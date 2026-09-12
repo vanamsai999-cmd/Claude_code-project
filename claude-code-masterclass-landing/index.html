@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Claude Code Masterclass — From overwhelmed to confident in 30 days</title>
+<meta name="description" content="A $97/month masterclass that takes developers from overwhelmed to genuinely confident with Claude Code. Real workflows, real codebases, cancel any time.">
+<link rel="canonical" href="{{SITE_URL}}">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{SITE_URL}}">
+<meta property="og:title" content="Claude Code Masterclass — From overwhelmed to confident">
+<meta property="og:description" content="A $97/month masterclass that takes developers from overwhelmed to genuinely confident with Claude Code.">
+<meta property="og:image" content="{{SITE_URL}}/og-image.png">
+<meta property="og:image:alt" content="Claude Code Masterclass">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claude Code Masterclass — From overwhelmed to confident">
+<meta name="twitter:description" content="A $97/month masterclass that takes developers from overwhelmed to genuinely confident with Claude Code.">
+<meta name="twitter:image" content="{{SITE_URL}}/og-image.png">
+
+<meta name="theme-color" content="#0f0e11">
+<link rel="stylesheet" href="styles.css">
+
+<!--
+  ANALYTICS — drop your snippet here (Plausible, Fathom, GA4, PostHog…).
+  main.js already fires a `cta_click` event with a `section` property from
+  every call to action; see trackCta() in main.js to wire it to your provider.
+-->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Claude Code Masterclass",
+  "description": "A guided masterclass that takes developers from beginner or overwhelmed to genuinely confident using Claude Code on real codebases.",
+  "url": "{{SITE_URL}}",
+  "provider": {
+    "@type": "Organization",
+    "name": "{{BRAND_NAME}}",
+    "url": "{{SITE_URL}}"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "online",
+    "courseWorkload": "PT3H",
+    "startDate": "{{START_DATE_ISO}}"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Subscription",
+    "price": "97.00",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "{{CHECKOUT_URL}}",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "97.00",
+      "priceCurrency": "USD",
+      "billingIncrement": 1,
+      "unitCode": "MON"
+    }
+  }
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-sentinel" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════ NAV ══════════════════════════════ -->
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a class="nav__brand" href="#top">
+      <span class="nav__mark" aria-hidden="true"></span>
+      <span class="ph">{{BRAND_NAME}}</span>
+    </a>
+
+    <nav class="nav__links" id="nav-links" aria-label="Primary">
+      <a href="#curriculum">Curriculum</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn--primary btn--sm nav__cta" href="{{CHECKOUT_URL}}" data-cta="nav">Join for&nbsp;$97/mo</a>
+    </nav>
+
+    <button class="nav__toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links">
+      <span class="nav__toggle-box" aria-hidden="true"><span></span><span></span></span>
+      <span class="sr-only">Menu</span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ══════════════════════════════ HERO ══════════════════════════════ -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="wrap hero__inner">
+
+    <div class="hero__copy">
+      <p class="eyebrow">For developers who already installed Claude Code and still feel lost</p>
+
+      <h1 id="hero-title">Go from overwhelmed to genuinely dangerous with Claude Code.</h1>
+
+      <p class="lede">
+        You've run the demos. You've seen the hype. And you still don't know what to
+        hand it, when to trust it, or why it keeps editing the wrong file. This is the
+        workflow nobody teaches you — a guided month that turns Claude Code from a
+        party trick into the way you actually ship.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn btn--primary btn--lg" href="{{CHECKOUT_URL}}" data-cta="hero">Join the Masterclass — $97/month</a>
+        <a class="btn btn--ghost btn--lg" href="#curriculum">See what's inside</a>
+      </div>
+
+      <p class="reassure">
+        <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 11.2 3.8 8.5l-1 1 3.7 3.7 7-7-1-1z"/></svg>
+        <span class="ph">{{CANCEL_POLICY}}</span> · Starts <span class="ph">{{START_DATE}}</span>
+      </p>
+    </div>
+
+    <!-- Terminal motif. Types out once on load; renders final state instantly
+         when prefers-reduced-motion is set. See main.js -->
+    <div class="term" role="img" aria-label="A Claude Code terminal session: the developer asks it to refactor a checkout flow to the new PaymentIntent API and update the tests. Claude reads twelve files, edits the payment session module, runs the checkout tests — twenty-four passing — and offers to open a pull request.">
+      <div class="term__bar" aria-hidden="true">
+        <span class="term__dot"></span><span class="term__dot"></span><span class="term__dot"></span>
+        <span class="term__title">claude — ~/acme-store</span>
+      </div>
+      <pre class="term__body" aria-hidden="true"><code id="term-code"></code><span class="term__caret" id="term-caret"></span></pre>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════ PAIN ══════════════════════════ -->
+<section class="section" id="pain" aria-labelledby="pain-title">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <p class="eyebrow">Sound familiar?</p>
+      <h2 id="pain-title">None of this means you're bad at your job.</h2>
+      <p class="section__sub">It means you were handed a new kind of tool and no one gave you the manual.</p>
+    </header>
+
+    <ul class="cards cards--4" role="list">
+      <li class="card reveal">
+        <p class="card__quote">“I get a great demo, and then it edits the wrong file.”</p>
+      </li>
+      <li class="card reveal">
+        <p class="card__quote">“I can't tell when to trust it and when to check every single line.”</p>
+      </li>
+      <li class="card reveal">
+        <p class="card__quote">“Everyone's shipping with agents. I'm still copy-pasting into a chat window.”</p>
+      </li>
+      <li class="card reveal">
+        <p class="card__quote">“It's magic on toy examples and falls apart in my actual repo.”</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════ TRANSFORMATION ══════════════════════ -->
+<section class="section section--alt" id="transformation" aria-labelledby="transform-title">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <p class="eyebrow">The shift</p>
+      <h2 id="transform-title">Thirty days from now.</h2>
+      <p class="section__sub">Same brain, same codebase. Completely different working relationship.</p>
+    </header>
+
+    <div class="shift reveal">
+      <div class="shift__col shift__col--now">
+        <h3 class="shift__label">Where you are now</h3>
+        <ul role="list">
+          <li>You paste snippets into a chat window and stitch the answers back together by hand.</li>
+          <li>You read every line it writes, because you have no idea what it might touch.</li>
+          <li>Claude has no idea what your project is, how it's structured, or what your team's conventions are.</li>
+          <li>You use it for boilerplate and tests, and nothing that actually matters.</li>
+          <li>Every session starts from zero.</li>
+        </ul>
+      </div>
+
+      <div class="shift__arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 12h14m0 0-5-5m5 5-5 5"/></svg>
+      </div>
+
+      <div class="shift__col shift__col--next">
+        <h3 class="shift__label">Where you'll be</h3>
+        <ul role="list">
+          <li>You hand over a whole task and review a diff — the way you'd review a teammate's.</li>
+          <li>Permissions and guardrails are set, so your attention goes where it earns its keep.</li>
+          <li>A tuned <code>CLAUDE.md</code> means it writes code that looks like your team wrote it.</li>
+          <li>You reach for it on refactors, migrations, code review, and bugs you can't reproduce.</li>
+          <li>Skills, subagents, and MCP servers do your recurring work on command.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ CURRICULUM ══════════════════════ -->
+<section class="section" id="curriculum" aria-labelledby="curriculum-title">
+  <div class="wrap wrap--narrow">
+    <header class="section__head reveal">
+      <p class="eyebrow">Curriculum</p>
+      <h2 id="curriculum-title">Six modules. One working developer at the end of them.</h2>
+      <p class="section__sub">Every module ends with something you've actually done in a real repository — not a quiz.</p>
+    </header>
+
+    <div class="accordion reveal" id="modules">
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="true" aria-controls="m1">
+            <span class="acc__num">01</span>
+            <span class="acc__text">
+              <span class="acc__title">Your first hour</span>
+              <span class="acc__outcome">Set up so that nothing scary can happen, and you know why.</span>
+            </span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="m1">
+          <ul role="list">
+            <li>Install, log in, and run your first real task in a repo you care about</li>
+            <li>Permission modes and safe defaults — what to allow, what to always review</li>
+            <li>The mental model: why an agentic tool behaves nothing like autocomplete</li>
+            <li>Terminal, desktop, web, and IDE — which one for which kind of work</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="m2">
+            <span class="acc__num">02</span>
+            <span class="acc__text">
+              <span class="acc__title">Prompting for real codebases</span>
+              <span class="acc__outcome">Stop getting confident, wrong answers.</span>
+            </span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="m2">
+          <ul role="list">
+            <li>Scoping a task so it's big enough to be worth it and small enough to review</li>
+            <li>What context to give, what to let it find, and the difference it makes</li>
+            <li>Recovering a session that's gone sideways instead of starting over</li>
+            <li>The tasks to keep for yourself — and how to tell which ones those are</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="m3">
+            <span class="acc__num">03</span>
+            <span class="acc__text">
+              <span class="acc__title">CLAUDE.md, memory, and project setup</span>
+              <span class="acc__outcome">Make Claude fluent in your repository.</span>
+            </span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="m3">
+          <ul role="list">
+            <li>Writing a <code>CLAUDE.md</code> that changes output quality on day one</li>
+            <li>Conventions, architecture notes, and commands worth writing down</li>
+            <li>Project vs. user vs. directory-scoped configuration</li>
+            <li>Keeping it current as the codebase moves</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="m4">
+            <span class="acc__num">04</span>
+            <span class="acc__text">
+              <span class="acc__title">Skills, subagents, and MCP</span>
+              <span class="acc__outcome">Teach it your workflows once; use them forever.</span>
+            </span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="m4">
+          <ul role="list">
+            <li>Packaging a repeatable process as a skill your whole team can run</li>
+            <li>Subagents: when parallel exploration pays and when it just burns tokens</li>
+            <li>Connecting MCP servers — your issue tracker, your docs, your database</li>
+            <li>Hooks and settings for the things you want to happen automatically</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="m5">
+            <span class="acc__num">05</span>
+            <span class="acc__text">
+              <span class="acc__title">Real workflows</span>
+              <span class="acc__outcome">The five jobs that pay for the subscription by themselves.</span>
+            </span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="m5">
+          <ul role="list">
+            <li>A multi-file refactor you'd genuinely merge</li>
+            <li>Backfilling a test suite for code you didn't write</li>
+            <li>Debugging a failure you can't reproduce locally</li>
+            <li>Code review, migrations, and the unglamorous maintenance work</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="m6">
+            <span class="acc__num">06</span>
+            <span class="acc__text">
+              <span class="acc__title">Shipping with confidence</span>
+              <span class="acc__outcome">Know what you're merging, and when to say no.</span>
+            </span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="m6">
+          <ul role="list">
+            <li>Reviewing agent output fast without rubber-stamping it</li>
+            <li>Git hygiene that keeps a bad session from becoming a bad afternoon</li>
+            <li>Guardrails for secrets, production, and anything irreversible</li>
+            <li>The honest limits — where this tool is still the wrong answer</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ MEMBERSHIP ══════════════════════
+     TRIM THIS: delete any tile that isn't actually part of your offer.
+     An over-promising page is worse than a short one.
+-->
+<section class="section section--alt" id="included" aria-labelledby="included-title">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <p class="eyebrow">Membership</p>
+      <h2 id="included-title">What you get every month.</h2>
+    </header>
+
+    <ul class="cards cards--3" role="list">
+      <li class="card reveal">
+        <svg class="card__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v12H4z"/><path d="M9 21h6"/><path d="M12 17v4"/></svg>
+        <h3>Live teaching sessions</h3>
+        <p><span class="ph">{{FORMAT}}</span> — worked live against real repositories, with your questions answered in the room.</p>
+      </li>
+      <li class="card reveal">
+        <svg class="card__ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg>
+        <h3>Every session recorded</h3>
+        <p>Miss one, watch it back. The full library stays available for as long as you're a member.</p>
+      </li>
+      <li class="card reveal">
+        <svg class="card__ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 19a6.5 6.5 0 0 1 13 0"/><path d="M17 6.2a3 3 0 0 1 0 5.6"/><path d="M18.5 19a6 6 0 0 0-2-4"/></svg>
+        <h3>A private community</h3>
+        <p>Working developers hitting the same walls. Post the session that went wrong; get an answer, not a lecture.</p>
+      </li>
+      <li class="card reveal">
+        <svg class="card__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6 3 12l5 6"/><path d="m16 6 5 6-5 6"/></svg>
+        <h3>Prompt &amp; config library</h3>
+        <p>Battle-tested <code>CLAUDE.md</code> files, skills, hooks, and settings you can drop into your own projects today.</p>
+      </li>
+      <li class="card reveal">
+        <svg class="card__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4"/><circle cx="12" cy="13" r="7"/><path d="M12 10v3.5l2.5 1.5"/></svg>
+        <h3>Office hours</h3>
+        <p>Bring your actual codebase and your actual stuck problem. We debug it together.</p>
+      </li>
+      <li class="card reveal">
+        <svg class="card__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-1.2 5.3"/><path d="M20 5v6h-6"/></svg>
+        <h3>Kept current</h3>
+        <p>Claude Code ships fast. New modules land as the tool changes, so what you learned last month doesn't rot.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════ INSTRUCTOR ══════════════════════ -->
+<section class="section" id="instructor" aria-labelledby="instructor-title">
+  <div class="wrap wrap--narrow">
+    <div class="bio reveal">
+      <div class="bio__photo">
+        <!-- Replace with: <img src="…" alt="{{INSTRUCTOR_NAME}}" width="160" height="160"> -->
+        <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="24" r="12"/><path d="M8 60a24 24 0 0 1 48 0"/></svg>
+        <span class="bio__todo">{{INSTRUCTOR_PHOTO}}</span>
+      </div>
+
+      <div class="bio__copy">
+        <p class="eyebrow" id="instructor-title">Who's teaching</p>
+        <h2 class="bio__name"><span class="ph">{{INSTRUCTOR_NAME}}</span></h2>
+        <p class="bio__text"><span class="ph">{{INSTRUCTOR_BIO}}</span></p>
+        <p class="bio__links"><span class="ph">{{SOCIAL_LINKS}}</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ SOCIAL PROOF ══════════════════════
+     OMITTED ON PURPOSE — no real testimonials were supplied, and placeholder
+     quotes on a sales page are a lie. When you have 2–3 real ones (name, role,
+     and permission to quote), uncomment this and fill it in.
+
+<section class="section section--alt" id="proof" aria-labelledby="proof-title">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <p class="eyebrow">From members</p>
+      <h2 id="proof-title">What it changed for them.</h2>
+    </header>
+    <ul class="cards cards--3" role="list">
+      <li class="card card--testimonial reveal">
+        <blockquote><p>REAL QUOTE HERE.</p></blockquote>
+        <figcaption class="who">
+          <img src="…" alt="" width="40" height="40">
+          <span><strong>Name</strong><br>Role, Company</span>
+        </figcaption>
+      </li>
+    </ul>
+  </div>
+</section>
+-->
+
+<!-- ══════════════════════ PRICING ══════════════════════ -->
+<section class="section section--alt" id="pricing" aria-labelledby="pricing-title">
+  <div class="wrap wrap--narrow">
+    <header class="section__head reveal">
+      <p class="eyebrow">Pricing</p>
+      <h2 id="pricing-title">One membership. One price.</h2>
+      <p class="section__sub">No tiers to decode, no upsell waiting on the next page.</p>
+    </header>
+
+    <div class="price reveal">
+      <p class="price__badge">Locked-in rate — your price never goes up</p>
+
+      <div class="price__amount">
+        <span class="price__currency">$</span><span class="price__num">97</span><span class="price__per">/month</span>
+      </div>
+
+      <ul class="price__list" role="list">
+        <li>Live teaching sessions — <span class="ph">{{FORMAT}}</span></li>
+        <li>All six modules, start to finish</li>
+        <li>Every session recorded and searchable</li>
+        <li>Private community of working developers</li>
+        <li>Prompt, skill, and <code>CLAUDE.md</code> library</li>
+        <li>Office hours with your own codebase</li>
+        <li>New modules as Claude Code ships features</li>
+        <li><span class="ph">{{CANCEL_POLICY}}</span></li>
+      </ul>
+
+      <a class="btn btn--primary btn--lg btn--block" href="{{CHECKOUT_URL}}" data-cta="pricing">Start today — $97/month</a>
+
+      <p class="price__fine">
+        <span class="ph">{{GUARANTEE}}</span> · Billed monthly · Cards and Apple&nbsp;Pay accepted
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FAQ ══════════════════════ -->
+<section class="section" id="faq" aria-labelledby="faq-title">
+  <div class="wrap wrap--narrow">
+    <header class="section__head reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2 id="faq-title">The things you're actually wondering.</h2>
+    </header>
+
+    <div class="accordion accordion--flush reveal" id="faqs">
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="f1">
+            <span class="acc__text"><span class="acc__title">Do I need to be an experienced developer?</span></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="f1">
+          <p>You need to be able to read code and find your way around a project. You don't need to be senior — but this isn't a "learn to program" course. If you've shipped something, you're in the right room.</p>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="f2">
+            <span class="acc__text"><span class="acc__title">What if I've barely used the terminal?</span></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="f2">
+          <p>Module 1 covers everything you need, and Claude Code also runs in the desktop app, the web, and as an IDE extension. Plenty of members never touch a terminal. Being nervous about it is not a reason to sit this out.</p>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="f3">
+            <span class="acc__text"><span class="acc__title">Does this work with my language and stack?</span></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="f3">
+          <p>Yes. What you're learning is a way of working — scoping, context, review, guardrails — and it transfers across languages. Demos span a few different stacks so nobody's watching a language they'll never write.</p>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="f4">
+            <span class="acc__text"><span class="acc__title">How much time does this take each week?</span></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="f4">
+          <p>Plan on <span class="ph">{{TIME_COMMITMENT}}</span>. The practice happens inside work you were going to do anyway — that's the point. You're not doing homework, you're doing your job differently.</p>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="f5">
+            <span class="acc__text"><span class="acc__title">Do I need a paid Claude plan on top of this?</span></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="f5">
+          <p>You'll need your own Claude Code access to follow along — that's billed by Anthropic and isn't included in this membership. Module 1 walks through the options so you don't overpay for capacity you won't use.</p>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="f6">
+            <span class="acc__text"><span class="acc__title">Is it live or self-paced?</span></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="f6">
+          <p><span class="ph">{{FORMAT}}</span> Everything is recorded, so a different time zone or a bad week costs you nothing.</p>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="f7">
+            <span class="acc__text"><span class="acc__title">Won't this be outdated in three months?</span></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="f7">
+          <p>Fair question, and the honest answer is that some of the specifics will change. That's exactly why this is a membership rather than a one-off course: modules get rewritten as the tool moves, and the underlying judgment — what to delegate, what to review — outlasts any particular feature.</p>
+        </div>
+      </div>
+
+      <div class="acc">
+        <h3>
+          <button class="acc__btn" aria-expanded="false" aria-controls="f8">
+            <span class="acc__text"><span class="acc__title">What happens if I cancel?</span></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="acc__panel" id="f8">
+          <p><span class="ph">{{CANCEL_POLICY}}</span> You keep access until the end of the period you've paid for, and anything you've downloaded stays yours. <span class="ph">{{GUARANTEE}}</span></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FINAL CTA ══════════════════════ -->
+<section class="final" aria-labelledby="final-title">
+  <div class="wrap wrap--narrow final__inner reveal">
+    <h2 id="final-title">You're one month from using this thing properly.</h2>
+    <p>Stop reading threads about what other people are shipping.</p>
+    <a class="btn btn--invert btn--lg" href="{{CHECKOUT_URL}}" data-cta="final">Join the Masterclass — $97/month</a>
+    <p class="final__fine"><span class="ph">{{CANCEL_POLICY}}</span></p>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div class="foot__brand">
+      <span class="nav__mark" aria-hidden="true"></span>
+      <span class="ph">{{BRAND_NAME}}</span>
+    </div>
+
+    <nav class="foot__links" aria-label="Footer">
+      <a href="#curriculum">Curriculum</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:{{CONTACT_EMAIL}}">Contact</a>
+      <a href="{{PRIVACY_URL}}">Privacy</a>
+      <a href="{{TERMS_URL}}">Terms</a>
+    </nav>
+
+    <p class="foot__social"><span class="ph">{{SOCIAL_LINKS}}</span></p>
+
+    <p class="foot__legal">
+      © <span id="year">2026</span> <span class="ph">{{BRAND_NAME}}</span>. All rights reserved.<br>
+      This is an independent course. It is not affiliated with, authorized by, or endorsed by Anthropic.
+      Claude and Claude Code are trademarks of Anthropic.
+    </p>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>
