@@ -1,0 +1,16 @@
+</main>
+</div>
+<script>
+function toggleAll(open){document.querySelectorAll('details').forEach(function(d){d.open=open;});}
+function cycleTheme(){
+  var r=document.documentElement, cur=r.getAttribute('data-theme');
+  var next = cur==='dark' ? 'light' : (cur==='light' ? '' : (matchMedia('(prefers-color-scheme: dark)').matches ? 'light':'dark'));
+  if(next) r.setAttribute('data-theme',next); else r.removeAttribute('data-theme');
+  try{ localStorage.setItem('mst-theme', next); }catch(e){}
+}
+(function(){ try{ var t=localStorage.getItem('mst-theme'); if(t) document.documentElement.setAttribute('data-theme',t);}catch(e){} })();
+document.querySelectorAll('nav.toc a').forEach(function(a){a.addEventListener('click',function(){document.querySelector('nav.toc').classList.remove('open');});});
+window.addEventListener('beforeprint',function(){toggleAll(true);});
+</script>
+</body>
+</html>

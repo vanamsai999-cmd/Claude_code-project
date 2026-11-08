@@ -1,0 +1,167 @@
+
+<h2 class="sec" id="s3">Section 3: Metric space fundamentals</h2>
+<p class="lead">How to build metrics, how to compare spaces (isometries, Lipschitz maps), and boundedness, balls and sequences in an <em>abstract</em> metric space.</p>
+
+<h3 id="s3-ex-list">Our stock of examples</h3>
+<table>
+<tr><th>Space</th><th>Metric</th><th>Induced by a norm?</th></tr>
+<tr><td>$\R$</td><td>$|y-x|$ (standard)</td><td>yes, $|\cdot|$</td></tr>
+<tr><td>$\R^N$, $\ell^p(N)$, $1\le p&lt;\infty$</td><td>$d_p(x,y)=\big(\sum|y_i-x_i|^p\big)^{1/p}$; the Triangle Inequality is <b>Minkowski's inequality</b></td><td>yes, $\|\cdot\|_p$</td></tr>
+<tr><td>$\R^N$, $\ell^\infty(N)$</td><td>$d_\infty(x,y)=\max|y_i-x_i|$</td><td>yes, $\|\cdot\|_\infty$</td></tr>
+<tr><td>$C(I;\R)$</td><td>$d_1(f,g)=\int|g-f|$</td><td>yes, $L^1$-norm</td></tr>
+<tr><td>$C(I;\R)$</td><td>$d_{\sup}$ (uniform distance)</td><td>yes, sup-norm</td></tr>
+<tr><td>any set</td><td>discrete</td><td>no (not a vector space in general)</td></tr>
+<tr><td>$\mathcal K(\R^2)$</td><td>Hausdorff</td><td>no</td></tr>
+<tr><td>$\R$</td><td>$|\tan^{-1}y-\tan^{-1}x|$ (bounded, $&lt;\pi$)</td><td><b>no</b></td></tr>
+</table>
+<p>The case $p=2$ is the Euclidean metric.</p>
+
+<h3 id="s3-new">New metrics from old</h3>
+<div class="box thm"><span class="tag">Metric induced by a norm (Exercise 3.1)</span><p>$d(x,y)=\|y-x\|$ is a metric. Later in the course: every metric space is isometric to a subset of a real normed space.</p></div>
+<div class="box thm"><span class="tag">Proposition (Metric induced by an injection)</span>
+<p>If $\phi:A\to E$ is <b>injective</b> into a metric space, then $d(s,t):=d_E(\phi(s),\phi(t))$ is a metric on $A$.</p>
+<p>Examples: the standard metric on $\C$, via $\C\to\R^2$, $x_1+ix_2\mapsto(x_1,x_2)$, which recovers $|v-u|$. The bounded metric $|\tan^{-1}y-\tan^{-1}x|$ on $\R$, via the injection $\tan^{-1}:\R\to\R$.</p></div>
+<div class="box thm"><span class="tag">Proposition (New metric via an increasing subadditive function)</span>
+<p>Let $\alpha:[0,\infty[\to[0,\infty[$ satisfy</p>
+<ul>
+<li>$\alpha(s)=0\iff s=0$;</li>
+<li><b>increasing</b>: $s\le t\Rightarrow\alpha(s)\le\alpha(t)$;</li>
+<li><b>subadditive</b>: $\alpha(s+t)\le\alpha(s)+\alpha(t)$.</li>
+</ul>
+<p>Then $d'=\alpha\circ d$ is a metric for <b>every</b> metric $d$.</p>
+<div class="prf">Symmetry is immediate. (MS1): $\alpha(d(s,t))=0\iff d(s,t)=0\iff s=t$. (MS3): $\alpha(d(r,t))\le\alpha(d(r,s)+d(s,t))\le\alpha(d(r,s))+\alpha(d(s,t))$, using <b>increasing</b> then <b>subadditive</b>. ∎</div>
+<p>Examples: $at$ ($a>0$); $\min\{t,1\}$; $t/(1+t)$; $\tan^{-1}t$; $t^{1/p}$ ($p\ge1$); and $1$ for $t\ne0$, $0$ for $t=0$ (this always gives the discrete metric). The 2nd, 3rd and 4th give <b>bounded metrics</b>. In the 3rd, 4th and 5th, α is invertible.</p></div>
+<div class="box def"><span class="tag">Metric subspace</span>
+<p>For $A\subset S$, $d|_{A\times A}$ is the <b>metric induced on $A$</b>, and $(A,d|_{A\times A})$ is a <b>metric subspace</b>.</p>
+<p>Warning: a subspace can look completely different from the whole space. The standard basis vectors $\{e_1,\dots,e_n\}\subset\R^n$ get the metric $\sqrt2\,d_{\text{discr}}$. This is unlike linear subspaces.</p></div>
+<div class="box def"><span class="tag">Product metrics</span>
+<p><b>Finite products</b>: $d_p(x,y)=\|(d_1(x_1,y_1),\dots,d_N(x_N,y_N))\|_p$, for $p\in[1,\infty]$.</p>
+<p><b>Countable products</b>: $d(x,y)=\sum_{k\ge1}2^{-k}\frac{d_k(x_k,y_k)}{1+d_k(x_k,y_k)}$ (Exercise 3.5).</p></div>
+
+<h3 id="s3-iso">Isometries, Lipschitz maps, contractions</h3>
+<div class="box def"><span class="tag">Definitions</span>
+<p><b>Isometry</b>: $d_F(f(x),f(y))=d_E(x,y)$ for all $x,y$. $E$ and $F$ are <b>isometric</b> if there is an isometric bijection. Isometric spaces are indistinguishable as metric spaces (like isomorphic vector spaces). Examples: inclusions of subspaces; rotations, reflections and translations of $\mathbb E^N$; $f\mapsto f(-\,\cdot)$ on $(C[-1,1],d_{\sup})$.</p>
+<p><b>Lipschitz</b>: $\exists M\ \forall x,y:\ d_F(f(x),f(y))\le M\,d_E(x,y)$. The <b>Lipschitz constant</b> is $\operatorname{Lip}f=\sup\{d_F(f(x),f(y))/d_E(x,y):x\ne y\}$.</p>
+<p><b>Strict contraction</b>: Lipschitz with $\operatorname{Lip}f&lt;1$.</p>
+<p><b>Bi-Lipschitz</b> ("Lipeomorphism"): a Lipschitz bijection whose inverse is Lipschitz.</p>
+<p>Isometries are Lipschitz (constant 1), so isometric bijections are bi-Lipschitz. $\operatorname{Lip}f=0$ means $f$ is <b>constant</b>.</p></div>
+<div class="box thm"><span class="tag">Example (continuously differentiable ⇒ Lipschitz)</span>
+<p>If $f\in C^1(I;\R)$, then $|f'|\le M$ (Uniform Continuity Theorem). By FTC, $|f(t)-f(s)|=|\int_s^tf'|\le M|t-s|$, so $\operatorname{Lip}f\le d_{\sup}(f',0)$. Hence $C^1(I;\R)\subset C_{\text{Lip}}(I;\R)\subset C(I;\R)\subset\F_b(I;\R)$.</p></div>
+<div class="box thm"><span class="tag">Example (Lipschitz bijection that is not bi-Lipschitz)</span>
+<p>$f:I\to I$, $x\mapsto x^2$. It is Lipschitz since $\frac{|y^2-x^2|}{|y-x|}=|x+y|\le2$. Its inverse $g(t)=\sqrt t$ is not Lipschitz: by the Mean Value Theorem, for $s,t\in\,]0,1/M[$ we get $\frac{|g(t)-g(s)|}{|t-s|}=\frac1{2\sqrt u}\ge\frac{\sqrt M}2$ for some $u$ between them. $M$ is arbitrary, so $\operatorname{Lip}g=\infty$.</p></div>
+<div class="box def"><span class="tag">Distance from a set</span>
+<p>For nonempty $A$: $\operatorname{dist}_A(x)=\inf\{d(x,a):a\in A\}$. It is 1-Lipschitz (Exercise 3.7). $\operatorname{dist}_A(x)=0$ iff some sequence in $A$ converges to $x$. Later this is the statement "$x\in\overline A$".</p></div>
+
+<h3 id="s3-bdd">Boundedness and the paradigm space $\ell^\infty(S;E)$</h3>
+<div class="box def"><span class="tag">Diameter, bounded</span>
+<p>$\operatorname{diam}A=\sup\{d(x,y):x,y\in A\}$ (possibly $\infty$). $A$ is <b>bounded</b> if $\operatorname{diam}A&lt;\infty$. A metric (space) is bounded if $E$ itself is.</p>
+<p>Facts:</p>
+<ul>
+<li>Discrete spaces are bounded.</li>
+<li>The supremum need not be attained.</li>
+<li>$A$ is bounded iff $\sup_{a\in A}d(p,a)&lt;\infty$ for some (equivalently, all) $p$.</li>
+<li>$A\subset B\Rightarrow\operatorname{diam}A\le\operatorname{diam}B$.</li>
+</ul></div>
+<div class="box thm"><span class="tag">Proposition (the metric space $\ell^\infty(S;E)$)</span>
+<p>$\F_b(S;E)$ is the set of bounded functions $S\to E$ (those with $\operatorname{diam}\operatorname{Ran}f&lt;\infty$). The sup metric $d_{\sup}(f,g)=\sup_{s\in S}d_E(f(s),g(s))$ is a metric on it.</p>
+<div class="prf"><p>Finite by Exercise 3.14.</p>
+<p>(MS1): $d_{\sup}=0\iff\forall s:\ d_E(f(s),g(s))=0\iff f=g$.</p>
+<p>(MS2): pointwise symmetry.</p>
+<p>(MS3): for each $t$, $d_E(f(t),h(t))\le d_E(f(t),g(t))+d_E(g(t),h(t))\le d_{\sup}(f,g)+d_{\sup}(g,h)$. The right side is independent of $t$; take the sup over $t$. ∎</p></div>
+<p>$\ell^\infty(\{1..N\};\R)\cong\ell^\infty(N)$ isometrically, so this massively extends the max metric. Later in the course: every metric space embeds isometrically in some $\ell^\infty(S;\R)$.</p></div>
+
+<h3 id="s3-balls">Balls and sequences</h3>
+<div class="box def"><span class="tag">Balls and spheres</span>
+<p><b>Open ball</b> $B_r(a)=\{x:d(x,a)&lt;r\}$. <b>Closed ball</b> $B_r[a]=\{x:d(x,a)\le r\}$. <b>Sphere</b> $S_r(a)=\{x:d(x,a)=r\}$.</p>
+<p>The open ball and the sphere partition the closed ball. For $R>r$: $\{a\}\subset B_r(a)\subset B_r[a]\subset B_R(a)$.</p>
+<p><b>Balls do not usually look like balls</b>: in a discrete space, $B_r(a)=\{a\}$ if $r\le1$ and $B_r(a)=E$ if $r>1$.</p></div>
+<div class="box thm"><span class="tag">Diameters of balls</span>
+<p>$\operatorname{diam}B_r[a]\le\operatorname{diam}B_R(a)\le\operatorname{diam}B_R[a]\le2R$ for $R>r$.</p>
+<p>In a discrete space, $\operatorname{diam}B_r(a)$ is $0$ if $r\le1$ or $E=\{a\}$, and $1$ if $r>1$ and $\#E\ge2$. So diam can be much less than $2r$.</p>
+<p>In normed spaces, $\operatorname{diam}B_R(a)=\operatorname{diam}B_R[a]=2R$ (no surprises).</p></div>
+<div class="box thm"><span class="tag">Openness property of open balls</span><p>$\forall p\in B\ \exists r>0:\ B_r(p)\subset B$ (Exercise 3.10 with $b=a$, $s=r$).</p></div>
+<div class="box def"><span class="tag">Sequences in a metric space</span>
+<p><b>Bounded</b>: the set of terms is bounded, equivalently $(d(a,x_n))_n$ is bounded in $\R$ for some or all $a$.</p>
+<p><b>Cauchy</b>: $\forall\eps>0\ \exists N\ \forall n,m\ge N:\ d(x_n,x_m)&lt;\eps$. Equivalently, $\lim_N\sup_pd(x_N,x_{N+p})=0$.</p>
+<p><b>Convergent</b> to $a$: $d(x_n,a)\to0$ in $\R$.</p>
+<p><b>Proposition</b>: convergent ⇒ Cauchy ⇒ bounded (Exercise 3.11). The converses fail in general metric spaces.</p></div>
+
+<h3 id="s3-ex">Exercises for Section 3, with full solutions</h3>
+<div class="box ex"><span class="tag">Exercise 3.1 (Metric induced by a norm)</span> <span class="marks">5 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p>$d(x,y)=\|y-x\|\in[0,\infty[$.</p>
+<p>(MS1): $\|y-x\|=0\iff y-x=0\iff x=y$, by (N1) and $\|0\|=0$.</p>
+<p>(MS2): $\|x-y\|=\|(-1)(y-x)\|=|-1|\,\|y-x\|$, by (N2).</p>
+<p>(MS3): $\|z-x\|=\|(z-y)+(y-x)\|\le\|z-y\|+\|y-x\|$, by (N3). ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.2 (Metric induced by an injection)</span>
+<details><summary>Solution</summary><div class="inner"><p>$d(s,t)=d_E(\phi(s),\phi(t))\ge0$ and is finite.</p>
+<p>(MS1): $d(s,t)=0\iff\phi(s)=\phi(t)\iff s=t$. The last step is exactly <b>injectivity</b>; without it, (MS1b) fails.</p>
+<p>(MS2) and (MS3) are inherited directly from $d_E$, applied to the points $\phi(r),\phi(s),\phi(t)$. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.3 (Associated bounded metric, $\alpha(t)=t/(1+t)$)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner"><p>Check the three hypotheses of the Proposition.</p>
+<p>$\alpha(t)=0\iff t=0$.</p>
+<p>Increasing: $\alpha(t)=1-\frac1{1+t}$ and $\frac1{1+t}$ decreases.</p>
+<p>Subadditive: $\alpha(s+t)=\frac{s}{1+s+t}+\frac{t}{1+s+t}\le\frac s{1+s}+\frac t{1+t}$, since enlarging a positive denominator decreases the fraction.</p>
+<p>Hence $\alpha\circ d$ is a metric, and it is bounded by $1$. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.4 (Rearranged Triangle Inequality, $\ell^1$, $\ell^\infty$, convergence)</span> <span class="marks">15 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) <b>Rearranged Triangle Inequality</b>: $|d(x,z)-d(y,z)|\le d(x,y)$. By (MS3), $d(x,z)\le d(x,y)+d(y,z)$, so $d(x,z)-d(y,z)\le d(x,y)$. Swapping $x$ and $y$ and using (MS2): $d(y,z)-d(x,z)\le d(x,y)$. Combine the two. For norms: $\big|\|x\|-\|y\|\big|\le\|x-y\|$ (take $z=0$).</p>
+<p>(b)(i) $d_1(x,y)=\sum|y_i-x_i|$. (MS1): a sum of nonnegative terms is zero iff each term is. (MS2): $|x_i-y_i|=|y_i-x_i|$. (MS3): add the inequalities $|z_i-x_i|\le|y_i-x_i|+|z_i-y_i|$ over $i$.</p>
+<p>(b)(ii) $d_\infty=\max_i|y_i-x_i|$. (MS1): the max is zero iff all terms are. (MS2) is clear. (MS3): for each $i$, $|z_i-x_i|\le|y_i-x_i|+|z_i-y_i|\le d_\infty(x,y)+d_\infty(y,z)$; take the max over $i$.</p>
+<p>(c) "$x_n\to a$" means $d(x_n,a)\to0$ in $\R$, i.e. $\forall\eps>0\ \exists N\ \forall n\ge N:\ d(x_n,a)&lt;\eps$. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.5 (Metric on a countable product)</span>
+<details><summary>Solution</summary><div class="inner">
+<p>$d(x,y)=\sum_k(\alpha_k\circ d_k)(x_k,y_k)$ with $\alpha_k(t)=2^{-k}\frac t{1+t}$. Each $\alpha_k$ satisfies the hypotheses of the Proposition (a positive multiple of the function in Exercise 3.3), so each $\rho_k:=\alpha_k\circ d_k$ is a metric on $S_k$ with $\rho_k\le2^{-k}$. The series therefore converges by comparison with $\sum2^{-k}=1$, and $0\le d\le1$.</p>
+<p>(MS1): $d(x,y)=0\iff$ every term is $0$ $\iff\forall k:\ x_k=y_k\iff x=y$ (equality in a product is componentwise).</p>
+<p>(MS2): termwise.</p>
+<p>(MS3): for each $K$, $\sum_{k\le K}\rho_k(x_k,z_k)\le\sum_{k\le K}\rho_k(x_k,y_k)+\sum_{k\le K}\rho_k(y_k,z_k)\le d(x,y)+d(y,z)$. Let $K\to\infty$ (order preservation under limits). ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.6 (Isometric bijections have isometric inverses)</span>
+<details><summary>Solution</summary><div class="inner"><p>(a) $f(x)=f(y)\Rightarrow d_E(x,y)=d_F(f(x),f(y))=0\Rightarrow x=y$. So <b>every isometry is injective</b>.</p>
+<p>(b) For $u,v\in F$: $d_E(g(u),g(v))=d_F(f(g(u)),f(g(v)))=d_F(u,v)$, using the isometry property and then $f\circ g=\mathrm{id}_F$. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.7 ("Distance from a set" function)</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) For any $a\in A$: $\operatorname{dist}_A(x)\le d(x,a)\le d(x,y)+d(y,a)$. So $\operatorname{dist}_A(x)-d(x,y)$ is a lower bound for $\{d(y,a):a\in A\}$, giving $\operatorname{dist}_A(x)-d(x,y)\le\operatorname{dist}_A(y)$. By symmetry, $|\operatorname{dist}_A(x)-\operatorname{dist}_A(y)|\le d(x,y)$. Hence $\operatorname{dist}_A$ is Lipschitz with $\operatorname{Lip}\le1$.</p>
+<p>(b) (i)⇒(ii): by the infimum version of Approximation of suprema by sequences, there are $a_n\in A$ with $d(x,a_n)\to\operatorname{dist}_A(x)=0$. Concretely, pick $d(x,a_n)&lt;1/n$. (ii)⇒(i): $0\le\operatorname{dist}_A(x)\le d(x,a_n)\to0$, so $\operatorname{dist}_A(x)=0$ by order preservation.</p>
+<p>(c) Apply (b) at every $x\in E$. ∎ (Later: (ii) says $A$ is <b>dense</b> in $E$.)</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.8 (Diameter of a union)</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) $A,B\subset A\cup B$, and diam is monotone under inclusion.</p>
+<p>(b) Assume $A,B\ne\emptyset$ and both are bounded (otherwise the inequality is trivial). Let $x,y\in A\cup B$. If both are in $A$, $d(x,y)\le\operatorname{diam}A$, which is at most the right side; similarly if both are in $B$. If $x\in A$ and $y\in B$, then for any $a\in A$, $b\in B$:
+$d(x,y)\le d(x,a)+d(a,b)+d(b,y)\le\operatorname{diam}A+d(a,b)+\operatorname{diam}B$. Taking the infimum over $a,b$ gives $d(x,y)\le\operatorname{diam}A+I+\operatorname{diam}B$. Take the sup over $x,y$. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.9 (Unit spheres in $\ell^p(2)$)</span> <span class="marks">10 marks</span>
+<details><summary>Solution (picture)</summary><div class="inner">
+<p>$S_1(0)=\{x:|x_1|^p+|x_2|^p=1\}$ (or $\max\{|x_1|,|x_2|\}=1$ for $p=\infty$).</p>
+<ul>
+<li>$p=1$: a <b>diamond</b> (square rotated 45°) with vertices $(\pm1,0),(0,\pm1)$.</li>
+<li>$p=2$: the <b>circle</b>.</li>
+<li>$p=\infty$: the <b>square</b> with corners $(\pm1,\pm1)$.</li>
+<li>$1&lt;p&lt;2$: a convex curve between the diamond and the circle.</li>
+<li>$2&lt;p&lt;\infty$: a convex curve between the circle and the square.</li>
+</ul>
+<p>As $p$ increases, the spheres grow outward: since $\|x\|_\infty\le\|x\|_q\le\|x\|_p$ for $p\le q$, the ball $B_1^{(p)}\subset B_1^{(q)}$. All of them pass through $(\pm1,0)$ and $(0,\pm1)$.</p>
+<!--SPHERES-->
+</div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.10 (Balls in an intersection of balls)</span>
+<details><summary>Solution</summary><div class="inner"><p>Take $t=\min\{r-d(p,a),\ s-d(p,b)\}$. It is $>0$ because $p$ is in both open balls. If $d(x,p)&lt;t$, then $d(x,a)\le d(x,p)+d(p,a)&lt;t+d(p,a)\le r$, and similarly $d(x,b)&lt;s$. So $B_t(p)\subset B_r(a)\cap B_s(b)$. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.11 (Convergent ⇒ Cauchy ⇒ Bounded)</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) If $x_n\to a$ and $\eps>0$, choose $N$ with $d(x_n,a)&lt;\eps/2$ for $n\ge N$. Then $d(x_n,x_m)\le d(x_n,a)+d(a,x_m)&lt;\eps$.</p>
+<p>(b) With $\eps=1$, choose $N$ with $d(x_n,x_m)&lt;1$ for $n,m\ge N$. Let $R=\max\{d(x_1,x_N),\dots,d(x_{N-1},x_N),1\}$. Then every $x_n\in B_R[x_N]$, so $\operatorname{diam}\{x_n\}\le2R&lt;\infty$. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.12 (Convergence of metric values)</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) By the Rearranged Triangle Inequality, $|d(x_n,p)-d(x_m,p)|\le d(x_n,x_m)$. So $(d(x_n,p))$ is <b>Cauchy in ℝ</b>, hence convergent by the <b>completeness of ℝ</b>.</p>
+<p>(b) $|d(x_n,p)-d(a,p)|\le d(x_n,a)\to0$, so $d(x_n,p)\to d(a,p)$ by the Sandwich Principle. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.13 (Convergence in product spaces)</span>
+<details><summary>Solution</summary><div class="inner">
+<p>The sum metric is $d(x,y)=d_1(x_1,y_1)+d_2(x_2,y_2)$.</p>
+<p>(i)⇒(ii): if $x^{(n)}\to a=(a_1,a_2)$, then $0\le d_i(x_i^{(n)},a_i)\le d(x^{(n)},a)\to0$. Sandwich.</p>
+<p>(ii)⇒(i): if $x_i^{(n)}\to a_i$, then $d(x^{(n)},(a_1,a_2))=d_1(\cdot)+d_2(\cdot)\to0+0$, by the algebra of limits. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 3.14 (Finiteness of the sup metric on $\F_b(S;E)$)</span> <span class="marks">5 marks</span>
+<details><summary>Solution</summary><div class="inner"><p>If $S=\emptyset$ there is nothing to prove (the sup of the empty set of nonnegative numbers is taken to be $0$). Otherwise fix $s_0\in S$. For every $s$:
+$d(f(s),g(s))\le d(f(s),f(s_0))+d(f(s_0),g(s_0))+d(g(s_0),g(s))\le\operatorname{diam}\operatorname{Ran}f+d(f(s_0),g(s_0))+\operatorname{diam}\operatorname{Ran}g$. This is a finite constant independent of $s$, so the sup is finite. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">In-text questions</span>
+<details><summary>Answers</summary><div class="inner"><ul>
+<li><b>Lipschitz constant 0?</b> Then $d(f(x),f(y))\le0$, so $f(x)=f(y)$ for all $x,y$: $f$ is constant.</li>
+<li><b>Basis vectors in $\R^n$</b>: $\|e_i-e_j\|_2=\sqrt{1+1}=\sqrt2$ for $i\ne j$, so $d'=\sqrt2\,d_{\text{discr}}$.</li>
+<li><b>Why is the $\tan^{-1}$ metric not induced by a norm?</b> It is bounded (all distances are $&lt;\pi$). A norm-metric on a nonzero space is unbounded, since $d(0,\lambda v)=|\lambda|\|v\|\to\infty$.</li>
+</ul></div></details></div>

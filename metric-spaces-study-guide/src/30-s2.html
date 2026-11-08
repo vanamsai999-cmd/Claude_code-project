@@ -1,0 +1,201 @@
+
+<h2 class="sec" id="s2">Section 2: Real analysis &amp; linear algebra (revision)</h2>
+<p class="lead">The engine room. The LUB Principle, Approximation of suprema, monotone convergence, Bolzano–Weierstrass, the Uniform Continuity Theorem, norms and inner products. Later sections quote these constantly.</p>
+
+<h3 id="s2-sub">2.1 Subsets of ℝ</h3>
+<div class="box def"><span class="tag">Minimum, maximum, bounds</span>
+<p>$A$ has a <b>minimum</b> if $\exists x\in A\ \forall a\in A:\ a\ge x$. The <b>maximum</b> is defined similarly. When they exist they are unique, written $\min A$ and $\max A$. Also $\max A=-\min(-A)$, where $-A=\{-a:a\in A\}$.</p>
+<p><b>Bounded above</b>: $\exists x\ \forall a:\ a\le x$, and $x$ is an <b>upper bound</b>. <b>Bounded below</b> is similar. <b>Bounded</b>: $\exists D\ \forall a,b\in A:\ |b-a|\le D$, equivalently $A\subset[x,y]$ for some $x,y$.</p>
+<p>The set of upper bounds $U_A$ is "upward closed" ($x\in U_A$ and $y>x$ imply $y\in U_A$). If $\max A$ exists then $U_A=[\max A,\infty[$.</p>
+<p>Examples: a nonempty finite set has a min and a max. $[a,b[$ has a min but <b>no max</b>; this obvious-looking fact depends on the Archimedean property.</p></div>
+<div class="box thm"><span class="tag">Theorem (Well-ordering of ℕ)</span><p>Every nonempty $A\subset\N$ has a minimum.</p>
+<div class="prf">Suppose $A$ has no minimum. Prove by <b>induction</b> that $P_n:\{1,\dots,n\}\subset A^\complement$. $P_1$: if $1\in A$ it would be the min. $P_k\Rightarrow P_{k+1}$: if $k+1\in A$ it would be the min, since $1,\dots,k\notin A$. So $A^\complement=\bigcup_n\{1,\dots,n\}=\N$, i.e. $A=\emptyset$, a contradiction. ∎</div></div>
+<div class="box def"><span class="tag">The nine types of subinterval of ℝ</span>
+<p>Take $a\le b$ and $c&lt;d$.</p>
+<p><b>I. Closed:</b> $]-\infty,b]$, $[a,b]$, $[a,\infty[$.</p>
+<p><b>II. Open:</b> $]-\infty,d[$, $]c,d[$, $]c,\infty[$.</p>
+<p><b>III. Half-open:</b> $[c,d[$, $]c,d]$.</p>
+<p><b>IV. Both open and closed:</b> $]-\infty,\infty[=\R$.</p>
+<p>If $a=b$, $[a,b]=\{a\}$ is <b>degenerate</b>. The bounded types are I(ii), II(ii), III(i), III(ii). $I=[0,1]$ is the <b>unit interval</b>.</p>
+<p><b>Germ of "closedness"</b>: if $x_n\in J$ for a closed interval $J$ and $x_n\to x$, then $x\in J$.</p>
+<p><b>Germ of "openness"</b>: if $p\in J$ for an open interval $J$, then $]p-\delta,p+\delta[\subset J$ for some $\delta>0$.</p></div>
+<div class="box thm"><span class="tag">Archimedean property: four equivalent forms</span>
+<p>(i) $\Q$ is <b>order dense</b> in $\R$: $x&lt;y\Rightarrow\exists q\in\Q:\ x&lt;q&lt;y$.</p>
+<p>(ii) $\forall x>0\ \exists n\in\N:\ 1/n&lt;x$.</p>
+<p>(iii) $\forall x>0\ \forall y\in\R\ \exists n:\ nx\ge y$.</p>
+<p>(iv) $\N$ is unbounded in $\R$: $\forall x\ \exists n:\ n>x$.</p>
+<div class="prf"><p>(ii)⇒(i), case $y>0$: pick $n$ with $1/n&lt;y-x$. By (ii) the set $\{k\in\N:k/2n\ge y\}$ is nonempty; let $p$ be its minimum (well-ordering). Then $q=(p-1)/2n$ satisfies $q&lt;y$ and $q=p/2n-1/2n\ge y-1/2n>y-1/n>x$. Case $y\le0$: apply the first case to $-y&lt;-x$ (note $-x>0$) and negate.</p>
+<p><b>(i)⇒(iv)</b>: if $x&lt;1$ take $n=1$. If $x\ge1$, (i) gives a rational $m/n\in\,]x,x+1[$ with $m,n\in\N$, and then $m\ge m/n>x$.</p>
+<p><b>(iv)⇒(iii)</b>: choose $n>y/x$, so $nx>y$.</p>
+<p><b>(iii)⇒(ii)</b>: apply (iii) with $y=2$: $nx\ge2>1$, so $1/n&lt;x$. ∎</p></div></div>
+<div class="box thm"><span class="tag">Least Upper Bound Principle (an AXIOM of ℝ)</span>
+<p>Every nonempty subset of $\R$ that is bounded above has a least upper bound $\sup A$, the <b>supremum</b>. Equivalently, $U_A=[s_A,\infty[$ and $\sup A=\min U_A$.</p>
+<p>It is <b>not a theorem</b>: it is part of what we mean by $\R$ (the complete ordered field). From it we derive (1) the Archimedean property of $\R$ and (2) Cauchy completeness of $\R$.</p></div>
+<div class="box thm"><span class="tag">Approximation of suprema (used everywhere)</span>
+<p>If $x=\sup A$, then for all $\eps>0$ there is $a\in A$ with $x-\eps&lt;a\le x$, i.e. $]x-\eps,x]\cap A\ne\emptyset$. The infimum version is analogous.</p></div>
+<div class="box thm"><span class="tag">Theorem (Archimedean property for ℝ)</span>
+<div class="prf">Suppose $\N$ is bounded above, with $s=\sup\N$. Then $s-1$ is not an upper bound, so $N>s-1$ for some $N\in\N$. But then $N+1>s$ and $N+1\in\N$, a contradiction. So version (iv) holds. ∎</div>
+<p>Consequence: $(1/n)$ is a nonconstant convergent sequence. Also $[a,b[$ and $[0,2\pi]\cap\Q$ have no maximum: given $x$ in the set, density gives a rational $q$ with $x&lt;q&lt;b$ (resp. $&lt;2\pi$), and $q$ lies in the set. For the second set this uses $2\pi\notin\Q$.</p></div>
+<div class="box warn"><span class="tag">Strange but true</span>$\Q$ and $\R\setminus\Q$ "interlace": each is order dense in $\R$. Yet $\Q$ is countable and $\R\setminus\Q$ is uncountable.</div>
+
+<h3 id="s2-seq">2.2 Sequences in ℝ</h3>
+<div class="box def"><span class="tag">Sequence definitions</span>
+<p>A real sequence is an element of $\R^\N\leftrightarrow\F(\N;\R)$, a natural linear isomorphism. The <b>set of terms</b> is $X=\{x_n:n\in\N\}$, a countable nonempty set. Properties:</p>
+<ul>
+<li><b>Bounded above/below/bounded</b>: $X$ is. We write $\sup x_n:=\sup X$.</li>
+<li><b>Monotonic increasing</b>: $x_{n+1}\ge x_n$ for all $n$. <b>Monotonic decreasing</b>: $x_{n+1}\le x_n$.</li>
+<li><b>Convergent</b>: $\exists a\ \forall\eps>0\ \exists N\ \forall n\ge N:\ |x_n-a|&lt;\eps$.</li>
+<li><b>Cauchy</b>: $\forall\eps>0\ \exists N\ \forall n,m\ge N:\ |x_n-x_m|&lt;\eps$.</li>
+</ul>
+<p>Convergence depends only on the <b>tail</b>: $(x_n)$ converges iff $(x_{p+n})_n$ does, with the same limit.</p></div>
+<div class="box thm"><span class="tag">Proposition (Approximation of suprema by sequences)</span>
+<p>If $A\ne\emptyset$ is bounded above, there is a <b>monotonic increasing</b> sequence $(a_n)$ in $A$ with $a_n\to\sup A$. If $\sup A\notin A$, it can be chosen strictly increasing.</p>
+<div class="prf">If $s:=\sup A\in A$, use the constant sequence. Otherwise choose $a_1\in\,]s-1,s]\cap A$, and given $a_1&lt;\dots&lt;a_n&lt;s$ choose $a_{n+1}\in A$ with $\max\{a_n,s-\frac1{n+1}\}&lt;a_{n+1}&lt;s$, by Approximation of suprema. Then $|s-a_n|&lt;1/n\to0$ by the Archimedean property and the Sandwich Principle. ∎</div></div>
+<div class="box thm"><span class="tag">Proposition (Algebra of limits in ℝ)</span>
+<p>If $x_n\to a$ and $y_n\to b$:</p>
+<p>(1) $sx_n+ty_n\to sa+tb$; (2) $x_ny_n\to ab$; (3) $|x_n|\to|a|$; (4) if $a\ne0$ then $x_n\ne0$ eventually and $1/x_n\to1/a$;</p>
+<p>(5a) if $x_n\le y_n$ eventually then $a\le b$ <b>(order preservation: ≤ survives limits)</b>; (5b) if $a&lt;b$ then $x_n&lt;y_n$ eventually;</p>
+<p>(6) <b>Sandwich Principle</b>: if $a=b$ and $x_n\le z_n\le y_n$ eventually, then $z_n\to a$. This is the most-used convergence criterion.</p></div>
+<div class="box warn"><span class="tag">Pitfall</span>Strict inequality does <b>not</b> survive limits: $1/n>0$ for all $n$, but $\lim1/n=0$. So $(1/n)$ lies in $]0,1]$ while its limit does not. The interval $]0,1]$ is not closed.</div>
+<div class="box thm"><span class="tag">Theorem (Bounded monotonic sequences converge)</span>
+<p>If $(x_n)$ is increasing and bounded above, then $x_n\to\sup\{x_n\}$. (If decreasing and bounded below, then $x_n\to\inf$.)</p>
+<div class="prf">Let $s=\sup x_n$ and $\eps>0$. By Approximation of suprema, $x_N>s-\eps$ for some $N$. By monotonicity, $s-\eps&lt;x_N\le x_n\le s$ for $n\ge N$, so $|s-x_n|&lt;\eps$. This rests on the LUB Principle. Decreasing case: apply the result to $(-x_n)$ and use $\inf A=-\sup(-A)$. ∎</div></div>
+<div class="box def"><span class="tag">Subsequence</span><p>$(x_{n_k})_k$ with $n_1&lt;n_2&lt;\cdots$, i.e. given by an order-preserving injection $k\mapsto n_k$. A subsequence of a subsequence is a subsequence. Example: $(1,1,\dots)$ and $(-1,-1,\dots)$ are subsequences of $((-1)^n)$.</p></div>
+<div class="box thm"><span class="tag">Theorem (Every real sequence has a monotonic subsequence)</span>
+<div class="prf">Call $n$ a <b>peak index</b> if $x_{n+p}\le x_n$ for all $p\in\N$, and let $P$ be the set of peak indices. <b>Case I</b>: $P$ infinite. List $P$ increasingly as $n_1&lt;n_2&lt;\cdots$; then $(x_{n_i})$ is decreasing. <b>Case II</b>: $P$ finite. Start at $n_1$ beyond every peak. $n_1$ is not a peak, so some $n_2>n_1$ has $x_{n_2}>x_{n_1}$; $n_2$ is not a peak either, and so on. This gives an increasing subsequence. ∎</div></div>
+<div class="box thm"><span class="tag">Theorem (Bolzano–Weierstrass, BWT)</span>
+<p>Every sequence in a <b>closed and bounded interval</b> $J$ has a subsequence converging to a limit <b>in $J$</b>.</p>
+<div class="prf">Take a monotonic subsequence. It is bounded and monotonic, hence convergent, and its limit is in $J$ because $J$ is closed. ∎ (The classical proof bisects $J$ repeatedly, keeping a half that contains infinitely many terms. That gives a Cauchy subsequence, which converges by completeness.)</div></div>
+<div class="box thm"><span class="tag">Lemma (Subsequence Lemma)</span>
+<p>TFAE: (i) some subsequence converges to $a$; (ii) for all $\eps>0$, $\{n:|x_n-a|&lt;\eps\}$ is infinite.</p>
+<div class="prf">(i)⇒(ii): the set contains the tail $\{n_K,n_{K+1},\ldots\}$. (ii)⇒(i): pick $n_{k+1}>n_k$ in $\{n:|x_n-a|&lt;\frac1{k+1}\}$, which is possible because each such set is infinite. Then $|x_{n_k}-a|&lt;1/k\to0$. ∎</div></div>
+<div class="box def"><span class="tag">lim sup and lim inf</span>
+<p>For bounded $(x_n)$, let $u_n=\sup_{k\ge n}x_k$ and $l_n=\inf_{k\ge n}x_k$. Then $\inf X=l_1\le l_2\le\cdots\le u_2\le u_1=\sup X$, so both sequences are monotone and bounded, hence convergent:</p>
+$$\limsup_{n\to\infty}x_n:=\lim_n\sup_{k\ge n}x_k,\qquad\liminf_{n\to\infty}x_n:=\lim_n\inf_{k\ge n}x_k.$$
+<p><b>Proposition.</b> If $(x_n)$ is bounded above and $\limsup x_n$ exists, some subsequence converges to $\limsup x_n$.</p></div>
+<div class="box thm"><span class="tag">Theorem (Completeness of ℝ)</span>
+<p>TFAE: (i) $(x_n)$ converges; (ii) $(x_n)$ is <b>Cauchy</b>; (iii) $(x_n)$ is bounded and $\liminf x_n=\limsup x_n$. In that case $\lim x_n=\limsup x_n=\liminf x_n$.</p>
+<div class="prf"><p>(i)⇒(ii): $|x_n-x_m|\le|x_n-a|+|a-x_m|&lt;2\eps$. This holds in every metric space.</p>
+<p>(ii)⇒(iii): with $\eps=1$, $|x_n|\le|x_N|+1$ for $n\ge N$, so $|x_n|\le\max\{|x_1|,\dots,|x_{N-1}|,|x_N|+1\}$ and the sequence is bounded. Then pick $n,m\ge N$ with $|x_n-l|&lt;\eps$ and $|u-x_m|&lt;\eps$ (possible because $l,u$ are limits of subsequences). This gives $|u-l|&lt;3\eps$, so $u=l$.</p>
+<p>(iii)⇒(i): $l_n\le x_n\le u_n$ and both bounds tend to $a$. Sandwich. ∎</p></div></div>
+
+<h3 id="s2-lin">2.3 Linear algebra</h3>
+<div class="box def"><span class="tag">Vector space over a field 𝕂</span>
+<p>$(V,+)$ is an <b>abelian group</b> (identity $0_V$, inverses, associativity, commutativity). Scalar multiplication satisfies $1v=v$ and $(\lambda\mu)v=\lambda(\mu v)$. Two distributive laws: $\lambda(u+v)=\lambda u+\lambda v$ and $(\lambda+\mu)v=\lambda v+\mu v$.</p>
+<p>Consequences: the identity is unique, inverses are unique, $(-\lambda)v=-(\lambda v)$, $0v=0$ and $\lambda0=0$.</p>
+<p>Examples: $\{0\}$; $\mathbb K^N$; $M_{n,m}(\mathbb K)$; $\F(S;V)$ with pointwise operations (zero = constant function $0_V$); the sequence space $s(V)$ (zero = constant zero sequence).</p></div>
+<div class="box def"><span class="tag">Linear maps, dual, subspaces</span>
+<p>$T$ is <b>linear</b> if $T(u+\lambda v)=Tu+\lambda Tv$. A bijective linear map is a <b>linear isomorphism</b>. The <b>dual</b> $V^{\text{dual}}$ is the set of linear maps $V\to\mathbb K$. Every $\phi\in(\R^N)^{\text{dual}}$ has the form $\phi(x)=a\cdot x$ with $a_i=\phi(e_i)$ (where $e_i$ are the standard basis vectors).</p>
+<p>A <b>(linear) subspace</b> $U$ satisfies (VSS.1) $0\in U$ (or just $U\ne\emptyset$) and (VSS.2) $u+\lambda u'\in U$. A subspace is itself a vector space. The most important "mother space" is $\F(S;V)$.</p>
+<p>$M_A:x\mapsto Ax$ is linear, and $A\mapsto M_A$ is a linear isomorphism $M_{n,m}(\mathbb K)\to L(\mathbb K^m;\mathbb K^n)$. Evaluation maps $f\mapsto f(s_0)$ are linear. $\operatorname{Ker}T=T^{-1}(\{0\})$ and $\operatorname{Ran}T=T(U)$ are subspaces.</p></div>
+<div class="box def"><span class="tag">Norm</span>
+<p>A <span class="kw">norm</span> on $V$ (over $\R$ or $\C$) is $\|\cdot\|:V\to[0,\infty[$ with</p>
+<p>(N1) $\|v\|=0\Rightarrow v=0$ <b>(Definiteness)</b>;</p>
+<p>(N2) $\|\lambda v\|=|\lambda|\|v\|$ <b>(Homogeneity)</b>;</p>
+<p>(N3) $\|u+v\|\le\|u\|+\|v\|$ <b>(Triangle inequality)</b>.</p>
+<p>(N2) gives $\|0\|=0$. Examples: $\|x\|_1=\sum|x_i|$; $\|x\|_2$; $\|x\|_\infty=\max|x_i|$; $\|f\|_1=\int_J|f|$ on $C(J;\R)$ (<b>not quite</b> a norm on $\mathcal R(J;\R)$, because (N1) fails); $\|f\|_{\sup}=\sup_J|f|$. Also $\|f\|_1\le|J|\,\|f\|_{\sup}$.</p></div>
+<div class="box def"><span class="tag">Inner product</span>
+<p>$\langle\cdot,\cdot\rangle:V\times V\to\mathbb F$ with (IP.1) $\langle v,v\rangle>0$ for $v\ne0$; (IP.2) $\langle v,u\rangle=\overline{\langle u,v\rangle}$; (IP.3) linear in the second slot.</p>
+<p>Examples: $\sum\bar u_iv_i$ on $\mathbb F^N$; $\int_Jfg$ on $C(J;\R)$.</p>
+<p><b>Cauchy–Schwarz</b>: $|\langle u,v\rangle|^2\le\langle u,u\rangle\langle v,v\rangle$, with equality iff $u,v$ are linearly dependent.</p>
+<p>$\|v\|=\sqrt{\langle v,v\rangle}$ is an <b>inner product norm</b>. $\|\cdot\|_{\sup}$ is <b>not</b> one; see the in-text questions below.</p></div>
+
+<h3 id="s2-cts">2.4 Continuity and boundedness</h3>
+<div class="box def"><span class="tag">Definitions (for $f:A\to\R$, $A\subset\R$)</span>
+<ul>
+<li><b>Bounded</b>: $\operatorname{Ran}f$ is bounded. Then $\|f\|_{\sup}=\sup|f|$ exists, by LUB.</li>
+<li><b>Continuous at $p$</b>: $\forall\eps>0\ \exists\delta>0\ \forall x\in A:\ |x-p|&lt;\delta\Rightarrow|f(x)-f(p)|&lt;\eps$.</li>
+<li><b>Not continuous at $p$</b>: $\exists\eps>0\ \forall\delta>0\ \exists x\in A:\ |x-p|&lt;\delta$ but $|f(x)-f(p)|\ge\eps$.</li>
+<li><b>Sequentially continuous at $p$</b>: $a_n\to p\Rightarrow f(a_n)\to f(p)$.</li>
+<li><b>Continuous</b>: $\forall\eps\ \forall x\ \exists\delta\ \forall y$ … (δ may depend on $x$).</li>
+<li><b>Uniformly continuous</b>: $\forall\eps\ \exists\delta\ \forall x,y$ … (one δ for all points).</li>
+<li><b>Lipschitz</b>: $\exists M\ge0\ \forall x,y:\ |f(x)-f(y)|\le M|x-y|$.</li>
+</ul>
+<p><b>Lipschitz ⇒ uniformly continuous ⇒ continuous.</b> $C_{\text{Lip}}(A;\R)\subset C(A;\R)\subset\F(A;\R)$ and $\F_b(A;\R)\subset\F(A;\R)$, all subspaces.</p>
+<p>Examples: $1/x$ on $]0,1]$ is <b>not uniformly continuous</b>: the points $\frac1{n+1},\frac1n$ are $\frac1{n(n+1)}$ apart, but their images are $1$ apart. $1/x$ on $[1,\infty[$ is <b>Lipschitz</b>: $|\frac1x-\frac1y|=\frac{|y-x|}{xy}\le|y-x|$.</p></div>
+<div class="box thm"><span class="tag">Theorem (Uniform Continuity Theorem)</span>
+<p>If $f:J\to\R$ is continuous and $J$ is <b>closed and bounded</b>, then (a) $f$ is uniformly continuous, (b) $f$ is bounded, and (c) $f$ attains a maximum and a minimum. In particular $C(J;\R)\subset\F_b(J;\R)$.</p>
+<div class="prf"><p>(a) Suppose not. Then there is $\eps>0$ and points with $|x_n-y_n|&lt;1/n$ but $|f(x_n)-f(y_n)|\ge\eps$. By <b>BWT</b>, $x_{n_k}\to p\in J$, and then $y_{n_k}\to p$ too. By sequential continuity $f(x_{n_k})-f(y_{n_k})\to0$, a contradiction.</p>
+<p>(b) If unbounded, pick $|f(x_n)|\ge n$. By BWT $x_{n_k}\to p$, and $f(x_{n_k})\to f(p)$ contradicts $|f(x_{n_k})|\ge n_k\to\infty$.</p>
+<p>(c) Let $u=\sup f(J)$. By Approximation of suprema by sequences, $f(x_n)\to u$. By BWT $x_{n_k}\to p\in J$, so $f(p)=u$. For the min, apply this to $-f$. ∎</p></div></div>
+<div class="box thm"><span class="tag">Intermediate Value Theorem (IVT)</span>
+<p>If $f:[a,b]\to\R$ is continuous and $p$ lies between $f(a)$ and $f(b)$, then $f(t)=p$ for some $t\in[a,b]$.</p>
+<div class="prf">WLOG $f(a)&lt;p&lt;f(b)$ (otherwise use $-f$, or a trivial endpoint case). Let $t=\inf A$ where $A=\{x\in J:f(x)\ge p\}$. A sequence in $A$ converges to $t$, so $t\in J$ (closed) and $f(t)\ge p$ by continuity; in particular $t>a$. If $f(t)>p$, continuity gives $\delta&lt;t-a$ with $f>p$ on $]t-\delta,t+\delta[\cap J$. Then $t-\delta/2\in A$, contradicting $t=\inf A$. So $f(t)=p$. ∎</div>
+<p><b>Corollary.</b> The range of a continuous $f$ on $[a,b]$ is a closed bounded interval $[\min f,\max f]$.</p></div>
+
+<h3 id="s2-int">2.5 Integration</h3>
+<div class="box thm"><span class="tag">Facts about Riemann integration on $J=[a,b]$</span>
+<p>$C(J;\R)\subset\mathcal R(J)\subset\F_b(J;\R)$, all subspaces of $\F(J;\R)$.</p>
+<ul>
+<li><b>Linearity</b>: $\int(\lambda f+\mu g)=\lambda\int f+\mu\int g$.</li>
+<li><b>Order preservation</b>: $f\le g\Rightarrow\int f\le\int g$.</li>
+<li><b>Fundamental integration inequalities</b>: $|\int f|\le\int|f|\le|J|\,\|f\|_{\sup}$.</li>
+</ul>
+<p><b>FTC I</b>: if $F'\in C(J;\R)$ then $\int_s^tF'=F(t)-F(s)$. <b>FTC II</b>: if $f\in C(J;\R)$ then $F(t)=\int_a^tf$ is differentiable with $F'=f$.</p>
+<p>For a <b>nondegenerate</b> $J$: $f\in C(J;\R)$ and $\int|f|=0\Rightarrow f=0$ (Exercise 2.10).</p></div>
+
+<h3 id="s2-ex">Exercises for Section 2, with full solutions</h3>
+<div class="box ex"><span class="tag">Exercise 2.1 (Max and min for subsets of ℤ)</span> <span class="marks">10 + 5 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) Let $A\subset\Z$ be nonempty with $a\ge p\in\Z$ for all $a\in A$. Set $A'=\{a-p+1:a\in A\}$. Then $A'\subset\N$ (since $a-p+1\ge1$) and $A'\ne\emptyset$. By <b>well-ordering of ℕ</b>, $A'$ has a minimum $m=a_0-p+1$ for some $a_0\in A$. For any $a\in A$, $a-p+1\ge m$ gives $a\ge a_0$. So $a_0=\min A$.</p>
+<p>(b) If $A$ is bounded above by $q$, then $-A$ is nonempty and bounded below by $-q$, so $x=\min(-A)$ exists by (a). Then $-x\in A$, and for every $a\in A$, $-a\ge x$, i.e. $a\le-x$. So $\max A=-x=-\min(-A)$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 2.2 (Boundedness by modulus)</span> <span class="marks">10 marks</span>
+<p>TFAE: (i) $A$ is bounded above and below; (ii) $\exists M\ \forall a\in A:\ |a|\le M$; (iii) $A$ is bounded.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(i)⇒(ii): if $l\le a\le u$ for all $a$, then $|a|\le\max\{|l|,|u|\}=:M$.</p>
+<p>(ii)⇒(iii): $|b-a|\le|a|+|b|\le2M=:D$.</p>
+<p>(iii)⇒(i): if $A=\emptyset$, every real number is a bound. Otherwise fix $a_0\in A$. For all $a$, $|a-a_0|\le D$, so $a_0-D\le a\le a_0+D$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 2.3 (Approximation of suprema)</span> <span class="marks">5 marks</span>
+<details><summary>Solution</summary><div class="inner"><p>Let $x=\sup A$ and $\eps>0$. Since $x-\eps&lt;x$ and $x$ is the <em>least</em> upper bound, $x-\eps$ is not an upper bound. So there is $a\in A$ with $a>x-\eps$. Also $a\le x$, because $x$ is an upper bound. Hence $a\in\,]x-\eps,x]\cap A$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 2.4 (Halving the work: infima)</span> <span class="marks">5 + 5 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) $x$ is a lower bound for $A$ ⟺ $\forall a:\ x\le a$ ⟺ $\forall a:\ -a\le-x$ ⟺ $-x$ is an upper bound for $-A$.</p>
+<p>(b) If $A$ (nonempty) is bounded below by $x$, then $-A$ is nonempty and bounded above by $-x$. By <b>LUB</b>, $s=\sup(-A)$ exists. By (a), $-s$ is a lower bound for $A$. If $l$ is any lower bound for $A$, then $-l$ is an upper bound for $-A$, so $s\le-l$, i.e. $l\le-s$. Hence $-s$ is the greatest lower bound: $\inf A=-\sup(-A)$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 2.5 (Order density of ℝ∖ℚ)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p>Use one positive irrational, $\sqrt2$. Let $x&lt;y$. Then $x/\sqrt2&lt;y/\sqrt2$, so by order density of $\Q$ there is $q\in\Q$ with $x/\sqrt2&lt;q&lt;y/\sqrt2$. If $q=0$, use density again to replace $q$ by a rational $q'\in\,]0,y/\sqrt2[$; this interval is nonempty since $y>0$ in that case. So we may take $q\ne0$. Then $z=q\sqrt2$ is irrational (if it were rational, $\sqrt2=z/q$ would be too), and $x&lt;z&lt;y$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 2.6 ($\sup\Q\cap[0,2\pi]=2\pi$)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner"><p>Let $S=\Q\cap[0,2\pi]$. It is nonempty ($0\in S$) and $2\pi$ is an upper bound. Suppose $u&lt;2\pi$ were an upper bound. Let $u'=\max\{u,0\}&lt;2\pi$. By order density there is $q\in\Q$ with $u'&lt;q&lt;2\pi$. Then $q\in S$ and $q>u$, a contradiction. So $2\pi$ is the least upper bound. (It is not a maximum, since $2\pi\notin\Q$.) ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 2.7 (Uniqueness of limits)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner"><p>Suppose $x_n\to a$, $x_n\to b$ and $a\ne b$. Let $\eps=|a-b|/2>0$. There is $N_1$ with $|x_n-a|&lt;\eps$ for $n\ge N_1$, and $N_2$ with $|x_n-b|&lt;\eps$ for $n\ge N_2$. For $n=\max\{N_1,N_2\}$: $|a-b|\le|a-x_n|+|x_n-b|&lt;2\eps=|a-b|$, a contradiction. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 2.8 (Area of unit disc)</span> <span class="marks">20 marks</span>
+<p>$a_n=$ area of the regular $n$-gon inscribed in the unit disc. Find $\sup a_n$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>$D_n$ splits into $n$ congruent isosceles triangles with two sides of length $1$ and apex angle $2\pi/n$. Each has area $\frac12\sin\frac{2\pi}n$, so
+$$a_n=\frac n2\sin\frac{2\pi}n=\pi\cdot\frac{\sin t_n}{t_n},\qquad t_n=\frac{2\pi}n.$$</p>
+<p><b>Monotone.</b> Let $g(t)=\frac{\sin t}t$ on $]0,\pi]$. Then $g'(t)=\frac{t\cos t-\sin t}{t^2}&lt;0$: on $]0,\pi/2[$ because $\tan t>t$, and on $[\pi/2,\pi]$ because $\cos t\le0&lt;\sin t$ (at $t=\pi$ the numerator is $-\pi&lt;0$). So $g$ is decreasing. Since $t_n$ decreases in $n$, $a_n$ increases. It is bounded by $4$ (as $D\subset[-1,1]^2$). By the <b>bounded monotone</b> theorem, $(a_n)$ converges and $\lim a_n=\sup a_n$.</p>
+<p><b>Limit.</b> By L'Hôpital's rule, $\lim_{t\to0}\frac{\sin t}t=\lim\frac{\cos t}1=1$. Since $t_n\to0$, $a_n\to\pi$.</p>
+<p>Hence $\sup a_n=\pi$, which is the area of the disc. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 2.9 (Continuity ≡ sequential continuity, in ℝ)</span> <span class="marks">20 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p><b>(a)⇒(b)</b>: let $a_n\to p$ and $\eps>0$. Choose $\delta$ from continuity, then $N$ with $|a_n-p|&lt;\delta$ for $n\ge N$. Then $|f(a_n)-f(p)|&lt;\eps$ for $n\ge N$.</p>
+<p><b>(b)⇒(a)</b> by the contrapositive: if $f$ is not continuous at $p$, there is $\eps_0>0$ such that for each $\delta=1/n$ there is $x_n\in A$ with $|x_n-p|&lt;1/n$ but $|f(x_n)-f(p)|\ge\eps_0$. Then $x_n\to p$ (Sandwich) but $f(x_n)\not\to f(p)$. So $f$ is not sequentially continuous. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 2.10 (Continuous $f$ with $\int|f|=0$ is zero)</span> <span class="marks">5 + 10 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) On $J=[a,b]$ with $a&lt;b$, take $f=\mathbf 1_{\{a\}}$. It is Riemann integrable (one discontinuity) with $\int|f|=0$, but $f\ne0$.</p>
+<p>(b) This is the same argument as Exercise 0.2. Suppose $f(p)\ne0$ and let $c=|f(p)|$. Continuity gives $\delta>0$ with $|f|>c/2$ on $[p-\delta,p+\delta]\cap J$, an interval of positive length $\ell$ because $J$ is nondegenerate. By order preservation, $\int_J|f|\ge\frac c2\ell>0$, a contradiction. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">In-text questions (linear algebra and analysis)</span>
+<details><summary>Answers</summary><div class="inner">
+<ul>
+<li><b>Inverse of a bijective linear map is linear</b>: given $u,v$, let $a=T^{-1}u$ and $b=T^{-1}v$. Then $T(a+\lambda b)=u+\lambda v$, so $T^{-1}(u+\lambda v)=a+\lambda b=T^{-1}u+\lambda T^{-1}v$.</li>
+<li><b>Which constant maps are linear?</b> Only the zero map, since linearity forces $T0=0$.</li>
+<li><b>Translation $T_x$ is linear</b> iff $x=0$, since $T_x(0)=x$.</li>
+<li><b>Dilation $D_\lambda$</b> is always linear.</li>
+<li><b>$L(U;V)$ is a subspace of $\F(U;V)$</b>: the zero map is linear, and if $S,T$ are linear then $(S+\lambda T)(u+\mu v)=(S+\lambda T)u+\mu(S+\lambda T)v$.</li>
+<li><b>Dual formula</b>: $a_i=\phi(e_i)$, since $\phi(x)=\phi(\sum x_ie_i)=\sum x_i\phi(e_i)$.</li>
+<li><b>$D:p\mapsto p'$ on $P(\R)$</b>: $\operatorname{Ker}D$ is the constant polynomials. $\operatorname{Ran}D=P(\R)$, since every polynomial has a polynomial antiderivative.</li>
+<li><b>Range of $\rho:f\mapsto\int_Jf$</b>: all of $\R$ when $J$ is nondegenerate, since $\int_Jc=c|J|$. It is $\{0\}$ if $J$ is degenerate.</li>
+<li><b>$\|f\|_1\le|J|\|f\|_{\sup}$</b>: $|f|\le\|f\|_{\sup}$ pointwise, so integrate (order preservation).</li>
+<li><b>Why is $\|\cdot\|_{\sup}$ not an inner product norm?</b> Inner product norms satisfy the <b>parallelogram law</b> $\|f+g\|^2+\|f-g\|^2=2\|f\|^2+2\|g\|^2$. On $[0,1]$ with $f=1$ and $g(x)=x$: the left side is $2^2+1^2=5$, but the right side is $2+2=4$.</li>
+<li><b>Sequences in closed intervals</b>: if $x_n\ge a$ for all $n$ and $x_n\to p$, then $p\ge a$. If instead $p&lt;a$, take $\eps=a-p$; some $x_n$ has $|x_n-p|&lt;\eps$, giving $x_n&lt;a$, a contradiction.</li>
+</ul></div></details></div>

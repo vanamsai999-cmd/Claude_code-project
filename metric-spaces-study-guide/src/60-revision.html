@@ -1,0 +1,91 @@
+
+<h2 class="sec" id="traps">Trap questions: true or false?</h2>
+<p class="lead">Examiners like these. Decide first, then open each one to check. Every "false" comes with a counterexample, which is what an answer needs.</p>
+
+<details class="card"><summary>1. Every subset of a metric space is either open or closed.</summary><div class="inner"><b>False.</b> $[0,1[$ and $\Q$ in $\R$ are neither. Some sets are both: $\emptyset$, $E$, and every subset of a discrete space.</div></details>
+<details class="card"><summary>2. An arbitrary intersection of open sets is open.</summary><div class="inner"><b>False.</b> $\bigcap_n]-1/n,1/n[=\{0\}$. Only <em>finite</em> intersections of open sets are open; <em>arbitrary unions</em> are open.</div></details>
+<details class="card"><summary>3. An arbitrary union of closed sets is closed.</summary><div class="inner"><b>False.</b> $\bigcup_n[1/n,1]=\,]0,1]$. Only <em>finite</em> unions of closed sets are closed; <em>arbitrary intersections</em> are closed.</div></details>
+<details class="card"><summary>4. The closure of the open ball $B_r(a)$ is always the closed ball $B_r[a]$.</summary><div class="inner"><b>False.</b> In a discrete space, $\overline{B_1(a)}=\{a\}$ but $B_1[a]=E$. Only $\overline{B_r(a)}\subset B_r[a]$ holds in general. Equality holds in normed spaces.</div></details>
+<details class="card"><summary>5. $\operatorname{diam}B_r(a)=2r$ in every metric space.</summary><div class="inner"><b>False.</b> Only $\le2r$. In a discrete space $\operatorname{diam}B_{1/2}(a)=0$.</div></details>
+<details class="card"><summary>6. $f(A\cap B)=f(A)\cap f(B)$ for every function.</summary><div class="inner"><b>False.</b> Only ⊂ holds. Counterexample: a constant function with $A=\{0\}$, $B=\{1\}$. Equality holds when $f$ is injective. Inverse images always preserve ∩, ∪ and complements.</div></details>
+<details class="card"><summary>7. Writing $f^{-1}(C)$ requires $f$ to be bijective.</summary><div class="inner"><b>False.</b> The inverse image $\{s:f(s)\in C\}$ is defined for every function.</div></details>
+<details class="card"><summary>8. A symmetric, transitive relation is reflexive.</summary><div class="inner"><b>False.</b> The empty relation on a nonempty set, or $\{(1,1)\}$ on $\{1,2\}$. The "proof" assumes each $x$ is related to something.</div></details>
+<details class="card"><summary>9. A continuous bijection between metric spaces is a homeomorphism.</summary><div class="inner"><b>False.</b> $\mathrm{id}:(\R,d_{\text{disc}})\to(\R,|\cdot|)$ is a continuous bijection, but its inverse is not continuous.</div></details>
+<details class="card"><summary>10. Continuous on $]0,1]$ implies uniformly continuous.</summary><div class="inner"><b>False.</b> $1/x$ is a counterexample. It is true on <b>closed and bounded</b> intervals (Uniform Continuity Theorem).</div></details>
+<details class="card"><summary>11. Topologically equivalent metrics have the same Cauchy sequences.</summary><div class="inner"><b>False.</b> $|\tan^{-1}y-\tan^{-1}x|$ vs $|y-x|$ on $\R$: $x_n=n$ is Cauchy for the first only. Lipschitz equivalent metrics do have the same Cauchy sequences.</div></details>
+<details class="card"><summary>12. Topologically equivalent metrics have the same bounded sets.</summary><div class="inner"><b>False.</b> $d$ vs $\min\{d,1\}$ on $\R$.</div></details>
+<details class="card"><summary>13. Every Cauchy sequence in a metric space converges.</summary><div class="inner"><b>False in general.</b> In $(\,]0,1],|\cdot|)$, the sequence $1/n$ is Cauchy but has no limit <em>in the space</em>. It is true in $\R$ (completeness of $\R$).</div></details>
+<details class="card"><summary>14. Every metric on a vector space comes from a norm.</summary><div class="inner"><b>False.</b> The discrete metric and the $\tan^{-1}$ metric are bounded, but a norm-metric on a nonzero space is unbounded.</div></details>
+<details class="card"><summary>15. If $D$ and $A$ are dense in $E$, then $D\cap A$ is dense.</summary><div class="inner"><b>False.</b> $\Q$ and $\R\setminus\Q$. It is true if one of them is <b>open</b> and dense.</div></details>
+<details class="card"><summary>16. A metric subspace inherits the "shape" of the space, like linear subspaces do.</summary><div class="inner"><b>False.</b> $\{e_1,\dots,e_n\}\subset\R^n$ is the discrete metric times $\sqrt2$.</div></details>
+<details class="card"><summary>17. "$[0,1[$ is open" is a meaningful statement on its own.</summary><div class="inner"><b>Not without saying "in which space".</b> It is open (and closed) in itself, and neither in $\R$.</div></details>
+<details class="card"><summary>18. A countable union of countable sets is countable.</summary><div class="inner"><b>True</b>, using countable choice to pick the surjections $\psi_n$.</div></details>
+<details class="card"><summary>19. $\Pow(\N)$ is countable.</summary><div class="inner"><b>False</b> (Cantor). But $\Pow_{00}(\N)$, the set of finite subsets, <b>is</b> countable.</div></details>
+<details class="card"><summary>20. The LUB Principle is a theorem proved from the field axioms.</summary><div class="inner"><b>False.</b> It is an <b>axiom</b> (completeness axiom). The Archimedean property is <em>derived</em> from it. ($\Q$ is an ordered field without LUB.)</div></details>
+<details class="card"><summary>21. Lipschitz ⇒ uniformly continuous ⇒ continuous, and both converses fail.</summary><div class="inner"><b>True.</b> $\sqrt x$ on $[0,1]$ is uniformly continuous (UCT) but not Lipschitz. $1/x$ on $]0,1]$ is continuous but not uniformly continuous.</div></details>
+<details class="card"><summary>22. If $x_n&lt;y_n$ for all $n$ and both converge, then $\lim x_n&lt;\lim y_n$.</summary><div class="inner"><b>False.</b> Only ≤ survives: $0&lt;1/n$, but both limits are 0.</div></details>
+<details class="card"><summary>23. An isometry need not be injective.</summary><div class="inner"><b>False.</b> Isometries are always injective, since $d(x,y)=d(f(x),f(y))=0\Rightarrow x=y$. They need not be surjective.</div></details>
+<details class="card"><summary>24. Continuous maps send open sets to open sets.</summary><div class="inner"><b>False.</b> A constant map. It is <em>preimages</em> of open sets that are open.</div></details>
+<details class="card"><summary>25. $\operatorname{Int}\Q=\emptyset$, $\overline\Q=\R$ and $\partial\Q=\R$ in $\R$.</summary><div class="inner"><b>True.</b> This uses density of both $\R\setminus\Q$ and $\Q$.</div></details>
+
+<h2 class="sec" id="cards">Flashcards: definitions and statements to know word for word</h2>
+<p class="lead">Say the answer out loud before you open the card. If you hesitate, review that card again.</p>
+<div class="grid2">
+<details class="card"><summary>Metric (all axioms, named)</summary><div class="inner">$d:S\times S\to[0,\infty[$ with (MS1) $d(x,y)=0\iff x=y$; (MS2) Symmetry; (MS3) Triangle Inequality $d(x,z)\le d(x,y)+d(y,z)$.</div></details>
+<details class="card"><summary>Norm (N1)–(N3)</summary><div class="inner">Definiteness $\|v\|=0\Rightarrow v=0$; Homogeneity $\|\lambda v\|=|\lambda|\|v\|$; Triangle inequality.</div></details>
+<details class="card"><summary>Injective / surjective</summary><div class="inner">$f(s_1)=f(s_2)\Rightarrow s_1=s_2$ / $\forall t\ \exists s:\ f(s)=t$ ($\operatorname{Ran}f=T$).</div></details>
+<details class="card"><summary>Left / right inverse ⟷ ?</summary><div class="inner">Left inverse ⟺ injective (if $S\ne\emptyset$ or $T=\emptyset$). Right inverse ⟺ surjective (needs <b>AC</b>).</div></details>
+<details class="card"><summary>Axiom of Choice (two forms)</summary><div class="inner">A product of nonempty sets is nonempty. Equivalently, every family of nonempty subsets has a choice function.</div></details>
+<details class="card"><summary>Equivalence relation; partition</summary><div class="inner">Reflexive, symmetric, transitive. Partition: covers $S$, blocks nonempty, distinct blocks disjoint. The two notions correspond bijectively.</div></details>
+<details class="card"><summary>Canonical decomposition</summary><div class="inner">$f=i\circ\tilde f\circ q$: quotient (surjection), then $\tilde f:[s]\mapsto f(s)$ (bijection onto $\operatorname{Ran}f$), then inclusion (injection).</div></details>
+<details class="card"><summary>Countable</summary><div class="inner">There is an injection $S\to\N$. For $S\ne\emptyset$, equivalently a surjection $\N\to S$. Equivalently, finite or bijective to $\N$.</div></details>
+<details class="card"><summary>Cantor's Theorem</summary><div class="inner">No surjection $S\to\Pow(S)$. Proof via $D=\{s:s\notin\phi(s)\}$. Also no surjection $S\to\F(S;\{0,1\})$.</div></details>
+<details class="card"><summary>Schröder–Bernstein</summary><div class="inner">Injections $S\to T$ and $T\to S$ ⇒ a bijection $S\to T$.</div></details>
+<details class="card"><summary>LUB Principle</summary><div class="inner">A nonempty subset of $\R$ that is bounded above has a least upper bound. It is an <b>axiom</b>.</div></details>
+<details class="card"><summary>Approximation of suprema</summary><div class="inner">$\forall\eps>0\ \exists a\in A:\ \sup A-\eps&lt;a\le\sup A$. Sequence version: some increasing $(a_n)\subset A$ has $a_n\to\sup A$.</div></details>
+<details class="card"><summary>Archimedean property (4 forms)</summary><div class="inner">$\Q$ is order dense; $\forall x>0\ \exists n:\ 1/n&lt;x$; $\forall x>0,y\ \exists n:\ nx\ge y$; $\N$ is unbounded.</div></details>
+<details class="card"><summary>Bolzano–Weierstrass</summary><div class="inner">Every sequence in a closed bounded interval $J$ has a subsequence converging to a point of $J$.</div></details>
+<details class="card"><summary>Completeness of ℝ</summary><div class="inner">Convergent ⟺ Cauchy ⟺ bounded with $\liminf=\limsup$.</div></details>
+<details class="card"><summary>Uniform Continuity Theorem</summary><div class="inner">Continuous on a closed bounded interval ⇒ uniformly continuous, bounded, attains max and min.</div></details>
+<details class="card"><summary>Lipschitz map; Lip f</summary><div class="inner">$d(f(x),f(y))\le M\,d(x,y)$; $\operatorname{Lip}f=\sup_{x\ne y}\frac{d(f(x),f(y))}{d(x,y)}$. Strict contraction: $\operatorname{Lip}f&lt;1$.</div></details>
+<details class="card"><summary>Isometry; isometric spaces</summary><div class="inner">Preserves distances exactly. Spaces are isometric if there is an isometric <b>bijection</b>.</div></details>
+<details class="card"><summary>Diameter; bounded set</summary><div class="inner">$\operatorname{diam}A=\sup d(x,y)$; bounded iff it is finite.</div></details>
+<details class="card"><summary>Open ball / closed ball / sphere</summary><div class="inner">$d(x,a)&lt;r$ / $\le r$ / $=r$.</div></details>
+<details class="card"><summary>Open set</summary><div class="inner">$\forall p\in U\ \exists r>0:\ B_r(p)\subset U$.</div></details>
+<details class="card"><summary>Point of closure (3 equivalent forms)</summary><div class="inner">Every ball meets $A$; a sequence in $A$ converges to $p$; $\operatorname{dist}_A(p)=0$.</div></details>
+<details class="card"><summary>Closed set (2 forms)</summary><div class="inner">$\overline A=A$. Equivalently, limits of convergent sequences in $A$ lie in $A$. Equivalently, the complement is open.</div></details>
+<details class="card"><summary>Interior; closure as extremal sets</summary><div class="inner">$\operatorname{Int}A$ is the largest open subset of $A$. $\overline A$ is the smallest closed superset.</div></details>
+<details class="card"><summary>Boundary</summary><div class="inner">$\partial A=\overline A\setminus\operatorname{Int}A=\overline A\cap\overline{A^\complement}$. It is closed.</div></details>
+<details class="card"><summary>Dense; separable</summary><div class="inner">$\overline D\supset A$. Separable: has a countable dense subset.</div></details>
+<details class="card"><summary>Global continuity</summary><div class="inner">$f$ continuous ⟺ preimage of every open set is open ⟺ preimage of every closed set is closed ⟺ sequentially continuous.</div></details>
+<details class="card"><summary>Homeomorphism (H1–H3)</summary><div class="inner">Continuous, bijective, continuous inverse.</div></details>
+<details class="card"><summary>Topological vs Lipschitz equivalence</summary><div class="inner">$\mathrm{id}_S$ is a homeomorphism vs bi-Lipschitz ($d_2\le Ld_1$, $d_1\le Kd_2$). The second implies the first, not conversely.</div></details>
+<details class="card"><summary>When is α∘d an equivalent metric?</summary><div class="inner">α definite, increasing, subadditive, continuous at 0. Examples: $cs$, $\min\{s,1\}$, $s/(1+s)$, $\tan^{-1}s$, $s^{1/p}$.</div></details>
+<details class="card"><summary>Open/closed sets of a subspace</summary><div class="inner">$X$ open (closed) in $\tilde A$ ⟺ $X=A\cap U$ with $U$ open (closed) in $E$.</div></details>
+<details class="card"><summary>Open subsets of ℝ</summary><div class="inner">Every open subset of $\R$ is a countable union of open intervals with rational endpoints.</div></details>
+</div>
+
+<h2 class="sec" id="gloss">Glossary &amp; notation</h2>
+<table>
+<tr><th>Symbol / term</th><th>Meaning</th></tr>
+<tr><td>$\N,\ \Z_+$</td><td>$\{1,2,\dots\}$, $\{0,1,2,\dots\}$</td></tr>
+<tr><td>$]a,b[,\ [a,b[$</td><td>open interval, half-open interval</td></tr>
+<tr><td>$\F(S;T)$, $T^S$</td><td>all functions $S\to T$; identified with the product $\prod_{s\in S}T$</td></tr>
+<tr><td>$\Pow(S)$, $\Pow_{00}(S)$</td><td>power set; finite subsets</td></tr>
+<tr><td>$A\Delta B$</td><td>symmetric difference</td></tr>
+<tr><td>$\operatorname{Ran}f$, $f(A)$, $f^{-1}(C)$</td><td>range, direct image, inverse image</td></tr>
+<tr><td>$f|_A$, $f|^B$</td><td>restriction, co-restriction</td></tr>
+<tr><td>$\mathbf 1_A$, $\iota_{A\to S}$, $\mathrm{id}_S$</td><td>indicator, inclusion, identity</td></tr>
+<tr><td>$S/{\sim}$, $[a]_\sim$, $q$</td><td>quotient set, equivalence class, quotient map</td></tr>
+<tr><td>$U_A$</td><td>set of upper bounds of $A$</td></tr>
+<tr><td>$C(A;\R)$, $C_{\text{Lip}}$, $\F_b$, $\mathcal R(J)$, $C^1$</td><td>continuous, Lipschitz, bounded, Riemann integrable, continuously differentiable functions</td></tr>
+<tr><td>$L(U;V)$, $V^{\text{dual}}$</td><td>linear maps; dual space</td></tr>
+<tr><td>$\ell^p(N)$, $\ell^\infty(S;E)$</td><td>$(\R^N,d_p)$; $(\F_b(S;E),d_{\sup})$</td></tr>
+<tr><td>$B_r(a)$, $B_r[a]$, $S_r(a)$</td><td>open ball, closed ball, sphere</td></tr>
+<tr><td>$\operatorname{diam}$, $\operatorname{dist}_A$, $\operatorname{Lip}$</td><td>diameter, distance from $A$, Lipschitz constant</td></tr>
+<tr><td>$\mathcal O(E)$, $\mathcal C(E)$</td><td>open sets, closed sets</td></tr>
+<tr><td>$\operatorname{Int}A$, $\overline A$, $\partial A$, $A^\complement$</td><td>interior, closure, boundary, complement</td></tr>
+<tr><td>$\tilde A$, $\tilde B_r(a)$</td><td>metric subspace and its balls</td></tr>
+<tr><td>TFAE, WLOG, ∎</td><td>the following are equivalent; without loss of generality; end of proof</td></tr>
+</table>
+<p class="small" style="margin-top:40px">Built from the MATH6310 lecture notes, Sections 0–4 (edition 07.ix.2026). Where these notes add an explanation, example or solution, it is written to be consistent with the notes' definitions and conventions.</p>

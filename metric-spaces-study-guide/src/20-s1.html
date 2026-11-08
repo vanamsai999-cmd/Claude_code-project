@@ -1,0 +1,291 @@
+
+<h2 class="sec" id="s1">Section 1: Sets, functions &amp; countability</h2>
+<p class="lead">The language of the whole course. Expect exam questions on images and inverse images, injectivity and surjectivity, equivalence relations, countability and Cantor's theorem.</p>
+
+<h3 id="s1-sets">1.1 Sets and the Axiom of Choice</h3>
+<div class="box def"><span class="tag">Definitions</span>
+<ul>
+<li><b>Empty set</b> $\emptyset$ (a letter from the Danish alphabet, not the Greek $\phi$).</li>
+<li>$A\subset S$ (<b>subset</b>): $x\in A\Rightarrow x\in S$. $A\subsetneq S$ (<b>proper subset</b>): $A\subset S$ and $A\ne S$.</li>
+<li><b>Set difference</b> $A\setminus B:=\{s\in A:s\notin B\}=A\cap(S\setminus B)$. Here $S\setminus B$ is the <b>complement</b> of $B$ in the universe $S$, also written $B^\complement$.</li>
+<li><b>Power set</b> $\Pow(S)=\{A:A\subset S\}$.</li>
+<li>For a family $\mathcal C$ of subsets of $S$: $\bigcup\mathcal C:=\{s\in S:\exists C\in\mathcal C\ s\in C\}$ and $\bigcap\mathcal C:=\{s\in S:\forall C\in\mathcal C\ s\in C\}$.</li>
+</ul></div>
+<div class="box thm"><span class="tag">Distributive laws &amp; de Morgan's laws</span>
+$$A\cap\bigcup\mathcal C=\bigcup_{C\in\mathcal C}(A\cap C),\qquad A\cup\bigcap\mathcal C=\bigcap_{C\in\mathcal C}(A\cup C),$$
+$$A\setminus\bigcup\mathcal C=\bigcap_{C\in\mathcal C}(A\setminus C),\qquad A\setminus\bigcap\mathcal C=\bigcup_{C\in\mathcal C}(A\setminus C).$$
+<p>Memory aid: taking a complement swaps $\cup$ and $\cap$.</p></div>
+<div class="box warn"><span class="tag">Tricky case: $\mathcal C=\emptyset$</span>$\bigcup\emptyset=\emptyset$ (no set contributes any element), but by convention $\bigcap\emptyset=S$ (every $s$ vacuously belongs to "all" members). This is why the <b>universe</b> must be known.</div>
+
+<div class="box def"><span class="tag">Cartesian products</span>
+<p>$S\times T=\{(s,t):s\in S,t\in T\}$, and $S\times T=\emptyset\iff S=\emptyset$ or $T=\emptyset$. $S_1\times\dots\times S_N$ consists of $N$-tuples, and $S^N$ is the case where all factors are $S$.</p>
+<p>For an <b>indexed family</b> $(S_\lambda)_{\lambda\in\Lambda}$: $\prod_{\lambda\in\Lambda}S_\lambda$ is the set of all families $(s_\lambda)_{\lambda\in\Lambda}$ with $s_\lambda\in S_\lambda$ (generalised sequences). Equality is componentwise: $a=b\iff\forall\lambda\ a_\lambda=b_\lambda$. If all $S_\lambda=S$, the product is written $S^\Lambda$. So $\R^\N$ is the set of all real sequences.</p>
+<p><b>Strange cases.</b> If $\Lambda=\emptyset$, the product has exactly <b>one</b> element (the empty family). If some $S_\mu=\emptyset$, the product is <b>empty</b> ("$s_\mu$ has nowhere to go").</p></div>
+<div class="box thm"><span class="tag">Axiom of Choice (AC)</span>
+<p>If $(S_\lambda)_{\lambda\in\Lambda}$ is a family of nonempty sets, then $\prod_\lambda S_\lambda\ne\emptyset$.</p>
+<p><b>Equivalent form (choice function):</b> for every indexed family $\{C_\lambda\}$ of nonempty subsets of $S$ there is $f\in\F(\Lambda;S)$ with $f(\lambda)\in C_\lambda$ for all $\lambda$.</p>
+<p>AC is <b>not deducible</b> from the other axioms of set theory, but it (or an equivalent) is used throughout modern mathematics.</p></div>
+
+<h3 id="s1-fun">1.2 Functions, AC again &amp; images</h3>
+<div class="box def"><span class="tag">Function</span>
+<p>A function $f$ has <b>three ingredients</b>: a <b>domain</b> (source) $S$, a <b>codomain</b> (target) $T$, and an unambiguous rule assigning to each $s\in S$ a unique $f(s)\in T$. We write $f:S\to T,\ s\mapsto f(s)$, and $\F(S;T)$ for the set of all such functions. Two functions are equal when all three ingredients agree.</p>
+<p>Examples: $U\mapsto\dim U$ on the subspaces of $V$; the zero-set map $f\mapsto\{s:f(s)=0\}$; $\det:M_n(\R)\to\R$.</p></div>
+<div class="box def"><span class="tag">Basic classes of function</span>
+<ol>
+<li><b>Identity</b> $\mathrm{id}_S:s\mapsto s$.</li>
+<li><b>Inclusion</b> $\iota_{A\to S}:A\to S$, $a\mapsto a$.</li>
+<li><b>Indicator function</b> $\mathbf 1_A:S\to\R$, equal to $1$ on $A$ and $0$ off $A$.</li>
+<li><b>Constant function</b> equal to $t_0$.</li>
+<li><b>Canonical projection</b> $\prod_jS_j\to S_k$, $(s_j)\mapsto s_k$.</li>
+</ol>
+<p><b>Strange cases:</b> $\F(\emptyset;T)$ has exactly one element (the empty function, whose rule is vacuous). If $S\ne\emptyset$ then $\F(S;\emptyset)=\emptyset$. If $\#S=n$ and $\#T=m$ then $\#\F(S;T)=m^n$, consistent with $m^0=1$ and $0^n=0$ for $n\ne0$.</p></div>
+<div class="box def"><span class="tag">Range, composition, restriction, extension, co-restriction</span>
+<ul>
+<li><b>Range</b> (image of $S$ under $f$): $\operatorname{Ran}f=\{f(s):s\in S\}=\{t\in T:\exists s\ f(s)=t\}$. For example $\operatorname{Ran}\mathbf 1_A$ is $\{1\}$ if $A=S$, $\{0\}$ if $A=\emptyset$, and $\{0,1\}$ otherwise. $f$ is constant $t_0$ iff $\operatorname{Ran}f=\{t_0\}$.</li>
+<li><b>Composition</b> $(g\circ f)(s)=g(f(s))$. It is <b>associative</b>, but usually $f\circ g\ne g\circ f$ (e.g. $\sin(x^2)\ne(\sin x)^2$). Also $f\circ\mathrm{id}_S=f=\mathrm{id}_T\circ f$.</li>
+<li><b>Restriction</b> $f|_A=f\circ\iota_{A\to S}$. An <b>extension</b> of $g\in\F(A;T)$ is any $f$ with $f|_A=g$.</li>
+<li><b>Co-restriction</b>: if $B\supset\operatorname{Ran}f$, then $f|^B:S\to B$, $s\mapsto f(s)$, satisfies $\iota_{B\to T}\circ f|^B=f$.</li>
+</ul></div>
+<div class="box def"><span class="tag">Injective, surjective, bijective</span>
+<ul>
+<li><b>Injective</b>: $f(s_1)=f(s_2)\Rightarrow s_1=s_2$. Equivalently (by the contrapositive) $s_1\ne s_2\Rightarrow f(s_1)\ne f(s_2)$.</li>
+<li><b>Surjective</b>: $\operatorname{Ran}f=T$, i.e. $\forall t\in T\ \exists s\in S\ f(s)=t$.</li>
+<li><b>Bijective</b>: both.</li>
+</ul>
+<p>The codomain matters. $x\mapsto x^2$ is injective but not surjective as a map $\R_+\to\R$; surjective but not injective as $\R\to\R_+$; bijective as $\R_+\to\R_+$. Inclusions are injective. Canonical projections are surjective (if all factors are nonempty). Quotient maps are surjective.</p>
+<p><b>Example.</b> On $\N$, $f(n)=n+1$ is injective and $g(n)=n-1$ for $n\ge2$, $g(1)=1$ is surjective. Then $g\circ f=\mathrm{id}_\N$ is bijective, but $f\circ g$ is neither injective (since $(f\circ g)(1)=(f\circ g)(2)=2$) nor surjective (it never takes the value 1).</p></div>
+<div class="box thm"><span class="tag">Proposition (Uniqueness of inverses)</span>
+<p>If $g\circ f=\mathrm{id}_S$ and $f\circ h=\mathrm{id}_T$, then $g=h$.</p>
+<div class="prf">$g=g\circ\mathrm{id}_T=g\circ(f\circ h)=(g\circ f)\circ h=\mathrm{id}_S\circ h=h$, by associativity. ∎</div></div>
+<div class="box thm"><span class="tag">Proposition (Injectivity/surjectivity &amp; left/right invertibility)</span>
+<p>Let $f\in\F(S;T)$.</p>
+<p>(a)* $f$ is injective $\iff$ there is a <b>left inverse</b> $g$ ($g\circ f=\mathrm{id}_S$). [*Exclude the case $S=\emptyset\ne T$.]</p>
+<p>(b) $f$ is surjective $\iff$ there is a <b>right inverse</b> $h$ ($f\circ h=\mathrm{id}_T$).</p>
+<p>(c) $f$ is bijective $\iff$ there is an <b>inverse</b> $k$ ($k\circ f=\mathrm{id}_S$ and $f\circ k=\mathrm{id}_T$), written $f^{-1}$.</p>
+<div class="prf"><p>The "if" parts follow from Exercise 1.4. For the "only if" parts (with $S,T\ne\emptyset$):</p>
+<p>(a) Fix $s_0\in S$. Define $g(t)=s$ if $t=f(s)$, and $g(t)=s_0$ if $t\notin\operatorname{Ran}f$. This is <b>well-defined</b> because injectivity makes the $s$ with $f(s)=t$ unique. Then $g(f(s))=s$.</p>
+<p>(b) Each fibre $f^{-1}(\{t\})$ is nonempty. By the <b>Axiom of Choice</b> there is $h:T\to S$ with $h(t)\in f^{-1}(\{t\})$, so $f(h(t))=t$.</p>
+<p>(c) Combine (a), (b) and uniqueness of inverses. ∎</p></div>
+<p>Remarks: left and right inverses are in general <b>not unique</b>. Even this basic result needs AC, in part (b).</p></div>
+<div class="box thm"><span class="tag">Corollary (Injections entail surjections and vice versa)</span><p>Avoiding the case $S=\emptyset\ne T$: there is an injection $S\to T$ $\iff$ there is a surjection $T\to S$. (A left inverse of an injection is a surjection, and a right inverse of a surjection is an injection.)</p></div>
+
+<div class="box def"><span class="tag">Direct and inverse images</span>
+<p><b>Direct image</b> of $A\subset S$: $f(A)=\{f(s):s\in A\}$, sometimes written $f[A]$. It defines a set map $\Pow(S)\to\Pow(T)$. $f(S)=\operatorname{Ran}f$.</p>
+<p><b>Inverse image</b> (preimage) of $C\subset T$: $f^{-1}(C):=\{s\in S:f(s)\in C\}$, a set map $\Pow(T)\to\Pow(S)$.</p></div>
+<div class="box warn"><span class="tag">Pitfall: the notation $f^{-1}(C)$ does not mean $f$ is invertible</span>
+<p>Preimages exist for <em>every</em> function. Examples: $f^{-1}(\emptyset)=\emptyset$ and $f^{-1}(T)=S$. For $x\mapsto x^2$, $f^{-1}([1,4])=[-2,-1]\cup[1,2]$. For $f$ constant $t_0$, $f^{-1}(C)=S$ if $t_0\in C$ and $\emptyset$ otherwise. If $f$ is bijective with inverse $g$, then $f^{-1}(C)=g(C)$, so the two notations agree in that case.</p></div>
+<div class="box thm"><span class="tag">Images vs inverse images: the rules to know</span>
+<table>
+<tr><th>Direct images (Exercise 1.8)</th><th>Inverse images (Prop. + Exercise 1.9)</th></tr>
+<tr><td>$f(\bigcup\mathcal A)=\bigcup f(A)$ <b>(equality)</b></td><td>$f^{-1}(\bigcup\mathcal C)=\bigcup f^{-1}(C)$</td></tr>
+<tr><td>$f(\bigcap\mathcal A)\subset\bigcap f(A)$ <b>(only ⊂)</b></td><td>$f^{-1}(\bigcap\mathcal C)=\bigcap f^{-1}(C)$</td></tr>
+<tr><td>$f(A\setminus B)\supset f(A)\setminus f(B)$ <b>(only ⊃)</b></td><td>$f^{-1}(D\setminus C)=f^{-1}(D)\setminus f^{-1}(C)$; $f^{-1}(T\setminus C)=S\setminus f^{-1}(C)$</td></tr>
+</table>
+<p><b>Slogan: inverse images preserve every set operation. Direct images preserve only unions.</b> This is why continuity is defined through <em>inverse</em> images of open sets in Section 4.</p>
+<p>Counterexample showing $f(A\cap B)\subsetneq f(A)\cap f(B)$: $S=\{0,1\}$, $f$ constant, $A=\{0\}$, $B=\{1\}$. Then $f(A\cap B)=f(\emptyset)=\emptyset$, but $f(A)\cap f(B)=\operatorname{Ran}f\ne\emptyset$.</p>
+<div class="prf"><b>(Inverse image of intersection.)</b> $s\in f^{-1}(\bigcap\mathcal C)\iff f(s)\in\bigcap\mathcal C\iff\forall C\ f(s)\in C\iff\forall C\ s\in f^{-1}(C)\iff s\in\bigcap f^{-1}(C)$. ∎<br>
+<span class="small">This uses the fact that $A=B$ iff ($\forall s$: $s\in A\iff s\in B$).</span></div></div>
+
+<h3 id="s1-sb">Schröder–Bernstein theorem</h3>
+<div class="box thm"><span class="tag">Theorem (Schröder–Bernstein): you must know the statement</span>
+<p>If there is an injection $S\to T$ and an injection $T\to S$, then there is a <b>bijection</b> $S\to T$.</p>
+<p>The same conclusion holds with surjections both ways, or with an injection $S\to T$ together with a surjection $S\to T$.</p>
+<p class="small">The proof is <b>not examinable</b>. Idea: find $P\subset S$ with $h(T\setminus g(P))=S\setminus P$. Then map $P$ by $g$ and $S\setminus P$ by $h^{-1}$. Such a $P$ is a fixed point of the monotone map $\psi(A)=S\setminus h(T\setminus g(A))$ on $\Pow(S)$. The <b>Set Monotonicity Lemma</b> provides it: $P=\bigcap\{\psi(A):\psi(A)\subset A\}$ satisfies $\psi(P)=P$.</p></div>
+
+<h3 id="s1-eq">1.3 Equivalence relations &amp; partitions</h3>
+<div class="box def"><span class="tag">Definition</span>
+<p>A relation $\sim$ on a nonempty set $S$ is an <span class="kw">equivalence relation</span> if it is <b>reflexive</b> ($s\sim s$), <b>symmetric</b> ($s\sim t\Rightarrow t\sim s$) and <b>transitive</b> ($r\sim s\ \&amp;\ s\sim t\Rightarrow r\sim t$).</p>
+<p>The <b>equivalence class</b> is $[a]_\sim=\{s:s\sim a\}$. The <b>quotient set</b> is $S/{\sim}=\{[a]:a\in S\}$. The <b>quotient map</b> is $q:a\mapsto[a]$, and it is surjective. Key fact: $[a]=[b]\iff a\sim b$.</p>
+<p>Examples: <b>equality</b> ($[a]=\{a\}$); the <b>full relation</b> ($[a]=S$); congruence mod $p$ on $\Z$ ($n\equiv_pm$ iff $p\mid(m-n)$, with classes $p\Z+k$ and $\Z=\bigcup_{k=0}^{p-1}[k]_p$). The <b>empty relation</b> on a nonempty set is symmetric and transitive but <em>not reflexive</em>, so it is not an equivalence relation.</p></div>
+<div class="box def"><span class="tag">Partition</span><p>$\mathcal C\subset\Pow(S)$ is a <span class="kw">partition</span> of $S$ if (1) $\bigcup\mathcal C=S$, (2) every $C\in\mathcal C$ is nonempty, and (3) $C\ne D\Rightarrow C\cap D=\emptyset$ (distinct blocks are disjoint).</p></div>
+<div class="box thm"><span class="tag">Theorem (Partitions ≡ equivalence relations)</span>
+<p>(i) If $\sim$ is an equivalence relation, then $S/{\sim}$ is a partition. (ii) If $\mathcal C$ is a partition, then $s\sim_{\mathcal C}t:\iff\exists C\in\mathcal C:\ s,t\in C$ is an equivalence relation. (iii) These two procedures are mutually inverse.</p>
+<div class="prf"><p>(i) By reflexivity $s\in[s]$, so the classes are nonempty and cover $S$. Suppose $r\in[s]\cap[t]$ and $u\in[t]$. Then $r\sim s$, $r\sim t$, $u\sim t$. By symmetry $u\sim t$, $t\sim r$, $r\sim s$, so by transitivity $u\sim s$. Hence $[t]\subset[s]$. Swapping the roles of $s$ and $t$ (using $r\in[t]\cap[s]$) gives $[s]\subset[t]$. So distinct classes are disjoint.</p>
+<p>(ii) <b>Reflexive</b>: each $s$ lies in some $C$, because $\bigcup\mathcal C=S$. <b>Symmetric</b>: obvious. <b>Transitive</b>: if $r,s\in C$ and $s,t\in D$, then $s\in C\cap D\ne\emptyset$, so $C=D$ and hence $r,t\in C$. ∎</p></div></div>
+<div class="box thm"><span class="tag">Theorem (Canonical decomposition of a function)</span>
+<p>For $f\in\F(S;T)$: (a) $s_1\sim_fs_2\iff f(s_1)=f(s_2)$ is an equivalence relation. (b) $\tilde f:S/{\sim_f}\to I:=\operatorname{Ran}f$, $[s]\mapsto f(s)$, is a <b>well-defined bijection</b>. (c) $f=i\circ\tilde f\circ q$, where $q$ is the quotient map and $i$ is the inclusion.</p>
+<p><b>Every function factorises as a surjection, then a bijection, then an injection.</b> This is the basis of every "First Isomorphism Theorem" in algebra.</p>
+<div class="prf">Well-defined: $[s_1]=[s_2]\Rightarrow s_1\sim s_2\Rightarrow f(s_1)=f(s_2)$. Injective: $f(s_1)=f(s_2)\Rightarrow s_1\sim s_2\Rightarrow[s_1]=[s_2]$. Surjective: $\operatorname{Ran}\tilde f=\operatorname{Ran}f=I$. Part (c) holds by definition. ∎</div></div>
+
+<h3 id="s1-count">1.4 Countability and Cantor's theorem</h3>
+<div class="box def"><span class="tag">Finite, countable</span>
+<p>$S$ is <b>finite</b> if $S=\emptyset$ or there is a bijection $S\to\{1,\dots,K\}$. The number $K$ (0 for $\emptyset$) is unique and is called the <b>cardinality</b> $\#S$.</p>
+<p>$S$ is <span class="kw">countable</span> if there is an <b>injection</b> $f:S\to\N$.</p></div>
+<div class="box thm"><span class="tag">Rules for countability (memorise)</span>
+<ol>
+<li>$\emptyset$ and $\N$ are countable.</li>
+<li>For $S\ne\emptyset$: $S$ is countable $\iff$ there is a <b>surjection</b> $\N\to S$.</li>
+<li>Subsets of countable sets are countable.</li>
+<li>If $T$ is countable and there is an injection $S\to T$, or a surjection $T\to S$, then $S$ is countable.</li>
+<li>$S$ is countable $\iff$ $S$ is finite or there is a bijection $\N\to S$ (i.e. "countably infinite").</li>
+<li>$\N^N$ is countable, via the injection $(k_1,\dots,k_N)\mapsto p_1^{k_1}\cdots p_N^{k_N}$ (the first $N$ primes; uniqueness of prime factorisation).</li>
+<li><b>Finite products</b> of countable sets are countable: if $\phi_i:\N\to S_i$ are surjections, then $(n_i)\mapsto(\phi_i(n_i))$ is a surjection $\N^N\to\prod S_i$.</li>
+<li>$\Q$ is countable: $\Z\times\N\to\Q$, $(n,m)\mapsto n/m$, is a surjection.</li>
+<li><b>A countable union of countable sets is countable</b>: with surjections $\psi_n:\N\to C_n$, the map $(n,m)\mapsto\psi_n(m)$ is a surjection $\N\times\N\to\bigcup C_n$. (Choosing all the $\psi_n$ at once uses AC.)</li>
+</ol></div>
+<div class="box thm"><span class="tag">Cantor's Theorem (two guises)</span>
+<p><b>(1)</b> There is <b>no surjection</b> $S\to\Pow(S)$, and hence no injection $\Pow(S)\to S$.</p>
+<div class="prf">Suppose $\phi:S\to\Pow(S)$ is surjective. Let $D:=\{s\in S:s\notin\phi(s)\}$, the <b>diagonal set</b>. Then $D=\phi(x)$ for some $x$. If $x\in D$ then $x\notin\phi(x)=D$, a contradiction. If $x\notin D$ then $x\in\phi(x)=D$, a contradiction. ∎ (This is reminiscent of <b>Russell's Paradox</b>.)</div>
+<p><b>(2)</b> There is no surjection $S\to\F(S;\{0,1\})$, and no injection the other way.</p>
+<div class="prf">Given $\phi$, write $\phi_s=\phi(s)$ and define the <b>diagonal function</b> $g(s)=1-\phi_s(s)$. Then $g(s)\ne\phi_s(s)$ for every $s$, so $g\ne\phi_s$ for all $s$, and $g\notin\operatorname{Ran}\phi$. ∎</div>
+<p><b>Consequences.</b> Using the bijections $\F(S;T)\cong T^S$ and $\Pow(S)\cong\F(S;\{0,1\})$ (Exercises 1.6–1.7), the sets $\Pow(\N)\cong\F(\N;\{0,1\})\cong\{0,1\}^\N$ are <b>uncountable</b>. Hence $\R$ is uncountable (Exercises 1.18 and 4.12). This was the key to Cantor's theory of infinite cardinals.</p></div>
+<div class="box thm"><span class="tag">Theorem (Countably infinite sets are bijective to ℕ)</span>
+<p>If $S$ is countable and infinite, then there is a bijection $S\to\N$.</p>
+<div class="prf">Let $g:S\to\N$ be an injection and $I=g(S)$, which is infinite. Using the <b>well-ordering of ℕ</b>, define $i_1=\min I$ and $i_n=\min(I\setminus\{i_1,\dots,i_{n-1}\})$. Then $i_1&lt;i_2&lt;\cdots$ and $I=\{i_k\}$, so $k\mapsto i_k$ is a bijection $\N\to I$. Compose its inverse with the co-restriction $S\to I$ of $g$. ∎</div>
+<p><b>Corollary (Schröder–Bernstein for ℕ).</b> An injection $S\to\N$ together with a surjection $S\to\N$ gives a bijection $S\to\N$. ($S$ is countable, and it is infinite because it maps onto $\N$.)</p></div>
+
+<h3 id="s1-order">1.5 Partial orders &amp; Zorn's Lemma (self-study, non-examinable)</h3>
+<div class="box def"><span class="tag">Definitions</span>
+<p><b>Partial order</b> $\le$: reflexive, <b>antisymmetric</b> ($s\le t\ \&amp;\ t\le s\Rightarrow s=t$), transitive. An <b>upper bound</b> $u$ of $A$ satisfies $a\le u$ for all $a\in A$. A <b>maximal element</b> $x$ satisfies $s\ge x\Rightarrow s=x$. A <b>chain</b> is a totally ordered subset. A <b>least upper bound</b> is an upper bound below every other upper bound; it is unique by antisymmetry.</p>
+<p><b>Strict partial order</b> $&lt;$: $s&lt;t\Rightarrow t\not&lt;s$, plus transitivity. Moving between $\le$ and $&lt;$ ($s&lt;t$ iff $s\le t$ and $s\ne t$) is a pair of mutually inverse procedures.</p>
+<p><b>Total order</b>: a partial order with <b>comparability</b> ($s\le t$ or $t\le s$). <b>Strict total order</b>: <b>trichotomy</b> (exactly one of $s&lt;t$, $s=t$, $s>t$) plus transitivity.</p>
+<p><b>Zorn's Lemma</b>: if every chain in a poset has an upper bound, there is a maximal element. It is equivalent to AC. Application: the <b>Hamel Basis Theorem</b> (every vector space has a basis): apply Zorn to the linearly independent subsets ordered by inclusion, where a maximal element is a basis.</p></div>
+
+<h3 id="s1-ex">Exercises for Section 1, with full solutions</h3>
+
+<div class="box ex"><span class="tag">Exercise 1.1 (Simple intersection/union problem)</span>
+<p>(a) TFAE: (i) $A\subset B$; (ii) $A\cap B=A$; (iii) $A\cup B=B$. (b) $(A\cup B)\setminus(A\cap B)=(A\setminus B)\cup(B\setminus A)=:A\Delta B$. (c) Draw it.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) <b>(i)⇒(ii)</b>: $A\cap B\subset A$ always. If $x\in A$ then $x\in B$ by (i), so $x\in A\cap B$. <b>(ii)⇒(iii)</b>: $B\subset A\cup B$ always. If $x\in A\cup B$, either $x\in B$, or $x\in A=A\cap B\subset B$. <b>(iii)⇒(i)</b>: $x\in A\Rightarrow x\in A\cup B=B$.</p>
+<p>(b) $x\in(A\cup B)\setminus(A\cap B)$ ⟺ $x$ is in at least one of $A,B$ but not both ⟺ $x$ is in exactly one of them ⟺ ($x\in A$ and $x\notin B$) or ($x\in B$ and $x\notin A$) ⟺ $x\in(A\setminus B)\cup(B\setminus A)$.</p>
+<p>(c) The shaded region is $A\Delta B$:</p>
+<svg viewBox="0 0 300 150" width="300" height="150" role="img" aria-label="Venn diagram of symmetric difference">
+<defs><clipPath id="cA"><circle cx="115" cy="75" r="60"/></clipPath><clipPath id="cB"><circle cx="185" cy="75" r="60"/></clipPath></defs>
+<circle cx="115" cy="75" r="60" fill="var(--accent)" fill-opacity=".35"/>
+<circle cx="185" cy="75" r="60" fill="var(--accent)" fill-opacity=".35"/>
+<circle cx="185" cy="75" r="60" clip-path="url(#cA)" fill="var(--bg)"/>
+<circle cx="115" cy="75" r="60" fill="none" stroke="var(--ink)"/><circle cx="185" cy="75" r="60" fill="none" stroke="var(--ink)"/>
+<text x="80" y="80">A∖B</text><text x="195" y="80">B∖A</text><text x="138" y="80" class="small">A∩B</text>
+</svg></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.2 (Distributivity and de Morgan)</span>
+<p>Verify (a) $A\cap\bigcup\mathcal C=\bigcup_{C}(A\cap C)$ and (b) $A\setminus\bigcap\mathcal C=\bigcup_C(A\setminus C)$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) $x\in A\cap\bigcup\mathcal C$ ⟺ $x\in A$ and $\exists C\in\mathcal C:x\in C$ ⟺ $\exists C\in\mathcal C:\ x\in A\cap C$ ⟺ $x\in\bigcup_C(A\cap C)$.</p>
+<p>(b) $x\in A\setminus\bigcap\mathcal C$ ⟺ $x\in A$ and not($\forall C:x\in C$) ⟺ $x\in A$ and $\exists C:x\notin C$ ⟺ $\exists C:x\in A\setminus C$ ⟺ $x\in\bigcup_C(A\setminus C)$. (The key step is negating a quantifier: $\lnot\forall=\exists\lnot$.) ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.3 (Counting injections and surjections)</span>
+<p>$S=\{1,2\}$, $T=\{1,2,3\}$. How many (a) injections $S\to T$, (b) surjections $S\to T$, (c) surjections $T\to S$?</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) $f(1)$ has 3 choices and $f(2)\ne f(1)$ has 2, giving <b>6</b>.</p>
+<p>(b) $\#\operatorname{Ran}f\le\#S=2&lt;3$, so there are <b>0</b>.</p>
+<p>(c) There are $2^3=8$ functions $T\to S$. The non-surjective ones are the 2 constant functions, leaving <b>6</b>. (This also illustrates the Corollary: injections $S\to T$ exist and so do surjections $T\to S$.)</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.4 (Injectivity and surjectivity under composition)</span>
+<p>$f:S\to T$, $g:T\to U$. (a)(i) $f,g$ injective ⇒ $g\circ f$ injective; (ii) $g\circ f$ injective ⇒ $f$ injective. (b)(i) $f,g$ surjective ⇒ $g\circ f$ surjective; (ii) $g\circ f$ surjective ⇒ $g$ surjective. (c)(i) $f,g$ bijective ⇒ $g\circ f$ bijective; (ii) $g\circ f$ bijective ⇒ $f$ injective and $g$ surjective.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a)(i) $g(f(s_1))=g(f(s_2))\Rightarrow f(s_1)=f(s_2)$ ($g$ injective) $\Rightarrow s_1=s_2$ ($f$ injective).</p>
+<p>(a)(ii) $f(s_1)=f(s_2)\Rightarrow g(f(s_1))=g(f(s_2))\Rightarrow s_1=s_2$, since $g\circ f$ is injective.</p>
+<p>(b)(i) Given $u\in U$, there is $t$ with $g(t)=u$ and $s$ with $f(s)=t$, so $(g\circ f)(s)=u$.</p>
+<p>(b)(ii) Given $u$, there is $s$ with $g(f(s))=u$, so $t:=f(s)$ satisfies $g(t)=u$.</p>
+<p>(c) (i) follows from (a)(i) and (b)(i). (ii) follows from (a)(ii) and (b)(ii).</p>
+<p class="small">Note that $g\circ f$ injective does <b>not</b> force $g$ to be injective, and $g\circ f$ surjective does not force $f$ to be surjective. The $\N$ example ($g\circ f=\mathrm{id}$ with $f(n)=n+1$) shows both.</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.5 (Simple injectivity problem)</span> <span class="marks">10 marks</span>
+<p>$f:\R\setminus\{1\}\to\R$, $x\mapsto\frac{2x}{x-1}$. (a) Show $f$ is injective. (b) Find $\operatorname{Ran}f$. (c) Find a left inverse $g:\R\to\R\setminus\{1\}$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) If $\frac{2x}{x-1}=\frac{2y}{y-1}$ then $2x(y-1)=2y(x-1)$, i.e. $2xy-2x=2xy-2y$, so $x=y$.</p>
+<p>(b) For $y\in\R$: $y=\frac{2x}{x-1}\iff y(x-1)=2x\iff x(y-2)=y$. If $y=2$ this says $0=2$, impossible. If $y\ne2$ then $x=\frac y{y-2}$, and $x\ne1$ (otherwise $y=y-2$). So $\operatorname{Ran}f=\R\setminus\{2\}$.</p>
+<p>(c) Let $g(y)=\frac y{y-2}$ for $y\ne2$, and $g(2)=0$ (any value in $\R\setminus\{1\}$ works). Check: $f(x)-2=\frac{2}{x-1}$, so $g(f(x))=\frac{2x}{x-1}\cdot\frac{x-1}{2}=x$, i.e. $g\circ f=\mathrm{id}_{\R\setminus\{1\}}$. The value $g(2)$ is arbitrary, which shows left inverses are not unique.</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.6 ($\F(S;T)\equiv T^S$)</span>
+<p>$\phi:P=\prod_{s\in S}T_s\to F=\F(S;T)$, $(t_s)_{s\in S}\mapsto f$ with $f(s)=t_s$. Define an inverse $\psi$ and verify it. You may assume $S,T\ne\emptyset$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) Define $\psi:F\to P$ by $\psi(f)=(f(s))_{s\in S}$. This lies in $P$ because each $f(s)\in T=T_s$.</p>
+<p>(b) $\psi(\phi((t_s)_s))=\psi(f)$ where $f(s)=t_s$, which equals $(f(s))_s=(t_s)_s$, so $\psi\circ\phi=\mathrm{id}_P$ (equality in $P$ is componentwise). Next, $\phi(\psi(f))$ is the function $s\mapsto f(s)$, which has the same domain, codomain and values as $f$. So $\phi\circ\psi=\mathrm{id}_F$. Hence $\phi$ is a bijection with inverse $\psi$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.7 ($\Pow(S)\equiv\F(S;\{0,1\})$)</span> <span class="marks">10 marks</span>
+<p>$\chi:A\mapsto\mathbf 1_A$. (a) Define $\sigma:F\to P$. (b) Show $\sigma\circ\chi=\mathrm{id}_P$ and $\chi\circ\sigma=\mathrm{id}_F$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) $\sigma(g):=g^{-1}(\{1\})=\{s\in S:g(s)=1\}$.</p>
+<p>(b) $\sigma(\chi(A))=\{s:\mathbf 1_A(s)=1\}=A$. For $g\in F$, let $A=\sigma(g)$. If $s\in A$ then $\mathbf 1_A(s)=1=g(s)$. If $s\notin A$ then $g(s)\ne1$, so $g(s)=0=\mathbf 1_A(s)$, because $g$ only takes the values $0$ and $1$. Hence $\chi(\sigma(g))=g$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.8 (Images of unions and intersections)</span>
+<p>(a) $f(\bigcup\mathcal A)=\bigcup f(A)$; (b) $f(\bigcap\mathcal A)\subset\bigcap f(A)$; and, from the text, (c) $f(A\setminus B)\supset f(A)\setminus f(B)$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) $t\in f(\bigcup\mathcal A)$ ⟺ $\exists s\in\bigcup\mathcal A$ with $f(s)=t$ ⟺ $\exists A\in\mathcal A\ \exists s\in A$ with $f(s)=t$ ⟺ $\exists A:t\in f(A)$ ⟺ $t\in\bigcup f(A)$.</p>
+<p>(b) If $t=f(s)$ with $s\in\bigcap\mathcal A$, then $s\in A$ for every $A$, so $t\in f(A)$ for every $A$. The reverse inclusion fails in general; see the constant-function example above. Equality holds if $f$ is injective.</p>
+<p>(c) Let $t\in f(A)\setminus f(B)$, so $t=f(a)$ with $a\in A$. If $a\in B$ then $t\in f(B)$, a contradiction. So $a\in A\setminus B$ and $t\in f(A\setminus B)$. (Strict inclusion example: $f$ constant, $A=\{0,1\}$, $B=\{1\}$. Then $f(A\setminus B)=\operatorname{Ran}f$ but $f(A)\setminus f(B)=\emptyset$.) ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.9 (Unions and complements under inverse images)</span> <span class="marks">10 marks</span>
+<p>Show $f^{-1}(\bigcup\mathcal C)=\bigcup f^{-1}(C)$ and $f^{-1}(D\setminus C)=f^{-1}(D)\setminus f^{-1}(C)$; in particular $f^{-1}(T\setminus C)=S\setminus f^{-1}(C)$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>$s\in f^{-1}(\bigcup\mathcal C)$ ⟺ $f(s)\in\bigcup\mathcal C$ ⟺ $\exists C:f(s)\in C$ ⟺ $\exists C:s\in f^{-1}(C)$ ⟺ $s\in\bigcup f^{-1}(C)$.</p>
+<p>$s\in f^{-1}(D\setminus C)$ ⟺ $f(s)\in D$ and $f(s)\notin C$ ⟺ $s\in f^{-1}(D)$ and $s\notin f^{-1}(C)$ ⟺ $s\in f^{-1}(D)\setminus f^{-1}(C)$.</p>
+<p>Take $D=T$ and use $f^{-1}(T)=S$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.10 (Disjoint union of equivalence relations)</span>
+<p>$A_1\cap A_2=\emptyset$, with $\sim_i$ an equivalence relation on $A_i$. Define $x\sim y$ iff ($x,y\in A_1$ and $x\sim_1y$) or ($x,y\in A_2$ and $x\sim_2y$). Show $\sim$ is an equivalence relation on $A_1\cup A_2$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p><b>Reflexive</b>: $x\in A_i$ for some $i$, and $x\sim_ix$. <b>Symmetric</b>: if $x,y\in A_i$ with $x\sim_iy$, then $y\sim_ix$, so $y\sim x$.</p>
+<p><b>Transitive</b>: suppose $x\sim y$ (so $x,y\in A_i$ with $x\sim_iy$) and $y\sim z$ (so $y,z\in A_j$ with $y\sim_jz$). Then $y\in A_i\cap A_j$. Since $A_1\cap A_2=\emptyset$, this forces $i=j$. By transitivity of $\sim_i$, $x\sim_iz$, so $x\sim z$. (Disjointness is used exactly here.) The resulting partition is the union of the two partitions. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.11 (Symmetry + Transitivity ⇏ Reflexivity)</span> <span class="marks">10 marks</span>
+<p>(a) Find the logical error in the "proof" that symmetry and transitivity give reflexivity. (b) Give a counterexample.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) The argument says: "for all $y$ with $x\sim y$, …, therefore $x\sim x$". It <b>assumes such a $y$ exists</b>. If $x$ is related to nothing, the "for all $y$" statement is <b>vacuously true</b> and gives no information, so $x\sim x$ is never derived. What the argument does prove: if every element is related to <em>something</em>, then a symmetric and transitive relation is reflexive.</p>
+<p>(b) $S=\{1,2\}$ with $\sim=\{(1,1)\}$ (only $1\sim1$). It is symmetric and transitive (check all cases), but $2\not\sim2$. The empty relation on any nonempty set also works.</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.12 (Countability of ℤ)</span>
+<details><summary>Solution</summary><div class="inner">
+<p>Define $f:\N\to\Z$ by $f(n)=n/2$ if $n$ is even and $f(n)=-(n-1)/2$ if $n$ is odd. So $1,2,3,4,5,\ldots\mapsto0,1,-1,2,-2,\ldots$</p>
+<p>It is a bijection, with inverse $g(k)=2k$ for $k>0$ and $g(k)=1-2k$ for $k\le0$. Check: for $k>0$, $f(2k)=k$; for $k\le0$, $1-2k$ is odd and $f(1-2k)=-(1-2k-1)/2=k$. Also $g(f(n))=n$ in both parity cases. Hence $\Z$ is countable. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.13 (Polynomials with rational coefficients)</span>
+<details><summary>Solution</summary><div class="inner">
+<p>Let $S_n$ be the polynomials of degree at most $n$ with rational coefficients. The map $\Q^{n+1}\to S_n$, $(a_0,\dots,a_n)\mapsto a_0+a_1x+\dots+a_nx^n$, is a <b>surjection</b>. $\Q^{n+1}$ is countable as a finite product of countable sets, so $S_n$ is countable. Finally $S=\bigcup_{n=0}^\infty S_n$ is a countable union of countable sets, hence countable. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.14 ($\Pow_{00}(\N)$ is countable)</span>
+<details><summary>Solution</summary><div class="inner">
+<p>Let $\Pow^{(N)}(\N)=\{A\subset\N:\#A=N\}$. Then $\Pow^{(0)}=\{\emptyset\}$ is countable. For $N\ge1$, list $A$ increasingly as $a_1&lt;\dots&lt;a_N$ and send $A\mapsto(a_1,\dots,a_N)\in\N^N$. This is <b>injective</b>, because $A$ is recovered as the set of entries. $\N^N$ is countable, so $\Pow^{(N)}(\N)$ is countable. Then $\Pow_{00}(\N)=\bigcup_{N=0}^\infty\Pow^{(N)}(\N)$ is a countable union of countable sets, hence countable. ∎</p>
+<p class="small">Contrast: $\Pow(\N)$ itself is uncountable (Cantor).</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.15 (Total order ↔ strict total order)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) Let $\le$ be a total order and $s&lt;t:\iff s\le t,\ s\ne t$.</p>
+<p><b>Trichotomy.</b> If $s=t$, neither $s&lt;t$ nor $t&lt;s$ holds. If $s\ne t$, comparability gives $s\le t$ or $t\le s$, so $s&lt;t$ or $t&lt;s$. Both cannot hold, since antisymmetry would give $s=t$. So exactly one holds.</p>
+<p><b>Transitivity.</b> If $r&lt;s$ and $s&lt;t$, then $r\le t$. If $r=t$ we would have $r\le s\le r$, so $r=s$, a contradiction. Hence $r&lt;t$.</p>
+<p>(b) Let $&lt;$ be a strict total order and $s\le t:\iff s&lt;t$ or $s=t$.</p>
+<p><b>Reflexive</b>: $s=s$. <b>Antisymmetric</b>: if $s\le t$, $t\le s$ and $s\ne t$, then $s&lt;t$ and $t&lt;s$, contradicting trichotomy (exactly one holds). <b>Transitive</b>: if any of the relations is an equality the claim is immediate; otherwise use transitivity of $&lt;$. <b>Comparable</b>: trichotomy gives $s&lt;t$, $s=t$ or $t&lt;s$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.16 (Bijections on a 3-element set)</span> <span class="marks">10 + 10 marks</span>
+<p>$f:\{x,y,z\}\to\{a,b,c\}$ bijective. A: $f(x)=a$. B: $f(y)\ne a$. C: $f(z)\ne b$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>There are $3!=6$ bijections. Write them as $(f(x),f(y),f(z))$:</p>
+<table><tr><th>$f$</th><th>A</th><th>B</th><th>C</th><th>#true</th></tr>
+<tr><td>(a,b,c)</td><td>T</td><td>T</td><td>T</td><td>3</td></tr>
+<tr><td>(a,c,b)</td><td>T</td><td>T</td><td>F</td><td>2</td></tr>
+<tr><td>(b,a,c)</td><td>F</td><td>F</td><td>T</td><td>1</td></tr>
+<tr><td>(b,c,a)</td><td>F</td><td>T</td><td>T</td><td>2</td></tr>
+<tr><td>(c,a,b)</td><td>F</td><td>F</td><td>F</td><td>0</td></tr>
+<tr><td>(c,b,a)</td><td>F</td><td>T</td><td>T</td><td>2</td></tr></table>
+<p>(a) Exactly two true: $x\mapsto a,y\mapsto c,z\mapsto b$; $x\mapsto b,y\mapsto c,z\mapsto a$; $x\mapsto c,y\mapsto b,z\mapsto a$.</p>
+<p>(b) Exactly one true: $x\mapsto b,y\mapsto a,z\mapsto c$.</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.17 (Relations via functions &amp; partitions)</span> <span class="marks">20 marks</span>
+<p>$f:S\to T$, $\mathcal C$ a partition of $S$. $t_1\sim t_2$ iff $\exists A\in\mathcal C:\ f^{-1}(\{t_1,t_2\})\subset A$. (a) Reflexive? If $f$ is injective? (b) Symmetric? If $f$ is bijective? (c) Transitive? If $f$ is surjective?</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) <b>Not necessarily reflexive.</b> $t\sim t$ iff the fibre $f^{-1}(\{t\})$ lies inside one block. Counterexample: $S=\{1,2\}$, $\mathcal C=\{\{1\},\{2\}\}$, $T=\{t\}$, $f$ constant. Then $f^{-1}(\{t\})=\{1,2\}$ is in no single block, so $t\not\sim t$.<br>
+<b>If $f$ is injective, it is reflexive</b>: $f^{-1}(\{t\})$ has at most one point. If it is empty, it lies in any block ($\mathcal C\ne\emptyset$ since $S\ne\emptyset$). If it is $\{s\}$, then $s$ lies in some block, since the blocks cover $S$.</p>
+<p>(b) <b>Always symmetric</b>, with no hypothesis on $f$, since $\{t_1,t_2\}=\{t_2,t_1\}$. In particular it is symmetric when $f$ is bijective.</p>
+<p>(c) <b>Not necessarily transitive.</b> $S=\{1,2\}$, $\mathcal C=\{\{1\},\{2\}\}$, $T=\{a,b,c\}$, $f(1)=a$, $f(2)=c$. Then $f^{-1}\{a,b\}=\{1\}$, so $a\sim b$; $f^{-1}\{b,c\}=\{2\}$, so $b\sim c$; but $f^{-1}\{a,c\}=\{1,2\}$, so $a\not\sim c$. The value $b$ is missed by $f$, and that is what breaks transitivity.<br>
+<b>If $f$ is surjective, it is transitive</b>: let $t_1\sim t_2$ via $A$ and $t_2\sim t_3$ via $B$. Since $f$ is surjective, $\emptyset\ne f^{-1}(\{t_2\})\subset A\cap B$. Distinct blocks are disjoint, so $A=B$. Then $f^{-1}\{t_1,t_3\}\subset f^{-1}\{t_1,t_2\}\cup f^{-1}\{t_2,t_3\}\subset A$, so $t_1\sim t_3$.</p>
+<p class="small">So if $f$ is bijective, $\sim$ is an equivalence relation, and its partition is $\{f(A):A\in\mathcal C\}$.</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.18 (Uncountability of ℝ)</span> <span class="marks">10 marks</span>
+<p>(a) $\psi:\{0,1\}^\N\to\R$, $a\mapsto\sum_{n\ge1}a_n10^{-n}$ is injective. (b) Deduce that $\R$ is uncountable.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) The series converges by comparison with $\sum10^{-n}$. Let $a\ne b$ and let $m$ be the <b>least</b> index with $a_m\ne b_m$ (well-ordering); WLOG $a_m=1$, $b_m=0$. Then
+$$\psi(a)-\psi(b)=10^{-m}+\sum_{n>m}(a_n-b_n)10^{-n}\ \ge\ 10^{-m}-\sum_{n>m}10^{-n}=10^{-m}-\tfrac19\,10^{-m}=\tfrac89\,10^{-m}>0.$$
+So $\psi(a)\ne\psi(b)$.</p>
+<p>(b) Suppose $\R$ were countable, with injection $j:\R\to\N$. Let $\beta:\Pow(\N)\to\F(\N;\{0,1\})\to\{0,1\}^\N$ be the bijection from Exercises 1.6–1.7. Then $j\circ\psi\circ\beta:\Pow(\N)\to\N$ is an injection (a composition of injections), contradicting <b>Cantor's Theorem</b> (no injection $\Pow(S)\to S$). Hence $\R$ is uncountable. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 1.19 (Characterisation of infiniteness)</span> <span class="marks">10 marks</span>
+<p>$S$ is infinite ⟺ there is an injection $\N\to S$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(⇐) Suppose $\iota:\N\to S$ is injective but $S$ is finite. If $S=\emptyset$ there is no map from $\N$ at all. Otherwise there is a bijection $\beta:S\to\{1,\dots,K\}$, and $\beta\circ\iota$ restricted to $\{1,\dots,K+1\}$ is an injection of a $(K+1)$-element set into a $K$-element set, contradicting the <b>pigeonhole principle</b>.</p>
+<p>(⇒) Let $S$ be infinite. By AC, take a choice function $c$ on $\Pow(S)\setminus\{\emptyset\}$. Define recursively $s_1=c(S)$ and $s_{n+1}=c(S\setminus\{s_1,\dots,s_n\})$. The set $S\setminus\{s_1,\ldots,s_n\}$ is nonempty, since otherwise $S$ would be finite. Then $s_{n+1}\notin\{s_1,\dots,s_n\}$, so $n\mapsto s_n$ is injective. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">In-text exercise (Countability remark 2)</span>
+<p>For $S\ne\emptyset$: countable ⟺ there is a surjection $\N\to S$.</p>
+<details><summary>Solution</summary><div class="inner"><p>An injection $f:S\to\N$ has a left inverse $g:\N\to S$ (here $S\ne\emptyset$ is needed), and $g$ is surjective because $g\circ f=\mathrm{id}_S$ (Exercise 1.4(b)(ii)). Conversely, a surjection $g:\N\to S$ has a right inverse $h$ (by AC; or explicitly, $h(s)=\min g^{-1}(\{s\})$ by well-ordering), and $h$ is injective. ∎</p></div></details></div>

@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metric Spaces Study Guide</title>
+<style>
+/*KATEX_CSS*/
+:root{
+  --bg:#fbfaf7; --panel:#ffffff; --ink:#1d1f24; --muted:#5b6170; --line:#e3e1da;
+  --accent:#2f5bd3; --accent-soft:#e9efff;
+  --def:#2f5bd3; --def-bg:#f1f5ff;
+  --thm:#7a3fc2; --thm-bg:#f6f0ff;
+  --ex:#0f7a5c; --ex-bg:#ecf8f3;
+  --warn:#b4471a; --warn-bg:#fff3ec;
+  --exam:#8a6a00; --exam-bg:#fff9e3;
+  --code-bg:#f3f2ee;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171c; --panel:#1c1f26; --ink:#e7e8ec; --muted:#a2a8b6; --line:#2d313b;
+    --accent:#8fb0ff; --accent-soft:#232c45;
+    --def:#8fb0ff; --def-bg:#1d2538;
+    --thm:#c7a2ff; --thm-bg:#261f36;
+    --ex:#5fd3a8; --ex-bg:#172a24;
+    --warn:#ff9f73; --warn-bg:#2f1f18;
+    --exam:#f0cd5a; --exam-bg:#2b2614;
+    --code-bg:#242832;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171c; --panel:#1c1f26; --ink:#e7e8ec; --muted:#a2a8b6; --line:#2d313b;
+  --accent:#8fb0ff; --accent-soft:#232c45;
+  --def:#8fb0ff; --def-bg:#1d2538;
+  --thm:#c7a2ff; --thm-bg:#261f36;
+  --ex:#5fd3a8; --ex-bg:#172a24;
+  --warn:#ff9f73; --warn-bg:#2f1f18;
+  --exam:#f0cd5a; --exam-bg:#2b2614;
+  --code-bg:#242832;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.62 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+.katex{font-size:1.04em}
+.layout{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:100vh}
+nav.toc{position:sticky;top:0;height:100vh;overflow:auto;border-right:1px solid var(--line);background:var(--panel);padding:20px 16px;font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+nav.toc h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 6px}
+nav.toc a{color:var(--ink);text-decoration:none;display:block;padding:3px 6px;border-radius:6px}
+nav.toc a:hover{background:var(--accent-soft)}
+nav.toc a.sub{padding-left:18px;color:var(--muted);font-size:13px}
+nav.toc .brand{font-weight:700;font-size:16px;margin-bottom:4px}
+nav.toc .tools{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+button{font:13px system-ui,sans-serif;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:5px 9px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+main{max-width:880px;margin:0 auto;padding:28px 28px 120px;width:100%}
+h1{font-size:2.1em;line-height:1.2;margin:.2em 0 .3em}
+h2.sec{font-size:1.75em;margin:2.2em 0 .4em;padding-top:.6em;border-top:3px solid var(--ink)}
+h3{font-size:1.3em;margin:1.8em 0 .4em}
+h4{font-size:1.08em;margin:1.4em 0 .3em}
+p{margin:.55em 0}
+a{color:var(--accent)}
+.lead{color:var(--muted);font-size:1.05em}
+.box{border-left:5px solid var(--c);background:var(--b);padding:12px 16px;margin:14px 0;border-radius:0 10px 10px 0;overflow-x:auto}
+.box>.tag{display:block;font:700 12px/1 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--c);margin-bottom:6px}
+.def{--c:var(--def);--b:var(--def-bg)}
+.thm{--c:var(--thm);--b:var(--thm-bg)}
+.ex{--c:var(--ex);--b:var(--ex-bg)}
+.warn{--c:var(--warn);--b:var(--warn-bg)}
+.exam{--c:var(--exam);--b:var(--exam-bg)}
+.idea{--c:var(--muted);--b:var(--panel)}
+.prf{margin:8px 0 14px;padding:8px 14px;border:1px dashed var(--line);border-radius:10px;background:var(--panel)}
+.prf::before{content:"Proof.";font-style:italic;font-weight:700;margin-right:6px}
+.prf.noLabel::before{content:none}
+.qed{float:right}
+details{margin:10px 0;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+details>summary{cursor:pointer;padding:9px 14px;font:600 14px/1.4 system-ui,sans-serif;color:var(--ex);list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ ";}
+details[open]>summary::before{content:"▾ ";}
+details>.inner{padding:2px 16px 12px;overflow-x:auto}
+details.card>summary{color:var(--ink);font-weight:500;font-family:inherit;font-size:16px}
+details.card>.inner{border-top:1px dashed var(--line);padding-top:8px}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.95em;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel)}
+.marks{font:600 12px system-ui,sans-serif;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:1px 8px;margin-left:6px;white-space:nowrap}
+.kw{font-weight:700;color:var(--def)}
+.small{font-size:.9em;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:14px system-ui,sans-serif;margin:10px 0}
+.flow span.n{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:5px 9px}
+.flow span.a{color:var(--muted)}
+svg text{fill:var(--ink);font:13px system-ui,sans-serif}
+.done-toggle{font:13px system-ui,sans-serif;margin-left:8px}
+.menu-btn{display:none}
+ol.steps>li{margin:4px 0}
+@media (max-width: 900px){
+  .layout{display:block}
+  nav.toc{position:fixed;inset:0 25% 0 0;z-index:20;transform:translateX(-105%);transition:transform .2s;height:100vh;box-shadow:0 0 30px rgba(0,0,0,.3)}
+  nav.toc.open{transform:none}
+  .menu-btn{display:inline-block;position:fixed;top:10px;right:12px;z-index:30}
+  main{padding:20px 16px 100px}
+  .grid2{grid-template-columns:1fr}
+  body{font-size:16px}
+}
+@media print{
+  nav.toc,.menu-btn,.tools,.noprint{display:none!important}
+  .layout{display:block}
+  main{max-width:none;padding:0}
+  body{background:#fff;color:#000;font-size:11pt}
+  details{break-inside:auto}
+  h2.sec{break-before:page}
+  .box,.prf{break-inside:avoid-page}
+}
+</style>
+</head>
+<body>
+<button class="menu-btn" onclick="document.querySelector('nav.toc').classList.toggle('open')">☰ Contents</button>
+<div class="layout">
+<nav class="toc">
+  <div class="brand">MATH6310 · Study Guide</div>
+  <div class="small">Metric Spaces &amp; Topology, Part I, Sections 0–4</div>
+  <div class="tools">
+    <button onclick="toggleAll(true)">Open all solutions</button>
+    <button onclick="toggleAll(false)">Close all</button>
+    <button onclick="cycleTheme()">Theme</button>
+  </div>
+  <h2>Start here</h2>
+  <a href="#plan">How to use this (3–4 h plan)</a>
+  <a href="#toolkit">Proof toolkit &amp; exam language</a>
+  <h2>Section 0</h2>
+  <a href="#s0">What is a metric space?</a>
+  <a class="sub" href="#s0-ex">Exercises 0.1–0.6</a>
+  <h2>Section 1</h2>
+  <a href="#s1">Sets, functions &amp; countability</a>
+  <a class="sub" href="#s1-sets">1.1 Sets &amp; Axiom of Choice</a>
+  <a class="sub" href="#s1-fun">1.2 Functions &amp; images</a>
+  <a class="sub" href="#s1-sb">Schröder–Bernstein</a>
+  <a class="sub" href="#s1-eq">1.3 Equivalence relations</a>
+  <a class="sub" href="#s1-count">1.4 Countability &amp; Cantor</a>
+  <a class="sub" href="#s1-order">1.5 Orders &amp; Zorn</a>
+  <a class="sub" href="#s1-ex">Exercises 1.1–1.19</a>
+  <h2>Section 2</h2>
+  <a href="#s2">Real analysis &amp; linear algebra</a>
+  <a class="sub" href="#s2-sub">2.1 Subsets of ℝ, LUB</a>
+  <a class="sub" href="#s2-seq">2.2 Sequences</a>
+  <a class="sub" href="#s2-lin">2.3 Linear algebra</a>
+  <a class="sub" href="#s2-cts">2.4 Continuity</a>
+  <a class="sub" href="#s2-int">2.5 Integration</a>
+  <a class="sub" href="#s2-ex">Exercises 2.1–2.10</a>
+  <h2>Section 3</h2>
+  <a href="#s3">Metric space fundamentals</a>
+  <a class="sub" href="#s3-ex-list">Examples of metrics</a>
+  <a class="sub" href="#s3-new">New metrics from old</a>
+  <a class="sub" href="#s3-iso">Isometries &amp; Lipschitz</a>
+  <a class="sub" href="#s3-bdd">Diameter, ℓ∞(S;E)</a>
+  <a class="sub" href="#s3-balls">Balls &amp; sequences</a>
+  <a class="sub" href="#s3-ex">Exercises 3.1–3.14</a>
+  <h2>Section 4</h2>
+  <a href="#s4">Metric space topology</a>
+  <a class="sub" href="#s4-open">Open sets, interior</a>
+  <a class="sub" href="#s4-cts">Continuity</a>
+  <a class="sub" href="#s4-closed">Closed sets, closure, boundary</a>
+  <a class="sub" href="#s4-dense">Density, separability</a>
+  <a class="sub" href="#s4-R">Open subsets of ℝ</a>
+  <a class="sub" href="#s4-homeo">Homeomorphisms, equivalence</a>
+  <a class="sub" href="#s4-prod">Products, subspaces</a>
+  <a class="sub" href="#s4-ex">Exercises 4.1–4.12</a>
+  <h2>Revision</h2>
+  <a href="#traps">Trap questions (true/false)</a>
+  <a href="#cards">Flashcards</a>
+  <a href="#gloss">Glossary &amp; notation</a>
+</nav>
+<main>
+<h1>Metric Spaces &amp; Topology: Sections 0–4, fully explained</h1>
+<p class="lead">Every definition, theorem and proof from the lecture notes, plus a complete worked solution to every exercise (the numbered ones and the ones in the text), written in the terminology an examiner expects to see.</p>
+
+<h3 id="plan">How to use this guide (a 3–4 hour plan)</h3>
+<table>
+<tr><th>Time</th><th>What to do</th></tr>
+<tr><td>0:00–0:15</td><td>Read the <a href="#toolkit">Proof toolkit</a> and Section 0. Learn the axioms (MS1)–(MS3) by name.</td></tr>
+<tr><td>0:15–1:00</td><td>Section 1. Try each exercise <em>before</em> opening its solution. Learn Cantor's theorem and the countability rules.</td></tr>
+<tr><td>1:00–1:45</td><td>Section 2. Learn the LUB Principle, Approximation of suprema, the Sandwich Principle, BWT and the Uniform Continuity Theorem. Most later proofs use these.</td></tr>
+<tr><td>1:45–2:30</td><td>Section 3. Practise checking the metric axioms, and learn Lipschitz maps, isometries, dist<sub>A</sub>, balls and sequences.</td></tr>
+<tr><td>2:30–3:30</td><td>Section 4, the heaviest part: open, closed, closure, interior, boundary, continuity via open sets, the two kinds of equivalence of metrics, and subspaces.</td></tr>
+<tr><td>3:30–4:00</td><td><a href="#traps">Trap questions</a> and <a href="#cards">flashcards</a>. Re-do any exercise you got wrong.</td></tr>
+</table>
+<p class="small">Colour key: <span style="color:var(--def)">■ Definition</span> · <span style="color:var(--thm)">■ Theorem/Proposition</span> · <span style="color:var(--ex)">■ Exercise</span> · <span style="color:var(--warn)">■ Pitfall</span> · <span style="color:var(--exam)">■ Exam phrasing</span>. Solutions are folded; click to open. The sidebar buttons open or close all of them at once.</p>
+<p class="small">Notation used throughout (as in the notes): $\N=\{1,2,3,\dots\}$, $\Z_+=\{0,1,2,\dots\}$, $]a,b[$ is an open interval, $\F(S;T)$ is the set of all functions $S\to T$, $\Pow(S)$ is the power set, and "TFAE" means "the following are equivalent".</p>
+
+<h3 id="toolkit">Proof toolkit &amp; exam language</h3>
+<div class="box exam"><span class="tag">How examiners want proofs written</span>
+<ul>
+<li><b>Name the axiom or result you use</b>, e.g. "by (MS3), the Triangle Inequality", "by the Approximation of suprema", "by the Sandwich Principle", "by the LUB Principle", "by Bolzano–Weierstrass".</li>
+<li><b>TFAE proofs</b>: prove a cycle (i)⇒(ii)⇒(iii)⇒(i). Say so at the start.</li>
+<li><b>Set equality</b> $A=B$: prove $A\subset B$ <em>and</em> $B\subset A$ (an "element chase": "let $x\in A$ … hence $x\in B$").</li>
+<li><b>Contrapositive</b>: to prove $P\Rightarrow Q$, prove $\lnot Q\Rightarrow\lnot P$. <b>Contradiction</b>: assume $P$ and $\lnot Q$ and derive something false.</li>
+<li><b>Well-defined</b>: when you define a function on equivalence classes (or by a formula that might be ambiguous), check that the value does not depend on the choice of representative.</li>
+<li><b>Quantifier order matters</b>: "$\forall\eps>0\ \exists\delta>0$" (continuity) differs from "$\exists\delta>0\ \forall x$" (uniform continuity: δ independent of the point).</li>
+<li><b>ε-room</b>: to show $a\le b$, it suffices to show $a&lt;b+\eps$ for every $\eps>0$. To show $a=0$ for $a\ge0$, show $a&lt;\eps$ for all $\eps>0$.</li>
+<li><b>Sup/inf</b>: to show $s=\sup A$, show (1) $s$ is an upper bound and (2) nothing smaller is: $\forall\eps>0\ \exists a\in A$ with $a>s-\eps$.</li>
+</ul></div>
+<div class="box idea"><span class="tag">The big dependency chain (memorise the order)</span>
+<div class="flow"><span class="n">LUB Principle (axiom)</span><span class="a">⇒</span><span class="n">Archimedean property</span><span class="a">⇒</span><span class="n">density of ℚ</span></div>
+<div class="flow"><span class="n">LUB</span><span class="a">⇒</span><span class="n">bounded monotone ⇒ convergent</span><span class="a">+</span><span class="n">monotone subsequence</span><span class="a">⇒</span><span class="n">Bolzano–Weierstrass</span><span class="a">⇒</span><span class="n">Uniform Continuity Thm (UC, bounded, max/min)</span><span class="a">⇒</span><span class="n">IVT corollary</span></div>
+<div class="flow"><span class="n">lim sup / lim inf</span><span class="a">⇒</span><span class="n">Completeness of ℝ (Cauchy ⇔ convergent)</span></div>
+<div class="flow"><span class="n">Metric axioms</span><span class="a">⇒</span><span class="n">balls, open sets</span><span class="a">⇒</span><span class="n">closed = complement of open</span><span class="a">⇒</span><span class="n">continuity ⇔ preimages of open sets are open</span><span class="a">⇒</span><span class="n">equivalence of metrics</span></div>
+</div>

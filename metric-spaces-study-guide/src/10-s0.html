@@ -1,0 +1,89 @@
+
+<h2 class="sec" id="s0">Section 0: What is a metric space?</h2>
+<p class="lead">Foundation for everything that follows. You asked for Sections 1–4, but each of them uses these axioms, so this section is short and should be learnt first.</p>
+
+<div class="box idea"><span class="tag">Big picture</span>
+<p>Linear algebra abstracts "adding and scaling" into the axioms of a <b>vector space</b>. The structure-preserving maps are <b>linear maps</b> and <b>linear isomorphisms</b>. Distance geometry abstracts "distance between points" into three axioms, giving a <b>metric space</b>. Its maps are <b>Lipschitz maps</b> and <b>isometries</b>. Everything later (convergence, continuity, open and closed sets) comes from these three axioms.</p>
+<p>Examples listed in the notes: the Euclidean, Manhattan ($\ell^1$) and Chebyshev ($\ell^\infty$) metrics on $\R^N$; the Hausdorff distance between sets; distances between functions; the $p$-adic distance on $\Q$; the Hamming distance between strings; the graph distance; matrix distances (rank, Frobenius/Hilbert–Schmidt, operator norm); the geodesic distance on a manifold; the discrete metric.</p></div>
+
+<div class="box def"><span class="tag">Definition (metric, metric space)</span>
+<p>A <span class="kw">metric</span> on a set $S$ is a function $d:S\times S\to[0,\infty[$ satisfying</p>
+<p>(MS1) $\forall x,y\in S:\ d(x,y)=0\iff x=y$;</p>
+<p>(MS2) $\forall x,y\in S:\ d(y,x)=d(x,y)$ <b>(Symmetry)</b>;</p>
+<p>(MS3) $\forall x,y,z\in S:\ d(x,z)\le d(x,y)+d(y,z)$ <b>(Triangle Inequality)</b>.</p>
+<p>A <span class="kw">metric space</span> $E$ is a set $S$ together with a specified metric $d$ on it: $E=(S,d)$.</p>
+<p><b>Refined version</b> (useful for checking axioms one at a time): (MS0) $0\le d(x,y)&lt;\infty$ <b>(Positivity &amp; Finiteness)</b>; (MS1a) $d(x,x)=0$; (MS1b) $d(x,y)=0\Rightarrow x=y$ <b>(Definiteness)</b>; plus (MS2) and (MS3).</p></div>
+<div class="box warn"><span class="tag">Pitfall</span>The same set can carry different metrics, giving <em>different</em> metric spaces: $(\R,d_{\text{standard}})$ and $(\R,d_{\text{discrete}})$ have the same underlying set but very different properties.</div>
+
+<h3>Motivating examples</h3>
+<div class="box thm"><span class="tag">Example (standard metric on ℝ)</span>
+<p>$d(x,y):=|y-x|$. (MS1) holds because $|a|=0\iff a=0$. (MS2) holds because $|-a|=|a|$. (MS3) holds because $|a+b|\le|a|+|b|$. All three come from $|a|:=\max\{a,-a\}$ and the fact that $\R$ is an <b>ordered field</b>. ($\R$ is the unique <b>complete ordered field</b> up to isomorphism.)</p></div>
+<div class="box thm"><span class="tag">Example (Euclidean metric $d_2$ on $\R^N$)</span>
+<p>$d_2(x,y)=\sqrt{(y_1-x_1)^2+\dots+(y_N-x_N)^2}$. (MS3) follows from the <b>Cauchy–Schwarz Inequality</b> $\sum x_iy_i\le\sqrt{\sum x_i^2}\sqrt{\sum y_i^2}$. The <b>Euclidean norm</b> is $\|x\|_2=\sqrt{\sum x_i^2}$, and $(\R^N,d_2)$ is written $\mathbb E^N$.</p>
+<details><summary>Why Cauchy–Schwarz gives the Triangle Inequality</summary><div class="inner">
+<p>$\|a+b\|_2^2=\|a\|_2^2+2\sum a_ib_i+\|b\|_2^2\le\|a\|_2^2+2\|a\|_2\|b\|_2+\|b\|_2^2=(\|a\|_2+\|b\|_2)^2$. Take square roots and put $a=y-x$, $b=z-y$: $d_2(x,z)=\|a+b\|_2\le d_2(x,y)+d_2(y,z)$.</p></div></details></div>
+<div class="box thm"><span class="tag">Example (discrete metric)</span><p>$d(s,t)=1$ if $s\ne t$, and $0$ if $s=t$. It works on <em>any</em> set $S$ (Exercise 0.1).</p></div>
+<div class="box thm"><span class="tag">Example (counting metric on $\Pow(S)$, $S$ finite)</span>
+<p>$d(A,B):=\#(A\Delta B)$, where $A\Delta B=(A\setminus B)\cup(B\setminus A)=(A\cup B)\setminus(A\cap B)$ is the <b>symmetric difference</b>. (MS1): $\#(A\Delta B)=0\iff A\Delta B=\emptyset\iff A\cup B=A\cap B\iff A=B$. (MS2): $B\Delta A=A\Delta B$. If $S$ is infinite, the same formula is a metric on $\Pow_{00}(S)=\{A\subset S:\#A&lt;\infty\}$, the <b>finite power set</b>.</p></div>
+<div class="box thm"><span class="tag">Example (Hausdorff metric)</span>
+<p>$\mathcal K(\R^2)$ is the collection of subsets of $\R^2$ that are (1) nonempty, (2) bounded, and (3) closed. The <b>δ-fattening</b> of $K$ is $K^\delta:=\{x\in\R^2:\exists a\in K\ d_2(x,a)\le\delta\}$, and</p>
+$$d_{\text{Hausdorff}}(K,J):=\inf\{\delta\ge0: K^\delta\supset J\text{ and }J^\delta\supset K\}.$$
+<p>Why each assumption is needed: <b>boundedness</b> (2) makes the set of admissible δ nonempty, so $d&lt;\infty$ (MS0). <b>Closedness</b> (3) is needed for (MS1b): if $x\in K\setminus J$ then $\operatorname{dist}(x,J)>0$ because $J$ is closed, so for $\delta=\operatorname{dist}(x,J)/2$ we have $J^\delta\not\supset K$, which forces $d(J,K)>0$. (MS1a) holds because $K^\delta\supset K$ for all δ. (MS2) is clear because the definition is symmetric in $K$ and $J$. The same construction works in $\mathbb E^N$.</p></div>
+<div class="box thm"><span class="tag">Example (integration metric $d_1$ on $C(I;\R)$, $I=[0,1]$)</span>
+<p>$d_1(f,g)=\int_0^1|g-f|$. (MS0): $|g-f|$ is continuous, hence Riemann integrable, with a nonnegative finite integral. (MS1a): $\int0=0$. (MS2): $|-h|=|h|$. (MS3): $|k+l|\le|k|+|l|$ pointwise, so $\int|k+l|\le\int|k|+\int|l|$ by order preservation and linearity. (MS1b) <b>needs continuity</b> (Exercise 0.2).</p></div>
+<div class="box thm"><span class="tag">Example (uniform / sup metric on $C(I;\R)$)</span>
+<p>$d_{\sup}(f,g)=\sup\{|g(s)-f(s)|:s\in I\}$. It is finite because a continuous function on a closed bounded interval is bounded. (MS1a) and (MS2) are easy. (MS3) and (MS1b) are Exercise 0.3.</p></div>
+<div class="box thm"><span class="tag">Example (two nonstandard metrics on $\R^2$, "TGV" metrics)</span>
+<p>$d_{TGV}(u,v)=\|u\|_2+\|v\|_2$ if $u\ne v$, and $0$ if $u=v$. Picture: every journey goes via the hub $0$ ("via Paris").</p>
+<p>$d'_{TGV}(u,v)=\|u\|_2+\|v\|_2$ if $u,v$ are linearly independent, and $\|v-u\|_2$ otherwise. Picture: you may travel straight along a line through $0$, otherwise you go via $0$.</p>
+<p>(MS1): $\|u\|+\|v\|=0\Rightarrow u=v=0$. (MS2): $\|-x\|=\|x\|$. The Triangle Inequality is Exercise 0.5.</p></div>
+
+<h3 id="s0-ex">Exercises for Section 0, with full solutions</h3>
+<div class="box ex"><span class="tag">Exercise 0.1 (Discrete metric)</span> <span class="marks">10 marks</span><p>Prove the discrete metric on a set $S$ is a metric.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>$d$ takes values in $\{0,1\}\subset[0,\infty[$ (MS0).</p>
+<p><b>(MS1)</b> By definition, $d(s,t)=0$ exactly when $s=t$.</p>
+<p><b>(MS2)</b> $s\ne t\iff t\ne s$, so $d(t,s)=d(s,t)$.</p>
+<p><b>(MS3)</b> Let $x,y,z\in S$. If $x=z$ then $d(x,z)=0\le d(x,y)+d(y,z)$. If $x\ne z$ then $y$ cannot equal both $x$ and $z$, so $y\ne x$ or $y\ne z$. Hence $d(x,y)+d(y,z)\ge1=d(x,z)$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 0.2 ((MS1b) for $d_1$)</span> <span class="marks">10 marks</span><p>Show: $h\in C(I;\R)$ and $\int|h|=0\Rightarrow h=0$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>We prove the <b>contrapositive</b>: $h\ne0\Rightarrow\int|h|>0$. Suppose $h(p)\ne0$ for some $p\in I$, and let $c:=|h(p)|>0$. The function $|h|$ is continuous at $p$, so with $\eps=c/2$ there is $\delta>0$ such that $s\in I,\ |s-p|&lt;\delta\Rightarrow\big||h(s)|-c\big|&lt;c/2$, so $|h(s)|>c/2$.</p>
+<p>Let $J=[p-\delta/2,p+\delta/2]\cap I$. This is a closed subinterval of $I$ of length $\ell\ge\min\{\delta/2,1\}>0$, and $|h|\ge c/2$ on $J$. Since $|h|\ge0$ everywhere, order preservation and additivity of the integral give $\int_I|h|\ge\int_J|h|\ge\tfrac c2\,\ell>0$. ∎</p>
+<p class="small">Continuity is essential: $h=\mathbf 1_{\{0\}}$ has $\int|h|=0$ but $h\ne0$ (that $h$ is Riemann integrable but not continuous).</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 0.3 ((MS3) and (MS1b) for $d_{\sup}$)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p><b>(MS3)</b> Let $f,g,h\in C(I;\R)$ and $s\in I$. By the Triangle Inequality in $\R$,
+$|h(s)-f(s)|\le|g(s)-f(s)|+|h(s)-g(s)|\le d_{\sup}(f,g)+d_{\sup}(g,h)$. The right-hand side does not depend on $s$, so it is an upper bound for $\{|h(s)-f(s)|:s\in I\}$. Taking the supremum gives $d_{\sup}(f,h)\le d_{\sup}(f,g)+d_{\sup}(g,h)$.</p>
+<p><b>(MS1b)</b> If $d_{\sup}(f,g)=0$ then for every $s$, $0\le|g(s)-f(s)|\le0$, so $f(s)=g(s)$. Hence $f=g$. (Continuity is not needed here.) ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 0.4 (Triangle Inequality for the counting metric)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p><b>Claim:</b> $A\Delta C\subset(A\Delta B)\cup(B\Delta C)$. Let $x\in A\Delta C$. By symmetry of roles, assume $x\in A\setminus C$. If $x\in B$ then $x\in B\setminus C\subset B\Delta C$. If $x\notin B$ then $x\in A\setminus B\subset A\Delta B$. The case $x\in C\setminus A$ is the same with letters swapped.</p>
+<p>So, for finite sets, $\#(A\Delta C)\le\#\big((A\Delta B)\cup(B\Delta C)\big)\le\#(A\Delta B)+\#(B\Delta C)$, i.e. $d(A,C)\le d(A,B)+d(B,C)$. ∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 0.5 (Triangle Inequality for $d_{TGV}$ and $d'_{TGV}$)</span> <span class="marks">20 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p>Write $\|\cdot\|$ for $\|\cdot\|_2$. Let $u,v,w\in\R^2$.</p>
+<p><b>$d_{TGV}$.</b> If $u=w$ the left side is $0$. Suppose $u\ne w$, so $d(u,w)=\|u\|+\|w\|$. If $v=u$, the right side is $0+d(u,w)$, which gives equality. If $v=w$, likewise. Otherwise $v\ne u$ and $v\ne w$, and the right side is $\|u\|+2\|v\|+\|w\|\ge\|u\|+\|w\|$.</p>
+<p><b>$d'_{TGV}$.</b> First a useful fact: in every case $\|v-u\|\le d'(u,v)$, because $\|v-u\|\le\|u\|+\|v\|$.</p>
+<p><i>Case A: $u,w$ linearly dependent.</i> Then $d'(u,w)=\|w-u\|\le\|v-u\|+\|w-v\|\le d'(u,v)+d'(v,w)$.</p>
+<p><i>Case B: $u,w$ linearly independent.</i> Then $u\ne0\ne w$ and $d'(u,w)=\|u\|+\|w\|$.</p>
+<ul>
+<li>If $v=0$: the pairs $\{u,0\}$ and $\{0,w\}$ are dependent, so the right side is $\|u\|+\|w\|$, which gives equality.</li>
+<li>If $v\ne0$, then $u,v$ dependent and $v,w$ dependent together would put $u,v,w$ on one line through $0$, contradicting independence of $u,w$. So at most one of the pairs is dependent.
+ <ul><li>Neither dependent: the right side is $\|u\|+2\|v\|+\|w\|\ge\|u\|+\|w\|$.</li>
+ <li>$u,v$ dependent, $v,w$ independent: the right side is $\|v-u\|+\|v\|+\|w\|\ge\|u\|+\|w\|$, since $\|u\|\le\|u-v\|+\|v\|$.</li>
+ <li>The remaining case is symmetric.</li></ul></li>
+</ul><p>∎</p></div></details></div>
+
+<div class="box ex"><span class="tag">Exercise 0.6 ((MS3) for the Hausdorff metric)</span> <span class="marks">10 marks</span>
+<p>(a) For $A,B\subset\R^N$ and $\gamma,\delta>0$: (i) $A\subset B\Rightarrow A^\delta\subset B^\delta$; (ii) $(A^\gamma)^\delta\subset A^{\gamma+\delta}$. (b) Deduce (MS3).</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a)(i) If $x\in A^\delta$, there is $a\in A$ with $d_2(x,a)\le\delta$. Since $a\in B$, $x\in B^\delta$.</p>
+<p>(a)(ii) If $x\in(A^\gamma)^\delta$, there is $y\in A^\gamma$ with $d_2(x,y)\le\delta$, and there is $a\in A$ with $d_2(y,a)\le\gamma$. By (MS3), $d_2(x,a)\le\gamma+\delta$, so $x\in A^{\gamma+\delta}$.</p>
+<p>(b) Let $K,J,L\in\mathcal K(\R^N)$ and $\eps>0$. Write $\Delta(K,J)=\{\delta: K^\delta\supset J,\ J^\delta\supset K\}$. By (a)(i) this set is "upward closed": if $\delta\in\Delta$ and $\delta'>\delta$ then $\delta'\in\Delta$. By the approximation property of infima, pick $\gamma\in\Delta(K,J)$ with $\gamma&lt;d(K,J)+\eps$ and $\delta\in\Delta(J,L)$ with $\delta&lt;d(J,L)+\eps$ (both can be taken $>0$). Then:</p>
+<p>$L\subset J^\delta$ and $J\subset K^\gamma\Rightarrow J^\delta\subset(K^\gamma)^\delta\subset K^{\gamma+\delta}$, so $L\subset K^{\gamma+\delta}$.</p>
+<p>$K\subset J^\gamma$ and $J\subset L^\delta\Rightarrow J^\gamma\subset(L^\delta)^\gamma\subset L^{\gamma+\delta}$, so $K\subset L^{\gamma+\delta}$.</p>
+<p>Hence $\gamma+\delta\in\Delta(K,L)$, so $d(K,L)\le\gamma+\delta&lt;d(K,J)+d(J,L)+2\eps$. Since $\eps>0$ was arbitrary, $d(K,L)\le d(K,J)+d(J,L)$. ∎</p></div></details></div>

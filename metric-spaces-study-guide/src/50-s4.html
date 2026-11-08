@@ -1,0 +1,200 @@
+
+<h2 class="sec" id="s4">Section 4: Metric space topology</h2>
+<p class="lead">Open and closed sets, interior, closure, boundary, continuity through open sets, density, separability, homeomorphisms, equivalence of metrics, product spaces and subspaces. This is the most examinable section.</p>
+
+<h3 id="s4-open">Open sets and interior</h3>
+<div class="box def"><span class="tag">Definition (open set)</span>
+<p>$U\subset E$ is <span class="kw">open</span> (in $E$) if $\forall p\in U\ \exists r>0:\ B_r(p)\subset U$. In words: <b>wherever you are in $U$, there is a ball centred at your location and contained entirely in $U$.</b> $\mathcal O(E)$ denotes the collection of open sets.</p></div>
+<div class="box thm"><span class="tag">Example (open balls are open sets)</span>
+<div class="prf noLabel"><b>Proof.</b> Let $p\in B_R(a)$ and $r=R-d(p,a)>0$. If $d(x,p)&lt;r$, then $d(x,a)\le d(x,p)+d(p,a)&lt;r+d(p,a)=R$. So $B_r(p)\subset B_R(a)$. ∎</div>
+<p>In $\R$ (standard metric), the open balls are exactly the bounded open intervals: $B_r(x)=\,]x-r,x+r[$, and $]c,d[=B_{(d-c)/2}(\frac{c+d}2)$.</p></div>
+<div class="box thm"><span class="tag">Proposition (The family of open sets)</span>
+<p>(a) $\emptyset,E\in\mathcal O$; (b) <b>arbitrary unions</b> of open sets are open; (c) the intersection of <b>two</b> (hence, by induction, finitely many) open sets is open.</p>
+<div class="prf">(a) Immediate: for $\emptyset$ the condition is vacuous; for $E$ every ball lies in $E$. (b) If $p\in\bigcup\mathcal U$, then $p\in U$ for some $U\in\mathcal U$, and $B_r(p)\subset U\subset\bigcup\mathcal U$. (c) If $p\in U\cap V$ with $B_r(p)\subset U$ and $B_s(p)\subset V$, take $t=\min\{r,s\}$. ∎</div></div>
+<div class="box warn"><span class="tag">Pitfall</span><b>Infinite</b> intersections of open sets need not be open: $\bigcap_n\,]-\frac1n,\frac1n[=\{0\}$ is not open in $\R$. The proof of (c) breaks because $\inf_n r_n$ may be $0$.</div>
+<div class="box thm"><span class="tag">Proposition</span><p>Every open set is a union of open balls: $U=\bigcup_{x\in U}B_{r(x)}(x)$.</p></div>
+<div class="box def"><span class="tag">Interior</span>
+<p>$p$ is an <b>interior point</b> of $A$ if $\exists r>0:\ B_r(p)\subset A$. The <span class="kw">interior</span> $\operatorname{Int}A$ is the set of interior points, and $\operatorname{Int}A\subset A$.</p>
+<p>Example: $\operatorname{Int}\Q=\emptyset$ in $\R$, because every interval $]x-r,x+r[$ contains irrationals (density of $\R\setminus\Q$).</p></div>
+<div class="box thm"><span class="tag">Proposition (Interior = largest open subset)</span>
+<p>$\operatorname{Int}A=\bigcup\{U\subset A:U\text{ open}\}$. Hence (a) $\operatorname{Int}A$ is open; (b) $A=\operatorname{Int}A\iff A$ is open; (c) $\operatorname{Int}(\operatorname{Int}A)=\operatorname{Int}A$.</p>
+<div class="prf">If $p\in\operatorname{Int}A$, then $B_r(p)$ is an open subset of $A$ containing $p$. Conversely, if $p\in U\subset A$ with $U$ open, then $B_r(p)\subset U\subset A$. ∎</div></div>
+
+<h3 id="s4-cts">Continuity</h3>
+<div class="box def"><span class="tag">Continuity between metric spaces</span>
+<p>$f:E\to E'$ is <b>continuous at $p$</b> if $\forall\eps>0\ \exists\delta>0:\ f(B_\delta(p))\subset B_\eps(f(p))$. It is <b>sequentially continuous at $p$</b> if $x_n\to p\Rightarrow f(x_n)\to f(p)$. <b>Continuous</b> means continuous at every $p$.</p></div>
+<div class="box thm"><span class="tag">Proposition: continuous at $p$ ⟺ sequentially continuous at $p$</span>
+<div class="prf">(⇒) Given ε, take δ, then $N$ with $d(x_n,p)&lt;\delta$ for $n\ge N$. Then $f(x_n)\in B_\eps(f(p))$. (⇐, contrapositive) If $f$ is not continuous at $p$, there is $\eta>0$ such that for every $n$ some $x_n\in B_{1/n}(p)$ has $d(f(x_n),f(p))\ge\eta$. Then $x_n\to p$ but $f(x_n)\not\to f(p)$. ∎</div></div>
+<div class="box thm"><span class="tag">Proposition (Lipschitz ⇒ continuous)</span><p>$0\le d(f(x_n),f(a))\le L\,d(x_n,a)\to0$. Alternatively, $f(B_r(p))\subset B_{Lr}(f(p))$, so take $\delta=\eps/L$ (any δ works if $L=0$). So $C_{\text{Lip}}(E;E')\subset C(E;E')$.</p></div>
+<div class="box thm"><span class="tag">Theorem (Global continuity via open sets). KEY.</span>
+<p>$f$ is continuous ⟺ $f^{-1}(V)$ is open in $E$ for every open $V$ in $E'$.</p>
+<div class="prf"><p>(⇒) Let $p\in f^{-1}(V)$. Since $V$ is open, $B_\eps(f(p))\subset V$ for some ε. Continuity gives δ with $f(B_\delta(p))\subset B_\eps(f(p))$. So $B_\delta(p)\subset f^{-1}(f(B_\delta(p)))\subset f^{-1}(B_\eps(f(p)))\subset f^{-1}(V)$.</p>
+<p>(⇐) $f^{-1}(B_\eps(f(p)))$ is open (balls are open) and contains $p$, so it contains some $B_\delta(p)$. Then $f(B_\delta(p))\subset f(f^{-1}(B_\eps(f(p))))\subset B_\eps(f(p))$. ∎</p></div>
+<p><b>Uses</b>: $f^{-1}(f(A))\supset A$ and $f(f^{-1}(B))\subset B$ (Exercise 4.3).</p></div>
+<div class="box warn"><span class="tag">Pitfall</span>It is <b>inverse</b> images of open sets that are open. <b>Direct</b> images of open sets under continuous maps need not be open: a constant map $\R\to\R$ sends $\R$ to a single point, which is not open.</div>
+
+<h3 id="s4-closed">Closed sets, closure, boundary</h3>
+<div class="box thm"><span class="tag">Proposition (Point of closure)</span>
+<p>TFAE for $A\subset E$, $p\in E$: (i) $\forall r>0:\ B_r(p)\cap A\ne\emptyset$; (ii) some sequence $(a_n)$ in $A$ has $a_n\to p$; (iii) $\operatorname{dist}_A(p)=0$.</p>
+<div class="prf">(iii)⇒(ii): approximation of the infimum by a sequence. (ii)⇒(i): $a_N\in B_r(p)\cap A$ for large $N$. (i)⇒(iii): for every ε, some $a\in A$ has $d(a,p)&lt;\eps$, so $\operatorname{dist}_A(p)&lt;\eps$. ∎</div></div>
+<div class="box def"><span class="tag">Closure, closed</span>
+<p>$p$ is a <b>point of closure</b> of $A$ if (i) holds. The <span class="kw">closure</span> is $\overline A=\{\text{points of closure of }A\}$, and $A\subset\overline A$.</p>
+<p>$A$ is <span class="kw">closed</span> if $\overline A=A$. Equivalently: <b>whenever a sequence in $A$ converges in $E$, its limit lies in $A$.</b> This is important to grasp and remember. $\mathcal C(E)$ denotes the closed sets.</p></div>
+<div class="box thm"><span class="tag">Facts about closures</span>
+<ul>
+<li>$\overline{\overline A}=\overline A$, so <b>closures are closed</b>. Proof: if $p\in\overline{\overline A}$, pick $v\in\overline A$ with $d(v,p)&lt;r/2$, then $a\in A$ with $d(a,v)&lt;r/2$; so $d(a,p)&lt;r$.</li>
+<li>$\overline{B_r(a)}\subset B_r[a]$. Proof: if $x_n\to p$ with $d(x_n,a)&lt;r$, then $d(p,a)=\lim d(x_n,a)\le r$ (convergence of metric values, order preservation).</li>
+<li>In general $B_r(a)\subset\overline{B_r(a)}\subset B_r[a]$, and both inclusions can be strict. Discrete space: $\overline{B_1(a)}=B_1(a)=\{a\}$, but $B_1[a]=E$.</li>
+<li>In a <b>normed</b> space, $\overline{B_r(a)}=B_r[a]$.</li>
+</ul></div>
+<div class="box thm"><span class="tag">Theorem (Closed = complement of open)</span>
+<p>$A$ is closed ⟺ $A^\complement=E\setminus A$ is open.</p>
+<div class="prf">(⇒) If $p\notin A=\overline A$, then $r:=\operatorname{dist}_A(p)>0$, so $B_r(p)\subset A^\complement$. (⇐, contrapositive) If $A$ is not closed, pick $p\in\overline A\setminus A$. Then $p\in A^\complement$, but every ball around $p$ meets $A$. So $A^\complement$ is not open. ∎</div></div>
+<div class="box warn"><span class="tag">MOST SETS IN A GENERAL METRIC SPACE ARE NEITHER OPEN NOR CLOSED</span>
+<p>Examples: $[c,d[$ in $\R$, and $\Q$ in $\R$. "Not open" does <b>not</b> mean "closed". Some sets are both ($\emptyset$, $E$, and every subset of a discrete space).</p></div>
+<div class="box thm"><span class="tag">Corollary (The family of closed sets)</span>
+<p>(a) $\emptyset,E$ are closed; (b) <b>arbitrary intersections</b> of closed sets are closed; (c) <b>finite unions</b> of closed sets are closed. Proof: de Morgan applied to the open-set properties.</p>
+<p>Infinite unions can fail: $\bigcup_n[\frac1n,1]=\,]0,1]$ is not closed.</p></div>
+<div class="box thm"><span class="tag">Proposition (Closure = smallest closed superset)</span>
+<p>$\overline A=\bigcap\{F\supset A:F\text{ closed}\}$.</p>
+<div class="prf">Let $H$ be the right side. $\overline A$ is a closed set containing $A$, so $H\subset\overline A$. Conversely, if $p=\lim a_n$ with $a_n\in A\subset H$, then since $H$ is closed, $p\in H$. ∎</div>
+<p><b>Corollary</b>: $(\overline A)^\complement=\operatorname{Int}(A^\complement)$ and $(\operatorname{Int}A)^\complement=\overline{A^\complement}$.</p></div>
+<div class="box def"><span class="tag">Topological boundary</span>
+<p>$\partial A:=\overline A\setminus\operatorname{Int}A=\overline A\cap\overline{A^\complement}$. It is <b>closed</b> (an intersection of two closed sets). $\operatorname{Int}A$, $\partial A$ and $\operatorname{Int}A^\complement$ form a <b>partition of $E$</b> (allowing empty pieces).</p>
+<p>Examples in $\R$: $\partial[0,1[=\{0,1\}$; $\partial\Q=\R$ (closure $\R$, interior $\emptyset$).</p></div>
+
+<h3 id="s4-dense">Density and separability</h3>
+<div class="box def"><span class="tag">Dense, separable</span>
+<p>For $D\subset A\subset E$: $D$ is <span class="kw">dense in $A$</span> if $\overline D\supset A$. <b>Test</b>: TFAE (i) $D$ is dense in $A$; (ii) $\forall a\in A\ \forall R>0:\ B_R(a)\cap D\ne\emptyset$; (iii) every $a\in A$ is a limit of a sequence in $D$.</p>
+<p>$E$ is <span class="kw">separable</span> if it has a <b>countable dense subset</b>.</p>
+<p>Example: $\Q\cap I$ and $(\R\setminus\Q)\cap I$ are both dense in $I$, yet they are disjoint.</p></div>
+<div class="box thm"><span class="tag">Proposition (Dense ∩ open-dense = dense)</span>
+<p>If $U$ is open and dense and $A$ is dense, then $U\cap A$ is dense.</p>
+<div class="prf">Let $p\in E$ and $R>0$. (1) Density of $U$ gives $u\in B_R(p)\cap U$. (2) $B_R(p)\cap U$ is open, so some $B_r(u)\subset B_R(p)\cap U$. (3) Density of $A$ gives $a\in B_r(u)\cap A\subset B_R(p)\cap U\cap A$. ∎ <span class="small">(Openness of $U$ is essential: $\Q$ and $\R\setminus\Q$ are both dense, but their intersection is empty.)</span></div></div>
+<div class="box thm"><span class="tag">Examples of separable spaces</span>
+<p>(1) $\ell^p(N)$ for every $p\in[1,\infty]$: $\Q^N$ is countable and dense. (2) $(C(I;\R),d_{\sup})$: polynomials are dense by the <b>Weierstrass Approximation Theorem</b>, and polynomials with rational coefficients approximate them uniformly. A second proof uses piecewise linear functions (Exercise 4.11).</p></div>
+
+<h3 id="s4-R">Open subsets of ℝ</h3>
+<div class="box thm"><span class="tag">Theorem (In ℝ, open ≡ countable union of open intervals)</span>
+<p>Let $\mathcal Q=\{]q,r[:q,r\in\Q,q&lt;r\}$, which is countable (it injects into $\Q^2$). For any $A\subset\R$, let $\mathcal Q_A=\{J\in\mathcal Q:J\subset A\}$. Then $\bigcup\mathcal Q_A=\operatorname{Int}A$.</p>
+<div class="prf">(⊂) Each $J$ in $\mathcal Q_A$ is an open subset of $A$. (⊃) If $]x-R,x+R[\subset A$, density of $\Q$ gives rationals $x-R&lt;q&lt;x&lt;r&lt;x+R$, so $x\in\,]q,r[\in\mathcal Q_A$. For open $U$, $U=\operatorname{Int}U=\bigcup\mathcal Q_U$, a countable union of open intervals. ∎</div>
+<p><b>Challenge (ℝ<sup>N</sup>)</b>: every open set in $\R^N$ is a countable union of open balls with rational centres and rational radii (or of open boxes with rational corners). The same proof works using density of $\Q^N$.</p></div>
+
+<h3 id="s4-homeo">Homeomorphisms and equivalence of metrics</h3>
+<div class="box def"><span class="tag">Homeomorphism</span>
+<p>$f:E\to E'$ is a <span class="kw">homeomorphism</span> if (H1) $f$ is continuous, (H2) $f$ is bijective, (H3) $f^{-1}$ is continuous.</p>
+<ul>
+<li>(H3) does <b>not</b> follow from (H1) and (H2). Example: $\mathrm{id}:(\R,d_{\text{discrete}})\to(\R,|\cdot|)$ is a continuous bijection (every map out of a discrete space is continuous), but its inverse is not continuous ($\{0\}$ is open in the discrete space but not in $\R$).</li>
+<li>Bi-Lipschitz maps are homeomorphisms.</li>
+<li>$\tan:]-\frac\pi2,\frac\pi2[\to\R$ is a homeomorphism whose inverse is Lipschitz.</li>
+<li>For a continuous bijection, TFAE: it is a homeomorphism; it maps open sets to open sets; it maps closed sets to closed sets.</li>
+</ul></div>
+<div class="box def"><span class="tag">Topological vs Lipschitz equivalence of metrics</span>
+<p>Let $d_1,d_2$ be metrics on $S$.</p>
+<p>(a) They are <span class="kw">topologically equivalent</span> if $\mathrm{id}_S:(S,d_1)\to(S,d_2)$ is a <b>homeomorphism</b>.</p>
+<p>(b) They are <span class="kw">Lipschitz equivalent</span> if $\mathrm{id}_S$ is <b>bi-Lipschitz</b>, i.e. $\exists L,K>0$ with $d_2\le Ld_1$ and $d_1\le Kd_2$.</p>
+<p>Lipschitz equivalent ⇒ topologically equivalent (the converse is false). Equivalent metrics have the <b>same open sets</b>.</p></div>
+<div class="box thm"><span class="tag">Proposition (Equivalence via convergence)</span>
+<p>TFAE: (i) $d_1,d_2$ are topologically equivalent; (ii) for all $p$ and $(x_n)$: $x_n\xrightarrow{d_1}p\iff x_n\xrightarrow{d_2}p$; (iii) $d_1$-closed ⟺ $d_2$-closed. (Also (iv): $d_1$-open ⟺ $d_2$-open, Exercise 4.7.)</p></div>
+<div class="box thm"><span class="tag">Proposition (Lipschitz equivalence preserves boundedness and Cauchy)</span>
+<p>If $d_2\le Ld_1$, then $d_2\text{-}\operatorname{diam}A\le L\,d_1\text{-}\operatorname{diam}A$ and $d_2(x_n,x_m)\le Ld_1(x_n,x_m)$. Apply this both ways.</p></div>
+<div class="box warn"><span class="tag">Topological equivalence does NOT preserve boundedness or Cauchyness</span>
+<p><b>Boundedness</b>: $d$ and $\min\{d,1\}$ are topologically equivalent on $\R$, but $\R$ is unbounded for $d$ and bounded for $\min\{d,1\}$.</p>
+<p><b>Cauchy</b>: $d_{NS}(x,y)=|\tan^{-1}y-\tan^{-1}x|$ is topologically equivalent to the standard metric on $\R$. But $x_n=n$ is $d_{NS}$-Cauchy (since $\tan^{-1}n\to\pi/2$ converges) and not Cauchy in the standard metric. So the two metrics are not Lipschitz equivalent.</p>
+<p>An <b>unbounded</b> metric cannot have a Lipschitz equivalent <b>bounded</b> metric: if $d\le Kd'$ and $d'\le M$, then $d\le KM$.</p></div>
+<div class="box thm"><span class="tag">Examples you must know</span>
+<p><b>All $\ell^p$ metrics on $\R^N$ are Lipschitz equivalent</b>, since $\|x\|_\infty\le\|x\|_p\le N^{1/p}\|x\|_\infty$. (Proof: $|x_j|^p\le\sum|x_i|^p\le N\max|x_i|^p$.)</p>
+<p><b>Corollaries</b>: for $A\subset\R^N$, $p,q\in[1,\infty]$: ℓ<sup>p</sup>-open ⟺ ℓ<sup>q</sup>-open; ℓ<sup>p</sup>-closed ⟺ ℓ<sup>q</sup>-closed; ℓ<sup>p</sup>-bounded ⟺ ℓ<sup>q</sup>-bounded. A sequence is ℓ<sup>p</sup>-convergent to $a$ iff it converges <b>coordinatewise</b> ($x_i^{(n)}\to a_i$ for each $i$). The same holds for Cauchy, and bounded means $\exists L:\ |x_i^{(n)}|\le L$ for all $i,n$.</p>
+<details><summary>Proof of the coordinatewise criterion (likely exam question)</summary><div class="inner">
+<p>For every $i$: $|x_i^{(n)}-a_i|\le\|x^{(n)}-a\|_\infty\le\|x^{(n)}-a\|_p\le N^{1/p}\|x^{(n)}-a\|_\infty\le N^{1/p}\sum_j|x_j^{(n)}-a_j|$.</p>
+<p>If $\|x^{(n)}-a\|_p\to0$, each coordinate converges (Sandwich). If every coordinate converges, the finite sum $\sum_j|x_j^{(n)}-a_j|\to0$ (algebra of limits), so $\|x^{(n)}-a\|_p\to0$.</p>
+<p>The Cauchy and bounded statements follow in the same way, replacing $a$ by $x^{(m)}$ or by $0$. ∎</p></div></details></div>
+<div class="box thm"><span class="tag">Proposition (Conditions for α∘d to be an equivalent metric)</span>
+<p>Suppose $\alpha:[0,\infty[\to[0,\infty[$ is (i) definite ($\alpha(s)=0\iff s=0$), (ii) increasing, (iii) subadditive, and (iv) <b>continuous at 0</b>. Then for every metric $d$, $\alpha\circ d$ is a <b>topologically equivalent</b> metric.</p>
+<p>If moreover (ii)′ α is strictly increasing on some $[0,\eta]$, then $d$-Cauchy ⟺ $(\alpha\circ d)$-Cauchy.</p>
+<div class="prf"><p><b>Same convergent sequences.</b> If $d(x_n,a)\to0$, then $\alpha(d(x_n,a))\to0$ by continuity at 0. If $x_n\not\to a$ in $d$, there are $\eta>0$ and a subsequence with $d(x_{n_i},a)\ge\eta$. Then $\alpha(d(x_{n_i},a))\ge\alpha(\eta)>0$ (increasing and definite), so $x_n\not\to a$ in $\alpha\circ d$. Apply Equivalence via convergence.</p>
+<p><b>Cauchy part.</b> (⇒): given $\eps$, continuity at 0 gives $\eta$ with $s&lt;\eta\Rightarrow\alpha(s)&lt;\eps$. Apply the $d$-Cauchy condition with $\eta$. (⇐): given $\eps>0$, $\alpha(\eps)>0$. Choose $N$ with $\alpha(d(x_n,x_m))&lt;\alpha(\eps)$ for $n,m\ge N$. If $d(x_n,x_m)\ge\eps$, then $\alpha(d(x_n,x_m))\ge\alpha(\eps)$ (increasing), a contradiction. So $d(x_n,x_m)&lt;\eps$. ∎</p></div>
+<p>Remarks: these conditions make α continuous <b>everywhere</b>, since $0\le\alpha(s+t)-\alpha(s)\le\alpha(t)$. Conditions (i), (iii), (iv) are also <b>necessary</b>; perhaps surprisingly, (ii) is not.</p>
+<p><b>Standard examples</b>: $\alpha_0(s)=cs$, $\alpha_1(s)=\min\{s,1\}$, $\alpha_2(s)=\frac s{1+s}$, $\alpha_3(s)=\tan^{-1}s$, $\alpha_4(s)=s^{1/p}$.</p>
+<p><b>Corollary</b>: every metric $d$ has a topologically equivalent <b>bounded</b> metric with the same Cauchy sequences (use $\alpha_1$, $\alpha_2$ or $\alpha_3$).</p></div>
+
+<h3 id="s4-prod">Products and metric subspaces revisited</h3>
+<div class="box thm"><span class="tag">Proposition (Convergence in countable product spaces)</span>
+<p>Let $d_i'$ be topologically equivalent to $d_i$ with $\sum_id_i'\text{-}\operatorname{diam}S_i&lt;\infty$, and let $d(x,y)=\sum_id_i'(x_i,y_i)$ on $S=\prod S_i$.</p>
+<p>(a) $x^{(n)}\to a$ ⟺ $x_i^{(n)}\to a_i$ for every $i$ (coordinatewise convergence).</p>
+<p>(b) If, in addition, $d_i'$ and $d_i$ have the same Cauchy sequences, then $d$-Cauchy ⟺ coordinatewise $d_i$-Cauchy.</p>
+<div class="prf">(⇐) Given ε, choose $K$ with the <b>tail</b> $\sum_{k>K}d'_k\text{-}\operatorname{diam}&lt;\eps$. Then choose $N$ so that the first $K$ coordinates are each within $\eps/K$. This gives $d(x^{(n)},a)&lt;2\eps$. (⇒) $d_i'(x_i^{(n)},a_i)\le d(x^{(n)},a)$. ∎</div>
+<p><b>Finite products</b> with the sum metric: convergence and Cauchyness are both coordinatewise.</p></div>
+<div class="box thm"><span class="tag">Balls in a metric subspace</span>
+<p>In $\tilde A=(A,d|_{A\times A})$: $\tilde B_r(a)=A\cap B_r(a)$ and $\tilde B_r[a]=A\cap B_r[a]$.</p></div>
+<div class="box warn"><span class="tag">Openness/closedness is always "in" a space</span>
+<p>$A=[0,1[$ is both open and closed in $\tilde A$ (it is the whole space), but neither open nor closed in $\R$.</p>
+<p>In $\tilde{\Z}\subset\R$, every subset is both open and closed, because $\tilde B_1(k)=\{k\}$ makes singletons open.</p></div>
+<div class="box thm"><span class="tag">Theorem (Closed and open sets of a metric subspace)</span>
+<p>For $X\subset A$: $X$ is closed in $\tilde A$ ⟺ $X=A\cap F$ for some $F$ closed in $E$. Likewise, $X$ is open in $\tilde A$ ⟺ $X=A\cap U$ for some $U$ open in $E$ (Exercise 4.10).</p>
+<div class="prf">(Closed, ⇒) Take $F=\overline X$ (closure in $E$). Then $X\subset A\cap F$. If $p\in A\cap F$, some $x_n\in X$ has $x_n\to p$. Since $p\in A$ and $X$ is closed in $\tilde A$, $p\in X$. (⇐) If $x_n\in X$ and $x_n\to a\in A$, then $(x_n)$ lies in $F$, which is closed in $E$, so $a\in F$. Hence $a\in A\cap F=X$. ∎</div></div>
+
+<h3 id="s4-ex">Exercises for Section 4, with full solutions</h3>
+<div class="box ex"><span class="tag">Exercise 4.1 (Open subsets of discrete spaces)</span> <span class="marks">5 marks</span>
+<details><summary>Solution</summary><div class="inner"><p><b>Every subset is open.</b> For $p\in U$, $B_1(p)=\{x:d(x,p)&lt;1\}=\{p\}\subset U$. (Any radius $r\le1$ works.) ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.2 (Open minus finite is open)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner"><p>Let $p\in U=V\setminus F$. Since $V$ is open, $B_{r_0}(p)\subset V$ for some $r_0>0$. Let $r=\min(\{r_0\}\cup\{d(p,q):q\in F\})$. This is a minimum of <b>finitely many positive</b> numbers ($p\notin F$, so $d(p,q)>0$), hence $r>0$. If $x\in B_r(p)$, then $x\in V$, and $x\ne q$ for every $q\in F$ (as $d(x,p)&lt;r\le d(q,p)$). So $B_r(p)\subset U$. ∎</p>
+<p class="small">Alternative: finite sets are closed (finite unions of closed singletons), so $V\setminus F=V\cap F^\complement$ is an intersection of two open sets. "Finite" is essential: $\R\setminus\Q$ is not open.</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.3 (Inverse images of direct images and vice versa)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) $f^{-1}(f(A))=\{s:\exists a\in A,\ f(s)=f(a)\}\supset A$ (take $s=a$). $f(f^{-1}(B))=B\cap\operatorname{Ran}f\subset B$.</p>
+<p>(b) $f(x)=x^2$ on $\R$. With $A=[0,1]$: $f^{-1}(f(A))=[-1,1]\supsetneq A$. With $B=[-1,1]$: $f(f^{-1}(B))=[0,1]\subsetneq B$.</p>
+<p>(c) If $f$ is injective, $f(s)=f(a)$ forces $s=a$, so $f^{-1}(f(A))=A$. Conversely, if equality holds for all $A$, take $A=\{s_1\}$: if $f(s_2)=f(s_1)$ then $s_2\in f^{-1}(f(\{s_1\}))=\{s_1\}$. So $f$ is injective.</p>
+<p>(d) If $f$ is surjective, $B\cap\operatorname{Ran}f=B$. Conversely, take $B=T$: $T=f(f^{-1}(T))=f(S)=\operatorname{Ran}f$. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.4 (Closed subsets of discrete spaces)</span> <span class="marks">5 marks</span>
+<details><summary>Solution</summary><div class="inner"><p><b>Every subset is closed</b>: its complement is open by Exercise 4.1. So in a discrete space every set is both open and closed. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.5 (Global continuity via closed sets)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner"><p>Use $f^{-1}(E'\setminus C)=E\setminus f^{-1}(C)$ (Exercise 1.9) and "closed ⟺ complement open".</p>
+<p>(i)⇒(ii): if $C$ is closed, $E'\setminus C$ is open, so $f^{-1}(E'\setminus C)=E\setminus f^{-1}(C)$ is open (global continuity). Hence $f^{-1}(C)$ is closed.</p>
+<p>(ii)⇒(i): if $V$ is open, $E'\setminus V$ is closed, so $E\setminus f^{-1}(V)$ is closed and $f^{-1}(V)$ is open. Global continuity via open sets gives continuity. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.6 (Equivalences of metrics are equivalence relations)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p><b>Reflexive</b>: $\mathrm{id}:(S,d)\to(S,d)$ is an isometry, hence bi-Lipschitz (constant 1) and a homeomorphism.</p>
+<p><b>Symmetric</b>: the inverse of $\mathrm{id}:(S,d_1)\to(S,d_2)$ is $\mathrm{id}:(S,d_2)\to(S,d_1)$. Both definitions require the map and its inverse to be continuous (resp. Lipschitz), which is symmetric in $d_1,d_2$.</p>
+<p><b>Transitive</b>: if $d_1\sim d_2$ and $d_2\sim d_3$, then $\mathrm{id}_{13}=\mathrm{id}_{23}\circ\mathrm{id}_{12}$. Compositions of continuous maps are continuous: $x_n\to p\Rightarrow\mathrm{id}(x_n)\to p\Rightarrow\dots$, or via preimages of open sets $(g\circ f)^{-1}(V)=f^{-1}(g^{-1}(V))$. Compositions of Lipschitz maps are Lipschitz: $d_3\le L_2d_2\le L_2L_1d_1$. Apply the same to the inverses. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.7 (Equivalence of metrics and comparison of balls)</span>
+<details><summary>Solution</summary><div class="inner">
+<p><b>(a)</b> (i)⇒(ii): $\mathrm{id}:(S,d_1)\to(S,d_2)$ is continuous at $p$, so for $R>0$ some $r_1$ has $B^1_{r_1}(p)\subset B^2_R(p)$. Symmetrically, some $r_2$ has $B^2_{r_2}(p)\subset B^1_R(p)$. Take $r=\min\{r_1,r_2\}$.</p>
+<p>(ii)⇒(iii): let $A$ be $d_1$-open and $p\in A$. Then $B^1_R(p)\subset A$ for some $R$, and (ii) gives $r$ with $B^2_r(p)\subset B^1_R(p)\subset A$. So $A$ is $d_2$-open, and symmetrically the other way.</p>
+<p>(iii)⇒(i): the preimage under $\mathrm{id}:(S,d_1)\to(S,d_2)$ of a $d_2$-open $V$ is $V$, which is $d_1$-open by (iii). By global continuity, $\mathrm{id}$ is continuous. The same argument applies to its inverse.</p>
+<p><b>(b)</b> (i)⇒(ii): suppose $d_2\le Ld_1$ and $d_1\le Kd_2$ with $L,K>0$. If $d_1(x,p)&lt;R/L$ then $d_2(x,p)&lt;R$, so $B^1_{mR}(p)\subset B^2_R(p)$ with $m=1/L$. If $d_2(x,p)&lt;R$ then $d_1(x,p)&lt;KR$, so $B^2_R(p)\subset B^1_{MR}(p)$ with $M=K$.</p>
+<p>(ii)⇒(i): fix $x,p$. For every $R>d_1(x,p)/m$ we have $x\in B^1_{mR}(p)\subset B^2_R(p)$, so $d_2(x,p)&lt;R$. Letting $R\downarrow d_1(x,p)/m$ gives $d_2\le\frac1md_1$. Similarly, for every $R>d_2(x,p)$, $x\in B^1_{MR}(p)$, so $d_1(x,p)&lt;MR$, giving $d_1\le Md_2$. Hence $\mathrm{id}$ is bi-Lipschitz. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.8 ($d_{TGV}$ is not equivalent to the standard metric on ℝ)</span> <span class="marks">10 marks</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) For $x\ne y$: $|x-y|\le|x|+|y|=d_{TGV}(x,y)$. So $g=\mathrm{id}:E_2\to E_1$ is Lipschitz with constant $\le1$.</p>
+<p>(b) For $x\ne0$, $d_{TGV}(x,0)=|x|+0=|x-0|$. Given ε, take δ=ε: $|x|&lt;\delta\Rightarrow d_{TGV}(x,0)&lt;\eps$. So $f$ is continuous at 0.</p>
+<p>(c) For $a\ne0$, let $x_n=a+\frac1n\to a$ in $E_1$. Then $d_{TGV}(x_n,a)=|x_n|+|a|\to2|a|\ne0$, so $f(x_n)\not\to f(a)$, and $f$ is not (sequentially) continuous at $a$. (Equivalently, $B^{TGV}_{|a|}(a)=\{a\}$, so $\{a\}$ is open in $E_2$ but not in $E_1$.)</p>
+<p><b>Deduce</b>: $\mathrm{id}:E_1\to E_2$ is not continuous, so the metrics are <b>not topologically equivalent</b>, and hence not Lipschitz equivalent either. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.9 (Continuity of the metric)</span>
+<details><summary>Solution</summary><div class="inner"><p>Apply the Rearranged Triangle Inequality twice:
+$|d(x,y)-d(u,v)|\le|d(x,y)-d(u,y)|+|d(u,y)-d(u,v)|\le d(x,u)+d(y,v)=d'((x,y),(u,v))$.
+So $d$ is <b>Lipschitz with constant ≤ 1</b>, and Lipschitz ⇒ continuous. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.10 (Open sets of a metric subspace)</span>
+<details><summary>Solution</summary><div class="inner">
+<p>(ii)⇒(i): let $X=A\cap U$ with $U$ open in $E$, and $p\in X$. Then $B_r(p)\subset U$ for some $r$, so $\tilde B_r(p)=A\cap B_r(p)\subset A\cap U=X$.</p>
+<p>(i)⇒(ii): for each $p\in X$ choose $r_p>0$ with $\tilde B_{r_p}(p)\subset X$, and let $U=\bigcup_{p\in X}B_{r_p}(p)$. $U$ is open in $E$ (a union of open balls). Then $A\cap U=\bigcup_p(A\cap B_{r_p}(p))=\bigcup_p\tilde B_{r_p}(p)$. This contains every $p\in X$ and is contained in $X$, so it equals $X$. ∎</p>
+<p class="small">Alternatively, use complements together with the closed-set theorem: $A\setminus X$ is closed in $\tilde A$, so $A\setminus X=A\cap F$; then $X=A\cap F^\complement$.</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.11 (Separability of $C(I;\R)$, again)</span> <span class="marks">10 marks</span>
+<p>$A=\bigcup_{n\ge0}A_n$, where $A_n$ is the set of continuous $g$, linear on each $[k/2^n,(k+1)/2^n]$, with $g(j/2^n)\in\Q$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>(a) The map $A_n\to\Q^{1+2^n}$, $g\mapsto(g(0),g(1/2^n),\dots,g(1))$, is <b>injective</b>: a function that is linear on each piece is determined by its values at the nodes (linear interpolation). $\Q^{1+2^n}$ is countable, so $A_n$ is countable. A countable union of countable sets is countable, so $A$ is countable.</p>
+<p>(b) Let $f\in C(I;\R)$ and $\eps>0$. By the <b>Uniform Continuity Theorem</b> there is $\delta$ with $|x-y|&lt;\delta\Rightarrow|f(x)-f(y)|&lt;\eps$. Choose $n$ with $2^{-n}&lt;\delta$, and rationals $q_j$ with $|q_j-f(j/2^n)|&lt;\eps$ (density of ℚ). Let $g\in A_n$ interpolate the $q_j$.</p>
+<p>For $x\in[x_k,x_{k+1}]$ (with $x_k=k/2^n$), write $x=(1-\lambda)x_k+\lambda x_{k+1}$ with $\lambda\in[0,1]$. Then
+$$|g(x)-f(x)|=|(1-\lambda)(q_k-f(x))+\lambda(q_{k+1}-f(x))|\le(1-\lambda)|q_k-f(x)|+\lambda|q_{k+1}-f(x)|.$$
+Each term satisfies $|q_k-f(x)|\le|q_k-f(x_k)|+|f(x_k)-f(x)|&lt;2\eps$ (since $|x-x_k|\le2^{-n}&lt;\delta$). So $|g-f|&lt;2\eps$ everywhere, and $d_{\sup}(f,g)\le2\eps$. Hence every ball meets $A$, and $A$ is dense.</p>
+<p>A countable dense subset exists, so $E$ is <b>separable</b>. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">Exercise 4.12 (Uncountability of ℝ, again)</span> <span class="marks">10 marks</span>
+<p>$\psi:\R\to\{0,1\}^\N$, $x\mapsto(F(\lfloor10x\rfloor),F(\lfloor10^2x\rfloor),\dots)$, where $F(m)=0$ for $m$ even and $1$ for $m$ odd. (a) Show ψ is surjective. (b) Deduce there is no surjection $\N\to\R$.</p>
+<details><summary>Solution</summary><div class="inner">
+<p>Here $\lfloor p\rfloor=\max\{m\in\Z:m\le p\}$, the integer part.</p>
+<p>(a) Given $a=(a_k)\in\{0,1\}^\N$, let $x=\sum_{k\ge1}a_k10^{-k}$. Then
+$$10^nx=\underbrace{\sum_{k\le n}a_k10^{n-k}}_{=:m_n\in\Z}+\underbrace{\sum_{k>n}a_k10^{n-k}}_{=:r_n\in[0,1/9]}.$$
+Since $0\le r_n\le\sum_{j\ge1}10^{-j}=\frac19&lt;1$, we get $\lfloor10^nx\rfloor=m_n$. Also $m_n=a_n+10(\dots)$, so $m_n\equiv a_n\pmod2$ and $F(m_n)=a_n$. Hence $\psi(x)=a$, and ψ is surjective.</p>
+<p>(b) If $\sigma:\N\to\R$ were surjective, then $\psi\circ\sigma:\N\to\{0,1\}^\N\cong\F(\N;\{0,1\})$ would be a surjection, contradicting <b>Cantor's Theorem</b> (no surjection $S\to\F(S;\{0,1\})$). Since $\R\ne\emptyset$, this means $\R$ is not countable. ∎</p></div></details></div>
+<div class="box ex"><span class="tag">In-text: why every subset of $\tilde{\Z}$ is open (and closed)</span>
+<details><summary>Answer</summary><div class="inner"><p>Every subset $X\subset\Z$ is a union of singletons, $X=\bigcup_{k\in X}\{k\}$. Each singleton is the open ball $\tilde B_1(k)$, and unions of open sets are open. So $X$ is open; and since $\Z\setminus X$ is open too, $X$ is also closed. This explains the "It suffices to show… (Why?)" step in the notes.</p></div></details></div>
