@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metric Spaces &amp; Topology</title>
+<meta name="description" content="A detailed, exam-focused study guide to Chapters 0–5 of Metric Spaces and Topology, organised around a Tuesday 2pm–7pm study session.">
+<style>
+:root{
+  --bg:#fbfaf7; --surface:#ffffff; --text:#1d1d1f; --muted:#5b5b63; --rule:#e3e0d8;
+  --accent:#2f5d8a; --accent-soft:#e8eff7;
+  --def:#2f5d8a; --def-bg:#eef3f9;
+  --thm:#6b3fa0; --thm-bg:#f3eef9;
+  --ex:#2e7d4f; --ex-bg:#edf6f0;
+  --warn:#a6461b; --warn-bg:#fbefe8;
+  --tip:#8a6d00; --tip-bg:#fbf6e2;
+  --code-bg:#f2f0ea;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16171a; --surface:#1e2024; --text:#e7e6e3; --muted:#a3a2a8; --rule:#34363c;
+    --accent:#8fb6e0; --accent-soft:#1f2a36;
+    --def:#8fb6e0; --def-bg:#1c2631;
+    --thm:#c3a4ea; --thm-bg:#271f33;
+    --ex:#8fd1a8; --ex-bg:#1a2a21;
+    --warn:#f0a07a; --warn-bg:#33231b;
+    --tip:#e6cb6a; --tip-bg:#2d2817;
+    --code-bg:#26282d;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16171a; --surface:#1e2024; --text:#e7e6e3; --muted:#a3a2a8; --rule:#34363c;
+  --accent:#8fb6e0; --accent-soft:#1f2a36;
+  --def:#8fb6e0; --def-bg:#1c2631;
+  --thm:#c3a4ea; --thm-bg:#271f33;
+  --ex:#8fd1a8; --ex-bg:#1a2a21;
+  --warn:#f0a07a; --warn-bg:#33231b;
+  --tip:#e6cb6a; --tip-bg:#2d2817;
+  --code-bg:#26282d;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:17px/1.65 "Charter","Iowan Old Style","Georgia","Cambria",serif;}
+main{max-width:860px;margin:0 auto;padding:32px 16px 80px}
+h1,h2,h3,h4{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.25;color:var(--text)}
+h1{font-size:2.2rem;margin:.2em 0 .2em}
+h2{font-size:1.65rem;margin:2.2em 0 .6em;padding-top:.6em;border-top:3px solid var(--accent)}
+h3{font-size:1.25rem;margin:1.8em 0 .5em;color:var(--accent)}
+h4{font-size:1.05rem;margin:1.3em 0 .4em}
+p{margin:.6em 0}
+a{color:var(--accent)}
+ul,ol{padding-left:1.4em}
+li{margin:.25em 0}
+.sub{color:var(--muted);font-size:1.05rem;margin-top:0}
+.m{font-family:"Cambria Math","STIX Two Math","Latin Modern Math","Times New Roman",serif;white-space:nowrap}
+.mb{display:block;text-align:center;margin:.7em 0;font-family:"Cambria Math","STIX Two Math","Latin Modern Math","Times New Roman",serif;font-size:1.05em;overflow-x:auto}
+.ov{text-decoration:overline}
+.box{border-left:5px solid var(--accent);background:var(--accent-soft);padding:.7em 1em;margin:1em 0;border-radius:0 8px 8px 0;break-inside:avoid}
+.box > .lbl{display:block;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2em}
+.def{border-color:var(--def);background:var(--def-bg)} .def>.lbl{color:var(--def)}
+.thm{border-color:var(--thm);background:var(--thm-bg)} .thm>.lbl{color:var(--thm)}
+.ex{border-color:var(--ex);background:var(--ex-bg)} .ex>.lbl{color:var(--ex)}
+.warn{border-color:var(--warn);background:var(--warn-bg)} .warn>.lbl{color:var(--warn)}
+.tip{border-color:var(--tip);background:var(--tip-bg)} .tip>.lbl{color:var(--tip)}
+.proof{margin:.4em 0 1em;padding:.2em 0 .2em 1em;border-left:2px dashed var(--rule)}
+.proof::before{content:"Proof. ";font-style:italic;font-weight:600}
+.proof::after{content:" ∎";float:right}
+.slot{display:flex;flex-wrap:wrap;gap:.4em 1em;align-items:baseline;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:.7em 1em;margin:.6em 0 1.2em;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:.92rem}
+.slot b{color:var(--accent)}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.93rem;background:var(--surface)}
+th,td{border:1px solid var(--rule);padding:.45em .6em;vertical-align:top;text-align:left}
+th{background:var(--accent-soft);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.tablewrap{overflow-x:auto}
+details{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:.5em .9em;margin:.6em 0;break-inside:avoid}
+summary{cursor:pointer;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-weight:600;font-size:.95rem}
+.q{margin:1em 0 .3em}
+.q .lvl{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:.72rem;font-weight:700;border-radius:999px;padding:.1em .6em;margin-right:.4em;vertical-align:middle}
+.easy{background:var(--ex-bg);color:var(--ex);border:1px solid var(--ex)}
+.med{background:var(--tip-bg);color:var(--tip);border:1px solid var(--tip)}
+.hard{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn)}
+.toc{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:.8em 1.2em}
+.toc ol{margin:.3em 0}
+.timeline td:first-child{white-space:nowrap;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.gloss dt{font-weight:700;margin-top:.6em;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.gloss dd{margin:0 0 0 1.2em}
+.check li{list-style:"☐  "}
+figure{margin:1em 0;text-align:center}
+figcaption{font-size:.88rem;color:var(--muted)}
+svg{max-width:100%;height:auto}
+.small{font-size:.9rem;color:var(--muted)}
+.cover{padding:1.2em 0 .4em}
+.pill{display:inline-block;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:.8rem;border:1px solid var(--rule);border-radius:999px;padding:.15em .7em;margin:.15em .2em .15em 0;background:var(--surface)}
+@media (max-width:600px){ body{font-size:16px} h1{font-size:1.7rem} h2{font-size:1.35rem} }
+@page{size:A4;margin:16mm 14mm 18mm}
+@media print{
+  :root{--bg:#fff;--surface:#fff}
+  body{font-size:11pt;background:#fff}
+  main{max-width:none;padding:0}
+  h2{break-before:page;border-top:none;padding-top:0}
+  h2.nobreak{break-before:auto}
+  h3,h4{break-after:avoid}
+  .box,details,table,figure{break-inside:avoid}
+  summary{list-style:none}
+  a{text-decoration:none;color:inherit}
+}
+</style>
+</head>
+<body>
+<main>
+
+<div class="cover">
+<h1>Metric Spaces &amp; Topology</h1>
+<p class="sub">An exam-focused study guide to Chapters 0–5 for your Tuesday 10 November session (2:00–7:00pm)</p>
+<p>
+<span class="pill">Ch 0 Preliminaries</span>
+<span class="pill">Ch 1 Metric spaces</span>
+<span class="pill">Ch 2 Open &amp; closed sets, convergence, topologies</span>
+<span class="pill">Ch 3 Continuity &amp; homeomorphisms</span>
+<span class="pill">Ch 4 Completeness</span>
+<span class="pill">Ch 5 Compactness</span>
+</p>
+</div>
+
+<div class="box tip"><span class="lbl">How to use this guide</span>
+<p>Each chapter starts with a <b>time slot</b> from your plan and a short list of what to do in it. Inside each chapter you'll find:</p>
+<ul>
+<li><b>Intuition</b>: the idea in plain English before any symbols.</li>
+<li><b>Definitions</b> (blue): the exact wording to memorise for exams.</li>
+<li><b>Theorems</b> (purple), with proofs of the results that are most often examined.</li>
+<li><b>Examples</b> (green) and <b>common mistakes</b> (orange).</li>
+<li><b>Practice questions</b> marked easy, medium or hard, each with a full solution. Try each one before you open the solution.</li>
+</ul>
+<p>At the end there's a <b>proof-template toolkit</b>, a <b>counterexample bank</b>, a <b>glossary</b> of every term, and the <b>recap checklist</b> for your 5:35 slot.</p>
+<p class="small">Chapter numbering follows the usual order for this course. If your notes order the topics differently, follow the topic headings rather than the chapter numbers.</p>
+</div>
+
+<h3>Your session plan: Tuesday 10 November</h3>
+<div class="tablewrap">
+<table class="timeline">
+<tr><th>Time</th><th>Task</th><th>Section of this guide</th></tr>
+<tr><td>2:00–2:10</td><td>Warm-up: skim the headings of every chapter</td><td>Contents below</td></tr>
+<tr><td>2:10–2:30</td><td>Ch 0: quick review of prerequisites</td><td><a href="#ch0">Chapter 0</a></td></tr>
+<tr><td>2:30–3:05</td><td>Ch 1: metric spaces</td><td><a href="#ch1">Chapter 1</a></td></tr>
+<tr><td>3:05–3:15</td><td>☕ Break</td><td></td></tr>
+<tr><td>3:15–3:50</td><td>Ch 2: open/closed sets, convergence, topologies</td><td><a href="#ch2">Chapter 2</a></td></tr>
+<tr><td>3:50–4:25</td><td>Ch 3: continuity</td><td><a href="#ch3">Chapter 3</a></td></tr>
+<tr><td>4:25–4:40</td><td>☕ Longer break</td><td></td></tr>
+<tr><td>4:40–5:10</td><td>Ch 4: completeness</td><td><a href="#ch4">Chapter 4</a></td></tr>
+<tr><td>5:10–5:35</td><td>Ch 5: compactness</td><td><a href="#ch5">Chapter 5</a></td></tr>
+<tr><td>5:35–5:45</td><td>Topology recap from memory</td><td><a href="#recap">Recap checklist</a></td></tr>
+<tr><td>5:45–6:00</td><td>☕ Break</td><td></td></tr>
+<tr><td>6:00–6:50</td><td>Linear systems</td><td>Separate guide (to follow)</td></tr>
+<tr><td>6:50–7:00</td><td>Wrap-up: what's done and where to start next time</td><td></td></tr>
+</table>
+</div>
+
+<div class="toc">
+<b>Contents</b>
+<ol start="0">
+<li><a href="#ch0">Preliminaries: sets, functions, ℝ, sequences</a></li>
+<li><a href="#ch1">Metric spaces</a></li>
+<li><a href="#ch2">Open and closed sets, convergence, topological spaces</a></li>
+<li><a href="#ch3">Continuity and homeomorphisms</a></li>
+<li><a href="#ch4">Completeness and the Contraction Mapping Theorem</a></li>
+<li><a href="#ch5">Compactness</a></li>
+</ol>
+<ul style="list-style:none;padding-left:.2em">
+<li>➕ <a href="#bonus">Bonus: connectedness (if your course covers it)</a></li>
+<li>🧰 <a href="#toolkit">Proof-template toolkit</a></li>
+<li>🧪 <a href="#counter">Counterexample bank</a></li>
+<li>📖 <a href="#glossary">Glossary of all terminology</a></li>
+<li>✅ <a href="#recap">5:35 recap checklist</a></li>
+</ul>
+</div>
+
+<div class="box"><span class="lbl">Notation used throughout</span>
+<ul>
+<li><span class="m">(X, d)</span> is a metric space, and <span class="m">x, y, z ∈ X</span> are points.</li>
+<li><span class="m">B(x, r) = {y ∈ X : d(x, y) &lt; r}</span> is the open ball and <span class="m">B̄(x, r) = {y : d(x, y) ≤ r}</span> is the closed ball.</li>
+<li><span class="m">int A</span> or <span class="m">A°</span> is the interior, <span class="m">cl A</span> or <span class="m ov">A</span> is the closure, <span class="m">∂A</span> is the boundary, and <span class="m">Aᶜ = X \ A</span> is the complement.</li>
+<li><span class="m">(xₙ)</span> is a sequence, and <span class="m">xₙ → x</span> means it converges to <span class="m">x</span>.</li>
+<li><span class="m">ℕ = {1, 2, 3, …}</span>, and <span class="m">ℤ, ℚ, ℝ, ℂ</span> are the integers, rationals, reals and complex numbers.</li>
+</ul>
+</div>
+
+<!-- ===================== CHAPTER 0 ===================== -->
+<h2 id="ch0">Chapter 0: Preliminaries</h2>
+<div class="slot"><b>⏱ 2:10–2:30 (20 min)</b><span>Read quickly. These are tools you'll use in every later chapter. Make sure you can apply the preimage rules and negate quantifiers without thinking.</span></div>
+
+<h3>0.1 Logic and quantifiers</h3>
+<p>Almost every definition in this course is a chain of "for all" (∀) and "there exists" (∃). To <b>negate</b> a statement, swap ∀ ↔ ∃ and negate the final condition.</p>
+<div class="box ex"><span class="lbl">Example: negating convergence</span>
+<p><span class="m">xₙ → x</span> means: <span class="m">∀ε &gt; 0 ∃N ∀n ≥ N : d(xₙ, x) &lt; ε</span>.</p>
+<p><span class="m">xₙ ↛ x</span> means: <span class="m">∃ε &gt; 0 ∀N ∃n ≥ N : d(xₙ, x) ≥ ε</span>. In words, infinitely many terms stay at least ε away from <span class="m">x</span>.</p>
+</div>
+<p>Proof methods you will use: <b>direct</b>, <b>contrapositive</b> (to prove P ⇒ Q, prove not Q ⇒ not P), <b>contradiction</b>, and <b>induction</b>.</p>
+
+<h3>0.2 Sets</h3>
+<ul>
+<li><b>De Morgan's laws:</b> <span class="m">(⋃ Aᵢ)ᶜ = ⋂ Aᵢᶜ</span> and <span class="m">(⋂ Aᵢ)ᶜ = ⋃ Aᵢᶜ</span>. These are why "unions of open sets are open" turns into "intersections of closed sets are closed".</li>
+<li><span class="m">A \ B = A ∩ Bᶜ</span>.</li>
+<li>To prove <span class="m">A = B</span>, show <span class="m">A ⊆ B</span> and <span class="m">B ⊆ A</span>. Take an arbitrary element of one set and show it lies in the other.</li>
+</ul>
+
+<h3>0.3 Functions, images and preimages</h3>
+<div class="box def"><span class="lbl">Definitions</span>
+<p>Let <span class="m">f : X → Y</span>.</p>
+<ul>
+<li>The <b>image</b> of <span class="m">A ⊆ X</span> is <span class="m">f(A) = {f(a) : a ∈ A}</span>.</li>
+<li>The <b>preimage</b> (inverse image) of <span class="m">B ⊆ Y</span> is <span class="m">f⁻¹(B) = {x ∈ X : f(x) ∈ B}</span>. This makes sense even when <span class="m">f</span> has no inverse.</li>
+<li><span class="m">f</span> is <b>injective</b> (one-to-one) if <span class="m">f(x) = f(y) ⇒ x = y</span>.</li>
+<li><span class="m">f</span> is <b>surjective</b> (onto) if every <span class="m">y ∈ Y</span> equals <span class="m">f(x)</span> for some <span class="m">x</span>.</li>
+<li><span class="m">f</span> is <b>bijective</b> if it is both. Exactly then there is an inverse function <span class="m">f⁻¹ : Y → X</span>.</li>
+</ul>
+</div>
+<div class="box thm"><span class="lbl">Preimages preserve everything (memorise this)</span>
+<ul>
+<li><span class="m">f⁻¹(⋃ Bᵢ) = ⋃ f⁻¹(Bᵢ)</span></li>
+<li><span class="m">f⁻¹(⋂ Bᵢ) = ⋂ f⁻¹(Bᵢ)</span></li>
+<li><span class="m">f⁻¹(Y \ B) = X \ f⁻¹(B)</span></li>
+</ul>
+<p>Images are less well behaved: <span class="m">f(⋃ Aᵢ) = ⋃ f(Aᵢ)</span>, but only <span class="m">f(A ∩ B) ⊆ f(A) ∩ f(B)</span> (equality holds if <span class="m">f</span> is injective). Also <span class="m">A ⊆ f⁻¹(f(A))</span> and <span class="m">f(f⁻¹(B)) ⊆ B</span>.</p>
+</div>
+<div class="box tip"><span class="lbl">Why this matters</span><p>Continuity is defined using <b>preimages</b> ("the preimage of an open set is open") because preimages respect complements, unions and intersections. Images don't, which is why "the image of an open set is open" is <b>not</b> the definition of continuity.</p></div>
+
+<h3>0.4 Countability</h3>
+<p>A set is <b>countable</b> if it is finite or in bijection with ℕ. ℕ, ℤ and ℚ are countable, and a countable union of countable sets is countable. ℝ is <b>uncountable</b> (Cantor's diagonal argument). These facts come up with dense sets and separability.</p>
+
+<h3>0.5 The real numbers: supremum and infimum</h3>
+<div class="box def"><span class="lbl">Definition</span>
+<p>An <b>upper bound</b> of <span class="m">A ⊆ ℝ</span> is an <span class="m">M</span> with <span class="m">a ≤ M</span> for all <span class="m">a ∈ A</span>. The <b>supremum</b> <span class="m">sup A</span> is the <i>least</i> upper bound. The <b>infimum</b> <span class="m">inf A</span> is the greatest lower bound.</p>
+<p><b>Completeness axiom of ℝ:</b> every non-empty subset of ℝ that is bounded above has a supremum in ℝ. This is exactly what ℚ lacks. For example, <span class="m">{q ∈ ℚ : q² &lt; 2}</span> has no supremum in ℚ.</p>
+</div>
+<div class="box thm"><span class="lbl">Approximation property</span><p>If <span class="m">s = sup A</span>, then for every <span class="m">ε &gt; 0</span> there is an <span class="m">a ∈ A</span> with <span class="m">s − ε &lt; a ≤ s</span>. You'll use this all the time, for example with <span class="m">d(x, A) = inf</span> and with diameters.</p></div>
+
+<h3>0.6 Inequalities</h3>
+<ul>
+<li><b>Triangle inequality:</b> <span class="m">|a + b| ≤ |a| + |b|</span>.</li>
+<li><b>Reverse triangle inequality:</b> <span class="m">| |a| − |b| | ≤ |a − b|</span>.</li>
+<li><b>Cauchy–Schwarz:</b> <span class="m">(Σ aᵢbᵢ)² ≤ (Σ aᵢ²)(Σ bᵢ²)</span>.</li>
+<li><b>Minkowski:</b> <span class="m">√Σ(aᵢ+bᵢ)² ≤ √Σaᵢ² + √Σbᵢ²</span>. This is the triangle inequality for the Euclidean metric.</li>
+</ul>
+
+<h3>0.7 Sequences in ℝ (you'll generalise all of this)</h3>
+<ul>
+<li><span class="m">xₙ → x</span> ⇔ <span class="m">∀ε &gt; 0 ∃N ∀n ≥ N : |xₙ − x| &lt; ε</span>.</li>
+<li><b>Monotone convergence theorem:</b> a bounded monotone sequence of reals converges.</li>
+<li><b>Bolzano–Weierstrass:</b> every bounded sequence in ℝ (or ℝⁿ) has a convergent subsequence.</li>
+<li>A <b>subsequence</b> <span class="m">(x_{n_k})</span> uses indices <span class="m">n₁ &lt; n₂ &lt; n₃ &lt; …</span>, so <span class="m">n_k ≥ k</span>.</li>
+</ul>
+
+<!-- ===================== CHAPTER 1 ===================== -->
+<h2 id="ch1">Chapter 1: Metric spaces</h2>
+<div class="slot"><b>⏱ 2:30–3:05 (35 min)</b><span>Learn the three axioms by heart. Work through the standard examples, especially the ℝⁿ metrics, the discrete metric and C[a,b]. Practise one "prove this is a metric" proof and one "show this is NOT a metric" counterexample.</span></div>
+
+<h3>1.1 The big idea</h3>
+<p><b>Intuition.</b> Analysis on ℝ (limits, continuity, convergence) only ever uses one thing: the <b>distance</b> <span class="m">|x − y|</span>. A metric space is any set with a sensible notion of distance. Once we have one, we can do analysis on sets of points, vectors, functions, strings, and so on.</p>
+
+<div class="box def"><span class="lbl">Definition 1.1: metric space</span>
+<p>A <b>metric</b> on a set <span class="m">X</span> is a function <span class="m">d : X × X → ℝ</span> such that for all <span class="m">x, y, z ∈ X</span>:</p>
+<ol>
+<li><b>(M1) Positivity:</b> <span class="m">d(x, y) ≥ 0</span>, and <span class="m">d(x, y) = 0 ⇔ x = y</span>.</li>
+<li><b>(M2) Symmetry:</b> <span class="m">d(x, y) = d(y, x)</span>.</li>
+<li><b>(M3) Triangle inequality:</b> <span class="m">d(x, z) ≤ d(x, y) + d(y, z)</span>.</li>
+</ol>
+<p>The pair <span class="m">(X, d)</span> is a <b>metric space</b>.</p>
+</div>
+<div class="box tip"><span class="lbl">Exam tip</span><p>When asked to "prove <span class="m">d</span> is a metric", check all three axioms explicitly and in order. M1 and M2 are usually one line each. All the work goes into M3.</p></div>
+
+<h3>1.2 Standard examples (know all of these)</h3>
+
+<h4>(a) The real line</h4>
+<p><span class="m">X = ℝ</span>, <span class="m">d(x, y) = |x − y|</span>. This is the <b>usual</b> or <b>standard</b> metric.</p>
+
+<h4>(b) Three metrics on ℝⁿ</h4>
+<p>For <span class="m">x = (x₁,…,xₙ)</span> and <span class="m">y = (y₁,…,yₙ)</span>:</p>
+<div class="mb">d₁(x,y) = Σᵢ |xᵢ − yᵢ|    (taxicab / Manhattan)</div>
+<div class="mb">d₂(x,y) = √( Σᵢ (xᵢ − yᵢ)² )    (Euclidean)</div>
+<div class="mb">d_∞(x,y) = maxᵢ |xᵢ − yᵢ|    (sup / max / Chebyshev)</div>
+<p>M1 and M2 are immediate. For M3: <span class="m">d₁</span> and <span class="m">d_∞</span> follow from the triangle inequality in ℝ, applied coordinate by coordinate. <span class="m">d₂</span> needs Minkowski / Cauchy–Schwarz.</p>
+<div class="box thm"><span class="lbl">Comparison inequalities in ℝⁿ</span>
+<div class="mb">d_∞(x,y) ≤ d₂(x,y) ≤ d₁(x,y) ≤ n·d_∞(x,y),   and   d₂ ≤ √n·d_∞.</div>
+<p>These show the three metrics are <b>Lipschitz equivalent</b> (§1.5). So they have the same open sets, the same convergent sequences and the same continuous functions.</p>
+</div>
+
+<h4>(c) The discrete metric</h4>
+<p>On <b>any</b> set <span class="m">X</span>: <span class="m">d(x, y) = 0</span> if <span class="m">x = y</span> and <span class="m">d(x, y) = 1</span> if <span class="m">x ≠ y</span>.</p>
+<div class="proof">M1 and M2 are clear. For M3, if <span class="m">x = z</span> the left side is 0 ≤ anything. If <span class="m">x ≠ z</span>, then <span class="m">y</span> can't equal both <span class="m">x</span> and <span class="m">z</span>, so at least one term on the right is 1. Then <span class="m">d(x,z) = 1 ≤ d(x,y) + d(y,z)</span>.</div>
+<div class="box warn"><span class="lbl">Why the discrete metric matters</span><p>It's the go-to <b>counterexample machine</b>. In it, every set is open and closed, every function out of it is continuous, convergent sequences are eventually constant, and it is always complete. It is compact only if <span class="m">X</span> is finite. Whenever you suspect a statement is false in general, test it here first.</p></div>
+
+<h4>(d) Function spaces C[a, b]</h4>
+<p><span class="m">C[a,b]</span> is the set of continuous functions <span class="m">f : [a,b] → ℝ</span>.</p>
+<div class="mb">d_∞(f,g) = sup_{t∈[a,b]} |f(t) − g(t)|    (uniform / sup metric)</div>
+<div class="mb">d₁(f,g) = ∫ₐᵇ |f(t) − g(t)| dt    (L¹ / integral metric)</div>
+<p>The sup is finite because <span class="m">|f − g|</span> is continuous on a closed bounded interval, so it attains a maximum. For <span class="m">d₁</span>, <b>continuity is needed for M1</b>: if <span class="m">f ≠ g</span> then <span class="m">|f − g| &gt; 0</span> on a small interval (by continuity), so the integral is &gt; 0. On merely integrable functions, <span class="m">d₁</span> fails M1. For example, a function that is 0 except at one point has integral 0.</p>
+<p><b>Picture:</b> <span class="m">d_∞(f,g)</span> is the largest vertical gap between the graphs. <span class="m">d₁(f,g)</span> is the area between them.</p>
+
+<h4>(e) Sequence spaces</h4>
+<ul>
+<li><span class="m">ℓ¹</span>: sequences with <span class="m">Σ|xᵢ| &lt; ∞</span>, with <span class="m">d(x,y) = Σ|xᵢ − yᵢ|</span>.</li>
+<li><span class="m">ℓ²</span>: sequences with <span class="m">Σxᵢ² &lt; ∞</span>, with <span class="m">d(x,y) = √Σ(xᵢ − yᵢ)²</span>.</li>
+<li><span class="m">ℓ^∞</span>: bounded sequences, with <span class="m">d(x,y) = sup|xᵢ − yᵢ|</span>.</li>
+</ul>
+
+<h4>(f) Normed spaces</h4>
+<div class="box def"><span class="lbl">Definition 1.2: norm</span>
+<p>A <b>norm</b> on a real vector space <span class="m">V</span> is a map <span class="m">‖·‖ : V → ℝ</span> such that:</p>
+<ol><li><span class="m">‖v‖ ≥ 0</span>, and <span class="m">‖v‖ = 0 ⇔ v = 0</span>;</li>
+<li><span class="m">‖λv‖ = |λ|‖v‖</span>;</li>
+<li><span class="m">‖u + v‖ ≤ ‖u‖ + ‖v‖</span>.</li></ol>
+<p>Every norm gives a metric <span class="m">d(u, v) = ‖u − v‖</span>. All the examples in (b), (d) and (e) come from norms. The discrete metric does <b>not</b> come from a norm on any non-zero vector space, because <span class="m">d(λv, 0)</span> would have to equal <span class="m">|λ| d(v, 0)</span>.</p>
+</div>
+
+<h4>(g) Other examples that come up in exams</h4>
+<ul>
+<li><b>Hamming metric:</b> on strings of length <span class="m">n</span>, <span class="m">d(x,y)</span> is the number of positions where <span class="m">x</span> and <span class="m">y</span> differ.</li>
+<li><b>Bounded metric:</b> <span class="m">d'(x,y) = d(x,y) / (1 + d(x,y))</span> is a metric, and every distance is &lt; 1. It is proved in §1.6.</li>
+<li><b>British Rail / SNCF metric</b> on ℝ²: <span class="m">d(x,y) = ‖x − y‖</span> if <span class="m">x</span>, <span class="m">y</span> and the origin are collinear, and <span class="m">‖x‖ + ‖y‖</span> otherwise. All journeys go via London (the origin).</li>
+<li><b>Subspace (induced) metric:</b> if <span class="m">Y ⊆ X</span>, restricting <span class="m">d</span> to <span class="m">Y × Y</span> makes <span class="m">Y</span> a metric space. For example, <span class="m">ℚ</span> or <span class="m">[0,1]</span> with <span class="m">|x − y|</span>.</li>
+<li><b>Product metric:</b> on <span class="m">X × Y</span>, use <span class="m">max{d_X(x,x'), d_Y(y,y')}</span> or <span class="m">d_X + d_Y</span>.</li>
+</ul>
+
+<h3>1.3 Things that are NOT metrics</h3>
+<div class="box warn"><span class="lbl">Standard failures</span>
+<ul>
+<li><span class="m">d(x,y) = (x − y)²</span> on ℝ fails <b>M3</b>: <span class="m">d(0,2) = 4 &gt; d(0,1) + d(1,2) = 2</span>.</li>
+<li><span class="m">d(x,y) = |x² − y²|</span> on ℝ fails <b>M1</b>: <span class="m">d(1, −1) = 0</span> but <span class="m">1 ≠ −1</span>.</li>
+<li><span class="m">d(x,y) = x − y</span> fails <b>M1</b> (it can be negative) and <b>M2</b>.</li>
+<li><span class="m">d(f,g) = |f(0) − g(0)|</span> on C[0,1] fails <b>M1</b>: two different functions can agree at 0. (This is called a <b>pseudometric</b>.)</li>
+</ul>
+<p>To disprove an axiom you only need <b>one specific counterexample with numbers</b>.</p>
+</div>
+
+<h3>1.4 Useful consequences of the axioms</h3>
+<div class="box thm"><span class="lbl">Lemma 1.3</span>
+<ol><li><b>Reverse triangle inequality:</b> <span class="m">|d(x,z) − d(y,z)| ≤ d(x,y)</span>.</li>
+<li><b>Polygon inequality:</b> <span class="m">d(x₁, xₙ) ≤ d(x₁,x₂) + d(x₂,x₃) + … + d(xₙ₋₁, xₙ)</span>.</li>
+<li><span class="m">|d(x,y) − d(x',y')| ≤ d(x,x') + d(y,y')</span>.</li></ol>
+</div>
+<div class="proof">For (1): by M3, <span class="m">d(x,z) ≤ d(x,y) + d(y,z)</span>, so <span class="m">d(x,z) − d(y,z) ≤ d(x,y)</span>. Swapping <span class="m">x</span> and <span class="m">y</span> (and using M2) gives <span class="m">d(y,z) − d(x,z) ≤ d(x,y)</span>. Together these give the absolute value.</div>
+
+<div class="box def"><span class="lbl">Definition 1.4: bounded, diameter, distance to a set</span>
+<ul>
+<li><span class="m">A ⊆ X</span> is <b>bounded</b> if there are <span class="m">x₀ ∈ X</span> and <span class="m">M</span> with <span class="m">d(a, x₀) ≤ M</span> for all <span class="m">a ∈ A</span>. Equivalently, <span class="m">A</span> lies inside some ball.</li>
+<li><b>Diameter:</b> <span class="m">diam A = sup{d(a,b) : a, b ∈ A}</span>. <span class="m">A</span> is bounded ⇔ <span class="m">diam A &lt; ∞</span>.</li>
+<li><b>Distance from a point to a set:</b> <span class="m">d(x, A) = inf{d(x,a) : a ∈ A}</span>.</li>
+<li><b>Distance between sets:</b> <span class="m">d(A, B) = inf{d(a,b) : a ∈ A, b ∈ B}</span>.</li>
+</ul>
+</div>
+<div class="box warn"><span class="lbl">Common mistakes</span>
+<ul>
+<li><span class="m">d(x, A) = 0</span> does <b>not</b> mean <span class="m">x ∈ A</span>. For example, <span class="m">d(0, (0,1)) = 0</span>. It means <span class="m">x</span> is in the <b>closure</b> of <span class="m">A</span> (Chapter 2).</li>
+<li>"Bounded" depends on the metric. ℝ is unbounded under <span class="m">|x−y|</span> but bounded under the discrete metric or <span class="m">d/(1+d)</span>.</li>
+</ul>
+</div>
+
+<div class="box def"><span class="lbl">Definition 1.5: isometry</span><p>A map <span class="m">f : (X,d_X) → (Y,d_Y)</span> is an <b>isometry</b> if <span class="m">d_Y(f(x), f(y)) = d_X(x,y)</span> for all <span class="m">x, y</span>. Isometries are automatically injective, by M1.</p></div>
+
+<h3>1.5 Equivalent metrics</h3>
+<div class="box def"><span class="lbl">Definition 1.6</span>
+<ul>
+<li><span class="m">d</span> and <span class="m">d'</span> on <span class="m">X</span> are <b>Lipschitz (strongly) equivalent</b> if there are constants <span class="m">α, β &gt; 0</span> with
+<span class="mb">α·d(x,y) ≤ d'(x,y) ≤ β·d(x,y)   for all x, y.</span></li>
+<li>They are <b>topologically equivalent</b> if they give the same open sets (Chapter 2). Equivalently, the identity map is continuous in both directions.</li>
+</ul>
+</div>
+<div class="box thm"><span class="lbl">Fact</span><p>Lipschitz equivalent ⇒ topologically equivalent, but <b>not conversely</b>. On ℝ, <span class="m">d = |x−y|</span> and <span class="m">d' = d/(1+d)</span> are topologically equivalent but not Lipschitz equivalent. If <span class="m">d ≤ β d'</span> held, <span class="m">d</span> would be bounded, because <span class="m">d' &lt; 1</span>.</p></div>
+<div class="box ex"><span class="lbl">Example: d₁ and d_∞ on C[0,1] are NOT equivalent</span>
+<p>Always <span class="m">d₁(f,g) ≤ d_∞(f,g)</span>, because the area is at most (height × width 1). There is no reverse inequality. Take <span class="m">fₙ(t) = tⁿ</span>: then <span class="m">d₁(fₙ, 0) = 1/(n+1) → 0</span>, but <span class="m">d_∞(fₙ, 0) = 1</span> for all <span class="m">n</span>. So <span class="m">fₙ → 0</span> in <span class="m">d₁</span> but not in <span class="m">d_∞</span>.</p></div>
+
+<h3>1.6 Worked proof: d/(1+d) is a metric</h3>
+<div class="box thm"><span class="lbl">Claim</span><p>If <span class="m">d</span> is a metric on <span class="m">X</span>, then <span class="m">ρ(x,y) = d(x,y) / (1 + d(x,y))</span> is a metric on <span class="m">X</span>.</p></div>
+<div class="proof">Let <span class="m">φ(t) = t/(1+t) = 1 − 1/(1+t)</span> for <span class="m">t ≥ 0</span>. Then <span class="m">φ(t) ≥ 0</span>, <span class="m">φ(t) = 0 ⇔ t = 0</span>, and <span class="m">φ</span> is <b>increasing</b>. So M1 and M2 for <span class="m">ρ</span> follow from those for <span class="m">d</span>.<br>
+<b>Subadditivity:</b> for <span class="m">a, b ≥ 0</span>,
+<span class="mb">φ(a+b) = a/(1+a+b) + b/(1+a+b) ≤ a/(1+a) + b/(1+b) = φ(a) + φ(b).</span>
+<b>M3:</b> since <span class="m">d(x,z) ≤ d(x,y) + d(y,z)</span> and <span class="m">φ</span> is increasing,
+<span class="mb">ρ(x,z) = φ(d(x,z)) ≤ φ(d(x,y) + d(y,z)) ≤ φ(d(x,y)) + φ(d(y,z)) = ρ(x,y) + ρ(y,z).</span>
+</div>
+<div class="box tip"><span class="lbl">General recipe</span><p>If <span class="m">φ : [0,∞) → [0,∞)</span> is increasing, subadditive, and <span class="m">φ(t) = 0 ⇔ t = 0</span>, then <span class="m">φ ∘ d</span> is a metric. Examples are <span class="m">√d</span>, <span class="m">min{d, 1}</span> and <span class="m">d/(1+d)</span>, but <b>not</b> <span class="m">d²</span>.</p></div>
+
+<h3>1.7 Practice questions</h3>
+<p class="q"><span class="lvl easy">EASY</span> 1. Show that <span class="m">d(x,y) = |x³ − y³|</span> is a metric on ℝ.</p>
+<details><summary>Solution</summary><p>M1: <span class="m">|x³ − y³| ≥ 0</span>, and it is 0 ⇔ <span class="m">x³ = y³</span> ⇔ <span class="m">x = y</span>, since cubing is injective on ℝ. M2 is clear. M3: <span class="m">|x³ − z³| = |(x³ − y³) + (y³ − z³)| ≤ |x³ − y³| + |y³ − z³|</span>. In general, <span class="m">|f(x) − f(y)|</span> is a metric whenever <span class="m">f</span> is injective. Compare <span class="m">|x² − y²|</span>, which fails because squaring isn't injective.</p></details>
+
+<p class="q"><span class="lvl easy">EASY</span> 2. Compute <span class="m">d₁, d₂, d_∞</span> between <span class="m">(1, 2)</span> and <span class="m">(4, −2)</span> in ℝ².</p>
+<details><summary>Solution</summary><p>The differences are <span class="m">3</span> and <span class="m">4</span>. So <span class="m">d₁ = 7</span>, <span class="m">d₂ = 5</span> and <span class="m">d_∞ = 4</span>. Check: <span class="m">4 ≤ 5 ≤ 7 ≤ 2·4</span>. ✓</p></details>
+
+<p class="q"><span class="lvl med">MEDIUM</span> 3. Is <span class="m">d(x,y) = min{1, |x − y|}</span> a metric on ℝ? Is it Lipschitz equivalent to the usual metric?</p>
+<details><summary>Solution</summary><p>Yes, it's a metric. <span class="m">φ(t) = min{1,t}</span> is increasing, satisfies <span class="m">φ(t) = 0 ⇔ t = 0</span>, and is subadditive: if <span class="m">a</span> or <span class="m">b ≥ 1</span> the right side is ≥ 1 ≥ <span class="m">φ(a+b)</span>; otherwise <span class="m">φ(a+b) ≤ a + b = φ(a) + φ(b)</span>. It is <b>not</b> Lipschitz equivalent to <span class="m">|x − y|</span>: we would need <span class="m">|x−y| ≤ β·min{1,|x−y|} ≤ β</span> for all <span class="m">x, y</span>, which is impossible. It is topologically equivalent, because small balls (radius &lt; 1) are the same in both metrics.</p></details>
+
+<p class="q"><span class="lvl hard">HARD</span> 4. Let <span class="m">p</span> be prime. For <span class="m">x ∈ ℤ \ {0}</span>, let <span class="m">v(x)</span> be the largest power <span class="m">k</span> with <span class="m">pᵏ | x</span>. Define <span class="m">d(x,y) = p^{−v(x−y)}</span> for <span class="m">x ≠ y</span> and <span class="m">d(x,x) = 0</span>. Show that <span class="m">d</span> satisfies the <b>ultrametric inequality</b> <span class="m">d(x,z) ≤ max{d(x,y), d(y,z)}</span>, and hence is a metric.</p>
+<details><summary>Solution</summary><p>M1 and M2 are clear (<span class="m">v(−a) = v(a)</span>). If <span class="m">pᵏ</span> divides both <span class="m">x − y</span> and <span class="m">y − z</span>, it divides their sum <span class="m">x − z</span>. So <span class="m">v(x − z) ≥ min{v(x−y), v(y−z)}</span>, and therefore <span class="m">d(x,z) = p^{−v(x−z)} ≤ max{d(x,y), d(y,z)}</span>. (The cases where two of the points are equal are trivial.) Since <span class="m">max{a,b} ≤ a + b</span>, M3 follows. A strange consequence: in an ultrametric space, every point of a ball is its centre.</p></details>
+
+<p class="q"><span class="lvl hard">HARD</span> 5. Prove that <span class="m">d₂</span> satisfies the triangle inequality on ℝⁿ.</p>
+<details><summary>Solution</summary><p>Let <span class="m">a = x − y</span> and <span class="m">b = y − z</span>, so <span class="m">x − z = a + b</span>. We need <span class="m">‖a+b‖ ≤ ‖a‖ + ‖b‖</span>, where <span class="m">‖a‖ = √Σaᵢ²</span>. Square both sides:
+<span class="mb">‖a+b‖² = Σaᵢ² + 2Σaᵢbᵢ + Σbᵢ² ≤ ‖a‖² + 2‖a‖‖b‖ + ‖b‖² = (‖a‖+‖b‖)²,</span>
+using Cauchy–Schwarz, <span class="m">Σaᵢbᵢ ≤ ‖a‖‖b‖</span>. Both sides are non-negative, so take square roots.</p></details>
+
+<!-- ===================== CHAPTER 2 ===================== -->
+<h2 id="ch2">Chapter 2: Open and closed sets, convergence, topological spaces</h2>
+<div class="slot"><b>⏱ 3:15–3:50 (35 min)</b><span>This is the most terminology-heavy chapter, and the language every later chapter uses. Learn the definitions of open, closed, interior, closure, boundary, limit point and dense word for word. Fill in the worked table in §2.4 yourself before checking it.</span></div>
+
+<h3>2.1 Balls</h3>
+<div class="box def"><span class="lbl">Definition 2.1</span>
+<p>For <span class="m">x ∈ X</span> and <span class="m">r &gt; 0</span>:</p>
+<ul>
+<li><b>Open ball:</b> <span class="m">B(x, r) = {y ∈ X : d(x,y) &lt; r}</span></li>
+<li><b>Closed ball:</b> <span class="m">B̄(x, r) = {y ∈ X : d(x,y) ≤ r}</span></li>
+<li><b>Sphere:</b> <span class="m">S(x, r) = {y ∈ X : d(x,y) = r}</span></li>
+</ul>
+</div>
+<p><b>Balls depend on the metric.</b> Here is the unit ball <span class="m">B(0,1)</span> in ℝ² for the three standard metrics:</p>
+<figure>
+<svg viewBox="0 0 540 190" width="540" role="img" aria-label="Unit balls in R2: a diamond for d1, a disc for d2, a square for d-infinity">
+  <g fill="none" stroke="currentColor" stroke-width="1" opacity=".35">
+    <line x1="10" y1="95" x2="170" y2="95"/><line x1="90" y1="15" x2="90" y2="175"/>
+    <line x1="190" y1="95" x2="350" y2="95"/><line x1="270" y1="15" x2="270" y2="175"/>
+    <line x1="370" y1="95" x2="530" y2="95"/><line x1="450" y1="15" x2="450" y2="175"/>
+  </g>
+  <polygon points="90,35 150,95 90,155 30,95" fill="#2f5d8a" fill-opacity=".18" stroke="#2f5d8a" stroke-width="2" stroke-dasharray="6 4"/>
+  <circle cx="270" cy="95" r="60" fill="#6b3fa0" fill-opacity=".18" stroke="#6b3fa0" stroke-width="2" stroke-dasharray="6 4"/>
+  <rect x="390" y="35" width="120" height="120" fill="#2e7d4f" fill-opacity=".18" stroke="#2e7d4f" stroke-width="2" stroke-dasharray="6 4"/>
+  <g font-family="system-ui,sans-serif" font-size="13" fill="currentColor" text-anchor="middle">
+    <text x="90" y="188">d₁: diamond</text><text x="270" y="188">d₂: disc</text><text x="450" y="188">d_∞: square</text>
+    <text x="156" y="90" font-size="11">1</text><text x="336" y="90" font-size="11">1</text><text x="516" y="90" font-size="11">1</text>
+  </g>
+</svg>
+<figcaption>Dashed edges show the boundary is <i>not</i> included in the open ball. Note that diamond ⊆ disc ⊆ square, which is the inequality d_∞ ≤ d₂ ≤ d₁ seen through balls.</figcaption>
+</figure>
+<div class="box ex"><span class="lbl">Example: balls in the discrete metric</span>
+<p><span class="m">B(x, r) = {x}</span> if <span class="m">r ≤ 1</span>, and <span class="m">B(x, r) = X</span> if <span class="m">r &gt; 1</span>. Also <span class="m">B̄(x, 1) = X</span> while <span class="m">B(x,1) = {x}</span>.</p></div>
+
+<h3>2.2 Open and closed sets</h3>
+<div class="box def"><span class="lbl">Definition 2.2: open set</span>
+<p><span class="m">U ⊆ X</span> is <b>open</b> if for every <span class="m">x ∈ U</span> there is an <span class="m">r &gt; 0</span> with <span class="m">B(x, r) ⊆ U</span>.</p>
+<p><b>Intuition:</b> every point of <span class="m">U</span> has some breathing room. You can move a little in any direction and stay in <span class="m">U</span>. No point of <span class="m">U</span> sits on its edge.</p>
+</div>
+<div class="box def"><span class="lbl">Definition 2.3: closed set</span>
+<p><span class="m">F ⊆ X</span> is <b>closed</b> if its complement <span class="m">X \ F</span> is open.</p>
+<p>Equivalently (Theorem 2.10), <span class="m">F</span> contains the limit of every convergent sequence of points in <span class="m">F</span>: you can't escape <span class="m">F</span> by taking limits.</p>
+</div>
+<div class="box thm"><span class="lbl">Lemma 2.4: open balls are open</span><p>For any <span class="m">x</span> and <span class="m">r &gt; 0</span>, <span class="m">B(x, r)</span> is open. Closed balls and spheres are closed.</p></div>
+<div class="proof">Let <span class="m">y ∈ B(x,r)</span> and put <span class="m">s = r − d(x,y) &gt; 0</span>. If <span class="m">z ∈ B(y, s)</span>, then <span class="m">d(x,z) ≤ d(x,y) + d(y,z) &lt; d(x,y) + s = r</span>, so <span class="m">z ∈ B(x,r)</span>. Hence <span class="m">B(y,s) ⊆ B(x,r)</span>.<br>
+For closed balls, show the complement is open. If <span class="m">d(x,y) &gt; r</span>, put <span class="m">s = d(x,y) − r</span>. For <span class="m">z ∈ B(y,s)</span>, <span class="m">d(x,z) ≥ d(x,y) − d(y,z) &gt; d(x,y) − s = r</span>.</div>
+<div class="box tip"><span class="lbl">Exam tip: the "r − d(x,y)" trick</span><p>This radius choice is the single most reused idea in the course. Draw the picture: a small ball around <span class="m">y</span> that fits inside the big ball.</p></div>
+
+<div class="box thm"><span class="lbl">Theorem 2.5: properties of open sets</span>
+<ol><li><span class="m">∅</span> and <span class="m">X</span> are open.</li>
+<li>Any union (even infinitely many) of open sets is open.</li>
+<li>A <b>finite</b> intersection of open sets is open.</li></ol>
+<p>Taking complements (De Morgan): <span class="m">∅, X</span> are closed, <b>any</b> intersection of closed sets is closed, and a <b>finite</b> union of closed sets is closed.</p>
+</div>
+<div class="proof">(2): if <span class="m">x ∈ ⋃Uᵢ</span>, then <span class="m">x ∈ Uⱼ</span> for some <span class="m">j</span>, and some <span class="m">B(x,r) ⊆ Uⱼ ⊆ ⋃Uᵢ</span>. (3): if <span class="m">x ∈ U₁ ∩ … ∩ Uₙ</span>, choose <span class="m">B(x, rᵢ) ⊆ Uᵢ</span> and let <span class="m">r = min{r₁,…,rₙ} &gt; 0</span>. The minimum of <b>finitely many</b> positive numbers is positive. This step fails for infinitely many: an infimum can be 0.</div>
+<div class="box warn"><span class="lbl">Why "finite" matters: counterexamples</span>
+<ul><li><span class="m">⋂ₙ (−1/n, 1/n) = {0}</span>: infinitely many open sets whose intersection is not open in ℝ.</li>
+<li><span class="m">⋃ₙ [1/n, 1] = (0, 1]</span>: infinitely many closed sets whose union is not closed.</li></ul>
+</div>
+<div class="box warn"><span class="lbl">The most common misconception: sets are not doors</span>
+<p>"Not open" does <b>not</b> mean "closed". A set can be:</p>
+<ul><li><b>both</b> open and closed ("clopen"): <span class="m">∅</span> and <span class="m">X</span> always, and every subset in a discrete space;</li>
+<li><b>neither</b>: <span class="m">[0,1)</span> in ℝ, or <span class="m">ℚ</span> in ℝ;</li>
+<li>exactly one of the two.</li></ul>
+</div>
+
+<div class="box ex"><span class="lbl">Examples in ℝ (usual metric)</span>
+<div class="tablewrap"><table>
+<tr><th>Set</th><th>Open?</th><th>Closed?</th><th>Reason</th></tr>
+<tr><td>(a, b)</td><td>✓</td><td>✗</td><td>It's a ball. Points <span class="m">xₙ → a</span> inside it have a limit outside it.</td></tr>
+<tr><td>[a, b]</td><td>✗</td><td>✓</td><td>Every ball around <span class="m">a</span> leaves the set. The complement is a union of open intervals.</td></tr>
+<tr><td>[a, b)</td><td>✗</td><td>✗</td><td>Fails at <span class="m">a</span> for openness, and at <span class="m">b</span> for closedness.</td></tr>
+<tr><td>{p}</td><td>✗</td><td>✓</td><td>Finite sets are always closed in a metric space.</td></tr>
+<tr><td>ℤ</td><td>✗</td><td>✓</td><td>The complement is a union of intervals (n, n+1).</td></tr>
+<tr><td>ℚ</td><td>✗</td><td>✗</td><td>Every interval contains both rationals and irrationals.</td></tr>
+<tr><td>{1/n : n ∈ ℕ}</td><td>✗</td><td>✗</td><td><span class="m">1/n → 0</span>, which is not in the set. Adding {0} makes it closed.</td></tr>
+<tr><td>ℝ, ∅</td><td>✓</td><td>✓</td><td>These are always clopen.</td></tr>
+</table></div>
+</div>
+<div class="box warn"><span class="lbl">Open depends on the ambient space</span><p><span class="m">[0, 1)</span> is not open in ℝ, but it <b>is</b> open in the subspace <span class="m">X = [0, 2]</span>, because <span class="m">[0,1) = B_X(0, 1)</span>. Always ask: open <i>in what</i>? (See §2.7.)</p></div>
+
+<h3>2.3 Interior, closure, boundary, limit points</h3>
+<div class="box def"><span class="lbl">Definition 2.6</span>
+<p>Let <span class="m">A ⊆ X</span>.</p>
+<ul>
+<li><b>Interior point</b> of <span class="m">A</span>: an <span class="m">x</span> with <span class="m">B(x,r) ⊆ A</span> for some <span class="m">r &gt; 0</span>.<br><b>Interior</b> <span class="m">int A</span>: the set of all interior points. It is the <b>largest open set contained in</b> <span class="m">A</span>, which equals the union of all open subsets of <span class="m">A</span>.</li>
+<li><b>Closure</b> <span class="m">cl A</span>: the <b>smallest closed set containing</b> <span class="m">A</span>, which equals the intersection of all closed supersets of <span class="m">A</span>.</li>
+<li><b>Limit point</b> (accumulation point, cluster point) of <span class="m">A</span>: an <span class="m">x</span> such that every ball <span class="m">B(x,r)</span> contains a point of <span class="m">A</span> <b>other than <span class="m">x</span></b>. The set of limit points is the <b>derived set</b> <span class="m">A'</span>.</li>
+<li><b>Isolated point</b> of <span class="m">A</span>: a point <span class="m">a ∈ A</span> with <span class="m">B(a,r) ∩ A = {a}</span> for some <span class="m">r</span>.</li>
+<li><b>Boundary</b>: <span class="m">∂A = cl A \ int A</span>.</li>
+<li><b>Exterior</b>: <span class="m">ext A = int(X \ A)</span>.</li>
+</ul>
+</div>
+<div class="box thm"><span class="lbl">Theorem 2.7: characterisations of closure (all equivalent; very examinable)</span>
+<p>For <span class="m">x ∈ X</span>, the following are equivalent:</p>
+<ol>
+<li><span class="m">x ∈ cl A</span>;</li>
+<li>every open ball <span class="m">B(x, r)</span> meets <span class="m">A</span> (that is, <span class="m">B(x,r) ∩ A ≠ ∅</span>);</li>
+<li>there is a sequence <span class="m">(aₙ)</span> in <span class="m">A</span> with <span class="m">aₙ → x</span>;</li>
+<li><span class="m">d(x, A) = 0</span>;</li>
+<li><span class="m">x ∈ A ∪ A'</span>.</li>
+</ol>
+<p>Also: <span class="m">A</span> is open ⇔ <span class="m">A = int A</span>; <span class="m">A</span> is closed ⇔ <span class="m">A = cl A</span> ⇔ <span class="m">A' ⊆ A</span>.</p>
+</div>
+<div class="proof">(1)⇒(2): if some <span class="m">B(x,r)</span> misses <span class="m">A</span>, then <span class="m">X \ B(x,r)</span> is a closed set containing <span class="m">A</span>, so it contains <span class="m">cl A</span>. That gives <span class="m">x ∉ cl A</span>.
+(2)⇒(3): pick <span class="m">aₙ ∈ B(x, 1/n) ∩ A</span>. Then <span class="m">d(aₙ, x) &lt; 1/n → 0</span>.
+(3)⇒(4): <span class="m">d(x,A) ≤ d(x,aₙ) → 0</span>.
+(4)⇒(2): for any <span class="m">r</span>, by the definition of inf there is <span class="m">a ∈ A</span> with <span class="m">d(x,a) &lt; r</span>.
+(2)⇒(1): let <span class="m">E</span> be the set of points satisfying (2). Its complement is open: if <span class="m">B(y,r) ∩ A = ∅</span>, then every <span class="m">z ∈ B(y,r)</span> has a small ball inside <span class="m">B(y,r)</span>, which misses <span class="m">A</span>. So <span class="m">E</span> is a closed set containing <span class="m">A</span>, and hence <span class="m">cl A ⊆ E</span>.</div>
+
+<div class="box thm"><span class="lbl">Theorem 2.8: useful identities</span>
+<ul>
+<li><span class="m">X \ cl A = int(X \ A)</span> and <span class="m">X \ int A = cl(X \ A)</span>.</li>
+<li><span class="m">∂A = cl A ∩ cl(X \ A)</span>. In words, <span class="m">x ∈ ∂A</span> ⇔ every ball around <span class="m">x</span> meets both <span class="m">A</span> and its complement. <span class="m">∂A</span> is always closed, and <span class="m">∂A = ∂(X\A)</span>.</li>
+<li><span class="m">cl(A ∪ B) = cl A ∪ cl B</span>, but only <span class="m">cl(A ∩ B) ⊆ cl A ∩ cl B</span>. For example, with <span class="m">A = ℚ</span> and <span class="m">B = ℝ \ ℚ</span>, the left side is ∅ and the right side is ℝ.</li>
+<li><span class="m">int(A ∩ B) = int A ∩ int B</span>, but only <span class="m">int(A ∪ B) ⊇ int A ∪ int B</span>.</li>
+<li><span class="m">A ⊆ B ⇒ int A ⊆ int B</span> and <span class="m">cl A ⊆ cl B</span>.</li>
+</ul>
+</div>
+
+<div class="box warn"><span class="lbl">Trap: closure of an open ball ≠ closed ball (in general)</span>
+<p>In the discrete metric, <span class="m">cl B(x,1) = cl{x} = {x}</span>, but <span class="m">B̄(x,1) = X</span>. What is always true is <span class="m">cl B(x,r) ⊆ B̄(x,r)</span>. Equality holds in normed spaces such as ℝⁿ and C[a,b].</p>
+</div>
+
+<div class="box def"><span class="lbl">Definition 2.9: dense, separable, nowhere dense</span>
+<ul>
+<li><span class="m">A</span> is <b>dense</b> in <span class="m">X</span> if <span class="m">cl A = X</span>. Equivalently, every non-empty open set meets <span class="m">A</span>, or every point is a limit of points of <span class="m">A</span>. Examples: ℚ and ℝ \ ℚ are dense in ℝ; polynomials are dense in <span class="m">(C[a,b], d_∞)</span> (Weierstrass).</li>
+<li><span class="m">X</span> is <b>separable</b> if it has a <b>countable</b> dense subset. Examples: ℝⁿ (via ℚⁿ) and C[a,b]. An uncountable discrete space is <b>not</b> separable.</li>
+<li><span class="m">A</span> is <b>nowhere dense</b> if <span class="m">int(cl A) = ∅</span>. Examples: ℤ or the Cantor set in ℝ.</li>
+</ul>
+</div>
+
+<h3>2.4 Worked example: compute everything</h3>
+<div class="box ex"><span class="lbl">A = [0, 1) ∪ {2} ∪ (ℚ ∩ (3, 4)) in ℝ</span>
+<div class="tablewrap"><table>
+<tr><th>Object</th><th>Answer</th><th>Why</th></tr>
+<tr><td>int A</td><td>(0, 1)</td><td>Points of (0,1) have room around them. Balls around 0 or 2 leave A. Every interval around a rational contains irrationals.</td></tr>
+<tr><td>cl A</td><td>[0, 1] ∪ {2} ∪ [3, 4]</td><td>1 is a limit of points in A. The rationals are dense in [3,4].</td></tr>
+<tr><td>∂A</td><td>{0, 1, 2} ∪ [3, 4]</td><td>cl A minus int A</td></tr>
+<tr><td>A′ (limit points)</td><td>[0, 1] ∪ [3, 4]</td><td>2 is not a limit point because it is isolated.</td></tr>
+<tr><td>Isolated points</td><td>{2}</td><td><span class="m">B(2, ½) ∩ A = {2}</span></td></tr>
+<tr><td>Open? Closed?</td><td>Neither</td><td><span class="m">0 ∈ A</span> is not an interior point, and <span class="m">1 ∈ cl A \ A</span>.</td></tr>
+</table></div>
+</div>
+
+<h3>2.5 Convergence of sequences</h3>
+<div class="box def"><span class="lbl">Definition 2.10</span>
+<p><span class="m">xₙ → x</span> in <span class="m">(X, d)</span> if <span class="m">d(xₙ, x) → 0</span> in ℝ. Explicitly:</p>
+<div class="mb">∀ε &gt; 0  ∃N ∈ ℕ  ∀n ≥ N :  d(xₙ, x) &lt; ε.</div>
+<p>Equivalently, every open set (or ball) containing <span class="m">x</span> contains <span class="m">xₙ</span> for all but finitely many <span class="m">n</span> (the sequence is <b>eventually</b> in it).</p>
+</div>
+<div class="box thm"><span class="lbl">Theorem 2.11: basic facts</span>
+<ol>
+<li><b>Limits are unique</b> in a metric space.</li>
+<li>A convergent sequence is bounded.</li>
+<li>If <span class="m">xₙ → x</span>, every subsequence also converges to <span class="m">x</span>.</li>
+<li><b>Sequential closedness:</b> <span class="m">F</span> is closed ⇔ whenever <span class="m">xₙ ∈ F</span> and <span class="m">xₙ → x ∈ X</span>, we have <span class="m">x ∈ F</span>.</li>
+</ol>
+</div>
+<div class="proof">(1): if <span class="m">xₙ → x</span> and <span class="m">xₙ → y</span>, then <span class="m">0 ≤ d(x,y) ≤ d(x,xₙ) + d(xₙ,y) → 0</span>, so <span class="m">d(x,y) = 0</span> and <span class="m">x = y</span>.
+(4) ⇒: suppose <span class="m">x ∉ F</span>. Since <span class="m">X \ F</span> is open, some <span class="m">B(x,r)</span> misses <span class="m">F</span>, so <span class="m">d(xₙ, x) ≥ r</span> for all <span class="m">n</span>. That contradicts <span class="m">xₙ → x</span>.
+(4) ⇐: by Theorem 2.7(3), any <span class="m">x ∈ cl F</span> is a limit of points of <span class="m">F</span>, so <span class="m">x ∈ F</span>. Hence <span class="m">cl F = F</span>.</div>
+<div class="box ex"><span class="lbl">What convergence means in specific spaces</span>
+<ul>
+<li><b>ℝⁿ</b> (any of <span class="m">d₁, d₂, d_∞</span>): convergence ⇔ <b>each coordinate</b> converges.</li>
+<li><b>(C[a,b], d_∞)</b>: convergence ⇔ <b>uniform convergence</b>.</li>
+<li><b>(C[a,b], d₁)</b>: convergence "in mean". This is weaker: <span class="m">tⁿ → 0</span> in <span class="m">d₁</span> but not in <span class="m">d_∞</span>.</li>
+<li><b>Discrete metric</b>: <span class="m">xₙ → x</span> ⇔ <span class="m">(xₙ)</span> is <b>eventually constant</b> and equal to <span class="m">x</span> (take ε = ½).</li>
+</ul>
+</div>
+
+<h3>2.6 Topological spaces</h3>
+<p><b>Intuition.</b> Notice that convergence, continuity and closure can all be described using only <b>which sets are open</b>. So we can forget the distances and just keep the collection of open sets. That collection is a <b>topology</b>.</p>
+<div class="box def"><span class="lbl">Definition 2.12: topology</span>
+<p>A <b>topology</b> on a set <span class="m">X</span> is a collection <span class="m">τ</span> of subsets of <span class="m">X</span> (called <b>open sets</b>) such that:</p>
+<ol><li><b>(T1)</b> <span class="m">∅ ∈ τ</span> and <span class="m">X ∈ τ</span>;</li>
+<li><b>(T2)</b> any union of members of <span class="m">τ</span> is in <span class="m">τ</span>;</li>
+<li><b>(T3)</b> any finite intersection of members of <span class="m">τ</span> is in <span class="m">τ</span> (it's enough to check intersections of two).</li></ol>
+<p><span class="m">(X, τ)</span> is a <b>topological space</b>. A set is <b>closed</b> if its complement is in <span class="m">τ</span>. A <b>neighbourhood</b> of <span class="m">x</span> is a set containing an open set that contains <span class="m">x</span>.</p>
+</div>
+<div class="box ex"><span class="lbl">Standard topologies</span>
+<ul>
+<li><b>Metric topology</b>: the open sets of a metric space (Theorem 2.5 checks T1–T3).</li>
+<li><b>Discrete topology</b>: <span class="m">τ</span> is <b>every</b> subset of <span class="m">X</span>. It comes from the discrete metric.</li>
+<li><b>Indiscrete (trivial) topology</b>: <span class="m">τ = {∅, X}</span>.</li>
+<li><b>Cofinite topology</b>: <span class="m">U</span> is open ⇔ <span class="m">U = ∅</span> or <span class="m">X \ U</span> is finite.</li>
+<li><b>Sierpiński space</b>: <span class="m">X = {0,1}</span>, <span class="m">τ = {∅, {1}, {0,1}}</span>.</li>
+</ul>
+</div>
+<div class="box ex"><span class="lbl">Example: checking a topology</span>
+<p>Is <span class="m">τ = {∅, {a}, {b}, {a,b,c}}</span> a topology on <span class="m">{a,b,c}</span>? <b>No</b>: <span class="m">{a} ∪ {b} = {a,b} ∉ τ</span>, so T2 fails. Adding <span class="m">{a,b}</span> fixes it.</p>
+</div>
+<div class="box def"><span class="lbl">Definition 2.13: comparing topologies, basis, metrizable, Hausdorff</span>
+<ul>
+<li><span class="m">τ₁</span> is <b>coarser</b> (weaker) than <span class="m">τ₂</span> if <span class="m">τ₁ ⊆ τ₂</span>; then <span class="m">τ₂</span> is <b>finer</b> (stronger). The indiscrete topology is the coarsest possible and the discrete topology is the finest.</li>
+<li>A <b>basis</b> <span class="m">ℬ</span> for <span class="m">τ</span> is a collection of open sets such that every open set is a union of members of <span class="m">ℬ</span>. Example: open balls are a basis for a metric topology, and intervals with rational endpoints are a basis for ℝ.</li>
+<li><span class="m">(X,τ)</span> is <b>metrizable</b> if some metric on <span class="m">X</span> produces exactly <span class="m">τ</span>.</li>
+<li><span class="m">(X,τ)</span> is <b>Hausdorff</b> (T₂) if any two distinct points <span class="m">x ≠ y</span> have <b>disjoint</b> open neighbourhoods <span class="m">U ∋ x</span> and <span class="m">V ∋ y</span>.</li>
+</ul>
+</div>
+<div class="box thm"><span class="lbl">Theorem 2.14: every metric space is Hausdorff</span></div>
+<div class="proof">If <span class="m">x ≠ y</span>, let <span class="m">r = d(x,y)/2 &gt; 0</span>. If <span class="m">z</span> were in <span class="m">B(x,r) ∩ B(y,r)</span>, then <span class="m">d(x,y) ≤ d(x,z) + d(z,y) &lt; 2r = d(x,y)</span>, a contradiction.</div>
+<div class="box tip"><span class="lbl">Exam use: proving a space is NOT metrizable</span><p>Show it isn't Hausdorff. The indiscrete topology on ≥ 2 points, the cofinite topology on an infinite set (any two non-empty open sets intersect) and Sierpiński space are all non-Hausdorff, so none of them is metrizable.</p></div>
+<div class="box warn"><span class="lbl">Weird behaviour in non-Hausdorff spaces</span><p>In the indiscrete topology, <b>every</b> sequence converges to <b>every</b> point, so limits aren't unique. Uniqueness of limits really comes from the Hausdorff property. Also, in general topological spaces, sequences aren't always enough to detect closure. That's why topology uses open sets as the basic notion.</p></div>
+
+<h3>2.7 Subspaces</h3>
+<div class="box def"><span class="lbl">Definition 2.15: subspace topology</span>
+<p>If <span class="m">Y ⊆ X</span>, the <b>subspace topology</b> on <span class="m">Y</span> is <span class="m">τ_Y = {U ∩ Y : U open in X}</span>. For metric spaces this is the same as the topology of the restricted metric, and <span class="m">B_Y(y,r) = B_X(y,r) ∩ Y</span>.</p>
+</div>
+<div class="box thm"><span class="lbl">Facts</span>
+<ul><li><span class="m">F ⊆ Y</span> is closed in <span class="m">Y</span> ⇔ <span class="m">F = C ∩ Y</span> for some <span class="m">C</span> closed in <span class="m">X</span>.</li>
+<li>If <span class="m">Y</span> is open in <span class="m">X</span>, then "open in <span class="m">Y</span>" ⇔ "open in <span class="m">X</span>" for subsets of <span class="m">Y</span>. The same holds for closed sets when <span class="m">Y</span> is closed.</li>
+<li>Example: in <span class="m">Y = ℚ</span>, the set <span class="m">{q ∈ ℚ : q² &lt; 2}</span> is <b>clopen</b>. It equals <span class="m">(−√2, √2) ∩ ℚ = [−√2, √2] ∩ ℚ</span>.</li></ul>
+</div>
+
+<h3>2.8 Practice questions</h3>
+<p class="q"><span class="lvl easy">EASY</span> 1. Prove that <span class="m">U = {(x,y) ∈ ℝ² : x &gt; 0}</span> is open, directly from the definition.</p>
+<details><summary>Solution</summary><p>Let <span class="m">p = (a,b) ∈ U</span>, so <span class="m">a &gt; 0</span>. Take <span class="m">r = a</span>. If <span class="m">(x,y) ∈ B(p, a)</span> (Euclidean), then <span class="m">|x − a| ≤ d₂((x,y),(a,b)) &lt; a</span>, so <span class="m">x &gt; 0</span>. Hence <span class="m">B(p,a) ⊆ U</span>. (Quicker method in Ch 3: <span class="m">U = f⁻¹((0,∞))</span> for the continuous map <span class="m">f(x,y) = x</span>.)</p></details>
+
+<p class="q"><span class="lvl easy">EASY</span> 2. Prove that every finite subset of a metric space is closed.</p>
+<details><summary>Solution</summary><p>First, <span class="m">{p}</span> is closed. If <span class="m">x ≠ p</span>, then <span class="m">B(x, d(x,p)) </span> doesn't contain <span class="m">p</span>, so the complement of <span class="m">{p}</span> is open. A finite set is a finite union of singletons, and finite unions of closed sets are closed.</p></details>
+
+<p class="q"><span class="lvl med">MEDIUM</span> 3. In a discrete metric space, find <span class="m">int A</span>, <span class="m">cl A</span> and <span class="m">∂A</span> for any <span class="m">A</span>.</p>
+<details><summary>Solution</summary><p>Every set is open (<span class="m">B(x,½) = {x} ⊆ A</span>) and so every set is also closed. Hence <span class="m">int A = A</span>, <span class="m">cl A = A</span> and <span class="m">∂A = ∅</span>.</p></details>
+
+<p class="q"><span class="lvl med">MEDIUM</span> 4. Show that <span class="m">∂A = ∅</span> ⇔ <span class="m">A</span> is clopen.</p>
+<details><summary>Solution</summary><p><span class="m">∂A = cl A \ int A</span> is empty ⇔ <span class="m">cl A ⊆ int A</span>. Since <span class="m">int A ⊆ A ⊆ cl A</span> always, that holds ⇔ <span class="m">int A = A = cl A</span> ⇔ <span class="m">A</span> is both open and closed.</p></details>
+
+<p class="q"><span class="lvl hard">HARD</span> 5. Let <span class="m">X</span> be infinite with the cofinite topology. (a) Show it's a topology. (b) Show it's not Hausdorff. (c) Which sequences converge, and to what?</p>
+<details><summary>Solution</summary><p>(a) T1: <span class="m">∅</span> by definition, and <span class="m">X \ X = ∅</span> is finite. T2: if the <span class="m">Uᵢ</span> are non-empty open sets, <span class="m">X \ ⋃Uᵢ = ⋂(X \ Uᵢ)</span> is contained in a finite set. T3: <span class="m">X \ (U ∩ V) = (X\U) ∪ (X\V)</span> is a union of two finite sets.
+(b) If <span class="m">U, V</span> are non-empty open and disjoint, then <span class="m">X = X \ (U ∩ V) = (X\U) ∪ (X\V)</span> is finite, a contradiction.
+(c) Suppose no value is repeated infinitely often (for example, all <span class="m">xₙ</span> are distinct). Then <span class="m">xₙ → x</span> for <b>every</b> <span class="m">x ∈ X</span>. An open <span class="m">U ∋ x</span> misses only finitely many points, so only finitely many <span class="m">xₙ</span> are outside <span class="m">U</span>. This is another example of non-unique limits.</p></details>
+
+<p class="q"><span class="lvl hard">HARD</span> 6. Prove that in any metric space, <span class="m">cl B(x,r) ⊆ B̄(x,r)</span>, and give an example where the inclusion is strict.</p>
+<details><summary>Solution</summary><p><span class="m">B̄(x,r)</span> is closed (Lemma 2.4) and contains <span class="m">B(x,r)</span>. The closure is the <i>smallest</i> such closed set, so the inclusion follows. For a strict example, use the discrete metric with <span class="m">r = 1</span> and <span class="m">|X| ≥ 2</span>: <span class="m">cl B(x,1) = {x} ≠ X = B̄(x,1)</span>. Another example: <span class="m">X = [0,1] ∪ [2,3]</span> ⊂ ℝ with <span class="m">x = 0</span>, <span class="m">r = 2</span>. Then <span class="m">cl B = [0,1]</span>, but <span class="m">B̄ = [0,1] ∪ {2}</span>.</p></details>
+
+<!-- ===================== CHAPTER 3 ===================== -->
+<h2 id="ch3">Chapter 3: Continuity and homeomorphisms</h2>
+<div class="slot"><b>⏱ 3:50–4:25 (35 min)</b><span>Learn the four equivalent definitions of continuity and how to switch between them. Memorise the uniform continuity hierarchy and its counterexamples. Be able to show two spaces are or are not homeomorphic.</span></div>
+
+<h3>3.1 Four equivalent definitions</h3>
+<p><b>Intuition.</b> <span class="m">f</span> is continuous if "close inputs give close outputs". If you want <span class="m">f(y)</span> within ε of <span class="m">f(x)</span>, you can guarantee it by taking <span class="m">y</span> within δ of <span class="m">x</span>.</p>
+<div class="box def"><span class="lbl">Definition 3.1: ε–δ continuity</span>
+<p><span class="m">f : (X,d_X) → (Y,d_Y)</span> is <b>continuous at <span class="m">a ∈ X</span></b> if</p>
+<div class="mb">∀ε &gt; 0  ∃δ &gt; 0  ∀x ∈ X :  d_X(x,a) &lt; δ ⇒ d_Y(f(x), f(a)) &lt; ε.</div>
+<p>In terms of balls: <span class="m">f(B(a,δ)) ⊆ B(f(a), ε)</span>. <span class="m">f</span> is <b>continuous</b> if it is continuous at every point.</p>
+</div>
+<div class="box thm"><span class="lbl">Theorem 3.2: equivalent forms (core exam theorem)</span>
+<p>For <span class="m">f : X → Y</span> between metric spaces, the following are equivalent:</p>
+<ol>
+<li><b>(ε–δ)</b> <span class="m">f</span> is continuous at every point.</li>
+<li><b>(Sequential)</b> <span class="m">xₙ → x</span> in <span class="m">X</span> ⇒ <span class="m">f(xₙ) → f(x)</span> in <span class="m">Y</span>.</li>
+<li><b>(Open sets)</b> <span class="m">V</span> open in <span class="m">Y</span> ⇒ <span class="m">f⁻¹(V)</span> open in <span class="m">X</span>.</li>
+<li><b>(Closed sets)</b> <span class="m">C</span> closed in <span class="m">Y</span> ⇒ <span class="m">f⁻¹(C)</span> closed in <span class="m">X</span>.</li>
+</ol>
+<p>For topological spaces, (3) is the <b>definition</b> of continuity.</p>
+</div>
+<div class="proof"><b>(1)⇒(3):</b> let <span class="m">V</span> be open and <span class="m">a ∈ f⁻¹(V)</span>. Since <span class="m">f(a) ∈ V</span>, choose ε with <span class="m">B(f(a),ε) ⊆ V</span>, then δ from (1). Then <span class="m">f(B(a,δ)) ⊆ B(f(a),ε) ⊆ V</span>, so <span class="m">B(a,δ) ⊆ f⁻¹(V)</span>.<br>
+<b>(3)⇒(1):</b> <span class="m">B(f(a),ε)</span> is open, so <span class="m">f⁻¹(B(f(a),ε))</span> is open and contains <span class="m">a</span>. Hence it contains some <span class="m">B(a,δ)</span>, which is exactly the ε–δ statement.<br>
+<b>(3)⇔(4):</b> take complements, using <span class="m">f⁻¹(Y \ C) = X \ f⁻¹(C)</span>.<br>
+<b>(1)⇒(2):</b> given ε, take δ from (1), then <span class="m">N</span> with <span class="m">d(xₙ,x) &lt; δ</span> for <span class="m">n ≥ N</span>. Then <span class="m">d(f(xₙ),f(x)) &lt; ε</span>.<br>
+<b>(2)⇒(1), by contrapositive:</b> if (1) fails at <span class="m">a</span>, there is an ε such that for each <span class="m">δ = 1/n</span> some <span class="m">xₙ</span> has <span class="m">d(xₙ,a) &lt; 1/n</span> but <span class="m">d(f(xₙ),f(a)) ≥ ε</span>. Then <span class="m">xₙ → a</span> but <span class="m">f(xₙ) ↛ f(a)</span>.</div>
+
+<div class="box tip"><span class="lbl">Which form should you use?</span>
+<ul>
+<li>To show <span class="m">f</span> <b>is</b> continuous with a formula: use ε–δ, or combine known continuous functions.</li>
+<li>To show <span class="m">f</span> is <b>not</b> continuous: find <b>one sequence</b> <span class="m">xₙ → x</span> with <span class="m">f(xₙ) ↛ f(x)</span>, or one open set whose preimage isn't open.</li>
+<li>To show a <b>set is open or closed</b>: write it as <span class="m">f⁻¹(open)</span> or <span class="m">f⁻¹(closed)</span> for a continuous <span class="m">f</span>. This is often a one-line proof.</li>
+<li>For abstract or topological questions: use the open-set form.</li>
+</ul>
+</div>
+
+<h3>3.2 Building continuous functions</h3>
+<div class="box thm"><span class="lbl">Theorem 3.3</span>
+<ul>
+<li>Constant maps and identity maps <span class="m">(X,d) → (X,d)</span> are continuous.</li>
+<li>Compositions of continuous maps are continuous: <span class="m">(g∘f)⁻¹(V) = f⁻¹(g⁻¹(V))</span>.</li>
+<li>If <span class="m">f, g : X → ℝ</span> are continuous, so are <span class="m">f + g</span>, <span class="m">fg</span>, <span class="m">|f|</span>, <span class="m">max(f,g)</span>, <span class="m">min(f,g)</span>, and <span class="m">f/g</span> where <span class="m">g ≠ 0</span>.</li>
+<li><span class="m">f = (f₁,…,fₙ) : X → ℝⁿ</span> is continuous ⇔ each component <span class="m">fᵢ</span> is continuous.</li>
+<li><b>Any</b> function out of a discrete space is continuous, because every preimage is open.</li>
+<li>For fixed <span class="m">a</span>, <span class="m">x ↦ d(x,a)</span> is continuous. More generally, <span class="m">x ↦ d(x,A)</span> is 1-Lipschitz: <span class="m">|d(x,A) − d(y,A)| ≤ d(x,y)</span>.</li>
+<li>Restrictions of continuous maps to subspaces are continuous.</li>
+</ul>
+</div>
+<div class="box ex"><span class="lbl">One-line open/closed proofs</span>
+<ul>
+<li><span class="m">{(x,y) : x² + y² &lt; 1}</span> is open: it is <span class="m">f⁻¹((−∞,1))</span> with <span class="m">f(x,y) = x²+y²</span> continuous.</li>
+<li><span class="m">{(x,y) : xy = 1}</span> is closed: it is <span class="m">g⁻¹({1})</span> with <span class="m">g(x,y) = xy</span>, and <span class="m">{1}</span> is closed.</li>
+<li><span class="m">{f ∈ C[0,1] : f(½) &gt; 0}</span> is open in <span class="m">d_∞</span>: the evaluation map <span class="m">f ↦ f(½)</span> is 1-Lipschitz, since <span class="m">|f(½) − g(½)| ≤ d_∞(f,g)</span>.</li>
+<li>The zero set <span class="m">{x : f(x) = 0}</span> of any continuous real-valued <span class="m">f</span> is closed.</li>
+</ul>
+</div>
+<div class="box warn"><span class="lbl">Continuity does NOT preserve open or closed sets under images</span>
+<ul>
+<li>Open sets can map to non-open sets: <span class="m">f(x) = x²</span> sends <span class="m">(−1,1)</span> to <span class="m">[0,1)</span>.</li>
+<li>Closed sets can map to non-closed sets: <span class="m">arctan</span> sends the closed set ℝ to <span class="m">(−π/2, π/2)</span>. Projecting the closed hyperbola <span class="m">xy = 1</span> to the x-axis gives <span class="m">ℝ \ {0}</span>.</li>
+</ul>
+<p>Only <b>preimages</b> behave well. (Exception: continuous images of <b>compact</b> sets are compact, see Ch 5.)</p>
+</div>
+<div class="box warn"><span class="lbl">Continuity depends on the metrics</span><p>The identity <span class="m">(ℝ, discrete) → (ℝ, usual)</span> is continuous, because everything is open in the domain. The identity <span class="m">(ℝ, usual) → (ℝ, discrete)</span> is <b>not</b>: the preimage of the open set <span class="m">{0}</span> is <span class="m">{0}</span>, which is not open in the usual topology. Likewise, the identity <span class="m">(C[0,1], d_∞) → (C[0,1], d₁)</span> is continuous (since <span class="m">d₁ ≤ d_∞</span>), but the reverse is not (<span class="m">tⁿ → 0</span> in <span class="m">d₁</span> only).</p></div>
+
+<h3>3.3 Uniform continuity and Lipschitz maps</h3>
+<div class="box def"><span class="lbl">Definition 3.4</span>
+<ul>
+<li><span class="m">f</span> is <b>uniformly continuous</b> if
+<span class="mb">∀ε &gt; 0  ∃δ &gt; 0  ∀x, y ∈ X :  d(x,y) &lt; δ ⇒ d(f(x),f(y)) &lt; ε.</span>
+The key difference from continuity is that <b>δ depends only on ε, not on the point</b>. Look at where "∀x" sits in the quantifiers.</li>
+<li><span class="m">f</span> is <b>Lipschitz</b> with constant <span class="m">L</span> if <span class="m">d(f(x),f(y)) ≤ L·d(x,y)</span> for all <span class="m">x, y</span>. If <span class="m">L &lt; 1</span>, <span class="m">f</span> is a <b>contraction</b> (Ch 4).</li>
+</ul>
+</div>
+<div class="box thm"><span class="lbl">Hierarchy</span>
+<div class="mb">Lipschitz  ⇒  uniformly continuous  ⇒  continuous</div>
+<p>Lipschitz ⇒ UC: take <span class="m">δ = ε/L</span>. Neither arrow reverses:</p>
+<div class="tablewrap"><table>
+<tr><th>Function</th><th>Continuous</th><th>Uniformly cont.</th><th>Lipschitz</th></tr>
+<tr><td><span class="m">x²</span> on ℝ</td><td>✓</td><td>✗</td><td>✗</td></tr>
+<tr><td><span class="m">1/x</span> on (0, 1)</td><td>✓</td><td>✗</td><td>✗</td></tr>
+<tr><td><span class="m">sin(1/x)</span> on (0, 1)</td><td>✓</td><td>✗</td><td>✗</td></tr>
+<tr><td><span class="m">√x</span> on [0, 1]</td><td>✓</td><td>✓ (compact domain)</td><td>✗ (slope unbounded near 0)</td></tr>
+<tr><td><span class="m">sin x</span> on ℝ</td><td>✓</td><td>✓</td><td>✓ (L = 1)</td></tr>
+<tr><td><span class="m">x²</span> on [0, 1]</td><td>✓</td><td>✓</td><td>✓ (L = 2)</td></tr>
+</table></div>
+</div>
+<div class="box ex"><span class="lbl">Proof: x² is not uniformly continuous on ℝ</span>
+<p>Take ε = 1. For any δ &gt; 0, let <span class="m">x = 1/δ</span> and <span class="m">y = 1/δ + δ/2</span>. Then <span class="m">|x − y| &lt; δ</span>, but <span class="m">|x² − y²| = |x − y||x + y| = (δ/2)(2/δ + δ/2) &gt; 1</span>.</p>
+<p><b>Sequence version (often easier):</b> <span class="m">f</span> is <b>not</b> UC ⇔ there exist ε &gt; 0 and sequences <span class="m">xₙ, yₙ</span> with <span class="m">d(xₙ,yₙ) → 0</span> but <span class="m">d(f(xₙ),f(yₙ)) ≥ ε</span>. For <span class="m">x²</span>, take <span class="m">xₙ = n</span> and <span class="m">yₙ = n + 1/n</span>: then <span class="m">yₙ² − xₙ² = 2 + 1/n² ≥ 2</span>.</p>
+</div>
+<div class="box thm"><span class="lbl">Why uniform continuity matters</span><p>A uniformly continuous map sends <b>Cauchy sequences to Cauchy sequences</b>. A merely continuous map need not: <span class="m">1/x</span> on (0,1) sends the Cauchy sequence <span class="m">1/n</span> to <span class="m">n</span>. Also, any continuous function on a <b>compact</b> metric space is uniformly continuous (Heine–Cantor, Ch 5).</p></div>
+
+<h3>3.4 Homeomorphisms</h3>
+<div class="box def"><span class="lbl">Definition 3.5</span>
+<p>A <b>homeomorphism</b> <span class="m">f : X → Y</span> is a <b>bijection</b> such that <span class="m">f</span> <b>and</b> <span class="m">f⁻¹</span> are both continuous. Then <span class="m">X</span> and <span class="m">Y</span> are <b>homeomorphic</b>, written <span class="m">X ≅ Y</span>. A <b>topological property</b> is one preserved by homeomorphisms.</p>
+<p><b>Intuition:</b> a homeomorphism stretches and bends without tearing or gluing. Topologists treat a coffee mug and a doughnut as the same.</p>
+</div>
+<div class="box ex"><span class="lbl">Examples</span>
+<ul>
+<li><span class="m">(−1, 1) ≅ ℝ</span> via <span class="m">x ↦ x / (1 − |x|)</span>, or <span class="m">x ↦ tan(πx/2)</span>.</li>
+<li>Any two open intervals are homeomorphic (via a linear map, then the example above). Similarly any two closed intervals.</li>
+<li>Any isometry onto its image is a homeomorphism onto its image.</li>
+<li>If <span class="m">d, d'</span> are topologically equivalent, the identity <span class="m">(X,d) → (X,d')</span> is a homeomorphism.</li>
+</ul>
+</div>
+<div class="box warn"><span class="lbl">A continuous bijection is NOT automatically a homeomorphism</span>
+<ul>
+<li><span class="m">f : [0, 2π) → S¹</span>, <span class="m">t ↦ (cos t, sin t)</span> is a continuous bijection onto the circle. Its inverse is not continuous at <span class="m">(1,0)</span>: points just below <span class="m">(1,0)</span> on the circle map to numbers near 2π, not near 0.</li>
+<li>The identity <span class="m">(ℝ, discrete) → (ℝ, usual)</span>.</li>
+</ul>
+<p>It <b>is</b> automatic when the domain is compact and the codomain is Hausdorff (Ch 5).</p>
+</div>
+<div class="box thm"><span class="lbl">Topological vs non-topological properties</span>
+<div class="tablewrap"><table>
+<tr><th>Topological (preserved by ≅)</th><th>NOT topological (depends on the metric)</th></tr>
+<tr><td>open/closed sets, convergence of sequences, continuity, Hausdorff, compactness, connectedness, separability, number of isolated points</td><td><b>boundedness</b> (ℝ ≅ (−1,1)), <b>completeness</b> (ℝ ≅ (0,1), but only ℝ is complete), Cauchy sequences, uniform continuity, diameter</td></tr>
+</table></div>
+</div>
+<div class="box tip"><span class="lbl">Proving X ≇ Y</span><p>Find a topological property one space has and the other lacks. For example, <span class="m">[0,1] ≇ (0,1)</span> because one is compact and the other isn't. <span class="m">ℝ ≇ ℝ²</span> because removing one point disconnects ℝ but not ℝ². <span class="m">[0,1) ≇ (0,1)</span> because removing the point 0 leaves <span class="m">[0,1)</span> connected, while removing any point disconnects (0,1).</p></div>
+
+<h3>3.5 Practice questions</h3>
+<p class="q"><span class="lvl easy">EASY</span> 1. Prove from ε–δ that <span class="m">f(x) = 3x + 2</span> is continuous on ℝ.</p>
+<details><summary>Solution</summary><p>Given ε &gt; 0, let δ = ε/3. If <span class="m">|x − a| &lt; δ</span>, then <span class="m">|f(x) − f(a)| = 3|x − a| &lt; ε</span>. It's in fact 3-Lipschitz, so it's uniformly continuous.</p></details>
+
+<p class="q"><span class="lvl easy">EASY</span> 2. Show that <span class="m">f(x) = 1</span> for <span class="m">x ≥ 0</span> and <span class="m">f(x) = 0</span> for <span class="m">x &lt; 0</span> is not continuous on ℝ, using two different methods.</p>
+<details><summary>Solution</summary><p><b>Sequences:</b> <span class="m">xₙ = −1/n → 0</span>, but <span class="m">f(xₙ) = 0 ↛ 1 = f(0)</span>. <b>Open sets:</b> <span class="m">f⁻¹((½, 2)) = [0, ∞)</span>, which is not open.</p></details>
+
+<p class="q"><span class="lvl med">MEDIUM</span> 3. Let <span class="m">A ⊆ X</span> be non-empty. Show that <span class="m">|d(x,A) − d(y,A)| ≤ d(x,y)</span>, and deduce that <span class="m">cl A = {x : d(x,A) = 0}</span> is closed.</p>
+<details><summary>Solution</summary><p>For any <span class="m">a ∈ A</span>, <span class="m">d(x,A) ≤ d(x,a) ≤ d(x,y) + d(y,a)</span>. Taking inf over <span class="m">a</span> gives <span class="m">d(x,A) ≤ d(x,y) + d(y,A)</span>. Swapping <span class="m">x</span> and <span class="m">y</span> gives the absolute value. So <span class="m">x ↦ d(x,A)</span> is 1-Lipschitz and hence continuous, and <span class="m">{x : d(x,A) = 0}</span> is the preimage of the closed set <span class="m">{0}</span>.</p></details>
+
+<p class="q"><span class="lvl med">MEDIUM</span> 4. Show that <span class="m">I : C[0,1] → ℝ</span>, <span class="m">I(f) = ∫₀¹ f</span>, is continuous with respect to <span class="m">d_∞</span>, and also with respect to <span class="m">d₁</span>.</p>
+<details><summary>Solution</summary><p><span class="m">|I(f) − I(g)| = |∫(f − g)| ≤ ∫|f − g| = d₁(f,g) ≤ d_∞(f,g)</span>. So <span class="m">I</span> is 1-Lipschitz for both metrics, and therefore uniformly continuous.</p></details>
+
+<p class="q"><span class="lvl hard">HARD</span> 5. Is the evaluation map <span class="m">E(f) = f(0)</span> continuous from <span class="m">(C[0,1], d₁)</span> to ℝ?</p>
+<details><summary>Solution</summary><p><b>No.</b> Let <span class="m">fₙ(t) = max{0, 1 − nt}</span> (a spike of height 1 at 0). Then <span class="m">d₁(fₙ, 0) = 1/(2n) → 0</span>, so <span class="m">fₙ → 0</span>. But <span class="m">E(fₙ) = 1 ↛ 0 = E(0)</span>. (With <span class="m">d_∞</span>, it is continuous: <span class="m">|f(0) − g(0)| ≤ d_∞(f,g)</span>.)</p></details>
+
+<p class="q"><span class="lvl hard">HARD</span> 6. Let <span class="m">f, g : X → Y</span> be continuous, with <span class="m">Y</span> a metric space. Show that <span class="m">{x : f(x) = g(x)}</span> is closed. Deduce that if <span class="m">f = g</span> on a dense subset, then <span class="m">f = g</span> everywhere.</p>
+<details><summary>Solution</summary><p><span class="m">h(x) = d_Y(f(x), g(x))</span> is continuous, because it's a composition of continuous maps (or argue with sequences). The set is <span class="m">h⁻¹({0})</span>, which is closed. If it contains a dense set <span class="m">D</span>, then it contains <span class="m">cl D = X</span>. Application: a continuous function on ℝ is determined by its values on ℚ.</p></details>
+
+<!-- ===================== CHAPTER 4 ===================== -->
+<h2 id="ch4">Chapter 4: Completeness</h2>
+<div class="slot"><b>⏱ 4:40–5:10 (30 min)</b><span>Learn the Cauchy definition, the list of complete and incomplete spaces, the "closed ⇔ complete" theorem, and the full proof of the Contraction Mapping Theorem. That proof is a favourite long exam question.</span></div>
+
+<h3>4.1 Cauchy sequences</h3>
+<p><b>Intuition.</b> A sequence is Cauchy if its terms eventually get as close to <b>each other</b> as you like, so they look as if they're converging. Completeness says that whenever this happens, there really is a limit in the space. ℚ is incomplete because <span class="m">1, 1.4, 1.41, 1.414, …</span> "wants" to converge to <span class="m">√2</span>, which isn't in ℚ. The space has holes.</p>
+<div class="box def"><span class="lbl">Definition 4.1: Cauchy sequence</span>
+<p><span class="m">(xₙ)</span> is <b>Cauchy</b> if</p>
+<div class="mb">∀ε &gt; 0  ∃N  ∀m, n ≥ N :  d(xₘ, xₙ) &lt; ε.</div>
+<p>Notice that, unlike the definition of convergence, this one <b>doesn't mention a limit</b>.</p>
+</div>
+<div class="box thm"><span class="lbl">Theorem 4.2: basic facts (with proofs, all short)</span>
+<ol>
+<li>Every convergent sequence is Cauchy.</li>
+<li>Every Cauchy sequence is bounded.</li>
+<li>A Cauchy sequence with a convergent subsequence converges, to the same limit.</li>
+</ol>
+</div>
+<div class="proof">(1): if <span class="m">xₙ → x</span>, choose <span class="m">N</span> with <span class="m">d(xₙ,x) &lt; ε/2</span> for <span class="m">n ≥ N</span>. Then <span class="m">d(xₘ,xₙ) ≤ d(xₘ,x) + d(x,xₙ) &lt; ε</span>.
+(2): with ε = 1, all <span class="m">xₙ</span> with <span class="m">n ≥ N</span> lie in <span class="m">B(x_N, 1)</span>. Only finitely many terms remain outside, so take the radius <span class="m">1 + max{d(xᵢ, x_N) : i &lt; N}</span>.
+(3): let <span class="m">x_{n_k} → x</span>. Given ε, choose <span class="m">N</span> from the Cauchy condition with ε/2, and <span class="m">k</span> with <span class="m">n_k ≥ N</span> and <span class="m">d(x_{n_k}, x) &lt; ε/2</span>. For <span class="m">n ≥ N</span>, <span class="m">d(xₙ, x) ≤ d(xₙ, x_{n_k}) + d(x_{n_k}, x) &lt; ε</span>.</div>
+
+<h3>4.2 Complete metric spaces</h3>
+<div class="box def"><span class="lbl">Definition 4.3</span><p><span class="m">(X, d)</span> is <b>complete</b> if every Cauchy sequence in <span class="m">X</span> converges to a point <b>of <span class="m">X</span></b>. A complete normed vector space is a <b>Banach space</b>.</p></div>
+
+<div class="box ex"><span class="lbl">Complete spaces</span>
+<ul>
+<li><b>ℝ</b>. A Cauchy sequence is bounded, so it has a convergent subsequence (Bolzano–Weierstrass), so it converges by 4.2(3). This uses the completeness axiom.</li>
+<li><b>ℝⁿ</b> with <span class="m">d₁, d₂</span> or <span class="m">d_∞</span>. Each coordinate is Cauchy in ℝ, so it converges.</li>
+<li>Any <b>closed</b> subset of ℝⁿ, such as <span class="m">[0,1]</span>, <span class="m">ℤ</span>, or the Cantor set.</li>
+<li>Any <b>discrete</b> metric space. A Cauchy sequence (with ε = ½) is eventually constant.</li>
+<li><b>(C[a,b], d_∞)</b>: uniform limits of continuous functions are continuous. Proof below.</li>
+<li><span class="m">ℓ¹, ℓ², ℓ^∞</span>.</li>
+<li>Any compact metric space (Ch 5).</li>
+</ul>
+</div>
+<div class="box warn"><span class="lbl">Incomplete spaces (and the Cauchy sequence that shows it)</span>
+<div class="tablewrap"><table>
+<tr><th>Space</th><th>Cauchy sequence with no limit in the space</th></tr>
+<tr><td>ℚ</td><td>Decimal truncations of √2: <span class="m">1, 1.4, 1.41, …</span> → √2 ∉ ℚ</td></tr>
+<tr><td>(0, 1)</td><td><span class="m">1/n</span> → 0 ∉ (0,1)</td></tr>
+<tr><td>ℝ \ {0}</td><td><span class="m">1/n</span></td></tr>
+<tr><td>(C[0,1], d₁)</td><td>Continuous ramps converging (in area) to a jump function (Q4 below)</td></tr>
+<tr><td>Polynomials on [0,1] with <span class="m">d_∞</span></td><td>Taylor partial sums of <span class="m">eᵗ</span> → <span class="m">eᵗ</span>, which is not a polynomial</td></tr>
+<tr><td>ℝ with <span class="m">d(x,y) = |arctan x − arctan y|</span></td><td><span class="m">xₙ = n</span> is Cauchy (arctan n → π/2) but doesn't converge</td></tr>
+</table></div>
+</div>
+<div class="box warn"><span class="lbl">Completeness is NOT a topological property</span><p><span class="m">ℝ ≅ (0,1)</span>, but ℝ is complete and (0,1) isn't. The last row above is ℝ with its usual topology but an incomplete metric. Completeness <b>is</b> preserved by Lipschitz-equivalent metrics, because they have the same Cauchy sequences.</p></div>
+
+<div class="box thm"><span class="lbl">Theorem 4.4: closed ⇔ complete (very examinable)</span>
+<ol><li>If <span class="m">X</span> is complete and <span class="m">F ⊆ X</span> is closed, then <span class="m">F</span> is complete.</li>
+<li>If <span class="m">Y ⊆ X</span> is complete (with the induced metric), then <span class="m">Y</span> is closed in <span class="m">X</span>, for <b>any</b> metric space <span class="m">X</span>.</li></ol>
+<p>So inside a complete space: <b>a subset is complete ⇔ it is closed</b>.</p>
+</div>
+<div class="proof">(1): a Cauchy sequence in <span class="m">F</span> is Cauchy in <span class="m">X</span>, so it converges to some <span class="m">x ∈ X</span>. <span class="m">F</span> is closed, so <span class="m">x ∈ F</span> (Theorem 2.11(4)).
+(2): let <span class="m">yₙ ∈ Y</span> with <span class="m">yₙ → x ∈ X</span>. Then <span class="m">(yₙ)</span> is convergent, hence Cauchy, so it converges in <span class="m">Y</span> to some <span class="m">y</span>. Limits are unique in <span class="m">X</span>, so <span class="m">x = y ∈ Y</span>. Hence <span class="m">Y</span> is closed.</div>
+
+<h4>Proof that (C[a,b], d_∞) is complete</h4>
+<div class="proof">Let <span class="m">(fₙ)</span> be Cauchy in <span class="m">d_∞</span>. <b>Step 1, candidate limit:</b> for each <span class="m">t</span>, <span class="m">|fₙ(t) − fₘ(t)| ≤ d_∞(fₙ,fₘ)</span>, so <span class="m">(fₙ(t))</span> is Cauchy in ℝ and converges. Call the limit <span class="m">f(t)</span>.
+<b>Step 2, uniform convergence:</b> given ε, choose <span class="m">N</span> with <span class="m">|fₙ(t) − fₘ(t)| &lt; ε</span> for all <span class="m">t</span> and all <span class="m">m,n ≥ N</span>. Let <span class="m">m → ∞</span>: <span class="m">|fₙ(t) − f(t)| ≤ ε</span> for all <span class="m">t</span> and all <span class="m">n ≥ N</span>, so <span class="m">d_∞(fₙ, f) → 0</span>.
+<b>Step 3, f is continuous (the "ε/3 argument"):</b> fix <span class="m">n</span> with <span class="m">sup|fₙ − f| &lt; ε/3</span>. <span class="m">fₙ</span> is continuous at <span class="m">s</span>, so choose δ with <span class="m">|fₙ(t) − fₙ(s)| &lt; ε/3</span> when <span class="m">|t − s| &lt; δ</span>. Then
+<span class="mb">|f(t) − f(s)| ≤ |f(t) − fₙ(t)| + |fₙ(t) − fₙ(s)| + |fₙ(s) − f(s)| &lt; ε.</span>
+So <span class="m">f ∈ C[a,b]</span> and <span class="m">fₙ → f</span>.</div>
+<div class="box tip"><span class="lbl">General 3-step template for "prove X is complete"</span><ol><li>Take a Cauchy sequence and find a candidate limit (usually pointwise or coordinatewise).</li><li>Show the sequence converges to the candidate <b>in the metric</b>.</li><li>Show the candidate actually <b>belongs to</b> X.</li></ol></div>
+
+<h3>4.3 The Contraction Mapping Theorem (Banach Fixed Point Theorem)</h3>
+<div class="box def"><span class="lbl">Definition 4.5</span><p><span class="m">f : X → X</span> is a <b>contraction</b> if there is a constant <span class="m">k</span> with <span class="m">0 ≤ k &lt; 1</span> such that <span class="m">d(f(x), f(y)) ≤ k·d(x,y)</span> for all <span class="m">x, y</span>. A <b>fixed point</b> is an <span class="m">x*</span> with <span class="m">f(x*) = x*</span>.</p></div>
+<div class="box thm"><span class="lbl">Theorem 4.6: Contraction Mapping Theorem</span>
+<p>Let <span class="m">(X, d)</span> be a <b>non-empty complete</b> metric space and let <span class="m">f : X → X</span> be a contraction with constant <span class="m">k</span>. Then:</p>
+<ol><li><span class="m">f</span> has a <b>unique</b> fixed point <span class="m">x*</span>;</li>
+<li>for <b>any</b> starting point <span class="m">x₀</span>, the iterates <span class="m">xₙ₊₁ = f(xₙ)</span> converge to <span class="m">x*</span>;</li>
+<li>error bound: <span class="m">d(xₙ, x*) ≤ kⁿ/(1 − k) · d(x₀, x₁)</span>.</li></ol>
+</div>
+<div class="proof"><b>Step 1, successive distances shrink geometrically:</b> by induction, <span class="m">d(xₙ, xₙ₊₁) ≤ kⁿ d(x₀, x₁)</span>.
+<b>Step 2, Cauchy:</b> for <span class="m">m &gt; n</span>, by the polygon inequality and a geometric series,
+<span class="mb">d(xₙ, xₘ) ≤ Σ_{j=n}^{m−1} kʲ d(x₀,x₁) ≤ kⁿ/(1−k) · d(x₀,x₁) → 0 as n → ∞</span>
+(because <span class="m">k &lt; 1</span>).
+<b>Step 3, convergence:</b> <span class="m">X</span> is complete, so <span class="m">xₙ → x*</span> for some <span class="m">x* ∈ X</span>.
+<b>Step 4, fixed point:</b> <span class="m">f</span> is Lipschitz and hence continuous, so <span class="m">f(x*) = lim f(xₙ) = lim xₙ₊₁ = x*</span>.
+<b>Step 5, uniqueness:</b> if <span class="m">f(x) = x</span> and <span class="m">f(y) = y</span>, then <span class="m">d(x,y) = d(f(x),f(y)) ≤ k·d(x,y)</span>. So <span class="m">(1 − k)d(x,y) ≤ 0</span>, giving <span class="m">d(x,y) = 0</span>.
+<b>Error bound:</b> let <span class="m">m → ∞</span> in Step 2.</div>
+<div class="box warn"><span class="lbl">Every hypothesis is needed</span>
+<ul>
+<li><b>Completeness:</b> <span class="m">f(x) = x/2</span> on <span class="m">(0, 1]</span> is a contraction with no fixed point (0 is missing).</li>
+<li><b>k &lt; 1 strictly, with a fixed k:</b> <span class="m">f(x) = x + 1/x</span> on <span class="m">[1, ∞)</span> satisfies <span class="m">|f(x) − f(y)| &lt; |x − y|</span> for <span class="m">x ≠ y</span>, but has <b>no</b> fixed point. (<span class="m">|f(x) − f(y)| = |x−y|(1 − 1/(xy))</span>, and the factor can be arbitrarily close to 1.)</li>
+<li><b>k = 1 isn't enough:</b> <span class="m">f(x) = x + 1</span> on ℝ is an isometry with no fixed point.</li>
+<li><b>f must map X into X:</b> always check this first in applications.</li>
+</ul>
+</div>
+<div class="box ex"><span class="lbl">Application: solving cos x = x</span>
+<p>Let <span class="m">X = [0, 1]</span>, which is closed in ℝ and so complete, and <span class="m">f(x) = cos x</span>.
+(i) <span class="m">f</span> maps <span class="m">X</span> into <span class="m">[cos 1, 1] ⊆ [0,1]</span>.
+(ii) By the Mean Value Theorem, <span class="m">|cos x − cos y| = |sin ξ||x − y| ≤ sin(1)·|x − y|</span>, and <span class="m">k = sin 1 ≈ 0.84 &lt; 1</span>.
+So there is a unique solution in [0,1] (≈ 0.739), and iterating cos from any starting point finds it.</p>
+<p><b>Other standard applications:</b> Picard–Lindelöf existence and uniqueness for ODEs <span class="m">y′ = F(t,y)</span> (apply it to the integral operator on <span class="m">C[a,b]</span>), integral equations, Newton's method convergence, and the inverse function theorem.</p>
+</div>
+<div class="box tip"><span class="lbl">Exam recipe for applying the theorem</span><ol><li>Name a complete space <span class="m">X</span>. Justify it, for example "closed subset of ℝ" or "(C[a,b], d_∞) is complete".</li><li>Show <span class="m">f(X) ⊆ X</span>.</li><li>Find <span class="m">k &lt; 1</span>, usually via the MVT (<span class="m">sup|f′| &lt; 1</span>) or a direct estimate.</li><li>Conclude there is a unique fixed point, with the iterates converging to it.</li></ol></div>
+
+<h3>4.4 Further results (for harder questions)</h3>
+<div class="box thm"><span class="lbl">Theorem 4.7: Cantor Intersection Theorem</span><p>Let <span class="m">X</span> be complete and <span class="m">F₁ ⊇ F₂ ⊇ …</span> non-empty closed sets with <span class="m">diam Fₙ → 0</span>. Then <span class="m">⋂Fₙ</span> is <b>exactly one point</b>. Conversely, if this holds for every such sequence, then <span class="m">X</span> is complete.</p></div>
+<div class="proof">Pick <span class="m">xₙ ∈ Fₙ</span>. For <span class="m">m ≥ n</span>, both <span class="m">xₘ</span> and <span class="m">xₙ</span> lie in <span class="m">Fₙ</span>, so <span class="m">d(xₘ,xₙ) ≤ diam Fₙ → 0</span>. The sequence is Cauchy, so <span class="m">xₙ → x</span>. Each <span class="m">Fₙ</span> is closed and contains the tail <span class="m">xₙ, xₙ₊₁, …</span>, so <span class="m">x ∈ Fₙ</span> for every <span class="m">n</span>. If <span class="m">y</span> is also in the intersection, <span class="m">d(x,y) ≤ diam Fₙ → 0</span>.</div>
+<div class="box warn"><span class="lbl">Hypotheses needed</span><p>Without closedness: <span class="m">⋂(0, 1/n) = ∅</span>. Without diam → 0: <span class="m">⋂[n, ∞) = ∅</span> in ℝ.</p></div>
+<div class="box thm"><span class="lbl">Theorem 4.8: Baire Category Theorem</span><p>In a complete metric space, a countable intersection of dense open sets is dense. Equivalently, a non-empty complete metric space is <b>not</b> a countable union of nowhere-dense sets. <i>Consequences:</i> ℝ is uncountable (it isn't a countable union of singletons); ℚ is not complete under any metric equivalent to the usual one; there exist continuous nowhere-differentiable functions.</p></div>
+<div class="box thm"><span class="lbl">Theorem 4.9: Completion</span><p>Every metric space <span class="m">X</span> sits isometrically as a <b>dense</b> subset of a complete metric space <span class="m">X̂</span> (its <b>completion</b>), which is unique up to isometry. For example, the completion of ℚ is ℝ, and the completion of <span class="m">(C[0,1], d₁)</span> is <span class="m">L¹[0,1]</span>.</p></div>
+
+<h3>4.5 Practice questions</h3>
+<p class="q"><span class="lvl easy">EASY</span> 1. Is <span class="m">[0, ∞)</span> complete? Is <span class="m">ℤ</span>? Is <span class="m">{1/n : n ∈ ℕ}</span>?</p>
+<details><summary>Solution</summary><p>Yes: it's closed in the complete space ℝ. Yes: it's closed, and Cauchy sequences in ℤ are eventually constant. No: <span class="m">(1/n)</span> is Cauchy, but its limit 0 isn't in the set (it isn't closed).</p></details>
+
+<p class="q"><span class="lvl easy">EASY</span> 2. Show that <span class="m">xₙ = 1 + ½ + … + 1/n</span> is not Cauchy in ℝ.</p>
+<details><summary>Solution</summary><p><span class="m">x_{2n} − xₙ = 1/(n+1) + … + 1/(2n) ≥ n·1/(2n) = ½</span> for every <span class="m">n</span>. So with ε = ½, no <span class="m">N</span> works. Note that <span class="m">xₙ₊₁ − xₙ → 0</span> is <b>not</b> enough for Cauchy.</p></details>
+
+<p class="q"><span class="lvl med">MEDIUM</span> 3. Show that <span class="m">f(x) = ½(x + 2/x)</span> is a contraction on <span class="m">[1, 2]</span>. What is its fixed point?</p>
+<details><summary>Solution</summary><p><span class="m">f′(x) = ½(1 − 2/x²)</span>. On [1,2], <span class="m">2/x² ∈ [½, 2]</span>, so <span class="m">f′ ∈ [−½, ¼]</span> and <span class="m">|f′| ≤ ½</span>. The minimum of <span class="m">f</span> is at <span class="m">√2</span>, where <span class="m">f = √2</span>; also <span class="m">f(1) = 1.5</span> and <span class="m">f(2) = 1.5</span>. So <span class="m">f([1,2]) ⊆ [√2, 1.5] ⊆ [1,2]</span>. [1,2] is complete, so there is a unique fixed point: <span class="m">x = ½(x + 2/x) ⇔ x² = 2</span>, giving <span class="m">x = √2</span>. This is the Babylonian / Newton method for √2. On <span class="m">[1,2] ∩ ℚ</span>, <span class="m">f</span> is still a contraction mapping ℚ to ℚ but has <b>no</b> fixed point, which shows completeness is needed.</p></details>
+
+<p class="q"><span class="lvl hard">HARD</span> 4. Show that <span class="m">(C[0,1], d₁)</span> is not complete.</p>
+<details><summary>Solution</summary><p>Define <span class="m">fₙ(t) = 0</span> on <span class="m">[0, ½]</span>, linear from 0 to 1 on <span class="m">[½, ½ + 1/n]</span>, and <span class="m">1</span> on <span class="m">[½ + 1/n, 1]</span> (for <span class="m">n ≥ 2</span>). For <span class="m">m &gt; n</span>, <span class="m">fₘ</span> and <span class="m">fₙ</span> differ only on <span class="m">[½, ½ + 1/n]</span>, by at most 1, so <span class="m">d₁(fₘ, fₙ) ≤ 1/n</span>. The sequence is <b>Cauchy</b>.<br>
+Suppose <span class="m">fₙ → f ∈ C[0,1]</span> in <span class="m">d₁</span>. On <span class="m">[0,½]</span>: <span class="m">∫₀^{½}|f| = ∫₀^{½}|f − fₙ| ≤ d₁(f, fₙ) → 0</span>, so <span class="m">f = 0</span> on <span class="m">[0,½]</span> (by continuity). For any <span class="m">c &gt; ½</span>, once <span class="m">½ + 1/n &lt; c</span>, the same argument on <span class="m">[c, 1]</span> gives <span class="m">f = 1</span> there. Hence <span class="m">f = 1</span> on <span class="m">(½, 1]</span>. Then <span class="m">f</span> jumps at ½ and is not continuous, a contradiction.</p></details>
+
+<p class="q"><span class="lvl hard">HARD</span> 5. Let <span class="m">X</span> be complete and <span class="m">f : X → X</span> with <span class="m">fᵐ</span> (the m-th iterate) a contraction for some <span class="m">m</span>. Show that <span class="m">f</span> has a unique fixed point.</p>
+<details><summary>Solution</summary><p>By the theorem, <span class="m">fᵐ</span> has a unique fixed point <span class="m">x*</span>. Then <span class="m">fᵐ(f(x*)) = f(fᵐ(x*)) = f(x*)</span>, so <span class="m">f(x*)</span> is also a fixed point of <span class="m">fᵐ</span>. By uniqueness, <span class="m">f(x*) = x*</span>. Any fixed point of <span class="m">f</span> is a fixed point of <span class="m">fᵐ</span>, so it is unique. (This is used in the ODE version of Picard's theorem on large intervals.)</p></details>
+
+<!-- ===================== CHAPTER 5 ===================== -->
+<h2 id="ch5">Chapter 5: Compactness</h2>
+<div class="slot"><b>⏱ 5:10–5:35 (25 min)</b><span>Learn the open-cover definition word for word, the three equivalent forms in metric spaces, Heine–Borel (and where it fails), and the theorems on continuous maps from compact spaces. Practise "show this is not compact" by finding a bad open cover or a bad sequence.</span></div>
+
+<h3>5.1 The idea</h3>
+<p><b>Intuition.</b> Compactness is the topological version of "finite". Finite sets have nice properties: every function on them has a maximum, and every sequence in them repeats some value infinitely often. Compact sets keep those properties even when infinite. In ℝⁿ, compact simply means <b>closed and bounded</b>. In general spaces you need the definition below.</p>
+
+<h3>5.2 Definitions</h3>
+<div class="box def"><span class="lbl">Definition 5.1: open cover, compact</span>
+<ul>
+<li>An <b>open cover</b> of <span class="m">K ⊆ X</span> is a collection <span class="m">{Uᵢ}_{i∈I}</span> of open sets with <span class="m">K ⊆ ⋃ Uᵢ</span>.</li>
+<li>A <b>subcover</b> is a subcollection that still covers <span class="m">K</span>. It is <b>finite</b> if it has finitely many sets.</li>
+<li><span class="m">K</span> is <b>compact</b> if <b>every</b> open cover of <span class="m">K</span> has a <b>finite subcover</b>.</li>
+</ul>
+</div>
+<div class="box warn"><span class="lbl">The #1 misreading</span><p>"Has a finite open cover" is <b>always</b> true: <span class="m">{X}</span> is one. The definition says that <b>every</b> open cover can be reduced to finitely many sets. To prove compactness you must handle an <b>arbitrary</b> cover. To disprove it, you only need <b>one</b> cover with no finite subcover.</p></div>
+<div class="box def"><span class="lbl">Definition 5.2: sequentially compact, totally bounded</span>
+<ul>
+<li><span class="m">X</span> is <b>sequentially compact</b> if every sequence in <span class="m">X</span> has a subsequence converging to a point <b>of X</b>.</li>
+<li><span class="m">X</span> is <b>totally bounded</b> if for every ε &gt; 0, <span class="m">X</span> is covered by <b>finitely many</b> balls of radius ε (an <b>ε-net</b>).</li>
+</ul>
+<p>Totally bounded ⇒ bounded, but <b>not conversely</b>. An infinite discrete space is bounded (diam = 1), but with ε = ½ each ball is a single point, so infinitely many balls are needed.</p>
+</div>
+
+<h3>5.3 The main equivalence (metric spaces)</h3>
+<div class="box thm"><span class="lbl">Theorem 5.3: for a metric space X, the following are equivalent</span>
+<ol><li><span class="m">X</span> is compact;</li>
+<li><span class="m">X</span> is sequentially compact;</li>
+<li><span class="m">X</span> is complete and totally bounded.</li></ol>
+<p>In general topological spaces, (1) and (2) can differ. In metric spaces you can use whichever is most convenient. Sequences are usually easiest.</p>
+</div>
+<div class="proof"><b>Sketch.</b> (1)⇒(2): if a sequence had no convergent subsequence, each point <span class="m">x</span> would have a ball containing <span class="m">xₙ</span> for only finitely many <span class="m">n</span>. Finitely many such balls cover <span class="m">X</span>, so the sequence would have only finitely many terms, which is a contradiction.
+(2)⇒(3): a Cauchy sequence has a convergent subsequence, so it converges by 4.2(3). If <span class="m">X</span> weren't totally bounded, you could choose points pairwise ≥ ε apart, and that sequence has no Cauchy (so no convergent) subsequence.
+(3)⇒(2): from any sequence, use finite ε-nets with ε = 1, ½, ⅓, … and a diagonal argument to extract a Cauchy subsequence. It converges by completeness.
+(2)⇒(1): use the Lebesgue number lemma (5.9) together with total boundedness.</div>
+
+<h3>5.4 Heine–Borel and its limits</h3>
+<div class="box thm"><span class="lbl">Theorem 5.4: Heine–Borel</span><p>A subset of <b>ℝⁿ</b> (usual metric) is compact ⇔ it is <b>closed and bounded</b>.</p></div>
+<div class="proof">⇒: Theorem 5.5. ⇐: a bounded sequence in ℝⁿ has a convergent subsequence (Bolzano–Weierstrass, coordinate by coordinate). Its limit lies in the set because the set is closed. So the set is sequentially compact.</div>
+<div class="box thm"><span class="lbl">Theorem 5.5: compact ⇒ closed and bounded (in any metric space)</span></div>
+<div class="proof"><b>Bounded:</b> the balls <span class="m">B(x₀, n)</span>, <span class="m">n ∈ ℕ</span>, form an open cover. A finite subcover means <span class="m">K ⊆ B(x₀, N)</span>. <b>Closed:</b> if <span class="m">kₙ ∈ K</span> and <span class="m">kₙ → x</span>, some subsequence converges in <span class="m">K</span>. That subsequence also converges to <span class="m">x</span>, so by uniqueness of limits <span class="m">x ∈ K</span>. (In topological spaces: compact subsets of <b>Hausdorff</b> spaces are closed.)</div>
+<div class="box warn"><span class="lbl">Closed + bounded does NOT imply compact outside ℝⁿ</span>
+<ul>
+<li><b>Infinite discrete space:</b> closed and bounded. The cover by singletons <span class="m">{{x} : x ∈ X}</span> has no finite subcover.</li>
+<li><b>Closed unit ball of ℓ²:</b> the vectors <span class="m">eₙ = (0,…,0,1,0,…)</span> satisfy <span class="m">d(eₙ, eₘ) = √2</span> for <span class="m">n ≠ m</span>, so no subsequence is Cauchy.</li>
+<li><b>Closed unit ball of (C[0,1], d_∞):</b> <span class="m">fₙ(t) = tⁿ</span> has no uniformly convergent subsequence, because the pointwise limit is discontinuous.</li>
+<li><b>X = (0,1] with the usual metric:</b> <span class="m">X</span> is closed in itself and bounded, but not compact. <span class="m">1/n</span> has no subsequence converging in <span class="m">X</span>.</li>
+<li><b>ℝ with d/(1+d):</b> bounded, closed in itself, not compact.</li>
+</ul>
+<p>The right generalisation is <b>complete + totally bounded</b>.</p>
+</div>
+
+<h3>5.5 Key theorems about compact sets</h3>
+<div class="box thm"><span class="lbl">Theorem 5.6: closed subsets of compact sets are compact</span></div>
+<div class="proof">Let <span class="m">F ⊆ K</span> be closed and <span class="m">{Uᵢ}</span> an open cover of <span class="m">F</span>. Then <span class="m">{Uᵢ} ∪ {X \ F}</span> is an open cover of <span class="m">K</span>. Take a finite subcover and drop <span class="m">X \ F</span>; what remains still covers <span class="m">F</span>. (Sequential version: a sequence in <span class="m">F</span> has a subsequence converging in <span class="m">K</span>, and its limit is in <span class="m">F</span> because <span class="m">F</span> is closed.)</div>
+<div class="box thm"><span class="lbl">Theorem 5.7: continuous image of compact is compact</span><p>If <span class="m">f : X → Y</span> is continuous and <span class="m">K ⊆ X</span> is compact, then <span class="m">f(K)</span> is compact.</p></div>
+<div class="proof">Let <span class="m">{Vᵢ}</span> be an open cover of <span class="m">f(K)</span>. Then <span class="m">{f⁻¹(Vᵢ)}</span> is an open cover of <span class="m">K</span>, because each <span class="m">f⁻¹(Vᵢ)</span> is open by continuity. A finite subcover <span class="m">f⁻¹(V₁), …, f⁻¹(Vₙ)</span> gives <span class="m">f(K) ⊆ V₁ ∪ … ∪ Vₙ</span>.</div>
+<div class="box thm"><span class="lbl">Corollary 5.8: Extreme Value Theorem</span><p>A continuous <span class="m">f : K → ℝ</span> on a non-empty compact space is <b>bounded</b> and <b>attains</b> its max and min. Proof: <span class="m">f(K)</span> is a compact, hence closed and bounded, subset of ℝ, so it contains its sup and inf.</p>
+<p><b>Failure without compactness:</b> <span class="m">f(x) = x</span> on (0,1) attains no max or min, and <span class="m">1/x</span> on (0,1] is unbounded.</p></div>
+
+<div class="box thm"><span class="lbl">Theorem 5.9: Heine–Cantor</span><p>A continuous function from a <b>compact</b> metric space to a metric space is <b>uniformly continuous</b>.</p></div>
+<div class="proof">Suppose not. Then there are ε &gt; 0 and <span class="m">xₙ, yₙ</span> with <span class="m">d(xₙ, yₙ) &lt; 1/n</span> but <span class="m">d(f(xₙ), f(yₙ)) ≥ ε</span>. By sequential compactness, some subsequence <span class="m">x_{n_k} → x</span>. Then <span class="m">y_{n_k} → x</span> too, since <span class="m">d(y_{n_k}, x) ≤ 1/n_k + d(x_{n_k}, x)</span>. By continuity, <span class="m">f(x_{n_k})</span> and <span class="m">f(y_{n_k})</span> both converge to <span class="m">f(x)</span>, so their distance tends to 0. That contradicts ≥ ε.</div>
+
+<div class="box thm"><span class="lbl">Theorem 5.10: compact → Hausdorff bijections are homeomorphisms</span><p>If <span class="m">f : X → Y</span> is a continuous bijection, <span class="m">X</span> is compact and <span class="m">Y</span> is Hausdorff (for example, a metric space), then <span class="m">f</span> is a homeomorphism.</p></div>
+<div class="proof">We need <span class="m">f⁻¹</span> to be continuous, that is, <span class="m">(f⁻¹)⁻¹(C) = f(C)</span> closed for every closed <span class="m">C ⊆ X</span>. A closed subset of a compact space is compact (5.6), its continuous image is compact (5.7), and compact subsets of a Hausdorff space are closed (5.5).</div>
+<div class="box tip"><span class="lbl">Compare</span><p>This is why <span class="m">[0,2π) → S¹</span> fails to be a homeomorphism: <span class="m">[0,2π)</span> is not compact. The same map on the compact space <span class="m">[0,2π]</span> isn't a bijection, but it passes to a homeomorphism once the endpoints are glued together.</p></div>
+
+<div class="box thm"><span class="lbl">Theorem 5.11: Lebesgue Number Lemma</span><p>If <span class="m">X</span> is a compact metric space and <span class="m">{Uᵢ}</span> is an open cover, there is a <span class="m">δ &gt; 0</span> (a <b>Lebesgue number</b>) such that every set of diameter &lt; δ lies inside a single <span class="m">Uᵢ</span>.</p></div>
+
+<div class="box thm"><span class="lbl">Theorem 5.12: finite intersection property (FIP)</span><p>A collection of sets has the <b>FIP</b> if every finite subcollection has non-empty intersection. <span class="m">X</span> is compact ⇔ every collection of closed sets with the FIP has non-empty total intersection. Proof: take complements in the open-cover definition. <i>Consequence:</i> nested non-empty compact sets <span class="m">K₁ ⊇ K₂ ⊇ …</span> have non-empty intersection.</p></div>
+
+<div class="box thm"><span class="lbl">Other facts worth knowing</span>
+<ul>
+<li>Finite unions of compact sets are compact. Arbitrary intersections of compact sets in a Hausdorff space are compact.</li>
+<li>A compact metric space is complete, totally bounded, bounded and <b>separable</b>.</li>
+<li>Products: <span class="m">X × Y</span> is compact ⇔ <span class="m">X</span> and <span class="m">Y</span> are (Tychonoff's theorem extends this to arbitrary products).</li>
+<li>If <span class="m">K</span> is compact, <span class="m">F</span> is closed and <span class="m">K ∩ F = ∅</span>, then <span class="m">d(K, F) &gt; 0</span>. This can fail for two disjoint closed sets: the x-axis and the curve <span class="m">y = 1/x</span> are at distance 0.</li>
+<li>Compactness is a <b>topological</b> property.</li>
+</ul>
+</div>
+
+<h3>5.6 Compactness in topological spaces</h3>
+<div class="box ex"><span class="lbl">Examples</span>
+<ul>
+<li>Any finite space is compact, under any topology.</li>
+<li>Any indiscrete space is compact (the only open cover is {X}, possibly with ∅).</li>
+<li>Any set with the <b>cofinite</b> topology is compact. One open set <span class="m">U₀</span> covers everything except finitely many points, and finitely many more sets cover those.</li>
+<li>An infinite <b>discrete</b> space is <b>not</b> compact.</li>
+</ul>
+</div>
+
+<h3>5.7 Practice questions</h3>
+<p class="q"><span class="lvl easy">EASY</span> 1. Show directly from the definition that <span class="m">(0, 1)</span> is not compact.</p>
+<details><summary>Solution</summary><p>The sets <span class="m">Uₙ = (1/n, 1)</span>, <span class="m">n ≥ 2</span>, form an open cover. Any finite subcollection has union <span class="m">(1/N, 1)</span> for its largest index <span class="m">N</span>, and this misses <span class="m">1/(2N)</span>. So there is no finite subcover.</p></details>
+
+<p class="q"><span class="lvl easy">EASY</span> 2. Which are compact? (a) <span class="m">[0,1] ∪ [2,3]</span> (b) <span class="m">{1/n : n ∈ ℕ} ∪ {0}</span> (c) <span class="m">ℤ</span> (d) <span class="m">{(x,y) : x² + y² = 1}</span> (e) <span class="m">ℚ ∩ [0,1]</span></p>
+<details><summary>Solution</summary><p>(a) Yes: closed and bounded. (b) Yes: closed (it contains its only limit point, 0) and bounded. (c) No: unbounded. (d) Yes: closed (preimage of {1}) and bounded. (e) No: not closed, since √2/2 is a limit of points in it but not in the set.</p></details>
+
+<p class="q"><span class="lvl med">MEDIUM</span> 3. Prove directly from the open-cover definition that <span class="m">K = {0} ∪ {1/n : n ∈ ℕ}</span> is compact.</p>
+<details><summary>Solution</summary><p>Let <span class="m">{Uᵢ}</span> be any open cover. Some <span class="m">U₀</span> contains 0. It is open, so it contains <span class="m">(−ε, ε)</span> for some ε, and hence contains <span class="m">1/n</span> for all <span class="m">n &gt; 1/ε</span>. Only finitely many points <span class="m">1, ½, …, 1/N</span> are left, and each lies in some <span class="m">Uᵢ</span>. Together that's <span class="m">N + 1</span> sets. This is the standard "the limit point swallows the tail" argument.</p></details>
+
+<p class="q"><span class="lvl med">MEDIUM</span> 4. Let <span class="m">K</span> be compact and <span class="m">f : K → ℝ</span> continuous with <span class="m">f(x) &gt; 0</span> for all <span class="m">x</span>. Show there's a <span class="m">c &gt; 0</span> with <span class="m">f(x) ≥ c</span> for all <span class="m">x</span>.</p>
+<details><summary>Solution</summary><p>By the EVT, <span class="m">f</span> attains its minimum at some <span class="m">x₀</span>. Let <span class="m">c = f(x₀) &gt; 0</span>. (It fails on (0,1] with <span class="m">f(x) = x</span>: the inf is 0 but not attained.)</p></details>
+
+<p class="q"><span class="lvl hard">HARD</span> 5. Let <span class="m">(X, d)</span> be compact and <span class="m">f : X → X</span> satisfy <span class="m">d(f(x), f(y)) &lt; d(x,y)</span> for all <span class="m">x ≠ y</span>. Prove that <span class="m">f</span> has a unique fixed point. (Contrast with <span class="m">x + 1/x</span> on [1,∞) from Ch 4.)</p>
+<details><summary>Solution</summary><p>Let <span class="m">g(x) = d(x, f(x))</span>. It is continuous, and <span class="m">X</span> is compact, so <span class="m">g</span> attains its minimum at some <span class="m">x₀</span>. If <span class="m">f(x₀) ≠ x₀</span>, then <span class="m">g(f(x₀)) = d(f(x₀), f(f(x₀))) &lt; d(x₀, f(x₀)) = g(x₀)</span>, which contradicts minimality. So <span class="m">f(x₀) = x₀</span>. Uniqueness: if <span class="m">x ≠ y</span> are both fixed, <span class="m">d(x,y) = d(f(x),f(y)) &lt; d(x,y)</span>, which is impossible. Compactness replaces the need for a uniform <span class="m">k &lt; 1</span>.</p></details>
+
+<p class="q"><span class="lvl hard">HARD</span> 6. Show that an isometry <span class="m">f : X → X</span> of a compact metric space into itself is surjective.</p>
+<details><summary>Solution</summary><p>Suppose <span class="m">a ∉ f(X)</span>. <span class="m">f(X)</span> is compact, hence closed, so <span class="m">ε = d(a, f(X)) &gt; 0</span>. Let <span class="m">xₙ = fⁿ(a)</span>. For <span class="m">m &gt; n</span>, since <span class="m">f</span> preserves distances, <span class="m">d(xₙ, xₘ) = d(a, f^{m−n}(a)) ≥ ε</span>, because <span class="m">f^{m−n}(a) ∈ f(X)</span>. So <span class="m">(xₙ)</span> has no Cauchy subsequence, which contradicts sequential compactness.</p></details>
+
+<!-- ===================== BONUS ===================== -->
+<h2 id="bonus">Bonus: connectedness (if your course covers it)</h2>
+<p class="small">Some courses put this in Chapter 5 or 6. It's short and often appears in exam questions about homeomorphisms, so it's worth skimming even if it isn't on your list.</p>
+<div class="box def"><span class="lbl">Definitions</span>
+<ul>
+<li><span class="m">X</span> is <b>disconnected</b> if <span class="m">X = U ∪ V</span> with <span class="m">U, V</span> open, disjoint and non-empty (a <b>separation</b>). Otherwise <span class="m">X</span> is <b>connected</b>. Equivalently, the only clopen sets are <span class="m">∅</span> and <span class="m">X</span>, or every continuous <span class="m">f : X → {0,1}</span> is constant.</li>
+<li><span class="m">X</span> is <b>path-connected</b> if any two points are joined by a continuous path <span class="m">γ : [0,1] → X</span>.</li>
+<li>A <b>connected component</b> is a maximal connected subset.</li>
+</ul>
+</div>
+<div class="box thm"><span class="lbl">Key results</span>
+<ul>
+<li>The connected subsets of ℝ are exactly the <b>intervals</b>.</li>
+<li>Continuous images of connected spaces are connected. This gives the <b>Intermediate Value Theorem</b>.</li>
+<li>Path-connected ⇒ connected, but <b>not</b> conversely. The <b>topologist's sine curve</b> <span class="m">{(x, sin(1/x)) : x &gt; 0} ∪ ({0} × [−1,1])</span> is connected but not path-connected.</li>
+<li>Open connected subsets of ℝⁿ are path-connected.</li>
+<li>The closure of a connected set is connected. A union of connected sets sharing a common point is connected.</li>
+<li>ℚ is <b>totally disconnected</b>: <span class="m">{q &lt; √2}</span> and <span class="m">{q &gt; √2}</span> separate it. Discrete spaces with ≥ 2 points are disconnected.</li>
+</ul>
+</div>
+<div class="box tip"><span class="lbl">Using connectedness to show X ≇ Y</span><p>If <span class="m">f : X → Y</span> is a homeomorphism, then <span class="m">X \ {p} ≅ Y \ {f(p)}</span>. Removing any point disconnects ℝ, but ℝ² minus a point stays connected, so <span class="m">ℝ ≇ ℝ²</span>. Removing 0 from <span class="m">[0,1)</span> leaves it connected, but removing any point from <span class="m">(0,1)</span> disconnects it, so <span class="m">[0,1) ≇ (0,1)</span>. Similarly <span class="m">S¹ ≇ [0,1]</span>.</p></div>
+
+<!-- ===================== TOOLKIT ===================== -->
+<h2 id="toolkit">Proof-template toolkit</h2>
+<p>Most exam questions are one of these patterns. Learn the first move for each.</p>
+<div class="tablewrap"><table>
+<tr><th>To prove…</th><th>Standard first move</th></tr>
+<tr><td><span class="m">d</span> is a metric</td><td>Check M1, M2, M3 in order. For M3, add and subtract, or use an increasing subadditive <span class="m">φ</span>.</td></tr>
+<tr><td><span class="m">d</span> is <b>not</b> a metric</td><td>Give one numerical counterexample to one axiom.</td></tr>
+<tr><td><span class="m">U</span> is open</td><td>(a) "Let <span class="m">x ∈ U</span>. Take <span class="m">r = …</span>" and show <span class="m">B(x,r) ⊆ U</span>; or (b) <span class="m">U = f⁻¹(open)</span> for continuous <span class="m">f</span>; or (c) <span class="m">U</span> is a union or finite intersection of open sets.</td></tr>
+<tr><td><span class="m">F</span> is closed</td><td>(a) The complement is open; (b) <span class="m">F = f⁻¹(closed)</span>; (c) sequences: <span class="m">xₙ ∈ F</span>, <span class="m">xₙ → x</span> ⇒ <span class="m">x ∈ F</span>.</td></tr>
+<tr><td>A set is <b>not</b> open</td><td>Find one point of the set where every ball leaves the set.</td></tr>
+<tr><td>A set is <b>not</b> closed</td><td>Find a sequence in the set converging to a point outside it.</td></tr>
+<tr><td><span class="m">x ∈ cl A</span></td><td>Find a sequence in <span class="m">A</span> converging to <span class="m">x</span>, or show every ball meets <span class="m">A</span>.</td></tr>
+<tr><td><span class="m">f</span> is continuous</td><td>ε–δ, or build from known continuous maps, or show it's Lipschitz.</td></tr>
+<tr><td><span class="m">f</span> is <b>not</b> continuous</td><td>One sequence <span class="m">xₙ → x</span> with <span class="m">f(xₙ) ↛ f(x)</span>.</td></tr>
+<tr><td><span class="m">f</span> is <b>not</b> uniformly continuous</td><td>Sequences <span class="m">xₙ, yₙ</span> with <span class="m">d(xₙ,yₙ) → 0</span> but <span class="m">d(f(xₙ),f(yₙ)) ≥ ε</span>.</td></tr>
+<tr><td><span class="m">X ≅ Y</span></td><td>Write down an explicit bijection and check continuity both ways. Or use a continuous bijection from a compact to a Hausdorff space.</td></tr>
+<tr><td><span class="m">X ≇ Y</span></td><td>A topological property that differs: compact, connected, number of components after removing a point, Hausdorff, separable…</td></tr>
+<tr><td><span class="m">(xₙ)</span> is Cauchy</td><td>Bound <span class="m">d(xₘ,xₙ)</span> for <span class="m">m &gt; n</span> by something → 0 that depends only on <span class="m">n</span>. A geometric series often works.</td></tr>
+<tr><td><span class="m">X</span> is complete</td><td>Closed subset of a known complete space, or the 3-step template (candidate limit, convergence, membership).</td></tr>
+<tr><td><span class="m">X</span> is <b>not</b> complete</td><td>One Cauchy sequence whose limit is missing.</td></tr>
+<tr><td>A unique solution exists</td><td>The Contraction Mapping Theorem: complete space, maps into itself, <span class="m">k &lt; 1</span>.</td></tr>
+<tr><td><span class="m">K</span> is compact</td><td>In ℝⁿ: closed and bounded. Otherwise: sequential compactness, a closed subset of a compact set, a continuous image of a compact set, or an arbitrary open cover.</td></tr>
+<tr><td><span class="m">K</span> is <b>not</b> compact</td><td>One open cover with no finite subcover, or one sequence with no convergent subsequence, or show it isn't closed or isn't bounded.</td></tr>
+<tr><td><span class="m">(X, τ)</span> is not metrizable</td><td>Show it isn't Hausdorff.</td></tr>
+</table></div>
+
+<!-- ===================== COUNTEREXAMPLES ===================== -->
+<h2 id="counter">Counterexample bank</h2>
+<div class="tablewrap"><table>
+<tr><th>False statement</th><th>Counterexample</th></tr>
+<tr><td>Not open ⇒ closed</td><td><span class="m">[0,1)</span>, or ℚ, in ℝ</td></tr>
+<tr><td>An infinite intersection of open sets is open</td><td><span class="m">⋂(−1/n, 1/n) = {0}</span></td></tr>
+<tr><td>An infinite union of closed sets is closed</td><td><span class="m">⋃[1/n, 1] = (0,1]</span></td></tr>
+<tr><td>cl B(x,r) = B̄(x,r)</td><td>Discrete metric with r = 1</td></tr>
+<tr><td>cl(A ∩ B) = cl A ∩ cl B</td><td><span class="m">A = ℚ, B = ℝ \ ℚ</span></td></tr>
+<tr><td>Limits are unique (in every topological space)</td><td>Indiscrete or cofinite topology</td></tr>
+<tr><td>Images of open/closed sets are open/closed</td><td><span class="m">x²</span> on (−1,1); arctan on ℝ</td></tr>
+<tr><td>Continuous ⇒ uniformly continuous</td><td><span class="m">x²</span> on ℝ; <span class="m">1/x</span> on (0,1)</td></tr>
+<tr><td>Uniformly continuous ⇒ Lipschitz</td><td><span class="m">√x</span> on [0,1]</td></tr>
+<tr><td>A continuous bijection is a homeomorphism</td><td><span class="m">[0,2π) → S¹</span>; identity (ℝ, discrete) → (ℝ, usual)</td></tr>
+<tr><td>Boundedness/completeness are topological</td><td><span class="m">ℝ ≅ (0,1)</span></td></tr>
+<tr><td>Topologically equivalent ⇒ Lipschitz equivalent</td><td><span class="m">d</span> and <span class="m">d/(1+d)</span> on ℝ</td></tr>
+<tr><td>d₁ and d_∞ on C[0,1] are equivalent</td><td><span class="m">tⁿ</span>: <span class="m">d₁ → 0</span>, <span class="m">d_∞ = 1</span></td></tr>
+<tr><td>xₙ₊₁ − xₙ → 0 ⇒ Cauchy</td><td>Harmonic partial sums, or <span class="m">√n</span></td></tr>
+<tr><td>Every Cauchy sequence converges</td><td><span class="m">1/n</span> in (0,1); √2 approximations in ℚ</td></tr>
+<tr><td>A weak contraction <span class="m">d(fx,fy) &lt; d(x,y)</span> has a fixed point</td><td><span class="m">x + 1/x</span> on [1,∞) (true on <b>compact</b> spaces)</td></tr>
+<tr><td>A contraction on any space has a fixed point</td><td><span class="m">x/2</span> on (0,1]</td></tr>
+<tr><td>Nested non-empty closed sets intersect</td><td><span class="m">[n, ∞)</span> in ℝ (true if compact, or complete with diam → 0)</td></tr>
+<tr><td>Closed + bounded ⇒ compact</td><td>Infinite discrete space; unit ball of ℓ²; (0,1] in itself</td></tr>
+<tr><td>Bounded ⇒ totally bounded</td><td>Infinite discrete space</td></tr>
+<tr><td>Disjoint closed sets are a positive distance apart</td><td>x-axis and <span class="m">y = 1/x</span></td></tr>
+<tr><td>Connected ⇒ path-connected</td><td>Topologist's sine curve</td></tr>
+</table></div>
+
+<!-- ===================== GLOSSARY ===================== -->
+<h2 id="glossary">Glossary of all terminology</h2>
+<dl class="gloss">
+<dt>Accumulation point / limit point / cluster point (of a set A)</dt><dd>A point <span class="m">x</span> such that every ball around <span class="m">x</span> contains a point of <span class="m">A</span> other than <span class="m">x</span>.</dd>
+<dt>Banach space</dt><dd>A complete normed vector space.</dd>
+<dt>Basis (for a topology)</dt><dd>A collection of open sets such that every open set is a union of members of the collection.</dd>
+<dt>Bijection</dt><dd>A function that is injective and surjective, so it has an inverse.</dd>
+<dt>Boundary ∂A</dt><dd><span class="m">cl A \ int A</span>: the points where every ball meets both <span class="m">A</span> and its complement.</dd>
+<dt>Bounded set</dt><dd>A set contained in some ball; equivalently, one with finite diameter.</dd>
+<dt>Cauchy sequence</dt><dd><span class="m">∀ε ∃N ∀m,n ≥ N: d(xₘ,xₙ) &lt; ε</span>.</dd>
+<dt>Clopen</dt><dd>Both open and closed.</dd>
+<dt>Closed ball B̄(x,r)</dt><dd><span class="m">{y : d(x,y) ≤ r}</span>.</dd>
+<dt>Closed set</dt><dd>A set whose complement is open; equivalently, one containing the limits of all its convergent sequences.</dd>
+<dt>Closure cl A</dt><dd>The smallest closed set containing <span class="m">A</span>, which equals <span class="m">A ∪ A′</span>, which equals the set of limits of sequences in <span class="m">A</span>.</dd>
+<dt>Coarser / finer topology</dt><dd><span class="m">τ₁ ⊆ τ₂</span> means <span class="m">τ₁</span> is coarser and <span class="m">τ₂</span> is finer.</dd>
+<dt>Cofinite topology</dt><dd>The open sets are ∅ and the sets with finite complement.</dd>
+<dt>Compact</dt><dd>Every open cover has a finite subcover.</dd>
+<dt>Complete</dt><dd>Every Cauchy sequence converges in the space.</dd>
+<dt>Completion</dt><dd>A complete space containing <span class="m">X</span> isometrically as a dense subset.</dd>
+<dt>Connected</dt><dd>Cannot be split into two disjoint non-empty open sets.</dd>
+<dt>Continuous</dt><dd>The preimage of every open set is open; equivalently ε–δ, or the sequential condition.</dd>
+<dt>Contraction</dt><dd><span class="m">d(f(x),f(y)) ≤ k·d(x,y)</span> for a fixed <span class="m">k &lt; 1</span>.</dd>
+<dt>Convergent sequence</dt><dd><span class="m">d(xₙ, x) → 0</span>.</dd>
+<dt>Dense</dt><dd><span class="m">cl A = X</span>; every non-empty open set meets <span class="m">A</span>.</dd>
+<dt>Derived set A′</dt><dd>The set of limit points of <span class="m">A</span>.</dd>
+<dt>Diameter</dt><dd><span class="m">sup{d(a,b) : a,b ∈ A}</span>.</dd>
+<dt>Discrete metric / topology</dt><dd><span class="m">d(x,y) = 1</span> for <span class="m">x ≠ y</span>; every subset is open.</dd>
+<dt>Distance to a set d(x,A)</dt><dd><span class="m">inf{d(x,a) : a ∈ A}</span>. It is 0 ⇔ <span class="m">x ∈ cl A</span>.</dd>
+<dt>Equivalent metrics (Lipschitz / strong)</dt><dd><span class="m">αd ≤ d′ ≤ βd</span> for some <span class="m">α, β &gt; 0</span>.</dd>
+<dt>Equivalent metrics (topological)</dt><dd>The two metrics have the same open sets.</dd>
+<dt>Exterior</dt><dd><span class="m">int(X \ A)</span>.</dd>
+<dt>Finite intersection property</dt><dd>Every finite subcollection has non-empty intersection.</dd>
+<dt>Fixed point</dt><dd>A point <span class="m">x</span> with <span class="m">f(x) = x</span>.</dd>
+<dt>Hausdorff (T₂)</dt><dd>Distinct points have disjoint open neighbourhoods.</dd>
+<dt>Homeomorphism</dt><dd>A continuous bijection with a continuous inverse.</dd>
+<dt>Image f(A)</dt><dd><span class="m">{f(a) : a ∈ A}</span>.</dd>
+<dt>Indiscrete (trivial) topology</dt><dd><span class="m">{∅, X}</span>.</dd>
+<dt>Induced (subspace) metric / topology</dt><dd>The restriction of <span class="m">d</span> to <span class="m">Y</span>; the open sets are <span class="m">U ∩ Y</span> with <span class="m">U</span> open in <span class="m">X</span>.</dd>
+<dt>Interior int A</dt><dd>The largest open subset of <span class="m">A</span>; the points with a ball inside <span class="m">A</span>.</dd>
+<dt>Isolated point</dt><dd>A point <span class="m">a ∈ A</span> with some ball meeting <span class="m">A</span> only in <span class="m">a</span>.</dd>
+<dt>Isometry</dt><dd>A distance-preserving map.</dd>
+<dt>Lebesgue number</dt><dd>A δ such that every set of diameter &lt; δ lies in one member of the cover.</dd>
+<dt>Lipschitz</dt><dd><span class="m">d(f(x),f(y)) ≤ L·d(x,y)</span>.</dd>
+<dt>Metric</dt><dd>A function satisfying M1 (positivity), M2 (symmetry) and M3 (triangle inequality).</dd>
+<dt>Metrizable</dt><dd>A topology that comes from some metric.</dd>
+<dt>Neighbourhood of x</dt><dd>A set containing an open set that contains <span class="m">x</span>.</dd>
+<dt>Norm</dt><dd><span class="m">‖v‖ ≥ 0</span> with equality iff <span class="m">v = 0</span>; <span class="m">‖λv‖ = |λ|‖v‖</span>; triangle inequality.</dd>
+<dt>Nowhere dense</dt><dd><span class="m">int(cl A) = ∅</span>.</dd>
+<dt>Open ball B(x,r)</dt><dd><span class="m">{y : d(x,y) &lt; r}</span>.</dd>
+<dt>Open cover</dt><dd>A collection of open sets whose union contains the set.</dd>
+<dt>Open set</dt><dd>Every point has a ball around it inside the set.</dd>
+<dt>Path-connected</dt><dd>Any two points are joined by a continuous path.</dd>
+<dt>Preimage f⁻¹(B)</dt><dd><span class="m">{x : f(x) ∈ B}</span>.</dd>
+<dt>Pseudometric</dt><dd>Like a metric, but <span class="m">d(x,y) = 0</span> is allowed for <span class="m">x ≠ y</span>.</dd>
+<dt>Separable</dt><dd>Has a countable dense subset.</dd>
+<dt>Sequentially compact</dt><dd>Every sequence has a subsequence converging in the space.</dd>
+<dt>Sphere S(x,r)</dt><dd><span class="m">{y : d(x,y) = r}</span>.</dd>
+<dt>Subsequence</dt><dd><span class="m">(x_{n_k})</span> with <span class="m">n₁ &lt; n₂ &lt; …</span>.</dd>
+<dt>Supremum / infimum</dt><dd>The least upper bound / greatest lower bound.</dd>
+<dt>Topological property</dt><dd>A property preserved by homeomorphisms.</dd>
+<dt>Topology</dt><dd>A collection of subsets containing ∅ and X, closed under arbitrary unions and finite intersections.</dd>
+<dt>Totally bounded</dt><dd>For every ε, finitely many ε-balls cover the space.</dd>
+<dt>Ultrametric</dt><dd>A metric with <span class="m">d(x,z) ≤ max{d(x,y), d(y,z)}</span>.</dd>
+<dt>Uniformly continuous</dt><dd>The ε–δ condition with δ independent of the point.</dd>
+</dl>
+
+<!-- ===================== RECAP ===================== -->
+<h2 id="recap">5:35 recap checklist</h2>
+<div class="slot"><b>⏱ 5:35–5:45 (10 min)</b><span>Close this guide. On a blank page, write as many of these as you can from memory. Then tick off what you got and circle what you missed. The circled items are where to start next session.</span></div>
+<h4>Definitions to write out exactly</h4>
+<ul class="check">
+<li>Metric (M1–M3)</li>
+<li>Open set; closed set</li>
+<li>Interior, closure, boundary, limit point, dense</li>
+<li>Convergent sequence; Cauchy sequence</li>
+<li>Topology (T1–T3); Hausdorff</li>
+<li>Continuity (ε–δ and open-set versions); uniform continuity</li>
+<li>Homeomorphism</li>
+<li>Complete; contraction</li>
+<li>Compact (open covers); sequentially compact; totally bounded</li>
+</ul>
+<h4>Theorems to state (and sketch proofs)</h4>
+<ul class="check">
+<li>Open balls are open (the <span class="m">r − d(x,y)</span> trick)</li>
+<li>Unions and finite intersections of open sets are open, with a counterexample for infinite intersections</li>
+<li>The four equivalent forms of continuity</li>
+<li>Closed subsets of complete spaces are complete; complete subspaces are closed</li>
+<li>Contraction Mapping Theorem, all 5 steps</li>
+<li>Compact ⇔ sequentially compact ⇔ complete + totally bounded (metric spaces)</li>
+<li>Heine–Borel; a counterexample outside ℝⁿ</li>
+<li>Continuous image of compact is compact ⇒ EVT</li>
+<li>Heine–Cantor; compact → Hausdorff continuous bijection is a homeomorphism</li>
+</ul>
+<h4>Counterexamples to recall instantly</h4>
+<ul class="check">
+<li>A set that is neither open nor closed</li>
+<li>A continuous function that is not uniformly continuous</li>
+<li>A continuous bijection that is not a homeomorphism</li>
+<li>An incomplete space, with its Cauchy sequence</li>
+<li>A closed, bounded, non-compact set</li>
+</ul>
+
+<div class="box tip"><span class="lbl">Next up</span><p>Break 5:45–6:00, then <b>linear systems 6:00–6:50</b> (separate guide to follow), then the wrap-up at 6:50 and a hard stop at <b>7:00pm</b>.</p></div>
+
+</main>
+<script>
+// Expand every solution when printing, so the PDF includes them all.
+window.addEventListener('beforeprint', function(){
+  document.querySelectorAll('details').forEach(function(d){ d.setAttribute('open',''); });
+});
+</script>
+</body>
+</html>
