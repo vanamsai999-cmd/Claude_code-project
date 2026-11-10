@@ -1,0 +1,119 @@
+% ------------------------------------------------------------------
+% Shared preamble for the Metric Spaces & Topology notes.
+% Used by notes-ch0-5.tex (full notes) and notes-ch3-5.tex.
+% ------------------------------------------------------------------
+\usepackage[a4paper,margin=2.5cm,headheight=14pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,decorations.pathreplacing,patterns}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{amsfonts}
+\usepackage{pifont}
+\usepackage[hidelinks]{hyperref}
+\usepackage{bookmark}
+
+% ---------------- page style ----------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Metric Spaces \& Topology}
+\fancyhead[R]{\small\itshape \leftmark}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptertitlename\ \thechapter.\ #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries}{\large\scshape \chaptertitlename\ \thechapter}{4pt}{\LARGE}
+  [\vspace{2pt}\titlerule]
+\titlespacing*{\chapter}{0pt}{0pt}{18pt}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.8em}{}
+
+\setlist{itemsep=2pt,topsep=4pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+% ---------------- colours ----------------
+\definecolor{defbg}{HTML}{EEF3F9}\definecolor{defrule}{HTML}{2F5D8A}
+\definecolor{thmbg}{HTML}{F3EEF9}\definecolor{thmrule}{HTML}{6B3FA0}
+\definecolor{exbg}{HTML}{EDF6F0}\definecolor{exrule}{HTML}{2E7D4F}
+\definecolor{warnbg}{HTML}{FBEFE8}\definecolor{warnrule}{HTML}{A6461B}
+\definecolor{tipbg}{HTML}{FBF6E2}\definecolor{tiprule}{HTML}{8A6D00}
+
+% ---------------- theorem environments ----------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}{Exercise}[chapter]
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{warning}{Warning}
+\newtheorem*{examtip}{Exam tip}
+\newtheorem*{intuition}{Intuition}
+
+\newcommand{\sidebox}[3]{%
+  \tcolorboxenvironment{#1}{breakable,enhanced,colback=#2,colframe=#3,
+    boxrule=0pt,leftrule=2.5pt,arc=0pt,outer arc=0pt,
+    left=6pt,right=6pt,top=3pt,bottom=3pt,before skip=9pt,after skip=9pt}}
+\sidebox{definition}{defbg}{defrule}
+\sidebox{theorem}{thmbg}{thmrule}
+\sidebox{lemma}{thmbg}{thmrule}
+\sidebox{proposition}{thmbg}{thmrule}
+\sidebox{corollary}{thmbg}{thmrule}
+\sidebox{example}{exbg}{exrule}
+\sidebox{warning}{warnbg}{warnrule}
+\sidebox{examtip}{tipbg}{tiprule}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% Difficulty tags for exercises
+\newcommand{\easy}{\textsf{\small\color{exrule}[Easy]}\ }
+\newcommand{\medium}{\textsf{\small\color{tiprule}[Medium]}\ }
+\newcommand{\hard}{\textsf{\small\color{warnrule}[Hard]}\ }
+
+% Study-plan slot at the start of each chapter
+\newtcolorbox{studyslot}[1]{enhanced,colback=white,colframe=defrule!60,
+  boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,top=3pt,bottom=3pt,
+  fonttitle=\sffamily\bfseries\small,coltitle=defrule,colbacktitle=defbg,
+  title={Study slot: #1}}
+
+% ---------------- notation ----------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\cl}{\operatorname{cl}}
+\newcommand{\inte}{\operatorname{int}}
+\newcommand{\ext}{\operatorname{ext}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\Bo}{B}
+\newcommand{\Bc}{\overline{B}}
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\set}[2]{\left\{\, #1 \;:\; #2 \,\right\}}
+\newcommand{\seq}[1]{(#1_n)_{n\in\N}}
+\newcommand{\dinf}{d_\infty}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\topo}{\tau}
+\newcommand{\ip}[2]{\left\langle #1, #2\right\rangle}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+\newcommand{\tickbox}{$\square$\ }
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}

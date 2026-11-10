@@ -1,0 +1,232 @@
+% ==================================================================
+\chapter{Completeness}\label{ch:4}
+% ==================================================================
+\begin{studyslot}{4:40--5:10 (30 min)}
+Learn the definition of a Cauchy sequence, the list of complete and incomplete spaces, Theorem~\ref{thm:closedcomplete} (closed $\iff$ complete), and the full proof of the Contraction Mapping Theorem (Theorem~\ref{thm:cmt}), a favourite long exam question.
+\end{studyslot}
+
+\begin{intuition}
+A sequence is Cauchy if its terms eventually get as close to \emph{each other} as you like, so they look as if they are converging. Completeness says that whenever this happens, there really is a limit in the space. $\Q$ is incomplete because $1,\ 1.4,\ 1.41,\ 1.414,\dots$ ``wants'' to converge to $\sqrt2\notin\Q$. The space has holes.
+\end{intuition}
+
+\section{Cauchy sequences}
+\begin{definition}[Cauchy sequence]\label{def:cauchy}
+A sequence $\seq{x}$ in $(X,d)$ is \textbf{Cauchy} if
+\[
+  \forall\eps>0\ \ \exists N\in\N\ \ \forall m,n\ge N:\quad d(x_m,x_n)<\eps .
+\]
+Unlike the definition of convergence, this does not mention a limit.
+\end{definition}
+
+\begin{proposition}\label{prop:cauchyfacts}
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item Every convergent sequence is Cauchy.
+  \item Every Cauchy sequence is bounded.
+  \item A Cauchy sequence with a convergent subsequence converges, to the same limit.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+(i) If $x_n\to x$, choose $N$ with $d(x_n,x)<\eps/2$ for $n\ge N$. Then for $m,n\ge N$,
+\[ d(x_m,x_n)\le d(x_m,x)+d(x,x_n)<\eps . \]
+(ii) With $\eps=1$, all $x_n$ with $n\ge N$ lie in $\Bo(x_N,1)$. So every term lies in $\Bo(x_N,R)$ with $R=1+\max_{i<N}d(x_i,x_N)$.
+(iii) Let $x_{n_k}\to x$ and $\eps>0$. Choose $N$ with $d(x_m,x_n)<\eps/2$ for $m,n\ge N$, then $k$ with $n_k\ge N$ and $d(x_{n_k},x)<\eps/2$. For $n\ge N$,
+\[ d(x_n,x)\le d(x_n,x_{n_k})+d(x_{n_k},x)<\eps. \qedhere \]
+\end{proof}
+
+\section{Complete metric spaces}
+\begin{definition}[Complete space]\label{def:complete}
+$(X,d)$ is \textbf{complete} if every Cauchy sequence in $X$ converges to a point \emph{of $X$}. A complete normed vector space is a \textbf{Banach space}.
+\end{definition}
+
+\begin{example}[Complete spaces]\label{ex:complete}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item $\R$. A Cauchy sequence is bounded, so it has a convergent subsequence by Bolzano--Weierstrass, so it converges by Proposition~\ref{prop:cauchyfacts}(iii). This uses the completeness axiom.
+  \item $(\R^n,d_p)$ for $p=1,2,\infty$: each coordinate sequence is Cauchy in $\R$.
+  \item Every closed subset of $\R^n$, such as $[0,1]$, $\Z$ or the Cantor set (Theorem~\ref{thm:closedcomplete}).
+  \item Every discrete metric space: with $\eps=\frac12$, a Cauchy sequence is eventually constant.
+  \item $(C[a,b],\dinf)$ (Theorem~\ref{thm:Cabcomplete}).
+  \item $\ell^1,\ell^2,\ell^\infty$, and every compact metric space (Chapter~\ref{ch:5}).
+\end{enumerate}
+\end{example}
+
+\begin{example}[Incomplete spaces and the Cauchy sequence that shows it]
+\leavevmode\par
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{0.95\linewidth}{@{}lY@{}}
+\toprule
+Space & Cauchy sequence with no limit in the space\\
+\midrule
+$\Q$ & decimal truncations of $\sqrt2$: $\ 1,\ 1.4,\ 1.41,\dots\to\sqrt2\notin\Q$\\
+$(0,1)$ & $x_n=\frac1n\to0\notin(0,1)$\\
+$\R\setminus\{0\}$ & $x_n=\frac1n$\\
+$(C[0,1],d_1)$ & continuous ramps tending to a step function (Exercise~\ref{exr:d1incomplete})\\
+polynomials on $[0,1]$ with $\dinf$ & Taylor partial sums $\sum_{k\le n}t^k/k!\to e^t$, which is not a polynomial\\
+$\R$ with $d(x,y)=\abs{\arctan x-\arctan y}$ & $x_n=n$, since $\arctan n\to\frac\pi2$\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{example}
+
+\begin{warning}[Completeness is not a topological property]
+$\R\cong(0,1)$, but only $\R$ is complete. The last row above gives $\R$ with its usual topology but an incomplete metric. Completeness \emph{is} preserved by Lipschitz equivalent metrics, since they have the same Cauchy sequences.
+\end{warning}
+
+\begin{theorem}[Closed $\iff$ complete]\label{thm:closedcomplete}
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item If $X$ is complete and $F\subseteq X$ is closed, then $F$ is complete.
+  \item If $Y\subseteq X$ is complete (with the induced metric), then $Y$ is closed in $X$. This holds in \emph{any} metric space $X$.
+\end{enumerate}
+In particular, a subset of a complete metric space is complete if and only if it is closed.
+\end{theorem}
+\begin{proof}
+(i) A Cauchy sequence in $F$ is Cauchy in $X$, so it converges to some $x\in X$. Since $F$ is closed, $x\in F$ by Theorem~\ref{thm:seqfacts}(iv).
+(ii) Let $y_n\in Y$ with $y_n\to x\in X$. Then $(y_n)$ is convergent, hence Cauchy, so $y_n\to y$ for some $y\in Y$. By uniqueness of limits, $x=y\in Y$.
+\end{proof}
+
+\begin{theorem}\label{thm:Cabcomplete}
+$(C[a,b],\dinf)$ is complete.
+\end{theorem}
+\begin{proof}
+Let $(f_n)$ be Cauchy for $\dinf$.
+
+\emph{Step 1 (candidate limit).} For each $t\in[a,b]$, $\abs{f_n(t)-f_m(t)}\le\dinf(f_n,f_m)$, so $(f_n(t))$ is Cauchy in $\R$ and converges. Define $f(t)=\lim_n f_n(t)$.
+
+\emph{Step 2 (convergence in the metric).} Given $\eps>0$, choose $N$ with $\abs{f_n(t)-f_m(t)}<\eps$ for all $t$ and all $m,n\ge N$. Letting $m\to\infty$ gives $\abs{f_n(t)-f(t)}\le\eps$ for all $t$ and $n\ge N$, that is, $\sup_t\abs{f_n(t)-f(t)}\to0$.
+
+\emph{Step 3 (the limit lies in the space; the $\eps/3$ argument).} Fix $n$ with $\sup_t\abs{f_n(t)-f(t)}<\eps/3$, and $\delta>0$ with $\abs{f_n(t)-f_n(s)}<\eps/3$ whenever $\abs{t-s}<\delta$. Then for $\abs{t-s}<\delta$,
+\[
+  \abs{f(t)-f(s)}\le\abs{f(t)-f_n(t)}+\abs{f_n(t)-f_n(s)}+\abs{f_n(s)-f(s)}<\eps .
+\]
+So $f\in C[a,b]$ and $\dinf(f_n,f)\to0$.
+\end{proof}
+
+\begin{examtip}[Template for ``prove $X$ is complete'']
+(1) Take a Cauchy sequence and find a candidate limit, usually pointwise or coordinatewise. (2) Show convergence to the candidate \emph{in the metric}. (3) Show the candidate belongs to $X$.
+\end{examtip}
+
+\section{The Contraction Mapping Theorem}
+\begin{definition}\label{def:contraction}
+A map $f\colon X\to X$ is a \textbf{contraction} if there is a constant $k\in[0,1)$ with
+\[ d\bigl(f(x),f(y)\bigr)\le k\,d(x,y)\qquad\text{for all }x,y\in X. \]
+A \textbf{fixed point} of $f$ is a point $x^*$ with $f(x^*)=x^*$.
+\end{definition}
+
+\begin{theorem}[Contraction Mapping Theorem / Banach Fixed Point Theorem]\label{thm:cmt}
+Let $(X,d)$ be a \emph{non-empty complete} metric space and $f\colon X\to X$ a contraction with constant $k$. Then:
+\begin{enumerate}[label=(\roman*)]
+  \item $f$ has a \emph{unique} fixed point $x^*$;
+  \item for every $x_0\in X$, the iterates $x_{n+1}=f(x_n)$ converge to $x^*$;
+  \item \emph{(a priori error bound)} $\displaystyle d(x_n,x^*)\le\frac{k^n}{1-k}\,d(x_0,x_1)$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\emph{Step 1.} By induction, $d(x_n,x_{n+1})=d\bigl(f(x_{n-1}),f(x_n)\bigr)\le k\,d(x_{n-1},x_n)\le\dots\le k^n d(x_0,x_1)$.
+
+\emph{Step 2 (Cauchy).} For $m>n$, by the polygon inequality and the geometric series,
+\[
+  d(x_n,x_m)\le\sum_{j=n}^{m-1}d(x_j,x_{j+1})\le d(x_0,x_1)\sum_{j=n}^{\infty}k^j=\frac{k^n}{1-k}\,d(x_0,x_1)\xrightarrow[n\to\infty]{}0,
+\]
+because $0\le k<1$.
+
+\emph{Step 3 (convergence).} $X$ is complete, so $x_n\to x^*$ for some $x^*\in X$.
+
+\emph{Step 4 (fixed point).} $f$ is Lipschitz, hence continuous, so
+\[ f(x^*)=f\bigl(\lim_n x_n\bigr)=\lim_n f(x_n)=\lim_n x_{n+1}=x^* . \]
+
+\emph{Step 5 (uniqueness).} If $f(x)=x$ and $f(y)=y$, then $d(x,y)=d\bigl(f(x),f(y)\bigr)\le k\,d(x,y)$. So $(1-k)\,d(x,y)\le0$, giving $d(x,y)=0$.
+
+Finally, (iii) follows by letting $m\to\infty$ in Step 2, using continuity of $d$.
+\end{proof}
+
+\begin{warning}[Every hypothesis is needed]
+\leavevmode
+\begin{itemize}
+  \item \emph{Completeness:} $f(x)=x/2$ on $(0,1]$ is a contraction with no fixed point.
+  \item \emph{A uniform $k<1$:} $f(x)=x+\frac1x$ on $[1,\infty)$ satisfies $\abs{f(x)-f(y)}=\abs{x-y}\bigl(1-\tfrac1{xy}\bigr)<\abs{x-y}$ for $x\ne y$, but $f(x)=x$ has no solution.
+  \item \emph{$k=1$ is not enough:} $f(x)=x+1$ on $\R$.
+  \item \emph{$f(X)\subseteq X$:} always check this first in applications.
+\end{itemize}
+\end{warning}
+
+\begin{example}[Solving $\cos x=x$]
+Take $X=[0,1]$, which is closed in $\R$ and hence complete, and $f=\cos$. Then:
+\begin{enumerate}[label=(\roman*)]
+  \item $f(X)=[\cos1,1]\subseteq[0,1]$;
+  \item by the Mean Value Theorem, $\abs{\cos x-\cos y}=\abs{\sin\xi}\,\abs{x-y}\le\sin(1)\,\abs{x-y}$, and $k=\sin1\approx0.84<1$.
+\end{enumerate}
+Therefore $\cos x=x$ has exactly one solution in $[0,1]$ (namely $x^*\approx0.739$), and iterating $\cos$ from any starting point converges to it.
+\end{example}
+
+\begin{remark}[Further applications]
+The Picard--Lindelöf theorem on existence and uniqueness for $y'=F(t,y)$ applies Theorem~\ref{thm:cmt} to the integral operator
+\[ (Ty)(t)=y_0+\int_{t_0}^tF\bigl(s,y(s)\bigr)\,ds \]
+on a closed subset of $(C[a,b],\dinf)$. Other applications include integral equations, the convergence of Newton's method, and the inverse function theorem.
+\end{remark}
+
+\begin{examtip}[Recipe for applying the theorem]
+(1) Name a complete space $X$ and justify it. (2) Check $f(X)\subseteq X$. (3) Find $k<1$, typically using $\sup\abs{f'}<1$ and the Mean Value Theorem. (4) Conclude there is a unique fixed point, which is the limit of the iterates.
+\end{examtip}
+
+\section{Further results}
+\begin{theorem}[Cantor Intersection Theorem]\label{thm:cantor}
+Let $X$ be complete and $F_1\supseteq F_2\supseteq\cdots$ non-empty closed subsets with $\diam F_n\to0$. Then $\bigcap_{n=1}^\infty F_n$ consists of exactly one point.
+\end{theorem}
+\begin{proof}
+Pick $x_n\in F_n$. For $m\ge n$, both $x_m$ and $x_n$ lie in $F_n$, so $d(x_m,x_n)\le\diam F_n\to0$. Thus $(x_n)$ is Cauchy and converges to some $x$. Each $F_n$ is closed and contains the tail $(x_m)_{m\ge n}$, so $x\in F_n$ for every $n$. If $y$ also lies in the intersection, then $d(x,y)\le\diam F_n\to0$, so $y=x$.
+\end{proof}
+The hypotheses are needed: $\bigcap_n(0,\frac1n)=\emptyset$ (not closed), and $\bigcap_n[n,\infty)=\emptyset$ (the diameters do not tend to $0$).
+
+\begin{theorem}[Baire Category Theorem]\label{thm:baire}
+In a complete metric space, every countable intersection of dense open sets is dense. Equivalently, a non-empty complete metric space is not a countable union of nowhere dense sets.
+\end{theorem}
+Consequences: $\R$ is uncountable; $\Q$ is not complete under any metric topologically equivalent to the usual one; continuous nowhere-differentiable functions exist.
+
+\begin{theorem}[Completion]
+Every metric space $X$ embeds isometrically as a dense subset of a complete metric space $\widehat X$, which is unique up to isometry. For example, $\widehat\Q=\R$.
+\end{theorem}
+
+\section{Exercises}
+\begin{exercise}\easy
+Are $[0,\infty)$, $\Z$ and $\set{\frac1n}{n\in\N}$ complete?
+\end{exercise}
+\begin{solution}
+$[0,\infty)$: yes, it is closed in $\R$. $\Z$: yes, it is closed, and its Cauchy sequences are eventually constant. $\set{\frac1n}{n\in\N}$: no, because $(\frac1n)$ is Cauchy with limit $0$ outside the set.
+\end{solution}
+
+\begin{exercise}\easy
+Show that $x_n=\sum_{k=1}^n\frac1k$ is not Cauchy.
+\end{exercise}
+\begin{solution}
+$\displaystyle x_{2n}-x_n=\sum_{k=n+1}^{2n}\frac1k\ge n\cdot\frac1{2n}=\frac12$ for every $n$, so no $N$ works for $\eps=\frac12$. Note that $x_{n+1}-x_n\to0$ is \emph{not} enough for a sequence to be Cauchy.
+\end{solution}
+
+\begin{exercise}\medium
+Show that $f(x)=\frac12\bigl(x+\frac2x\bigr)$ is a contraction of $[1,2]$ and find its fixed point.
+\end{exercise}
+\begin{solution}
+$f'(x)=\frac12\bigl(1-\frac2{x^2}\bigr)\in[-\frac12,\frac14]$ on $[1,2]$, so $\abs{f'}\le\frac12$ and $f$ is a contraction with $k=\frac12$. Also $f$ has minimum $f(\sqrt2)=\sqrt2$ and $f(1)=f(2)=\frac32$, so $f([1,2])\subseteq[\sqrt2,\frac32]\subseteq[1,2]$. The fixed point solves $x=\frac12(x+\frac2x)$, so $x^2=2$ and $x^*=\sqrt2$. On $[1,2]\cap\Q$, $f$ is still a contraction of the space into itself but has no fixed point, which shows completeness is needed.
+\end{solution}
+
+\begin{exercise}\hard\label{exr:d1incomplete}
+Show that $(C[0,1],d_1)$ is not complete.
+\end{exercise}
+\begin{solution}
+For $n\ge2$ let
+\[
+  f_n(t)=\begin{cases}0,&0\le t\le\frac12,\\ n\bigl(t-\frac12\bigr),&\frac12\le t\le\frac12+\frac1n,\\ 1,&\frac12+\frac1n\le t\le1.\end{cases}
+\]
+For $m>n$, $f_m$ and $f_n$ differ only on $[\frac12,\frac12+\frac1n]$, and by at most $1$, so $d_1(f_m,f_n)\le\frac1n$. The sequence is Cauchy.
+
+Suppose $d_1(f_n,f)\to0$ with $f\in C[0,1]$. Then $\int_0^{1/2}\abs f=\int_0^{1/2}\abs{f-f_n}\le d_1(f,f_n)\to0$, so $f=0$ on $[0,\frac12]$ by continuity. For any $c>\frac12$ and all $n$ with $\frac12+\frac1n<c$, $\int_c^1\abs{f-1}\le d_1(f,f_n)\to0$, so $f=1$ on $[c,1]$. Hence $f=1$ on $(\frac12,1]$. Then $f$ is discontinuous at $\frac12$, a contradiction.
+\end{solution}
+
+\begin{exercise}\hard
+Let $X$ be complete and $f\colon X\to X$ such that the iterate $f^m$ is a contraction for some $m\ge1$. Prove that $f$ has a unique fixed point.
+\end{exercise}
+\begin{solution}
+By Theorem~\ref{thm:cmt}, $f^m$ has a unique fixed point $x^*$. Then $f^m\bigl(f(x^*)\bigr)=f\bigl(f^m(x^*)\bigr)=f(x^*)$, so $f(x^*)$ is also a fixed point of $f^m$. By uniqueness, $f(x^*)=x^*$. Any fixed point of $f$ is a fixed point of $f^m$, so it is unique.
+\end{solution}

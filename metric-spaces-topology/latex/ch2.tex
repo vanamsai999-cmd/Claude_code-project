@@ -1,0 +1,367 @@
+% ==================================================================
+\chapter{Open and Closed Sets, Convergence, Topological Spaces}\label{ch:2}
+% ==================================================================
+\begin{studyslot}{3:15--3:50 (35 min)}
+This is the chapter with the most terminology, and every later chapter uses it. Learn the definitions of open, closed, interior, closure, boundary, limit point and dense word for word. Fill in Example~\ref{ex:compute} yourself before reading the answers.
+\end{studyslot}
+
+\section{Balls}
+\begin{definition}[Balls and spheres]
+For $x\in X$ and $r>0$:
+\begin{align*}
+  \Bo(x,r)&=\set{y\in X}{d(x,y)<r}, \\
+  \Bc(x,r)&=\set{y\in X}{d(x,y)\le r}, \\
+  S(x,r)&=\set{y\in X}{d(x,y)=r}.
+\end{align*}
+These are the \textbf{open ball}, the \textbf{closed ball} and the \textbf{sphere}.
+\end{definition}
+
+Balls depend on the metric. Figure~\ref{fig:balls} shows the unit ball $\Bo(0,1)$ in $\R^2$ for the three metrics of Example~\ref{ex:Rn}.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=1.3]
+  \foreach \x/\name/\col in {0/{d_1}/defrule,3.4/{d_2}/thmrule,6.8/{d_\infty}/exrule}{
+    \draw[->,gray] (\x-1.4,0)--(\x+1.4,0);
+    \draw[->,gray] (\x,-1.4)--(\x,1.4);
+  }
+  \filldraw[fill=defrule!15,draw=defrule,thick,dashed] (1,0)--(0,1)--(-1,0)--(0,-1)--cycle;
+  \filldraw[fill=thmrule!15,draw=thmrule,thick,dashed] (3.4,0) circle (1);
+  \filldraw[fill=exrule!15,draw=exrule,thick,dashed] (5.8,-1) rectangle (7.8,1);
+  \node[below] at (0,-1.45) {$d_1$: diamond};
+  \node[below] at (3.4,-1.45) {$d_2$: disc};
+  \node[below] at (6.8,-1.45) {$d_\infty$: square};
+  \foreach \x in {0,3.4,6.8} \node[below right,font=\scriptsize] at (\x+1,0) {$1$};
+\end{tikzpicture}
+\caption{Unit open balls in $\R^2$. The dashed boundary is not part of the open ball. The nesting diamond $\subseteq$ disc $\subseteq$ square is the inequality $\dinf\le d_2\le d_1$ of Proposition~\ref{prop:Rn-compare}.}
+\label{fig:balls}
+\end{figure}
+
+\begin{example}[Balls in a discrete space]
+For the discrete metric, $\Bo(x,r)=\{x\}$ if $r\le1$ and $\Bo(x,r)=X$ if $r>1$. In particular $\Bo(x,1)=\{x\}$ but $\Bc(x,1)=X$.
+\end{example}
+
+\section{Open and closed sets}
+\begin{definition}[Open set]\label{def:open}
+A subset $U\subseteq X$ is \textbf{open} if
+\[
+  \forall x\in U\ \ \exists r>0:\quad \Bo(x,r)\subseteq U .
+\]
+\end{definition}
+
+\begin{intuition}
+Every point of $U$ has some breathing room. You can move a little in any direction and remain in $U$. No point of $U$ sits on its edge.
+\end{intuition}
+
+\begin{definition}[Closed set]\label{def:closed}
+A subset $F\subseteq X$ is \textbf{closed} if its complement $X\setminus F$ is open.
+\end{definition}
+
+\begin{lemma}[Open balls are open]\label{lem:ballsopen}
+Every open ball $\Bo(x,r)$ is open, and every closed ball $\Bc(x,r)$ and sphere $S(x,r)$ is closed.
+\end{lemma}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=1.6]
+  \filldraw[fill=defrule!10,draw=defrule,thick,dashed] (0,0) circle (1.5);
+  \fill (0,0) circle (1pt) node[below left] {$x$};
+  \fill (0.8,0.45) circle (1pt) node[below] {$y$};
+  \filldraw[fill=thmrule!20,draw=thmrule,thick,dashed] (0.8,0.45) circle ({1.5-sqrt(0.8^2+0.45^2)});
+  \draw[|<->|] (0,0) -- node[above left,font=\small]{$d(x,y)$} (0.8,0.45);
+  \draw[->,thmrule] (0.8,0.45) -- ++(-30:{1.5-sqrt(0.8^2+0.45^2)}) node[midway,below,font=\scriptsize]{$s$};
+  \node[defrule] at (-0.9,1.35) {$\Bo(x,r)$};
+\end{tikzpicture}
+\caption{The proof of Lemma~\ref{lem:ballsopen}: a ball of radius $s=r-d(x,y)$ around $y$ fits inside $\Bo(x,r)$.}
+\end{figure}
+
+\begin{proof}
+Let $y\in\Bo(x,r)$ and set $s=r-d(x,y)>0$. If $z\in\Bo(y,s)$, then
+\[
+  d(x,z)\le d(x,y)+d(y,z)<d(x,y)+s=r,
+\]
+so $\Bo(y,s)\subseteq\Bo(x,r)$. For the closed ball, we show its complement is open. If $d(x,y)>r$, set $s=d(x,y)-r>0$. For $z\in\Bo(y,s)$, Lemma~\ref{lem:reverse} gives $d(x,z)\ge d(x,y)-d(y,z)>d(x,y)-s=r$. The sphere is $\Bc(x,r)\setminus\Bo(x,r)=\Bc(x,r)\cap(X\setminus\Bo(x,r))$, an intersection of two closed sets.
+\end{proof}
+
+\begin{examtip}
+The radius choice $s=r-d(x,y)$ is the most reused idea in the course. Draw the picture.
+\end{examtip}
+
+\begin{theorem}[Properties of open sets]\label{thm:openprops}
+In any metric space $(X,d)$:
+\begin{enumerate}[label=(\roman*)]
+  \item $\emptyset$ and $X$ are open;
+  \item an arbitrary union $\bigcup_{i\in I}U_i$ of open sets is open;
+  \item a \emph{finite} intersection $U_1\cap\dots\cap U_n$ of open sets is open.
+\end{enumerate}
+Dually (by De Morgan): $\emptyset$ and $X$ are closed, arbitrary intersections of closed sets are closed, and finite unions of closed sets are closed.
+\end{theorem}
+\begin{proof}
+(i) is vacuous for $\emptyset$, and holds for $X$ with any $r$. (ii) If $x\in\bigcup U_i$, then $x\in U_j$ for some $j$, so $\Bo(x,r)\subseteq U_j\subseteq\bigcup U_i$ for some $r>0$. (iii) If $x\in\bigcap_{k=1}^n U_k$, pick $r_k>0$ with $\Bo(x,r_k)\subseteq U_k$ and let $r=\min\{r_1,\dots,r_n\}$. Then $r>0$, \emph{because there are finitely many $r_k$}, and $\Bo(x,r)\subseteq\bigcap U_k$.
+\end{proof}
+
+\begin{warning}
+Finiteness in (iii) is essential:
+\[
+  \bigcap_{n=1}^\infty\Bigl(-\frac1n,\frac1n\Bigr)=\{0\}\ \ \text{is not open},
+  \qquad
+  \bigcup_{n=1}^\infty\Bigl[\frac1n,1\Bigr]=(0,1]\ \ \text{is not closed}.
+\]
+\end{warning}
+
+\begin{warning}[Sets are not doors]
+``Not open'' does \emph{not} mean ``closed''. A set can be both open and closed (\textbf{clopen}): $\emptyset$ and $X$ always, and every subset of a discrete space. A set can also be neither: $[0,1)$ or $\Q$ in $\R$.
+\end{warning}
+
+\begin{example}[Subsets of $\R$ with the usual metric]
+\leavevmode\par
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{0.95\linewidth}{@{}lccY@{}}
+\toprule
+Set & Open & Closed & Reason \\
+\midrule
+$(a,b)$ & \cmark & \xmark & It is a ball. A sequence $x_n\to a$ inside it has its limit outside. \\
+$[a,b]$ & \xmark & \cmark & Every ball around $a$ leaves the set. Its complement is a union of open intervals. \\
+$[a,b)$ & \xmark & \xmark & Openness fails at $a$ and closedness fails at $b$. \\
+$\{p\}$, finite sets & \xmark & \cmark & Finite sets are closed in every metric space. \\
+$\Z$ & \xmark & \cmark & Its complement is $\bigcup_n(n,n+1)$. \\
+$\Q$ & \xmark & \xmark & Every interval contains both rationals and irrationals. \\
+$\set{1/n}{n\in\N}$ & \xmark & \xmark & $1/n\to0\notin$ set. Adding $0$ makes it closed. \\
+$\R$, $\emptyset$ & \cmark & \cmark & These are always clopen. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{example}
+
+\begin{warning}[Open \emph{in what}?]
+$[0,1)$ is not open in $\R$, but it \emph{is} open in the subspace $X=[0,2]$, since $[0,1)=\Bo_X(0,1)$. See Section~\ref{sec:subspace}.
+\end{warning}
+
+\section{Interior, closure, boundary and limit points}
+\begin{definition}\label{def:intcl}
+Let $A\subseteq X$.
+\begin{enumerate}[label=(\roman*)]
+  \item $x$ is an \textbf{interior point} of $A$ if $\Bo(x,r)\subseteq A$ for some $r>0$. The \textbf{interior} $\inte A$ (also written $A^\circ$) is the set of interior points. Equivalently,
+  \[ \inte A=\bigcup\set{U}{U\subseteq A,\ U\text{ open}}, \]
+  the largest open subset of $A$.
+  \item The \textbf{closure} of $A$ is
+  \[ \cl A=\overline A=\bigcap\set{F}{F\supseteq A,\ F\text{ closed}}, \]
+  the smallest closed superset of $A$.
+  \item $x$ is a \textbf{limit point} (accumulation point) of $A$ if every ball $\Bo(x,r)$ contains a point of $A\setminus\{x\}$. The set $A'$ of limit points is the \textbf{derived set}.
+  \item $a\in A$ is an \textbf{isolated point} of $A$ if $\Bo(a,r)\cap A=\{a\}$ for some $r>0$.
+  \item The \textbf{boundary} is $\partial A=\cl A\setminus\inte A$, and the \textbf{exterior} is $\ext A=\inte(X\setminus A)$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Characterisations of the closure]\label{thm:closure}
+For $A\subseteq X$ and $x\in X$, the following are equivalent:
+\begin{enumerate}[label=(\arabic*)]
+  \item $x\in\cl A$;
+  \item $\Bo(x,r)\cap A\ne\emptyset$ for every $r>0$;
+  \item there is a sequence $(a_n)$ in $A$ with $a_n\to x$;
+  \item $d(x,A)=0$;
+  \item $x\in A\cup A'$.
+\end{enumerate}
+Moreover, $A$ is open $\iff A=\inte A$, and $A$ is closed $\iff A=\cl A\iff A'\subseteq A$.
+\end{theorem}
+\begin{proof}
+(1)$\Rightarrow$(2): if $\Bo(x,r)\cap A=\emptyset$, then $X\setminus\Bo(x,r)$ is a closed set containing $A$, hence containing $\cl A$, so $x\notin\cl A$.
+(2)$\Rightarrow$(3): choose $a_n\in\Bo(x,1/n)\cap A$. Then $d(a_n,x)<1/n\to0$.
+(3)$\Rightarrow$(4): $0\le d(x,A)\le d(x,a_n)\to0$.
+(4)$\Rightarrow$(2): by Proposition~\ref{prop:approx}, for each $r>0$ some $a\in A$ has $d(x,a)<r$.
+(2)$\Rightarrow$(1): let $E$ be the set of $x$ satisfying (2). If $y\notin E$, then some $\Bo(y,r)$ misses $A$. Every $z\in\Bo(y,r)$ has a ball inside $\Bo(y,r)$ (Lemma~\ref{lem:ballsopen}), so $z\notin E$. Hence $X\setminus E$ is open, and $E$ is a closed set containing $A$. Therefore $\cl A\subseteq E$.
+(2)$\Leftrightarrow$(5): immediate from the definitions.
+\end{proof}
+
+\begin{proposition}[Useful identities]\label{prop:identities}
+For $A,B\subseteq X$:
+\begin{align*}
+  X\setminus\cl A&=\inte(X\setminus A), & X\setminus\inte A&=\cl(X\setminus A),\\
+  \partial A&=\cl A\cap\cl(X\setminus A)=\partial(X\setminus A), & \partial A&\ \text{is closed},\\
+  \cl(A\cup B)&=\cl A\cup\cl B, & \cl(A\cap B)&\subseteq\cl A\cap\cl B,\\
+  \inte(A\cap B)&=\inte A\cap\inte B, & \inte(A\cup B)&\supseteq\inte A\cup\inte B.
+\end{align*}
+The inclusions can be strict. For $A=\Q$ and $B=\R\setminus\Q$, $\cl(A\cap B)=\emptyset$ but $\cl A\cap\cl B=\R$.
+\end{proposition}
+
+\begin{warning}[$\cl\Bo(x,r)\ne\Bc(x,r)$ in general]
+Always $\cl\Bo(x,r)\subseteq\Bc(x,r)$. In a discrete space with at least two points, $\cl\Bo(x,1)=\{x\}\ne X=\Bc(x,1)$. Equality does hold in every normed space.
+\end{warning}
+
+\begin{definition}[Dense, separable, nowhere dense]\label{def:dense}
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item $A$ is \textbf{dense} in $X$ if $\cl A=X$. Equivalently, every non-empty open set meets $A$.
+  \item $X$ is \textbf{separable} if it has a countable dense subset.
+  \item $A$ is \textbf{nowhere dense} if $\inte(\cl A)=\emptyset$.
+\end{enumerate}
+\end{definition}
+For example, $\Q$ and $\R\setminus\Q$ are dense in $\R$, and $\R^n$ is separable because $\Q^n$ is dense. Polynomials are dense in $(C[a,b],\dinf)$ (Weierstrass). An uncountable discrete space is not separable. $\Z$ and the Cantor set are nowhere dense in $\R$.
+
+\begin{example}[Computing everything]\label{ex:compute}
+Let $A=[0,1)\cup\{2\}\cup\bigl(\Q\cap(3,4)\bigr)\subseteq\R$.
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{0.95\linewidth}{@{}llY@{}}
+\toprule
+Object & Answer & Reason \\
+\midrule
+$\inte A$ & $(0,1)$ & Points of $(0,1)$ have room around them. Balls around $0$ or $2$ leave $A$. Every interval around a rational contains irrationals. \\
+$\cl A$ & $[0,1]\cup\{2\}\cup[3,4]$ & $1$ is a limit of points in $A$, and $\Q$ is dense in $[3,4]$. \\
+$\partial A$ & $\{0,1,2\}\cup[3,4]$ & $\cl A\setminus\inte A$. \\
+$A'$ & $[0,1]\cup[3,4]$ & $2$ is isolated, so it is not a limit point. \\
+Isolated points & $\{2\}$ & $\Bo(2,\tfrac12)\cap A=\{2\}$. \\
+Open / closed? & neither & $0\in A$ is not interior, and $1\in\cl A\setminus A$. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{example}
+
+\section{Convergence of sequences}
+\begin{definition}[Convergence]\label{def:conv}
+A sequence $\seq{x}$ in $X$ \textbf{converges} to $x\in X$, written $x_n\to x$, if $d(x_n,x)\to0$ in $\R$:
+\[
+  \forall\eps>0\ \ \exists N\in\N\ \ \forall n\ge N:\quad d(x_n,x)<\eps .
+\]
+Equivalently, every open set containing $x$ contains all but finitely many terms $x_n$.
+\end{definition}
+
+\begin{theorem}[Basic facts]\label{thm:seqfacts}
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item Limits in a metric space are unique.
+  \item A convergent sequence is bounded.
+  \item If $x_n\to x$, then every subsequence converges to $x$.
+  \item \textbf{Sequential characterisation of closed sets:} $F$ is closed $\iff$ whenever $x_n\in F$ and $x_n\to x\in X$, we have $x\in F$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+(i) If $x_n\to x$ and $x_n\to y$, then $0\le d(x,y)\le d(x,x_n)+d(x_n,y)\to0$, so $x=y$.
+(ii) With $\eps=1$, all but finitely many terms lie in $\Bo(x,1)$.
+(iii) $n_k\ge k$.
+(iv) ($\Rightarrow$) If $x\notin F$, some $\Bo(x,r)\subseteq X\setminus F$, so $d(x_n,x)\ge r$ for all $n$, which is a contradiction. ($\Leftarrow$) By Theorem~\ref{thm:closure}(3), each $x\in\cl F$ is a limit of points of $F$, so $x\in F$. Thus $\cl F=F$.
+\end{proof}
+
+\begin{example}[What convergence means in specific spaces]
+\leavevmode
+\begin{itemize}
+  \item In $(\R^n,d_p)$ for $p=1,2,\infty$: convergence $\iff$ coordinatewise convergence.
+  \item In $(C[a,b],\dinf)$: convergence $\iff$ \textbf{uniform convergence}.
+  \item In $(C[a,b],d_1)$: convergence in mean, which is strictly weaker (Example~\ref{ex:tn}).
+  \item In a discrete space: $x_n\to x\iff x_n=x$ for all sufficiently large $n$ (take $\eps=\tfrac12$).
+\end{itemize}
+\end{example}
+
+\section{Topological spaces}
+\begin{intuition}
+Convergence, closure and (as we will see) continuity can all be described using only \emph{which sets are open}. So we can forget the distance and keep just the collection of open sets. That collection is a topology.
+\end{intuition}
+
+\begin{definition}[Topology]\label{def:topology}
+A \textbf{topology} on a set $X$ is a collection $\topo$ of subsets of $X$ such that
+\begin{enumerate}[label=\textbf{(T\arabic*)},leftmargin=3em]
+  \item $\emptyset\in\topo$ and $X\in\topo$;
+  \item if $U_i\in\topo$ for all $i\in I$, then $\bigcup_{i\in I}U_i\in\topo$;
+  \item if $U,V\in\topo$, then $U\cap V\in\topo$.
+\end{enumerate}
+The members of $\topo$ are the \textbf{open sets}, and $(X,\topo)$ is a \textbf{topological space}. $F$ is \textbf{closed} if $X\setminus F\in\topo$. A \textbf{neighbourhood} of $x$ is a set $N$ with $x\in U\subseteq N$ for some $U\in\topo$.
+\end{definition}
+
+\begin{example}[Standard topologies]\label{ex:topologies}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item The \textbf{metric topology} $\topo_d$: the open sets of $(X,d)$. Theorem~\ref{thm:openprops} is exactly \textup{(T1)--(T3)}.
+  \item The \textbf{discrete topology} $\topo=\mathcal P(X)$, which comes from the discrete metric.
+  \item The \textbf{indiscrete} (trivial) topology $\topo=\{\emptyset,X\}$.
+  \item The \textbf{cofinite topology} $\topo=\{\emptyset\}\cup\set{U\subseteq X}{X\setminus U\text{ is finite}}$.
+  \item \textbf{Sierpiński space}: $X=\{0,1\}$, $\topo=\{\emptyset,\{1\},\{0,1\}\}$.
+\end{enumerate}
+\end{example}
+
+\begin{example}
+$\topo=\{\emptyset,\{a\},\{b\},\{a,b,c\}\}$ is \emph{not} a topology on $\{a,b,c\}$, since $\{a\}\cup\{b\}=\{a,b\}\notin\topo$.
+\end{example}
+
+\begin{definition}\label{def:hausdorff}
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item $\topo_1$ is \textbf{coarser} than $\topo_2$ (and $\topo_2$ is \textbf{finer}) if $\topo_1\subseteq\topo_2$.
+  \item A \textbf{basis} for $\topo$ is a collection $\mathcal B\subseteq\topo$ such that every open set is a union of members of $\mathcal B$. For example, open balls form a basis for $\topo_d$.
+  \item $(X,\topo)$ is \textbf{metrizable} if $\topo=\topo_d$ for some metric $d$.
+  \item $(X,\topo)$ is \textbf{Hausdorff} if for all $x\ne y$ there are disjoint open $U\ni x$ and $V\ni y$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}\label{thm:metrichausdorff}
+Every metric space is Hausdorff.
+\end{theorem}
+\begin{proof}
+If $x\ne y$, let $r=\tfrac12d(x,y)>0$. If $z\in\Bo(x,r)\cap\Bo(y,r)$, then $d(x,y)\le d(x,z)+d(z,y)<2r=d(x,y)$, a contradiction.
+\end{proof}
+
+\begin{examtip}
+To show a topology is \emph{not metrizable}, show it is not Hausdorff. This covers the indiscrete topology on $\ge2$ points, the cofinite topology on an infinite set, and Sierpiński space.
+\end{examtip}
+
+\begin{warning}
+In non-Hausdorff spaces, limits need not be unique. In the indiscrete topology, every sequence converges to every point. Uniqueness of limits really comes from the Hausdorff property.
+\end{warning}
+
+\section{Subspaces}\label{sec:subspace}
+\begin{definition}[Subspace topology]
+If $Y\subseteq X$, the \textbf{subspace topology} is $\topo_Y=\set{U\cap Y}{U\in\topo}$. For a metric space this agrees with the topology of the restricted metric, and $\Bo_Y(y,r)=\Bo_X(y,r)\cap Y$.
+\end{definition}
+
+\begin{proposition}
+$F\subseteq Y$ is closed in $Y$ $\iff$ $F=C\cap Y$ for some $C$ closed in $X$. If $Y$ is open (respectively closed) in $X$, a subset of $Y$ is open (respectively closed) in $Y$ $\iff$ it is open (respectively closed) in $X$.
+\end{proposition}
+
+\begin{example}
+In $Y=\Q$, the set $\set{q\in\Q}{q^2<2}=(-\sqrt2,\sqrt2)\cap\Q=[-\sqrt2,\sqrt2]\cap\Q$ is clopen.
+\end{example}
+
+\section{Exercises}
+\begin{exercise}\easy
+Prove directly that $U=\set{(x,y)\in\R^2}{x>0}$ is open.
+\end{exercise}
+\begin{solution}
+Let $p=(a,b)\in U$ and take $r=a>0$. If $(x,y)\in\Bo(p,a)$, then $\abs{x-a}\le d_2\bigl((x,y),p\bigr)<a$, so $x>0$. Hence $\Bo(p,a)\subseteq U$. (Faster, using Chapter~\ref{ch:3}: $U=f^{-1}\bigl((0,\infty)\bigr)$ for the continuous map $f(x,y)=x$.)
+\end{solution}
+
+\begin{exercise}\easy
+Prove that every finite subset of a metric space is closed.
+\end{exercise}
+\begin{solution}
+If $x\ne p$, then $\Bo\bigl(x,d(x,p)\bigr)$ does not contain $p$, so $X\setminus\{p\}$ is open and $\{p\}$ is closed. A finite set is a finite union of singletons, so it is closed by Theorem~\ref{thm:openprops}.
+\end{solution}
+
+\begin{exercise}\medium
+In a discrete metric space, find $\inte A$, $\cl A$ and $\partial A$ for an arbitrary $A$.
+\end{exercise}
+\begin{solution}
+$\Bo(x,\tfrac12)=\{x\}\subseteq A$ for every $x\in A$, so every set is open. Hence every set is also closed. Therefore $\inte A=A=\cl A$ and $\partial A=\emptyset$.
+\end{solution}
+
+\begin{exercise}\medium
+Show that $\partial A=\emptyset\iff A$ is clopen.
+\end{exercise}
+\begin{solution}
+$\partial A=\cl A\setminus\inte A=\emptyset\iff\cl A\subseteq\inte A$. Since $\inte A\subseteq A\subseteq\cl A$ always, this holds $\iff\inte A=A=\cl A$.
+\end{solution}
+
+\begin{exercise}\hard
+Let $X$ be infinite with the cofinite topology. (a) Verify \textup{(T1)--(T3)}. (b) Show $X$ is not Hausdorff. (c) Determine which sequences converge, and to what.
+\end{exercise}
+\begin{solution}
+(a) $X\setminus X=\emptyset$ is finite. For non-empty open $U_i$, $X\setminus\bigcup U_i=\bigcap(X\setminus U_i)$ is finite. Also $X\setminus(U\cap V)=(X\setminus U)\cup(X\setminus V)$ is finite.
+(b) If $U,V$ are non-empty, open and disjoint, then $X=(X\setminus U)\cup(X\setminus V)$ is finite, a contradiction.
+(c) If no value occurs infinitely often (for example, if all $x_n$ are distinct), then $x_n\to x$ for \emph{every} $x$: an open $U\ni x$ misses only finitely many points, hence only finitely many terms. If exactly one value $a$ occurs infinitely often, then $x_n\to a$ and to no other point. For $c\ne a$, the open set $X\setminus\{a\}\ni c$ misses infinitely many terms. If two or more values occur infinitely often, the sequence converges to nothing.
+\end{solution}
+
+\begin{exercise}\hard
+Prove $\cl\Bo(x,r)\subseteq\Bc(x,r)$ and give two examples where the inclusion is strict.
+\end{exercise}
+\begin{solution}
+$\Bc(x,r)$ is closed (Lemma~\ref{lem:ballsopen}) and contains $\Bo(x,r)$, and the closure is the smallest such set. Strict examples: (a) the discrete metric with $r=1$; (b) $X=[0,1]\cup[2,3]\subseteq\R$, $x=0$, $r=2$, where $\cl\Bo(0,2)=[0,1]$ but $\Bc(0,2)=[0,1]\cup\{2\}$.
+\end{solution}

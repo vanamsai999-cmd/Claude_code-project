@@ -1,0 +1,238 @@
+% ==================================================================
+\chapter{Metric Spaces}\label{ch:1}
+% ==================================================================
+\begin{studyslot}{2:30--3:05 (35 min)}
+Learn the three axioms by heart. Work through the standard examples, especially the metrics on $\R^n$, the discrete metric and $C[a,b]$. Practise one ``prove this is a metric'' proof and one ``show this is \emph{not} a metric'' counterexample.
+\end{studyslot}
+
+\begin{intuition}
+Analysis on $\R$ (limits, continuity, convergence) only ever uses one thing: the distance $\abs{x-y}$. A \emph{metric space} is any set with a sensible notion of distance. Once we have one, we can do analysis on sets of points, vectors, functions or strings.
+\end{intuition}
+
+\section{Definition and first examples}
+\begin{definition}[Metric space]\label{def:metric}
+A \textbf{metric} on a set $X$ is a function $d\colon X\times X\to\R$ such that for all $x,y,z\in X$:
+\begin{enumerate}[label=\textbf{(M\arabic*)},leftmargin=3.2em]
+  \item $d(x,y)\ge 0$, and $d(x,y)=0 \iff x=y$; \hfill(positivity)
+  \item $d(x,y)=d(y,x)$; \hfill(symmetry)
+  \item $d(x,z)\le d(x,y)+d(y,z)$. \hfill(triangle inequality)
+\end{enumerate}
+The pair $(X,d)$ is called a \textbf{metric space}.
+\end{definition}
+
+\begin{examtip}
+When asked to prove that $d$ is a metric, check \textup{(M1)}, \textup{(M2)}, \textup{(M3)} explicitly and in order. \textup{(M1)} and \textup{(M2)} are usually one line each. All the work goes into \textup{(M3)}.
+\end{examtip}
+
+\begin{example}[The real line]
+$X=\R$ with $d(x,y)=\abs{x-y}$, the \textbf{usual} (standard) metric.
+\end{example}
+
+\begin{example}[Three metrics on $\R^n$]\label{ex:Rn}
+For $x=(x_1,\dots,x_n)$ and $y=(y_1,\dots,y_n)$ in $\R^n$ define
+\begin{align*}
+  d_1(x,y) &= \sum_{i=1}^n \abs{x_i-y_i} &&\text{(taxicab / Manhattan)},\\
+  d_2(x,y) &= \Bigl(\sum_{i=1}^n (x_i-y_i)^2\Bigr)^{1/2} &&\text{(Euclidean)},\\
+  \dinf(x,y) &= \max_{1\le i\le n}\abs{x_i-y_i} &&\text{(sup / max / Chebyshev)}.
+\end{align*}
+\textup{(M1)} and \textup{(M2)} are immediate. For $d_1$ and $\dinf$, \textup{(M3)} follows from the triangle inequality in $\R$ applied coordinate by coordinate. For $d_2$ it is Minkowski's inequality (Exercise~\ref{exr:d2}).
+\end{example}
+
+\begin{proposition}[Comparison of the metrics on $\R^n$]\label{prop:Rn-compare}
+For all $x,y\in\R^n$,
+\[
+  \dinf(x,y)\;\le\; d_2(x,y)\;\le\; d_1(x,y)\;\le\; n\,\dinf(x,y),
+  \qquad
+  d_2(x,y)\le\sqrt{n}\,\dinf(x,y).
+\]
+\end{proposition}
+\begin{proof}
+Write $a_i=\abs{x_i-y_i}$ and $M=\max_i a_i$. Then $M^2\le\sum a_i^2$, which gives the first inequality. Expanding $(\sum a_i)^2=\sum a_i^2+2\sum_{i<j}a_ia_j\ge\sum a_i^2$ gives the second. The rest follows from $a_i\le M$ for every $i$.
+\end{proof}
+
+\begin{example}[The discrete metric]\label{ex:discrete}
+On \emph{any} set $X$ define
+\[
+  d(x,y)=\begin{cases}0,& x=y,\\ 1,& x\ne y.\end{cases}
+\]
+\textup{(M1)}, \textup{(M2)} are clear. For \textup{(M3)}: if $x=z$, the left side is $0$. If $x\ne z$, then $y$ cannot equal both $x$ and $z$, so the right side is at least $1=d(x,z)$.
+\end{example}
+
+\begin{warning}
+The discrete metric is the standard \emph{counterexample machine}. In it, every set is open and closed, every function out of it is continuous, convergent sequences are eventually constant, and the space is complete. It is compact only if $X$ is finite. Whenever you suspect a general statement is false, test it here first.
+\end{warning}
+
+\begin{example}[Function spaces]\label{ex:Cab}
+Let $C[a,b]$ be the set of continuous $f\colon[a,b]\to\R$. Define
+\[
+  \dinf(f,g)=\sup_{t\in[a,b]}\abs{f(t)-g(t)},
+  \qquad
+  d_1(f,g)=\int_a^b\abs{f(t)-g(t)}\,dt .
+\]
+The supremum is finite because $\abs{f-g}$ is continuous on the compact interval $[a,b]$, so it attains a maximum. For $d_1$, continuity is essential for \textup{(M1)}: if $f\ne g$, then $\abs{f-g}>0$ on some subinterval, so the integral is positive. Geometrically, $\dinf(f,g)$ is the largest vertical gap between the graphs, and $d_1(f,g)$ is the area between them.
+\end{example}
+
+\begin{example}[Sequence spaces]
+\begin{align*}
+  \ell^1 &= \Bigl\{x=(x_i): \sum_i\abs{x_i}<\infty\Bigr\}, & d(x,y)&=\sum_{i=1}^\infty\abs{x_i-y_i},\\
+  \ell^2 &= \Bigl\{x=(x_i): \sum_i x_i^2<\infty\Bigr\}, & d(x,y)&=\Bigl(\sum_{i=1}^\infty(x_i-y_i)^2\Bigr)^{1/2},\\
+  \ell^\infty &= \Bigl\{x=(x_i): \sup_i\abs{x_i}<\infty\Bigr\}, & d(x,y)&=\sup_{i}\abs{x_i-y_i}.
+\end{align*}
+\end{example}
+
+\section{Normed spaces}
+\begin{definition}[Norm]\label{def:norm}
+A \textbf{norm} on a real vector space $V$ is a map $\norm{\cdot}\colon V\to\R$ such that for all $u,v\in V$ and $\lambda\in\R$:
+\begin{enumerate}[label=\textbf{(N\arabic*)},leftmargin=3.2em]
+  \item $\norm{v}\ge0$, and $\norm{v}=0\iff v=0$;
+  \item $\norm{\lambda v}=\abs{\lambda}\,\norm{v}$;
+  \item $\norm{u+v}\le\norm{u}+\norm{v}$.
+\end{enumerate}
+Every norm induces a metric $d(u,v)=\norm{u-v}$.
+\end{definition}
+
+\begin{remark}
+All the metrics in Examples~\ref{ex:Rn} and~\ref{ex:Cab} come from norms. The discrete metric does \emph{not} come from a norm on any non-zero vector space: \textup{(N2)} would force $d(\lambda v,0)=\abs{\lambda}\,d(v,0)$ to take every value in $[0,\infty)$.
+\end{remark}
+
+\section{Further examples and non-examples}
+\begin{example}\label{ex:others}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item \textbf{Hamming metric.} On strings of length $n$, $d(x,y)=\#\set{i}{x_i\ne y_i}$.
+  \item \textbf{Bounded metric.} If $d$ is a metric, then so is $\rho=\dfrac{d}{1+d}$, and $\rho<1$ (Proposition~\ref{prop:d1d}).
+  \item \textbf{British Rail metric} on $\R^2$: $d(x,y)=\norm{x-y}$ if $x$, $y$ and $0$ are collinear, and $d(x,y)=\norm{x}+\norm{y}$ otherwise.
+  \item \textbf{Subspace metric.} If $Y\subseteq X$, the restriction $d|_{Y\times Y}$ is a metric on $Y$. For example, $\Q$ or $[0,1]$ with $\abs{x-y}$.
+  \item \textbf{Product metric.} On $X\times Y$: $\ d\bigl((x,y),(x',y')\bigr)=\max\{d_X(x,x'),d_Y(y,y')\}$.
+\end{enumerate}
+\end{example}
+
+\begin{example}[Things that are \emph{not} metrics]\label{ex:nonmetric}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item $d(x,y)=(x-y)^2$ on $\R$ fails \textup{(M3)}: $\ d(0,2)=4>2=d(0,1)+d(1,2)$.
+  \item $d(x,y)=\abs{x^2-y^2}$ on $\R$ fails \textup{(M1)}: $\ d(1,-1)=0$ but $1\ne-1$.
+  \item $d(f,g)=\abs{f(0)-g(0)}$ on $C[0,1]$ fails \textup{(M1)}. This is a \textbf{pseudometric}.
+\end{enumerate}
+To disprove an axiom, one explicit numerical counterexample is enough.
+\end{example}
+
+\section{Consequences of the axioms}
+\begin{lemma}\label{lem:reverse}
+For all $x,y,z,x',y'\in X$:
+\begin{enumerate}[label=(\roman*)]
+  \item $\abs{d(x,z)-d(y,z)}\le d(x,y)$; \hfill(reverse triangle inequality)
+  \item $d(x_1,x_n)\le\sum_{k=1}^{n-1}d(x_k,x_{k+1})$; \hfill(polygon inequality)
+  \item $\abs{d(x,y)-d(x',y')}\le d(x,x')+d(y,y')$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(i) By \textup{(M3)}, $d(x,z)\le d(x,y)+d(y,z)$, so $d(x,z)-d(y,z)\le d(x,y)$. Swapping $x$ and $y$ and using \textup{(M2)} gives $d(y,z)-d(x,z)\le d(x,y)$. (ii) Induction on $n$. (iii) Apply (i) twice.
+\end{proof}
+
+\begin{definition}[Bounded sets, diameter, distance to a set]\label{def:bounded}
+Let $A,B\subseteq X$ be non-empty.
+\begin{enumerate}[label=(\roman*)]
+  \item $A$ is \textbf{bounded} if there are $x_0\in X$ and $M\ge0$ with $d(a,x_0)\le M$ for all $a\in A$.
+  \item The \textbf{diameter} of $A$ is $\diam A=\sup\set{d(a,b)}{a,b\in A}$. So $A$ is bounded $\iff\diam A<\infty$.
+  \item The \textbf{distance} from $x$ to $A$ is $d(x,A)=\inf\set{d(x,a)}{a\in A}$, and $d(A,B)=\inf\set{d(a,b)}{a\in A,\ b\in B}$.
+\end{enumerate}
+\end{definition}
+
+\begin{warning}
+$d(x,A)=0$ does \emph{not} imply $x\in A$. For example, $d\bigl(0,(0,1)\bigr)=0$. It means $x\in\cl A$ (Theorem~\ref{thm:closure}). Boundedness also depends on the metric: $\R$ is unbounded for $\abs{x-y}$ but bounded for the discrete metric.
+\end{warning}
+
+\begin{definition}[Isometry]
+A map $f\colon(X,d_X)\to(Y,d_Y)$ is an \textbf{isometry} if $d_Y\bigl(f(x),f(y)\bigr)=d_X(x,y)$ for all $x,y\in X$. Isometries are injective by \textup{(M1)}.
+\end{definition}
+
+\section{Equivalent metrics}
+\begin{definition}\label{def:equiv}
+Two metrics $d,d'$ on $X$ are
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Lipschitz} (strongly) \textbf{equivalent} if there are constants $\alpha,\beta>0$ with
+  \[ \alpha\,d(x,y)\le d'(x,y)\le\beta\,d(x,y)\qquad\text{for all }x,y\in X; \]
+  \item \textbf{topologically equivalent} if they have the same open sets (Chapter~\ref{ch:2}).
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+Lipschitz equivalent $\Rightarrow$ topologically equivalent, but not conversely.
+\end{proposition}
+\begin{proof}[Counterexample to the converse]
+On $\R$, $d=\abs{x-y}$ and $\rho=d/(1+d)$ have the same open sets, because their small balls coincide up to rescaling of the radius. But $d\le\beta\rho<\beta$ would make $d$ bounded, which is false.
+\end{proof}
+
+\begin{example}[$d_1$ and $\dinf$ on {$C[0,1]$} are not equivalent]\label{ex:tn}
+Always $d_1(f,g)\le\dinf(f,g)$, because the area is at most height $\times$ width $1$. But for $f_n(t)=t^n$,
+\[
+  d_1(f_n,0)=\int_0^1t^n\,dt=\frac1{n+1}\longrightarrow0,
+  \qquad
+  \dinf(f_n,0)=1\ \text{ for all } n .
+\]
+So no inequality $\dinf\le\beta\,d_1$ can hold.
+\end{example}
+
+\section{Worked proof: $d/(1+d)$ is a metric}
+\begin{proposition}\label{prop:d1d}
+If $d$ is a metric on $X$, then $\rho(x,y)=\dfrac{d(x,y)}{1+d(x,y)}$ is a metric on $X$.
+\end{proposition}
+\begin{proof}
+Let $\varphi(t)=\dfrac{t}{1+t}=1-\dfrac1{1+t}$ for $t\ge0$. Then $\varphi\ge0$, $\varphi(t)=0\iff t=0$, and $\varphi$ is increasing. So \textup{(M1)} and \textup{(M2)} for $\rho$ follow from those for $d$. Next, $\varphi$ is \emph{subadditive}: for $a,b\ge0$,
+\[
+  \varphi(a+b)=\frac{a}{1+a+b}+\frac{b}{1+a+b}\le\frac{a}{1+a}+\frac{b}{1+b}=\varphi(a)+\varphi(b).
+\]
+Hence, using \textup{(M3)} for $d$ and that $\varphi$ is increasing,
+\[
+  \rho(x,z)=\varphi\bigl(d(x,z)\bigr)\le\varphi\bigl(d(x,y)+d(y,z)\bigr)\le\varphi\bigl(d(x,y)\bigr)+\varphi\bigl(d(y,z)\bigr)=\rho(x,y)+\rho(y,z). \qedhere
+\]
+\end{proof}
+
+\begin{remark}[General recipe]
+If $\varphi\colon[0,\infty)\to[0,\infty)$ is increasing, subadditive and satisfies $\varphi(t)=0\iff t=0$, then $\varphi\circ d$ is a metric. Examples: $\sqrt{d}$, $\min\{d,1\}$, $d/(1+d)$. This does \emph{not} work for $d^2$, which is not subadditive.
+\end{remark}
+
+\section{Exercises}
+\begin{exercise}\easy
+Show that $d(x,y)=\abs{x^3-y^3}$ is a metric on $\R$.
+\end{exercise}
+\begin{solution}
+\textup{(M1)}: $\abs{x^3-y^3}\ge0$, and it equals $0\iff x^3=y^3\iff x=y$, since $t\mapsto t^3$ is injective. \textup{(M2)} is clear. \textup{(M3)}: $\abs{x^3-z^3}=\abs{(x^3-y^3)+(y^3-z^3)}\le\abs{x^3-y^3}+\abs{y^3-z^3}$. In general, $\abs{f(x)-f(y)}$ is a metric whenever $f$ is injective.
+\end{solution}
+
+\begin{exercise}\easy
+Compute $d_1,d_2,\dinf$ between $(1,2)$ and $(4,-2)$ in $\R^2$.
+\end{exercise}
+\begin{solution}
+The coordinate differences are $3$ and $4$, so $d_1=7$, $d_2=5$, $\dinf=4$. Check: $4\le5\le7\le2\cdot4$.
+\end{solution}
+
+\begin{exercise}\medium
+Is $d(x,y)=\min\{1,\abs{x-y}\}$ a metric on $\R$? Is it Lipschitz equivalent to the usual metric?
+\end{exercise}
+\begin{solution}
+$\varphi(t)=\min\{1,t\}$ is increasing, $\varphi(t)=0\iff t=0$, and it is subadditive. If $a\ge1$ or $b\ge1$, the right side is $\ge1\ge\varphi(a+b)$; otherwise $\varphi(a+b)\le a+b=\varphi(a)+\varphi(b)$. So $d$ is a metric. It is \emph{not} Lipschitz equivalent to $\abs{x-y}$: we would need $\abs{x-y}\le\beta\min\{1,\abs{x-y}\}\le\beta$ for all $x,y$. It is topologically equivalent, since balls of radius $<1$ coincide.
+\end{solution}
+
+\begin{exercise}\hard
+Fix a prime $p$. For $0\ne m\in\Z$, let $v(m)$ be the largest $k$ with $p^k\mid m$. Define $d(x,y)=p^{-v(x-y)}$ for $x\ne y$ and $d(x,x)=0$. Show that
+\[
+  d(x,z)\le\max\{d(x,y),\,d(y,z)\},
+\]
+the \textbf{ultrametric inequality}, and deduce that $d$ is a metric on $\Z$.
+\end{exercise}
+\begin{solution}
+If $p^k$ divides both $x-y$ and $y-z$, it divides their sum $x-z$. Hence $v(x-z)\ge\min\{v(x-y),v(y-z)\}$, and so $d(x,z)\le\max\{d(x,y),d(y,z)\}$. (The cases where two of the points coincide are trivial.) Since $\max\{a,b\}\le a+b$, \textup{(M3)} follows. \textup{(M1)} and \textup{(M2)} are clear because $v(-m)=v(m)$. A curious consequence is that in an ultrametric space, every point of a ball is a centre of that ball.
+\end{solution}
+
+\begin{exercise}\hard\label{exr:d2}
+Prove that $d_2$ satisfies the triangle inequality on $\R^n$.
+\end{exercise}
+\begin{solution}
+Put $a=x-y$ and $b=y-z$, so that $x-z=a+b$. Writing $\norm{a}=(\sum a_i^2)^{1/2}$ and using Cauchy--Schwarz, $\sum a_ib_i\le\norm{a}\norm{b}$:
+\[
+  \norm{a+b}^2=\sum a_i^2+2\sum a_ib_i+\sum b_i^2\le\norm{a}^2+2\norm{a}\norm{b}+\norm{b}^2=\bigl(\norm{a}+\norm{b}\bigr)^2 .
+\]
+Both sides are non-negative, so take square roots.
+\end{solution}

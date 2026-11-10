@@ -1,0 +1,97 @@
+% ==================================================================
+\chapter{Preliminaries}\label{ch:0}
+% ==================================================================
+\begin{studyslot}{2:10--2:30 (20 min)}
+Read this quickly: it collects the tools every later chapter uses. Make sure you can apply the preimage identities (Proposition~\ref{prop:preimage}) and negate quantified statements without hesitation.
+\end{studyslot}
+
+\section{Logic and quantifiers}
+Almost every definition in this course is a chain of quantifiers $\forall$ and $\exists$. To \emph{negate} such a statement, swap $\forall\leftrightarrow\exists$ and negate the final condition.
+
+\begin{example}[Negating convergence]
+The statement $x_n\to x$ means
+\[
+  \forall \eps>0\ \ \exists N\in\N\ \ \forall n\ge N:\quad d(x_n,x)<\eps .
+\]
+Its negation, $x_n\not\to x$, is
+\[
+  \exists \eps>0\ \ \forall N\in\N\ \ \exists n\ge N:\quad d(x_n,x)\ge\eps ,
+\]
+that is, infinitely many terms stay at least $\eps$ away from $x$.
+\end{example}
+
+The proof methods used throughout are: \emph{direct proof}; \emph{contrapositive} (prove $\neg Q\Rightarrow\neg P$ to get $P\Rightarrow Q$); \emph{contradiction}; and \emph{induction}.
+
+\section{Sets}
+\begin{proposition}[De Morgan's laws]
+For any family $(A_i)_{i\in I}$ of subsets of $X$,
+\[
+  X\setminus \bigcup_{i\in I} A_i = \bigcap_{i\in I}(X\setminus A_i),
+  \qquad
+  X\setminus \bigcap_{i\in I} A_i = \bigcup_{i\in I}(X\setminus A_i).
+\]
+\end{proposition}
+These laws turn every statement about open sets into a statement about closed sets, and vice versa. To prove $A=B$, show $A\subseteq B$ and $B\subseteq A$ by taking an arbitrary element.
+
+\section{Functions, images and preimages}
+\begin{definition}
+Let $f\colon X\to Y$, $A\subseteq X$ and $B\subseteq Y$.
+\begin{enumerate}[label=(\roman*)]
+  \item The \textbf{image} of $A$ is $f(A)=\set{f(a)}{a\in A}$.
+  \item The \textbf{preimage} of $B$ is $f^{-1}(B)=\set{x\in X}{f(x)\in B}$. This is defined even if $f$ has no inverse.
+  \item $f$ is \textbf{injective} if $f(x)=f(y)\Rightarrow x=y$; \textbf{surjective} if $f(X)=Y$; \textbf{bijective} if both. Exactly in the bijective case there is an inverse $f^{-1}\colon Y\to X$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Preimages preserve set operations]\label{prop:preimage}
+For any family $(B_i)_{i\in I}$ of subsets of $Y$ and any $B\subseteq Y$,
+\begin{align*}
+  f^{-1}\Bigl(\bigcup_{i} B_i\Bigr) &= \bigcup_{i} f^{-1}(B_i), &
+  f^{-1}\Bigl(\bigcap_{i} B_i\Bigr) &= \bigcap_{i} f^{-1}(B_i), &
+  f^{-1}(Y\setminus B) &= X\setminus f^{-1}(B).
+\end{align*}
+Images only satisfy $f\bigl(\bigcup A_i\bigr)=\bigcup f(A_i)$ and $f(A_1\cap A_2)\subseteq f(A_1)\cap f(A_2)$, with equality when $f$ is injective. Moreover
+\[
+  A\subseteq f^{-1}\bigl(f(A)\bigr), \qquad f\bigl(f^{-1}(B)\bigr)\subseteq B .
+\]
+\end{proposition}
+
+\begin{remark}
+This is why continuity is defined through \emph{preimages} (``$f^{-1}(\text{open})$ is open''): preimages respect unions, intersections and complements, and images do not.
+\end{remark}
+
+\section{Countability}
+A set is \textbf{countable} if it is finite or in bijection with $\N$. The sets $\N,\Z,\Q$ are countable, and so is any countable union of countable sets. $\R$ is \textbf{uncountable} (Cantor's diagonal argument).
+
+\section{Supremum and infimum}
+\begin{definition}
+Let $\emptyset\ne A\subseteq\R$. A number $M$ is an \textbf{upper bound} for $A$ if $a\le M$ for all $a\in A$. The \textbf{supremum} $\sup A$ is the least upper bound, and the \textbf{infimum} $\inf A$ is the greatest lower bound.
+\end{definition}
+
+\begin{theorem}[Completeness axiom of $\R$]
+Every non-empty subset of $\R$ that is bounded above has a supremum in $\R$.
+\end{theorem}
+This is exactly what $\Q$ lacks: $\set{q\in\Q}{q^2<2}$ has no supremum in $\Q$.
+
+\begin{proposition}[Approximation property]\label{prop:approx}
+If $s=\sup A$, then for every $\eps>0$ there exists $a\in A$ with $s-\eps<a\le s$. Similarly, if $t=\inf A$, there exists $a\in A$ with $t\le a<t+\eps$.
+\end{proposition}
+
+\section{Inequalities}
+For $a,b\in\R$ and $a_i,b_i\in\R$:
+\begin{align*}
+  &\text{Triangle inequality:} && \abs{a+b}\le\abs{a}+\abs{b},\\
+  &\text{Reverse triangle inequality:} && \bigl|\abs{a}-\abs{b}\bigr|\le\abs{a-b},\\
+  &\text{Cauchy--Schwarz:} && \Bigl(\sum_{i=1}^n a_ib_i\Bigr)^2\le\Bigl(\sum_{i=1}^n a_i^2\Bigr)\Bigl(\sum_{i=1}^n b_i^2\Bigr),\\
+  &\text{Minkowski:} && \Bigl(\sum_{i=1}^n (a_i+b_i)^2\Bigr)^{1/2}\le\Bigl(\sum_{i=1}^n a_i^2\Bigr)^{1/2}+\Bigl(\sum_{i=1}^n b_i^2\Bigr)^{1/2}.
+\end{align*}
+
+\section{Sequences of real numbers}
+\begin{theorem}
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Monotone convergence:} a bounded monotone sequence in $\R$ converges.
+  \item \textbf{Bolzano--Weierstrass:} every bounded sequence in $\R$ (or $\R^n$) has a convergent subsequence.
+\end{enumerate}
+\end{theorem}
+A \textbf{subsequence} of $\seq{x}$ is $(x_{n_k})_{k\in\N}$ with $n_1<n_2<n_3<\cdots$. In particular $n_k\ge k$ for all $k$.

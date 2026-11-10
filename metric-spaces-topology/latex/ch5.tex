@@ -1,0 +1,191 @@
+% ==================================================================
+\chapter{Compactness}\label{ch:5}
+% ==================================================================
+\begin{studyslot}{5:10--5:35 (25 min)}
+Learn the open-cover definition word for word, the three equivalent forms for metric spaces (Theorem~\ref{thm:cpt-equiv}), Heine--Borel and where it fails, and the theorems about continuous maps on compact spaces. Practise proving that a set is \emph{not} compact by giving a bad open cover or a bad sequence.
+\end{studyslot}
+
+\begin{intuition}
+Compactness is the topological version of ``finite''. Finite sets have convenient properties: every real function on them has a maximum, and every sequence in them repeats some value infinitely often. Compact sets keep these properties even when infinite. In $\R^n$, compact simply means \emph{closed and bounded}.
+\end{intuition}
+
+\section{Definitions}
+\begin{definition}[Open cover, compactness]\label{def:compact}
+Let $K\subseteq X$.
+\begin{enumerate}[label=(\roman*)]
+  \item An \textbf{open cover} of $K$ is a family $\U=\{U_i\}_{i\in I}$ of open sets with $K\subseteq\bigcup_{i\in I}U_i$.
+  \item A \textbf{subcover} is a subfamily that still covers $K$. It is \textbf{finite} if it has finitely many members.
+  \item $K$ is \textbf{compact} if \emph{every} open cover of $K$ has a finite subcover:
+  \[
+    K\subseteq\bigcup_{i\in I}U_i\ \Longrightarrow\ K\subseteq U_{i_1}\cup\dots\cup U_{i_n}\ \text{ for some } i_1,\dots,i_n\in I .
+  \]
+\end{enumerate}
+\end{definition}
+
+\begin{warning}[The most common misreading]
+``$K$ has a finite open cover'' is always true, since $\{X\}$ is one. The definition requires that \emph{every} open cover can be reduced to finitely many sets. To prove compactness, handle an \emph{arbitrary} cover. To disprove it, exhibit \emph{one} cover with no finite subcover.
+\end{warning}
+
+\begin{definition}[Sequential compactness, total boundedness]\label{def:seqcpt}
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item $X$ is \textbf{sequentially compact} if every sequence in $X$ has a subsequence converging to a point \emph{of $X$}.
+  \item $X$ is \textbf{totally bounded} if for every $\eps>0$ there are finitely many points $x_1,\dots,x_n$ (an \textbf{$\eps$-net}) with
+  \[ X=\Bo(x_1,\eps)\cup\dots\cup\Bo(x_n,\eps). \]
+\end{enumerate}
+\end{definition}
+Totally bounded $\Rightarrow$ bounded, but not conversely. An infinite discrete space has $\diam=1$, but with $\eps=\frac12$ each ball is a single point.
+
+\section{The main equivalence}
+\begin{theorem}\label{thm:cpt-equiv}
+For a metric space $X$, the following are equivalent:
+\begin{enumerate}[label=(\arabic*)]
+  \item $X$ is compact;
+  \item $X$ is sequentially compact;
+  \item $X$ is complete and totally bounded.
+\end{enumerate}
+\end{theorem}
+\begin{proof}[Sketch of proof]
+(1)$\Rightarrow$(2): Suppose $(x_n)$ has no convergent subsequence. Then each $x\in X$ has a ball $\Bo(x,r_x)$ containing $x_n$ for only finitely many $n$. Finitely many of these balls cover $X$, so only finitely many indices $n$ exist, a contradiction.
+
+(2)$\Rightarrow$(3): A Cauchy sequence has a convergent subsequence, so it converges (Proposition~\ref{prop:cauchyfacts}). If $X$ were not totally bounded for some $\eps$, we could inductively choose $x_{n+1}\notin\bigcup_{k\le n}\Bo(x_k,\eps)$. Then $d(x_m,x_n)\ge\eps$ for all $m\ne n$, so no subsequence is Cauchy.
+
+(3)$\Rightarrow$(2): Cover $X$ by finitely many balls of radius $1$. One contains infinitely many terms. Repeat inside that with radius $\frac12,\frac13,\dots$ and take a diagonal subsequence. It is Cauchy, so it converges by completeness.
+
+(2)$\Rightarrow$(1): Use the Lebesgue number $\delta$ of the cover (Lemma~\ref{lem:lebesgue}) and a finite $\frac\delta3$-net. Each ball of the net lies inside a single member of the cover.
+\end{proof}
+
+\section{Heine--Borel and its limits}
+\begin{theorem}[Compact $\Rightarrow$ closed and bounded]\label{thm:cpt-closed}
+A compact subset $K$ of a metric space $X$ is closed and bounded.
+\end{theorem}
+\begin{proof}
+\emph{Bounded:} $\{\Bo(x_0,n)\}_{n\in\N}$ is an open cover of $K$, and a finite subcover gives $K\subseteq\Bo(x_0,N)$.
+\emph{Closed:} let $k_n\in K$ with $k_n\to x$. Some subsequence converges to a point of $K$. That subsequence also converges to $x$, so by uniqueness of limits $x\in K$.
+\end{proof}
+
+\begin{theorem}[Heine--Borel]\label{thm:heineborel}
+A subset of $(\R^n,d_2)$ is compact if and only if it is closed and bounded.
+\end{theorem}
+\begin{proof}
+($\Rightarrow$) Theorem~\ref{thm:cpt-closed}. ($\Leftarrow$) A sequence in a bounded set has a convergent subsequence by Bolzano--Weierstrass, applied one coordinate at a time. Its limit lies in the set because the set is closed. So the set is sequentially compact.
+\end{proof}
+
+\begin{warning}[Closed and bounded $\not\Rightarrow$ compact in general]
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item An infinite discrete space is closed and bounded, but the cover $\{\{x\}\}_{x\in X}$ has no finite subcover.
+  \item In the closed unit ball of $\ell^2$, the vectors $e_n=(0,\dots,0,1,0,\dots)$ satisfy $d(e_n,e_m)=\sqrt2$ for $n\ne m$, so no subsequence is Cauchy.
+  \item In the closed unit ball of $(C[0,1],\dinf)$, $f_n(t)=t^n$ has no uniformly convergent subsequence, because its pointwise limit is discontinuous.
+  \item $X=(0,1]$ is closed in itself and bounded, but $(\frac1n)$ has no subsequence converging in $X$.
+\end{enumerate}
+In general, the correct replacement for ``closed and bounded'' is \emph{complete and totally bounded}.
+\end{warning}
+
+\section{Key theorems}
+\begin{theorem}\label{thm:closedsub}
+A closed subset of a compact space is compact.
+\end{theorem}
+\begin{proof}
+Let $F\subseteq K$ be closed and $\{U_i\}$ an open cover of $F$. Then $\{U_i\}\cup\{X\setminus F\}$ is an open cover of $K$. Take a finite subcover and discard $X\setminus F$; the remaining sets cover $F$.
+\end{proof}
+
+\begin{theorem}[Continuous image of a compact set]\label{thm:ctsimage}
+If $f\colon X\to Y$ is continuous and $K\subseteq X$ is compact, then $f(K)$ is compact.
+\end{theorem}
+\begin{proof}
+Let $\{V_i\}$ be an open cover of $f(K)$. Each $f^{-1}(V_i)$ is open (Theorem~\ref{thm:cts-equiv}), and together they cover $K$. Choose a finite subcover $f^{-1}(V_{1}),\dots,f^{-1}(V_{n})$. Then $f(K)\subseteq V_1\cup\dots\cup V_n$.
+\end{proof}
+
+\begin{corollary}[Extreme Value Theorem]\label{cor:evt}
+If $K\ne\emptyset$ is compact and $f\colon K\to\R$ is continuous, then $f$ is bounded and attains its bounds: there exist $a,b\in K$ with
+\[ f(a)=\inf_{x\in K}f(x),\qquad f(b)=\sup_{x\in K}f(x). \]
+\end{corollary}
+\begin{proof}
+$f(K)$ is compact, hence closed and bounded in $\R$, so it contains its supremum and infimum.
+\end{proof}
+Without compactness this fails: $f(x)=x$ on $(0,1)$ attains neither bound, and $1/x$ on $(0,1]$ is unbounded.
+
+\begin{theorem}[Heine--Cantor]\label{thm:heinecantor}
+A continuous map from a compact metric space to a metric space is uniformly continuous.
+\end{theorem}
+\begin{proof}
+If not, by Proposition~\ref{prop:ucseq} there are $\eps>0$ and $x_n,y_n$ with $d(x_n,y_n)<\frac1n$ but $d\bigl(f(x_n),f(y_n)\bigr)\ge\eps$. By sequential compactness, $x_{n_k}\to x$ for some subsequence. Then $y_{n_k}\to x$ as well, since $d(y_{n_k},x)\le\frac1{n_k}+d(x_{n_k},x)$. By continuity, $f(x_{n_k})$ and $f(y_{n_k})$ both converge to $f(x)$, so their distance tends to $0$, a contradiction.
+\end{proof}
+
+\begin{theorem}\label{thm:cpt-haus}
+Let $f\colon X\to Y$ be a continuous bijection, with $X$ compact and $Y$ Hausdorff (for example, a metric space). Then $f$ is a homeomorphism.
+\end{theorem}
+\begin{proof}
+We must show $f^{-1}$ is continuous, that is, $(f^{-1})^{-1}(C)=f(C)$ is closed for each closed $C\subseteq X$. $C$ is compact (Theorem~\ref{thm:closedsub}), so $f(C)$ is compact (Theorem~\ref{thm:ctsimage}), and compact subsets of Hausdorff spaces are closed.
+\end{proof}
+
+\begin{lemma}[Lebesgue Number Lemma]\label{lem:lebesgue}
+If $X$ is a compact metric space and $\U$ is an open cover of $X$, there is $\delta>0$ (a \textbf{Lebesgue number}) such that every subset of $X$ of diameter less than $\delta$ lies in a single member of $\U$.
+\end{lemma}
+
+\begin{theorem}[Finite intersection property]\label{thm:fip}
+A family of sets has the \textbf{finite intersection property} (FIP) if every finite subfamily has non-empty intersection. $X$ is compact $\iff$ every family of closed sets with the FIP has non-empty intersection. In particular, nested non-empty compact sets $K_1\supseteq K_2\supseteq\cdots$ satisfy $\bigcap_nK_n\ne\emptyset$.
+\end{theorem}
+
+\begin{proposition}[Further facts]
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item Finite unions of compact sets are compact.
+  \item A compact metric space is complete, totally bounded, bounded and separable.
+  \item $X\times Y$ is compact $\iff$ $X$ and $Y$ are compact (Tychonoff's theorem extends this to arbitrary products).
+  \item If $K$ is compact, $F$ is closed and $K\cap F=\emptyset$, then $d(K,F)>0$. This fails for two closed sets: the $x$-axis and $\set{(x,y)}{y=1/x,\ x>0}$ are disjoint but at distance $0$.
+  \item Compactness is a topological property.
+\end{enumerate}
+\end{proposition}
+
+\begin{example}[Compactness in topological spaces]
+Finite spaces, indiscrete spaces and cofinite spaces are compact. For a cofinite space, one member of any open cover misses only finitely many points, and finitely many more members cover those. An infinite discrete space is not compact.
+\end{example}
+
+\section{Exercises}
+\begin{exercise}\easy
+Show directly from the definition that $(0,1)$ is not compact.
+\end{exercise}
+\begin{solution}
+The sets $U_n=(\frac1n,1)$, $n\ge2$, cover $(0,1)$. A finite subfamily has union $(\frac1N,1)$, where $N$ is its largest index, and this misses $\frac1{2N}$.
+\end{solution}
+
+\begin{exercise}\easy
+Which of these are compact? (a) $[0,1]\cup[2,3]$; (b) $\{0\}\cup\set{\frac1n}{n\in\N}$; (c) $\Z$; (d) $S^1=\set{(x,y)}{x^2+y^2=1}$; (e) $\Q\cap[0,1]$.
+\end{exercise}
+\begin{solution}
+(a) Yes: closed and bounded. (b) Yes: closed, since it contains its only limit point $0$, and bounded. (c) No: unbounded. (d) Yes: closed (a preimage of $\{1\}$) and bounded. (e) No: not closed, since $\frac{\sqrt2}2$ is a limit of points in the set but not in it.
+\end{solution}
+
+\begin{exercise}\medium
+Prove from the open-cover definition that $K=\{0\}\cup\set{\frac1n}{n\in\N}$ is compact.
+\end{exercise}
+\begin{solution}
+Let $\U$ be an open cover. Some $U_0\in\U$ contains $0$, and hence contains $(-\eps,\eps)$ for some $\eps>0$, so it contains $\frac1n$ for all $n>\frac1\eps$. The finitely many remaining points $1,\frac12,\dots,\frac1N$ each lie in some member of $\U$. That gives at most $N+1$ sets in total. The limit point swallows the tail.
+\end{solution}
+
+\begin{exercise}\medium
+Let $K$ be compact and $f\colon K\to\R$ continuous with $f>0$. Show $\inf_K f>0$.
+\end{exercise}
+\begin{solution}
+By Corollary~\ref{cor:evt}, $\inf_Kf=f(x_0)$ for some $x_0\in K$, and $f(x_0)>0$. Compare $f(x)=x$ on $(0,1]$, where the infimum $0$ is not attained.
+\end{solution}
+
+\begin{exercise}\hard
+Let $(X,d)$ be compact and $f\colon X\to X$ satisfy $d\bigl(f(x),f(y)\bigr)<d(x,y)$ for all $x\ne y$. Prove that $f$ has a unique fixed point. Compare with $x+\frac1x$ on $[1,\infty)$ in Chapter~\ref{ch:4}.
+\end{exercise}
+\begin{solution}
+$g(x)=d\bigl(x,f(x)\bigr)$ is continuous on the compact space $X$, so it attains its minimum at some $x_0$. If $f(x_0)\ne x_0$, then
+\[ g\bigl(f(x_0)\bigr)=d\bigl(f(x_0),f(f(x_0))\bigr)<d\bigl(x_0,f(x_0)\bigr)=g(x_0), \]
+contradicting minimality. So $f(x_0)=x_0$. Uniqueness: two distinct fixed points $x\ne y$ would give $d(x,y)<d(x,y)$. Compactness replaces the uniform constant $k<1$.
+\end{solution}
+
+\begin{exercise}\hard
+Show that an isometry $f\colon X\to X$ of a compact metric space is surjective.
+\end{exercise}
+\begin{solution}
+Suppose $a\notin f(X)$. $f(X)$ is compact, hence closed, so $\eps=d\bigl(a,f(X)\bigr)>0$. Let $x_n=f^n(a)$. For $m>n$, since $f^n$ preserves distances,
+\[ d(x_n,x_m)=d\bigl(a,f^{m-n}(a)\bigr)\ge\eps, \]
+because $f^{m-n}(a)\in f(X)$. So $(x_n)$ has no Cauchy subsequence, contradicting sequential compactness.
+\end{solution}

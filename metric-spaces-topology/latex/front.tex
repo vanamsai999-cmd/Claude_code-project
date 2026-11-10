@@ -1,0 +1,90 @@
+% ------------------------------------------------------------------
+% Title page, how to use, session plan, notation.
+% \iffull is true for the Chapters 0-5 notes, false for Chapters 3-5.
+% ------------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3cm}
+{\scshape\large Study notes\par}
+\vspace{0.6cm}
+{\Huge\bfseries Metric Spaces \& Topology\par}
+\vspace{0.5cm}
+\iffull
+{\Large Chapters 0--5\par}
+\else
+{\Large Chapters 3--5: Continuity, Completeness, Compactness\par}
+\fi
+\vspace{1.2cm}
+\rule{0.6\textwidth}{0.4pt}\par
+\vspace{0.6cm}
+{\large Tuesday 10 November \quad 2:00--7:00\,pm session\par}
+\vfill
+{\small Definitions, theorems with proofs, worked examples, common mistakes,\\
+graded exercises with full solutions, proof templates, a counterexample bank\\
+and a glossary of every term needed for the exam.\par}
+\vspace{1cm}
+\end{titlepage}
+
+\pagenumbering{roman}
+\chapter*{How to use these notes}
+\addcontentsline{toc}{chapter}{How to use these notes}
+\markboth{How to use these notes}{}
+
+Each chapter starts with its \textbf{study slot} from the session plan below and a short list of what to focus on in that slot. Inside each chapter:
+
+\begin{itemize}
+  \item \textbf{Intuition} paragraphs give the idea in plain English before the formal statement.
+  \item \colorbox{defbg}{\textbf{Definitions}} are worded the way you should state them in an exam.
+  \item \colorbox{thmbg}{\textbf{Theorems, lemmas, propositions}} come with proofs of the results most often examined.
+  \item \colorbox{exbg}{\textbf{Examples}} and \colorbox{warnbg}{\textbf{Warnings}} cover standard cases and common mistakes.
+  \item \textbf{Exercises} are tagged \easy, \medium\ or \hard\ and each has a full solution. Cover the solution and try the exercise first.
+\end{itemize}
+
+The appendices contain a \textbf{proof-template toolkit}, a \textbf{counterexample bank}, a \textbf{glossary} and the \textbf{recap checklist} for the 5:35 slot.
+\iffull\else
+Since these notes start at Chapter~3, Appendix~\ref{app:prereq} summarises everything from Chapters~0--2 that the later chapters use. Read it first if those chapters aren't fresh.
+\fi
+
+\medskip
+{\small\itshape Chapter numbering follows the usual order for a first course in metric spaces. If your lecture notes order the topics differently, go by the section headings.}
+
+\section*{Session plan: Tuesday 10 November}
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Time} & \textbf{Task} & \textbf{Where} \\
+\midrule
+2:00--2:10 & Warm-up: skim the chapter headings & Contents \\
+2:10--2:30 & Chapter 0: preliminaries & \iffull Chapter 0\else Appendix~\ref{app:prereq}\fi \\
+2:30--3:05 & Chapter 1: metric spaces & \iffull Chapter 1\else Appendix~\ref{app:prereq}\fi \\
+3:05--3:15 & Break & \\
+3:15--3:50 & Chapter 2: open and closed sets, topologies & \iffull Chapter 2\else Appendix~\ref{app:prereq}\fi \\
+3:50--4:25 & Chapter 3: continuity & Chapter 3 \\
+4:25--4:40 & Longer break & \\
+4:40--5:10 & Chapter 4: completeness & Chapter 4 \\
+5:10--5:35 & Chapter 5: compactness & Chapter 5 \\
+5:35--5:45 & Recap from memory & Recap checklist \\
+5:45--6:00 & Break & \\
+6:00--6:50 & Linear systems & Separate notes \\
+6:50--7:00 & Wrap-up: what's done, where to start next time & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{Notation}
+\begin{tabularx}{\textwidth}{@{}lY@{}}
+$(X,d)$ & a metric space; $x,y,z\in X$ are points \\
+$\Bo(x,r)=\set{y\in X}{d(x,y)<r}$ & open ball of radius $r>0$ \\
+$\Bc(x,r)=\set{y\in X}{d(x,y)\le r}$ & closed ball \\
+$\inte A,\ \cl A = \overline{A},\ \partial A$ & interior, closure, boundary \\
+$A^c = X\setminus A$ & complement \\
+$A'$ & derived set (the limit points of $A$) \\
+$\seq{x}$, $x_n\to x$ & a sequence; convergence \\
+$\N=\{1,2,3,\dots\}$, $\Z,\Q,\R,\C$ & the usual number systems \\
+$C[a,b]$ & the continuous functions $[a,b]\to\R$ \\
+\end{tabularx}
+
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}

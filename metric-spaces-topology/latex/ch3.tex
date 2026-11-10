@@ -1,0 +1,229 @@
+% ==================================================================
+\chapter{Continuity and Homeomorphisms}\label{ch:3}
+% ==================================================================
+\begin{studyslot}{3:50--4:25 (35 min)}
+Learn the four equivalent definitions of continuity (Theorem~\ref{thm:cts-equiv}) and when to use each. Memorise the hierarchy Lipschitz $\Rightarrow$ uniformly continuous $\Rightarrow$ continuous, with a counterexample for each converse. Be able to prove that two spaces are, or are not, homeomorphic.
+\end{studyslot}
+
+\begin{intuition}
+$f$ is continuous if close inputs give close outputs. To make $f(y)$ within $\eps$ of $f(x)$, it is enough to take $y$ within $\delta$ of $x$.
+\end{intuition}
+
+\section{Four equivalent definitions}
+\begin{definition}[$\eps$--$\delta$ continuity]\label{def:cts}
+Let $f\colon(X,d_X)\to(Y,d_Y)$. Then $f$ is \textbf{continuous at} $a\in X$ if
+\[
+  \forall\eps>0\ \ \exists\delta>0\ \ \forall x\in X:\quad d_X(x,a)<\delta\ \Longrightarrow\ d_Y\bigl(f(x),f(a)\bigr)<\eps .
+\]
+Equivalently, $f\bigl(\Bo(a,\delta)\bigr)\subseteq\Bo\bigl(f(a),\eps\bigr)$. We call $f$ \textbf{continuous} if it is continuous at every point of $X$.
+\end{definition}
+
+\begin{theorem}[Characterisations of continuity]\label{thm:cts-equiv}
+For $f\colon X\to Y$ between metric spaces, the following are equivalent:
+\begin{enumerate}[label=(\arabic*)]
+  \item $f$ is continuous (Definition~\ref{def:cts}) at every point;
+  \item \textbf{(sequential)} $x_n\to x$ in $X$ implies $f(x_n)\to f(x)$ in $Y$;
+  \item \textbf{(open sets)} $V$ open in $Y$ implies $f^{-1}(V)$ open in $X$;
+  \item \textbf{(closed sets)} $C$ closed in $Y$ implies $f^{-1}(C)$ closed in $X$.
+\end{enumerate}
+For topological spaces, (3) is taken as the \emph{definition} of continuity.
+\end{theorem}
+\begin{proof}
+\textbf{(1)$\Rightarrow$(3).} Let $V\subseteq Y$ be open and $a\in f^{-1}(V)$. Choose $\eps>0$ with $\Bo(f(a),\eps)\subseteq V$, and then $\delta$ as in (1). Then
+\[
+  f\bigl(\Bo(a,\delta)\bigr)\subseteq\Bo\bigl(f(a),\eps\bigr)\subseteq V,
+  \quad\text{so}\quad \Bo(a,\delta)\subseteq f^{-1}(V).
+\]
+\textbf{(3)$\Rightarrow$(1).} $\Bo(f(a),\eps)$ is open, so $f^{-1}\bigl(\Bo(f(a),\eps)\bigr)$ is an open set containing $a$. It therefore contains some $\Bo(a,\delta)$, which is exactly the statement in (1).
+
+\textbf{(3)$\Leftrightarrow$(4).} Use $f^{-1}(Y\setminus C)=X\setminus f^{-1}(C)$ (Proposition~\ref{prop:preimage}).
+
+\textbf{(1)$\Rightarrow$(2).} Given $\eps>0$, take $\delta$ from (1) and $N$ with $d(x_n,x)<\delta$ for $n\ge N$. Then $d\bigl(f(x_n),f(x)\bigr)<\eps$ for $n\ge N$.
+
+\textbf{(2)$\Rightarrow$(1)} (contrapositive). Suppose (1) fails at $a$. Then there is $\eps>0$ such that for each $\delta=1/n$ there is $x_n$ with $d(x_n,a)<1/n$ but $d\bigl(f(x_n),f(a)\bigr)\ge\eps$. Thus $x_n\to a$ but $f(x_n)\not\to f(a)$.
+\end{proof}
+
+\begin{examtip}[Which form to use]
+\leavevmode
+\begin{itemize}
+  \item To show $f$ \emph{is} continuous: use $\eps$--$\delta$, or build $f$ from known continuous maps (Proposition~\ref{prop:build}), or show $f$ is Lipschitz.
+  \item To show $f$ is \emph{not} continuous: give \emph{one} sequence $x_n\to x$ with $f(x_n)\not\to f(x)$.
+  \item To show a set is open or closed: write it as $f^{-1}(\text{open})$ or $f^{-1}(\text{closed})$ for a continuous $f$.
+  \item In abstract or topological settings: use preimages of open sets.
+\end{itemize}
+\end{examtip}
+
+\section{Building continuous functions}
+\begin{proposition}\label{prop:build}
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item Constant maps and the identity $(X,d)\to(X,d)$ are continuous.
+  \item If $f\colon X\to Y$ and $g\colon Y\to Z$ are continuous, so is $g\circ f$, since $(g\circ f)^{-1}(W)=f^{-1}\bigl(g^{-1}(W)\bigr)$.
+  \item If $f,g\colon X\to\R$ are continuous, so are $f\pm g$, $fg$, $\abs f$, $\max\{f,g\}$, $\min\{f,g\}$, and $f/g$ where $g\ne0$.
+  \item $f=(f_1,\dots,f_n)\colon X\to\R^n$ is continuous $\iff$ each $f_i$ is continuous.
+  \item Every function from a discrete space is continuous.
+  \item For $\emptyset\ne A\subseteq X$, the map $x\mapsto d(x,A)$ is $1$-Lipschitz: $\abs{d(x,A)-d(y,A)}\le d(x,y)$.
+  \item Restrictions of continuous maps to subspaces are continuous.
+\end{enumerate}
+\end{proposition}
+
+\begin{example}[One-line proofs that sets are open or closed]
+\leavevmode
+\begin{itemize}
+  \item $\set{(x,y)\in\R^2}{x^2+y^2<1}=f^{-1}\bigl((-\infty,1)\bigr)$ with $f(x,y)=x^2+y^2$, so it is open.
+  \item $\set{(x,y)\in\R^2}{xy=1}=g^{-1}(\{1\})$ with $g(x,y)=xy$, so it is closed.
+  \item $\set{f\in C[0,1]}{f(\tfrac12)>0}$ is open in $\dinf$, because evaluation $E(f)=f(\tfrac12)$ satisfies $\abs{E(f)-E(g)}\le\dinf(f,g)$.
+  \item The zero set $\set{x}{f(x)=0}$ of a continuous $f\colon X\to\R$ is closed.
+\end{itemize}
+\end{example}
+
+\begin{warning}[Images are badly behaved]
+Continuous maps need not send open sets to open sets, or closed sets to closed sets:
+\[
+  x\mapsto x^2:\ (-1,1)\longmapsto[0,1),
+  \qquad
+  \arctan:\ \R\longmapsto\bigl(-\tfrac\pi2,\tfrac\pi2\bigr).
+\]
+Projecting the closed hyperbola $\{xy=1\}$ to the $x$-axis gives $\R\setminus\{0\}$, which is not closed. Only \emph{preimages} behave well, apart from compact sets (Theorem~\ref{thm:ctsimage}).
+\end{warning}
+
+\begin{warning}[Continuity depends on the metrics]
+$\mathrm{id}\colon(\R,\text{discrete})\to(\R,\abs{\cdot})$ is continuous, but $\mathrm{id}\colon(\R,\abs{\cdot})\to(\R,\text{discrete})$ is not: $\mathrm{id}^{-1}(\{0\})=\{0\}$ is not open. Likewise $\mathrm{id}\colon(C[0,1],\dinf)\to(C[0,1],d_1)$ is continuous, since $d_1\le\dinf$, but its inverse is not (Example~\ref{ex:tn}).
+\end{warning}
+
+\section{Uniform continuity and Lipschitz maps}
+\begin{definition}\label{def:uc}
+Let $f\colon(X,d_X)\to(Y,d_Y)$.
+\begin{enumerate}[label=(\roman*)]
+  \item $f$ is \textbf{uniformly continuous} if
+  \[
+    \forall\eps>0\ \ \exists\delta>0\ \ \forall x,y\in X:\quad d_X(x,y)<\delta\ \Longrightarrow\ d_Y\bigl(f(x),f(y)\bigr)<\eps .
+  \]
+  Here $\delta$ depends only on $\eps$, not on the point. Compare the position of ``$\forall x$'' with Definition~\ref{def:cts}.
+  \item $f$ is \textbf{Lipschitz} with constant $L\ge0$ if $d_Y\bigl(f(x),f(y)\bigr)\le L\,d_X(x,y)$ for all $x,y\in X$. If $L<1$, $f$ is a \textbf{contraction} (Chapter~\ref{ch:4}).
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+Lipschitz $\Rightarrow$ uniformly continuous $\Rightarrow$ continuous. Neither implication reverses.
+\end{proposition}
+\begin{proof}
+If $f$ is $L$-Lipschitz with $L>0$, take $\delta=\eps/L$. The second implication is immediate from the definitions. The counterexamples are in the table below.
+\end{proof}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Function & Continuous & Uniformly continuous & Lipschitz\\
+\midrule
+$x^2$ on $\R$ & \cmark & \xmark & \xmark\\
+$1/x$ on $(0,1)$ & \cmark & \xmark & \xmark\\
+$\sin(1/x)$ on $(0,1)$ & \cmark & \xmark & \xmark\\
+$\sqrt x$ on $[0,1]$ & \cmark & \cmark\ (compact domain) & \xmark\ (slope $\to\infty$ at $0$)\\
+$\sin x$ on $\R$ & \cmark & \cmark & \cmark\ ($L=1$)\\
+$x^2$ on $[0,1]$ & \cmark & \cmark & \cmark\ ($L=2$)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{proposition}[Sequential criterion]\label{prop:ucseq}
+$f$ is \emph{not} uniformly continuous $\iff$ there exist $\eps>0$ and sequences $(x_n),(y_n)$ with
+\[
+  d(x_n,y_n)\to0\quad\text{but}\quad d\bigl(f(x_n),f(y_n)\bigr)\ge\eps\ \text{ for all } n .
+\]
+\end{proposition}
+
+\begin{example}[$x^2$ is not uniformly continuous on $\R$]
+Take $x_n=n$ and $y_n=n+\frac1n$. Then $\abs{x_n-y_n}=\frac1n\to0$, but
+\[
+  y_n^2-x_n^2=2+\frac1{n^2}\ge2 .
+\]
+\end{example}
+
+\begin{proposition}
+A uniformly continuous map sends Cauchy sequences to Cauchy sequences. A continuous map need not: $1/x$ on $(0,1)$ sends the Cauchy sequence $(1/n)$ to $(n)$.
+\end{proposition}
+
+\section{Homeomorphisms}
+\begin{definition}\label{def:homeo}
+A \textbf{homeomorphism} is a bijection $f\colon X\to Y$ such that both $f$ and $f^{-1}$ are continuous. If one exists, $X$ and $Y$ are \textbf{homeomorphic}, written $X\cong Y$. A \textbf{topological property} is one preserved by homeomorphisms.
+\end{definition}
+
+\begin{intuition}
+A homeomorphism stretches and bends without tearing or gluing. This is why topologists treat a coffee mug and a doughnut as the same space.
+\end{intuition}
+
+\begin{example}\label{ex:homeos}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item $(-1,1)\cong\R$ via $x\mapsto\dfrac{x}{1-\abs x}$, with inverse $y\mapsto\dfrac{y}{1+\abs y}$. Alternatively, use $x\mapsto\tan(\pi x/2)$.
+  \item Any two open intervals are homeomorphic, and so are any two closed intervals (use affine maps $x\mapsto\alpha x+\beta$).
+  \item An isometry is a homeomorphism onto its image.
+  \item If $d,d'$ are topologically equivalent, then $\mathrm{id}\colon(X,d)\to(X,d')$ is a homeomorphism.
+\end{enumerate}
+\end{example}
+
+\begin{warning}[A continuous bijection need not be a homeomorphism]
+The map $f\colon[0,2\pi)\to S^1$, $f(t)=(\cos t,\sin t)$, is a continuous bijection, but $f^{-1}$ is not continuous at $(1,0)$. Points just below $(1,0)$ on the circle are sent to numbers near $2\pi$, not near $0$. Another example is $\mathrm{id}\colon(\R,\text{discrete})\to(\R,\abs\cdot)$. A continuous bijection \emph{is} a homeomorphism when the domain is compact and the codomain is Hausdorff (Theorem~\ref{thm:cpt-haus}).
+\end{warning}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}YY@{}}
+\toprule
+\textbf{Topological} (preserved by $\cong$) & \textbf{Not topological} (depends on the metric)\\
+\midrule
+open and closed sets, convergence, continuity, Hausdorff, compactness, connectedness, separability, number of isolated points
+&
+boundedness ($\R\cong(-1,1)$), completeness ($\R\cong(0,1)$), being Cauchy, uniform continuity, diameter\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{examtip}[Proving $X\not\cong Y$]
+Find a topological property that one space has and the other lacks. $[0,1]\not\cong(0,1)$ because only $[0,1]$ is compact. $\R\not\cong\R^2$ because removing a point disconnects $\R$ but not $\R^2$. $[0,1)\not\cong(0,1)$ because removing $0$ leaves $[0,1)$ connected, while removing any point disconnects $(0,1)$.
+\end{examtip}
+
+\section{Exercises}
+\begin{exercise}\easy
+Prove from the definition that $f(x)=3x+2$ is continuous on $\R$.
+\end{exercise}
+\begin{solution}
+Given $\eps>0$, put $\delta=\eps/3$. If $\abs{x-a}<\delta$, then $\abs{f(x)-f(a)}=3\abs{x-a}<\eps$. In fact $f$ is $3$-Lipschitz, so it is uniformly continuous.
+\end{solution}
+
+\begin{exercise}\easy
+Let $f=\mathbf 1_{[0,\infty)}$, that is, $f(x)=1$ for $x\ge0$ and $f(x)=0$ for $x<0$. Show $f$ is not continuous in two ways.
+\end{exercise}
+\begin{solution}
+\emph{Sequences:} $x_n=-\frac1n\to0$, but $f(x_n)=0\not\to1=f(0)$. \emph{Open sets:} $f^{-1}\bigl((\tfrac12,2)\bigr)=[0,\infty)$ is not open.
+\end{solution}
+
+\begin{exercise}\medium
+For $\emptyset\ne A\subseteq X$, prove $\abs{d(x,A)-d(y,A)}\le d(x,y)$. Deduce that $\cl A=\set{x}{d(x,A)=0}$ is closed.
+\end{exercise}
+\begin{solution}
+For every $a\in A$, $d(x,A)\le d(x,a)\le d(x,y)+d(y,a)$. Taking the infimum over $a$ gives $d(x,A)\le d(x,y)+d(y,A)$. Swapping $x$ and $y$ gives the reverse inequality. So $x\mapsto d(x,A)$ is continuous, and $\cl A$ is the preimage of the closed set $\{0\}$ (Theorem~\ref{thm:closure}).
+\end{solution}
+
+\begin{exercise}\medium
+Show that $I\colon C[0,1]\to\R$, $I(f)=\int_0^1f$, is continuous for both $\dinf$ and $d_1$.
+\end{exercise}
+\begin{solution}
+$\displaystyle\abs{I(f)-I(g)}=\Bigl|\int_0^1(f-g)\Bigr|\le\int_0^1\abs{f-g}=d_1(f,g)\le\dinf(f,g)$, so $I$ is $1$-Lipschitz for both metrics.
+\end{solution}
+
+\begin{exercise}\hard
+Is $E(f)=f(0)$ continuous from $(C[0,1],d_1)$ to $\R$?
+\end{exercise}
+\begin{solution}
+No. Let $f_n(t)=\max\{0,1-nt\}$, a spike of height $1$ at $0$. Then $d_1(f_n,0)=\frac1{2n}\to0$, so $f_n\to0$. But $E(f_n)=1\not\to0=E(0)$. (With $\dinf$, $E$ is $1$-Lipschitz.)
+\end{solution}
+
+\begin{exercise}\hard
+Let $f,g\colon X\to Y$ be continuous, where $Y$ is a metric space. Show $\set{x}{f(x)=g(x)}$ is closed. Deduce that if $f=g$ on a dense set, then $f=g$.
+\end{exercise}
+\begin{solution}
+$h(x)=d_Y\bigl(f(x),g(x)\bigr)$ is continuous, since $x_n\to x$ implies $f(x_n)\to f(x)$ and $g(x_n)\to g(x)$, and then $h(x_n)\to h(x)$ by Lemma~\ref{lem:reverse}(iii). The set is $h^{-1}(\{0\})$, which is closed. If it contains a dense $D$, it contains $\cl D=X$. For example, a continuous function on $\R$ is determined by its values on $\Q$.
+\end{solution}

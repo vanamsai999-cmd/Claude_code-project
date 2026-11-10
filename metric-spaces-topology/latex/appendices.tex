@@ -1,0 +1,249 @@
+% ==================================================================
+% Appendices (shared by both documents)
+% ==================================================================
+\appendix
+
+\iffull\else
+% ------------------------------------------------------------------
+\chapter{Summary of Chapters 0--2}\label{app:prereq}
+% ------------------------------------------------------------------
+These are the facts from the earlier chapters that Chapters~3--5 rely on. References such as ``Theorem~\ref{thm:closure}'' point to the full Chapters~0--5 notes.
+
+\paragraph{Metric (Definition~\ref{def:metric}).} $d\colon X\times X\to\R$ with \textup{(M1)} $d(x,y)\ge0$ and $d(x,y)=0\iff x=y$; \textup{(M2)} $d(x,y)=d(y,x)$; \textup{(M3)} $d(x,z)\le d(x,y)+d(y,z)$.
+
+\paragraph{Standard examples.} $\R$ with $\abs{x-y}$. $\R^n$ with $d_1,d_2,\dinf$, where $\dinf\le d_2\le d_1\le n\dinf$. The discrete metric. $C[a,b]$ with $\dinf(f,g)=\sup\abs{f-g}$ or $d_1(f,g)=\int\abs{f-g}$. Normed spaces with $d(u,v)=\norm{u-v}$. $f_n(t)=t^n$ has $d_1(f_n,0)\to0$ but $\dinf(f_n,0)=1$.
+
+\paragraph{Reverse triangle inequality.} $\abs{d(x,z)-d(y,z)}\le d(x,y)$.
+
+\paragraph{Balls.} $\Bo(x,r)=\set{y}{d(x,y)<r}$ is open: for $y\in\Bo(x,r)$, the ball $\Bo\bigl(y,r-d(x,y)\bigr)$ lies inside it. $\Bc(x,r)$ is closed.
+
+\paragraph{Open and closed sets.} $U$ is open if $\forall x\in U\ \exists r>0:\ \Bo(x,r)\subseteq U$. $F$ is closed if $X\setminus F$ is open. Arbitrary unions and finite intersections of open sets are open. A set can be both open and closed, or neither.
+
+\paragraph{Closure (Theorem~\ref{thm:closure}).} The following are equivalent: $x\in\cl A$; every ball around $x$ meets $A$; $x=\lim a_n$ with $a_n\in A$; $d(x,A)=0$. $F$ is closed $\iff$ $F$ contains the limits of all its convergent sequences.
+
+\paragraph{Interior, boundary, dense.} $\inte A$ is the largest open subset of $A$, and $\partial A=\cl A\setminus\inte A$. $A$ is dense if $\cl A=X$. $X$ is separable if it has a countable dense subset.
+
+\paragraph{Convergence.} $x_n\to x\iff d(x_n,x)\to0$. Limits are unique. In $\R^n$, convergence is coordinatewise. In $(C[a,b],\dinf)$, it is uniform convergence. In a discrete space, a convergent sequence is eventually constant.
+
+\paragraph{Topology (Definition~\ref{def:topology}).} A family $\topo$ containing $\emptyset$ and $X$, closed under arbitrary unions and finite intersections. Examples: discrete, indiscrete, cofinite. \textbf{Hausdorff}: distinct points have disjoint open neighbourhoods. Every metric space is Hausdorff, so a non-Hausdorff space is not metrizable.
+
+\paragraph{Subspace.} $U\subseteq Y$ is open in $Y$ $\iff$ $U=V\cap Y$ with $V$ open in $X$. For example, $[0,1)$ is open in $[0,2]$.
+
+\paragraph{Preimages} commute with unions, intersections and complements, but images do not.
+\fi
+
+% ------------------------------------------------------------------
+\chapter{Connectedness}\label{app:connected}
+% ------------------------------------------------------------------
+{\small\itshape Some courses put connectedness in Chapter~5 or~6. It is short and often appears in questions about homeomorphisms.}
+
+\begin{definition}
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item $X$ is \textbf{disconnected} if $X=U\cup V$ with $U,V$ open, disjoint and non-empty (a \textbf{separation}). Otherwise $X$ is \textbf{connected}. Equivalently, the only clopen subsets are $\emptyset$ and $X$, or every continuous $f\colon X\to\{0,1\}$ is constant.
+  \item $X$ is \textbf{path-connected} if for all $x,y\in X$ there is a continuous $\gamma\colon[0,1]\to X$ with $\gamma(0)=x$ and $\gamma(1)=y$.
+  \item A \textbf{component} is a maximal connected subset.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}
+\leavevmode
+\begin{enumerate}[label=(\roman*)]
+  \item The connected subsets of $\R$ are exactly the intervals.
+  \item Continuous images of connected spaces are connected. This gives the \textbf{Intermediate Value Theorem}.
+  \item Path-connected $\Rightarrow$ connected. The converse fails for the \textbf{topologist's sine curve}
+  \[ S=\set{\bigl(x,\sin\tfrac1x\bigr)}{x>0}\cup\bigl(\{0\}\times[-1,1]\bigr). \]
+  \item Open connected subsets of $\R^n$ are path-connected.
+  \item The closure of a connected set is connected. A union of connected sets with a common point is connected.
+  \item $\Q$ is totally disconnected: $\set{q}{q<\sqrt2}$ and $\set{q}{q>\sqrt2}$ separate it.
+\end{enumerate}
+\end{theorem}
+
+\begin{examtip}[Using connectedness to show $X\not\cong Y$]
+If $f\colon X\to Y$ is a homeomorphism, then $X\setminus\{p\}\cong Y\setminus\{f(p)\}$. Removing any point disconnects $\R$ but not $\R^2$, so $\R\not\cong\R^2$. Similarly $[0,1)\not\cong(0,1)$ and $S^1\not\cong[0,1]$.
+\end{examtip}
+
+% ------------------------------------------------------------------
+\chapter{Proof-Template Toolkit}\label{app:toolkit}
+% ------------------------------------------------------------------
+Most exam questions follow one of these patterns. Learn the first move for each.
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{@{}p{0.3\linewidth}p{0.64\linewidth}@{}}
+\toprule
+\textbf{To prove\dots} & \textbf{Standard first move}\\
+\midrule
+\endhead
+$d$ is a metric & Check \textup{(M1)}, \textup{(M2)}, \textup{(M3)}. For \textup{(M3)}, add and subtract, or use an increasing subadditive $\varphi$.\\
+$d$ is not a metric & One numerical counterexample to one axiom.\\
+$U$ is open & ``Let $x\in U$. Take $r=\dots$'', then show $\Bo(x,r)\subseteq U$. Or write $U=f^{-1}(\text{open})$ with $f$ continuous.\\
+$F$ is closed & Show the complement is open; or $F=f^{-1}(\text{closed})$; or $x_n\in F,\ x_n\to x\Rightarrow x\in F$.\\
+A set is not open & One point of the set where every ball leaves the set.\\
+A set is not closed & A sequence in the set converging to a point outside it.\\
+$x\in\cl A$ & A sequence in $A$ converging to $x$, or show every ball around $x$ meets $A$.\\
+$f$ is continuous & $\eps$--$\delta$; build it from known continuous maps; or show it is Lipschitz.\\
+$f$ is not continuous & One sequence $x_n\to x$ with $f(x_n)\not\to f(x)$.\\
+$f$ is not uniformly continuous & $d(x_n,y_n)\to0$ but $d\bigl(f(x_n),f(y_n)\bigr)\ge\eps$.\\
+$X\cong Y$ & An explicit bijection, continuous in both directions; or a continuous bijection from a compact space to a Hausdorff space.\\
+$X\not\cong Y$ & A topological property that differs: compactness, connectedness, components after removing a point, Hausdorff, separability.\\
+$(x_n)$ is Cauchy & Bound $d(x_m,x_n)$ for $m>n$ by a quantity depending only on $n$ that tends to $0$. A geometric series often works.\\
+$X$ is complete & A closed subset of a complete space, or the 3-step template: candidate limit, convergence in the metric, membership.\\
+$X$ is not complete & One Cauchy sequence whose limit is missing.\\
+A unique solution exists & The Contraction Mapping Theorem: complete space, $f(X)\subseteq X$, constant $k<1$.\\
+$K$ is compact & In $\R^n$: closed and bounded. Otherwise: sequential compactness, a closed subset of a compact set, a continuous image of a compact set, or an arbitrary open cover.\\
+$K$ is not compact & One open cover with no finite subcover; one sequence with no convergent subsequence; or show it is not closed, or not bounded.\\
+$(X,\topo)$ is not metrizable & Show it is not Hausdorff.\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+% ------------------------------------------------------------------
+\chapter{Counterexample Bank}\label{app:counter}
+% ------------------------------------------------------------------
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{@{}p{0.44\linewidth}p{0.5\linewidth}@{}}
+\toprule
+\textbf{False statement} & \textbf{Counterexample}\\
+\midrule
+\endhead
+Not open $\Rightarrow$ closed & $[0,1)$, or $\Q$, in $\R$\\
+Infinite intersections of open sets are open & $\bigcap_n(-\frac1n,\frac1n)=\{0\}$\\
+Infinite unions of closed sets are closed & $\bigcup_n[\frac1n,1]=(0,1]$\\
+$\cl\Bo(x,r)=\Bc(x,r)$ & discrete metric with $r=1$\\
+$\cl(A\cap B)=\cl A\cap\cl B$ & $A=\Q$, $B=\R\setminus\Q$\\
+Limits are unique in every topological space & indiscrete or cofinite topology\\
+Continuous images of open or closed sets are open or closed & $x^2$ on $(-1,1)$; $\arctan$ on $\R$\\
+Continuous $\Rightarrow$ uniformly continuous & $x^2$ on $\R$; $1/x$ on $(0,1)$\\
+Uniformly continuous $\Rightarrow$ Lipschitz & $\sqrt x$ on $[0,1]$\\
+A continuous bijection is a homeomorphism & $[0,2\pi)\to S^1$; $\mathrm{id}\colon(\R,\text{disc})\to(\R,\abs\cdot)$\\
+Boundedness and completeness are topological & $\R\cong(0,1)$\\
+Topologically equivalent $\Rightarrow$ Lipschitz equivalent & $d$ and $d/(1+d)$ on $\R$\\
+$d_1$ and $\dinf$ on $C[0,1]$ are equivalent & $t^n$: $d_1\to0$ but $\dinf=1$\\
+$x_{n+1}-x_n\to0\Rightarrow$ Cauchy & $\sum_{k\le n}\frac1k$; $\sqrt n$\\
+Every Cauchy sequence converges & $\frac1n$ in $(0,1)$; approximations to $\sqrt2$ in $\Q$\\
+$d(fx,fy)<d(x,y)\Rightarrow$ fixed point & $x+\frac1x$ on $[1,\infty)$ (true if $X$ is compact)\\
+A contraction on any space has a fixed point & $x/2$ on $(0,1]$\\
+Nested non-empty closed sets intersect & $[n,\infty)$ in $\R$\\
+Closed and bounded $\Rightarrow$ compact & infinite discrete space; unit ball of $\ell^2$; $(0,1]$ in itself\\
+Bounded $\Rightarrow$ totally bounded & infinite discrete space\\
+Disjoint closed sets are a positive distance apart & $x$-axis and $y=1/x$\\
+Connected $\Rightarrow$ path-connected & topologist's sine curve\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+% ------------------------------------------------------------------
+\chapter{Glossary}\label{app:glossary}
+% ------------------------------------------------------------------
+\begin{description}[style=nextline,leftmargin=1.5em,itemsep=1pt]
+\iffull
+\item[Accumulation / limit point of $A$] Every ball around $x$ meets $A\setminus\{x\}$.
+\fi
+\item[Banach space] A complete normed vector space.
+\iffull
+\item[Basis for a topology] A family of open sets such that every open set is a union of its members.
+\item[Boundary $\partial A$] $\cl A\setminus\inte A$: every ball around the point meets both $A$ and $X\setminus A$.
+\fi
+\item[Bounded] Contained in some ball; equivalently, $\diam A<\infty$.
+\item[Cauchy sequence] $\forall\eps\ \exists N\ \forall m,n\ge N:\ d(x_m,x_n)<\eps$.
+\iffull
+\item[Clopen] Both open and closed.
+\item[Closed set] Its complement is open; equivalently, it contains the limits of its convergent sequences.
+\item[Closure $\cl A$] The smallest closed superset of $A$; equals $A\cup A'$.
+\item[Cofinite topology] $\emptyset$ together with the sets that have finite complement.
+\fi
+\item[Compact] Every open cover has a finite subcover.
+\item[Complete] Every Cauchy sequence converges in the space.
+\item[Completion] A complete space containing $X$ isometrically as a dense subset.
+\item[Connected] Not a union of two disjoint non-empty open sets.
+\item[Continuous] Preimages of open sets are open; equivalently, the $\eps$--$\delta$ or sequential conditions.
+\item[Contraction] $d(f(x),f(y))\le k\,d(x,y)$ for a fixed $k<1$.
+\item[Dense] $\cl A=X$; equivalently, $A$ meets every non-empty open set.
+\item[Diameter] $\diam A=\sup\set{d(a,b)}{a,b\in A}$.
+\iffull
+\item[Discrete metric] $d(x,y)=1$ for $x\ne y$; every set is open.
+\fi
+\item[Distance to a set] $d(x,A)=\inf_{a\in A}d(x,a)$; it is $0$ $\iff$ $x\in\cl A$.
+\iffull
+\item[Equivalent metrics] Lipschitz: $\alpha d\le d'\le\beta d$. Topological: the same open sets.
+\fi
+\item[Finite intersection property] Every finite subfamily has non-empty intersection.
+\item[Fixed point] A point with $f(x)=x$.
+\item[Hausdorff] Distinct points have disjoint open neighbourhoods.
+\item[Homeomorphism] A continuous bijection with a continuous inverse.
+\iffull
+\item[Interior $\inte A$] The largest open subset of $A$.
+\fi
+\item[Isolated point] A point $a\in A$ with $\Bo(a,r)\cap A=\{a\}$ for some $r>0$.
+\item[Isometry] A distance-preserving map.
+\item[Lebesgue number] A $\delta$ such that every set of diameter $<\delta$ lies in one member of the cover.
+\item[Lipschitz] $d(f(x),f(y))\le L\,d(x,y)$.
+\iffull
+\item[Metric] Satisfies \textup{(M1)} positivity, \textup{(M2)} symmetry and \textup{(M3)} the triangle inequality.
+\item[Metrizable] The topology comes from a metric.
+\item[Norm] Satisfies \textup{(N1)--(N3)}; induces the metric $\norm{u-v}$.
+\fi
+\item[Nowhere dense] $\inte(\cl A)=\emptyset$.
+\item[Open cover] A family of open sets whose union contains the set.
+\iffull
+\item[Open set] Every point has a ball around it inside the set.
+\fi
+\item[Path-connected] Any two points are joined by a continuous path.
+\item[Separable] Has a countable dense subset.
+\item[Sequentially compact] Every sequence has a subsequence converging in the space.
+\item[Topological property] A property preserved by homeomorphisms.
+\iffull
+\item[Topology] Contains $\emptyset$ and $X$; closed under arbitrary unions and finite intersections.
+\fi
+\item[Totally bounded] For every $\eps>0$, finitely many $\eps$-balls cover the space.
+\item[Uniformly continuous] The $\eps$--$\delta$ condition with $\delta$ independent of the point.
+\end{description}
+
+% ------------------------------------------------------------------
+\chapter{Recap Checklist (5:35--5:45)}\label{app:recap}
+% ------------------------------------------------------------------
+Close the notes. On a blank page, write as many of these as you can from memory. Tick off what you got and circle what you missed. The circled items are where to start next session.
+
+\section*{Definitions to state exactly}
+\begin{itemize}[label=$\square$]
+\iffull
+  \item Metric \textup{(M1)--(M3)}; norm
+  \item Open set, closed set; interior, closure, boundary, limit point, dense
+  \item Convergent sequence; topology \textup{(T1)--(T3)}; Hausdorff
+\fi
+  \item Continuity ($\eps$--$\delta$ and open-set versions); uniform continuity; Lipschitz
+  \item Homeomorphism; topological property
+  \item Cauchy sequence; complete; contraction
+  \item Compact (open covers); sequentially compact; totally bounded
+\end{itemize}
+
+\section*{Theorems to state, with a proof sketch}
+\begin{itemize}[label=$\square$]
+\iffull
+  \item Open balls are open (the radius $r-d(x,y)$)
+  \item Unions and finite intersections of open sets are open, with a counterexample for infinite intersections
+  \item The characterisations of the closure
+\fi
+  \item The four equivalent forms of continuity
+  \item Closed subsets of complete spaces are complete; complete subspaces are closed
+  \item $(C[a,b],\dinf)$ is complete (the $\eps/3$ argument)
+  \item Contraction Mapping Theorem: all five steps
+  \item Compact $\iff$ sequentially compact $\iff$ complete and totally bounded
+  \item Heine--Borel, and a counterexample outside $\R^n$
+  \item The continuous image of a compact set is compact, hence the Extreme Value Theorem
+  \item Heine--Cantor; a continuous bijection from a compact space to a Hausdorff space is a homeomorphism
+\end{itemize}
+
+\section*{Counterexamples to recall instantly}
+\begin{itemize}[label=$\square$]
+  \item A set that is neither open nor closed
+  \item A continuous function that is not uniformly continuous
+  \item A continuous bijection that is not a homeomorphism
+  \item An incomplete space, with its Cauchy sequence
+  \item A closed, bounded, non-compact set
+\end{itemize}
+
+\begin{examtip}[Next up]
+Break 5:45--6:00, then \textbf{linear systems 6:00--6:50} (separate notes), then wrap-up at 6:50 and a hard stop at \textbf{7:00\,pm}.
+\end{examtip}
