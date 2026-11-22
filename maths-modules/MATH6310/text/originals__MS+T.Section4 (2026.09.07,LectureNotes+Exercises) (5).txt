@@ -1,0 +1,1011 @@
+                  ·
+Metric Spaces & Topology
+            (MATH6310)
+
+                  ·
+             Part I
+                  ·
+        Section 4.
+  Metric space topology
+
+     Lecture Notes & Exercises
+       Last edited: 07.ix.2026
+
+
+
+
+                                 Video Clips
+                                  (1) Open sets & interior [30 mins]
+                                  (2) Continuity [19 mins]
+                                  (3) Closed sets, closure & boundary [30 mins]
+                                  (4) Density & Separability [19 mins]
+                                  (5) Open subsets of R [9 mins]
+                                  (6) Homeomorphisms & Equivalences [21 mins]
+                                  (7) Equivalence via α [25 mins]
+                                  (8) Convergence in countable products [15 mins]
+                                  (9) Continuity of metrics [2 mins]
+                                 (10) Metric subspaces revisited [13 mins]
+                                                                  Open sets
+                                                                  Definition.
+Introduction                                                      Let U ⊂ E for a metric space E. Then U is open (or, more
+In this section we introduce the topology of a metric space       fully, open in E) if
+through the following topics
+                                                                                   ∀p∈U ∃r>0 BrE (p) ⊂ U ;
+    open sets and interior points
+                                                                  in words, “wherever you are in U there is a ball which is
+    continuity, global continuity and Lipschitz                  centred at your location and contained entirely in U .”
+
+    closed sets and points of closure                            Notation. The collection of open sets of a metric space E is
+                                                                  denoted O(E), thus
+    A is closed iff A is open
+                       ∁
+
+                                                                                O(E) := {U ⊂ E : U is open}.
+    topological boundary
+
+    density and separability
+
+    characterisation of the open sets of R
+
+    homeomorphism
+
+    (topological and Lipschitz) equivalence of metrics
+
+    when is α ◦ d a metric, for every d?
+
+    convergence in countable product spaces
+
+    metric subspaces revisited.
+
+
+                                1                                                              2
+
+
+
+
+Example. (Open balls are open sets)                               Exercise. (Open minus finite equals open)
+Let U be an open ball in a metric space E. Then U is open.        Let U = V \ F , where V, F ⊂ E for a metric space E.
+    To see this let a and R be the centre and radius of U , and   Suppose that V is open and F is a finite set. Show that U
+let p ∈ U . Thus                                                  is open.
+                        p ∈ BRE (a) = U.
+Set r = R − d(p, a). Then r > 0 and if x ∈ Br (p) then, by
+the Triangle Inequality,
+
+       d(x, a) ≤ d(x, p) + d(p, a) < r + d(p, a) = R,
+
+so x ∈ BR(a) = U , thus
+
+                           BrE (p) ⊂ U.
+
+Therefore U is open.
+
+Cf. the remark following Exercise (Balls in an intersection of
+balls).
+Exercise. (Open subsets of discrete metric spaces)
+What are the open sets of a discrete metric space?
+
+Example. (Open balls of R)
+Let U be an open ball of R (with its standard metric). Then
+U is a bounded open interval, and conversely.
+   [Now you can easily prove this.]
+
+
+                                3                                                              4
+Proposition. (The family of open sets)                        Proof.
+Let O = O(E), for a metric space E. Then
+                                                                  (a) That ∅ and E are open may be seen as immediate conse-
+ (a) ∅, E ∈ O                                                         quences of the definition. (You should convince yourself
+     “the empty set and whole set are open.”                          of this.)
+                    S                                                                              S
+ (b) If U ⊂ O then U ∈ O                                          (b) Let U ⊂ O and set V = U and let p ∈ V . Then
+     “an arbitrary union of open sets is open.”                       p ∈ U for some U ∈ U. Since U is open, and p ∈ U ,
+                                                                      there is r > 0 such that Br (p) ⊂ U . But U ⊂ V so
+ (c) If U, V ∈ O then U ∩ V ∈ O
+     “the intersection of two open sets is open.”                                           Br (p) ⊂ V.
+
+                                                                      Thus V is open.
+                                                                  (c) Let U, V ∈ O, set W = U ∩ V and let p ∈ W . Then,
+                                                                      since p ∈ U and U is open, there is r > 0 such that
+                                                                      Br (p) ⊂ U , and, since p ∈ V and V is open there is
+                                                                      s > 0 such that Bs(p) ⊂ V . Take t = min{r, s}. Then
+                                                                      t > 0 and
+
+                                                                              Bt(p) ⊂ Br (p) ∩ Bs(p) ⊂ U ∩ V = W.
+                                                              .       Thus W is open.
+
+
+
+
+                              5                                                               6
+
+
+
+
+Corollary. (A finite intersecton of open sets is open)        Interior
+Let U1, · · · , Un be open sets of a metric space E. Then
+                                                              Definition.
+U1 ∩ · · · ∩ Un is open.
+                                                              Let A ⊂ E for a metric space E, and let p ∈ E. Then p is
+Proof. In view of the proposition this follows by induction   an interior point of A if
+on n since, for all k ∈ N,                                                            ∃r>0 : Br (p) ⊂ A.
+                                           
+        U1 ∩ · · · ∩ Uk+1 = U1 ∩ · · · ∩ Uk ∩ Uk+1.           The collection of all interior points of A is called the interior
+                                                              of A, and is denoted Int A.
+
+Proposition. (Open sets are unions of open balls)             Thus Int A ⊂ A.
+Let U be an open set of a metric space E. Then U is a union   Remark.
+of open balls.                                                If U is an open set of a metric space then every point in U is
+                                                              an interior point of U , so Int U = U .
+Proof. For all x ∈ U there is a radius r(x) > 0 such
+that Br(x)(x) ⊂ U . Thus (since any set is the union of its   Example.
+singleton subsets)                                            As a subset of R with its standard metric,
+                   [        [
+             U=      {x} ⊂     Br(x)(x) ⊂ U,                                             Int Q = ∅,
+                  x∈U       x∈U
+
+so                                                            because every open subinterval of R contains irrational num-
+                                                              bers (*), and thus, for all x ∈ Q and r > 0
+                          [
+                     U=         Br(x)(x),
+                          x∈U
+                                                                                BrR(x) =]x − r, x + r[ ̸⊂ Q.
+a union of open balls.
+                                                              (*) Can you prove this? Recall the Order Density of R \ Q
+                                                              in R Exercise.
+                              7                                                               8
+Proposition. (Interior equals largest open subset)                 Corollary.
+Let A ⊂ E for a metric space E. Then                               Let A ⊂ E for a metric space E. Then
+                       [
+              Int A = {U ⊂ A : U is open}.                          (a) Int A is open
+                                                                    (b) A = Int A if and only if A is open.
+Proof. Set V = RHS.
+   Let p ∈ Int A. Then there is r > 0 such that Br (p) ⊂ A.         (c) Int(Int A) = Int A.
+Since the ball Br (p) is an open set containing p, this implies
+that p ∈ V . Thus Int A ⊂ V .                                      Proof.
+   Suppose conversely that p ∈ V . Then p ∈ U for some
+open set satisfying U ⊂ A. Since U is open there is r > 0           (a) By the Proposition, Int A is a union of open sets. There-
+such that Br (p) ⊂ U . But then Br (p) ⊂ A, so p ∈ Int A.               fore Int A is open.
+Thus V ⊂ Int A. Therefore Int A = V .                               (b) If A = Int A then A is open, by (a). Conversely, if A
+                                                                        is open then every point of A is an interior point of A,
+                                                                        so Int A = A.
+                                                                    (c) This follows from (a) and (b).
+
+
+
+
+                               9                                                                  10
+
+
+
+
+Continuity                                                         Proof. Suppose that f is continuous at p. Let (xn) be a
+                                                                   sequence in E converging to p, and let ε > 0. First choose
+Definition.
+                                                                   δ > 0 such that
+Let f ∈ F (E; E ′) for metric spaces E and E ′ and let p ∈ E.
+                                                                                                         ′
+Then f is continuous at p if                                                         f (BδE (p)) ⊂ BεE (f (p)),
+
+             ∀ε>0 ∃δ>0 f (BδE (p)) ⊂ BεF (f (p))                   and then choose N ∈ N such that dE (xn, p) < δ for all n ≥
+                                                                                                                      ′
+                                                                   N . Then, for n ≥ N , xn ∈ BδE (p) so f (xn) ∈ BεE (f (p)).
+and f is sequentially continuous at p if for every sequence        Thus
+(xn) in E                                                                      dE ′ (f (xn), f (p)) < ε for n ≥ N.
+                xn → p ⇒ f (xn) → f (p).
+                                                                   Thus f (xn) → f (p). Therefore (i) implies (ii).
+The function f is continuous (respectively, sequentially con-         Suppose that f is not continuous at p. Then there is
+tinuous) if it is continuous at p (respectively sequentially       η > 0 such that
+continuous at p) for all p ∈ E.                                                                              ′
+                                                                                  ∀δ>0 f (BδE (p)) ̸⊂ BηE (f (p)).
+Proposition.                                                       Thus
+Let f ∈ F (E; E ′) for metric spaces E and E ′, and let p ∈ E.                ∀n∈N ∃xn∈B E (p) d(f (xn), f (p)) ≥ η.
+Then TFAE:                                                                                1/n
+
+                                                                   The sequence (xn) in E satisfies
+  (i) f is continuous at p,
+                                                                                                xn → p
+ (ii) f is sequentially continuous at p.
+                                                                   because 0 ≤ d(xn, p) < 1/n for each n ∈ N and 1/n → 0,
+Remark.                                                            but
+It follows that f is continuous if and only if f is sequentially                        f (xn) ̸→ f (p).
+continuous.                                                        Thus f is not sequentially continuous at p. Hence (ii) implies
+                                                                   (i) by the contrapositive.
+
+                              11                                                                  12
+Proposition. (Lipschitz =⇒ continuous)                             Exercise. (Inverse images of direct images & vice versa)
+Let f : E → E ′ be a Lipschitz function, for metric spaces E       Let f ∈ F (S; T ) for sets S and T , and let A ⊂ S and
+and E ′. Then f is continuous.                                     B ⊂ T.
+
+Proof. Let (xn) be a sequence converging to a in E. Then               (a) Prove that
+
+                                                                                 f −1 f (A) ⊃ A whereas f f −1(B) ⊂ B.
+                                                                                                                
+               0 ≤ d(f (xn), f (a) ≤ L d(xn, a),
+
+where L = Lip f . Thus, since d(xn, a) → 0, f (xn) → f (a).            (b) Give examples where the above inclusions are proper
+Hence f is (sequentially) continuous.                                      (i.e. definitely not equalities).
+Alternatively,
+                                                                       (c) Identify the set f f −1(B) .
+                                                                                                        
+                                  E′
+                 f BrE (p) ⊂ BLr
+                                         
+                                     f (p)
+
+for all r > 0, where L = Lip f . Thus, if ε > 0 then
+                                   ′
+                   f BδE (p) ⊂ BεE f (p)
+                                          
+
+for δ = ε/L, so f is continuous.
+
+Thus CLip(E; E ′) ⊂ C(E; E ′).
+
+
+
+
+                              13                                                                    14
+
+
+
+
+Theorem. (Global continuity via open sets)                         Closed sets
+Let f ∈ F (E; E ′) for metric spaces E and E ′. Then TFAE
+                                                                   Proposition. (Point of closure of a set)
+  (i) f is continuous                                              Let A ⊂ E and p ∈ E for a metric space E. Then TFAE:
+
+ (ii) f −1(V ) is open in E for every open set V in E ′.                (i) ∀r>0 Br (p) ∩ A ̸= ∅.
+
+Proof. Suppose that f is continuous and let p ∈ f −1(V ) for           (ii) There is a sequence (an) in A such that an → p.
+an open set V in E ′. Since V is open in E ′ and contains f (p)        (iii) distA(p) = 0.
+                                ′
+there is ε > 0 such that BεE (f (p)) ⊂ V . By the continuity
+                                                 ′
+of f , there is δ > 0 such that f (BδE (p)) ⊂ BεE (f (p)). Now     Proof. Recall that
+              BδE (p) ⊂ f −1 f (BδE (p))
+                                                                                                  
+                                                                                    distA(p) := inf d(p, a) : a ∈ A .
+                               ′
+                   ⊂ f −1(BεE (f (p))) ⊂ f −1(V ).                 (iii) ⇒ (ii): Suppose that (iii) holds. Then, by the Approx-
+       −1
+Thus f (V ) is open in E. Therefore (i) implies (ii).                     imation of suprema by sequences Exercise, in its infi-
+   Suppose that f satisfies (ii) and let p ∈ E and ε > 0.                 mum version, there is a sequence (an) in A such that
+             ′
+Then f −1(BεE (f (p))) is open and contains p, so there is δ > 0          d(p, an) → 0, in other words (ii) holds.
+such that                                                          (ii) ⇒ (i): Suppose that (ii) holds, and let r > 0. Choose
+                                    ′
+                  BδE (p) ⊂ f −1(BεE (f (p))).                           N ∈ N such that d(p, an) < r for all n ≥ N . Then
+But then                                                                 aN ∈ Br (p) ∩ A, so (i) holds.
+                               ′             ′
+       f (BδE (p)) ⊂ f f −1(BεE (f (p)) ⊂ BεE (f (p)),             (i) ⇒ (iii): Suppose that (i) holds and let ε > 0. Then there
+                                       
+                                                                        is a ∈ Bε(p) ∩ A, in other words a ∈ A such that
+thus f is continuous at p. Therefore f is continuous. It                d(a, p) < ε. Thus distA(p) < ε. Since ε is an arbitrary
+follows that (ii) implies (i).                                          positive number, this implies that distA(p) = 0.
+                                                                   .
+                              15                                                                    16
+Definition.                                                       Remarks.
+Let A ⊂ E and p ∈ E for a metric space E. Then p is
+                                                                       1. In a general metric space E, for any a ∈ E and r > 0,
+a point of closure of A if it satisfies condition (i) of the
+previous proposition.                                                                     Br (a) ⊂ Br (a) ⊂ Br [a].
+    The (topological ) closure of A, denoted A, is the follow-
+ing set:                                                               2. In a discrete metric space E, for any a ∈ E,
+           {p ∈ E : p is a point of closure of A}.                                 B1(a) = B1(a) = {a} and B1[a] = E.
+
+Remark.                                                                3. In a normed linear space E
+For any subset A of a metric space,
+                                                                                  Br (a) = Br [a] for all a ∈ E and r > 0.
+                           A ⊂ A.
+                                                                  Proposition.
+Example. Let r > 0 and let a ∈ E for a metric space E.            Let A ⊂ E for a metric space E. Then
+Then
+                   Br (a) ⊂ Br [a].                                                            A = A.
+
+Proof. Let p ∈ Br (a). Then, by Proposition (Point of             Proof. Let p ∈ A, and let r > 0. Then 2r > 0, so there is
+closure of a set), there is a sequence (xn) in Br (a) such that   v ∈ A such that d(v, p) < 2r . But then there is a ∈ A such
+xn → p. By Proposition (Convergence of metric values),            that d(a, v) < 2r . Thus, by the Triangle Inequality,
+                    d(p, a) = lim d(xn, a).                                                                    r r
+                                                                               d(a, p) ≤ d(a, v) + d(v, p) <    + = r,
+                                                                                                               2 2
+Since d(xn, a) < r for each n, it follows that d(p, a) ≤ r, by
+Proposition (Order preservation under convergence). Thus          so Br (p) ∩ A ̸= ∅. It follows that p ∈ A. Therefore A ⊂ A.
+p ∈ Br [a]. The inclusion follows.                                Since A ⊂ A, we have equality.
+
+                              17                                                                  18
+
+
+
+
+Definition.                                                       Theorem. (Closed as complement of open)
+Let A ⊂ E for a metric space E. Then A is closed if A             Let A, B ⊂ E for a metric space E, satisfy
+contains all its points of closure:
+                                                                                     A ∪ B = E and A ∩ B = ∅.
+                           A = A.                                 Thus
+                                                                                   B = A∁ := E \ A and A = B ∁.
+Equivalently, A is closed if, for any sequence (an) in A which
+converges in E,                                                   Then TFAE:
+                         lim an ∈ A.                                   (i) A is closed.
+This is important to grasp and to remember.                        (ii) B is open.
+Remark.                                                           Proof. Suppose that A is closed and let p ∈ B. Then
+Most subsets of a metric space—like subintervals of R of the      p∈
+                                                                   / A = A, so r := distA(p) > 0, thus
+form [c, d[, where −∞ < c < d < ∞ —are neither open,
+                                                                                          Br (p) ⊂ A∁ = B.
+nor closed.
+                                                                  Therefore B is open. Thus (i) implies (ii).
+Notation. For a metric space E, C(E) denotes the collection          Suppose that A is not closed. Then A \ A is nonempty.
+of its closed subsets.                                            Let p ∈ A \ A. Then p ∈ A∁ = B and, for any r > 0,
+                                                                                           Br (p) ∩ A ̸= ∅,
+                                                                  so
+                                                                                          Br (p) ̸⊂ A∁ = B.
+                                                                  Hence B is not open. Thus (ii) ⇒ (i), by the contrapositive.
+
+
+                                                                  Reminder. MOST SETS IN A GENERAL METRIC SPACE
+                                                                  ARE NEITHER OPEN NOR CLOSED.
+                              19                                                                  20
+Exercise. (Closed subsets of discrete metric spaces)           Corollary.
+What are the closed sets in a discrete metric space E?         Let C = C(E), for a metric space E. Then
+                                                                (a) ∅, E ∈ C
+                                                                    “the empty set and whole set are closed.”
+                                                                                    T
+                                                                (b) If F ⊂ C then F ∈ C
+                                                                    “arbitrary intersections of closed sets are closed.”
+                                                                (c) If F1, · · · , FN ∈ C then F1 ∪ · · · ∪ FN ∈ C
+                                                                    “a finite union of closed sets is closed.”
+
+                                                               Proof. In view of the identities
+
+                                                                           ∅∁ = E, E ∁ = ∅,
+                                                                            \ ∁       [
+                                                                               F =        F ∁, and
+                                                                                         F ∈F
+                                                                           (F1 ∪ · · · ∪ FN )∁ = F1∁ ∩ · · · ∩ FN∁ ,
+
+                                                               this follows from Proposition (The family of open sets) and
+                                                               the above Theorem.
+
+
+
+
+                                   21                                                           22
+
+
+
+
+Exercise. (Global continuity via closed sets)                  Proposition. (Closure as intersection of closed supersets)
+Let f ∈ F (E; E ′) for metric spaces E and E ′. Show that                         \
+TFAE:                                                                        A=        F ⊃ A : F is closed .
+
+  (i) f is continuous                                          Proof. Set H = RHS. Thus H is a closed set containing A.
+ (ii) f   −1                                              ′
+               (C) is closed for all closed subsets C of E .   Since A is a closed set containing A, it follows that A ⊃ H.
+                                                                   On the other hand, suppose that p ∈ A. Then p = lim an
+                                                               for some sequence (an) in A. Since (an) is also a sequence
+                                                               in H and H is closed, it follows that p = lim an ∈ H too
+                                                               (“important to grasp and remember”). It follows that A ⊂
+                                                               H. Therefore equality holds: A = H.
+
+
+
+
+                                   23                                                           24
+Corollary. (Closure, interior and complement)                Topological Boundary
+Let A ⊂ E for a metric space E. Then
+                                                             Definition.
+          ∁          ∁
+    (i) A = Int A , and                                      Let A ⊂ E for a metric space E. The (topological ) boundary
+                                                             of A is the set
+    (ii) (Int A)∁ = A∁.                                                               A \ Int A;
+                                                             it is denoted ∂A.
+Proof. (ii) follows by applying (i) to A∁, and (i) may be
+seen as follows:                                             Remarks.
+        ∁
+             \                             ∁
+      A =        {F : F ⊃ A and F is closed}                      1. For any subset A of a metric space E
+             [
+          = {F ∁ : F ⊃ A and F is closed}                                               Int A ∪ ∂A ∪ Int A∁
+             [
+          = {U : U ∁ ⊃ A and U is open}                              forms a partition of E.
+             [
+          = {U : U ⊂ A∁ and U is open} = Int A∁.                  2. ∂A is closed because it is the intersection of two closed
+.                                                                    sets:
+                                                                                      ∂A = A ∩ (Int A)∁.
+
+
+
+
+                                  25                                                         26
+
+
+
+
+Density                                                      Proposition. (Dense intersect open-dense = dense)
+                                                             Let U, A ⊂ E for a metric space E. Suppose that
+Definition.
+Let D ⊂ A ⊂ E for a metric space E. Then D is dense in           (a) U is open and dense in E, and
+A if
+                                                                 (b) A is dense in E.
+                      D ⊃ A.
+                                                             Show that U ∩ A is dense in E too.
+Example.
+Let I = [0, 1] as metric subspaces of R (with its standard   Proof. Let p ∈ E and R > 0 and set C = U ∩ A. We
+metric), let A = Q ∩ I and let B = (R \ Q) ∩ I. Then         must show that
+                                                                              BR(p) ∩ C ̸= ∅.
+                    A and B are both dense in I,
+                                                                  1. By the density of U in E, there is
+but
+                                                                                          u ∈ BR(p) ∩ U.
+                              A ∩ B = ∅.
+                                                                  2. Since BR(p) ∩ U is open, there is r > 0 such that
+Challenge. Let
+                                                                                        Br (u) ⊂ BR(p) ∩ U.
+              D = {f ∈ C(I; R) : f is piecewise linear}.
+Show that D is dense in the metric space (C(I; R), dsup).         3. Since A is dense in E, there is
+
+Remark. (Test for density)                                                                a ∈ Br (u) ∩ A.
+Let D ⊂ A ⊂ E for a metric space E. Then TFAE:                    4. But then
+      D is dense in A.                                                         a ∈ Br (u) ∩ A ⊂ BR(p) ∩ U ∩ A,
+      ∀a∈A ∀R>0         BR(a) ∩ D ̸= ∅.                             so BR(p) ∩ C ̸= ∅, as required.
+      ∀a∈A ∃(xn) in D      xn → a.                          .
+
+                                  27                                                         28
+Separability                                                          An exercise (Separability of C(I; R), again) guides you through
+                                                                      an alternative proof
+Definition.
+A metric space E is separable if it has a countable dense
+subset.
+Examples.
+1. ℓp(N ) is separable, for each p ∈ [1, ∞] and each N ∈ N.
+The following subset is countable (as we now know) and dense
+(as is easily verified):
+            QN = {(q1, · · · , qN ) : q1, · · · , qN ∈ Q}.
+2. C(I; R) is separable, where I = [0, 1], because
+ (a) P (I; R), the subset of polynomial functions from I to
+     R, is dense (this is the famous Weierstrass Approxima-
+     tion Theorem, not proved here),
+ (b) If p(x) = a0 + a1x + · · · + aN xN , then letting
+                                    (n)            (n)
+                       (q (n) = (q0 , · · · , qN ))n∈N
+        be a sequence in QN +1 converging to (a0, · · · , aN ), and
+        setting
+                              (n)         (n)             (n)
+                 p(n)(x) = q0 + q1 x + ... + qN xN ,
+        p(n) → p in the sup metric (i.e. uniformly). [You can
+        prove this!]
+
+                                    29                                                             30
+
+
+
+
+Open subsets of R                                                     Lemma. For any subset A of R,
+                                                                                         [
+Set                                                                                        QA = Int A.
+                 Q := ]q, r[: q, r ∈ Q, q < r ,
+the collection of bounded open subintervals of R with rational        Proof. Let x ∈ Int A. Then there is R > 0 such that
+endpoints.
+                                                                                    ]x − R, x + R[ = BRR(x) ⊂ A.
+Lemma.
+                                                                      By the order density of Q in R, there are q, r ∈ Q such that
+Q is countable.
+                                                                                 x − R < q < x and x < r < x + R,
+Proof. The map defined by
+                                                                      and thus
+             Q → Q2 := Q × Q,                   ]q, r[ 7→ (q, r)
+                                                                                  x ∈ ]q, r[ ⊂ ]x − R, x + R[ ⊂ A.
+is clearly injective. Since Q2 is countable, it follows that Q
+is countable too.                                                     It follows that x ∈ J for some J ∈ QA, so
+                                                                                                    [
+      For A ⊂ R, set                                                                            x∈    QA.
+                                                                                    S
+                   QA := J ∈ Q : J ⊂ A .                              Thus Int A ⊂ QA. We already observed the reverse inclu-
+                                                                      sion, therefore equality holds.
+Note that, since
+                             QA ⊂ Q,
+the collection QA is necessarily countable too. Also, since the
+elements of QA are open subsets of the set A, it follows that
+                      [
+                          QA ⊂ Int A.
+
+
+                                    31                                                             32
+Theorem. (In R, Open ≡ Countable union of intervals)               Homeomorphism
+Let U be an open subset of R with its standard metric. Then
+                                                                   Definition.
+U is a countable union of open intervals.
+                                                                   Let f ∈ F (E; E ′) for metric spaces E and E ′. Then f is a
+Proof. Since Int U = U , the second lemma implies that             homeomorphism if
+                          [                                        (H1) f is continuous
+                     U=       QU .
+                                                                   (H2) f is bijective
+By the first lemma Q is countable. Since QU ⊂ Q, it follows
+that QU is countable too. Since Q is a collection of open          (H3) f −1 is continuous
+intervals the result follows.
+                                                                   Remarks.
+Challenge.                                                             (H3) does not follow from (H1) and (H2), in general.
+Find the counterpart to this theorem for R2, R3, · · · .
+                                                                       Bi-Lipschitz maps are homeomorphisms.
+
+                                                                       The map
+                                                                                             π π
+                                                                                    tan : ] − , [→ R, s 7→ tan s
+                                                                                             2 2
+                                                                         is a homeomorphism whose inverse is Lipschitz.
+                                                                       For a continuous bijectionf : E → E ′ between metric
+                                                                         spaces E and E ′, TFAE:
+                                                                           – f is a homeomorphism
+                                                                           – f (U ) is open in E ′ for every open set U in E
+                                                                           – f (C) is closed in E ′ for every closed set C in E
+
+                              33                                                                   34
+
+
+
+
+Equivalences of metrics                                            Proposition. (Equivalence via convergence)
+                                                                   Let d1 and d2 be metrics on a set S. Then TFAE:
+Definition. (Topological equivalence and Lipschitz equivalence)
+Let d1 and d2 be metrics on a set S. Then                            (i) d1 and d2 are topologically equivalent.
+ (a) d1 and d2 are topologically equivalent if idS is a home-       (ii) For any p ∈ S and sequence (xn) in S,
+     omorphism from (S, d1) to (S, d2)
+                                                                          (xn) is d1-convergent to p
+ (b) d1 and d2 are Lipschitz equivalent if idS is a bi-Lipschitz                              ⇐⇒ (xn) is d2-convergent to p.
+     map from (S, d1) to (S, d2)
+                                                                    (iii) For any subset A of S,
+Remark. Let d1 and d2 be equivalent metrics on a set S and
+let A ⊂ S. Then                                                                    A is d1-closed ⇐⇒ A is d2-closed.
+             A is d1-open ⇐⇒ A is d2-open .
+                                                                   Proof. The equivalence of (i) and (iii) follows from Exercise
+This follows from Theorem (Global continuity via open sets).       (Global continuity via closed sets), and Exercise (Equivalence
+                                                                   of metrics & comparison of balls), below.
+                                                                       The equivalence of (i) and (ii) follows from the equivalence
+                                                                   of continuity and sequential continuity for maps between met-
+                                                                   ric spaces.
+
+
+
+
+                              35                                                                   36
+Exercise. (Equivalences of metrics as equivalence relations) Show   Proposition. (Boundedness and Cauchy preservation)
+that both topological equivalence and Lipschitz equivalence         Let d1 and d2 be Lipshitz equivalent metrics on a set S. Then
+are equivalence relations on the set of all metrics on a given      the following hold.
+set S.
+                                                                     (a) For any subset A of S,
+Remark.
+                                                                                A is d1-bounded ⇐⇒ A is d2-bounded.
+The above fact is used throughout all further deliberations
+on equivalence of metrics.
+                                                                     (b) For any sequence (xn) in S,
+
+                                                                              (xn) is d1-Cauchy ⇐⇒ (xn) is d2-Cauchy.
+
+                                                                    Proof. By symmetry it suffices to prove the forward impli-
+                                                                    cations.
+                                                                        Let L ≥ 0 be such that
+
+                                                                                d2(x, y) ≤ L d1(x, y) for all x, y ∈ S.
+
+                                                                    Then, for any subset A of S,
+
+                                                                                      d2-diamA ≤ L d1-diamA,
+
+                                                                    so A is d2-bounded if it is d1-bounded.
+                                                                       Also, for any sequence (xn) in S,
+
+                                                                            d2(xn, xm) ≤ L d1(xn, xm) for all n, m ∈ N.
+
+                                                                    so A is d2-Cauchy if it is d1-Cauchy.
+
+
+                                37                                                                 38
+
+
+
+
+Examples.                                                           Corollary. (Boundedness, openness & closedness in ℓp(N ))
+                                                                    Let A ⊂ RN , and let p, q ∈ [1, ∞].
+    All of the norm-metrics dp (1 ≤ p ≤ ∞) on RN are
+     Lipschitz equivalent. This follows from the easily veri-        (a) A is ℓp-open iff A is ℓq -open.
+     fied relations
+                                                                     (b) A is ℓp-closed iff A is ℓq -closed.
+                        1/p
+             ∥x∥p ≤ N         ∥x∥∞ and ∥x∥∞ ≤ ∥x∥p,
+                                                                     (c) A is ℓp-bounded iff A is ℓq -bounded.
+                                 N
+     for all p ∈ [1, ∞[, x ∈ R and N ∈ N.
+                                                                    Corollary. (Convergence and Cauchy in ℓp(N ))
+    The non-standard metric on R given by
+                                                                    Let (x(n)) be a sequence in RN , and let p, q ∈ [1, ∞].
+                dN S (x, y) = | tan−1 y − tan−1 x|
+                                                                     (a) (x(n)) is ℓp-convergent to a iff (x(n)) is ℓq -convergent to a
+     is topologically equivalent to the standard metric (since           iff
+                                                                                          (n)
+     the map                                                                            xi → ai for i = 1, · · · , N.
+                       tan :] − π/2, π/2[→ R
+                                                                     (b) (x(n)) is ℓp-Cauchy iff (x(n)) is ℓq -Cauchy iff
+     is a homeomorphism), but the two metrics are not Lip-
+                                                                                    (n) 
+     schitz equivalent (because the above map is not Lips-                         xi is Cauchy in R for i = 1, · · · , N.
+     chitz).
+                                                                     (c) (x(n)) is ℓp-bounded iff (x(n)) is ℓq -bounded iff
+                                                                                       (n)
+                                                                             ∃L≥0 |xi | ≤ L for i = 1, · · · , N and n ∈ N.
+
+                                                                    Deducing these equivalences is a very good exercise (and po-
+                                                                    tential exam question).
+
+
+
+                                39                                                                 40
+Exercise. (Equivalence of metrics & comparison of balls)              Exercise. (dTGV is not equivalent to the standard metric on R)
+Let E1 = (S, d1) and E2 = (S, d2) for metrics d1 and d2 on            Let E1 be R with its standard metric, and let E2 be R with
+a set S.                                                              the TGV-metric given by
+                                                                                                 (
+ (a) Show that TFAE:                                                                               |x| + |y| if x ̸= y
+                                                                                  dTGV (x, y) :=
+       (i) d1 and d2 are topologically equivalent.                                                 0          if x = y.
+
+      (ii) For all p ∈ S and R > 0 there is r > 0 such that           Set
+
+                  BrE1 (p) ⊂ BRE2 (p) and BrE2 (p) ⊂ BRE1 (p).               f := idR : E1 → E2 and g := idR : E2 → E1.
+
+      (iii) For all A ⊂ S, A is d1-open if and only if A is           Show that
+            d2-open.
+                                                                       (a) g is Lipschitz;
+ (b) Show that TFAE:
+                                                                       (b) f is continuous at 0;
+       (i) d1 and d2 are Lipschitz equivalent
+                                                                       (c) for a ∈ R \ {0}, f is not continuous at a.
+      (ii) There are m, M > 0 such that, for all p ∈ S and
+           R > 0,                                                     Deduce that dTGV is not equivalent to the standard metric.
+                         E1
+                        BmR (p) ⊂ BRE2 (p) ⊂ BM
+                                              E1
+                                                R (p).
+
+
+
+
+                                 41                                                                 42
+
+
+
+
+Proposition. (Conditions for α ◦ d to be an equivalent metric)        Proof. We prove the first part; the last part is left as an
+Let S be a set. Consider a function                                   exercise.
+                                                                          Let d be a metric on S and set d′ := α ◦ d. We already
+                        α : [0, ∞[→ [0, ∞[,
+                                                                      know that d′ is a metric on S. Let a ∈ S and let (xn) be a
+which satisfies                                                       sequence in S.
+  (i) ∀s∈[0,∞[ α(s) = 0 ⇔ s = 0                          (Definite)       If (xn) is d-convergent to a then, by the continuity of α
+                                                                      at 0,
+ (ii) ∀s,t∈[0,∞[ s ≤ t ⇒ α(s) ≤ α(t)                 (Increasing)                d′(xn, a) = α(d(xn, a)) → 0 as n → ∞,
+(iii) ∀s,t∈[0,∞[ α(s + t) ≤ α(s) + α(t)            (Subadditive)      so (xn) is d′-convergent to a. Conversely, suppose that (xn) is
+Suppose further that                                                  not d-convergent to a. Then there is η > 0 and a subsequence
+                                                                      (xni ) such that
+ (iv) α is continuous at 0.                    (Continuous at 0)
+Then, for every metric d on S, α ◦ d is a topologically equiv-                         d(xni , a) ≥ η for all i ∈ N.
+alent metric.
+                                                                      Since α is increasing and α(s) > 0 for all s > 0,
+    Suppose that α also satisfies
+ (ii)′ ∃η>0∀s,t∈[0,∞[ s < t ≤ η ⇒ α(s) < α(t) (Strictly inc.)                      d′(xni , a) ≥ α(η) > 0 for all i ∈ N,
+Then, for every metric d on S, and every sequence (xn) in S,          so (xn) is not d′-convergent to a.
+   (xn) is d-Cauchy if and only if (xn) is (α ◦ d)-Cauchy.                The result therefore follows by Proposition (Equivalence
+                                                                      via convergence).
+Remarks.
+The conditions imply that α is continuous everywhere since            Remark.
+      0 ≤ α(s + t) − α(s) ≤ α(t) for all s, t ∈ [0, ∞[.               You will be expected to know the examples below.
+
+Whilst (i), (iii) and (iv) are also necessary, perhaps surpris-
+ingly (ii) is not.
+
+                                 43                                                                 44
+Examples. (Sources of topologically equivalent metrics)                 Corollary. (Topologically equivalent bounded metric)
+The functions α : [0, ∞[→ [0, ∞[ given by                               For every metric d on a set S, there is a topologically equiv-
+                                                                        alent bounded metric d′ such that, any sequence in S is d-
+ (0) α0(s) = cs, where c > 0,                                           Cauchy if and only if it is d′-Cauchy.
+ (1) α1(s) = min{s, 1},
+                                                                        Proof. Taking d′ = α ◦ d for α = α1, α2 or α3 above, d′ is
+              s                                                         such a metric.
+ (2) α2(s) = 1+s ,
+
+ (3) α3(s) = tan−1 s, for the function                                  Remark. Note that an unbounded metric cannot have a Lip-
+                                           π                            schitz equivalent bounded metric. Why not?
+                        tan−1 : [0, ∞[→ [0, [,
+                                           2
+
+ (4) α4(s) = s1/p, where p ∈ [1, ∞[.
+satisfy the hypotheses of the above proposition.
+
+Remark.
+For a sequence (xn) in a metric space (E, d), and i ∈ {0, · · · , 5},
+Proposition (Conditions for α ◦ d to be an equivalent metric)
+implies that
+
+   (xn) is d-Cauchy if and only if (xn) is (αi ◦ d)-Cauchy.
+
+
+
+
+                                45                                                                          46
+
+
+
+
+Convergence in countable product spaces                                 Proof. (a) Suppose that (ii) holds. Let ε > 0. Choose
+                                                                        K ∈ N such that
+Proposition. (Convergence in countable product spaces)                                  X
+Let E = (S1, d1), E = (S2, d2), . . . be a sequence of metric                             d′k - diam(Ek ) < ε,
+spaces and, for each i = 1, 2, ....., let d′i be a metric which is                            k>K
+topologically equivalent to di such that                                then, for each k ∈ {1, 2, · · · , K} choose Nk ∈ N such that
+                   X
+                          d′i- diam Si < ∞.                                                  (n)          ε
+                        i≥1
+                                                                                       d′k (xk , ak ) <     for n ≥ Nk .
+                                                                                                         K
+Let E = (S, d) for the set S = S1 × S2 × . . . and metric d             Set N = max{N1, ..., NK }. Then, for n ≥ N ,
+on S given by                                                                                 K                         ∞
+                                                                                                          (n)                       (n)
+                                                                                              X                         X
+                                                                                    (n)
+                                                                             d(x , a) ≤             d′k (xk , ak ) +           d′k (xk , ak )
+                           X
+               d(x, y) :=       d′i(xi, yi)).
+                                 i≥1                                                          k=1                      k=K+1
+                                                                                              K               ∞
+(Recall that this does define a metric on the Cartesian prod-                                 X               X
+uct set S.)                                                                               ≤         ε/K +              d′k - diam(Ek ) < 2ε.
+                                                                                              k=1           k=K+1
+   (a) For a ∈ E and a sequence (x(n)) in E, TFAE:
+                                                                                  (n)
+                                                                        Thus x → a as n → ∞. Therefore (ii) implies (i).
+  (i) x(n) → a as n → ∞
+                                                                          Suppose conversely that (i) holds. Then, for each i,
+       (n)
+ (ii) xi     → ai in Ei as n → ∞, for i = 1, 2, ...                                                 (n)
+                                                                                              d′i(xi , ai) ≤ d(x(n), a),
+     (b) Suppose further that, for each i = 1, 2, ....., the metric         (n)
+                                                                        so xi → ai. Therefore (i) implies (ii).
+d′i is such that a sequence in Ei is di-Cauchy if and only if it
+                                                                           (b) Noting that, by Corollary (Topologically equivalent
+is d′i-Cauchy. Then TFAE too:
+                                                                        bounded metric), (ii) is equivalent to
+  (i) (x(n)) is d-Cauchy                                                           (n)
+                                                                         (ii)′ (xi )n≥1 is d′i-Cauchy, for i = 1, 2, · · · ,
+           (n)
+ (ii) (xi )n≥1 is di-Cauchy, for i = 1, 2, ...                          the last part follows by a very similar argument.
+
+                                47                                                                          48
+For finite products the proposition simplifies as follows.         Exercise. (Continuity of the metric itself)
+                                                                   Let (E, d) be a metric space. Show that the metric d is
+Proposition. (Convergence in a finite product of spaces)           continuous, as a map d : E × E → [0, ∞[⊂ R with respect
+Let E1 = (S1, d1), . . . , EN = (SN , dN ), be metric spaces and   to the metric on E × E given by
+let S = S1 × · · · × SN with metric given by
+                                                                               d′ (x, y), (u, v) := d(x, u) + d(y, v).
+                                                                                                
+                                  N
+                                  X
+                     d(x, y) :=         di(xi, yi).
+                                  i=1
+
+Then for a ∈ E and a sequence (x(n)) in E, TFAE:
+  (i) x(n) → a as n → ∞
+       (n)
+ (ii) xi     → ai in Ei as n → ∞, for i = 1, 2, ...
+And the analogous correspondence of Cauchyness holds too.
+
+
+
+
+                                  49                                                            50
+
+
+
+
+Metric subspaces revisited                                         Example. (Open & closed sets of a metric subspace)
+Let E = (S, d) be a metric space. Recall that, for a subset        Let A = [0, 1[, and let A
+                                                                                           e denote A viewed as a metric sub-
+A of S,                                                            space of R with its usual metric. Then A is both open and
+              de := d|A×A : A × A → [0, ∞[                         closed in A,
+                                                                             e as it is the whole space—which is always open
+                                                                   and closed! However, A is neither open nor closed in the
+defines a metric on A. We refer to A
+                                   e = (A, d)
+                                           e as a metric           metric space R.
+subspace of E.
+                                                                   Remark. (Openness/closedness ‘in’)
+Proposition. (Balls in a metric subspace)                          This shows that, when speaking of openness, or closedness,
+Let E = (S, d), A, A e and de be as above, and let a ∈ A and       of a set A, it is essential to be clear about the metric space
+r > 0. Then, denoting the balls in the metric space A e by B,
+                                                           e       that A is being considered in.
+           er (a) = A ∩ Br (a) and B
+           B                       er [a] = A ∩ Br [a].
+                                                                   Example. (Z as metric subspace of R)
+                                                                   Consider R with its standard metric, and let A
+                                                                                                                e be the metric
+Proof. Let x ∈ A. Then
+                                                                   subspace (Z, d) of R. Then every subset of Z is both open
+                                                                                 e
+x∈B
+  er (a) ⇐⇒ x ∈ A and d(x,
+                      e a) < r                                     and closed in A.
+                                                                                  e
+         ⇐⇒ x ∈ A and d(x, a) < r ⇐⇒ x ∈ A ∩ Br (a),
+                                                                   Proof. It suffices to show that, for all k ∈ Z, the set {k}
+so the first identity holds. The second follows very similarly.    is open in A.
+                                                                              e (Why?) This follows from the fact that, for
+                                                                   k ∈ Z,
+                                                                             e1(k) = Z ∩ B1(k)
+                                                                             B
+Harder question.                                                                     
+What are the closed sets of a metric subspace?                                     = n ∈ Z : |n − k| < 1 = {k},
+
+                                                                   so the set {k} is actually an open ball in A,
+                                                                                                              e and so is an open
+                                                                   set in A.
+                                                                          e
+
+                                  51                                                            52
+Theorem. (Closed sets of a metric subspace)              Proof. (i) ⇒ (ii): Suppose that (i) holds. Let F = X
+Let A ⊂ S, for a metric space E = (S, d), let A
+                                              e be the   denote the closure of X in E. Then F is closed in E and
+                              e and let X ⊂ A. Then
+resulting metric subspace (A, d),                                          X = A ∩ X ⊂ A ∩ F.
+TFAE:
+                                                         It therefore suffices to show that A ∩ F ⊂ X, so that X =
+ (i) X is closed in A.
+                    e
+                                                         A ∩ F . Accordingly, let p ∈ A ∩ F . Since p ∈ F and
+                                                         F = X, there is a sequence (xn) in X such that xn → p.
+ (ii) X = A ∩ F , for some set F closed in E.
+                                                         Since p ∈ A, (xn) is a sequence in X, and X is closed in Ae
+                                                         (by assumption), it follows that p ∈ X. Thus A ∩ F ⊂ X,
+                                                         as required.
+                                                             (ii)⇒ (i): Suppose that X = A ∩ F where F is a closed
+                                                         set of E. Let (xn) be a sequence in X which converges in A,
+                                                                                                                  e
+                                                         and set a = lim xn. Then a ∈ A and
+                                                                               e n, a) → 0 as n → ∞,
+                                                                    d(xn, a) = d(x
+                                                         so (xn) is a sequence in F converging to a in E, and F is
+                                                         closed in E. Thus a ∈ F also, so a ∈ A ∩ F = X. Therefore
+                                                         X is closed in A.
+                                                                        e
+
+                                                         Exercise. (Open sets of a metric subspace)
+                                                         Let A ⊂ S, for a metric space E = (S, d), let Ae be the
+                                                         resulting metric subspace (A, d), and let X ⊂ A. Then
+                                                                                        e
+                                                         TFAE:
+                                                           (i) X is open in A.
+                                                                            e
+
+                                                          (ii) X = A ∩ U , for some set U open in E.
+
+                           53                                                        54
+
+
+
+
+                                                         Exercises for Section 4
+
+
+
+
+                           55                                                        56
+Exercise. 4.1 (Open subsets of discrete metric spaces)              Exercise. 4.5 (Global continuity via closed sets)
+What are the open sets of a discrete metric space? [5 marks]        Let f ∈ F (E; E ′) for metric spaces E and E ′. Show that
+                                                                    TFAE:
+Exercise. 4.2 (Open minus finite equals open)
+Let U = V \ F , where V, F ⊂ E for a metric space E.                  (i) f is continuous
+Suppose that V is open and F is a finite set. Show that U
+is open.                                        [10 marks]           (ii) f −1(C) is closed for all closed subsets C of E ′.
+Exercise. 4.3 (Inverse images of direct images & vice versa)        [10 marks]
+Let f ∈ F (S; T ) for sets S and T , and let A ⊂ S and
+B ⊂ T.                                                              Exercise. 4.6 (Equivalences of metrics as equivalence relations)
+                                                                    Show that both topological equivalence and Lipschitz equiv-
+ (a) Identify the sets f −1 f (A) and f f −1(B) , and show
+                                                
+                                                                    alence are equivalence relations on the set of all metrics on a
+     that
+                                                                    given set S.                                        [10 marks]
+           f −1 f (A) ⊃ A whereas f f −1(B) ⊂ B.
+                                               
+
+    (b) Give examples where the above inclusions are proper
+        (i.e. definitely not equalities).
+    (c) Show that f −1 f (A) = A for all A ⊂ S if and only if
+                               
+
+        f is injective.
+    (d) Show that f f −1(B) = B for all B ⊂ T if and only
+                               
+
+        if f is surjective.
+·                                                      [10 marks]
+Exercise. 4.4 (Closed subsets of discrete metric spaces)
+What are the closed sets in a discrete metric space E?
+·                                                   [5 marks]
+
+                               57                                                                 58
+
+
+
+
+Exercise. 4.7 (Equivalence of metrics & comparison of balls)        Exercise. 4.8 (dTGV is not equivalent to the standard metric on R)
+                                                                    Let E1 be R with its standard metric, and let E2 be R with
+Let E1 = (S, d1) and E2 = (S, d2) for metrics d1 and d2 on          the TGV-metric given by
+a set S.                                                                                        (
+                                                                                                 |x| + |y| if x ̸= y
+    (a) Show that TFAE:                                                          dTGV (x, y) :=
+                                                                                                 0          if x = y.
+         (i) d1 and d2 are topologically equivalent.                Set
+        (ii) For all p ∈ S and R > 0 there is r > 0 such that
+                                                                          f := idR : E1 → E2 and g := idR : E2 → E1.
+                BrE1 (p) ⊂ BRE2 (p) and BrE2 (p) ⊂ BRE1 (p).
+                                                                    Show that
+        (iii) For all A ⊂ S, A is d1-open if and only if A is
+                                                                     (a) g is Lipschitz;
+              d2-open.
+                                                                     (b) f is continuous at 0;
+    (b) Show that TFAE:
+                                                                     (c) for a ∈ R \ {0}, f is not continuous at a.
+         (i) d1 and d2 are Lipschitz equivalent
+        (ii) There are m, M > 0 such that, for all p ∈ S and        Deduce that dTGV is not equivalent to the standard metric.
+             R > 0,                                                 [10 marks]
+                       E1
+                      BmR (p) ⊂ BRE2 (p) ⊂ BM
+                                            E1
+                                              R (p).
+                                                                    Exercise. 4.9 (Continuity of the metric itself)
+                                                                    Let (E, d) be a metric space. Show that the metric d is
+                                                                    continuous, as a map d : E × E → [0, ∞[⊂ R with respect
+                                                                    to the metric on E × E given by
+
+                                                                                d′ (x, y), (u, v) := d(x, u) + d(y, v).
+                                                                                                 
+
+
+
+                               59                                                                 60
+Exercise. 4.10 (Open sets of a metric subspace)               Exercise. 4.12 (Uncountability of R, again)
+Let A ⊂ S, for a metric space E = (S, d), let A e be the
+                                                               (a) Show that the map
+resulting metric subspace (A, d), and let X ⊂ A. Then
+                               e
+                                                                                        x 7→ F (⌊10x⌋), F (⌊102x⌋), · · ·
+                                                                                                                            
+TFAE:                                                               ψ : R → {0, 1}N,
+  (i) X is open in A.
+                   e
+                                                                   defined in terms of the function
+ (ii) X = A ∩ U , for some set U open in E = (S, d).
+                                                                                                  (
+                                                                                                    0 if m is even
+                                                                          F : Z → {0, 1}, m 7→                     ,
+Exercise. 4.11 (Separability of C(I; R), again)                                                     1 if m is odd
+Let E = C(I; R) with the supremum metric. Let                      is surjective.
+                             ∞
+                             [                                 (b) Deduce that there are no surjections
+                        A=         An
+                             n=0                                                         σ : N → R,
+where An denotes the set of continuous functions g : I →
+                                                                   using a suitable implication of Cantor’s Theorem.
+R which are linear on each subinterval of I of the form
+[k/2n, (k + 1)/2n], and satisfy                                                                                [10 marks]
+          g j/2n ∈ Q for all j ∈ {0, 1, · · · , 2n}.          Floor notation.
+    Show the following                                        Let p ∈ R. Then
+    (a) A is countable.                         [10 marks]
+                                                                           ⌊p⌋ := max{m ∈ N : m ≤ p}
+    [Hint: Show that each set An is countable, by injecting
+             n
+it into Q1+2 .]                                                                 = min{n ∈ N : n + 1 > p}.
+    (b) A is dense in E.
+[Hint: Since I is closed and bounded, each function f ∈ E
+is uniformly continuous.]
+    Deduce that E is separable.
+
+                             61                                                            62
+

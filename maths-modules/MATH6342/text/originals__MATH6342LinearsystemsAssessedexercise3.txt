@@ -1,0 +1,17 @@
+[Hand transcription of a scanned PDF; pdftotext found no text layer]
+Assessed Exercise 3
+A3.1 (i) Calculate the Laplace transform of cos 2ωt from the definition, and
+     (ii) deduce the Laplace transform of sin^2 ωt where ω > 0 is a constant.     [4]
+A3.2 Solve the initial value problem dy/dt - 7y = sin 2t, y(0) = 0,
+     by taking Laplace transforms. Use partial fractions at the final step.      [4]
+A3.3 Let A = [[2,1,0],[1,2,1],[0,1,2]].
+     (i) Find the eigenvectors and corresponding eigenvalues of A.               [3]
+     (ii) Hence find a real matrix U such that U^T U = I and Δ = U^T A U is diagonal. [2]
+     (iii) Find an expression for exp(tA) in terms of exp(tΔ).                   [1]
+A3.4 Consider (n x n) real matrices A, S, K, L. Let K be positive definite and real symmetric
+     (discussed in MATH220; see frame 194 for a reminder).
+     (i) Show that if κ is an eigenvalue of K, then κ > 0 (prove (i) => (ii) in Lemma 194).
+     (ii) Deduce that det K > 0 and trace(K) > 0.
+     (iii) Let S be invertible. Show that S'KS is also positive definite.
+     (iv) Deduce that exp(A')K exp(A) is also positive definite.
+     (v) Suppose that L is positive definite. Show that K + L is also positive definite. [6]

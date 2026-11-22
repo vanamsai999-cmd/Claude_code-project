@@ -1,0 +1,1450 @@
+MATH6310 | Sections 0–4 + worked practice                                                     Sai Vanam
+
+
+
+                           Metric Spaces & Topology
+                           Sections 0, 1, 2, 3 and 4 in 2 21 hours
+                 Guided study session and worked question bank for Sai Vanam
+
+  What you will do in this session
+  This session covers Sections 0–4, five sections in total, following your original lecture numbering.
+  This is a focused first pass through their main definitions and proof methods, with short questions
+  and worked model answers. It is designed to be completed in 150 minutes including a five-
+  minute break. Keep the full lecture guide nearby for topics needing a second pass; 150 minutes
+  cannot replace practice on every exercise.
+
+  New: your nine question sets, organised by topic
+  Section 0 now includes Questions 1a–1b on metric axioms. Section 2 includes Questions 2a–2g on
+  boundedness, monotonicity, convergence, Cauchy sequences, subsequences, uniform continuity and
+  Bolzano–Weierstrass. Each question reproduces the supplied options and is followed by a worked
+  answer and a reusable method. These added practice pages are outside the 150-minute route:
+  skip them on a timed first pass, then return for deeper practice. Full proofs are included where
+  useful; answers are independently written, not official mark schemes.
+
+  Your exact 150-minute route
+
+   Elapsed time         Task                                                 Duration
+   00:00–00:20          Section 0: metric axioms and examples                20 minutes
+   00:20–00:45          Section 1: sets, maps and countability               25 minutes
+   00:45–01:10          Section 2: analysis and linear algebra revision      25 minutes
+   01:10–01:15          Break: leave your desk                               5 minutes
+   01:15–01:45          Section 3: metric-space fundamentals                 30 minutes
+   01:45–02:20          Section 4: metric space topology                     35 minutes
+   02:20–02:30          Closed-notes recall test and corrections             10 minutes
+
+
+  Method: Make the time useful
+  Use paper, a pen and a countdown timer. Do not copy whole paragraphs. Write each definition once,
+  then reproduce its proof pattern from memory. Spend the stated attempt time before revealing a
+  model answer. If a question takes too long, mark it with a star and move on at the end of its time
+  window. Return to starred items after the 150 minutes.
+
+  Exam tips and common mistakes
+  For each topic ask: What do I need to prove? Which definition starts the proof? What estimate
+  connects the two? Good answers state assumptions and justify every implication. Model answers
+  here are independently written, not official mark schemes.
+
+
+
+
+                                                   1
+MATH6310 | Sections 0–4 + worked practice                                                        Sai Vanam
+
+
+Section 0: what is a metric?
+
+  Method: Time window: 00:00–00:06; 6 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  A metric is an abstract distance rule
+  A metric on a set S is a function d : S × S → [0, ∞) with finite values satisfying, for all x, y, z ∈ S,
+
+               d(x, y) = 0 ⇐⇒ x = y                         (zero exactly at equal points),
+                   d(x, y) = d(y, x)                        (symmetry),
+                    d(x, z) ≤ d(x, y) + d(y, z)             (triangle inequality).
+
+  A metric space is the pair (S, d): both the set and the distance rule matter. The triangle inequality
+  says going via another point cannot make the total route shorter than the direct distance.
+  In R, d(x, y) = |x − y|. In Rn , Euclidean distance is d2 (x, y) =
+                                                                     pP
+                                                                                     2
+                                                                         i |xi − yi | . Different metrics
+  on the same set can give different convergence and geometric shapes.
+
+  Method: The metric-verification checklist
+  First check the rule is defined and finite for every pair. Check nonnegativity, zero iff equality,
+  and symmetry. Then prove the triangle inequality for arbitrary x, y, z. For piecewise definitions,
+  separate cases. To disprove a candidate, one failed axiom is enough.
+
+  Exam question: Quick check: attempt for 1 minute
+
+  Is d(x, y) = |x − y|2 a metric on R? Give a decisive reason.
+
+  Worked model answer
+  No. With x = 0, y = 1, z = 2, d(0, 2) = 4 but d(0, 1) + d(1, 2) = 1 + 1 = 2. This violates triangle
+  inequality. Symmetry and definiteness alone do not make a rule a metric.
+
+  A useful alternate construction
+  If ϕ : A → E is injective and dE is a metric, then dA (x, y) = dE (ϕ(x), ϕ(y)) is a metric. All axioms
+  transfer from E; injectivity is needed because zero distance between images must imply equality of
+  the original points. Example: | arctan x − arctan y| defines a metric on R.
+
+
+
+
+                                                     2
+MATH6310 | Sections 0–4 + worked practice                                                           Sai Vanam
+
+
+Section 0: discrete and counting metrics
+
+  Method: Time window: 00:06–00:12; 6 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  The discrete metric
+  For any set S, let d(x, y) = 0 when x = y, and 1 otherwise. It ignores numerical size: all different
+  points are one unit apart. Its values are finite/nonnegative, its zero condition is built in, and
+  equality is symmetric.
+  For triangle inequality, if x = z, the left side is zero. If x ̸= z, at least one of x ̸= y and y ̸= z must
+  hold, since otherwise x = y = z. Hence the right side is at least 1, which is the left side.
+
+  Exam question: Exercise 0.4 method: attempt for 2 minutes
+
+  For finite sets, define d(A, B) = #(A△B), where A△B consists of points in exactly one of A, B.
+  Prove triangle inequality by a set inclusion.
+
+  Worked model answer
+  The key inclusion is
+                                        A△C ⊆ (A△B) ∪ (B△C).
+  If a point has different membership in A and C, its membership in B must differ from at least one
+  of those two. Thus it belongs to the union on the right. Taking finite cardinalities gives
+
+                       #(A△C) ≤ #((A△B) ∪ (B△C)) ≤ #(A△B) + #(B△C).
+
+  This is d(A, C) ≤ d(A, B) + d(B, C).
+
+  Check the interpretation with a small example
+
+  For A = {1, 2}, B = {2, 3} and C = {3, 4}, the distances are d(A, B) = 2, d(B, C) = 2 and
+  d(A, C) = 4. Here triangle inequality is equality. A numerical example checks the formula but does
+  not replace the general proof.
+
+  Exam tips and common mistakes
+  For counting arguments, find an inclusion before counting. Do not assume all three points or all
+  three sets are distinct when proving a metric axiom.
+
+
+
+
+                                                      3
+MATH6310 | Sections 0–4 + worked practice                                                           Sai Vanam
+
+
+Section 0: distances between functions and sets
+
+  Method: Time window: 00:12–00:20; 8 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Two function metrics, two meanings of closeness
+
+  On C([0, 1]; R),
+                                        Z 1
+                          d1 (f, g) =         |f − g|,   dsup (f, g) = sup |f (t) − g(t)|.
+                                         0                            t∈[0,1]
+
+  The first measures total area of disagreement; the second measures worst error. Since d1 ≤ dsup ,
+  small sup error gives small integral error. The converse fails: a height-one triangular spike of width
+  1/n has area 1/(2n) but sup norm 1.
+  Sup triangle inequality: at every t,
+
+                     |f (t) − h(t)| ≤ |f (t) − g(t)| + |g(t) − h(t)| ≤ dsup (f, g) + dsup (g, h).
+
+  The final bound is independent of t, so taking the supremum proves the desired inequality.
+
+  Exam question: Exercise 0.2 method: attempt for 2 minutes
+             R1
+  Why does    0 |h| = 0 imply h = 0 for continuous h? Where is continuity used?
+
+
+  Worked model answer
+  If h(p) ̸= 0, let c = |h(p)| > 0. Continuity gives a neighbourhood of p in which |h(t) − h(p)| < c/2,
+  so |h(t)| > c/2. This neighbourhood contains an interval J of positive length, even if p is an
+  endpoint. Hence 01 |h| ≥ (c/2)|J| > 0, a contradiction. Continuity turns a nonzero value at one
+                      R
+
+  point into positive height on a positive-length interval.
+
+  Recognise these further examples; revisit their long proofs later
+  Hausdorff distance compares nonempty closed bounded Euclidean sets by the smallest fattening
+  radius allowing each to contain the other. Its triangle proof combines A ⊆ Br , B ⊆ Cs to obtain
+  A ⊆ Cr+s , and also the reverse containment.
+  TGV distance between distinct points is ∥x∥2 + ∥y∥2 , as if travelling via the origin. Its radial
+  variant uses ordinary distance for points on a common line through the origin. Their proofs require
+  case splits; the full guide gives them. These are examples to recognise, not reasons to abandon the
+  metric axioms.
+
+  Exam tips and common mistakes
+  At minute 20, say the metric axioms without looking. If you cannot explain the discrete triangle
+  proof, star this topic before continuing.
+
+
+
+
+                                                          4
+MATH6310 | Sections 0–4 + worked practice                                                       Sai Vanam
+
+
+Section 0 practice: 1a. Metric space axioms I
+
+  Concept and method
+
+  A metric is a finite, non-negative distance with d(x, y) = 0 ⇐⇒ x = y, symmetry and the triangle
+  inequality. First test d(x, x), then test distinct points with zero distance. If these pass, prove the
+  triangle inequality. A single counterexample disproves an axiom; examples alone cannot prove it
+  for every input.
+
+  Exam question: 1a: select every metric on R
+
+   a. d(x, y) = min{1, |x − y|}.
+   b. d(x, y) = |x − y| + 1.
+   c. d(x, y) = | arctan x − arctan y|, where arctan is the inverse of tan : (−π/2, π/2) → R.
+   d. d(x, y) = max{|x|, |y|}.
+   e. d(x, y) = |x − y|.
+
+  Worked model answer
+  Select a, c and e.
+  a: Yes. This caps ordinary distance at 1. Non-negativity and symmetry are immediate, and the
+  minimum is zero exactly when x = y. For the triangle inequality, if either |x − y| ≥ 1 or |y − z| ≥ 1,
+  then d(x, y) + d(y, z) ≥ 1 ≥ d(x, z). Otherwise both distances are less than 1, and
+
+                        d(x, z) ≤ |x − z| ≤ |x − y| + |y − z| = d(x, y) + d(y, z).
+
+  b: No. d(x, x) = 1, whereas a point must have zero distance from itself.
+  c: Yes. It is non-negative and symmetric. Injectivity of arctan gives d(x, y) = 0 ⇐⇒ x = y.
+  Also,
+                | arctan x − arctan z| ≤ | arctan x − arctan y| + | arctan y − arctan z|.
+  d: No. d(1, 1) = 1 ̸= 0.
+  e: Yes. Absolute value gives non-negativity, identity and symmetry; the inequality |x − z| ≤
+  |x − y| + |y − z| gives the last axiom.
+
+  Exam tips and common mistakes
+
+  For an injective map f : X → R, the formula |f (x) − f (y)| is a metric on X. Injectivity matters:
+  without it, distinct inputs could have distance zero. Here tan−1 means inverse tangent, not 1/ tan.
+
+
+
+
+                                                    5
+MATH6310 | Sections 0–4 + worked practice                                                         Sai Vanam
+
+
+Section 0 practice: 1b. Metric space axioms II
+
+  Exam question: 1b: select every metric on R2
+
+  For x = (x1 , x2 ) and y = (y1 , y2 ):
+                    |x1 − y1 | + |x2 − y2 |
+   a. d(x, y) =                              .
+                 |x1 − y1 | + |x2 − y2 | + 1
+  b. d(x, y) = |x1 − y1 |.
+   c. d(x, y) = |x1 − y1 | + |x2 − y2 |.
+  d. d(x, y) = max{|x1 − y1 |, |x2 − y2 |}.
+                                            2
+   e. d(x, y) = |x1 − y1 |1/2 + |x2 − y2 | .
+
+
+  Worked model answer
+  Select a, c and d.
+  c: Yes (taxicab metric). All terms are non-negative, the sum is zero exactly when both
+  coordinates agree, and symmetry is immediate. Applying |xi − zi | ≤ |xi − yi | + |yi − zi | for i = 1, 2
+  and adding proves the triangle inequality.
+  a: Yes. Write ρ for the metric in c. The function t 7→ t/(1 + t) is increasing for t ≥ 0. Put
+  B = ρ(x, y) and C = ρ(y, z). Then
+
+                  ρ(x, z)      B+C      B       C      B   C
+                            ≤       =       +       ≤    +    .
+                1 + ρ(x, z)   1+B+C   1+B+C   1+B+C   1+B 1+C
+
+  This proves the triangle inequality. The other axioms follow from those of ρ; the denominator is
+  always positive.
+  b: No. For x = (0, 0) and y = (0, 1), x ̸= y but d(x, y) = 0. The second coordinate is ignored.
+  d: Yes (maximum metric). Non-negativity, identity and symmetry hold. Each coordinate
+  satisfies
+                          |xi − zi | ≤ |xi − yi | + |yi − zi | ≤ d(x, y) + d(y, z).
+  Taking the maximum over i = 1, 2 gives the required triangle inequality.
+  e: No. Take x = (0, 0), y = (0, 1), z = (0, 2). Then d(x, z) = 4, but d(x, y) + d(y, z) = 1 + 1 = 2.
+  This violates the triangle inequality.
+
+  Method: Choosing a useful counterexample
+  Set one coordinate equal at all three points to simplify a two-dimensional formula. Equally spaced
+  points 0, 1, 2 expose squared distances: 22 > 12 + 12 . When proving a metric, explicitly check the
+  three easy properties before the triangle inequality.
+
+
+
+
+                                                     6
+MATH6310 | Sections 0–4 + worked practice                                                      Sai Vanam
+
+
+Section 1: sets and functions
+
+  Method: Time window: 00:20–00:26; 6 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  The language used in proofs
+  A ⊆ B means every element of A lies in B. To prove equality, prove both inclusions. The power
+  set P(S) is the set of all subsets of S. A union means “at least one”; an intersection means “every”.
+  De Morgan’s laws switch union/intersection when taking complements.
+    i∈I Si consists of coordinate families with xi ∈ Si . Equality means coordinatewise equality. For
+  Q
+
+  I = N, the objects are sequences. The axiom of choice says a product of nonempty sets is nonempty,
+  or equivalently one may select an element from each set of an arbitrary nonempty-set family.
+
+  A function includes its domain and codomain
+  For f : S → T , injective means f (x) = f (y) ⇒ x = y; surjective means every point of T is attained;
+  bijective means both. The range f [S] can be smaller than T .
+  A restriction reduces the domain. A co-restriction reduces the codomain to a set still containing
+  the range. An extension enlarges the domain while preserving the old values. Composition acts
+  from right to left: (g ◦ f )(x) = g(f (x)).
+  Images and preimages are
+
+                       f [A] = {f (a) : a ∈ A},      f −1 [B] = {s ∈ S : f (s) ∈ B}.
+
+  An inverse image exists for every function; it does not require an inverse function.
+
+  Exam question: Attempt for 1 minute
+
+  For f : R → R, f (x) = x2 , find f [{−1, 1}] and f −1 [{1}]. Is f injective or surjective?
+
+  Worked model answer
+  The image is {1} and the preimage is {−1, 1}. The map is not injective because the two inputs
+  have equal output, and not surjective onto R because no negative value is attained. Changing the
+  domain and codomain to [0, ∞) would make the same squaring rule bijective.
+
+
+
+
+                                                     7
+MATH6310 | Sections 0–4 + worked practice                                                        Sai Vanam
+
+
+Section 1: building bijections and inverses
+
+  Method: Time window: 00:26–00:33; 7 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Method: The safest bijection proof
+  Either prove injective and surjective separately, or define an inverse and check both compositions.
+  For maps involving equivalence classes or functions, check well-definedness first. Do not merely
+  state “obvious inverse” when the domain or codomain matters.
+
+  Exam question: Exercise 1.7: attempt for 3 minutes
+
+  Let χ : P(S) → F(S; {0, 1}) send A to its indicator 1A . Prove it is bijective by constructing the
+  inverse.
+
+  Worked model answer
+  For a binary-valued function f define σ(f ) = {s ∈ S : f (s) = 1}. Then σ(1A ) = A, because an
+  indicator is one exactly on A. Conversely, for every s, if f (s) = 1, the point lies in σ(f ) and
+  1σ(f ) (s) = 1; if f (s) = 0, the point is outside and the indicator is zero. Thus 1σ(f ) = f . Both
+  compositions are identities, so χ is bijective.
+
+  Left versus right inverse
+  g ◦ f = idS is a left inverse relation and implies f injective. f ◦ h = idT is a right inverse relation
+  and implies f surjective. If both hold, associativity gives
+
+                                    g = g ◦ (f ◦ h) = (g ◦ f ) ◦ h = h.
+
+  Thus a two-sided inverse is unique. A left inverse can be constructed for an injection with nonempty
+  domain by inverting on the range and choosing any one fixed output elsewhere. Right inverses of
+  arbitrary surjections use choice to pick one point in each fibre.
+
+  Image identities worth retaining
+
+                               A ⊆ f −1 [f [A]],    f [f −1 [B]] = B ∩ f [S].
+  Preimages preserve unions, intersections and complements. Images preserve unions, but only
+  f [A ∩ B] ⊆ f [A] ∩ f [B] generally. Equality can fail for a constant map and two disjoint nonempty
+  sets.
+
+
+
+
+                                                    8
+MATH6310 | Sections 0–4 + worked practice                                                      Sai Vanam
+
+
+Section 1: relations, partitions and countability
+
+  Method: Time window: 00:33–00:40; 7 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Equivalence relation means three properties
+  Reflexive: x ∼ x. Symmetric: x ∼ y ⇒ y ∼ x. Transitive: x ∼ y and y ∼ z ⇒ x ∼ z. The class
+  [x] = {y : y ∼ x} groups equivalent points. Classes are nonempty, cover the set, and are disjoint
+  unless equal; hence they form a partition.
+  Conversely a partition gives an equivalence relation by “in the same block”. For any function f , the
+  rule x ∼ y ⇐⇒ f (x) = f (y) is an equivalence relation. The induced map [x] 7→ f (x) is a bijection
+  from classes to the range. Equal representatives have equal outputs, so the formula is well-defined.
+
+  Exam question: Attempt for 1 minute
+  Why do symmetry and transitivity alone not force reflexivity?
+
+  Worked model answer
+  They do not guarantee that a point is related to anything. The empty relation on a nonempty set
+  is symmetric and transitive vacuously, but no point is related to itself. A proof starting “choose y
+  with x ∼ y” would assume an unjustified existence statement.
+
+  Countable does not mean finite
+  Countable means there is an injection into N; finite sets are included. Integers are countable via
+  the list 0, 1, −1, 2, −2, . . .. Finite products and countable unions of countable sets are countable.
+  Rationals are countable because countable Z × N maps onto them via (m, n) 7→ m/n.
+  Rational-coefficient polynomials are countable: degree-at-most-k polynomials correspond to tuples
+  in Qk+1 ; then take a countable union over k. Finite subsets of N are countable by listing each set’s
+  elements increasingly and sorting by its finite size.
+
+  Exam tips and common mistakes
+  A countable infinite product can be uncountable. The finite-product rule does not prove that binary
+  sequence space {0, 1}N is countable.
+
+
+
+
+                                                    9
+MATH6310 | Sections 0–4 + worked practice                                                       Sai Vanam
+
+
+Section 1: Cantor’s argument and a checkpoint
+
+  Method: Time window: 00:40–00:45; 5 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Exam question: Cantor’s theorem: attempt for 2 minutes
+
+  Prove no function f : S → P(S) is surjective.
+
+  Worked model answer
+  Define D = {s ∈ S : s ∈ / f (s)}. If f were onto, some x would satisfy f (x) = D. Then x ∈ D iff
+  x∈
+   / f (x) iff x ∈
+                 / D, a contradiction. Therefore no such surjection exists.
+
+  The binary-sequence version
+                                                                                (n)
+  If rows s(1) , s(2) , . . . supposedly list all binary sequences, define bn = 1 − sn . The new sequence
+  differs from row n in coordinate n, so it appears nowhere in the list. Thus {0, 1}N is uncountable.
+  Schroder–Bernstein says injections in both directions between two sets imply a bijection exists.
+  Know the statement; the notes mark its proof non-examinable. Partial orders and Zorn’s lemma
+  are optional self-study in Section 1: recognise reflexivity, antisymmetry and transitivity, and that
+  Zorn supplies a maximal element when every chain has an upper bound. Their deeper proofs are
+  not part of this timed route.
+
+  Exam question: Checkpoint: attempt for 1 minute
+  Explain why the set of rational-coefficient polynomials is countable but all infinite binary sequences
+  are not.
+
+  Worked model answer
+  Each polynomial needs only a finite tuple of rational coefficients. Sort by a degree bound, giving
+  a countable union of finite products of countable sets. Binary sequences allow infinitely many
+  independent coordinates; the diagonal construction produces a missing sequence from any proposed
+  countable list. The finite-product argument therefore does not apply to them.
+
+
+
+
+                                                   10
+MATH6310 | Sections 0–4 + worked practice                                                  Sai Vanam
+
+
+Section 2: supremum, infimum and approximation
+
+  Method: Time window: 00:45–00:51; 6 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Least upper bound versus maximum
+  s = sup A means a ≤ s for every a ∈ A, and no smaller number is an upper bound. A maximum
+  must also belong to A. For (0, 1), supremum is 1 but there is no maximum; infimum is 0 but no
+  minimum.
+  The least upper bound principle guarantees a real supremum for every nonempty upper-bounded
+  real set. The corresponding infimum is inf A = − sup(−A). The Archimedean property lets you
+  choose n with 1/n < ε. Rationals and irrationals both lie between any two distinct reals.
+
+  Method: The approximation lemma
+  For any ε > 0, there is a ∈ A with s − ε < a ≤ s. Otherwise s − ε would itself be an upper bound
+  smaller than s. Choosing ε = 1/n gives a sequence an ∈ A converging to s.
+  For an infimum l, choose an with l ≤ an < l + 1/n. This is how to choose approximately closest
+  points when an actual minimiser may not exist.
+
+  Exam question: Exercise 2.6: attempt for 2 minutes
+
+  Show sup(Q ∩ [0, 2π]) = 2π and decide whether this is a maximum.
+
+  Worked model answer
+  2π is an upper bound and the set is nonempty because it contains zero. For any ε > 0, rational
+  density gives a rational q with max{0, 2π − ε} < q < 2π. Thus q belongs to the set and lies above
+  2π − ε. No smaller number can be an upper bound, proving the supremum is 2π. It is not a
+  maximum, since 2π is irrational and is absent from the set.
+
+  Exam tips and common mistakes
+
+  Never assume a supremum or infimum is attained. Approximate it with an error such as 1/n or ε
+  unless you have a theorem guaranteeing attainment.
+
+
+
+
+                                                 11
+MATH6310 | Sections 0–4 + worked practice                                                      Sai Vanam
+
+
+Section 2: sequences and subsequences
+
+  Method: Time window: 00:51–00:58; 7 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  The three definitions
+
+                           xn → a ⇐⇒ ∀ε > 0 ∃N ∀n ≥ N : |xn − a| < ε.
+                      (xn ) Cauchy ⇐⇒ ∀ε > 0 ∃N ∀n, m ≥ N : |xn − xm | < ε.
+  Bounded means |xn | ≤ M for every n and one finite M . Convergent implies Cauchy implies
+  bounded. In R, Cauchy also implies convergent. Bounded alone does not: (−1)n oscillates forever.
+  A subsequence xnk has strictly increasing indices. Bolzano–Weierstrass says every bounded real
+  sequence has a convergent subsequence. A bounded increasing sequence converges to its supremum;
+  the decreasing version uses its infimum.
+
+  Limsup and liminf are limits of tail bounds
+
+  For bounded (xn ) put un = supk≥n xk and ln = inf k≥n xk . Then un decreases, ln increases, and
+
+                              lim sup xn = lim un ,        lim inf xn = lim ln .
+                                            n                             n
+
+  The sequence converges iff these two values agree. For xn = (−1)n + 1/n, even terms tend to 1 and
+  odd terms to −1, so limsup is 1 and liminf is −1.
+
+  Exam question: Attempt for 2 minutes
+  Prove uniqueness of limits. Start from xn → a and xn → b.
+
+  Worked model answer
+  For every n, |a − b| ≤ |a − xn | + |xn − b|. Both terms tend to zero, so |a − b| = 0 and a = b. In an
+  explicit contradiction proof, if a ̸= b, choose ε = |a − b|/3 and a common large cutoff making both
+  distances below ε; then |a − b| < 2|a − b|/3, impossible.
+
+  Exam tips and common mistakes
+  For two convergent sequences, combine their cutoffs by taking the maximum. For two error terms,
+  begin with tolerance ε/2. These are choices you can reuse throughout the module.
+
+
+
+
+                                                      12
+MATH6310 | Sections 0–4 + worked practice                                                       Sai Vanam
+
+
+Section 2: norms, inner products and induced metrics
+
+  Method: Time window: 00:58–01:04; 6 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Norm means a length rule on a vector space
+  A norm is a finite nonnegative function satisfying
+
+                   ∥x∥ = 0 ⇐⇒ x = 0,        ∥λx∥ = |λ| ∥x∥ ,    ∥x + y∥ ≤ ∥x∥ + ∥y∥ .
+
+  Examples on RN are ∥x∥1 =      i |xi |, ∥x∥2 = (
+                                                            2 1/2 and ∥x∥
+                                                     i |xi | )            ∞ = maxi |xi |. The comparison
+                                 P               P
+
+
+                             ∥x∥∞ ≤ ∥x∥p ≤ N 1/p ∥x∥∞          (1 ≤ p < ∞)
+
+  is crucial for finite-coordinate arguments.
+  An inner product is positive definite, conjugate symmetric and linear in one argument. The notes
+                                                                                           p
+  use linearity in the second argument. Cauchy–Schwarz gives |⟨x, y⟩| ≤ ∥x∥ ∥y∥, and ∥x∥ = ⟨x, x⟩
+  is its induced norm.
+
+  Exam question: 2023 Q2(a) method: attempt for 2 minutes
+
+  Prove that d(x, y) = ∥y − x∥ defines a metric from any norm.
+
+  Worked model answer
+  Finiteness and nonnegativity come from the norm. Its definiteness gives d(x, y) = 0 ⇐⇒ y − x =
+  0 ⇐⇒ x = y. Homogeneity with scalar −1 gives symmetry. Finally,
+
+           d(x, z) = ∥z − x∥ = ∥(z − y) + (y − x)∥ ≤ ∥z − y∥ + ∥y − x∥ = d(y, z) + d(x, y).
+
+  Thus all metric axioms hold.
+
+  Minimal linear algebra revision
+
+  A linear subspace contains zero and is closed under u + λv. A linear map satisfies T (u + λv) =
+  T u + λT v; its kernel and image are subspaces. Function spaces use pointwise addition and scalar
+  multiplication. A metric subspace, introduced in Section 3, does not need to be a vector subspace:
+  any subset can inherit a metric.
+
+
+
+
+                                                     13
+MATH6310 | Sections 0–4 + worked practice                                                       Sai Vanam
+
+
+Section 2: continuity and integration
+
+  Method: Time window: 01:04–01:10; 6 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Distinguish three strengths of continuity
+
+  Continuity at p: for each ε > 0, choose δ > 0 such that |x − p| < δ implies |f (x) − f (p)| < ε. The
+  choice may depend on p.
+  Uniform continuity: choose one δ for all pairs x, y at that tolerance. Lipschitz continuity: |f (x) −
+  f (y)| ≤ L|x − y| with one finite constant. Thus Lipschitz implies uniform continuity implies
+  continuity.
+  If |f ′ | ≤ L throughout an interval, the mean value theorem gives a Lipschitz estimate. A continuous
+  function on a closed bounded interval is bounded, uniformly continuous and attains its extrema.
+  The intermediate value theorem guarantees every value between two endpoint outputs.
+
+  Integration estimates used to prove metric facts
+
+  For integrable h on [a, b],
+                                    Z b         Z b
+                                          h ≤         |h| ≤ (b − a) ∥h∥∞ .
+                                     a           a
+                                                                             Rt                      ′ = h.
+  Integration is linear and order preserving. For continuous h, H(t) =       a h(s) ds satisfies H
+  For continuously differentiable H, st H ′ = H(t) − H(s).
+                                     R
+
+
+
+  Exam question: Attempt for 2 minutes
+                 R1
+  Show R(f ) =    0 f is Lipschitz on C([0, 1]) with sup metric, and find the optimal constant.
+
+
+  Worked model answer
+
+  |R(f ) − R(g)| ≤ 01 |f − g| ≤ ∥f − g∥∞ , so Lip R ≤ 1. With f ≡ 1, g ≡ 0, the ratio of output
+                      R
+
+  difference to input distance is 1. Therefore no smaller constant works and Lip R = 1.
+
+  Exam tips and common mistakes
+  At minute 70, write the definitions of supremum, Cauchy and norm from memory. If a specific
+  definition is weak, mark it for the final test rather than rereading the whole section now.
+
+  01:10–01:15: your five-minute break
+  Stop now. Stand up, get water and leave the page. At minute 75 return to the next block. The
+  break is included in the 150-minute budget.
+
+
+
+
+                                                        14
+MATH6310 | Sections 0–4 + worked practice                                                        Sai Vanam
+
+
+Section 2 practice: 2a. Bounded real sequences
+
+  Concept and method
+  Bounded above means an ≤ M for one fixed real M and every n. Bounded below means an ≥ m for
+  one fixed real m. Bounded means both. Bounds need not be attained or optimal. For alternating
+  expressions, examine odd and even indices separately. Throughout these questions n = 1, 2, . . ..
+
+  Exam question: 2a: select all true statements
+
+  Let vn = ne−n , wn = log(1/n), xn = n4 − 28n − 600, yn = (−1)n wn , zn = n2 .
+   a. All sequences are bounded above.
+  b. (vn ), (wn ) are bounded above and (vn ), (xn ), (zn ) are bounded below.
+   c. (vn ), (wn ), (yn ) are bounded above and (vn ), (xn ), (zn ) are bounded below.
+  d. All sequences are bounded below.
+   e. None of the sequences are bounded.
+
+  Worked model answer
+  Select b only.
+
+                         Sequence           Bounded above?       Bounded below?
+                         ne−n                    Yes                  Yes
+                         − log n                 Yes                  No
+                         n4 − 28n − 600          No                   Yes
+                         (−1)n (− log n)         No                   No
+                         n2                      No                   Yes
+
+  vn : 0 < vn ≤ 1/e. Indeed, (te−t )′ = e−t (1 − t) ≤ 0 for t ≥ 1, so the largest term is the first.
+  wn : wn = − log n ≤ 0, but wn → −∞. It has an upper bound and no lower bound.
+  xn : xn → +∞, so no upper bound exists. For t ≥ 2, (t4 − 28t − 600)′ = 4t3 − 28 > 0. Thus the
+  terms increase from n = 2 onwards. Since x1 = −627 and x2 = −640, every term is at least −640.
+  yn : y2k = − log(2k) → −∞, whereas y2k−1 = log(2k − 1) → +∞. Neither bound exists.
+  zn : zn ≥ 1 and zn → +∞. Option a fails for zn ; c fails for yn ; d fails for wn ; e fails because vn is
+  bounded.
+
+  Exam tips and common mistakes
+  Tending to +∞ prevents an upper bound but, for a real sequence, still allows a lower bound: the
+  tail is above a fixed level and only finitely many earlier terms remain. Bounded does not mean
+  convergent.
+
+
+
+
+                                                     15
+MATH6310 | Sections 0–4 + worked practice                                                   Sai Vanam
+
+
+Section 2 practice: 2b. Decreasing sequences
+
+  Concept and method
+
+  Decreasing (non-increasing) means an+1 ≤ an for every n. Strictly decreasing means an+1 < an .
+  Compute an+1 − an and show it is non-positive; for positive terms, a ratio at most 1 also works.
+  Initial terms suggest a pattern but do not prove it.
+
+  Exam question: 2b: which sequences are monotonic decreasing?
+
+   a. yn = n3 − 1.
+   b. wn = e−n .
+   c. xn = (−1)n .
+   d. vn = −⌊n/2⌋, where ⌊t⌋ is the greatest integer at most t.
+   e. zn = 2 − n3 .
+
+  Worked model answer
+  Select b, d and e.
+  a: No. yn+1 − yn = 3n2 + 3n + 1 > 0, so it increases.
+  b: Yes. wn+1 = e−1 wn < wn , as 0 < e−1 < 1 and wn > 0.
+  c: No. The sequence −1, 1, −1, 1, . . . rises and falls.
+  d: Yes. Its terms are 0, −1, −1, −2, −2, −3, . . .. More formally,
+                                     n+1   n
+                                            
+                                         ≥           =⇒     vn+1 ≤ vn .
+                                      2    2
+  It is decreasing but not strictly decreasing because consecutive terms sometimes agree.
+  e: Yes. zn+1 − zn = −(3n2 + 3n + 1) < 0, so it strictly decreases.
+
+  Exam tips and common mistakes
+  A minus sign reverses inequalities. Constant terms are allowed in monotonic sequences. A constant
+  sequence is both increasing and decreasing.
+
+  Method: From monotonicity to convergence
+  Increasing and bounded above implies convergence to the supremum of the terms. Decreasing
+  and bounded below implies convergence to the infimum. Monotonicity by itself is insufficient: n
+  increases without a finite limit.
+
+
+
+
+                                                   16
+MATH6310 | Sections 0–4 + worked practice                                                  Sai Vanam
+
+
+Section 2 practice: 2c. Convergent sequences
+
+  Concept and method
+
+  Convergence to L ∈ R means: for every ε > 0, eventually |an − L| < ε. Divide polynomial ratios
+  by the highest denominator power; use the squeeze theorem for shrinking oscillations; find two
+  subsequences with different limits to disprove convergence.
+
+  Exam question: 2c: select every convergent sequence in R
+
+   a. zn = (n3 − 7n + 1)/n3 .
+   b. vn = arctan n.
+                  n
+   c. yn = 1 +       cos(nπ/2).
+               n+1
+                n
+   d. xn = (−1) sin(1/n).
+   e. wn = arctan(en ).
+
+  Worked model answer
+  Select a, b, d and e.
+  a: zn = 1 − 7/n2 + 1/n3 → 1.
+  b: As the input n → +∞, arctan n → π/2. A limit need not be attained by any term.
+  c: Not convergent. For n = 4k, the cosine is 1, so
+                                                        4k
+                                          y4k = 1 +          → 2.
+                                                      4k + 1
+  For n = 4k + 2, the cosine is −1, so
+                                                       4k + 2
+                                         y4k+2 = 1 −          → 0.
+                                                       4k + 3
+  Every subsequence of a convergent sequence must have the same limit. These two limits differ, so
+  the full sequence diverges.
+  d: |xn | = | sin(1/n)| ≤ 1/n → 0. The squeeze theorem gives xn → 0 despite the alternating sign.
+  e: en → +∞, hence arctan(en ) → π/2.
+
+  Exam tips and common mistakes
+
+  An oscillating factor does not automatically cause divergence. In c its amplitude n/(n + 1) tends
+  to 1; in d the amplitude tends to zero. Also, +∞ is not a real limit: tending to infinity is not
+  convergence in R.
+
+
+
+
+                                                      17
+MATH6310 | Sections 0–4 + worked practice                                                      Sai Vanam
+
+
+Section 2 practice: 2d. Cauchy sequences
+
+  Concept and method
+  Cauchy means the late terms become close to each other:
+
+                                ∀ε > 0 ∃N ∀m, n ≥ N : |am − an | < ε.
+
+  In R, Cauchy is equivalent to convergent because R is complete. Every Cauchy sequence is bounded.
+  In a general metric space, Cauchy need not imply convergence in that space.
+
+  Exam question: 2d: select every Cauchy sequence
+
+   a. zn = (7n2 + n + 3)/n2 .
+   b. yn = cos(nπ/2).
+   c. vn = n/2n .
+   d. xn = 1/n.
+                  n
+   e. wn = n(−1) .
+
+  Worked model answer
+  Select a, c and d.
+  a: zn = 7 + 1/n + 3/n2 → 7, so it is Cauchy.
+  b: Not Cauchy. Arbitrarily late terms y4k = 1 and y4k+2 = −1 are distance 2 apart. Taking
+  ε = 1 contradicts the definition, no matter how large N is.
+  c: n/2n → 0. To justify exponential domination, for n ≥ 2,
+                            vn+1   n+1  3
+                                 =     ≤ ,        0 < vn ≤ v2 (3/4)n−2 → 0.
+                             vn     2n  4
+  Thus it converges and is Cauchy.
+  d: 1/n → 0, so it is Cauchy. Directly, given ε > 0, choose an integer N > 2/ε. For m, n ≥ N ,
+
+                                 |1/m − 1/n| ≤ 1/m + 1/n ≤ 2/N < ε.
+
+  e: Not Cauchy. If n is even, wn = n; if n is odd, wn = 1/n. Its even terms are unbounded. Since
+  every Cauchy sequence is bounded, this cannot be Cauchy.
+
+  Exam tips and common mistakes
+  To disprove Cauchy directly, choose one fixed ε > 0 and find two indices beyond every proposed N
+  whose values stay at least that far apart. Showing only that adjacent terms get close is insufficient:
+  log(n + 1) − log n → 0, but log n is not Cauchy.
+
+
+
+
+                                                   18
+MATH6310 | Sections 0–4 + worked practice                                                        Sai Vanam
+
+
+Section 2 practice: 2e. Subsequences and increasing sequences
+
+  Concept and method
+  A subsequence is xnk with strictly increasing indices n1 < n2 < · · · . It preserves the original order.
+  Increasing means xn+1 ≥ xn ; decreasing means xn+1 ≤ xn . An “if and only if” statement requires
+  both implications. Test constants and oscillating sequences when looking for counterexamples.
+
+  Exam question: 2e: select all true statements
+
+  Let (xn ) be a real sequence.
+   a. (xn ) is increasing if and only if yn = xn+1 − xn takes only non-negative values.
+  b. (xn ) is not increasing if and only if it is decreasing.
+   c. (xn ) cannot be both increasing and decreasing.
+  d. (xn ) is increasing if and only if (−xn ) is decreasing.
+   e. (xn ) is increasing if and only if it does not have a decreasing subsequence.
+
+  Worked model answer
+  Select a and d.
+  a: True. xn+1 ≥ xn ⇐⇒ xn+1 − xn ≥ 0 for every n. This is exactly the definition.
+  b: False. xn = (−1)n is neither increasing nor decreasing. “Not increasing” only requires at least
+  one downward step, not that every step is downward. A constant sequence also disproves the
+  reverse implication: it is decreasing but is increasing too.
+  c: False. xn = 3 is both. Indeed, a sequence is both increasing and decreasing exactly when it is
+  constant, since the two inequalities force xn+1 = xn .
+  d: True. xn+1 ≥ xn ⇐⇒ −xn+1 ≤ −xn .
+  e: False. A constant sequence is increasing and has constant, hence decreasing, subsequences.
+  The converse fails too: xn = n + 2(−1)n begins −1, 4, 1, 6, 3, 8, . . ., so it is not increasing. Yet
+  xn ≥ n − 2 → +∞; every subsequence therefore tends to +∞. No subsequence can be decreasing,
+  because it would then be bounded above by its first term.
+
+  Exam tips and common mistakes
+  Do not confuse “decreasing” with “strictly decreasing”. Constant sequences often decide multiple-
+  choice questions about monotonicity. The negation of “every step is upwards or level” is “at least
+  one step goes down”.
+
+
+
+
+                                                    19
+MATH6310 | Sections 0–4 + worked practice                                                     Sai Vanam
+
+
+Section 2 practice: 2f. Uniform continuity
+
+  Concept and method
+  Uniform continuity means one δ works everywhere in the domain:
+
+                   ∀ε > 0 ∃δ > 0 ∀x, y ∈ D :    |x − y| < δ =⇒ |f (x) − f (y)| < ε.
+
+  Ordinary continuity permits δ to depend on the base point; uniform continuity does not. If
+  |f (x) − f (y)| ≤ L|x − y| with fixed L > 0, choose δ = ε/L. To disprove uniform continuity, find
+  xn , yn ∈ D with |xn − yn | → 0 but output differences not tending to zero.
+
+  Exam question: 2f: select every uniformly continuous function
+
+   a. l : (0, ∞) → R, l(x) = 1/x.
+   b. f : R → R, f (x) = 5x.
+   c. g : R → R, g(x) = x2 .
+   d. h : [0, 2] → R, h(x) = x2 .
+   e. k : [1, ∞) → R, k(x) = 1/x.
+
+  Worked model answer
+  Select b, d and e.
+  a: No. Set xn = 1/n, yn = 1/(n + 1). Their distance is 1/[n(n + 1)] → 0, but |l(xn ) − l(yn )| = 1.
+  For ε = 1/2, no single δ works near 0.
+  b: Yes. |5x − 5y| = 5|x − y|; choose δ = ε/5.
+  c: No. Set xn = n, yn = n + 1/n. Their distance is 1/n → 0, but |yn2 − x2n | = 2 + 1/n2 . For ε = 1,
+  no single δ works.
+  d: Yes. On [0, 2], |x2 − y 2 | = |x − y||x + y| ≤ 4|x − y|. Choose δ = ε/4.
+  e: Yes. For x, y ≥ 1, |1/x − 1/y| = |x − y|/(xy) ≤ |x − y|. Choose δ = ε.
+
+  Exam tips and common mistakes
+  The domain is essential. Continuous functions on closed bounded real intervals are uniformly
+  continuous, giving another proof for d. Unbounded domains do not automatically prevent uniform
+  continuity: b and e are counterexamples. An unbounded derivative alone is not a general proof of
+  failure; supply a valid argument such as the paired sequences above.
+
+
+
+
+                                                  20
+MATH6310 | Sections 0–4 + worked practice                                                    Sai Vanam
+
+
+Section 2 practice: 2g. Bolzano–Weierstrass
+
+  Concept and method
+  Every bounded real sequence has a convergent subsequence. Equivalently, a sequence in a closed
+  bounded interval [a, b] has a subsequence converging to a point of that interval. The full sequence
+  need not converge. To use the theorem here, find fixed upper and lower bounds for all terms.
+
+  Exam question: 2g: which sequences lie in a closed bounded real interval?
+
+   a. xn = n sin(1/n).
+   b. yn = n3/2 sin(1/n).
+   c. vn = sin n.
+   d. zn = n1/n .
+   e. wn = n sin n.
+
+  Worked model answer
+  Select a, c and d.
+  a: Yes. Since | sin t| ≤ |t| and sin(1/n) > 0,
+
+                                     0 < n sin(1/n) ≤ n(1/n) = 1.
+
+  Thus [0, 1] contains all terms.
+                       √
+  b: No. Rewrite as n [sin(1/n)/(1/n)]. The bracket tends to 1, so it is eventually at least 1/2.
+               √
+  Hence yn ≥ n/2 → +∞ eventually; there is no upper bound.
+  c: Yes. −1 ≤ sin n ≤ 1. It need not converge for Bolzano–Weierstrass to apply.
+  d: Yes. The inequality 1 ≤ n ≤ 2n for n ≥ 1 gives 1 ≤ n1/n ≤ 2. To justify the upper bound by
+  induction: 1 ≤ 2, and n + 1 ≤ 2n ≤ 2n+1 whenever n ≤ 2n . Thus [1, 2] contains every term.
+  e: No. A rigorous unboundedness proof avoids guessing values of sin n. Suppose |n sin n| ≤ M for
+  all n. The angle subtraction formula implies
+                                                                  M    M
+                        0 < sin 1 ≤ | sin(n + 1)| + | sin n| ≤       +   −→ 0,
+                                                                 n+1   n
+  a contradiction. Here the first inequality uses sin 1 = sin(n + 1) cos n − cos(n + 1) sin n and
+  | cos t| ≤ 1.
+
+  Exam tips and common mistakes
+  A graph suggests behaviour but is not proof of boundedness for infinitely many terms. A growing
+  factor times a bounded factor may or may not be bounded: compare a and e. You only need a
+  valid containing interval, not the smallest one.
+
+
+
+
+                                                    21
+MATH6310 | Sections 0–4 + worked practice                                                     Sai Vanam
+
+
+Section 3: reverse triangle inequality and boundedness
+
+  Method: Time window: 01:15–01:23; 8 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  The most reusable distance estimate
+  From triangle inequality, d(x, p) ≤ d(x, y) + d(y, p), so d(x, p) − d(y, p) ≤ d(x, y). Swap x, y to
+  bound the opposite difference. Together,
+
+                                        |d(x, p) − d(y, p)| ≤ d(x, y).
+
+  Consequently xn → a implies d(xn , p) → d(a, p). More generally,
+
+                                    |d(a, b) − d(c, e)| ≤ d(a, c) + d(b, e),
+
+  by routing one distance through the other pair, subtracting and swapping.
+
+  Diameter and distance to a set
+  diam A = supx,y∈A d(x, y). Bounded means finite diameter. Containment in BR [p] implies diameter
+  at most 2R. Conversely, for nonempty bounded A, choose a ∈ A: d(p, x) ≤ d(p, a) + diam A for
+  every x ∈ A, placing the set in a finite-radius ball about any fixed p.
+  For nonempty A, define distA (x) = inf a∈A d(x, a). It is 1-Lipschitz. Zero distance means a point
+  can be approximated arbitrarily closely from A, not necessarily that it lies in A.
+
+  Exam question: Exercise 3.7: attempt for 3 minutes
+
+  Prove | distA (x) − distA (y)| ≤ d(x, y).
+
+  Worked model answer
+  For every a ∈ A, distA (x) ≤ d(x, a) ≤ d(x, y) + d(y, a). Taking the infimum over a gives distA (x) ≤
+  d(x, y) + distA (y). Swap x, y to get the reverse one-sided bound. Combining proves the absolute-
+  value inequality. No closest point needs to exist.
+
+
+
+
+                                                      22
+MATH6310 | Sections 0–4 + worked practice                                                            Sai Vanam
+
+
+Section 3: balls, subspaces and Lipschitz maps
+
+  Method: Time window: 01:23–01:30; 7 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Balls depend on the distance rule
+
+          Br (a) = {x : d(x, a) < r},    Br [a] = {x : d(x, a) ≤ r},   Sr (a) = {x : d(x, a) = r}.
+  For a discrete metric, open balls are {a} if 0 < r ≤ 1 and the whole space if r > 1; closed balls
+  switch at r = 1. In a subspace A ⊆ E, distances are restricted and BrA (a) = A ∩ BrE (a).
+  An isometry satisfies dF (f x, f y) = dE (x, y). It is injective but need not be onto. A bijective
+  isometry has isometric inverse. A Lipschitz map satisfies dF (f x, f y) ≤ LdE (x, y) for one finite L; a
+  strict contraction has such a constant below one. Bi-Lipschitz means bijective with both directions
+  Lipschitz.
+
+  Method: Find a smaller ball using the spare radius
+
+  If p ∈ BR (a), choose r = R − d(p, a) > 0. For x ∈ Br (p),
+
+                               d(x, a) ≤ d(x, p) + d(p, a) < r + d(p, a) = R.
+
+  Thus Br (p) ⊆ BR (a). For intersection of two balls, use the minimum of their two spare radii.
+
+  Exam question: Attempt for 2 minutes
+
+  Prove isometries are injective. Then give a Lipschitz bound for f (x) = x2 on [0, 1].
+
+  Worked model answer
+  If f (x) = f (y) for an isometry, dE (x, y) = dF (f (x), f (y)) = 0, so x = y. For squaring, |x2 − y 2 | =
+                                                                                      √
+  |x − y||x + y| ≤ 2|x − y| on [0, 1], so 2 is a Lipschitz constant. Its inverse x is not Lipschitz
+            √      √               √
+  because | t − 0|/|t − 0| = 1/ t → ∞ as t ↓ 0.
+
+
+
+
+                                                     23
+MATH6310 | Sections 0–4 + worked practice                                                       Sai Vanam
+
+
+Section 3: convergence proofs you should reproduce
+
+  Method: Time window: 01:30–01:38; 8 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  The metric versions of the definitions
+  xn → a means d(xn , a) → 0. Cauchyness means all pairwise distances in a sufficiently late tail are
+  small. The implication chain is still
+
+                                  convergent ⇒ Cauchy ⇒ bounded.
+
+  For the first implication route between xn , xm through the limit. For the second, place the tail
+  within distance one of one tail point, then take a finite maximum to include all early terms.
+  A sequence in a discrete metric space converges iff eventually constant: tolerance 1/2 forces distance
+  zero. The same tolerance for pairs shows a discrete Cauchy sequence is eventually constant too.
+
+  Exam question: Attempt for 3 minutes
+  Prove that a Cauchy sequence with a subsequence converging to a must itself converge to a.
+
+  Worked model answer
+  Fix ε > 0. Cauchyness gives N with d(xn , xm ) < ε/2 for all n, m ≥ N . Since xnk → a and nk → ∞,
+  choose one k with nk ≥ N and d(xnk , a) < ε/2. For every n ≥ N ,
+
+                                 d(xn , a) ≤ d(xn , xnk ) + d(xnk , a) < ε.
+
+  Thus the whole sequence tends to a.
+
+  How to negate Cauchyness
+  Not Cauchy means
+                               ∃ε0 > 0 ∀N ∃n, m ≥ N : d(xn , xm ) ≥ ε0 .
+  One fixed positive separation persists arbitrarily far out. Adjacent gaps tending to zero are not
+  enough for Cauchyness: the harmonic partial sums have gaps 1/(n + 1) → 0 but are unbounded
+  and therefore not Cauchy.
+
+  Exam tips and common mistakes
+
+  The limit must belong to the space. The sequence 1/n, starting at n = 2, converges in R but has
+  no limit in the metric subspace (0, 1), because zero is missing and metric limits are unique.
+
+
+
+
+                                                    24
+MATH6310 | Sections 0–4 + worked practice                                                      Sai Vanam
+
+
+Section 3: products, transformed metrics and sup spaces
+
+  Method: Time window: 01:38–01:45; 7 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Products and bounded transforms
+  For two factors with sum metric D = d1 +d2 , convergence is equivalent to coordinatewise convergence.
+  Each coordinate distance is at most D; conversely control each coordinate by ε/2.
+  A standard countable-product metric is
+
+                                                              di (xi , yi )
+                                                      2−i
+                                                X
+                                    D(x, y) =                                 .
+                                                i≥1
+                                                            1 + di (xi , yi )
+
+  The sum is finite because each term is at most 2−i . A zero sum forces every coordinate distance
+  to vanish. Symmetry is termwise. Triangle inequality follows by transforming each coordinate
+  with α(t) = t/(1 + t), which is increasing, definite and subadditive, then summing. Coordinate
+  convergence is proved using a finite initial block and a uniformly small weighted tail; detailed
+  topology appears later in the module.
+
+  The general supremum metric
+
+  ℓ∞ (S; E) consists of functions S → E with bounded images, with distance sups dE (f (s), g(s)). For
+  nonempty S, fix s0 ∈ S and use
+
+                       d(f (s), g(s)) ≤ diam f (S) + d(f (s0 ), g(s0 )) + diam g(S).
+
+  The bound is finite and independent of s, proving the supremum distance is finite. The other
+  metric axioms follow pointwise, as in Section 0.
+
+  Exam question: Attempt for 2 minutes
+
+  Prove subadditivity of α(t) = t/(1 + t), the key step for its use in a transformed metric.
+
+  Worked model answer
+  For s, t ≥ 0,
+                           s+t      s     t      s   t
+                                =      +      ≤    +    .
+                          1+s+t   1+s+t 1+s+t   1+s 1+t
+  Hence α(s + t) ≤ α(s) + α(t). Since α is increasing, applying it to d(x, z) ≤ d(x, y) + d(y, z) and
+  then using this inequality proves triangle inequality for α ◦ d.
+
+
+
+
+                                                      25
+MATH6310 | Sections 0–4 + worked practice                                                        Sai Vanam
+
+
+Section 4: open sets and closed sets
+
+  Method: Time window: 01:45–01:53; 8 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  The definitions that start most topology questions
+
+  U is open in E if every p ∈ U admits some r > 0 with Br (p) ⊆ U . Your radius may depend on
+  the point. A set F is closed in E if every sequence of its points converging in E has its limit in F .
+  Equivalently its complement is open.
+  The empty set and whole space are both open and closed. A set may be open, closed, both, or
+  neither. In usual R, (0, 1) is open, [0, 1] closed, and [0, 1) neither. In a discrete space every subset
+  is both open and closed.
+  Arbitrary unions and finite intersections of open sets are open. For an intersection, choose the
+                                                                                         T
+  minimum of finitely many available positive radii. Infinite intersections may fail: n (−1/n, 1/n) =
+  {0} is not open in R. Dually, arbitrary intersections and finite unions of closed sets are closed.
+
+  Exam question: Attempt for 2 minutes
+
+  Prove that A open implies E \ A closed, using sequences.
+
+  Worked model answer
+  Take xn ∈ E \ A with xn → x in E. If x ∈ A, openness gives r > 0 with Br (x) ⊆ A. Convergence
+  puts xn in this ball for all sufficiently large n, contradicting xn ∈
+                                                                      / A. Thus x ∈ E \ A, proving this
+  complement closed.
+  For the converse, if A is not open, some a ∈ A has every B1/n (a) meeting the complement. Choose
+  xn there. Then xn → a from the complement, contradicting its closedness. Hence A is open iff its
+  complement is closed.
+
+  Exam tips and common mistakes
+  An openness proof starts with an arbitrary point inside the set and finds a positive radius. A
+  closedness proof starts with an arbitrary sequence in the set whose ambient limit exists, then
+  retains that limit in the set.
+
+
+
+
+                                                    26
+MATH6310 | Sections 0–4 + worked practice                                                           Sai Vanam
+
+
+Section 4: interior, closure, boundary and subspaces
+
+  Method: Time window: 01:53–02:01; 8 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Three ways to describe a set locally
+  Int A consists of points with some ball contained in A. It is the largest open subset of A.
+  The closure A consists of points whose every ball meets A. Equivalently, p ∈ A iff some an ∈ A
+  tends to p. Choose an ∈ A ∩ B1/n (p) to construct such a sequence. Closure is the smallest closed
+  superset. For nonempty A, p ∈ A iff dist(p, A) = 0.
+  Boundary is ∂A = A \ Int A = A ∩ E \ A. Every ball about a boundary point meets both the set
+  and its complement. In R, Int Q = ∅ but Q = ∂Q = R.
+
+  Relative topology changes which points matter
+  For V ⊆ A ⊆ E, V is open in A iff V = A ∩ U for ambient open U . It is closed in A iff V = A ∩ F
+  for ambient closed F . The metric ball identity is BrA (a) = A ∩ BrE (a).
+  Thus [0, 1) is both open and closed in itself, even though neither in usual R. Never omit the
+  ambient space when its identity is unclear.
+
+  Exam question: Attempt for 2 minutes
+
+  For V = [0, 1), find interior, closure and boundary in (a) R and (b) the subspace A = [0, 2].
+
+  Worked model answer
+  In R, interior is (0, 1), closure is [0, 1], boundary is {0, 1}. In A, V = A ∩ (−1, 1) is open, so relative
+  interior is [0, 1). Relative closure is A ∩ [0, 1] = [0, 1], hence relative boundary is {1}. Zero becomes
+  an interior point because negative points no longer belong to the space.
+
+
+
+
+                                                      27
+MATH6310 | Sections 0–4 + worked practice                                                       Sai Vanam
+
+
+Section 4: continuity through open preimages
+
+  Method: Time window: 02:01–02:08; 7 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Choose among equivalent continuity tests
+  For f : E → F , metric continuity means small input distance from p gives small output distance
+  from f (p), for each p. It is equivalent to preserving limits of sequences. Globally it is equivalent
+  to every open target set having open preimage, and also to every closed target set having closed
+  preimage.
+  For sequential continuity implying continuity, negate continuity: obtain one fixed ε0 > 0 and points
+  xn with d(xn , p) < 1/n but d(f (xn ), f (p)) ≥ ε0 . These contradict preservation of sequence limits.
+
+  Exam question: 2023 Q2(c) / 2025 Q3(f) method: attempt for 2 minutes
+
+  Prove continuity iff open sets have open preimages.
+
+  Worked model answer
+  If f is continuous and p ∈ f −1 [V ] for open V , choose ε > 0 with Bε (f (p)) ⊆ V . Continuity gives
+  δ > 0 with f [Bδ (p)] ⊆ Bε (f (p)). Thus Bδ (p) ⊆ f −1 [V ], proving openness.
+  Conversely suppose all open preimages are open. For p and ε > 0, W = f −1 [Bε (f (p))] is open
+  and contains p. Some δ > 0 satisfies Bδ (p) ⊆ W . Hence d(x, p) < δ implies d(f (x), f (p)) < ε,
+  establishing continuity.
+
+  Exam tips and common mistakes
+  Continuity controls inverse images, not direct images. A constant continuous f : R → R sends
+  any nonempty open interval to a singleton, which is not open in R. A homeomorphism needs a
+  continuous inverse as well as continuity and bijectivity.
+
+
+
+
+                                                   28
+MATH6310 | Sections 0–4 + worked practice                                                        Sai Vanam
+
+
+Section 4: density and separability
+
+  Method: Time window: 02:08–02:14; 6 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  A dense set gets arbitrarily close to every point
+
+  D dense in E means D = E, equivalently every nonempty open ball meets D, equivalently each
+  point is a limit of a sequence from D. Separable means there is a countable dense subset.
+  Qn is countable dense in Rn . In C([0, 1]) with sup metric, use continuous piecewise-linear functions
+  on dyadic meshes with rational vertex values. For each fixed mesh the finite tuple of rationals makes
+  the family countable. Taking all meshes keeps it countable. Uniform continuity lets a sufficiently
+  fine mesh approximate a continuous function, and rationally approximating vertex values then
+  interpolating makes the sup error small.
+  Every open subset of R is a countable union of open intervals with rational endpoints: around each
+  point select one contained in the set; there are only countably many candidate endpoint pairs.
+
+  Exam question: 2023 Q3(a) / 2024 Q2(d) method: attempt for 2 minutes
+
+  If D dense and U open dense, prove D ∩ U dense. Why is openness needed?
+
+  Worked model answer
+  Take any ball Br (p). Density of U gives u ∈ Br (p) ∩ U . This intersection is open, so contains a ball
+  Bs (u). Density of D supplies a point in Bs (u) ∩ D, hence in Br (p) ∩ U ∩ D. Every ball therefore
+  meets U ∩ D, proving density.
+  Without openness take rationals and irrationals in R: both are dense but their intersection is
+  empty.
+
+
+
+
+                                                    29
+MATH6310 | Sections 0–4 + worked practice                                                   Sai Vanam
+
+
+Section 4: equivalent metrics and homeomorphisms
+
+  Method: Time window: 02:14–02:20; 6 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  What each kind of equivalence preserves
+  Topological equivalence means the identity map in both directions is continuous, equivalently the
+  metrics have the same open sets or the same convergent sequences with the same limits.
+  Lipschitz equivalence requires constants c, C > 0 with c d ≤ d′ ≤ C d. This preserves boundedness
+  and Cauchyness as well as topology. All finite-dimensional ℓp metrics are Lipschitz equivalent by
+  the norm-comparison inequalities.
+  Cauchy equivalence means exactly the same Cauchy sequences. The transformed metrics min{1, d}
+  and d/(1 + d) preserve Cauchy sequences and topology; if d is unbounded they cannot be Lips-
+  chitz equivalent to it. A homeomorphism is a bijection with both it and its inverse continuous;
+  completeness need not be preserved by an arbitrary homeomorphism.
+
+  Exam question: 2024 Q3 method: attempt for 2 minutes
+
+  Explain why dN S (x, y) = | arctan x − arctan y| on R has the usual topology but different Cauchy
+  sequences.
+
+  Worked model answer
+  The map arctan is a homeomorphism from the usual real line to (−π/2, π/2), so its pullback
+  metric gives the usual topology. But xn = n is Cauchy for dN S because arctan n → π/2. It is not
+  Cauchy in the usual metric, since adjacent terms stay distance one apart. Thus these topologically
+  equivalent metrics are not Cauchy equivalent.
+
+  Exam tips and common mistakes
+
+  Do not confuse | arctan x − arctan y| with arctan(d(x, y)). The first changes Cauchy behaviour on
+  R; the second is a distance transform that preserves it. For countable products, the weighted-tail
+  argument connects coordinatewise convergence to product convergence.
+
+
+
+
+                                                 30
+MATH6310 | Sections 0–4 + worked practice                                                       Sai Vanam
+
+
+Final closed-notes test
+
+  Method: Time window: 02:20–02:25 attempt; 02:25–02:30 check
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  Exam question: Five-minute recall test: cover all earlier pages
+  Write short answers without looking. Allow about one minute for each item.
+  1. State all metric axioms. Give one reason |x − y|2 is not a metric on R.
+  2. Define the inverse of the indicator-function bijection A 7→ 1A . State why both compositions are
+     identities.
+  3. Let s = sup A for nonempty upper-bounded A. Explain how to choose an ∈ A with an → s.
+  4. Derive |d(x, p) − d(y, p)| ≤ d(x, y).
+  5. State the open-preimage test for continuity and prove that continuous maps have open preimages
+     of open sets.
+
+  Worked model answer
+  1. Finite nonnegative distances; zero iff equality; symmetry; triangle inequality. Squared distance
+  fails at 0, 1, 2, since 4 > 1 + 1.
+  2. Send f : S → {0, 1} to {s : f (s) = 1}. An indicator’s one-set is exactly the original subset, and
+  the indicator of a binary function’s one-set agrees with the function at every input.
+  3. Choose s − 1/n < an ≤ s. Such a point exists because otherwise s − 1/n is an upper bound
+  smaller than s. Then 0 ≤ s − an < 1/n → 0.
+  4. Triangle inequality gives d(x, p) − d(y, p) ≤ d(x, y); swap x, y to bound the negative of this
+  difference by the same quantity. The absolute-value bound follows.
+  5. Continuity is equivalent to every open target set having open preimage. If p ∈ f −1 [V ], openness
+  of V gives Bε (f (p)) ⊆ V . Continuity gives δ > 0 with f [Bδ (p)] ⊆ Bε (f (p)), so Bδ (p) ⊆ f −1 [V ].
+  Thus the preimage is open.
+
+  Use the final five minutes to correct, not to restart
+  Award one tick per complete item. Four or five ticks: attempt a fresh exercise from each section next.
+  Two or three: revisit the missed proof patterns first. Zero or one: start again with metric axioms
+  and the supremum definition, then build up. This is a learning diagnostic, not an exam-grade
+  prediction.
+
+
+
+
+                                                    31
+MATH6310 | Sections 0–4 + worked practice                                                         Sai Vanam
+
+
+After the session: a focused follow-up list
+
+  Method: Time window: Reference only; not extra work inside the 150 minutes
+  Use elapsed time from the start of the session. Read the explanation, try the question with its
+  answer covered, then check and correct your work.
+
+  What to return to next
+
+   Section 0           Exercises 0.1, 0.2 and 0.4 first; then the TGV case splits and Hausdorff
+                       triangle proof in 0.5–0.6.
+   Section 1           Exercises 1.5–1.7 for inverses and bijections; 1.12–1.14 for countability;
+                       1.17 for a more demanding relation problem.
+   Section 2           Exercises 2.3, 2.6 and 2.9 for supremum approximation and continuity;
+                       2.10 for why continuity matters in integral distance.
+   Section 3           Exercises 3.1, 3.3, 3.7, 3.10 and 3.11 for the main reusable proof templates;
+                       then 3.5 and 3.14 for product and sup metrics.
+   Section 4           Exercises 4.2, 4.5, 4.7, 4.10 and 4.11 for local radii, continuity, metric
+                       equivalence, relative topology and separability.
+
+
+  Method: If the question says this, start here
+
+   Verify a metric                       List axioms, then decide the triangle-inequality method.
+   Show a map is bijective               Find an inverse and verify both compositions, or prove
+                                         injective and onto.
+   Prove a supremum claim                Upper bound plus arbitrarily close elements from below.
+   Bound a difference of distances       Triangle inequality, rearrange, swap roles.
+   Find a ball inside another            Use the spare radius R − d(p, a).
+   Prove Lipschitz continuity            Bound the ratio or the output difference by L times input
+                                         distance.
+   Prove a sequence is Cauchy            Control every pair of late indices, not just neighbours.
+   Prove a supremum metric inequal- Prove a pointwise common bound, then take the supre-
+   ity                              mum.
+
+
+  Source alignment
+  This session follows Sections 0–4 of the MATH6310 notes dated 7 September 2026, including
+  the original Section 1 retrieved from your earlier uploads, and the expanded seven-section guide
+  prepared in this chat. The norm-induced metric question matches a method in the 2023 MATH316
+  paper; the other labelled exercise references follow the lecture sheets. Optional order theory, lengthy
+  specialised metric proofs and the rest of the exercise sets remain follow-up work. Sections 5–6 and
+  the appendices are outside this session.
+
+
+
+
+                                                    32
+

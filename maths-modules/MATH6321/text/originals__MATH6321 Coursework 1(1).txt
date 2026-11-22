@@ -1,0 +1,52 @@
+                             MATH6321 Coursework 1
+
+
+This coursework is worth 5% of your mark for this module and should be handed in by 4pm on
+Wednesday 21st October.
+
+Crack the three ciphers below. Each plaintext is a quote from a well known book, and in each case
+I have given you the type of cipher used. You may use any of the tools in the course to assist you
+(or any others beyond the course as long as they are explained). In each case the key is related to
+the corresponding book, but it is not necessary to use this fact to solve the ciphers.
+
+You might find the following website useful for counting letter frequencies in strings of text:
+
+                          https://www.dcode.fr/frequency-analysis.
+
+Marks will be awarded based on the rigour and quality of your cryptanalysis, so try to give a full
+explanation of what you are doing. Just handing in the plaintexts will only get you a small number
+of marks. Marks are also available for partial attempts...so even if you don’t manage to break the
+cipher you might still get marks for telling me what you tried!
+
+
+  1. (2 marks) Caesar cipher:
+
+
+     QB EIA I JZQOPB KWTL LIG QV IXZQT, IVL BPM KTWKSA EMZM ABZQSQVO BPQZBMMV.
+
+
+  2. (3 marks) Monoalphabetic substitution cipher:
+
+
+     A SG OSAPFY OSGAFASP WATK SFF OJPGQ JO QLEPLT WPATAICQ, SIR SG GYQLFO TKL SUTKJP
+     JO S TPAOFAIC GJIJCPSMK UMJI TKL QUHBLET, AI WKAEK A SISFYZL JIL KUIRPLR SIR QAXTY
+     QLMSPSTL EAMKLPQ, HUT A EJIOLQQ TKST TKAQ AQ LITAPLFY ILW TJ GL. TKL JHBLET JO TKJQL
+     WKJ AIVLITLR TKL QYQTLG KSQ SMMSPLITFY HLLI TJ EJIELSF TKST TKLQL EKSPSETLPQ EJIVLY
+     S GLQQSCL, SIR TJ CAVL TKL ARLS TKST TKLY SPL TKL GLPL PSIRJG QDLTEKLQ JO EKAFRPLI.
+
+
+  3. (5 marks) Vigenère cipher:
+
+
+     XTNIKIHVJWHTFNLXMVAAIWRALWENWJHTFNLXMVAAIWRALWEROWDFNQKSODQLLAJBZTAXMGUFF
+     WDXSYVWHSZBOPSKPWTPFKZDFSMDXEWQLLAJBZTEGWUWOWQFRRVLMAIKGAIWRALWEJMSHOEWXA
+     IXPLXTNIKIHVAWPSFVGUDRZCCEJA
+
+
+     (Hint: the keyword length is between 3 and 6).
+
+
+
+
+                                                  1
+

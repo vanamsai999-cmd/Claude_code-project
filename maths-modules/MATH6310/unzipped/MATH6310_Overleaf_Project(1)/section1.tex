@@ -1,0 +1,241 @@
+\clearpage
+\setcounter{section}{0}
+\section{Sets, functions and countability}
+\begin{note}{Source and learning route}
+This section follows the original Section 1 lecture PDF dated 7 September 2026, recovered from your earlier uploads. Its order is: sets and choice; functions and images; equivalence relations and partitions; countability and Cantor's theorem; then optional partial orders and Zorn's lemma. These ideas provide the language for all later metric-space proofs.
+\end{note}
+\topic{Sets, families, products and the axiom of choice}
+\begin{note}{The basic objects}
+$A\subseteq S$ means every member of $A$ belongs to $S$. A proper subset also satisfies $A\ne S$. The power set $\mathcal P(S)$ is the set of all subsets of $S$; for example $\mathcal P(\{a,b\})=\{\varnothing,\{a\},\{b\},\{a,b\}\}$.
+
+For a family $\mathcal A$ of subsets of a universe $S$, membership in $\bigcup\mathcal A$ means membership in at least one member, whereas membership in $\bigcap\mathcal A$ means membership in every member. The empty union is $\varnothing$; the empty intersection is $S$. The latter convention depends on the specified universe.
+\[A\cap\bigcup\mathcal A=\bigcup_{B\in\mathcal A}(A\cap B),\qquad A\setminus\bigcap\mathcal A=\bigcup_{B\in\mathcal A}(A\setminus B).\]
+Prove identities by writing out what it means for an arbitrary point to belong to each side.
+\end{note}
+\begin{note}{Products and choice}
+$\prod_{i\in I}S_i$ consists of indexed families $x=(x_i)_{i\in I}$ with $x_i\in S_i$. Equality means equality in every coordinate. If $I=\N$, these are sequences; if every factor equals $S$, write $S^I$. The empty product contains one empty family. A product with an empty factor is empty.
+
+The axiom of choice says an arbitrary family of nonempty sets has nonempty product. Equivalently there is a choice function selecting one element from each member. A selection from each fibre of a surjection is one place this enters the notes. It does not say that the selection rule is unique.
+\end{note}
+\topic{Functions, restrictions, inverses and images}
+\begin{note}{A function has three ingredients}
+Specify a domain, codomain, and one output in the codomain for each input. The range is the outputs actually attained, so it need not equal the codomain. Identity maps, inclusion maps, constant maps, coordinate projections and indicator functions are fundamental examples. An indicator $1_A:S\to\{0,1\}$ is one on $A$ and zero elsewhere in $S$.
+
+For $f:S\to T$ and $g:T\to U$, $(g\circ f)(s)=g(f(s))$. Composition is associative but generally not commutative. Restricting $f$ to $A\subseteq S$ reduces its domain. Extending it reverses that operation. Co-restricting its codomain to $B$ is permitted when the entire range lies in $B$.
+
+There is exactly one function from $\varnothing$ to any $T$, and no function from a nonempty set to $\varnothing$. If finite sets have $n$ domain points and $m$ codomain points, there are $m^n$ functions.
+\end{note}
+\begin{note}{Injectivity, surjectivity and inverses}
+Injective means $f(x)=f(y)\Rightarrow x=y$. Surjective means every target value is attained. Bijective means both. The same squaring rule is not injective on $\R$, but is injective on $[0,\infty)$; changing the codomain also changes surjectivity.
+
+A left inverse satisfies $g\circ f=\mathrm{id}_S$, which forces $f$ injective. Conversely an injection with nonempty domain has a left inverse: invert on the range and send all other target points to one fixed domain point. The empty-domain exception is important.
+
+A right inverse satisfies $f\circ h=\mathrm{id}_T$, which forces surjectivity. Conversely choose one point in each fibre $f^{-1}[\{t\}]$ to obtain a right inverse of a surjection, using choice. A bijection has a two-sided inverse. If $g$ is a left inverse and $h$ a right inverse, associativity gives
+\[g=g\circ(f\circ h)=(g\circ f)\circ h=h.\]
+Hence a two-sided inverse is unique.
+\end{note}
+\begin{note}{Images and preimages}
+$f[A]=\{f(a):a\in A\}$ and $f^{-1}[B]=\{s:f(s)\in B\}$. The notation $f^{-1}[B]$ does not assume that $f$ has an inverse function.
+
+Images preserve unions and satisfy $f[A\cap B]\subseteq f[A]\cap f[B]$, possibly strictly. Preimages preserve unions, intersections and complements exactly. Always $A\subseteq f^{-1}[f[A]]$, while $f[f^{-1}[B]]=B\cap f[S]$.
+\end{note}
+\topic{Equivalence relations, partitions and canonical factorisation}
+\begin{note}{Equivalence classes group indistinguishable elements}
+An equivalence relation is reflexive, symmetric and transitive. Its class $[a]=\{x:x\sim a\}$ contains $a$, and two classes are either identical or disjoint. The set of classes is $S/{\sim}$, and $q(s)=[s]$ is the surjective quotient map.
+
+A partition is a family of nonempty disjoint subsets whose union is $S$. Equivalence classes form a partition: reflexivity covers every point, and symmetry/transitivity show that intersecting classes coincide. Conversely a partition defines $x\sim y$ when they lie in the same block. Coverage gives reflexivity; sharing a block gives symmetry; the uniqueness of the block containing an intermediate point gives transitivity. These constructions undo one another.
+
+Congruence modulo an integer $p\ge2$ groups integers into residue classes. Equality gives singleton classes; the full relation gives one class. The empty relation on a nonempty set is symmetric and transitive but not reflexive.
+\end{note}
+\begin{note}{Every function factors through its fibres}
+For $f:S\to T$, define $x\sim_f y$ iff $f(x)=f(y)$. This is an equivalence relation. The formula $\widetilde f([x])=f(x)$ defines a bijection from $S/{\sim_f}$ to $f[S]$: equivalent representatives have equal outputs, equal outputs give equal classes, and every range value is attained. With $i:f[S]\hookrightarrow T$,
+\[f=i\circ\widetilde f\circ q.\]
+Thus every map is a surjection onto its classes, followed by a bijection onto its range, followed by an inclusion into the codomain. This pattern later explains quotient metrics and algebraic isomorphism theorems.
+\end{note}
+\topic{Countability, diagonalisation and comparing sizes}
+\begin{note}{Countability rules and how they are proved}
+Countable means admitting an injection into $\N$ and includes finite sets. A nonempty set is countable iff it admits a surjection from $\N$. A countably infinite set admits a bijection with $\N$: inject it into $\N$, then enumerate its infinite image in increasing order using well-ordering.
+
+Finite products of countable sets are countable. For example $(n_1,\ldots,n_k)\mapsto p_1^{n_1}\cdots p_k^{n_k}$ injects $\N^k$ into $\N$ by unique prime factorisation. The rationals are countable because $(m,n)\mapsto m/n$ maps countable $\Z\times\N$ onto $\Q$.
+
+A countable union of countable sets is countable: after ignoring empty sets, enumerate each set, and use a two-index list to cover the union. Since $\N^2$ is countable, the combined list is countable. This does not apply to infinite products: $\{0,1\}^{\N}$ is uncountable.
+\end{note}
+\begin{exam}{Cantor's theorem: model proof}
+Prove there is no surjection $f:S\to\mathcal P(S)$.
+\end{exam}
+\begin{answer}
+For any proposed $f$, define $D=\{s\in S:s\notin f(s)\}$. If $f$ were surjective, some $x\in S$ would satisfy $f(x)=D$. Then $x\in D$ iff $x\notin f(x)$ iff $x\notin D$, a contradiction. Hence no such surjection exists. Equivalently, no injection $\mathcal P(S)\to S$ exists. Using the bijection between subsets and indicator functions gives the corresponding result for $\{0,1\}^S$. In particular binary sequence space is uncountable.
+\end{answer}
+\begin{note}{Schroder--Bernstein theorem: know the statement}
+If there is an injection $S\to T$ and an injection $T\to S$, then a bijection $S\to T$ exists. The source notes require knowledge of the theorem but mark its proof non-examinable. It lets you compare sizes without explicitly writing the final bijection. Do not confuse the two arbitrary injections with mutually inverse maps; they need not be inverses.
+\end{note}
+\topic{Partial orders and Zorn's lemma: optional self-study}
+\begin{note}{Order terminology and the maximal-element principle}
+A partial order is reflexive, antisymmetric and transitive. Antisymmetry means $x\le y$ and $y\le x$ imply $x=y$; this differs from symmetry. A total order additionally makes every pair comparable. A strict order is asymmetric and transitive; a strict total order has trichotomy.
+
+A chain is a subset of mutually comparable elements. An upper bound dominates every element of a subset. A maximal element has no strictly larger element, but need not dominate all elements of the whole set. For example distinct singleton sets are both maximal in the collection of singleton subsets ordered by inclusion.
+
+Zorn's lemma says that a partially ordered set in which every chain has an upper bound has a maximal element. It is equivalent to the axiom of choice. For linearly independent subsets of a vector space ordered by inclusion, the union of a chain is independent because any finite proposed dependence lies in one chain member. Zorn then gives a maximal independent set, which spans and hence is a basis. Partial functions ordered by extension give another important example: a chain has a union function because its members agree wherever their domains overlap. This explains the extension argument in Appendix II. The source labels this order-theory subsection non-examinable.
+\end{note}
+\topic{Worked lecture exercises 1.1--1.19}
+\exercise{1.1}{Inclusion and symmetric difference}
+\begin{exam}{Lecture exercise}
+Prove $A\subseteq B\iff A\cap B=A\iff A\cup B=B$, and identify the symmetric difference.
+\end{exam}
+\begin{answer}
+If $A\subseteq B$, intersecting with $B$ removes nothing from $A$ and adjoining $A$ adds nothing to $B$, proving both equalities. Conversely $A=A\cap B$ puts every member of $A$ in $B$; and $A\cup B=B$ also puts each member of $A$ in $B$. Thus either equality gives inclusion.
+
+A point lies in $(A\cup B)\setminus(A\cap B)$ iff it belongs to at least one of $A,B$ but not both, equivalently it lies in $(A\setminus B)\cup(B\setminus A)$. A Venn diagram shades the two nonoverlapping outer parts and leaves the common lens unshaded.
+\end{answer}
+\exercise{1.2}{Distributivity and De Morgan}
+\begin{exam}{Lecture exercise}
+Prove $A\cap\bigcup\mathcal C=\bigcup_{C\in\mathcal C}(A\cap C)$ and $A\setminus\bigcap\mathcal C=\bigcup_{C\in\mathcal C}(A\setminus C)$.
+\end{exam}
+\begin{answer}
+For the first identity, $x$ belongs to the left iff $x\in A$ and there exists $C\in\mathcal C$ with $x\in C$, iff there exists $C\in\mathcal C$ with $x\in A\cap C$, which is membership on the right.
+
+For the second, $x$ belongs to the left iff $x\in A$ and not every $C\in\mathcal C$ contains $x$, iff some $C\in\mathcal C$ satisfies $x\in A$ and $x\notin C$, iff $x$ lies on the right. The empty-family conventions make these identities valid in that case too.
+\end{answer}
+\exercise{1.3}{Counting maps}
+\begin{exam}{Lecture exercise}
+For $S=\{1,2\}$ and $T=\{1,2,3\}$, count injections $S\to T$, surjections $S\to T$ and surjections $T\to S$.
+\end{exam}
+\begin{answer}
+An injection has $3$ choices for the first output and $2$ remaining choices for the second, giving $6$. No function from two points can attain three different outputs, so there are zero surjections $S\to T$. There are $2^3=8$ maps $T\to S$; precisely the two constant maps miss one target value. Thus there are $8-2=6$ surjections $T\to S$.
+\end{answer}
+\exercise{1.4}{Composition and injectivity/surjectivity}
+\begin{exam}{Lecture exercise}
+Prove the stated composition rules for injections, surjections and bijections.
+\end{exam}
+\begin{answer}
+If $f,g$ are injective and $g(f(x))=g(f(y))$, injectivity of $g$ gives $f(x)=f(y)$ and then that of $f$ gives $x=y$. If only $g\circ f$ is known injective, $f(x)=f(y)$ implies equality of composite outputs and hence $x=y$, so $f$ is injective.
+
+If $f,g$ are onto, given $u$ choose $t$ with $g(t)=u$, then $s$ with $f(s)=t$; thus $g(f(s))=u$. If only the composite is onto, every $u$ is $g(f(s))$ for some $s$, so $u$ is in the range of $g$ and $g$ is onto. Combining these statements proves that composing bijections gives a bijection, and that a bijective composite forces $f$ injective and $g$ surjective. It does not force either factor bijective.
+\end{answer}
+\exercise{1.5}{A rational function and its left inverse}
+\begin{exam}{Lecture exercise}
+For $f:\R\setminus\{1\}\to\R$, $f(x)=2x/(x-1)$, prove injectivity, find its range and construct a left inverse on all of $\R$.
+\end{exam}
+\begin{answer}
+If $f(x)=f(y)$, cross-multiplication is valid because neither denominator vanishes and gives $x(y-1)=y(x-1)$, hence $x=y$. Solving $t=2x/(x-1)$ gives $(t-2)x=t$. The value $t=2$ is impossible, and for $t\ne2$ the solution $x=t/(t-2)$ is never $1$. Hence the range is $\R\setminus\{2\}$.
+
+Define $g(t)=t/(t-2)$ for $t\ne2$, and $g(2)=0$. Every output lies in $\R\setminus\{1\}$, and substitution gives $g(f(x))=x$. Thus $g$ is a left inverse; the otherwise unused value at $2$ may be any point other than $1$.
+\end{answer}
+\exercise{1.6}{Functions as indexed families}
+\begin{exam}{Lecture exercise}
+Show $T^S$ is bijective with $\mathcal F(S;T)$ by defining inverse maps.
+\end{exam}
+\begin{answer}
+Map an indexed family $(t_s)_{s\in S}$ to the function $f(s)=t_s$. In the other direction send $f$ to $(f(s))_{s\in S}$. Starting with a family returns the same coordinate at each $s$; starting with a function returns the same value at each input. Thus both compositions are identities and the maps are inverse bijections. For empty $S$ both sets are singletons; for nonempty $S$ and empty $T$ both are empty, and their unique connecting map is bijective.
+\end{answer}
+\exercise{1.7}{Subsets and indicator functions}
+\begin{exam}{Lecture exercise}
+Prove $\chi:\mathcal P(S)\to\mathcal F(S;\{0,1\})$, $A\mapsto1_A$, is bijective by constructing its inverse.
+\end{exam}
+\begin{answer}
+For a binary-valued function $f$ define $\sigma(f)=\{s\in S:f(s)=1\}$. If $A\subseteq S$, then $\sigma(1_A)=A$ because the indicator is one exactly on $A$. Conversely, for any $s\in S$, if $f(s)=1$ then $s\in\sigma(f)$ and $1_{\sigma(f)}(s)=1$; if $f(s)=0$ then $s\notin\sigma(f)$ and the indicator is zero. Thus $1_{\sigma(f)}=f$. Therefore $\sigma\circ\chi$ and $\chi\circ\sigma$ are identities, proving bijectivity. The indicator's domain is the whole $S$, not just $A$.
+\end{answer}
+\exercise{1.8}{Images of unions and intersections}
+\begin{exam}{Lecture exercise}
+Show images preserve unions and satisfy inclusion for intersections.
+\end{exam}
+\begin{answer}
+$y\in f[\bigcup\mathcal A]$ iff $y=f(x)$ for some $x$ lying in at least one $A\in\mathcal A$, iff $y\in f[A]$ for some such $A$, proving the union identity. If $y\in f[\bigcap\mathcal A]$, choose a single $x$ in every $A$ with $f(x)=y$. Then $y\in f[A]$ for every $A$, yielding inclusion in the intersection of images. Equality can fail: a constant map sends two disjoint nonempty sets to the same singleton, while their intersection has empty image.
+\end{answer}
+\exercise{1.9}{Preimage identities}
+\begin{exam}{Lecture exercise}
+Prove inverse images preserve unions and set differences.
+\end{exam}
+\begin{answer}
+$x\in f^{-1}[\bigcup\mathcal C]$ iff $f(x)$ belongs to some $C\in\mathcal C$, iff $x$ belongs to some $f^{-1}[C]$. This proves the union identity. Also $x\in f^{-1}[D\setminus C]$ iff $f(x)\in D$ and $f(x)\notin C$, iff $x\in f^{-1}[D]\setminus f^{-1}[C]$. Taking $D=T$ gives the complement identity $f^{-1}[T\setminus C]=S\setminus f^{-1}[C]$.
+\end{answer}
+\exercise{1.10}{Disjoint union of equivalence relations}
+\begin{exam}{Lecture exercise}
+Combine equivalence relations on disjoint nonempty $A_1,A_2$ by relating points only when they lie in the same set and are related there. Prove the result is an equivalence relation.
+\end{exam}
+\begin{answer}
+Every point belongs to one $A_i$ and is related to itself there, giving reflexivity. Symmetry follows from symmetry within that same $A_i$. If $x\sim y$ and $y\sim z$, the first relation puts $x,y$ in some $A_i$ and the second puts $y,z$ in some $A_j$. Since the sets are disjoint and share $y$, $i=j$. Transitivity of the relation within this common constituent gives $x\sim z$. Thus all three properties hold.
+\end{answer}
+\exercise{1.11}{Symmetry and transitivity do not imply reflexivity}
+\begin{exam}{Lecture exercise}
+Identify the flaw in choosing $y$ with $x\sim y$ to derive $x\sim x$, and give a counterexample.
+\end{exam}
+\begin{answer}
+There may be no such $y$ for a given $x$. Symmetry and transitivity are conditional statements; they do not assert existence of a related point. The empty relation on a nonempty set satisfies symmetry and transitivity vacuously, but no point is related to itself, so reflexivity fails.
+\end{answer}
+\exercise{1.12}{Enumerating the integers}
+\begin{exam}{Lecture exercise}
+Write a bijection $\N\to\Z$.
+\end{exam}
+\begin{answer}
+With $\N=\{1,2,\ldots\}$, define $f(1)=0$, $f(2k)=k$ for $k\ge1$, and $f(2k+1)=-k$ for $k\ge1$. Its values list $0,1,-1,2,-2,\ldots$. Zero occurs once; each positive integer $k$ occurs exactly at $2k$; each negative integer $-k$ occurs exactly at $2k+1$. Thus it is both injective and surjective, proving countability of $\Z$.
+\end{answer}
+\exercise{1.13}{Rational-coefficient polynomials}
+\begin{exam}{Lecture exercise}
+Prove the set of all rational-coefficient polynomials is countable.
+\end{exam}
+\begin{answer}
+For each $n\ge0$, polynomials of degree at most $n$ are uniquely encoded by $(a_0,\ldots,a_n)\in\Q^{n+1}$, allowing leading zero coefficients. This finite product is countable, so each bounded-degree family is countable. Every polynomial has finite degree, so the whole set is a countable union of these families and is countable.
+\end{answer}
+\exercise{1.14}{Finite subsets of natural numbers}
+\begin{exam}{Lecture exercise}
+Prove $\mathcal P_{00}(\N)$, the finite subsets of $\N$, is countable.
+\end{exam}
+\begin{answer}
+For each $k\ge1$, encode a $k$-element subset by listing its elements in strictly increasing order. This injects that family into $\N^k$, which is countable. The zero-element family consists only of $\varnothing$. Taking the countable union over $k\ge0$ proves countability. Alternatively, the finite binary sum $A\mapsto1+\sum_{n\in A}2^{n-1}$ is an injection into $\N$, by uniqueness of finite binary expansions.
+\end{answer}
+\exercise{1.15}{Strict and non-strict total orders}
+\begin{exam}{Lecture exercise; optional order-theory material}
+Show the conversions $x<y\iff x\le y\text{ and }x\ne y$ and $x\le y\iff x<y\text{ or }x=y$ take total orders to strict total orders and back.
+\end{exam}
+\begin{answer}
+Given a total order, comparable distinct points satisfy precisely one direction of strict inequality, because antisymmetry prevents both. Equal points satisfy neither, proving trichotomy. If $x<y<z$, transitivity gives $x\le z$; equality $x=z$ would force $x=y$ by antisymmetry, impossible. Thus $x<z$.
+
+Conversely, the converted non-strict relation is reflexive by its equality clause. If $x\le y$ and $y\le x$ with distinct points, then $x<y$ and $y<x$, contradicting trichotomy, so it is antisymmetric. Transitivity follows from strict transitivity when both steps are strict, while an equality step leaves the other comparison unchanged. Trichotomy ensures comparability. Thus the relation is a total order.
+\end{answer}
+\exercise{1.16}{Truth conditions for bijections}
+\begin{exam}{Lecture exercise}
+For bijections from $\{x,y,z\}$ to $\{a,b,c\}$, let A mean $f(x)=a$, B mean $f(y)\ne a$, C mean $f(z)\ne b$. List those with exactly two, and exactly one, true propositions.
+\end{exam}
+\begin{answer}
+Represent a map by $(f(x),f(y),f(z))$. Check all six permutations:
+\begin{center}\begin{tabular}{c|ccc|c}
+\text{Outputs}&A&B&C&\text{True count}\\\hline
+$(a,b,c)$&T&T&T&3\\
+$(a,c,b)$&T&T&F&2\\
+$(b,a,c)$&F&F&T&1\\
+$(b,c,a)$&F&T&T&2\\
+$(c,a,b)$&F&F&F&0\\
+$(c,b,a)$&F&T&T&2
+\end{tabular}\end{center}
+Exactly two are true for $(a,c,b)$, $(b,c,a)$ and $(c,b,a)$. Exactly one is true only for $(b,a,c)$. Exhausting the six permutations proves the lists complete.
+\end{answer}
+\exercise{1.17}{A relation built from fibres and a partition}
+\begin{exam}{Lecture exercise}
+For $f:S\to T$ and a partition $\mathcal C$ of nonempty $S$, define $u\sim v$ iff $f^{-1}[\{u,v\}]\subseteq A$ for some block $A\in\mathcal C$. Test reflexivity, symmetry and transitivity, including the additional assumptions in the source exercise.
+\end{exam}
+\begin{answer}
+Reflexivity can fail: take $S=\{1,2\}$ with singleton blocks, $T=\{u\}$ and $f$ constant. Then $f^{-1}[\{u\}]=S$ lies in no single block, so $u\not\sim u$. If $f$ is injective, each fibre is a singleton or empty and is contained in some block; thus reflexivity holds.
+
+Symmetry always holds, since $\{u,v\}=\{v,u\}$. In particular it holds when $f$ is bijective.
+
+Transitivity can fail when a target point is missing from the range. Take $S=\{1,2\}$ with singleton blocks and $T=\{u,v,w\}$ with $f(1)=u$, $f(2)=v$. Then $u\sim w$ and $w\sim v$, since the respective preimages are $\{1\}$ and $\{2\}$. But $u\not\sim v$, because their combined preimage is $S$.
+
+If $f$ is surjective, transitivity does hold. Suppose $u\sim v$ via block $A$ and $v\sim w$ via block $B$. Surjectivity gives a point in the fibre over $v$, which lies in both blocks. Blocks of a partition that intersect are equal, so $A=B$. The fibres over $u$ and $w$ then both lie in this common block, proving $u\sim w$.
+\end{answer}
+\exercise{1.18}{Embedding binary sequences in the reals}
+\begin{exam}{Lecture exercise}
+Show $\psi(a)=\sum_{n\ge1}a_n10^{-n}$ is injective for $a\in\{0,1\}^{\N}$ and deduce uncountability of $\R$.
+\end{exam}
+\begin{answer}
+If $a\ne b$, let $N$ be their first differing coordinate and assume $a_N=1$, $b_N=0$. Earlier terms cancel. The worst opposing tail has magnitude at most $\sum_{n>N}10^{-n}=10^{-N}/9$, so
+\[\psi(a)-\psi(b)\ge10^{-N}-10^{-N}/9=(8/9)10^{-N}>0.\]
+Thus the outputs differ and $\psi$ is injective. Binary sequence space is uncountable by Cantor's theorem and its indicator-function formulation. If $\R$ were countable, composing an injection $\R\to\N$ with $\psi$ would make binary sequence space countable, a contradiction. Hence $\R$ is uncountable.
+\end{answer}
+\exercise{1.19}{Infiniteness and an injection from natural numbers}
+\begin{exam}{Lecture exercise}
+Show $S$ is infinite iff there is an injection $\N\to S$.
+\end{exam}
+\begin{answer}
+An injection from infinite $\N$ cannot have finite target, so its existence forces $S$ infinite. Conversely, for infinite $S$, choose $s_1\in S$. After distinct $s_1,\ldots,s_n$ have been chosen, their finite set cannot exhaust $S$, so select $s_{n+1}$ outside it. In the choice framework used by the lecture notes this recursive selection gives infinitely many distinct points. The map $n\mapsto s_n$ is injective. This implication uses a choice principle, consistent with the notes' assumed axiom of choice.
+\end{answer}

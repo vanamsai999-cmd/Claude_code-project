@@ -1,0 +1,502 @@
+\clearpage
+\setcounter{section}{3}
+\section{Metric space topology}
+
+\topic{Open sets and interior}
+\begin{note}{Openness and interior}
+$U$ is open in $E$ if $\forall p\in U\ \exists r>0:B_r^E(p)\subseteq U$. Its points have room around them \emph{within the specified metric space}. Empty and whole sets are open. Every set in a discrete metric space is open, since $B_{1/2}(p)=\{p\}$.
+
+A point is in $\inte A$ iff it has a ball contained in $A$. The interior is the largest open subset of $A$:
+\[\inte A=\bigcup\{U:U\subseteq A,\ U\text{ open}\}.\]
+Thus $\inte A$ is open; $A$ is open iff $A=\inte A$; and $\inte(\inte A)=\inte A$.
+\end{note}
+\begin{note}{Unions and intersections}
+Arbitrary unions of open sets are open: a point in a union lies in one member, which supplies a ball. Finite intersections are open: use the minimum of finitely many positive radii. Infinite intersections need not be open:
+\[\bigcap_{n\ge1}(-1/n,1/n)=\{0\}.\]
+Every open set is a union of open balls: choose $r_x>0$ with $B_{r_x}(x)\subseteq U$ for each $x\in U$, then $U=\bigcup_{x\in U}B_{r_x}(x)$.
+
+Every open $U$ is also a union of closed balls. Choose $R_x>0$ with $B_{R_x}(x)\subseteq U$ and use $B_{R_x/2}[x]\subseteq U$. A union of closed sets need not be closed, so there is no contradiction.
+\end{note}
+\begin{method}{Prove open or disprove open}
+For a positive proof, fix an arbitrary point \emph{inside} and construct a positive radius, often a minimum of distances to excluded points or endpoints. For a negative proof, find one point in the set for which every positive-radius ball contains an excluded point. Merely observing that the set has a missing endpoint is insufficient in an arbitrary metric space.
+\end{method}
+\begin{exam}{2022 Q2(b): unions of balls}
+Prove every open subset is a union of open balls. Is it necessarily a union of closed balls?
+\end{exam}
+\begin{answer}
+Let $U$ be open. For each $x\in U$, choose $r_x>0$ such that $B_{r_x}(x)\subseteq U$. Every $x\in U$ belongs to its own ball, so
+\[U\subseteq\bigcup_{x\in U}B_{r_x}(x)\subseteq U.\]
+Hence equality holds. Also $x\in B_{r_x/2}[x]\subseteq B_{r_x}(x)\subseteq U$, so
+\[U=\bigcup_{x\in U}B_{r_x/2}[x].\]
+Thus the answer is yes. The empty set is covered by the empty union in both cases.
+\end{answer}
+\begin{exam}{Section 4 Exercise 4.2: removing finitely many points}
+If $V$ is open and $F$ finite in $E$, prove $V\setminus F$ is open.
+\end{exam}
+\begin{answer}
+Take $p\in V\setminus F$. Choose $R>0$ with $B_R(p)\subseteq V$. If $F=\varnothing$, this already works. Otherwise the finitely many positive numbers $d(p,f)$, $f\in F$, have a positive minimum $s$. Set $r=\min\{R,s\}>0$. A point of $B_r(p)$ lies in $V$ but cannot equal an element of $F$, since its distance from $p$ is less than $s$. Thus $B_r(p)\subseteq V\setminus F$, proving openness.
+\end{answer}
+\begin{tip}
+For intersections, take a \emph{minimum} radius, not a maximum. Finiteness matters: an infimum of infinitely many positive radii can be zero. In $\R$, removing the countable dense set $\Q$ from $\R$ does not leave an open set.
+\end{tip}
+
+
+\topic{Closed sets, closure and boundary}
+\begin{note}{Three descriptions of closure}
+For $A\subseteq E$, a point $p$ is in $\cl A$ iff every ball about $p$ meets $A$, iff there is $a_n\in A$ with $a_n\to p$. For nonempty $A$, this is equivalent to $\dist(p,A)=0$. To produce the sequence, choose $a_n\in B_{1/n}(p)\cap A$.
+
+A set is closed iff $A=\cl A$, equivalently it contains the limits of every sequence of its points which converges in $E$. Closure is the smallest closed superset:
+\[\cl A=\bigcap\{F:A\subseteq F,\ F\text{ closed}\},\qquad\cl{\cl A}=\cl A.\]
+To prove closure is idempotent directly, approximate a point of $\cl{\cl A}$ by a point of $\cl A$ within $r/2$, then that point by a point of $A$ within $r/2$.
+\end{note}
+\begin{note}{Closed/open duality and boundary}
+$A$ is closed iff $E\setminus A$ is open. Consequently arbitrary intersections of closed sets are closed; finite unions of closed sets are closed. Closed balls are closed because distance to their centre is continuous, or because a limit of distances $\le r$ is still $\le r$.
+\[E\setminus\cl A=\inte(E\setminus A),\qquad E\setminus\inte A=\cl{E\setminus A}.\]
+The boundary is
+\[\partial A=\cl A\setminus\inte A=\cl A\cap\cl{E\setminus A}.\]
+Every ball about a boundary point meets both $A$ and its complement. Boundary is closed. The three disjoint regions $\inte A$, $\partial A$, $\inte(E\setminus A)$ partition $E$.
+
+In $\R$: for $A=[0,1)$, interior is $(0,1)$, closure is $[0,1]$, boundary is $\{0,1\}$. For $A=\Q$, interior is empty and both closure and boundary are $\R$. For discrete spaces every set is both open and closed, and every boundary is empty.
+\end{note}
+\begin{exam}{2025 Q3(e) / 2024 Q2(b): open versus closed complement}
+Prove $A$ is open iff $E\setminus A$ is closed, using the sequential definition of closedness.
+\end{exam}
+\begin{answer}
+Suppose $A$ is open and $x_n\in E\setminus A$ with $x_n\to x$. If $x\in A$, choose $r>0$ with $B_r(x)\subseteq A$. Eventually $x_n\in B_r(x)$, contradicting $x_n\notin A$. Thus $x\in E\setminus A$, proving this complement is closed.
+
+Conversely, suppose $E\setminus A$ is closed. If $A$ were not open, there would be $a\in A$ such that every $B_{1/n}(a)$ meets $E\setminus A$. Choose $x_n$ in that intersection. Then $x_n\to a$, so closedness forces $a\in E\setminus A$, a contradiction. Hence $A$ is open.
+\end{answer}
+\begin{exam}{2023 Q2(b): closure of unions and intersections}
+Prove $\cl{A\cup B}=\cl A\cup\cl B$. Give an example where $\cl{A\cap B}\subsetneq\cl A\cap\cl B$.
+\end{exam}
+\begin{answer}
+Since $A\subseteq A\cup B$ and $B\subseteq A\cup B$, monotonicity of closure gives $\cl A\cup\cl B\subseteq\cl{A\cup B}$. For the reverse inclusion, $\cl A\cup\cl B$ is a finite union of closed sets, hence closed, and contains $A\cup B$. Since closure is the smallest closed superset, $\cl{A\cup B}\subseteq\cl A\cup\cl B$.
+
+For strictness take $A=(0,1)$ and $B=(1,2)$ in $\R$. Then $A\cap B=\varnothing$, so $\cl{A\cap B}=\varnothing$, while $\cl A\cap\cl B=[0,1]\cap[1,2]=\{1\}$.
+\end{answer}
+\begin{tip}
+A set can be open, closed, both or neither. ``Not open'' does not mean closed. Also $\cl{B_r(a)}\subseteq B_r[a]$ can be strict: in a discrete space with at least two points, $\cl{B_1(a)}=\{a\}$ but $B_1[a]=E$.
+\end{tip}
+
+
+\topic{Metric subspaces and relative topology}
+\begin{note}{The inherited metric and its balls}
+For $A\subseteq E$, the subspace metric is $d_A=d_E|_{A\times A}$. For $a\in A$,
+\[B_r^A(a)=A\cap B_r^E(a),\qquad B_r^A[a]=A\cap B_r^E[a].\]
+A subset $V\subseteq A$ is open in $A$ iff $V=A\cap U$ for some open $U$ in $E$. It is closed in $A$ iff $V=A\cap F$ for some closed $F$ in $E$. Also $\cl V^{\,A}=A\cap\cl V^{\,E}$.
+
+The whole subspace $A$ is always open and closed in itself, regardless of its status in $E$. For example $A=[0,1)$ is neither open nor closed in $\R$, but both in itself. Every subset of $\Z$ is open and closed in $\Z$ under the inherited usual metric, because radius $1/2$ balls are singletons.
+\end{note}
+\begin{method}{Relative openness}
+Do not demand a full ambient ball contained in $V$. You only need $A\cap B_r^E(p)\subseteq V$. Points excluded from $A$ are irrelevant. Either use this directly or represent the set as $A\cap U$ with $U$ ambient open.
+\end{method}
+\begin{exam}{2022 Q2(d): the relative-open-set theorem}
+Prove that $V\subseteq A$ is open in $A$ iff $V=A\cap U$ for an open $U\subseteq E$.
+\end{exam}
+\begin{answer}
+First, if $V=A\cap U$ with $U$ open in $E$, take $v\in V$. Choose $r>0$ with $B_r^E(v)\subseteq U$. Then $B_r^A(v)=A\cap B_r^E(v)\subseteq A\cap U=V$, so $V$ is open in $A$.
+
+Conversely, suppose $V$ is open in $A$. For each $v\in V$, choose $r_v>0$ with $B_{r_v}^A(v)\subseteq V$. Let $U=\bigcup_{v\in V}B_{r_v}^E(v)$, an open subset of $E$. Each $v$ belongs to $A\cap U$, so $V\subseteq A\cap U$. If $x\in A\cap U$, then $x\in A\cap B_{r_v}^E(v)=B_{r_v}^A(v)\subseteq V$ for some $v$. Thus $V=A\cap U$.
+\end{answer}
+\begin{exam}{2024 Q2(c)(ii): both relatively, neither ambiently}
+Give a subspace $A\subseteq E$ and $R\subseteq A$ such that $R$ is both open and closed in $A$ but neither in $E$.
+\end{exam}
+\begin{answer}
+Take $E=\R$ with its usual metric and $A=R=[0,1)$. Since $R=A$, it is both open and closed in the subspace. It is not open in $\R$ because every ball about $0$ contains negative numbers. It is not closed in $\R$ because $1-1/n\in R$ for all $n\ge1$ and this sequence tends to $1\notin R$.
+\end{answer}
+
+
+\topic{Continuity in metric spaces}
+\begin{note}{The three equivalent tests}
+For $f:E\to F$, continuity at $p$ is
+\[\forall\varepsilon>0\ \exists\delta>0\ \forall x\in E:\ d_E(x,p)<\delta\Rightarrow d_F(f(x),f(p))<\varepsilon.\]
+It is equivalent to sequential continuity: $x_n\to p\Rightarrow f(x_n)\to f(p)$. Globally, it is equivalent to preimages of all open sets being open, and to preimages of all closed sets being closed.
+
+Lipschitz functions are continuous: for $L>0$ take $\delta=\varepsilon/L$; for $L=0$ the map is constant and any positive $\delta$ works. Compositions of continuous maps are continuous: if $x_n\to x$, then $f(x_n)\to f(x)$ and $g(f(x_n))\to g(f(x))$.
+\end{note}
+\begin{method}{Choose the shortest continuity proof}
+Use a Lipschitz bound if an algebraic estimate is available. Use sequences when limits are easy or you want to disprove continuity. Use open preimages when the question concerns topology. To disprove continuity at $p$, produce $x_n\to p$ whose images fail to tend to $f(p)$.
+
+To prove sequential continuity implies continuity, negate continuity. This provides a fixed $\varepsilon_0>0$ and points $x_n$ with $d(x_n,p)<1/n$ but $d(f(x_n),f(p))\ge\varepsilon_0$, contradicting sequential continuity.
+\end{method}
+\begin{exam}{2023 Q2(c)(ii) and 2025 Q3(f): the open-preimage theorem}
+Prove that $f$ is continuous iff $f^{-1}[V]$ is open for every open $V\subseteq F$.
+\end{exam}
+\begin{answer}
+Suppose $f$ is continuous and take $p\in f^{-1}[V]$. Since $f(p)\in V$ and $V$ is open, choose $\varepsilon>0$ with $B_\varepsilon^F(f(p))\subseteq V$. Continuity gives $\delta>0$ such that $f[B_\delta^E(p)]\subseteq B_\varepsilon^F(f(p))$. Therefore $B_\delta^E(p)\subseteq f^{-1}[V]$, proving openness.
+
+Conversely suppose all open preimages are open. Fix $p\in E$ and $\varepsilon>0$. The set $W=f^{-1}[B_\varepsilon^F(f(p))]$ is open and contains $p$. Hence some $\delta>0$ satisfies $B_\delta^E(p)\subseteq W$. Thus $d_E(x,p)<\delta$ implies $d_F(f(x),f(p))<\varepsilon$. So $f$ is continuous at every $p$.
+\end{answer}
+\begin{exam}{2023 Q2(c)(iii): images do not behave like preimages}
+Give a continuous map and an open set whose image is not open.
+\end{exam}
+\begin{answer}
+Let $f:\R\to\R$ be the constant map $f(x)=0$, and let $U=(-1,1)$. The function is continuous, indeed $0$-Lipschitz. But $f[U]=\{0\}$ is not open in $\R$, since no positive-radius ball about $0$ lies in that singleton. Thus continuity controls inverse images of open sets, not arbitrary direct images.
+\end{answer}
+\begin{note}{Identity theorem for continuous functions}
+If $f,g:E\to F$ are continuous, the set $H=\{x:f(x)=g(x)\}$ is closed: for $x_n\in H$ with $x_n\to x$, continuity gives $f(x)=\lim f(x_n)=\lim g(x_n)=g(x)$. If $H$ contains a dense subset, $E=\cl H=H$, so $f=g$. This proves uniqueness of continuous extensions from dense domains.
+\end{note}
+
+
+\topic{Density, separability and open subsets of the real line}
+\begin{note}{Density and separability}
+$D$ is dense in $E$ iff $\cl D=E$, iff every nonempty open ball meets $D$, iff each point is a limit of a sequence from $D$. More generally $D\subseteq A$ is dense in $A$ iff $A\subseteq\cl D^{\,E}$.
+
+$E$ is separable if it has a countable dense subset. $\Q^n$ is countable dense in $\R^n$ under every $\ell^p$ metric. A discrete metric space is separable iff it is countable: every dense subset must meet each singleton open ball and hence equal the whole space.
+
+A dense set need not be open or closed. Two dense sets can be disjoint: $\Q$ and $\R\setminus\Q$. The intersection is guaranteed dense when one is \emph{open and dense} and the other is dense.
+\end{note}
+\begin{exam}{2023 Q3(a) / 2024 Q2(d): dense intersect open dense}
+If $D$ is dense and $U$ open dense in $E$, prove $D\cap U$ is dense. Explain why the openness hypothesis matters.
+\end{exam}
+\begin{answer}
+Fix an arbitrary nonempty open ball $B_r(p)$. Density of $U$ gives $u\in B_r(p)\cap U$. This intersection is open, so there is $s>0$ with $B_s(u)\subseteq B_r(p)\cap U$. Density of $D$ supplies $a\in B_s(u)\cap D$. Then $a\in B_r(p)\cap U\cap D$. Thus every ball meets $U\cap D$, proving density.
+
+Without openness take $D=\Q$ and $U=\R\setminus\Q$ in $\R$. Both are dense but their intersection is empty and hence not dense.
+\end{answer}
+\begin{note}{A countable dense family in $C([0,1])$}
+For each $n\ge0$, let $A_n$ be the continuous functions linear on each dyadic interval $[k/2^n,(k+1)/2^n]$ and with rational values at every vertex. Each function is determined by $2^n+1$ rationals, so $A_n$ is countable. Hence $A=\bigcup_{n\ge0}A_n$ is countable.
+
+To approximate $f\in C([0,1])$, use uniform continuity to choose a mesh so that values of $f$ vary by less than $\varepsilon/2$ on each interval. Approximate vertex values by rationals within $\varepsilon/2$, and interpolate linearly. If $t$ is between adjacent vertices $a,b$ and $t=(1-\theta)a+\theta b$, then
+\begin{align*}
+|f(t)-g(t)|&\le(1-\theta)|f(t)-g(a)|+\theta|f(t)-g(b)|\\
+&< (1-\theta)\varepsilon+\theta\varepsilon=\varepsilon.
+\end{align*}
+Choosing all errors below $\varepsilon/3$ gives a strict uniform margin. Therefore $A$ is dense. Alternatively, rational-coefficient polynomials are countable dense, using Weierstrass approximation and coefficient approximation.
+\end{note}
+\begin{exam}{2024 Q2(d)(v), expanded using Exercise 4.11}
+Describe a countable dense subset of $C([0,1];\R)$ in the sup metric and justify both claims.
+\end{exam}
+\begin{answer}
+Use the dyadic piecewise-linear family $A$ above. For fixed $n$, send each function to its finite tuple of rational vertex values. This is injective into $\Q^{2^n+1}$; hence $A_n$ is countable and its countable union $A$ is countable. Given $f$ and $\varepsilon>0$, choose the mesh by uniform continuity so that $|f(t)-f(s)|<\varepsilon/3$ whenever $t,s$ lie in one mesh interval. Choose rational vertex values within $\varepsilon/3$ of $f$. On each interval, convex interpolation gives $|g(t)-f(t)|<2\varepsilon/3$. Hence $\norm{g-f}_\infty\le2\varepsilon/3<\varepsilon$, proving density.
+\end{answer}
+\begin{note}{Every open subset of $\R$ is a countable union of intervals}
+The family $\mathcal B=\{(q,r):q,r\in\Q,q<r\}$ is countable, since it injects into $\Q^2$. For open $U$, let $\mathcal B_U$ be those intervals contained in $U$. Given $x\in U$, take $(x-\delta,x+\delta)\subseteq U$ and rational endpoints $x-\delta<q<x<r<x+\delta$. Then $x\in(q,r)\subseteq U$. Thus $U=\bigcup\mathcal B_U$, a countable union. The intervals need not be disjoint for this proof. The same idea uses rational-centred rational-radius balls in $\R^n$.
+\end{note}
+
+
+\topic{Homeomorphisms and equivalence of metrics}
+\begin{note}{Homeomorphisms preserve topology}
+A homeomorphism is a continuous bijection whose inverse is continuous. A continuous bijection alone is insufficient: the identity $(\R,d_{\rm discrete})\to(\R,|\cdot|)$ is continuous and bijective but its inverse is not continuous.
+
+For a continuous bijection, being a homeomorphism is equivalent to sending every open set to an open set, or every closed set to a closed set. Bi-Lipschitz bijections are homeomorphisms. Homeomorphisms preserve sequential compactness, but need not preserve metric boundedness or completeness.
+\end{note}
+\begin{note}{Three notions of equivalent metrics on the same set}
+\textbf{Topological equivalence:} the identity is a homeomorphism. Equivalently, the metrics have the same open sets, the same closed sets, or the same convergent sequences with the same limits.
+
+\textbf{Cauchy equivalence:} the metrics have exactly the same Cauchy sequences. This notion appears explicitly in the 2024 paper. It implies topological equivalence: if $x_n\to p$ for one metric, interleave $x_1,p,x_2,p,\ldots$; it is Cauchy for both metrics, forcing convergence to $p$ for the second. Thus Cauchy equivalence also preserves completeness.
+
+\textbf{Lipschitz equivalence:} there exist $c,C>0$ with
+\[c\,d(x,y)\le d'(x,y)\le C\,d(x,y)\quad\text{for every pair}.\]
+It preserves bounded sets and Cauchy sequences, hence completeness and topology. These equivalence relations are reflexive, symmetric and transitive: use identity, inverse and composition of the relevant identity maps; for Lipschitz bounds multiply constants.
+\end{note}
+\begin{method}{Prove or disprove equivalence}
+Try two-sided linear bounds for Lipschitz equivalence. For topological equivalence, compare small balls at each point or compare convergent sequences. To disprove it, find a sequence converging to a point in one metric but not the other. To disprove Cauchy equivalence, find a sequence Cauchy for one but not the other. To disprove Lipschitz equivalence, show a ratio of distances tends to zero or infinity.
+\end{method}
+\begin{note}{Transforming a metric by $\alpha$}
+Suppose $\alpha:[0,\infty)\to[0,\infty)$ is definite ($\alpha(t)=0$ iff $t=0$), nondecreasing and subadditive. Then $d'=\alpha\circ d$ is a metric because
+\[\alpha(d(x,z))\le\alpha(d(x,y)+d(y,z))\le\alpha(d(x,y))+\alpha(d(y,z)).\]
+If $\alpha$ is continuous at zero, it has the same convergence as $d$: small $d$ gives small $d'$, and $d\ge\eta$ gives $d'\ge\alpha(\eta)>0$. The same argument with pairs proves preservation of Cauchy sequences. The notes give a sufficient version with an additional local strict-monotonicity assumption; the examples below satisfy that version.
+
+Examples are $\alpha(t)=ct$ ($c>0$), $\min\{t,1\}$, $t/(1+t)$, $\arctan t$ and $t^{1/p}$ ($p\ge1$). The first three non-linear bounded examples produce bounded metrics. For $t/(1+t)$,
+\[\frac{s+t}{1+s+t}=\frac{s}{1+s+t}+\frac{t}{1+s+t}\le\frac{s}{1+s}+\frac{t}{1+t}.\]
+The transform $\alpha(0)=0$, $\alpha(t)=1$ for $t>0$ gives the discrete metric but fails continuity at zero, so need not preserve topology.
+\end{note}
+\begin{exam}{2024 Q3(b)--(c): truncated and arctangent metrics}
+Show that $d'=\min\{1,d\}$ is Cauchy equivalent to $d$, but need not be Lipschitz equivalent. Show that $d_{NS}(x,y)=|\arctan x-\arctan y|$ is not Cauchy equivalent to the usual metric on $\R$.
+\end{exam}
+\begin{answer}
+For $a,b\ge0$, $\min(1,a+b)\le\min(1,a)+\min(1,b)$: if either $a$ or $b$ is at least $1$, the right side is at least $1$; otherwise the right side is $a+b$. Together with the original triangle inequality this proves the triangle inequality for $d'$. Other axioms follow immediately.
+
+Since $d'\le d$, a $d$-Cauchy sequence is $d'$-Cauchy. Conversely, given $\varepsilon>0$, take $\eta=\min\{1/2,\varepsilon/2\}$. Eventually $d'(x_n,x_m)<\eta<1$, so the minimum must equal $d(x_n,x_m)$, and therefore $d(x_n,x_m)<\varepsilon$. Thus the Cauchy sequences coincide. On $\R$ with usual $d$, no $c>0$ can satisfy $c|x-y|\le\min\{1,|x-y|\}$ for all pairs, by taking $x=0,y=n\to\infty$. Hence Lipschitz equivalence can fail.
+
+For the arctangent metric take $x_n=n$. Its arctangents converge to $\pi/2$, so it is $d_{NS}$-Cauchy. It is not usual-metric Cauchy, since $|x_{n+1}-x_n|=1$. Thus the metrics are not Cauchy equivalent, although they are topologically equivalent.
+\end{answer}
+\begin{tip}
+Do not confuse $\arctan(d(x,y))$ with $|\arctan x-\arctan y|$. The first is a scalar transformation of the original distance and preserves Cauchy sequences here; the second is a pullback from an open interval and can change them.
+\end{tip}
+
+
+\topic{Detailed proof: Why closure of a norm ball is its closed ball}
+\begin{exam}{Additional practice based on Sections 3 and 4}
+In a normed vector space, prove $\cl{B_r(a)}=B_r[a]$ for $r>0$. Explain why the argument is not available in an arbitrary metric space.
+\end{exam}
+\begin{answer}
+First $B_r[a]$ is closed and contains $B_r(a)$. By the smallest-closed-superset description of closure, $\cl{B_r(a)}\subseteq B_r[a]$.
+
+For the reverse inclusion, take $x\in B_r[a]$. If $\norm{x-a}<r$, it is already in the open ball and hence in its closure. If $\norm{x-a}=r$, define
+\[x_n=a+(1-1/n)(x-a)\qquad(n\ge2).\]
+By norm homogeneity,
+\[\norm{x_n-a}=(1-1/n)r<r,\qquad \norm{x_n-x}=r/n\to0.\]
+Thus $x_n\in B_r(a)$ and $x_n\to x$, so the sequential description of closure puts $x\in\cl{B_r(a)}$. This proves the other inclusion and hence equality.
+
+The construction uses vector addition and scalar multiplication to move along a line segment toward $a$. A general metric space need not have such points. In a discrete space with at least two points, $B_1(a)=\{a\}$ is already closed, but $B_1[a]=E$. Therefore equality can fail without the normed vector-space structure.
+\end{answer}
+\begin{tip}
+A geometric intuition such as ``approach radially from inside'' becomes a proof only after you specify the sequence and compute both its membership and its limit. Those are the two separate checks in the displayed formulas.
+\end{tip}
+
+
+\topic{Proof clinic: Open-set arguments: choose the available margin}
+\begin{exam}{Additional practice: a strict distance inequality defines an open set}
+For fixed $a,b\in E$, prove $U=\{x:d(x,a)<d(x,b)\}$ is open without citing a preimage theorem.
+\end{exam}
+\begin{answer}
+Fix $p\in U$. Its positive margin is $h=d(p,b)-d(p,a)>0$. Moving from $p$ to $x$ can increase distance to $a$ by at most $d(x,p)$ and decrease distance to $b$ by at most $d(x,p)$. Thus budget less than half the margin in total by taking $r=h/3$.
+
+If $d(x,p)<r$, triangle and reverse triangle inequalities give
+\begin{align*}
+d(x,a)&\le d(p,a)+d(x,p)<d(p,a)+r,\\
+d(x,b)&\ge d(p,b)-d(x,p)>d(p,b)-r.
+\end{align*}
+Since $2r=2h/3<h$, $d(p,a)+r<d(p,b)-r$. Therefore $d(x,a)<d(x,b)$, so $x\in U$. We have $B_r(p)\subseteq U$, proving openness.
+\end{answer}
+\begin{method}{The continuity shortcut after you understand the estimate}
+The function $h(x)=d(x,a)-d(x,b)$ is continuous, since both distance functions are Lipschitz. Thus $U=h^{-1}[(-\infty,0)]$ is open. This is shorter, but the direct proof explains how the positive margin produces a radius.
+\end{method}
+
+
+\topic{Proof clinic: Closed-set arguments: retain weak inequalities at limits}
+\begin{exam}{Additional practice: an equidistance locus is closed}
+Show $F=\{x\in E:d(x,a)=d(x,b)\}$ is closed.
+\end{exam}
+\begin{answer}
+Take a sequence $x_n\in F$ with $x_n\to x$ in $E$. By continuity of distance values, $d(x_n,a)\to d(x,a)$ and $d(x_n,b)\to d(x,b)$. Each pair of values is equal, so their limits are equal: $d(x,a)=d(x,b)$. Hence $x\in F$. The sequential characterisation proves $F$ closed.
+
+An alternative is $F=h^{-1}[\{0\}]$ for the continuous function $h$ from the previous lesson. Since $\{0\}$ is closed in $\R$, its preimage is closed.
+\end{answer}
+\begin{note}{Why closed inequalities survive and strict ones may not}
+If $t_n\le c$ and $t_n\to t$, then $t\le c$. But $t_n<c$ does not force $t<c$: $c-1/n\to c$. Thus sets defined by continuous weak inequalities are naturally closed, while strict inequalities are naturally open. In an arbitrary metric setting, use continuity to make this reasoning precise rather than relying on the appearance of the inequality alone.
+\end{note}
+
+
+\topic{Proof clinic: Finding closure, interior and boundary in stages}
+\begin{exam}{Additional practice: an interval with an isolated point}
+In usual $\R$, let $A=(0,1)\cup\{2\}$. Find its interior, closure and boundary, with justification.
+\end{exam}
+\begin{answer}
+Every point of $(0,1)$ has a small interval around it contained in $(0,1)$, hence in $A$. The point $2$ is not interior because every ball around it contains points different from $2$ and outside $(0,1)$. Thus $\inte A=(0,1)$.
+
+Every point of $A$ lies in its closure. The endpoint $0$ is approached by $1/n$ for $n\ge2$, and $1$ by $1-1/n$ for $n\ge2$, so both belong to the closure. The set $[0,1]\cup\{2\}$ is closed and contains $A$, so the closure cannot be larger than it. Therefore $\cl A=[0,1]\cup\{2\}$.
+
+Subtracting the interior gives $\partial A=\{0,1,2\}$. In particular a boundary point may itself belong to the set ($2$), or fail to belong ($0,1$).
+\end{answer}
+\begin{tip}
+Identify closure and interior separately, then use the boundary formula. Boundary is not merely ``endpoints of an interval''; isolated points and dense subsets require the general definition.
+\end{tip}
+
+
+\topic{Proof clinic: The same subset viewed in two different spaces}
+\begin{exam}{Additional practice: relative boundary}
+Let $E=\R$, $A=[0,2]$ and $V=[0,1)\subseteq A$. Find the interior, closure and boundary of $V$ relative to $A$, and compare with the ambient answers in $\R$.
+\end{exam}
+\begin{answer}
+In the subspace $A$, $V=A\cap(-1,1)$, so $V$ is open in $A$. Thus $\operatorname{Int}_A V=V=[0,1)$. Its closure in $A$ is $A\cap\overline{V}^{\,\R}=[0,2]\cap[0,1]=[0,1]$. Hence $\partial_A V=[0,1]\setminus[0,1)=\{1\}$.
+
+In $\R$, the interior is $(0,1)$, the closure is $[0,1]$ and the boundary is $\{0,1\}$. The point zero ceases to be a boundary point in the subspace because negative points are no longer part of the space. A sufficiently small relative ball about zero lies entirely in $V$.
+\end{answer}
+
+
+\topic{Proof clinic: How to write a counterexample that earns its conclusion}
+\begin{method}{Three sentences are usually needed}
+Name the objects and the metric spaces. Verify the hypotheses of the claim. Then explicitly verify the failure of its conclusion. A bare formula often leaves the important justification missing.
+\end{method}
+\begin{exam}{Additional practice: continuous image of a closed set}
+Disprove: ``Every continuous image of a closed set is closed.''
+\end{exam}
+\begin{answer}
+Take the usual metric on both $E=[0,\infty)$ and $F=\R$, and let $f(x)=1/(1+x)$. The set $E$ is closed in $\R$, and $f$ is continuous because the denominator is nonzero throughout its domain. Its image is $(0,1]$: values are positive and at most one, and each $y\in(0,1]$ is attained at $x=1/y-1\ge0$. This image is not closed in $\R$ because $1/n\in(0,1]$ tends to $0\notin(0,1]$. Thus all hypotheses hold but the conclusion fails.
+\end{answer}
+\begin{tip}
+When the target is a metric subspace, check closedness in that target, not in some larger space you happen to picture. The image $(0,1]$ is not closed in $\R$ but is closed in itself.
+\end{tip}
+
+
+\topic{Proof clinic: A proof-writing checklist applied to a theorem}
+\begin{exam}{Additional practice: a closed ball is closed}
+Prove $B_r[a]$ is closed, stating exactly how convergence is used.
+\end{exam}
+\begin{answer}
+Let $(x_n)$ be a sequence in $B_r[a]$ converging in $E$ to a point $x$. Membership gives $d(x_n,a)\le r$ for every $n$. Reverse triangle inequality gives $|d(x_n,a)-d(x,a)|\le d(x_n,x)\to0$, so $d(x_n,a)\to d(x,a)$. Taking the limit in the weak inequality yields $d(x,a)\le r$. Therefore $x\in B_r[a]$. Since every convergent sequence from the ball has its ambient limit in the ball, the ball is closed.
+\end{answer}
+\begin{note}{What this answer does well}
+It begins with an arbitrary sequence of the required type; distinguishes membership from convergence; names the estimate giving convergence of scalar distances; keeps the non-strict inequality when passing to a limit; concludes membership; and invokes the correct closed-set characterisation. You can use the same structure whenever a set is defined by a continuous weak inequality.
+\end{note}
+
+
+\topic{Worked lecture exercises}
+\exercise{4.1}{Open sets in a discrete space}
+\begin{exam}{Lecture exercise}
+Identify every open subset of a discrete metric space $E$.
+\end{exam}
+\begin{answer}
+Every subset is open. To verify this, let $A\subseteq E$ and fix any $a\in A$. In the discrete metric $B_{1/2}(a)=\{a\}$, because all distinct points have distance $1$. Therefore $B_{1/2}(a)\subseteq A$. This satisfies the openness definition at every point of $A$, so $A$ is open. The empty subset is open vacuously.
+\end{answer}
+\begin{note}{Why the metric matters}
+The same underlying set $\R$ has singleton sets open in its discrete metric but not in its usual metric. Openness belongs to a metric space, not to a bare set.
+\end{note}
+\exercise{4.2}{An open set minus finitely many points}
+\begin{exam}{Lecture exercise}
+Prove $V\setminus F$ is open when $V$ is open and $F$ finite.
+\end{exam}
+\begin{answer}
+Let $p\in V\setminus F$. Since $V$ is open, choose $R>0$ with $B_R(p)\subseteq V$. If $F=\varnothing$, this ball proves the result at $p$. Otherwise each $d(p,f)$ for $f\in F$ is strictly positive because $p\notin F$. Since there are only finitely many, their minimum $s$ exists and is positive. Set $r=\min\{R,s\}>0$.
+
+For $x\in B_r(p)$, we have $x\in V$ because $r\le R$. Also $x\notin F$: any $f\in F$ has distance at least $s$ from $p$, whereas $d(x,p)<r\le s$. Thus $B_r(p)\subseteq V\setminus F$. The point $p$ was arbitrary, so $V\setminus F$ is open.
+
+An alternative uses finite sets being closed: a singleton is closed by uniqueness of limits, finite unions of closed sets are closed, so $V\setminus F=V\cap(E\setminus F)$ is an intersection of two open sets.
+\end{answer}
+\exercise{4.3}{Images and inverse images}
+\begin{exam}{Lecture exercise}
+Identify $f^{-1}[f[A]]$ and $f[f^{-1}[B]]$, prove the standard inclusions, give strict examples, and characterise equality for every subset.
+\end{exam}
+\begin{method}{Translate membership before manipulating sets}
+An element of $f^{-1}[f[A]]$ has the same image as some point of $A$. This need not force it to lie in $A$ if the map identifies different points. The image of a preimage can only recover target points actually reached by $f$.
+\end{method}
+\begin{answer}
+For $f:S\to T$,
+\[f^{-1}[f[A]]=\{x\in S:\exists a\in A,\ f(x)=f(a)\}.
+\]
+This contains $A$ because $a$ has the same image as itself. Also
+\[f[f^{-1}[B]]=B\cap f[S],\]
+because a point lies on the left exactly when it is the image of some $s\in S$ and lies in $B$. Thus the second set is contained in $B$.
+
+For strictness, take $f:\R\to\R$, $f(x)=x^2$. With $A=\{1\}$, $f^{-1}[f[A]]=\{-1,1\}\supsetneq A$. With $B=\{-1\}$, $f[f^{-1}[B]]=\varnothing\subsetneq B$.
+
+If $f$ is injective and $x\in f^{-1}[f[A]]$, some $a\in A$ has $f(x)=f(a)$, so injectivity yields $x=a\in A$. This gives equality for every $A$. Conversely, suppose equality holds for all $A$ and $f(x)=f(y)$. Taking $A=\{x\}$ gives $y\in f^{-1}[f[A]]=A$, so $y=x$. Thus $f$ is injective.
+
+If $f$ is surjective, then $f[S]=T$, so the second identity becomes $f[f^{-1}[B]]=B$ for every $B$. Conversely, equality for every $B$ applies to $B=T$, giving $f[S]=T$. Thus $f$ is surjective.
+\end{answer}
+\begin{tip}
+Inverse-image notation does not mean an inverse function exists. The proofs work for arbitrary maps, including noninjective and nonsurjective ones.
+\end{tip}
+\exercise{4.4}{Closed sets in a discrete space}
+\begin{exam}{Lecture exercise}
+Identify all closed subsets of a discrete metric space.
+\end{exam}
+\begin{answer}
+Every subset is closed. For $A\subseteq E$, its complement is another subset of the discrete space and is open by Exercise 4.1; hence $A$ is closed.
+
+Sequentially: a sequence from $A$ converging in $E$ must be eventually equal to its limit. An eventual value of a sequence from $A$ lies in $A$. Thus all such limits stay in $A$, proving closedness directly.
+\end{answer}
+\exercise{4.5}{Continuity through closed preimages}
+\begin{exam}{Lecture exercise}
+Show $f:E\to F$ is continuous iff $f^{-1}[C]$ is closed in $E$ for every closed $C\subseteq F$.
+\end{exam}
+\begin{answer}
+We use the open-preimage characterisation of continuity and the identity
+\[f^{-1}[F\setminus C]=E\setminus f^{-1}[C].\]
+Assume $f$ continuous and $C$ closed in $F$. Then $F\setminus C$ is open, so its preimage is open. This preimage is the complement of $f^{-1}[C]$, so $f^{-1}[C]$ is closed.
+
+Conversely suppose all closed preimages are closed. For open $V\subseteq F$, the set $C=F\setminus V$ is closed, so $f^{-1}[C]$ is closed. Hence $f^{-1}[V]=E\setminus f^{-1}[C]$ is open. Every open set has open preimage, so $f$ is continuous.
+\end{answer}
+\begin{method}{Use complements to halve the work}
+Theorems about closed sets often follow from their open-set versions using complements and De Morgan's laws. Still write the inverse-image identity: it is the algebraic step connecting the two statements.
+\end{method}
+\exercise{4.6}{Equivalence relations on metrics}
+\begin{exam}{Lecture exercise}
+Prove topological equivalence and Lipschitz equivalence are equivalence relations on the metrics on a fixed set $S$.
+\end{exam}
+\begin{answer}
+For topological equivalence, reflexivity holds because a metric has the same open sets as itself. Symmetry holds because ``$d$ and $d'$ have the same open sets'' is symmetric. For transitivity, if $d,d'$ have the same open sets and $d',d''$ have the same open sets, then $d,d''$ have the same open sets. Thus it is an equivalence relation.
+
+For Lipschitz equivalence, $d$ is equivalent to itself using both comparison constants equal to $1$. If $c\,d\le d'\le C\,d$ with $c,C>0$, then
+\[C^{-1}d'\le d\le c^{-1}d',\]
+so symmetry holds. If also $a\,d'\le d''\le b\,d'$ with $a,b>0$, combine to get
+\[ac\,d\le d''\le bC\,d.\]
+These positive constants prove transitivity. Hence Lipschitz equivalence is also an equivalence relation.
+\end{answer}
+\exercise{4.7}{Metric equivalence by comparing balls}
+\begin{exam}{Lecture exercise}
+(a) Show topological equivalence is equivalent to mutual small-ball containment at every point, and to identical open sets. (b) Show Lipschitz equivalence is equivalent to constants $m,M>0$ with
+\[B^{d_1}_{mR}(p)\subseteq B^{d_2}_R(p)\subseteq B^{d_1}_{MR}(p)\quad\text{for all }p,R>0.\]
+\end{exam}
+\begin{answer}
+(a) If $d_1,d_2$ are topologically equivalent, both identity maps are continuous. For fixed $p,R$, continuity in each direction gives positive radii $r_1,r_2$ for the two desired containments. Their minimum $r$ works simultaneously.
+
+Conversely suppose for each $p,R$ there is $r>0$ with $B^{d_1}_r(p)\subseteq B^{d_2}_R(p)$ and $B^{d_2}_r(p)\subseteq B^{d_1}_R(p)$. If $U$ is $d_2$-open and $p\in U$, choose $R$ with $B^{d_2}_R(p)\subseteq U$, then $r$ with $B^{d_1}_r(p)\subseteq B^{d_2}_R(p)$. Thus $U$ is $d_1$-open. Swap metrics for the reverse statement. Therefore the open sets agree. Identical open sets make both identities continuous by the open-preimage test, hence give topological equivalence.
+
+(b) If $c\,d_1\le d_2\le C\,d_1$, take $m=1/C$ and $M=1/c$. Then $d_1(p,x)<mR$ implies $d_2(p,x)<R$, while $d_2(p,x)<R$ implies $d_1(p,x)<MR$.
+
+Conversely assume the displayed ball containments. Fix $p,x$ and let $t=d_1(p,x)$. For every $R>t/m$, $x\in B^{d_1}_{mR}(p)$, hence $d_2(p,x)<R$. Let $R\downarrow t/m$ to get $d_2(p,x)\le t/m$. Similarly, for every $R>d_2(p,x)$, the second containment gives $d_1(p,x)<MR$; let $R\downarrow d_2(p,x)$ to get $d_1(p,x)\le M d_2(p,x)$. Thus
+\[M^{-1}d_1(p,x)\le d_2(p,x)\le m^{-1}d_1(p,x),\]
+proving Lipschitz equivalence.
+\end{answer}
+\begin{tip}
+The limit $R\downarrow$ the distance matters because open-ball membership uses a strict inequality. Do not place a point in an open ball whose radius equals its distance from the centre.
+\end{tip}
+\exercise{4.8}{TGV versus usual topology}
+\begin{exam}{Lecture exercise}
+On $\R$, let $d_T(x,y)=|x|+|y|$ for $x\ne y$, zero otherwise. Compare the two identity maps between this and the usual metric.
+\end{exam}
+\begin{answer}
+For all $x,y$, $|x-y|\le d_T(x,y)$, so the identity from TGV to the usual metric is $1$-Lipschitz and continuous.
+
+For the reverse identity at zero, $d_T(x,0)=|x|$, so for any $\varepsilon>0$ choose $\delta=\varepsilon$. Then $|x|<\delta$ implies $d_T(x,0)<\varepsilon$. Hence it is continuous at zero.
+
+At $a\ne0$, let $x_n=a+1/n$. These points are distinct from $a$ and converge to $a$ in the usual metric. But
+\[d_T(x_n,a)=|a+1/n|+|a|\to2|a|>0.\]
+Therefore the identity is not sequentially continuous at $a$ and hence not continuous there. The identity is not a homeomorphism, so the metrics are not topologically equivalent.
+\end{answer}
+\exercise{4.9}{The distance map is continuous}
+\begin{exam}{Lecture exercise}
+Show $d:E\times E\to[0,\infty)$ is continuous for the sum metric on $E\times E$.
+\end{exam}
+\begin{answer}
+For $(x,y),(u,v)\in E\times E$, route from $x$ to $y$ via $u,v$ to get
+\[d(x,y)-d(u,v)\le d(x,u)+d(y,v).\]
+Interchanging the two ordered pairs gives the opposite difference bounded by the same quantity, so
+\[|d(x,y)-d(u,v)|\le d(x,u)+d(y,v).\]
+The right side is exactly the product distance between the ordered pairs. Thus the distance map is $1$-Lipschitz and therefore continuous. For an explicit continuity proof choose $\delta=\varepsilon$.
+\end{answer}
+\exercise{4.10}{Relative open sets}
+\begin{exam}{Lecture exercise}
+Prove $V\subseteq A$ is open in the metric subspace $A$ iff $V=A\cap U$ for some ambient open $U$.
+\end{exam}
+\begin{answer}
+If $V=A\cap U$ with $U$ open and $v\in V$, choose $r>0$ with $B_r^E(v)\subseteq U$. Then $B_r^A(v)=A\cap B_r^E(v)\subseteq A\cap U=V$, showing $V$ open in $A$.
+
+Conversely, if $V$ is open in $A$, choose for each $v\in V$ a radius $r_v>0$ with $B_{r_v}^A(v)\subseteq V$. Put $U=\bigcup_{v\in V}B_{r_v}^E(v)$. This is open as a union of open balls. Every $v\in V$ lies in $A\cap U$, so $V\subseteq A\cap U$. If $x\in A\cap U$, then for some $v\in V$, $x\in A\cap B_{r_v}^E(v)=B_{r_v}^A(v)\subseteq V$. Thus $A\cap U\subseteq V$, proving equality.
+\end{answer}
+\exercise{4.11}{A countable dense family of continuous functions}
+\begin{exam}{Lecture exercise}
+Let $A_n$ consist of continuous functions on $[0,1]$ linear on every interval $[k2^{-n},(k+1)2^{-n}]$ and rational-valued at the vertices. Prove $A=\bigcup_{n\ge0}A_n$ is countable dense in the sup space $C([0,1])$.
+\end{exam}
+\begin{method}{Encode finitely, approximate uniformly}
+For countability, encode each polygonal function by its finite tuple of rational vertex heights. For density, choose a fine mesh by uniform continuity, then rational heights near the true vertex heights. Linear interpolation does not amplify the vertex errors.
+\end{method}
+\begin{answer}
+For fixed $n$, the map
+\[g\longmapsto(g(0),g(2^{-n}),\ldots,g(1))\]
+is injective from $A_n$ to $\Q^{2^n+1}$ because linear interpolation uniquely determines the function between its vertices. A finite product of countable sets is countable, so each $A_n$ is countable. Their countable union $A$ is countable.
+
+For density, fix $f\in C([0,1])$ and $\varepsilon>0$. By uniform continuity choose $\delta>0$ such that $|s-t|<\delta$ implies $|f(s)-f(t)|<\varepsilon/3$. Choose $n$ with $2^{-n}<\delta$. At each mesh vertex $t_k=k2^{-n}$, select a rational $q_k$ with $|q_k-f(t_k)|<\varepsilon/3$. Let $g\in A_n$ be their linear interpolant.
+
+For $t\in[t_k,t_{k+1}]$, write $t=(1-\theta)t_k+\theta t_{k+1}$, $0\le\theta\le1$. Then $g(t)=(1-\theta)q_k+\theta q_{k+1}$, and
+\begin{align*}
+|g(t)-f(t)|&\le(1-\theta)|q_k-f(t)|+\theta|q_{k+1}-f(t)|\\
+&\le(1-\theta)(|q_k-f(t_k)|+|f(t_k)-f(t)|)\\
+&\quad+\theta(|q_{k+1}-f(t_{k+1})|+|f(t_{k+1})-f(t)|)\\
+&<2\varepsilon/3.
+\end{align*}
+Hence $\norm{g-f}_\infty\le2\varepsilon/3<\varepsilon$. Every sup ball about $f$ meets $A$, so $A$ is dense. Therefore the space is separable.
+\end{answer}
+\begin{tip}
+Approximating each point with an independently chosen rational would not normally produce a continuous function. The common mesh and linear interpolation ensure membership in $C([0,1])$.
+\end{tip}
+\exercise{4.12}{Uncountability through decimal parity}
+\begin{exam}{Lecture exercise}
+Let $F(m)$ be the parity of $m\in\Z$. Show $\psi(x)=(F(\lfloor10x\rfloor),F(\lfloor10^2x\rfloor),\ldots)$ maps $\R$ onto $\{0,1\}^{\N}$, then deduce no surjection $\N\to\R$ exists.
+\end{exam}
+\begin{answer}
+Fix any target binary sequence $c=(c_1,c_2,\ldots)$. Define $x=\sum_{k\ge1}c_k10^{-k}$. This series converges, since $0\le c_k\le1$ and the geometric comparison series converges. For each $n$,
+\[10^nx=\sum_{k=1}^nc_k10^{n-k}+\sum_{k>n}c_k10^{n-k}.\]
+The first sum is an integer; the second lies in $[0,1/9]$ because $\sum_{j\ge1}10^{-j}=1/9<1$. Thus
+\[\lfloor10^nx\rfloor=\sum_{k=1}^nc_k10^{n-k}.\]
+For $k<n$ every $10^{n-k}$ is even, so all earlier terms contribute even integers. The parity of the sum is therefore exactly $c_n$. Hence $\psi(x)=c$, proving surjectivity.
+
+If a surjection $\sigma:\N\to\R$ existed, then $\psi\circ\sigma$ would be a surjection $\N\to\{0,1\}^{\N}$. That would list every binary sequence, contradicting Cantor's diagonal argument. Thus no such $\sigma$ exists and $\R$ is uncountable.
+\end{answer}
+\begin{note}{Notation clarification}
+The usual floor of a real number is the greatest \emph{integer} at most it. The printed floor definition in the supplied exercise uses $\N$ where $\Z$ is needed for arbitrary reals. The construction above uses nonnegative $x$, but the definition of the original map on all $\R$ uses the standard integer floor.
+\end{note}

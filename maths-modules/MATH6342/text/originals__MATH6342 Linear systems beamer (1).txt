@@ -1,0 +1,4281 @@
+Lancaster University 2026/7
+
+
+
+
+               MATH6342 Linear systems
+
+                      Gordon Blower
+
+                      Lancaster University
+
+
+                      August 27, 2026
+2 Abstract
+
+
+
+
+Useful software and books, frame 3
+1 Linear systems and their description, frames 6-30
+2 Solving linear systems by matrix theory, frames 31-85
+3 Laplace transforms, frames 86-134
+4 Transfer functions, realization and stability, frames 135-161
+5 Feedback control, frames 162-218
+Appendix: MATLAB commands, frames 219-224
+Glossary of linear system terminology, frame 225-227
+3 Useful software
+
+
+
+• AppsAnywhere is installed in the student computer labs on campus;
+• See AppsAnywhere lancaster.ac.uk so that you can link to
+AppsAnywhere on your laptop on campus or via GlobalConnect; in case
+of difficulty ask ISS Helpdesk in the Learning Zone;
+• MATLAB Online is available on the internet and has all the packages
+needed;
+• MATLAB is available on AppsAnywhere on campus or by
+GlobalConnect;
+• R − Studio is available on AppsAnywhere on campus
+4 Useful books
+
+
+
+• Gordon Blower, Linear Systems, (Springer-Nature Mathematical
+Engineering, 2023).
+• C.-T. Chen, Linear System Theory and Design, Fourth Edition, (Oxford
+University Press, 2012).
+• R.C. Dorf and R.H. Bishop, Modern Control Systems, twelfth Edition,
+(Pearson 2011).
+• J.P. Hespanha, Linear Systems Theory, (Princeton and Oxford, 2009).
+For the MATH6342 Projects, there are specific references and readings
+linked to the Moodle page.
+5 Examples of linear systems
+
+
+
+
+Wind turbines, domestic central heating systems, electrical wiring
+networks, electrocardiograms (heat rate), photographic lenses, vehicle
+suspension systems, epidemics, predator-prey systems, musical filters,
+musical amplifiers Musical tones,
+6 Chapter 1: Linear systems and their description
+
+In linear systems, we consider a machine made up of several components,
+which are connected together. We take t > 0 to be time and consider
+the evolution of the system through time. The machine has an input
+u = u(t), and output y = y(t) and the internal state of the machine is
+described by a state x = x(t), and we take u, x, y to be vector-valued
+functions of t. The state of a system is a set of variables whose values,
+together with the input and the equations describing the dynamics, will
+describe the future state and output of the system. Usually, we want to
+know how y(t) depends upon u(t). The component parts of the machine
+are represented by various linear operators. We consider a special class of
+linear systems that we can analyze by means of linear algebra. We obtain:
+• general results which enable us to classify and describe a significant
+class of linear systems, called (A, B, C, D);
+• specific methods for solving these linear systems;
+• results that are in a form that allows effective and explicit computation
+of solutions, usually using computers.
+7 Linear systems and their description
+
+Let C be the field of complex numbers, let V and W be vector spaces
+over C, so λf + µg ∈ V for all f , g ∈ V and λ, µ ∈ C. (We use C since
+the results from MATH220 about square matrices work best for C, and
+we also use some results from MATH215 complex analysis.) Time is
+t > 0. A map L : V → W is called linear if
+
+                        L(λf + µg) = λLf + µLg.
+
+The following give the basic examples with
+
+   V = W = {continuously differentiable functions f : [0, ∞) → C}.
+
+i) Differentiation Lf = df∫︁dtx; symbolised by [d/dt]; ∫︁
+ii) Integration Lf (x) = 0 f (t) dt, symbolised as [ ];
+iii) an amplifier is multiplication by a ∈ C, symbolised as [a];
+iv) Multiplication by h ∈ V , Lf (t) = h(t)f (t) symbolised as [h];
+v) Evaluation at t0 , f ↦→ f (t0 ) symbolised as [δt0 ].
+8 Summing junctions and taps
+
+  u1                u1 + u2
+            +
+
+       u2
+
+Diagram of a summing junction, to add signals
+
+   u        .         u
+
+                u
+
+
+Diagram of tap. Think of a tap as a point on an electrical circuit where
+wires are connected, so that the voltage is the same at all wires making
+the connection. Unlike a water tap or junction in a plumbing system, the
+tap does not divide the input into different outputs.
+9 Amplifiers, integrators and differentiators
+
+
+
+                         u                   au
+                                  a
+ Diagram of amplifier                           The effect of the amplifier
+ is to multiply by some a ∈ C. The term amplifier is used here even when
+ 0 < a < 1, so the amplitude of the signal is decreased.
+
+                           u                  u
+                                           ∫︁
+                                  ∫︁
+
+ Diagram of integrator
+
+                              u               du/dt
+                                      d/dt
+ Diagram of differentiator
+10 Producing block diagrams
+
+
+
+
+You can produce block diagrams either by:
+(i) drawing with pen on paper, and photographing with mobile telephone;
+(ii) drawing on whiteboard, and photographing with mobile telephone;
+(iii) using tikz pictures in Latex (this is hard work);
+(iv) drawing on tablets.
+11 Block Diagrams
+
+Let V be the space of infinitely differentiable functions f : (0, ∞) → C.
+Let u ∈ V be the input, y ∈ V be the output. A diagram is a graph built
+up from vertices u, y and others chosen from
+                                               ∫︂
+                         u, y, δ0 , ⊕, ·, d/dt, , a, h
+                       {︂                              }︂
+
+
+which are connected by directed edges, drawn as arrows.
+(1) u is the input and y is the output. The vertices u and y have degree
+one; whereas all other vertices have degree two or three with one or two
+arrows pointing into the vertex, and one or two pointing out.
+(2) The graph is simple, so there are no loops or multiple edges. All
+vertices lie on some directed path of consecutive arrows from u to y.
+(3) If the diagram contains a circuit, then we say that there is feedback.
+(4) If the diagram does not contain a circuit, then the system is ‘open
+loop’ or ‘straight through’.
+12 Open loop system
+
+We can build up more complicated systems as in
+                             ∫︂
+                       y = 3 u + 2u ′ + 6u.
+
+
+                 u               3u                3 u
+                                                    ∫︁
+                         3
+                                        ∫︁
+
+
+         u
+
+                 u               2u               2du/dt
+             .           2            d/dt                 +
+
+         u
+
+    u                u                       6u                y
+             .               6                             +
+13 Feedback
+
+
+[See video: V1 feedback block diagram]
+Open loop Here the input u is subject to linear operations and produces
+an output y. For example
+
+                         y(t) = atu(t) + u ′′ (t).
+
+Some machines are open loop, for instance rockets, or primitive turbines.
+Closed loop or feedback systems Here we take the input, subject it to
+linear operations, and also take the output, feed it back into the system,
+apply linear operations to the output and then add the modified input
+and the modified output. Most modern appliances involve some feedback
+or control systems. For instance, car engines, wind turbines involve
+feedback systems to control their rate of rotation.
+13 Positive feedback
+
+
+Example 1. (Bird populations) Let x be the number of birds on an
+isolated island, say puffins on Ailsa Craig. The birth rate of birds is
+proportional to the number of birds, and birds can come and go by flying
+to other nesting sites at rate u, so, for some k > 0,
+                             dx
+                                = kx + u.
+                             dt
+Example 2. (Turbocharger) A car engine has a turbocharger. The faster
+the engine revolves, the more exhaust it produces, so the turbine forces
+more air into the engine, so the engine goes faster and so on.
+Most practical devices incorporate some negative feedback so that they
+do not damage themselves or their users.
+15 Black’s amplifier
+
+
+
+                                           θ
+                            θy
+                                                      y
+
+       u                          u + θy                       y
+                 +                                        .
+
+Example 3. (Black’s amplifier) Let 0 < θ < 1. The output y is fed back
+into the input u, after multiplication by θ, so y = θy + u, hence
+y = u/(1 − θ) is an amplified version of the input. This will also amplify
+any noise, so is not practical by itself as an amplifier.
+In this feedback system, the summing junction is beside the input,
+whereas the tap is beside the output.
+16 Negative Feedback via air resistance
+
+
+Example. Feedback can also occur by force of nature. A cyclist pedals
+harder, hence goes faster, but the faster the cyclist goes, the greater the
+air resistance. Let m be the mass of the cyclist, v the velocity, k a
+constant of proportionality, and u the force imparted on the pedals. Then
+by Newton’s second law of motion,
+                                dv
+                            m      = −kv + u
+                                dt
+which we can express as a feedback system
+                             −k         1
+                                ∫︂        ∫︂
+                        v=         v+        u,
+                              m         m
+
+and the sign of −k/m indicates negative feedback.
+17 Negative feedback diagram
+
+
+
+
+                               −k
+                    −kv
+                                     v
+
+      u                                  .   v
+             +                 1/m
+                      ∫︁
+18 Matrix amplifier
+
+
+
+
+                              U                BU
+                                       B
+Diagram of matrix amplifier
+The number of columns of the matrix B equals the number of rows of U,
+so that BU is well defined. We can use summing junctions, taps,
+differentiators and integrators with vector inputs. So we can form block
+diagrams with vector inputs. In this way, we can deal with multiple
+inputs and multiple outputs.
+19 Linear differential operators
+
+
+ Let t be the independent variable. By combining amplifiers, summing
+ junctions and differentiators, we can construct linear differential operators
+
+                              d nf            d n−1 f
+            Lf (t) = an (t)        + an−1 (t)         + · · · + a0 (t)f (t);
+                              dt n            dt n−1
+ the number of derivatives n is the order of L; the aj (t) are the coefficient
+ (functions). When the aj are constants, we talk about a linear differential
+ operator with constant coefficients. A linear equation of order n is
+
+                     d nf            d n−1 f
+            an (t)        + an−1 (t)         + · · · + a0 (t)f (t) = u(t),
+                     dt n            dt n−1
+ where an (t), . . . , a0 (t), u(t) are given and f (t) is to be found.
+20 Differential equations as feedback systems
+
+Proposition
+The differential equation
+
+    an y (n) (t) + · · · + a0 y = bm u (m) + bm−1 u (m−1) (t) + · · · + b0 u(t)
+
+with constant coefficients can be realized as a feedback system with
+input u and output y involving taps, amplifiers, summing junction,
+integrators and differentiations.
+
+Proof. When an ̸= 0, we integrate n times and divide by an to get
+
+       an−1                  a0               bm                              b0
+              ∫︂                  ∫︂ (n)           ∫︂ (n)                          ∫︂ (n)
+  y =−             y − ··· −               y+               u   (m)
+                                                                      + ··· +               u.
+        an                   an               an                              an
+Then it is straightforward to realize the system by introducing an
+intermediate state x via x = Bu, where
+Input operator and feedback loop
+
+
+
+
+                                    A
+
+
+
+       u                x                       y
+                  B         +
+                                   ∫︁ (n)   .
+21 Input operator B
+
+
+                                     bm d m u        b0
+                          x = Bu =            + ··· + u
+                                     an dt m         an
+
+               bm             d           ...        d
+               an             dt                     dt
+      ..                                                  ..
+       .                                                   .
+           .             b2          d          d
+                                                          +
+                         an          dt         dt
+
+
+
+           .   b1                         d
+                                                          +
+               an                         dt
+
+
+  u        .        b0                                         x
+                    an                                    +
+22 Feedback loop with integrations
+
+
+                  an−1                     a0
+                            ∫︂                   ∫︂ (n)        ∫︂ (n)
+             y =−                y − ··· −                y+            x.
+                   an                      an
+
+                    −an−1           d                     d
+                     an             dt         ...        dt
+        ..                                                              ..
+         .                                                               .
+       +            −a1                   d                                  .
+                    an                    dt
+
+
+
+       +                  −a0                                                .
+                          an
+
+
+
+   x                                                                             y
+       +
+                                    ...                                      .
+               ∫︁                                         ∫︁
+23 Damped harmonic oscillator
+
+Damped harmonic oscillators are important, because they (i) arise in
+various physical and electrical systems; (ii) exhibit the effects that
+describe more general linear systems. So this example will reappear.
+Let t be time and y displacement from rest of a mass on a spring. The
+velocity is y ′ and acceleration y ′′ , the mass is driven by an external
+driving force u(t). The equation is
+
+                           y ′′ + βy ′ + γy = u
+
+where β and γ are constants; usually γ > 0 and β ≥ 0. This models the
+suspension of a car moving along a road. Here u(t) represents the force
+imparted on the car by the road; the suspension involves a spring which
+gives a restoring force −γy, while the shock absorbers give a damping
+force −βy ′ . We can write this as a feedback system, using the formula
+                            ∫︂        ∫︂ ∫︂    ∫︂ ∫︂
+                     y = −β y − γ           y+       u.
+24 Harmonic oscillator as a feedback system
+
+
+
+                            ∫︁
+                                      −γ
+
+
+
+
+                   +             −β           ·
+
+
+
+   u     ∫︁                      ∫︁               y
+                   +                          ·
+25 Matrix form of the damped harmonic oscillator
+
+We often choose input u(t) = e iωt = cos(ωt) + i sin(ωt), with angular
+frequency ω.
+We introduce a new state variable v, the velocity, so y ′ = v. Then we
+have a pair of equations y ′ = v and v ′ = −βv − γy + u. We put these
+together in a matrix equation
+
+                                   y          0
+                                 [︃ ]︃      [︃ ]︃
+                             X=        ,B =
+                                   v          1
+
+                                 0  1
+                                  [︃        ]︃
+                             A=
+                                −γ −β
+so the matrix form of the differential equation is
+                             dX
+                                = AX + Bu.
+                             dt
+26 Reduction of order
+
+[see video: V3 reduction of order]
+Lemma
+The linear differential equation
+
+             d ny            d n−1 y
+                  + an−1 (t)         + · · · + a0 (t)y(t) = u(t),
+             dt n            dt n−1
+may be expressed as the matrix system
+                              dX
+                                 = AX + Bu
+                              dt
+where X is (n × 1), A is (n × n) and B is (n × 1).
+
+Thus we replace a nth order differential equation with one independent
+variable with a first order differential equation with a (n × 1) vector
+independent variable. Let
+27 Proof of reduction of order
+
+
+                                      y       0
+                                  ⎡        ⎤ ⎡ ⎤
+                           ⎢         ⎥y′     ⎢0⎥
+                      X =⎢           ⎥ , B = ⎢ .. ⎥
+                                      ..
+                           ⎢         ⎥       ⎢ ⎥
+                           ⎣         ⎦ .     ⎣.⎦
+                            y (n−1)           1
+                         0       1       0
+                       ⎡                             ⎤
+                                              ...
+                                               .. ⎥
+                       ⎢ 0       0       1         . ⎥
+                       ⎢
+                     A=⎢
+                       ⎢ ..     ..      ..     .. ⎥
+                                                     ⎥
+                       ⎣ .         .       .       . ⎦
+                        −a0 −a1 . . . −an−1
+so the differential equation is
+                              dX
+                                 = AX + Bu.
+                              dt
+28 Constant coefficient case
+
+
+
+
+The advantages are that first order differential equations are easier to
+solve than nth order equation, and in this case, we can use linear algebra
+on the matrix A; see the discussion on frame 36 below. If the aj are
+constant, or equivalently A is constant, then the system is said to have
+constant coefficients, and the differential equation can be expressed as
+the feedback system               ∫︂         ∫︂
+                          X =A      X +B     U.
+29 Matrix form of ODE
+
+
+
+                                 ∫︂          ∫︂
+                          X =A        X +B        U
+
+which may be represented as a feedback system.
+
+                                             A
+                             AX
+                                                                   X
+  U              BU        AX + BU                         (AX + BU)       X
+                                                      ∫︁
+           B          +                                                .
+                                             ∫︁
+30 Companion matrix
+
+
+
+Definition (Companion matrix)
+Let aj ∈ C for j = 0, . . . , n − 1. Then the (n × n) matrix
+
+                                 0     1     0
+                              ⎡                          ⎤
+                                                  ...
+                                                   .. ⎥
+                              ⎢ 0      0     1         . ⎥
+                              ⎢
+                    Ac = ⎢ .           .    .      .
+                                 .     .      .      .
+                              ⎢                          ⎥
+                              ⎣ .      .        .      . ⎦
+                                                         ⎥
+
+                                −a0 −a1 . . . −an−1
+
+is called a companion matrix (as in frame 25; note the order and signs of
+the aj .)
+31 Chapter 2: Solving linear systems by matrix theory
+
+Determinants To obtain the determinant of
+                             a11 a12 a13
+                           ⎡              ⎤
+
+                       A = ⎣a21 a22 a23 ⎦
+                             a31 a32 a33
+recall the chess-board of signs
+                               ⎡     ⎤
+                                + − +
+                               ⎣− + −⎦ ,
+                                + − +
+pick one column, say the second, then multiply out with sign from above
+                     ⃓a21 a23 ⃓        ⃓a11 a13 ⃓        ⃓a11 a13 ⃓
+                     ⃓         ⃓       ⃓         ⃓       ⃓         ⃓
+        det A = −a12 ⃓           + a22 ⃓           − a32 ⃓
+                       a31 a33 ⃓         a31 a33 ⃓         a21 a23 ⃓
+                     ⃓         ⃓       ⃓         ⃓       ⃓         ⃓
+
+where the 2 × 2 determinants exclude the row and column of their
+coefficient.
+32 Cofactors
+
+Definition (Adjugate)
+The determinant of the submatrix of A that excludes row j and column
+k, multiplied by (−1)j+k , is called the cofactor Ajk of ajk , so
+                                       n
+                            det A =         ajk Ajk
+                                      ∑︂
+
+                                      j=1
+
+is the expansion by column k for all k = 1, . . . , n. The adjugate matrix
+adj(A) is the transpose of the matrix [Ajk ] of cofactors.
+
+Proposition
+(i) For all square matrices A adj(A) = (det A)I.
+(ii) A square matrix is said to be lower triangular if all the entries above
+the leading diagonal are zero. The determinant of a lower triangular
+matrix equals the product of the entries on the leading diagonal.
+33 Characteristic polynomial
+
+Definition (Characteristic polynomial)
+The characteristic polynomial of a (n × n) complex matrix A is
+χA (λ) = det(λI − A), where I is the (n × n) identity matrix.
+
+In MATH220, the lectures used cA (λ) = det(A − λI). The definition used
+in the MATH6342 lectures is standard in control theory. Also
+    χA (λ) = det(λI − A) = λn − λn−1 trace(A) + · · · + (−1)n det A,
+so χA (λ) is a monic polynomial of degree n.
+Lemma
+If det(sI − A) ̸= 0, then sI − A is invertible and
+
+                (sI − A)−1 = (det(sI − A))−1 adj(sI − A).
+
+
+This may or may not be an appropriate formula for computing the
+34 All monic polynomials are characteristic polynomials
+
+inverse, depending on n. It does tell us that sI − A is invertible, except at
+finitely many values of s. Often (sI − A)−1 is called the resolvent of A.
+Proposition (Characteristic polynomials of companion matrix)[see video
+V7]
+The characteristic polynomial of the companion matrix Ac is
+
+            det(λI − Ac ) = λn + an−1 λn−1 + · · · + a1 λ + a0 .
+
+Thus any monic complex polynomial arises as the characteristic
+polynomial of some complex matrix.
+
+Proof. We prove this by induction on n. Let Pn be the statement that
+the above identity holds for some positive integer n. Then P1 is trivially
+true. Assume that the identity holds for 1, . . . , n − 1 and consider Pn . We
+expand the determinant by the first column, and obtain det(λI − Ac ) =
+35 Determinant of a companion matrix
+
+                                           0
+                          ⎡                                 ⎤
+                              λ      −1            ...
+                                                   ..
+                           ⎢0                         .
+                           ⎢                                ⎥
+                                     λ    −1                ⎥
+                           ⎢ ..
+                       det ⎢         ..
+                                                            ⎥=
+                                          ..       ..
+                           ⎣.         .      .        .
+                                                            ⎥
+                                                            ⎦
+                            a0       a1 . . .    λ + an−1
+                   0                                  −1 0     0 ...
+      ⎡                                ⎤             ⎡               ⎤
+          λ   −1              ...
+                              ..                                  .. ⎥
+       ⎢0                        .⎥ + (−1)n−1 a0 det ⎢ λ −1 0       .⎥
+       ⎢                          ⎥                  ⎢
+              λ    −1             ⎥                  ⎢
+       ⎢ ..
+ λ det ⎢      ..   ..         ..                         .. .. .. ⎥
+                                                                     ⎥
+       ⎣.      .       .         .                   ⎣0      .  .   .⎦
+                                  ⎥                  ⎢
+                                  ⎦
+        a1    a2   . . . λ + an−1                      0 . . . λ −1
+so we use the induction hypothesis to deal with the first determinant,
+and observe that the second is lower triangular, so by Prop 20(ii)
+        det(λI − A) = λ(λn−1 + an−1 λn−2 + · · · + a2 λ + a1 ) + a0
+                    = λn + an−1 λn−1 + · · · + a1 λ + a0 .
+36 Norm of a vector
+
+Let V = Cn×1 , the complex vector space of column vectors. The
+standard inner product on V is defined for
+                             z1                w1
+                           ⎡ ⎤                ⎡ ⎤
+                           ⎢ .. ⎥             ⎢ .. ⎥
+                       z = ⎣ . ⎦,     w =⎣ . ⎦
+                             zn                wn
+
+                                               z1
+                                              ⎡ ⎤
+                                                      n
+                                           ]︁ ⎢ . ⎥ ∑︂
+            ⟨z, w⟩ = w z = w̄1 . . . w̄n ⎣ . ⎦ =
+                        ′                       .        w̄j zj
+                            [︁
+
+                                               zn    j=1
+
+equivalently written z = column(zj )nj=1 w = column(wj )nj=1 by
+                                             n
+                        ⟨z, w⟩ = w̄ ⊤ z =         zj w̄j .
+                                            ∑︂
+
+                                            j=1
+
+Then ⟨z, z⟩ ≥ 0, with ⟨z, z⟩ = 0 ⇒ z = 0;
+37 Cauchy–Schwarz inequality
+
+
+                        ⟨z + u, w⟩ = ⟨z, w⟩ + ⟨u, w⟩
+                   ⟨λz, w⟩ = λ⟨z, w⟩,                 ⟨z, w⟩ = ⟨w, z⟩
+On V the standard norm is the Euclidean norm for z = column(zj )nj=1
+                               n             )︂1/2
+           ∥(zj )nj=1 ∥ =           |zj |2           = (z̄ ⊤ z)1/2 = ⟨z, z⟩1/2 .
+                            (︂∑︂
+
+                              j=1
+
+
+Proposition (Cauchy–Schwarz inequality)
+All z, w ∈ V satisfy
+
+                            (i)       |⟨z, w⟩| ≤ ∥z∥∥w∥,
+
+                       (ii)         ∥z + w∥ ≤ ∥z∥ + ∥w∥.
+38 Proof of the Cauchy–Schwarz inequality
+
+Proof. (i) Recall that a nonzero complex number ζ has a polar
+decomposition ζ = se iθ , where θ ∈ (−π, π] and s = |ζ| > 0; so
+e −iθ ζ = s > 0. If ⟨z, w⟩ = 0, then (i) is clearly true. Otherwise, there
+exists u ∈ C such that uū = 1 and u⟨z, w⟩ = |⟨z, w⟩|. Now we have a
+real quadratic in t which is non negative
+              0 ≤ ∥tw + uz∥2
+                = ⟨tw + uz, tw + uz⟩
+                = t 2 ⟨w, w⟩ + t⟨w, uz⟩ + ⟨uz, tw⟩ + ⟨uz, uz⟩
+                = t 2 ∥w∥2 + 2t|⟨z, w⟩| + ∥z∥2 .
+We cannot have a pair of distinct real roots, since
+y = t 2 ∥w∥2 + 2t|⟨z, w⟩| + ∥z∥2 is a parabola that does not cross the
+t-axis. Hence this quadratic has discriminant b 2 − 4ac ≤ 0, so
+                         4|⟨z, w⟩|2 ≤ 4∥z∥2 ∥w∥2 .
+39 The norm of the sum of matrices
+
+
+(ii) By (i) we have
+
+              ∥z + w∥2 = ⟨z + w, z + w⟩
+                       = ⟨z, z⟩ + ⟨z, w⟩ + ⟨w, z⟩ + ⟨w, w⟩
+                       = ∥z∥2 + 2ℜ⟨z, w⟩ + ∥w∥2
+                       ≤ ∥z∥2 + 2∥z∥∥w∥ + ∥w∥2
+                         (︁         )︁2
+                       = ∥z∥ + ∥w∥ .
+
+Suppose that A and B are (n × n) complex matrices, and that
+V = Cn×1 . Then A operates on V = C(n×1) column vector and
+A : V → V : v ↦→ Av by multiplication on the left.
+40 Adjoint of a matrix
+
+
+Definition (i) The transpose of a n × m matrix A = [ajk ] is the m × n
+matrix A⊤ = [akj ], obtained by interchanging rows with columns.
+(ii) We define the adjoint of a n × m matrix A = [ajk ] to be the m × n
+matrix A′ = [ākj ] given interchanging the rows and columns and taking
+the complex conjugate. If A is real, then A′ = A⊤ , the transpose. We
+have ⟨Ax, y⟩ = ⟨x, A′ y⟩. This is MATLAB-style notation commonly used
+in linear systems engineering; in linear algebra the notation A∗ is used for
+adjoint, and in physics A† is used. The adjoint is often called the
+Hermitian conjugate.
+Definition The norm of a (n × n) matrix is
+
+                   ∥A∥ = sup{∥Av∥ : v ∈ V ; ∥v∥ ≤ 1}.
+41 Estimates on the norm of a matrix
+
+Proposition
+(i) For a square diagonal matrix ∆ with diagonal entries λ1 , . . . , λn ,
+∥∆∥ = max{|λj | : j = 1, . . . , n}.
+(ii) Let A have columns A = [A1∑︁    , A2 , . . . , An ], and let column Aj ∈ Cn×1
+have norm ∥Aj ∥. Then ∥A∥ ≤ ( nj=1 ∥Aj ∥2 )1/2 .
+
+Proof. (i) Let (ej )nj=1 be the usual orthonormal basis of Cn×1 and
+    ∑︁n
+v = ∑︁ j=1 vj ej , so ∥v∥ = ( nj=1 |vj |2 )1/2 . Then
+                             ∑︁
+∆v = nj=1 vj ∆ej = nj=1 vj λj ej , so
+                        ∑︁
+
+                    n                                n
+              2               2                 2
+                         |λj vj | ≤ max |λk |             |vj |2 = max |λk |2 ∥v∥2 .
+                   ∑︂                               ∑︂
+       ∥∆v∥ =
+                                     k                              k
+                   j=1                              j=1
+
+We can achieve equality in this inequality by considering the largest |λk |,
+and selecting v = ek .
+42 Proof of matrix norm estimates
+
+                          ∑︁n                  ∑︁n
+(ii) Here we have Av =       j=1 vj Aej =         j=1 vj Aj , so by the triangle
+inequality,
+                    n                      n                     n            )︂1/2
+                                                        )︁1/2 (︂∑︂
+                                               |vj |2                ∥Aj ∥2
+                   ∑︂                   (︂∑︂
+          ∥Av∥ ≤         |vj |∥Aj ∥ ≤                                                 ,
+                   j=1                   j=1                   j=1
+
+where the last step follows by Cauchy–Schwarz, so
+                                     n               )︂1/2
+                                          ∥Aj ∥2
+                                  (︂∑︂
+                         ∥Av∥ ≤                              ∥v∥.
+                                    j=1
+
+This inequality (ii) is usually an overestimate, but it does show that the
+norm of any finite matrix is finite.
+43 Properties of the norm of a matrix
+
+Lemma
+The matrix norm satisfies
+
+     ∥A + B∥ ≤ ∥A∥ + ∥B∥;   ∥λA∥ = |λ|∥A∥;   ∥AB∥ ≤ ∥A∥∥B∥.
+
+
+Proof. Let v ∈ V have ∥v∥ ≤ 1. We have
+
+        ∥(A + B)v∥ = ∥Av + Bv∥ ≤ ∥Av∥ + ∥Bv∥ ≤ ∥A∥ + ∥B∥
+
+so ∥A + B∥ ≤ ∥A∥ + ∥B∥.
+We have ∥(λA)v∥ = |λ|∥Av∥, so ∥λA∥ = |λ|∥A∥. We observe that
+∥A∥ = inf{t : ∥Aw∥ ≤ t∥w∥ : ∀w ∈ V }. Then with w = Bv, we have
+
+                 ∥(AB)v∥ ≤ ∥A∥∥∥Bv∥ ≤ ∥A∥∥B∥∥v∥,
+
+so ∥AB∥ ≤ ∥A∥∥B∥.
+44 Rank of a matrix
+
+
+
+Lemma
+For X1 , . . . , Xn ∈ Cm×1 , the following quantities are equal:
+(i) the dimension of the vector space V spanned by X1 , . . . , Xn ;
+(ii) the number of linearly independent columns in the m × n matrix
+A = [X1 . . . Xn ];
+(iii) the number of linearly independent rows in A;
+(iv) the number of nonzero rows in any equivalent echelon form of A.
+
+For a proof, see MATH220 Theorem 3.24. These can be computed in
+MATLAB and Scilab using r ank(A).
+45 Polynomial functions of a matrix
+
+
+
+
+Definition Let A be a n × n complex matrix. As in MATH220, we form
+polynomials in A. Let I be the n × n identity matrix. We can form
+A, A2 , A3 , . . . by matrix multiplication, and hence given
+g(z) = am z m + · · · + a0 we build polynomials
+
+                 g(A) = am Am + am−1 Am−1 + · · · + a0 I
+
+for complex coefficients aj . We regard A0 = I, the identity matrix.
+46 Characteristic equation
+
+The eigenvalue equation is
+                                Av = λv
+where v ̸= 0 is the eigenvector and λ ∈ C the eigenvalue.
+Lemma
+The eigenvalues of n × n complex matrix A are the roots of the
+characteristic equation
+                             χA (λ) = 0.
+
+Proof. Recall that det(sI − A) = χA (s). By the Fundamental Theorem
+of Algebra, there are n complex roots, counted according to algebraic
+multiplicity. When χA (λ) = 0, the matrix λI − A is not invertible, so
+there exists v ∈ V , with v ̸= 0 and Av = λv and λ is an eigenvalue.
+Conversely, if there exists v ̸= 0 and λ ∈ C such that Av = λv, then
+λI − A is not invertible, so χA (λ) = 0.
+47 Similar to a diagonal matrix
+
+
+
+(The geometric multiplicity of λ is the number of linearly independent
+solutions of Av = λv. Now by a slight extension of this Lemma, one can
+show that 1 ≤ (geometric multiplicity) ≤ (algebraic multiplicity).)
+Lemma
+For a complex n × n matrix A, the following are equivalent:
+(i) There exists an invertible matrix S such that ∆ = S −1 AS is a
+diagonal matrix;
+(ii) there exist n linearly independent eigenvectors of A;
+(iii) there exists a basis of Cn that consists of eigenvectors of A.
+48 Polynomials of a diagonable matrix
+
+
+Proposition
+Suppose that A has n distinct eigenvalues λ1 , . . . , λn . Then there exists
+an invertible n × n matrix S and a diagonal matrix ∆ such that
+A = S∆S −1 and generally
+
+                           g(λ1 )    0    0
+                         ⎡                               ⎤
+                                                   ...
+                                                   .. ⎥
+                         ⎢ 0      g(λ2 ) 0             . ⎥
+                         ⎢
+                g(A) = S ⎢ .       .     .         .
+                                                         ⎥ S −1
+                             .       .     .         .
+                         ⎢
+                         ⎣ .           .     .         . ⎦
+                                                         ⎥
+
+                             0     ...     0 g(λn )
+
+for all complex polynomials g(λ).
+
+Soon we’ll extend this to the functions g(x) = exp(tx) and
+g(x) = 1/(s − x).
+49 Diagonalizing the matrix
+
+Proof. Let Xj ̸= 0 be a n × 1 column such that AXj = λj Xj , and let
+S = [X1 X2 . . . Xn ]; then the Xj are linearly independent by Chapter 6 of
+MATH220 and hence S has column rank n. Hence S is invertible. Now
+let
+                                 λ1 0        0 ...
+                                ⎡                   ⎤
+
+                                ⎢ 0 λ2 0 . . . ⎥
+                                ⎢                   ⎥
+                          ∆=⎢ .         .. . .
+                                  .
+                                ⎢                   ⎥
+                                ⎣.       .     .
+                                                    ⎥
+                                                    ⎦
+                                  0 . . . 0 λn
+and note the chain of identities
+
+               AS = A X1 . . . Xn = AX1 . . . AXn
+                        [︁           ]︁ [︁           ]︁
+
+
+              = λ1 X1 . . . λn Xn = X1 . . . Xn ∆ = S∆
+                [︁               ]︁ [︁         ]︁
+
+where S is invertible, so A = S∆S −1 .
+50 Functions of the matrix
+
+
+
+
+Then
+                   A2 = S∆S −1 S∆S −1 = S∆2 S −1
+and so on so,
+
+                g(A) = am Am + am−1 Am−1 + · · · + a0 I
+
+        = S(am ∆m + am−1 ∆m−1 + · · · + a0 I)S −1 = Sg(∆)S −1 ,
+and we can easily check that g(∆) is as above.
+51 Cayley–Hamilton Theorem
+
+Theorem
+Let A be a n × n complex matrix with characteristic polynomial χA (s).
+Then
+                            χA (A) = 0.
+
+Proof See project topics.
+Complex exponential For z ∈ C write z = ℜz + iℑz where ℜz is the
+real part and ℑz is the imaginary part. We define
+
+                                          z2 z3
+                 exp(z) = e z = 1 + z +      +    + ...,
+                                          2!   3!
+which converges for all z ∈ C. We have exp(z + w) = exp(z) exp(w) and
+(d/dz) exp(z) = exp(z). Also, e iθ = cos θ + i sin θ has |e iθ | = 1. Hence
+e z has modulus |e z | = e ℜz and argument arg e z = ℑz. In engineering,
+this is often called the phase.
+52 Matrix exponential exp(A) or expm (A)
+
+[see video: V19 calculating matrix exponentials] For any n × n complex
+matrix A, we define the matrix exponential by
+
+             exp(A) = I + A + A2 /2! + · · · + Am /m! + . . . .
+
+
+Proposition (Wedderburn)
+(i) For any n × n complex matrix A, the exponential series converges,
+and ∥ exp(A)∥ ≤ e ∥A∥ .
+(ii) exp(zA) exp(wA) = exp((z + w)A) for all z, w ∈ C;
+(iii) exp(zA) has inverse exp(−zA) for all z ∈ C;
+(iv) Let λ be an eigenvalue of A. Then e zλ is an eigenvalue of exp(zA).
+(v)
+                          d
+                            exp(zA) = A exp(zA).
+                         dz
+53 Proof of properties of exponential
+
+(i) Note that for a matrix X the entries Xjk satisfy Xjk = ⟨X ek , ej ⟩ so
+|Xjk | ≤ ∥X ∥. Also,
+
+                     ∥A2 ∥ ≤ ∥A∥2 , . . . , ∥Am ∥ ≤ ∥A∥m ,
+
+so
+                                         A2         Am
+                     pm (A) = I + A +       + ··· +
+                                         2!         m!
+satisfy
+                              ⃦ Ak+1                    m
+                                                 Am ⃦     ∥A∥j
+          ∥pm (A) − pk (A)∥ ≤ ⃦
+                                                       ∑︂
+                                         + ··· +    ⃦≤
+                              ⃦                     ⃦
+                                (k + 1)!         m!        j!
+                                                             j=k+1
+
+
+where e ∥A∥ = ∞       j
+               j=0 ∥A∥ /j! converges. Hence each entry of pm (A)
+             ∑︁
+converges as m → ∞, giving exp(A) as the limit.
+54 Proof of properties of exponential, continued
+
+
+
+(ii) We write
+                                     m         m
+                                       z j Aj ∑︂ w k Ak
+                pm (zA)pm (wA) =
+                                    ∑︂
+                                          j!             k!
+                                    j=0            k=0
+
+and compare with
+                            2m                     2m ∑︂
+                                                       r
+                               (z + w)r Ar               z s w r−s Ar
+         p2m ((z + w)A) =
+                            ∑︂                     ∑︂
+                                               =
+                                    r!                        s!(r − s)!
+                            r=0                    r=0 s=0
+
+where pm (zA) → exp(zA), pm (wA) → exp(wA), and
+p2m ((z + w)A) → exp((z + w)A), so exp((z + w)A) = exp(zA) exp(wA).
+55 Proof of properties of exponential, concluded
+
+(iii) Observe that, by (ii)
+
+               exp(zA) exp(−zA) = I = exp(−zA) exp(zA)
+
+(iv) Let v ∈ V satisfy v ̸= 0 and Av = λv. Then
+
+                                 z j Aj v          z j λj v
+                              ∞                 ∞
+                                                              = e zλ v.
+                              ∑︂                ∑︂
+               exp(zA)v =                   =
+                                     j!                j!
+                              j=0               j=0
+
+(v) We consider (ii), and obtain as h → 0
+
+           exp((z + h)A) − exp(zA)           (︂ exp(hA) − I )︂
+                                   = exp(zA)
+                      h                              h
+                          hA2 h2 A3
+            = exp(zA) A +
+                     (︂                    )︂
+                              +     + . . . → exp(zA)A
+                           2!   3!
+56 Exponential of a diagonable matrix
+
+Lemma
+Suppose that A has n distinct eigenvalues λ1 , . . . , λn . Then there exists
+an invertible n × n matrix S such that
+                            ⎡ tλ
+                              e 1     0    0
+                                                        ⎤
+                                                  ...
+                                                  .. ⎥
+                            ⎢ 0 e tλ2 0               .⎥
+                            ⎢
+                exp(tA) = S ⎢ .      ..   ..      .. ⎥ S .
+                                                        ⎥ −1
+                            ⎣ ..
+                            ⎢
+                                        .    .        .⎦
+                               0    ...    0 e n   tλ
+
+
+
+Proof. Introduce the matrix S = [X1 X2 . . . Xn ] with columns given by
+the eigenvectors of A, hence the Xj are linearly independent and S has
+rank n. Hence S is an invertible n × n matrix such that A = S∆S −1
+where ∆ is diagonal with entries λ1 , . . . , λn . Hence
+exp(tA) = S exp(t∆)S −1 .
+57 Exponentials of diagonable matrices
+
+
+
+Proposition
+Suppose that A has distinct eigenvalues λj such that ℜλj ≤ κ for all
+j = 1, . . . , n, all the eigenvalues lie in the closed left half plane
+{λ : ℜλ ≤ κ} which consists of the points in the complex plane that lie
+on or to the left of the vertical line {λ : ℜλ = κ}. ∑︁
+                                                             n
+(i) Then the general solution of dX    dt = AX is X =        j=1 aj e
+                                                                      λj t X , where
+                                                                            j
+Xj is an eigenvector corresponding to λj and aj ∈ C are arbitrary.
+(ii) There exists M such that ∥ exp(tA)∥ ≤ Me κt               (t ≥ 0).
+(iii) In particular, suppose that ℜλj ≤ 0 for all j = 1, . . . , n. Then there
+exists M such that ∥ exp(tA)∥ ≤ M              (t ≥ 0).
+58 Checking the solution
+
+
+(i) For arbitrary X0 ∈ Cn , we observe that X (t) = exp(tA)X0 satisfies
+dX (t)/dt = AX (t) and X (0) = X0 . We can write
+X0 = a1 X1 + · · · + an Xn for some aj ∈ C since∑︁{X1 , X2 , . . . , Xn } is a basis
+for Cn . Also, exp(tA)Xj = e λj t Xj , so X (t) = nj=1 aj e λj t Xj is the
+general solution.
+(ii) Consider
+                ⎡ tλ                         ⎤ ⎡ ⎤ ⎡ tλ ⎤
+                   e 1     0 ... ...             z1       e 1 z1
+                ⎢ 0 e tλ2 0            . . . ⎥ ⎢z2 ⎥ ⎢e tλ2 z2 ⎥
+                                             ⎥ ⎢    ⎥   ⎢
+                          ..                 ⎥ ⎢ .. ⎥ = ⎢ .. ⎥
+                ⎢                                                ⎥
+                ⎣ 0          . ...      0         .         . ⎦
+                ⎢
+                                             ⎦ ⎣    ⎦   ⎣
+                    0     ...    ...   e tλn    zn       e tλn zn
+
+where |e tλj | = e tℜλj ≤ e tκ for all t ≥ 0,
+59 Checking the bounds
+
+
+hence
+                       n                                  n
+                                  tλj     2        2tκ
+                                        zj | ≤ e               |zj |2
+                      ∑︂                                 ∑︂
+                             |e
+                       j=1                               j=1
+
+so ∥ exp(t∆)z∥ ≤ e tκ ∥z∥; hence
+                              ⎡ tλ
+                             ⃦ e                      0
+                                   1
+                                                                     ⎤
+                                                                ... ⃦
+                                                     ..
+                                                        .
+                                                                     ⎥⃦ −1
+             ∥ exp(tA)∥ ≤ ∥S∥⃦⎣ 0                                0 ⎦⃦∥S ∥
+                             ⃦⎢
+
+                                 0                  ...        e tλn
+
+               ≤ ∥S∥∥S −1 ∥ max |e tλj | ≤ ∥S∥∥S −1 ∥e tκ .
+                                  j=1,...,n
+60 SISO (A,B,C,D)
+
+[see video V6 (A,B,C,D) linear systems] Let A, B, C, D be constant
+complex matrices with shapes:
+
+        A (n × n);     B   (n × 1);   C    (1 × n);   D   (1 × 1).
+
+Then the linear system with one input, n states and one output is
+                             dX
+                                = AX + Bu
+                             dt
+                              y = CX + Du
+Here t is time, u is the input, X is the state, and y is the output. We
+call the system single-input single-output or SISO.
+Examples. (i) An electrical fan is a SISO system. The input is
+electricity, and the output is moving air. The states can involve the
+speed of rotation, voltage, current and so on.
+(ii) A wind turbine has input moving air and output electricity.
+61 MIMO (A,B,C,D) (see diagram on 78)
+
+Definition (A,B,C,D)
+Let A, B, C, D be constant complex matrices with shapes: A (n × n); B
+(n × k); C (m × n); D (m × k). Then the continuous time linear system
+with k inputs, n states and m outputs is
+                          dX
+                             = AX + BU,
+                          dt
+                           Y = CX + DU.
+Here U ∈ Ck×1 is the input, X ∈ Cn×1 is the state, and Y ∈ Cm×1 is the
+output, which all depend upon t. The matrices are:
+A=state matrix (main transformation);
+B= input matrix;
+C= output matrix;
+D=straight through matrix (see diagram on frame 78)
+62 MIMO (A,B,C,D)
+
+
+This is the standard form for continuous time linear systems, as used in
+MATLAB etc. i) If k = 1, then we say the system is single input; if
+m = 1, then the system is single output. If k = m = 1, then the system
+is SISO.
+ii) If k > 1, then we say the system is multi input; if m > 1 then the
+system is multi output.
+iii) If k ≥ 1 and m ≥ 1, then we call the system MIMO. (SISO is a
+special case of MIMO)
+We write MIMO as a rectangular (n + k) × (n + m) block array with sizes
+
+                          A B          n×n n×k
+                       [︃     ]︃    [︃               ]︃
+
+                          C D          m×n m×k
+63 Domestic MIMO
+
+
+Example 1. A washing machine is a MIMO system. The inputs are cold
+water, soap powder, and electricity; whereas the outputs are hot soapy
+water, cold rinsing water and hot air. The state of the washing machine
+can be complicated, and relate to the rotation of the drum, temperature
+of various components, washing cycles and so on.
+Example 2. A domestic central heating system is a MIMO system with
+inputs gas, cold air, electricity and cold water; whereas the outputs are
+hot air and hot water.
+Example 3. Mobile telephone networks are MIMO systems. There are
+multiple transmitting antennas, and multiple receiving antennas. Massive
+MIMO is used to model 5G wireless transmission. In a given district, the
+may be 1000 receivers, and 100 transmitters; so we need a matrix A of
+size 1000 × 1000. This explains the terminology ‘massive’.
+64 MIMO transposed
+
+
+
+Let A, B, C, D be complex matrices with shapes A (n × n); B (n × k); C
+(m × n); D (m × k) Recall
+
+                  (m × n) × (n × n) × (n × k) = (m × k)
+
+Then (A⊤ , C ⊤ , B ⊤ , D ⊤ ) also gives a linear system
+
+                         A     C⊤           n×n n×m
+                       [︃ ⊤        ]︃    [︃             ]︃
+
+                         B⊤ D⊤              k ×n k ×m
+
+where det(sI − A⊤ ) = det(sI − A).
+65 Solving the basic linear differential equation
+
+ Theorem
+ Suppose that A is a constant (n × n) matrix and that BU(t) is a (n × k)
+ matrix with continuous functions [0, ∞) → C as entries. Then for any
+ constant (n × k) complex matrix X0 , the (n × k) matrix function
+                                  ∫︂ t
+             X (t) = exp(tA)X0 +       exp((t − s)A)BU(s) ds
+                                     0
+
+ is the unique solution of the matrix differential equation
+                              dX
+                                 = AX + BU
+                              dt
+ that has the initial value
+                                 X (0) = X0 .
+66 Motivation from integrating factors: Uniqueness
+
+Write the ODE in the standard form of a first order linear ODE
+                            dX
+                               − AX = BU
+                            dt
+so the integrating factor is exp(−tA), and
+                         dX
+             exp(−tA)         − exp(−tA)AX = exp(−tA)BU
+                          dt
+                     d (︁            )︁
+                          exp(−tA)X = exp(−tA)BU,
+                     dt
+by frame 41, so we integrate to get
+                                   ∫︂ t
+              [︁              ]︁t
+                 exp(−wA)X 0 =          exp(−wA)BU(w)dw
+                                  0
+                                        ∫︂ t
+        exp(−tA)X (t) − exp(0)X (0) =          exp(−wA)BU(w)dw
+                                         0
+67 Proof by checking
+
+so again by frame 38
+                              ∫︂ t
+        X (t) − exp(tA)X0 =     exp((t − w)A)BU(w)dw
+                               0
+                                     ∫︂ t
+                           = exp(tA)      exp(−wA)BU(w)dw.
+                                       0
+
+• To check the solution works, let t = 0 to get X (0) = X0 . Then we
+apply standard results of calculus, and work on one entry of the matrix at
+a time. So by the fundamental theorem of calculus, X is a differentiable
+function of t, with derivative
+                                                  ∫︂ t
+ d
+   X = A exp(tA)X0 + exp(0)BU(t) + A exp(tA)           exp(−wA)BU(w) dw
+dt                                                  0
+      = AX + BU.
+68 Solving MIMO
+
+Corollary
+For any initial condition X0 and any continuous input U, the solution of
+(A,B,C,D) is
+                             ∫︂ t
+     Y (t) = C exp(tA)X0 +        C exp((t − v)A)BU(v) dv + DU(t).
+                             0
+
+
+Proof. From the theorem, we take
+                               ∫︂ t
+           X (t) = exp(tA)X0 +      exp((t − v)A)BU(v) dv
+                                  0
+
+and then Y is uniquely determined by X and U via
+
+                        Y (t) = CX (t) + DU(t).
+69 Terminology concerning solutions
+
+The terminology of MATH102/318 Differential Equations reappears.
+Consider the inhomogeneous differential equation
+                         dX
+                            = AX + BU(t).
+                         dt
+i) The expression X (t) = exp(tA)X0 with X0 arbitrary is known as the
+complementary function, since it satisfies the homogeneous differential
+equation
+                               dX
+                                    = AX .
+                                dt
+              ∫︁ t
+ii) The term 0 exp((t − v)A)BU(v) dv is a particular integral of the
+inhomogeneous differential equation.
+iii) The general solution of the inhomogeneous equation is a particular
+integral plus the complementary function.
+70 Rational functions
+
+Let s be an algebraic indeterminate (variable), let g(s) and h(s) be
+complex polynomials, with h(s) not the zero polynomial. Then
+
+                                         g(s)
+                               f (s) =
+                                         h(s)
+
+is said to be a rational function. The set of all complex rational functions
+in s is denoted C(s), with the usual operations of multiplication,
+addition, division and differentiation.
+(i) If the degree of g(s) is less than or equal to the degree of h(s), then
+f (s) is said to be proper rational. If the degree of g(s) is strictly less
+than the degree of h(s), then f (s) is said to be strictly proper.
+(ii) Suppose that g(s) and h(s) have no common factors other than
+constants. Then zeros of g(s) give zeros of f (s); while zeros of h(s) give
+poles of f (s).
+71 The transfer function of (A, B, C , D) (see also 130)
+
+Definition (Transfer function)
+The transfer function of (A, B, C, D) is T (s) = D + C(sI − A)−1 B.
+
+Lemma
+The transfer function may be found by exact arithmetic over C(s) by
+elementary row operation.
+
+Proof. If sI − A is invertible, then the following block matrices are row
+equivalent over C(s):
+
+                     A − sI B ∼ I (A − sI)−1 B
+                   [︃            ]︃ [︃                ]︃
+                                   =                     .
+                       C      D       0       T (s)
+
+We observe that T (s) can be computed exactly by matrix multiplication
+and elementary row operations, which involve rational arithmetic.
+72 The transfer function of SISO (A, B, C , D)
+
+Proposition
+The transfer function T (s) = D + C(sI − A)−1 B of a SISO system is a
+proper rational function, and all the poles are eigenvalues of A.
+Proof. The characteristic polynomial det(sI − A) has degree n, and
+leading term s n . A cofactor of sI − A is the determinant of a
+(n − 1) × (n − 1) submatrix of sI − A and hence is a polynomial of
+degree less than or equal to n − 1. Now
+                 (sI − A)−1 = det(sI − A)−1 adj(sI − A)
+where adj(sI − A) is the transpose of the matrix of cofactors. Hence the
+entries of (sI − A)−1 are strictly proper rational functions. The
+eigenvalues of A are precisely the zeros of det(sI − A), hence are the only
+possible poles of entries of (sI − A)−1 . Since C, B and D are constant
+matrices, they do not introduce any more factors involving s, so T (s) is
+a proper rational function.
+73 The transfer function of MIMO (A, B, C , D)
+
+
+
+
+Corollary
+The transfer function of a MIMO is a (m × k) matrix of proper rational
+functions, and all the poles are eigenvalues of A.
+
+This follows from the proof of the Proposition. Next we consider the
+converse of the Proposition. Realization means devising a linear system
+with a given transfer function. [see video: V8 Realizing proper rational
+functions]
+74 Realization with a SISO
+
+Proposition. The general strictly proper rational function
+
+                                    ∑︁n−1      j
+                                      j=0 γj s
+                         T (s) =
+                                 s n + n−1
+                                        j=0 αj s
+                                                 j
+                                      ∑︁
+
+is the transfer function of the SISO (A, B, C, D), where
+
+                   0      1      0 ...      0
+                ⎡                               ⎤
+                                                          0
+                                                         ⎡ ⎤
+                ⎢ 0                  . ..
+                          0      1          0            ⎢0⎥
+                ⎢                               ⎥
+                                                ⎥
+           A = ⎢ ...     ..     ..   ..      .. ⎥ , B = ⎢ .. ⎥ ,
+                ⎢                               ⎥        ⎢ ⎥
+                            .      .    .     . ⎥        ⎢.⎥
+                ⎢
+                                                ⎥
+                ⎢ ..     ..     ..   ..                  ⎣0⎦
+                ⎢                                        ⎢ ⎥
+                ⎣ .         .      .    .   1
+                                                ⎥
+                                                          1
+                                                ⎦
+                  −α0 −α1 . . . . . . −αn−1
+
+                  C = γ0 γ1 . . .                D = 0.
+                     [︁                    ]︁
+                                       γn−1 ,
+75 Proof of realization
+
+We require to prove T (s) = C(sI − A)−1 B. Recall that
+                (sI − A)−1 = det(sI − A)−1 adj(sI − A)
+where the adjugate is the transpose of the matrix of cofactors. The
+coefficients αj appear in the denominator, but not in the numerator. Also
+adj(sI − A)B equals the last column of adj(sI − A), so by transposition,
+adj(sI − A)B equals the final row of the matrix of cofactors of sI − A,
+where
+                            s −1 0                   0
+                         ⎡                                ⎤
+                                          ...
+                                           ..
+                         ⎢0     s             .      0
+                         ⎢                                ⎥
+                                    −1                    ⎥
+                         ⎢ .. . .   ..     ..        .
+                                                     ..
+                         ⎢                                ⎥
+                sI − A = ⎢ .      .    .      .
+                                                          ⎥
+                                                          ⎥
+                         ⎢ .. . .   ..
+                         ⎢                                ⎥
+                         ⎣.       .    .    s
+                                                          ⎥
+                                                    −1 ⎦
+                           α0 α1 . . . αn−2 s + αn−1
+We compute these one after another, and find that the αj do not appear
+in these cofactors.
+76 Cofactors
+
+Recall that the determinant of an upper or lower triangular matrix equals
+the product of the diagonal entries. The cofactor of the entry α0 in place
+(n, 1) is
+                               −1 0 . . . 0
+                              ⎡                    ⎤
+                                          .
+                              ⎢ s −1 . . 0 ⎥
+                              ⎢                    ⎥
+                      n−1
+                 (−1)         ⎢... ... ...
+                          det ⎢                    ⎥=1
+                                                .. ⎥
+                                                 . ⎦
+                                 ..
+                              ⎣
+                                  .   0     s −1
+The cofactor of the entry α1 in place (n, 2) is
+
+                                  s   0...        0
+                              ⎡                        ⎤
+                                       .
+                             ⎢ 0 −1 . .           0⎥
+                             ⎢                       ⎥
+                     n−2
+                 (−1)    det ⎢ .    .  ..            ⎥=s
+                                                  .. ⎥
+                             ⎣ .. ..      .
+                             ⎢
+                                                   . ⎦
+                                 ..
+                                  .  0  0         −1
+77 Conclusion of realization
+
+and so until the cofactor of the entry s + αn−1 in place (n, n) is
+
+                            s   −1 . . .       0
+                        ⎡                         ⎤
+                                              . ⎥
+                        ⎢ 0      s        −1 . . ⎥
+                        ⎢
+                        ⎢ ..
+                    det ⎢       ..        .. .. ⎥   = s n−1
+                        ⎣ .           .     .    .⎥
+                                 ..
+                                                  ⎦
+                         ...      .       0     s
+
+So
+                                                               1
+                                                           ⎡        ⎤
+                                                           ⎢   s  ⎥
+                                                        ]︁ ⎢   ..
+                                                                  ⎥
+             Cadj(sI − A)B = γ0 γ1 . . .                        .
+                                [︁
+                                                    γn−1 ⎢
+                                                           ⎢      ⎥
+                                                                  ⎥
+                                                           ⎢ n−2 ⎥
+                                                           ⎣s     ⎦
+                                                            s n−1
+
+
+                      = γ0 + γ1 s + · · · + γn−1 s n−1 .
+78 Conclusion of the proof
+
+
+
+Note that A is a companion matrix, so by Proposition 22,
+
+            det(sI − A) = s n + αn−1 s n−1 + · · · + α1 s + α0 .
+
+Hence
+                         Cadj(sI − A)B
+                  T (s) =
+                           det(sI − A)
+                         γ0 + γ1 s + · · · + γn−1 s n−1
+                        = n                             .
+                          s + αn−1 s n−1 + · · · + α0
+79 Example: realising a proper rational function by SISO
+
+[see video:V9 Example of realizing a transfer function as a rational
+function]
+Example
+To realize
+                                     2s 2 + 3s + 1
+                        T (s) =
+                                 s 3 + 6s 2 + 8s − 2
+as the transfer function of a SISO.
+As in Proposition 72 we introduce
+
+               0 1      0          0
+             ⎡             ⎤      ⎡ ⎤
+
+         A= 0 0         1 , B = 0⎦ , C = 1 3 2 , D = 0.
+                                        [︁    ]︁
+             ⎣             ⎦      ⎣
+               2 −8 −6             1
+
+which can be realized as a feedback linear system without differentiators.
+In MATLAB, or similar, one can check that T (s) = C(sI − A)−1 B.
+80 Checking the solution
+
+Here
+                               s −1  0
+                             ⎡           ⎤
+
+                    sI − A = ⎣ 0  s −1 ⎦ ;
+                              −2 8 s + 6
+computing only the relevant entries, we have
+                                      ⎡        ⎤
+                                        ∗ ∗ ∗
+                      adj(sI − A)⊤ = ⎣∗ ∗ ∗ ⎦
+                                        1 s s2
+
+                                           1     0
+                                     ⎡        ⎤⎡ ⎤
+                                      ∗ ∗
+             Cadj(sI − A)B = 1 3 2 ∗ ∗ s         0⎦
+                            [︁    ]︁
+                                     ⎣        ⎦ ⎣
+                                      ∗ ∗ s 2    1
+                           = 1 + 3s + 2s 2
+81 Checking the solution, concluded
+
+
+
+
+Since A is a companion matrix, we have
+
+                     det(sI − A) = s 3 + 6s 2 + 8s − 2
+
+so
+                         Cadj(sI − A)B     1 + 3s + 2s 2
+               T (s) =                 = 3                ,
+                          det(sI − A)   s + 6s 2 + 8s − 2
+as required.
+82 A determinant formula for realization by SISO
+
+
+
+Theorem
+Let T (s) be a proper rational function. Then T (s) can be realized as the
+transfer function of a SISO (A, B, C, D), so T (s) = D + C(sI − A)−1 B.
+In particular, with A, B, C as in frame 68 and D ∈ C,
+
+                                         A − sI B
+                                      [︃          ]︃
+                                  det
+                                           C    D
+                         T (s) =                     .
+                                     det[A − sI]
+
+
+Beware the minus signs! See exercises for a proof.
+83 Realising MIMO as a feedback system
+
+Differentiators are sometimes regarded as bad components to have in a
+linear system since they can introduce noise. Integrators are preferable,
+since they depend upon the long term history of system. So it is
+advantageous to produce linear systems without differentiators.
+Proposition
+The MIMO system (A, B, C, D) can be realized as a feedback system
+involving taps, matrix amplifiers, summing junctions and integrators, but
+no differentiators.
+Proof. We write
+                            d
+                              X = AX + BU
+                           dt
+in the form                     ∫︂     ∫︂
+                          X =A X +B U
+
+realize as a feedback system with        and matrix amplifiers A and B.
+                                    ∫︁
+84 MIMO as a feedback system
+
+
+Then we take U and X as inputs into the system
+
+                          Y = CX + DU.
+
+
+                                  A
+                                         X
+  U     .                                    .           Y
+                B        +                       C   +
+                                  ∫︁
+
+
+
+                                  D
+85 The Laplace transform of MIMO
+
+
+
+Remark
+If in MIMO we replace the integrator by multiplication by 1/s we
+                                     ∫︁
+
+obtain
+                       X̂ = (1/s)AX̂ + (1/s)B Û
+                              Ŷ = C X̂ + D Û
+with solution
+                       Ŷ = (D + C(sI − A)−1 B)Û.
+
+The theoretical justification of this is the Laplace transform.
+86 Chapter 3 Laplace transforms
+
+[See video: V11 Laplace transform introduction]
+Definition (Laplace transform)
+(i) Suppose that f : (0, ∞) → C is a continuous function such that
+
+                   (E )     |f (x)| ≤ Me βx     (x > 0)
+
+for some M > 0 and β ∈ R. Here β is called the exponential type or
+growth rate. Then we say that f is of exponential type, or satisfies (E).
+(ii) We then define the Laplace transform by
+                          ∫︂ ∞
+               L(f )(s) =      f (x)e −sx dx   (ℜs > β).
+                            0
+
+Sometimes L(f )(s) is written as fˆ(s). Here x, t are time variables;
+whereas s is the transform variable.
+87 Laplace transform table
+
+
+[See video: V13 Laplace transform of cosine] Examples. Let a be a
+non-zero real number, b > 0 and α > −1.
+
+                          f (x)      L(f )(s)
+                            1         1/s
+                                           n!
+                            xn           s n+1
+                                   1
+                           e ax   s−a      (s > a)
+                           xα           Γ(α+1)
+                                          s α+1
+                                             a
+                         sin ax          s 2 +a2
+                                             s
+                        cos ax           s 2 +a2
+                        δb (dx)          e −bs
+                                         e −bs
+                       H(x − b)            s
+88 Examples of Laplace transforms
+
+[See video: V10 MATLAB for calculus]
+                                                  2
+                  Example       L(x 2 ; s) =             (s > 0)
+                                                 s3
+To see this, consider R > 0 and integrate by parts
+   ∫︂ R                [︂ x 2 e −sx ]︂R 2 ∫︂ R
+        x 2 e −sx dx =                  +       xe −sx dx
+     0                       −s       0   s   0
+                       [︂ x 2 e −sx ]︂R [︂ 2xe −sx ]︂R      2 R −sx
+                                                             ∫︂
+                     =                  +              + 2         e dx
+                             −s 0            −s 2 0        s 0
+                       [︂ x 2 e −sx ]︂R [︂ 2xe −sx ]︂R [︂ 2e −sx ]︂R
+                     =                  +              +
+                             −s 0            −s 2 0          −s 3 0
+                           R e2  −Rs     2Re  −Rs    2e −Rs       2
+                     =−                −           −         + 3     (s > 0)
+                                s           s 2        s 3       s
+                         2
+                     → 3           as     R → ∞.
+                        s
+89 Remarks on some functions
+
+
+(i) In the above table x α satisfies (E) for α ≥ 0; for 0 > α > −1, x α
+diverges as x → 0+, but the Laplace transform integral exists as an
+improper Riemann integral.
+(ii) The Dirac delta function δb is not actually a function, instead δb is
+the
+∫︁ measure that assigns unit mass to the point b ≥ 0 on the line. So
+   f (x)δb (dx) = f (b) for all continuous real functions f .
+(iii) The Heaviside function
+
+                            H(x) = 1,    x ≥ 0;
+
+                            H(x) = 0,    x < 0;
+is a step function with a jump at x = 0, so∫︁H(x − b) is a step function
+with a jump at x = b. Hence H(x − b) = (−∞,x] δb (dt).
+90 Examples of Laplace transforms, continued
+
+
+
+
+(ii) The Heaviside function has
+                                      ∫︂ ∞
+                L(H(x − b); s) =              H(x − b)e −sx dx
+                                       0
+                                      ∫︂ ∞
+                                  =           e −sx dx
+                                       b
+                                      e −sb
+                                  =                (s > 0).
+                                        s
+91 Properties of the Laplace transform
+
+Proposition. Here (E ) refers to some M > 0 and β ∈ R.
+                                                                       M
+(i) The Laplace transform exists for all s > β, and |L(f )(s)| ≤ s−β      .
+      ax
+(ii) e f (x) also satisfies (E ) with transform L(f )(s − a).
+(iii) The Laplace transform is linear so, that if f , g satisfy (E ), then for
+all λ, µ ∈ C the function λf + µg also satisfies (E ) and
+
+                  L(λf + µg)(s) = λL(f )(s) + µL(g)(s).
+
+(iv) xf (x) also satisfies (E ) and L(f )(s) is differentiable with
+
+                                           d
+                        L(xf (x))(s) = −      L(f )(s).
+                                           ds
+(v) If f is continuously differentiable and f ′ satisfies (E ), then f also
+satisfies (E ) and L(f ′ )(s) = sL(f )(s) − f (0).
+92 Proof of properties of Laplace transform
+
+(i) Let |f (x)| ≤ Me βx . Then for 0 < W < R
+        ⃓∫︂ R            ⃓      ∫︂ R
+              e f (x) dx ⃓ ≤ M
+               −sx
+                                     e βx e −sx dx
+        ⃓                ⃓
+        ⃓
+           W                      W
+                             [︂ M              ]︂R
+                           =          e (β−s)x
+                               β−s               W
+                               M (β−s)R             M (β−s)W
+                           =        e          −       e     →0
+                             β−s                   β−s
+as W → ∞. Also, we can let R → ∞ and W → 0+ to get
+                        ⃓∫︂ ∞                ⃓     M
+                              e −sx f (x) dx ⃓ ≤      .
+                        ⃓                    ⃓
+                                                 s −β
+                        ⃓
+                           0
+
+(ii) Consider 0 e −(s−a)x f (x)dx.
+              ∫︁ ∞
+
+(iii) Suppose that |f (x)| ≤ Pe ax and |g(x)| ≤ Re bx for all x > 0. Then
+with β = max{a, b} and M = |λ|P + |µ|R, we have
+93 Integration
+
+
+                        |λf (x) + µg(x)| ≤ Me βx ,
+so we can integrate
+∫︂ ∞                           ∫︂ ∞                ∫︂ ∞
+     e (λf (x) + µg(x)) dx = λ
+      −sx
+                                    e f (x) dx + µ
+                                     −sx
+                                                        e −sx g(x) dx.
+ 0                                  0                            0
+
+(v) Suppose that |f ′ (x)| ≤ Me βx for all x > 0 and some β > 0, so f ′
+belongs to (E ); we verify that f also belongs to (E ). By fundamental
+theorem of calculus,
+                                         ∫︂ x
+                         f (x) = f (0) +      f ′ (t) dt,
+                                          0
+                                              ∫︂ x
+                   so   |f (x)| ≤ |f (0)| +           Me βt dt
+                                                  0
+                                        [︂ Me βt ]︂x
+                          = |f (0)| +
+                                              β       0
+94 Laplace transform of derivative
+
+
+                                            Me βx  M
+                             = |f (0)| +          − ,
+                                             β     β
+so f satisfies (E ). Now for s > β, we integrate by parts to get
+       ∫︂ R                             ]︂R  ∫︂ R
+              e       f (x) dx = e f (x) + s      e −sx f (x) dx
+                                [︂
+                  −sx ′            −sx
+         0                                     0         0
+                                                             ∫︂ R
+                              =e   −sR
+                                         f (R) − f (0) + s          e −sx f (x) dx
+                                                              0
+
+so we let R → ∞ to get
+            ∫︂ ∞                         ∫︂ ∞
+                 e f (x) dx = −f (0) + s
+                  −sx ′
+                                              e −sx f (x) dx.
+                  0                                  0
+
+[See video: V14 Laplace transform of derivative]
+95 Differentiating Laplace transforms
+
+[See video: V12 Laplace transforms are holomorphic] (iv) Let s > β + δ
+for some δ > 0 and consider −δ < h < δ. Note that e δx e −sx f (x) is
+integrable, and x ≤ e δx /δ, so xf (x) also satisfies (E ). Also
+
+            e −(s+h)x − e −sx         (︂ e −hx − 1 )︂
+                              = e −sx                 → −xe −sx
+                    h                        h
+as h → 0. Hence
+
+         L(f )(s + h) − L(f )(s)          e −(s+h)x − e −sx
+                                     ∫︂ ∞
+                                 =                          f (x) dx
+                    h                0            h
+                                          e      − 1 −sx
+                                   ∫︂ ∞ −xh
+                                 =                   e f (x) dx
+                                     0         h
+                                       ∫︂ ∞
+                                 →−          xe −sx f (x) dx.
+                                        0
+
+To make this precise, we consider
+96 Estimates
+
+
+                 e −xh − 1          (︂ e −xh − 1 + hx )︂
+                           +x =h
+                     h                       h2
+where by comparing the coefficients in the power series
+
+               ⃓ e −xh − 1 + hx ⃓ ⃓ x 2 hx 3 h2 x 4          ⃓
+                                ⃓=⃓ −          +       − ...⃓
+               ⃓                ⃓ ⃓                          ⃓
+                       h2           2!      3!    4!
+               ⃓
+                                   x 2 δx 3 δ 2 x 4
+                                 ≤     +       +      + ...
+                                   2!     3!     4!
+                                   e δx − 1 − δx
+                                 =               ≤ δ −2 e δx
+                                         δ2
+we have e δx e −sx f (x) is integrable,
+97 Conclusion
+
+
+and the sum
+                     e −xh − 1 −sx
+              ∫︂ ∞                                ∫︂ ∞
+                              e f (x) dx +                 xe −sx f (x) dx.
+                0        h                            0
+
+is bounded by a convergent integral
+     ⃓∫︂ ∞ e −xh − 1 + hx                ⃓       ∫︂ ∞
+                          e −sx
+                                f (x) dx   ≤ |h|      δ −2 e δx e −sx |f (x)| dx
+     ⃓                                   ⃓
+                  h
+     ⃓                                   ⃓
+        0                                          0
+                                           →0        h → 0,
+
+so
+                d
+                     ∫︂ ∞                        ∫︂ ∞
+                            e −sx f (x) dx = −            xe −sx f (x) dx.
+                ds    0                           0
+98 Holomorphic Laplace transform
+
+
+
+
+Proposition
+Suppose that f satisfies (E). Then
+(i) L(f )(s) defines a holomorphic (complex differentiable) function of s
+on the open right half plane {s ∈ C : ℜs > β};
+(ii) L(f )(s) → 0 as s → ∞ along (0, ∞).
+
+Proof. (i) Similar to Proposition 85(iv)
+(ii) This is similar to Proposition 85(i).
+99 Laplace transform of exponentials and powers
+
+
+Proposition
+Let νj > −1 and let pj ∈ C for j = 1, . . . , N. Then
+
+                                       N
+                            f (t) =         aj t νj e pj t
+                                      ∑︂
+
+                                      j=1
+
+satisfies (E ) for β > max{ℜpj } and L(f )(s) is holomorphic for ℜs > β.
+
+Proof. Let Γ(α) = 0 t α−1 e −t dt for α > 0. By direct calculation, we
+                     ∫︁ ∞
+
+have
+                                     N
+                                            Γ(νj + 1)
+                                        aj
+                                    ∑︂
+                         L(f )(s) =                       .
+                                    j=1
+                                           (s − pj )νj +1
+100 Laplace convolution
+
+[See video: V16 Laplace convolution] Definition. Suppose that f and g
+both satisfy (E ). Then their Laplace convolution is
+                                ∫︂ x
+                     f ∗ g(x) =      f (x − y)g(y) dy.
+                                   0
+
+
+
+Proposition
+The Laplace convolution is:
+(i) commutative, so f ∗ g = g ∗ f ;
+(ii) linear, so (λf + µg) ∗ h = λf ∗ h + µg ∗ h;
+(iii) multiplicative with respect to the Laplace transform, so f ∗ g satisfies
+(E) and
+                 L(f ∗ g)(s) = L(f )(s)L(g)(s)      (s > s0 );
+(iv) associative, so f ∗ (g ∗ h) = (f ∗ g) ∗ h.
+101 Bounds on convolution formula
+
+
+(i) Change variable to u = y − x.
+(ii) is easy.
+(iii) We choose M, β such that
+
+               |f (x)| ≤ Me βx ,   |g(x)| ≤ Me βx       (x > 0);
+
+then
+                 |f (x − y)g(y)| ≤ Me β(x−y) Me βy = M 2 e βx
+so                    ⃓∫︂ x
+                            f (x − y)g(y) dy ⃓ ≤ xM 2 e βx
+                                             ⃓
+                      ⃓                      ⃓
+                      ⃓
+                           0
+so f ∗ g satisfies (E ).
+102 Proof of convolution formula
+
+
+Also, when we change order of integration, then let u = y − x,
+                     ∫︂ ∞
+       L(f ∗ g)(s) =       e −sx f ∗ g(x) dx
+                     ∫︂0 ∞        ∫︂ x
+                   =       e −sx
+                                       f (x − y)g(y) dy dx
+                     ∫︂0 ∞          0
+                                       (︂∫︂ ∞
+                           e g(y)              e −s(x−y) f (x − y) dx dy
+                                                                     )︂
+                             −sy
+                   =
+                       0                   y
+                     ∫︂ ∞                   ∫︂ ∞
+                   =       e g(y) dy
+                             −sy
+                                                  e −su f (u) du
+                        0                  0
+                    = L(f )(s)L(g)(s).
+
+The Laplace transform converts convolution to multiplication.
+103 Conclusion of proof: associativity
+
+
+
+
+(iv) This can be proved in a similar way to (i). Alternatively, one use (iii)
+to compute
+
+               L((f ∗ g) ∗ h)(s) = L(f ∗ g)(s)L(h)(s)
+                                  = L(f )(s)L(g)(s)L(h)(s)
+                                  = L(f ∗ (g ∗ h))(s)
+
+and then use uniqueness, as discussed below.
+104 Lerch’s Uniqueness Theorem
+
+
+Theorem
+Suppose that f and g satisfy (E ) and that there exists s0 such that
+
+                    L(f )(s) = L(g)(s)      (s > s0 ).
+
+Then f (x) = g(x) for all x > 0.
+
+The proof of this is rather difficult, hence is omitted. There is an
+inversion formula, credited to Bromwich, which recovers f from its
+Laplace transform F via a contour integral; unfortunately, it is rather
+hard to use. So if one knows that F (λ) occurs as L(f )(λ) for some f ,
+then the best way to find f is by comparing F with known Laplace
+transforms in tables, then invoking the uniqueness theorem.
+105 Solving an integral equation
+
+Example
+To solve the integral equation
+                                           ∫︂ t
+                                  at
+                     y(t) = 2e         +          e b(t−u) y(u) du
+                                            0
+
+where a, b are constants with a ̸= b + 1, and y satisfies (E ).
+
+Solution. Note that the the integral is a convolution of y with e bt , so by
+Proposition 93(iii), we have
+                                         2   ŷ(s)
+                          ŷ(s) =          +       ;
+                                       s −a s −b
+after a little reduction we obtain
+                                        2(s − b)
+                        ŷ(s) =                       ;
+                                   (s − a)(s − b − 1)
+106 Example of integral equation, concluded
+
+
+which we write as partial fractions
+                                   A     B
+                       ŷ(s) =       +       ;
+                                 s −a s −b−1
+then
+                        2(a − b)             −2
+                    A=            ; B=              ;
+                        a−b−1             a−b−1
+by the uniqueness of Laplace transforms, we have a unique solution
+
+                              2(a − b)e at − 2e (b+1)t
+                     y(t) =                            .
+                                    a−b−1
+[See video: V17 Solving an integral equation]
+107 Laplace transform of a differential equation
+
+
+Proposition
+Suppose that y(0) = p0 , y ′ (0) = p1 , . . . , y (n−1) (0) = pn−1 and
+
+                 y (n) (t) + an−1 y (n−1) (t) + · · · + a0 y = u(t)
+
+where the coefficients are complex constants and u satisfies (E ). Then
+there exists a complex polynomial qn−1 (s) of degree ≤ n − 1, that
+depends only upon the aj and pk , such that
+
+         (s n + an−1 s n−1 + · · · + a0 )L(y)(s) + qn−1 (s) = L(u)(s)
+
+where s n + an−1 s n−1 + · · · + a0 is the characteristic polynomial.
+108 Proof
+
+By repeatedly applying Proposition 89, we have
+
+                        L(y ′ )(s) = sL(y)(s) − y(0)
+
+                       L(y ′′ )(s) = sL(y ′ )(s) − y ′ (0)
+                 L(y (n) )(s) = sL(y (n−1) )(s) − y (n−1) (0),
+so we can substitute backwards and get
+
+                  L(y ′′ )(s) = s 2 L(y)(s) − sy(0) − y ′ (0)
+
+            L(y ′′′ )(s) = s 3 L(y)(s) − s 2 y(0) − sy ′ (0) − y ′′ (0)
+and thus obtain qn−1 (s) with coefficients pj = y (j) (0) as in the initial
+conditions y(0), . . . , y (n−1) (0). The characteristic polynomial in frame 95
+is the same as we get from frames 22 and 23.
+109 Example of Laplace transform of differential equation
+
+Example
+To find the Laplace transform of
+
+                        y ′′′ + 2y ′′ − y ′ + y = u
+
+                    y ′′ (0) = 5, y ′ (0) = −1, y(0) = 7
+where u ∈ (E ).
+
+Solution. The Laplace transforms are found recursively, with
+
+                             L(y)(s) = ŷ(s)
+
+                          L(y ′ )(s) = s ŷ(s) − 7
+                      L(y ′′ )(s) = s 2 ŷ(s) − 7s + 1
+                   L(y ′′′ )(s) = s 3 ŷ(s) − 7s 2 + s − 5
+110 Example of Laplace transform of differential equation,
+concluded
+
+
+substituting this into
+
+                 L(y ′′′ ) + 2L(y ′′ ) − L(y ′ ) + L(y) = L(u)
+
+gives
+             (s 3 + 2s 2 − s + 1)ŷ(s) − 7s 2 − 13s + 4 = û(s).
+Remarks (i) Alternatively, we can represent this as an (A, B, C, D) SISO
+system.
+(ii) We often take s such that ℜs ≥ 0, so s is in the right half plane, and
+denote the points on the imaginary axis by s = iω, where ω ∈ R is the
+angular frequency.
+111 Transfer function of a Laplace transformed system
+
+
+
+Definition (Transfer function)
+Consider a linear system Y = LU where L is a linear operator, and such
+that all the entries of the (k × 1) input U and (m × 1) output Y satisfy
+(E ), and let the initial conditions be zero. Suppose that T (s) is a
+(m × k) matrix of functions such that
+
+                     Ŷ (s) = T (s)Û(s)    (s > β).
+
+Then T (s) is called the transfer function of the linear system.
+112 Solving MIMO by Laplace transforms
+
+
+Theorem
+Let A, B, C, D be constant matrices, and suppose that the input function
+satisfies (E ). Then the output Y of the linear system
+
+                             dX
+                                = AX + BU
+                             dt
+                             Y = CX + DU
+with initial condition X (0) = 0 in (E ) is uniquely determined, and the
+Laplace transform satisfies
+
+                            Ŷ (s) = T (s)Û(s)
+
+where the transfer function is T (s) = D + C(sI − A)−1 B.
+113 Proof
+
+As in frame 63, the solution is determined by
+                           ∫︂ t
+                  X (t) =       exp(((t − v)A)BU(v) dv
+                             0
+
+which a convolution type integral of functions in (E ), since
+
+                ∥ exp(tA)∥ ≤ M1 e β1 t ,   ∥U(t)∥ ≤ M2 e β2 t
+
+so with M = M1 M2 ∥B∥ and β = max{β1 , β2 }, we have
+
+                    ∥ exp(((t − v)A)BU(v)∥ ≤ Me βt
+
+so
+                      ∥X (t)∥ ≤ tMe βt ≤ Me (β+1)t
+and so X satisfies (E ) and has a Laplace transform. From the differential
+equation, dX /dt also satisfies (E ) and has a Laplace transform, and
+likewise Y satisfies (E ).
+114 Laplace transform of (A,B,C,D)
+
+The Laplace transform of
+                            dX
+                               = AX + BU
+                            dt
+                             Y = CX + DU
+is
+                    s X̂ (s) − X (0) = AX̂ (s) + B Û(s)
+                        Ŷ (s) = C X̂ (s) + D Û(s).
+Hence when s is not an eigenvalue of A,
+
+              X̂ (s) = (sI − A)−1 B Û(s) + (sI − A)−1 X (0)
+
+       Ŷ (s) = C(sI − A)−1 B Û(s) + D Û(s) + C(sI − A)−1 X (0).
+When X (0) = 0 we get Ŷ (s) = T (s)Û(s).
+115 Laplace transform of block diagram
+
+
+
+
+                            A
+
+                                 X̂
+   Û   .                             .           Ŷ
+              B      +     1/s            C   +
+
+
+                           D
+116 Jordan blocks
+
+A k × k Jordan block with eigenvalue λ ∈ C is the matrix
+
+                             λ 1       0 ... 0
+                           ⎡                       ⎤
+                           ⎢0 λ        1    0 . . .⎥
+                           ⎢ ..       ..   ..
+                           ⎢                       ⎥
+                  Jk (λ) = ⎢  .  0       .     . 0
+                                                   ⎥
+                                                   ⎥
+                           ⎢ .. . .        . .
+                           ⎢                       ⎥
+                           ⎣.       . 0        . 1⎦
+                                                   ⎥
+
+                             0 0 ... 0           λ
+
+                                           λ 1
+                                          [︃   ]︃
+                   J1 (λ) = [λ], J2 (λ) =         ,
+                                           0 λ
+                                    λ 1 0
+                                   ⎡       ⎤
+
+                          J3 (λ) = ⎣ 0 λ 1 ⎦
+                                     0 0 λ
+117 Jordan canonical form (Jordan normal form)
+
+
+[See video: V18 Jordan canonical form] i) Let λ be an entry on the
+leading diagonal of a square matrix A such that all the other entries in
+the same column as λ are 0. Observe if λ is in row j, then the column
+vector with 1 in row j and 0 elsewhere is an eigenvector corresponding to
+eigenvalue λ. Hence λ is an eigenvalue of A.
+ii) In a Jordan block, all the entries down the leading diagonal are equal
+to some λ, all the entries in the diagonal above the leading diagonal are
+1, and all other entries are zero. By (i), λ is an eigenvalue of the Jordan
+block.
+iii) We put Jordan blocks of various sizes into a block matrix, so that the
+blocks on the block diagonal are Jordan blocks. Then all the entries
+below the leading diagonal are zero; all the entries in the diagonal
+directly above the leading diagonal are 0 or 1, and all the entries above
+this diagonal are all zero.
+118 Eigenvalue terminology
+
+
+
+(i) Each eigenvalue λj has algebraic multiplicity nj , where nj is the
+largest power of (z − λj ) that divides the characteristic polynomial of A.
+(ii) For each eigenvalue λj , there is an eigenvector vj . Let
+E (λj ) = {v : Av = λj v} be the eigenspace. The geometric multiplicity of
+λj is the dimension of E (λj ).
+(iii) For each λj , the geometric multiplicity is the number of Jordan
+blocks that involve λj , so the geometric multiplicity is less than or equal
+to the algebraic multiplicity.
+(iv) When a Jordan block has shape k × k, where k > 1, it has both
+eigenvectors and generalised eigenvectors. A generalised eigenvector is
+v ̸= 0 such that (λj I − A)m v = 0 for some m = 2, . . . , k.
+119 Example
+
+
+Consider the matrix A that is given by
+
+                         2 1 0
+                      ⎡⎡ ∗         ⎤                  ⎤
+                      ⎢⎣ 0 2 1⎦ 03×1           03×2 ⎥
+                      ⎢ 0 0 2
+                      ⎢                               ⎥
+                 A=⎢
+                                                      ⎥
+                            01×3       [2 ] [︃ 01×2 ]︃⎥
+                                         ∗
+                                                      ⎥
+                      ⎢
+                                              3∗ 1 ⎦
+                      ⎢                               ⎥
+                            02×3       02×1
+                      ⎣
+                                               0 3
+
+where the eigenvalues are marked 2∗ and 3∗ ; these are the only entries in
+their own column; the eigenspaces are E (2) of dimension 2 since there
+are two blocks involving eigenvalue 2, and E (3) of dimension 1 since
+there is one block involving eigenvalue 3. The eigenvalues are 2, 2, 3,
+listed according to multiplicity.
+120 Jordan form of the example
+
+
+and the corresponding eigenvectors are e1 , e4 , e5 .The matrix A has
+Jordan blocks
+                         J2 (3) ⊕ J2 (1) ⊕ J2 (3)
+and A has shape 6 × 6 since 3 + 1 + 2 = 6; the characteristic polynomial
+is
+                       χA (s) = (s − 2)4 (s − 3)2
+which is given by the product of the diagonal terms of sI − A and has
+roots 2, 2, 2, 2, 3, 3; the minimal polynomial is
+
+                         m(s) = (s − 2)3 (s − 3)2
+
+since the largest block involving eigenvalue 2 is J3 (2) and the largest
+with eigenvalue 3 is J2 (3).
+121 Computing eigenvalues
+
+
+
+(i) One way to compute eigenvalues is to solve the characteristic
+equation, either algebraically or numerically. Computers can employ some
+special algorithms to find approximate values for eigenvalues.
+(ii) For complex matrices up to and including size 4 × 4, it is possible to
+compute the Jordan canonical form algebraically. However, computing
+JCF by hand is a bore.
+(iii) In any method, multiple eigenvalues are a technical challenge.
+MATLAB has a command jor dan for finding the JCF.
+(iv) However, computers find it easy to check whether matrices are
+positive definite, so researchers have found clever ways to use linear
+matrix inequalities instead of computing eigenvalues, as in frame 154.
+122 Jordan Canonical Form
+
+
+Theorem
+Let A be an (n × n) complex matrix. Then there exist S an invertible
+n × n complex matrix, a partition of n into n = k1 + k2 + · · · + kr and
+kj × kj Jordan blocks Jkj (λj ) where λj is some eigenvalue of A, such that
+A is similar to the sum of Jordan blocks
+                       Jk1 (λ1 )     0             0
+                      ⎡                                ⎤
+                                           ...
+                      ⎢ 0        Jk2 (λ2 ) 0      ... ⎥
+               A=S⎢ .                                  ⎥S .
+                                                       ⎥ −1
+                      ⎣ ..                  ..
+                      ⎢
+                                     0         .   0 ⎦
+                         0        ...     0    Jkr (λr )
+
+
+See MATH220, Chapter 6.
+123 Exponentials of complex matrices
+
+
+[See video: V19 Calculating matrix exponentials]
+Lemma
+Let A be a (n × n) complex matrix with eigenvalues λj , where
+maxj ℜλj < β for some real β.
+(i) Then the entries of exp(tA) are complex linear combinations of t k e tλj
+for integers k < n.
+(ii) There exists M such that
+
+                     ∥ exp(tA)∥ ≤ Me βt       (t > 0).
+
+
+The condition ℜλj < β means that the point λj lies strictly to the left of
+the vertical line in the complex plane through β on the real axis.
+124 Reducing to Jordan blocks
+
+From the Jordan canonical form, we have
+
+                                    0                           0
+             ⎡                                                            ⎤
+              exp(tJk1 (λ1 ))                 ...
+                                                                ..
+                    0         exp(tJk2 (λ2 )) 0                  .
+             ⎢                                                         ⎥
+ exp(tA) = S ⎢                                                         ⎥S ,
+             ⎢                                                         ⎥ −1
+                    ..                        ..
+                     .              0            .            0
+             ⎢                                                         ⎥
+             ⎣                                                         ⎦
+                    0              ...         0        exp(tJkr (λr ))
+
+so we consider a typical block Jk (λ). Now
+
+                 λ 0 0 ... 0                0      1    0             0
+                ⎡                      ⎤ ⎡                                ⎤
+                                                              ...
+                ⎢0 λ 0          0 . . .⎥ ⎢0
+                                       ⎥   ⎢       0    1      0     . . .⎥
+                ⎢ ..     . ..  . .. 0 ⎥⎥ + ⎢ ...       ..     ..
+                ⎢                                                         ⎥
+       Jk (λ) = ⎢  . 0                             0      .      .    0⎥
+                                           ⎢                              ⎥
+                ⎢ ..                   ⎥ ⎢.
+                ⎣ . 0 0 . . . 0 ⎦ ⎣ ..                        ..
+                ⎢                      ⎥ ⎢                                ⎥
+                                                   0 0           .    1⎦
+                                                                          ⎥
+
+                  0 0 ... 0          λ      0      0 ...       0      0
+
+which we write as
+125 Exponential of a Jordan block
+
+
+                             Jk (λ) = λIk + Nk
+where Nk is strictly upper triangular, and Ik and Nk commute, so
+
+                    exp(tJk (λ)) = exp(tλIk ) exp(tNk ).
+
+Now Nkk = 0, so we have a polynomial of degree k − 1 < n
+
+            exp(tNk ) = I + tNk + · · · + t k−1 Nkk−1 /(k − 1)!
+
+and | exp(tλ)| = e tℜλ , hence we obtain the bound
+
+                                                    t k−1 ∥Nk ∥k−1 )︂
+       ∥ exp(tJk (λ))∥ ≤ e tℜλ 1 + t∥Nk ∥ + · · · +
+                              (︂
+                                                                      .
+                                                       (k − 1)!
+126 Conclusion of proof of the Lemma
+
+
+                                                r
+                                               ∑︂
+             ∥ exp(tA)∥ ≤ ∥S∥∥S −1 ∥                 ∥ exp(tJkj (λj ))∥
+                                               j=1
+                                                r               kj −1 ℓ
+                                                                ∑︂ t ∥Nkℓj ∥
+                                                         tℜλj
+                                                     e
+                                               ∑︂
+                                      −1
+                            ≤ ∥S∥∥S        ∥                                   .
+                                                                       ℓ!
+                                               j=1              ℓ=0
+
+Now choose ε > 0 such that ℜλj + ε < β. Observe that t ℓ e −εt is
+bounded for all t > 0, also e tℜλj ≤ e βt e −εt , so
+                                             r k∑︂  t ∥Nkℓj ∥ )︂
+                                                j −1 ℓ
+
+                   M = sup e −εt ∥S∥∥S −1 ∥
+                           (︂               ∑︂
+                       t>0                             ℓ!
+                                                 j=1 ℓ=0
+
+is finite. Hence
+                        ∥ exp(tA)∥ ≤ Me βt                 (t > 0).
+127 Exponential and Inverses
+
+Proposition
+Let A be an (n × n) complex matrix. Then for s > ∥A∥, the matrix
+sI − A is invertible with inverse
+                                  ∫︂ ∞
+                     (sI − A) =
+                             −1
+                                       e −st exp(tA) dt.
+                                    0
+
+
+Proof. We have
+                                                 d
+               (sI − A) exp(t(A − sI)) = −          exp(t(A − sI))
+                                                 dt
+so
+      ∫︂ R                                  ∫︂ R
+                                                       d
+             (sI − A) exp(t(A − sI)) dt =          −      exp(t(A − sI)) dt
+       0                                     0         dt
+so by Fundamental Theorem of Calculus
+128 Exponential and Inverse, concluded
+
+
+
+
+           ∫︂ R
+                                                      ]︁R
+(sI − A)          exp(t(A − sI)) dt = − exp(t(A − sI)) 0 = I − exp R(A − sI);
+                                     [︁
+            0
+
+by the assumption on s, we can take the limit as R → ∞ to obtain
+                           ∫︂ ∞
+                  (sI − A)      exp(t(A − sI)) dt = I.
+                                 0
+
+Hence sI − A is invertible.
+129 Partial fractions
+
+ Proposition
+ Let f (s) be a complex rational function. Then there exists a complex
+ polynomial q(s), integers nj > 0 and poles λj ∈ C and aj ∈ C, all
+ uniquely determined, such that
+                                         N
+                                                  aj
+                       f (s) = q(s) +
+                                        ∑︂
+                                                          .
+                                              (s − λj )nj
+                                        j=1
+
+
+
+ Proof of existence. Starting with f (s) = g(s)/h(s), we use the Euclidean
+ algorithm to write
+                           g(s) = q(s)h(s) + r (s)
+ where q(s) and r (s) are polynomials, and either r (s) = 0 or the degree of
+ r (s) is strictly less than the degree of h(s); hence
+130 Partial fractions and Laplace transforms
+
+
+                                            r (s)
+                           f (s) = q(s) +
+                                            h(s)
+where r (s)/h(s) is strictly proper. Now by the fundamental theorem of
+algebra,
+                                      n
+                            h(s) = b    (s − λj )mj
+                                     ∏︂
+
+                                  j=1
+
+where the λj ∈ C are distinct. Then by the usual partial fractions
+calculation, we look for coefficients ak such that
+
+                         r (s) ∑︂ ak,nk
+                              =              ,
+                         h(s)    (s − λk )nk
+                                  k
+
+with integers 1 ≤ nk ≤ mk . The poles and coefficients are unique.
+131 Laplace transforms which are strictly proper rationals
+
+[See video: V15 Laplace transforms and partial fractions]
+Corollary
+Let y(t) be a function of the form
+                                     n
+                           y(t) =         aj,nj t nj e λj t .
+                                    ∑︂
+
+                                    j=1
+
+Then the Laplace transform Y of y is a strictly proper rational function
+with partial fraction decomposition
+                                    n
+                                           nj !aj,nj
+                         Y (s) =
+                                   ∑︂
+                                                       .
+                                    j=1
+                                        (s − λj )nj +1
+
+Conversely, all strictly proper rational functions arise thus.
+132 Laplace transform calculation
+
+Let ℜλ < β and β < s. We substitute z = (s − λ)t and find
+            ∫︂ ∞                ∫︂ ∞
+                  n λt −st
+                 t e e     dt =      t n e −(s−λ)t dt
+              0                   0
+                                     1
+                                              ∫︂ ∞
+                              =                     z n e −z dz;
+                                (s − λ)n+1 0
+this can be justified by Cauchy’s theorem from complex analysis.
+Integrating by parts, we obtain
+              1                             n
+                               ]︂∞                 ∫︂ ∞
+                         n −z
+                       −z e                               z n−1 e −z dz
+                     [︂
+      =                             +
+         (s − λ)n+1              0    (s  − λ) n+1
+                                                     0
+                   n                           n(n     1)
+                                                             ∫︂ ∞
+                              n−1 −z
+                                      ]︂∞          −
+      =0+                          e                              z n−2 e −z dz
+                         [︂
+                           −z              +
+             (s − λ)n+1                 0     (s − λ)n+1 0
+and so until
+                                                        n!
+                       ∫︂ ∞
+                              t n e λt e −st dt =              .
+                         0                          (s − λ)n+1
+133 Laplace transforms and stable rational functions
+
+Corollary
+The Laplace transform gives a bijection between
+
+                  span t n e pt : n = 0, 1, . . . ; ℜp < 0
+                      {︁                                   }︁
+
+
+and the set of strictly proper complex rational functions that have all
+their poles in the open left half plane {p : ℜp < 0}.
+
+Proof. The Laplace transform of t n e pt is n!/(s − p)n+1 , which is a
+strictly proper rational function that has a pole of order n + 1 at p in the
+open left half plane. Conversely, any strictly proper rational function has
+the form F (s) = G(s)/H(s), where G(s) and H(s) are complex
+polynomials such that deg(G) < deg(H) and the poles of F (s) are at the
+zeros of H(s). Then F (s) has a unique partial fractions decomposition as
+                                            aj
+                           F (s) =
+                                   ∑︂
+                                       (s − pj )1+nj
+134 proof of Corollary
+
+
+
+
+where aj ∈ C, nj ∈ {0, 1, 2, . . . } and the pole pj has ℜpj < 0 by the
+choice of F ; the proof of this fact involves the fundamental theorem of
+algebra and careful study of F near to each of its poles. This F (s) is the
+Laplace transform of
+                                    ∑︂ aj
+                          f (t) =               t nj e pj t ,
+                                         nj !
+                                     j
+
+by the Proposition.
+135 Chapter 4: Transfer functions, realization and stability
+
+Consider a SISO linear system Y = LU where L is a linear operator, and
+such that all the input U and output Y satisfy (E ). Let Ŷ and Û be the
+Laplace transforms of Y and U. Suppose that T (s) is a function such
+that
+                      Ŷ (s) = T (s)Û(s)  (s > β).
+Then T (s) is called the transfer function of the linear system. The
+transfer function describes all the important dynamics associated with
+(A, B, C, D); see Theorem 160.
+
+Theorem (Realizing a SISO by a rational function)
+Let T be a complex rational function. Then there exists a SISO linear
+system Σ, possibly with feedback, composed of taps, amplifiers, summing
+junctions, integrators, and differentiators, such that the transfer function
+of Σ is T .
+136 Proof of realization
+
+
+Let the transfer function be T (s) = p(s)/q(s) where p(s) = nj=0 aj s j
+                                                            ∑︁
+
+and q(s) = m            k
+                k=0 bk s are polynomials with bm = 1. Consider the
+              ∑︁
+differential equation
+                                    n
+                                         dju
+                               y=     aj j
+                                   ∑︂
+                                         dt
+                                  j=0
+
+which has Laplace transform
+
+                           Y (s) = p(s)U(s).
+
+Also, we can realize the proper rational function 1/q(s) as the transfer
+function of a SISO system, as in Proposition 68. By combining these in
+series, we realize a system with transfer function T (s) = p(s)/q(s).
+137 Transfer function of a Laplace transformed MIMO
+
+Definition (Transfer function)
+Consider a MIMO linear system Y = LU where L is a linear operator,
+and such that all the entries of the (k × 1) input U and (m × 1) output
+Y satisfy (E ), and let the initial conditions be zero. Suppose that T (s)
+is a (m × k) matrix of functions such that
+
+                     Ŷ (s) = T (s)Û(s)    (s > β).
+
+Then T (s) is called the transfer function of the linear system.
+
+Corollary
+Let T be a matrix of complex rational functions. Then there exists a
+MIMO linear system Σ, possibly with feedback, composed of taps, matrix
+amplifiers, summing junctions, differentiators and integrators such that
+the transfer function of Σ is T .
+138 Frequency Response
+
+Suppose that we have a SISO with Laplace transform Ŷ (s) = T (s)Û(s).
+We change variable to s = iω so Ŷ (iω) = T (iω)Û(iω). (Consider input
+e iωt , with iω on imaginary axis in s plane. We interpret ω as an angular
+frequency, and t as time.)
+Definition
+(i) Let T (s) be a rational function. Then the frequency response
+function is T (iω) where ω ∈ (−∞, ∞).
+(ii) The Nyquist plot of T is the curve {T (iω) : −∞ ≤ ω ≤ ∞}.
+
+Nyquist introduced a plot of the frequency response function
+T (iω) = Γ(ω)e iϕ(ω) , from which one can glean a great deal of useful
+information about the linear system. In the MATH6342 Projects, it is
+helpful to produce Nyquist plots of all the frequency response functions
+in use. Given a real rational transfer function tf , MATLAB has a special
+command nyquist for the Nyquist plot.
+139 A Nyquist plot
+
+
+
+
+         Figure: Nyquist plot for the transfer function 1/(s 2 + s + 6)
+
+The arrows give direction of the Nyquist plot. We always plot T (iω) as
+ω increases from −∞ to +∞, so iω goes up the imaginary axis.
+140 Another Nyquist plot
+
+
+
+
+                 Figure: Nyquist plot looping across itself
+
+MATLAB gives a red cross at the point −1. We are interested in the net
+number of times that the contour winds round −1; that is, the number
+ of clockwise windings minus the number of anti-clockwise windings.
+141 Geometrical interpretation of phase and gain
+
+Let Γe iϕ = x + iy; then for x > 0, we have a point in the right half-plane
+with ϕ = tan−1 (y/x) so −π/2 ≤ ϕ ≤ π/2;    √︁ for y > 0, we have a point in
+the upper half-plane with ϕ = cos (x/ x 2 + y 2 ) so 0 < ϕ < π.
+                                    −1
+
+In the Nyquist plot, the gain and phase can be found from the polar form
+of points on the Nyquist contour:
+• Γ(ω) = |T (iω)| is the gain, namely the distance of T (iω) to 0;
+• ϕ(ω) = arg T (iω) is the phase, namely the angle between T (iω) and
+the positive real axis.
+Equivalently
+                        log T (iω) = log Γ(ω) + iϕ(ω).
+In complex analysis, a contour is a continuous curve γ : [a, b] → C such
+that γ(a) = γ(b), and γ is piecewise continuously differentiable. The
+image of a contour γ under a function f that is holomorphic on γ is also
+a contour. The imaginary axis is not a contour, but we can consider
+semicircular contours in the right half-plane of radius R, where R → ∞.
+[See video: V29 Nyquist plots in MATLAB]
+142 Nyquist’s locus
+
+
+Proposition (Nyquist’s locus)
+Let R be a rational function that is proper and has all its poles in the
+open left half plane. Then R(iω) for −∞ ≤ ω ≤ ∞ gives a contour in C
+that starts and ends at some c ∈ C where R(s) → c as s → ∞.
+
+Proof. Write R(s) = c + p(s)/q(s) where degree of p(s) is strictly less
+than the degree of q(s), where R(s) → c as s → ∞. There are finitely
+many poles, at λ such that q(λ) = 0, and there exists δ > 0 such that
+ℜλ < −δ for all poles λ. Hence for −∞ < ω < ∞, the function R(iω) is
+continuously differentiable and R(iω) → c as ω → ±∞. We can write
+ω = tan t where t ∈ (−π/2, π/2), and R(i tan t) → c as t → (−π/2)+
+and → π/2−, so γ(t) = R(i tan t) is a contour in the sense of complex
+analysis. We need∫︁ to show that the length of the contour is finite, or
+equivalently that −∞ |R ′ (iω)|dω converges.
+                    ∞
+143 Nyquist’s contour
+
+
+We have
+                                       n
+                                                cj
+                       R(s) = c +
+                                      ∑︂
+                                            (s − λj )mj
+                                      j=1
+
+where mj are positive integers and ℜλj < 0, so
+                                    n
+                                          −cj mj
+                       R ′ (s) =
+                                   ∑︂
+
+                                   j=1
+                                       (s − λj )mj +1
+
+where mj + 1 ≥ 2 for all j, so there exists M such that
+|R ′ (iω)| ≤ M/(1 + ω 2 ) for all real ω , hence and the length of the
+contour is finite. The contour starts and ends at c, since p(s)/q(s) → 0
+as s = iω → ±i∞.
+144 Gain and Phase
+
+In engineering, the frequency response is relatively easy to measure. The
+polar decomposition of the frequency response function gives the gain Γ
+and phase ϕ.
+• Gain measures how much the device amplifies a signal. If Γ > 1 (so
+log Γ > 0), then the device makes the signal bigger.
+• The phase describes the relative position of peaks in the output versus
+the input.
+Definition (Gain and Phase)
+Define the frequency response to be T (iω), and make a polar
+decomposition T (iω) = Γ(ω)e iϕ(ω) . Then define the gain (or amplitude
+gain) of the system to be Γ(ω) = |T (iω)| at angular frequency ω ∈ R;
+define the phase (shift) to be ϕ(ω) = arg T (iω). The Nyquist locus is
+the curve {T (iω) : −∞ ≤ ω ≤ ∞} in the complex plane.
+145 Example of gain and phase
+
+[See video: V24 example for frequency response function]
+Example
+For a, b > 0, u0 a constant and y(0) = y ′ (0) = 0, find the gain and
+phase of
+                         ay ′′ + by ′ + y = u(t).
+
+Then the Laplace transform is
+                        (as 2 + bs + 1)Y (s) = U(s),
+so that taking s = iω in the formula
+                                           1
+                           T (s) =                 ,
+                                     as 2 + bs + 1
+                              1            1 − aω 2 − ibω
+             T (iω) =                  =                        ,
+                        1 − aω 2 + ibω   (1 − aω 2 )2 + b 2 ω 2
+146 Calculating Gain and phase
+
+so the gain is
+                                            1
+                 Γ(ω) = |T (iω)| = √︁                       ;
+                                     (1 − aω 2 )2 + b 2 ω 2
+
+while the phase ϕ(ω) satisfies
+
+                             bω                        bω
+                 tan ϕ =             ,   ϕ = tan−1
+                           ω2a − 1                   ω2a − 1
+which has sign depending on the value of ω. Note that
+
+                        ϕ(ω) = arg(1 − aω 2 − ibω)
+
+and so T (0) = 1, hence ϕ(0) = 0; while T (iω) is in the third quadrant
+as ω → ∞, whereas T (iω) is in the second quadrant as ω → −∞; at
+                                                       √
+1 − aω 2 = 0, T (iω) is on the imaginary axis so ϕ(±1/ a) = ∓π/2.
+147 Bode and phase plot
+
+
+                                           Bode Diagram
+                                      0
+                   Magnitude (dB)
+                                    -20
+
+                                    -40
+
+                                    -60
+
+                                    -80
+                                      0
+             Phase (deg)
+
+
+
+
+                                    -45
+                                    -90
+                            -135
+                            -180
+                               10 -1       10 0         10 1   10 2
+                                          Frequency (rad/s)
+
+    Figure: Bode plot and phase for the transfer function 1/(s 2 + s + 6)
+148 Scales on the Bode plot and phase plot
+
+The Bode plot is the logarithm of the gain log Γ in decibels versus ω in
+radians per second, with ω > 0 plotted on a log scale. Going from left to
+right on the Bode plot, ω increases from 0 to ∞, and iω goes up the
+imaginary axis. Recall that 360◦ is equivalent to 2π radians, and be
+careful with the scales on the plots. The phase (or phase shift) ϕ(ω) is
+the change in phase of the signal between input and output at a given
+input frequency. Phase ϕ in degrees is plotted against ω in radians per
+second, with ω > 0 on a log scale.
+i) If ϕ(ω) > 0, there is phase gain, so the output runs ahead of the input.
+ii) If ϕ(ω) < 0, there is a phase lag, so the output runs behind the input.
+iii) If ϕ = 0, then the input and output are said to be in phase.
+iv) If ϕ = π (or 180◦ ), then the input and output are in anti-phase so
+input peaks emerge as output troughs. Anti-phase signals are used in
+noise-cancelling headphones, where a sound is cancelled by a sound in
+anti-phase. Anti-phase is also used in optical lens coatings, to reduce
+reflections.
+149 Damped harmonic oscillator
+
+Example (Damped harmonic oscillator)
+The system is
+                                 dX
+                                    = AX + BU,
+                                 dt
+where γ > 0 and β real in
+
+                         0  1                      0
+                            [︃]︃                 [︃ ]︃
+                     A=          ,            B=       .
+                        −γ −β                      1
+
+                            C= 1 0        D=0
+                              [︁   ]︁
+
+
+The characteristic equation of A is
+                       [︃        ]︃
+                          λ −1
+                   det              = λ2 + λβ + γ = 0,
+                          γ λ+β
+so eigenvalues are
+                                         √︁
+150 Matrix form of the damped harmonic oscillator
+
+with corresponding eigenvectors
+
+                              1             1
+                           [︃ ]︃          [︃     ]︃
+                                 ,
+                             λ+            λ−
+
+so when λ+ ̸= λ− , we introduce
+
+                                  1  1
+                                  [︃            ]︃
+                              S=
+                                 λ+ λ−
+
+so that S is invertible and
+                                λ+ 0
+                              [︃      ]︃
+                          A=S            S −1
+                                 0 λ−
+
+and                               [︃ tλ
+                                    e +         0
+                                                       ]︃
+                      exp(tA) = S                           S −1
+                                     0         e tλ−
+151 Cases of the damped harmonic oscillator
+
+
+                                                                  √
+Consider 1/(s 2 + βs + γ) with γ > 0; poles at λ± = (1/2)(−β ±        ∆)
+where ∆ = β 2 − 4γ. Then
+
+  solutions         ∆<0                   ∆=0            ∆>0
+   β>0       decaying oscillations  critically damped  exp decay
+   β=0             periodic              constant     hyperbolic
+   β<0      unbounded oscillations exponential growth exp growth
+
+The damped oscillator is exponentially stable if and only if β > 0 and
+γ > 0. When β = 0 and γ > 0, the oscillator is marginally stable. For
+β < 0, the oscillator is unstable.
+[See video: V20 Harmonic oscillator stability]
+152 Stability cases
+
+
+Consider dX /dt = AX with X (0) = X0 . This has solution
+X (t) = exp(tA)X0 , and we distinguish the following cases.
+(i) Exponentially stable: there exist M, δ > 0 such that
+∥X (t)∥ ≤ Me −δt for all t > 0 and all X0 . This occurs when ℜλj < 0 for
+all eigenvalues λj . This is BIBO stable.
+(ii) Marginally stable: X (t) is bounded for t > 0 for all X0 , which
+occurs when ℜλj < 0, or ℜλj = 0 and the corresponding Jordan blocks
+are all of size 1 × 1. Later we will regard this marginal case as BIBO
+unstable.
+(iii) Unstable: X (t) (t > 0) is unbounded for some X0 , which occurs
+when either ℜλj > 0 for some eigenvalue λj of A, or ℜλj = 0 for some λj
+that has a Jordan block of size ≥ 2. This is also BIBO unstable.
+153 BIBO stability
+
+
+
+Definition (BIBO)
+Let (A, B, C, D) be a linear system
+
+                            dX
+                               = AX + Bu
+                            dt
+                             Y = CX + Du
+such that for all bounded inputs u(t) for t ∈ (0, ∞), all outputs y are
+bounded for t ∈ (0, ∞). Then we say that the system is bounded-input
+bounded-output stable, or BIBO stable.
+154 Undamped harmonic oscillator
+
+Example
+The undamped harmonic oscillator
+
+                         d 2x
+                              + ν 2 x = U0 cos ωt
+                         dt 2
+with U0 real and ω, ν > 0 is marginally stable, but not BIBO stable.
+
+We introduce
+                        x            0   1            0
+                      [︃ ]︃       [︃       ]︃       [︃ ]︃
+                 X=         ,A =              , B =       ,
+                        v           −ν 2 0            1
+
+                           C = 1 0 , D=0
+                               [︁     ]︁
+
+                       d
+                          X = AX + BU0 cos ωt.
+                       dt
+Note that A has eigenvalues ±iν on the imaginary axis.
+155 Undamped harmonic oscillator: complementary
+function
+
+
+The general solution is given by the complementary function plus a
+particular integral. The complementary function arises when the input is
+zero. For U = 0 the system oscillates at its natural angular frequency ν
+                             d
+and the general solution of dt X = AX is
+                             [︃         ]︃      [︃          ]︃
+                               cos νt               sin νt
+                    X = c1                 + c2                ,
+                              −ν sin νt            ν cos νt
+
+for constants c1 , c2 . In particular, all these solutions are bounded, so we
+have marginal stability.
+We use this as the complementary function in the following two
+contrasting cases.
+156 Marginal stability
+
+
+
+• For U ̸= 0 and ω ̸= ν, the input has angular frequency different from
+the natural angular frequency, and the solution is the complementary
+function plus a particular integral
+
+                                                       U0
+               [︃           ]︃      [︃          ]︃         [︃         ]︃
+                   cos νt               sin νt                cos ωt
+       X = c1                  + c2                + 2                   ;
+                  −ν sin νt            ν cos νt     ν − ω 2 −ω sin ωt
+
+here the complementary function oscillates at natural angular frequency
+ν; whereas the particular integral oscillates at the input angular
+frequency ω. These solutions are all bounded. One can obtain these
+particular integrals by W3.2, or by guesswork.
+157 Resonance
+
+
+• Let U0 ̸= 0 and ν = ω, so that the input angular frequency equals the
+natural angular frequency. Then the general solution is
+
+                                                   U0       t sin νt
+              [︃          ]︃      [︃          ]︃      [︃                 ]︃
+                 cos νt               sin νt
+       X = c1                + c2                +
+                 − sin νt            ν cos νt      2ν sin νt + tν cos νt
+
+where the solution oscillates unboundedly; this effect is called resonance.
+The input is bounded whereas the output is unbounded, so the system is
+not BIBO stable. The term marginal stability is used to describe the
+situation in which the complementary function is bounded, whereas the
+particular integral is unbounded for suitably chosen bounded inputs; this
+entails that the system is not BIBO stable. [See video: V27 resonance]
+Resonance occurs where a system is driven by a bounded input at the
+natural frequency of the systems, producing an unbounded output.
+158 Bounded exponentials of matrices
+
+
+
+Lemma
+Suppose that A has (not necessarily distinct) eigenvalues such that
+ℜλj < 0 for all j = 1, . . . , n. Then there exists M, δ > 0 such that
+
+                    ∥ exp(tA)∥ ≤ Me −δt        (t ≥ 0).
+
+
+This follows from Lemma 116. The difference between ℜλ ≤ 0 in
+Proposition 51(iii) and ℜλ < 0 in the Lemma 148 is subtle, and
+historically important in the theory. Maxwell realized that the stronger
+hypothesis of the Lemma 148, requiring strict inequality, is needed to
+cover the case of multiple eigenvalues, and deal with resonance.
+159 BIBO stability in terms of eigenvalues of A
+
+
+
+Theorem
+Suppose that all eigenvalues λj of A satisfy ℜλj < 0, and that U is
+bounded on (0, ∞). Then all solutions to
+
+                            dX
+                               = AX + BU
+                            dt
+                            Y = CX + DU
+are bounded on (0, ∞). Hence (A, B, C, D) is BIBO stable.
+160 Proof of BIBO stability
+
+By the Theorem 59, the general solution to the differential equation is
+                                ∫︂ t
+           X (t) = exp(tA)X0 +       exp((t − v)A)BU(v) dv
+                                            0
+
+where by hypotheses there exists K > 0 such that
+
+                      ∥B∥∥U(v)∥ ≤ K                (v > 0)
+
+and by the Lemma 116
+
+                    ∥ exp(tA)∥ ≤ Me −tδ             (t > 0),
+
+so
+                                     ∫︂ t
+      ∥X (t)∥ ≤ Me   −tδ
+                           ∥X0 ∥ +          ∥ exp((t − v)A)∥∥B∥∥U(v)∥dv
+                                      0
+161 Conclusion of proof
+
+
+                                         ∫︂ t
+                ∥X (t)∥ ≤ M∥X0 ∥ + K M          e −δ(t−v) dv
+                                          0
+                                   K M [︂ −δ(t−v) ]︂t
+                        = M∥X0 ∥ +        −e
+                                    δ                 0
+                                   K M (︁
+                        = M∥X0 ∥ +        1−e  −δt
+                                                   )︁
+                                    δ
+                                   KM
+                        ≤ M∥X0 ∥ +           (t > 0).
+                                    δ
+Hence X (t) is bounded, so the output is also bounded, since
+
+                        Y (t) = CX (t) + Du(t)
+
+is the sum of two bounded functions.
+162 Chapter 5 Feedback control
+
+
+
+Transfer functions and stability criteria: In this chapter we combine ideas
+about transfer functions with the notion of stability, so as to obtain
+criteria for stability of a system solely in terms of properties of transfer
+functions. The idea is to describe the properties of solutions of the
+differential equation, without having to solve the differential equations
+explicitly. Thus, we go from differential equations to algebra via the
+Laplace transform. When building devices from components, the main
+operations on the transfer functions are:
+• amplification λf (s)
+• addition f (s) + g(s)
+• multiplication f (s)g(s)
+163 Maxwell’s problem
+
+[See video: V21 stable polynomials]
+Definition (Stable polynomials)
+A polynomial h(x) is said to be stable if all of its zeros are in the open
+left half plane LHP = {s ∈ C : ℜs < 0}.
+
+Problem
+Given a monic polynomial, find necessary and sufficient conditions on the
+coefficients for the polynomial to be stable.
+
+Finding the zeros exactly can be very difficult. Practical modern method:
+given a monic complex polynomial p(s), there exists a complex matrix A
+such that det(sI − A) = p(s). Then one can find the eigenvalues of A
+numerically. If all the eigenvalues are comfortably in the open left half
+plane, then p(s) is stable. We now give a necessary condition for stability,
+which is not sufficient. Routh extended this to a sufficient condition.
+164 Necessary condition for stability
+
+[See video: V22 Stablepolynomialsrationals1]
+Proposition
+Suppose that h(s) is a monic real polynomial that is stable. Then all the
+coefficients of h(s) are positive.
+
+Proof. Here h(s) has real coefficients, so h(λ) = 0 if and only if
+h(λ̄) = 0. Hence the roots of h(s) are either real µj < 0; or pairs of
+conjugate complex roots λk and λ̄k with ℜλk < 0, which combine to
+give real quadratic factors (s − λk )(s − λ̄k ) = s 2 − 2sℜλk + |λk |2 . Hence
+h(s) factorizes as
+                         n            m
+               h(s) =                   (s 2 − 2sℜλk + |λk |2 ),
+                        ∏︂           ∏︂
+                           (s − µj )
+                        j=1         k=1
+
+where −µj > 0, −2ℜλk > 0 and |λk |2 > 0; hence all the coefficients that
+we obtain on multiplying out are positive.
+165 Stable rational functions S
+
+
+[See video: V23 Stable rationals]
+Definition (Stable rational functions)
+Let LHP = {s ∈ C : ℜs < 0} be the open left half plane. A rational
+function f (s) is said to be stable if
+(i) f (s) is proper, and
+(ii) all the poles of f (s) are the open left half plane.
+The space of stable rational functions is denoted S.
+
+Equivalently, f (s) = g(s)/h(s) is stable if
+(i) degree(g(s)) ≤ degree(h(s)), so f (s) is proper, and
+(ii) all the zeros of h(s) have ℜs < 0, so h(s) is stable.
+So a polynomial h(s) is stable as in 164, if and only if 1/h(s) is a stable
+rational function as in 165.)
+166 Differential rings
+
+
+
+ Proposition
+ (i) The set S of stable rational functions forms a differential ring on
+ RHP = {s ∈ C : ℜs > 0} , so
+ (R) S is a ring under pointwise multiplication and addition, so that
+ f (s), g(s) ∈ S and λ, µ ∈ C imply f (s)g(s) ∈ S and λf (s) + µg(s) ∈ S;
+ (C) multiplication is commutative f (s)g(s) = g(s)f (s);
+ (ID2) f (s)g(s) = 0 for all s ∈ RHP implies f (s) = 0 or g(s) = 0 on
+ RHP;
+ (Diff) For all f (s) ∈ S the derivative f ′ (s) also belongs to S, and
+ satisfies Leibniz’s rule (f (s)g(s))′ = f ′ (s)g(s) + f (s)g ′ (s).
+ (ii) However, S is not a field.
+167 The stable rational functions form a differential ring
+
+
+Proof. (i) (R) Multiplication and addition: Given f1 (s) = g1 (s)/h1 (s)
+and f2 (s) = g2 (s)/h2 (s) with degree(g1 (s)) ≤ degree(h1 (s)) and
+degree(g2 (s)) ≤ degree(h2 (s)) we have
+
+                    f1 (s)f2 (s) = g1 (s)g2 (s)/h1 (s)h2 (s)
+
+where degree(g1 (s)g2 (s)) ≤ degree(h1 (s)h2 (s)). Also, the zeros of
+h1 (s)h2 (s) are either zeros of h1 (s) or zeros of h2 (s), hence are in LHP.
+By partial fractions, we can write f ∈ S as
+                                    ∑︂N
+                      f (s) = q +           aj (s − λj )−nj .
+                                      j=1
+168 Partial fractions
+
+
+ where here q ∈ C is a constant since f ∈ S is proper, and all the λj have
+ ℜλj < 0. So we can take linear combinations of such f , and stay in S.
+ Also f1 (s) + f2 (s) = (g1 (s)h2 (s) + h1 (s)g2 (s))/h1 (s)h2 (s) ∈ S.
+ (C) Commutativity of multiplication follows from the corresponding
+ property for polynomials;
+ (ID2) likewise;
+ (Diff) Also, we can differentiate
+                                      N
+                                            −nj aj
+                         f ′ (s) =
+                                     ∑︂
+                                                   nj +1
+                                                         ,
+                                     j=1
+                                         (s − λ j )
+
+ and the poles are at λj in open left half plane.
+ (ii) Whereas 1/(s + 1) belongs to S, the inverse s + 1 is not proper,
+ hence not in S.
+169 Poles of the transfer function of the damped harmonic
+oscillator
+
+
+Consider 1/(s 2 + βs
+                   √+ γ) with γ > 0 and β real with poles at
+λ± = (1/2)(−β ± ∆) where ∆ = β 2 − 4γ. Then
+
+        poles      β   ∆<0      ∆=0          ∆>0
+                      λ+ = λ̄− λ+ = λ− distinct real roots
+       unstable β < 0 ℜλ± > 0 λ± > 0     0 < λ− < λ+
+       marginal β = 0 ℜλ+ = 0 λ± = 0     λ− < 0 < λ +
+        stable β > 0 ℜλ± < 0 λ± < 0      λ− < λ + < 0
+
+For a damped harmonic oscillator, we have β, γ > 0, so only the last row
+matters. The last row gives the stable cases.
+170 Stability for systems and transfer functions
+
+[See video: V25 Notions of stability] For a linear system such as
+(A, B, C, B), we have two notions of stability, one is BIBO stability,
+relating to the solutions of the associated differential equation; the other
+is stability of the transfer function as a rational function. The following
+result resolves these two interpretations, and can often determine
+whether transfer functions are stable by basic algebra.
+Theorem
+Let T be a complex rational function. Then T is stable if and only if T
+is the transfer function of some linear system (A, B, C, D) that is BIBO
+stable.
+Proof. Suppose that the system (A, B, C, D) is BIBO stable with
+transfer function T (s); prove that T (s) is stable as a rational function.
+Recall Ŷ (s) = T (s)Û(s). Then we can choose a bounded input U = 1
+such that Û(s) = 1/s. But Σ is BIBO stable, so Y is bounded,
+171 If (A,B,C,D) is BIBO stable, then T is stable
+
+so |Y (t)| ≤ M for some M and all t > 0, so
+                                ⃓∫︂ ∞                 ⃓
+                     |Ŷ (s)| = ⃓      e −st Y (t) dt ⃓
+                                ⃓                     ⃓
+                                ∫︂ 0∞
+                                                        M
+                              ≤       e −tℜs M dt ≤        .
+                                  0                     ℜs
+Hence Ŷ (s) is holomorphic on {s : ℜs > 0} and Ŷ (s) → 0 as s → ∞
+along (0, ∞). So T (s) = s Ŷ (s) must be proper rational.
+• Suppose that T has a pole at λ; we prove by contradiction that
+ℜλ < 0. If ℜλ > 0, then T (s)Û(s) = T (s)/s also has a pole at λ. But
+Ŷ (s) cannot have a pole at s = λ by Prop 74.
+• Now suppose that ℜλ = 0, so λ = iν for some real ν. The idea is to
+cause resonance, so we let U(t) = cos νt, which is bounded, and
+                                  s       1/2      1/2
+                     Û(s) =           =        +
+                               s2 + ν2   s − iν   s + iν
+172 A stable T is realised by a BIBO stable (A,B,C,D)
+
+
+
+has a pole at iν, and hence Ŷ (s) = T (s)Û(s) has a double (or triple, ...)
+pole at iν. Now consider s with ℜs > 0 and s → iν. Now T (s)Û(s)
+diverges like 1/(s − iν)2 or 1/(s − iν)3 etc.; whereas Ŷ (s) can only
+diverge like M/ℜs at worst. This contradicts the identity
+Ŷ (s) = T (s)Û(s). Hence T has no poles on the imaginary axis. Hence
+T (s) has all its poles in LHP, so T is stable.
+Conversely, suppose that T is stable. Then by Proposition 68, there
+exists a SISO (A, B, C, D) such that the transfer function is T and the
+eigenvalues λ of A are the poles of T , hence satisfy ℜλ < 0. Then by
+Theorem 149, (A, B, C, D) is BIBO stable.
+[See video: V26 (A,B,C,D) BIBO stable]
+173 Realization
+
+
+Theorem
+(i) Every monic complex polynomial is the characteristic polynomial of
+some complex matrix.
+(ii) Every proper complex rational function is the transfer function T (s)
+of some SISO system (A, B, C, D).
+(iii) Every stable complex rational function is the transfer function of
+some BIBO stable system (A, B, C, D).
+
+Realization suggests building a gadget with desired properties. In
+contemporary English, argument is often used to mean a dispute; it also
+means the summary of a story; in mathematics, the term applies to the
+angle in the polar decomposition of a complex number. The latter is
+denoted arg, or Arg, especially when the values is taken in (−π, π].
+MATLAB uses angle for argument, while engineers often use phase.
+174 Nyquist’s criterion for stability of T
+
+
+ [See video: V29 Nyquist plots in MATLAB]
+ Here we focus attention on Nyquist’s criterion for stability, which is the
+ starting point for the other application. Nyquist’s criterion tells us how
+ close a stable system is from instability through feedback. Consider the
+ feedback loop with constant feedback −1, so the transfer function is
+ T = R/(1 + R).
+ Nyquist’s criterion
+ Let R be the transfer function of a plant such that R is stable. Suppose
+ that the contour R(iω) (−∞ ≤ ω ≤ ∞) does not pass through or wind
+ around −1. Then T = R/(1 + R) is also stable, so the feedback system
+ with constant feedback −1 is also stable.
+175 Functions in Nyquist’s criterion
+
+
+
+We let c = lims→∞ R(s) where c ̸= −1 by assumption. Hence we can
+write R(s) = c + p(s)/q(s) where p(s) and q(s) are polynomials, and
+degree p(s) is less than the degree of q(s). Then
+
+                 R(s)       c + p(s)/q(s)        cq(s) + p(s)
+     T (s) =            =                   =                    .
+               1 + R(s)   c + 1 + p(s)/q(s)   (1 + c)q(s) + p(s)
+and the degree of (1 + c)q(s) + p(s) equals the degree of q(s), hence
+T (s) is proper.
+Now we check that the poles of T are all in LHP. First, note that poles
+of R give finite values of T . So the possible poles of T (s) are the zeros
+of 1 + R(s), and these are not cancelled by the zeros of R(s).
+176 Argument principle
+
+Next we consider the Nyquist contour of R. Let
+• N be the net number of times that the Nyquist contour of R winds
+around −1, clockwise [we count clockwise windings since we go up the
+imaginary axis then should go clockwise to the complete contour in RHP,
+see 166]; let
+• Z be the number of zeros of R(s) + 1 in the right half plane;
+• P be the number of poles of R(s) + 1 in the right half plane;
+Then, by the Argument Principle of complex analysis applied to a
+semicircular contour in the right half plane,
+
+                             N = Z − P.
+
+(We have N since we are counting clockwise windings, and s describes
+the semicircular contour in the negative sense). Here N = P = 0 by
+hypothesis, so Z = 0. Hence T has no poles in the right half plane,
+hence T is stable.
+177 Left and Right Semicircles
+
+                  5
+
+                  4
+
+                  3
+
+                  2
+
+                  1
+
+                  0
+
+                  -1
+
+                  -2
+
+                  -3
+
+                  -4
+
+                  -5
+                    -5                  0                   5
+
+
+
+
+          Figure: Semicircular contours in left and right half planes
+
+ The Nyquist contour goes up the imaginary axis, so we count N as the
+               number of clockwise windings round −1.
+178 Describing the stability of (A, B, C , D)
+
+
+                                          Nyquist plot, Bode plot
+
+
+           block diagram                    T (iω) = Γ(ω)e iϕ(ω)
+
+
+                                    L
+ dX /dt = AX + BU;    Y = CX + DU       T (s) = D + C(sI − A)−1 B
+
+
+            (A, B, C, D)                Poles, zeros, factors of T (s)
+
+
+                                             Stability criterion
+179 Feedback Control
+
+
+Vehicles are usually under human control.
+Example 1. An airliner starts at rest on the runway and then is
+accelerated until it achieves lift-off. To achieve this, the engines are run
+almost flat out. Once the aircraft reaches cruising altitude, the pilot will
+reduce the amount of fuel going into the engines, and fly at a steady
+speed.
+Example 2. A car on the motor way is not run flat out. Instead, the
+driver regulates the speed by means of the accelerator, so that when the
+car is going too fast, say over 70 miles per hour, the driver can reduce
+the amount of fuel going into the engine, and thus slow down the car.
+Likewise the driver can speed up the car by allowing more fuel to go into
+the engine. Regulating speed thus involves the continual attention of the
+driver; so can we automate this?
+180 Feedback controllers
+
+
+In 1788, the engineer James Watt produced various controllers
+(governors) for steam engines. In 1868, Maxwell presented a general
+theory of feedback control. The idea is to feed the output from a
+machine through a controller back into the input, and thereby regulate
+the output. Consider a plant given by a linear system G (m × k) and a
+controller represented by a linear system −K (k × m). The output from
+G is fed back into the input. The minus sign indicates that we want
+negative feedback (if the engine goes too fast, the controller will slow it
+down).
+• Controllers generally use negative feedback.
+• Usually, plants are described by their Laplace transforms.
+• Rational transfer functions and controllers are simplest to deal with.
+• Proportional-integral-differentiator controllers PID are widely used.
+181 Simple feedback loop diagram
+
+
+
+
+                           -K
+                  -Ky
+                                   y
+
+      u                                    y
+             +             G           .
+182 Stability problem
+
+Definition (Simple Feedback Loop)
+(i) Suppose that G has k inputs and m outputs. We choose K to have m
+inputs and k outputs. Then the simple feedback loop (SFL) has transfer
+function
+                          T = (I + GK )−1 G.
+(ii) Suppose that G and K are rational matrix functions. The poles of G
+are called open loop poles; the poles of T are called closed loop poles.
+
+Problem
+Given a SISO system with rational transfer function G, can we find a
+rational controller −K such that T = (I + GK )−1 G is stable rational?
+
+When G = p/q is strictly proper and stable, Nyquist’s criterion is useful,
+especially for K = 1, the constant negative feedback loop.
+183 PID controllers
+
+
+PID (proportional-integral-derivative) controllers K have the form
+
+                                         b
+                           K (s) = a +     + cs
+                                         s
+where a, b, c are constants, usually real. In 1866, Robert Whitehead, a
+naval engineer from Bolton, invented PD controllers for torpedoes, in
+which the differentiator moves an errant torpedo abruptly back on track.
+In other applications, one may wish to have a milder form of controller,
+such as a PI controller, which gently guides the system on course. When
+selecting a controller, one needs to ensure that the system is stable, and
+also adequately responsive. For instance, the steering of a car should be
+stable, so that the car does not drift off the intended route, but the
+driver should still be able to change direction of the vehicle.
+184 Example of proportional feedback
+
+Consider a SISO system with transfer function G(s) = p(s)/q(s) with
+p, q complex polynomials. The zeros of p are called open loop zeros,
+while the zeros of q are called open loop poles. Then the controller
+−K = −k with constant k > 0 gives a proportional negative feedback
+loop with
+                                               p
+                      T = (I + K G)−1 G =          .
+                                            kp + q
+Example. Let p(s) = s 2 and q(s) = bs + c where b, c > 0. Then G(s)
+is not proper; whereas
+                                         s2
+                          T (s) =
+                                  ks 2 + bs + c
+is proper and has poles in the open left half plane at
+                                    √
+                              −b ± b 2 − 4ck
+                          s=                     ,
+                                      2k
+so the controlled system with T is stable.
+185 Example of proportional-integral feedback
+
+[See video: V28 Simple feedback loop controller]
+Example
+Find a feedback controller of the form −a − b/s that stabilises the plant
+with transfer function G(s) = s/(s − 1)(s + 3).
+
+The plant has poles at s = 1, −3, hence is unstable. We consider
+               G         1               s
+                   =           = 2                   .
+            1 + GK   (1/G) + K  s + (2 − a)s − b − 3
+
+For stability we require positive coefficients, so 2 − a > 0 and
+−b − 3 > 0. In particular, we choose b = −4 and a = 0, and get
+
+                             G        s
+                                 =          ,
+                          1 + GK   (1 + s)2
+
+which is stable.
+186 Euclidean algorithm for polynomials
+
+How to find the highest common factor of two nonzero polynomials over
+C, and express the highest common factor in terms of the original
+polynomials.
+• Step 0. Given polynomials P0 and P1 with deg P0 ≥ deg P1 , find by
+long division polynomials Q1 and P2 such that P0 = Q1 P1 + P2 , where
+either P2 = 0 or deg P1 > deg P2 . In the latter case, we continue.
+• Step 1. Find by long division polynomials Q2 and P3 such that
+P1 = Q2 P2 + P3 , where either P3 = 0 or deg P2 > deg P3 . In the latter
+case, we continue.
+The degrees of the polynomials satisfy
+
+               deg P0 ≥ deg P1 > deg P2 > deg P3 > . . . ,
+
+so eventually we must have Pn+1 = 0 for some n. This identifies Pn as
+the highest common factor of P0 and P1 .
+187 Bezout’s identity for polynomials
+
+• Work back. We write
+                          Pn = Pn−2 − Qn−1 Pn−1
+and eliminate Pn−1 via
+                         Pn−1 = Pn−3 − Qn−2 Pn−2 ;
+then use
+                         Pn−2 = Pn−4 − Qn−3 Pn−3 ;
+to eliminate Pn−2 , and so on until we get back to the start, so
+                             Pn = MP0 + NP1
+where M and N are polynomials, and Pn is the highest common factor.
+MATLAB can find the greatest common divisor (highest common factor)
+g for polynomials P and Q with g = MP + NQ via the command
+>>[g,M,N]=gcd(P,Q)
+188 Highest common factor and common zeros
+
+
+Let G be a complex rational function. Then we can write G = P/Q for
+complex polynomials P and Q. We can find the highest common factor
+of P and Q by the Euclidean algorithm. Note that the Euclidean
+algorithm can be carried out in exact arithmetic–no need to find roots of
+polynomial equations.
+Lemma
+Nonzero complex polynomials P and Q have no common complex zeros
+if and only if there exist complex polynomials M and N such that
+
+                            PM + QN = 1.
+189 Zeros of the highest common factor
+
+
+Proof. If P and Q have a common zero λ, then
+
+                     P(λ)M(λ) + Q(λ)N(λ) = 0,
+
+contrary to the equality. Conversely, suppose that P and Q have no
+common zeros and carry out the Euclidean algorithm for P and Q to
+obtain complex polynomials M, N, R such that R is the highest common
+factor of P and Q and PM + QN = R. If R = r is a nonzero constant,
+then we can multiply through by r −1 to obtain PM/r + QN/r = 1, as
+required. Otherwise, R is a complex polynomial of positive degree, and
+hence by the fundamental theorem of algebra has a complex zero λ. Now
+R is a factor of both P and of Q, so s − λ is a factor of both P and Q,
+so λ is a common zero of P and Q, contrary to assumption.
+190 Matrix completion problem
+
+
+Let R be a commutative ring with 1. Given n ∈ N, and f1 , . . . , fn ,
+consider the n × n matrix
+
+                                 f1 , . . . fn
+                              [︃               ]︃
+                          F =
+                                  ∗ ... ∗
+
+where the unspecified entries are to be chosen.
+Problem
+When can we choose the unspecified entries so that F has an inverse
+with entries in R? That is, when does there exist G ∈ Mn×n (R) such
+that GF = In ?
+This is a really difficult problem, and depends upon R. We will solve the
+case n = 2 for some rings that arise from linear systems.
+191 Completing integer matrices
+
+Let R = Z, n = 2 and consider a, b ∈ Z. When can we find c, d ∈ Z
+such that
+                                     a b
+                                  [︃     ]︃
+                            F =
+                                    c d
+has an inverse matrix with entries in Z?
+(i) Clearly this is impossible when a, b = 0. The inverse
+
+                                   1       d −b
+                                        [︃       ]︃
+                          G=
+                                ad − bc −c a
+
+exists if and only if ad − bc ̸= 0. However, G might have entries in Q,
+rather than Z. We require det G, det F ∈ Z such that
+
+                       det(G) det(F ) = det I2 = 1,
+
+so we need to have det F = ±1, that is ad − bc = ±1. Equivalently, c, d
+exist if and only if a, b have highest common factor 1.
+192 Completing complex polynomial entries
+
+
+
+Proposition
+Given f (s), g(s) ∈ C[s], the following conditions are equivalent:
+(i) there exist h(s), k(s) ∈ C[s] such that
+
+                                      f (s) g(s)
+                                   [︃            ]︃
+                             F =
+                                     h(s) k(s)
+
+has an inverse G ∈ M2×2 (C[s]);
+(ii) f (s)k(s) − g(s)h(s) = ∆ for some ∆ ∈ C \ {0};
+(iii) f (s), g(s) have highest common factor 1;
+(iv) f (s) and g(s) have no common zeros.
+193 Proof of polynomial matrix completion
+
+
+
+
+(i) ⇒ (ii) This follows from det G det F = 1, where det G, det F ∈ C[s].
+(ii) ⇒ (i) The required inverse is
+
+                       1 k(s) −g(s)
+                          [︃             ]︃
+                 G=                         ∈ M2×2 (C[s]);
+                      ∆ −h(s) f (s)
+
+we are allowed to divide by the nonzero constant ∆.
+(ii) ⇔ (iii) Essentially, this is a definition.
+(iii) ⇔ (iv) This is Lemma 179.
+194 Changes of variable in the rational functions
+
+
+[See video: V31 Coprime factorization theory] Consider C(s) and let
+g(s) ∈ C(s). Then the map λ ↦→ g(s) and 1 ↦→ 1 determines a
+homomorphism of fields C(λ) → C(s) via f (λ) ↦→ f (g(s)). Consider
+a, b, c, b ∈ C such that ad − bc ̸= 0, and write
+                           as + b          dλ − b
+                      λ=          ,   s=           .
+                           cs + d          −cλ + d
+                                                             as+b
+There is an isomorphism of fields C(λ) → C(s) : f (λ) ↦→ f ( cs+d ) with
+                     dλ−b
+inverse f (s) ↦→ f ( −cλ+d ). In particular, we can take
+
+                               1           λ−1
+                        λ=        ,   s=       .
+                             s +1           −λ
+Let P(λ) ∈ C[λ]. Then P(1/(1 + s)) gives a stable rational function in s.
+195 Coprime factorisation in the stable rational functions
+
+Definition (Coprime)
+Let P(s), Q(s) ∈ S be non zero. We say that P and Q are coprime if
+there exist X (s) and Y (s) in S such that
+
+                       P(s)X (s) + Q(s)Y (s) = 1.
+
+
+Proposition
+Let G(s) be a complex rational function. Then there exist P(s) and Q(s)
+in S such that
+                                      P(s)
+                             G(s) =
+                                      Q(s)
+and P(s) and Q(s) are coprime in S, and which may be found in exact
+arithmetic.
+196 Example
+
+[See video: V32 Coprime factorization example] Let
+                                      s2 + 5
+                           G(s) =              .
+                                    s2 − s + 1
+Then with s = (1 − λ)/λ, we have
+                        (1 − λ)2 + 5λ2        6λ2 − 2λ + 1
+          G(s) =                            =              .
+                   (1 − λ)2 − λ(1 − λ) + λ2   3λ2 − 3λ + 1
+Then by the Euclidean algorithm
+     (︂ 24λ − 2 )︂(︂             )︂ (︂ 12λ − 9 )︂(︂
+                     3λ2 − 3λ + 1 −                 6λ2 − 2λ + 1 = 1
+                                                                )︂
+           7                              7
+so letting λ = 1/(1 + s), we have PX + QY = 1 with P, Q, X , Y ∈ S
+(︂ 22 − 2s )︂(︂  3        3     )︂ (︂ 3 − 9s )︂(︂ 6      2
+                                                                   = 1.
+                                                                )︂
+                     −       +1   −                   −       +1
+  7(1 + s) (1 + s)2 1 + s            7(1 + s) (1 + s)2 1 + s
+197 Proof
+
+(1) We have shown that C(s) and C(1/(s + 1)) are isomorphic. The
+issue is to show that we can choose P(s) and Q(s) coprime in S. Since
+G(s) is rational, we can write G(s) = M(s)/N(s) where complex
+polynomials M, N have no common zeros. [Otherwise, find their highest
+common factor by Euclid’s algorithm and divide through by the hcf]
+(2) We introduce a new variable λ = 1/(1 + s) and write
+                                        (︂ 1 − λ )︂
+                          M̃(λ) = λm M
+                                             λ
+                                       (︂ 1 − λ )︂
+                          Ñ(λ) = λm N
+                                             λ
+where m is the maximum of the degrees of M and N, so that M̃(λ) and
+Ñ(λ) are polynomials. Now M̃(λ) and Ñ(λ) have no common zeros. The
+problematic case is λ = 0, but we note that M̃(0) is the mth coefficient
+of M, and Ñ(0) is the mth coefficient of N; so either M̃(0) or Ñ(0) is not
+zero by the choice of m.
+198 Conclusion of proof
+
+(3) By the Lemma, there exist complex polynomials X̃ (λ) and Ỹ (λ) such
+that
+                    M̃(λ)X̃ (λ) + Ñ(λ)Ỹ (λ) = 1.
+(4) Finally we convert back to the original variable s = (1 − λ)/λ and
+introduce                 (︂ 1 )︂                  (︂ 1 )︂
+                P(s) = M̃          ; Q(s) = Ñ             ;
+                             1+s                     1+s
+                            (︂ 1 )︂              (︂ 1 )︂
+                 X (s) = X̃         ; Y (s) = Ỹ         ;
+                              1+s                   1+s
+so that P(s), Q(s), X (s), Y (s) belong to S. Indeed, they are all proper
+and the only poles are at s = −1. Furthermore, P(s) and Q(s) satisfy
+
+                        P(s)X (s) + Q(s)Y (s) = 1
+199 Coprime factorisation algorithm
+
+
+and
+                         M(s)   M̃(1/(1 + s))   P(s)
+                G(s) =        =               =      .
+                         N(s)   Ñ(1/(1 + s))   Q(s)
+We have shown that C(s) is the field generated by S.
+Algorithm
+1) Write G(s) as a quotient of polynomials in s with no common zeros.
+2) Introduce λ via s = (1 − λ)/λ and clear the denominators.
+3) Apply the Euclidean algorithm for polynomials in λ.
+4) Convert back to the original variable s by λ = 1/(1 + s).
+
+[See video: V33 Coprime factorization by MATLAB]
+200 Controlling rational systems
+
+Proposition
+Let G = P/Q be a complex rational function, as above. Then the
+rational K = X /Y is such that
+
+                   G           K          1         GK
+                       ,           ,          ,
+                1 + GK      1 + GK     1 + GK     1 + GK
+are all stable rational functions.
+Proof. We recall that PX + QY = 1, we we have
+                         G         P/Q
+                             =            = PY ;
+                      1 + GK   1 + PX /QY
+
+                         K         X /Y
+                             =            = X Q;
+                      1 + GK   1 + PX /QY
+186 Proof
+
+
+
+
+                       1          1
+                           =            = QY ;
+                    1 + GK   1 + PX /QY
+                      GK       PX /QY
+                           =            = PX .
+                    1 + GK   1 + PX /QY
+Given any rational SISO, we have produced an algorithm for finding a
+controller to stabilise it.
+201 Wellposedness of the SFL diagram
+
+
+
+                                               n
+
+
+                           -1              +
+                                       z
+
+
+
+    r        x                  y
+         +        K        +           G   .
+
+
+                          d
+202 Wellposedness of the SFL
+
+The standard form of the rational simple feedback loop linear system has
+inputs r , d and n and states x, y and z so that
+                                 x =r −z
+                               y = d + Kx
+                                z = n + Gy
+for some rational functions G and K , hence
+                         1    0 1       x   r
+                      ⎡            ⎤⎡ ⎤ ⎡ ⎤
+                      ⎣−K     1 0⎦ ⎣y ⎦ = ⎣d ⎦ .
+                         0 −G 1         z   n
+
+Definition (Well posed)
+The system is said to be well posed if the inputs (r , d, n) uniquely
+determine the states (x, y, z).
+203 Criterion for well posed SF L
+
+
+
+Lemma
+The SF L system is well posed if and only if 1 + GK ̸= 0, and in this
+case, the inputs determine the states by
+
+                  x                 1 −G −1           r
+                ⎡ ⎤              ⎡                ⎤⎡ ⎤
+                ⎣y ⎦ =     1     ⎣K      1 −K        d⎦ .
+                        1 + GK
+                                                  ⎦ ⎣
+                  z               GK G          1     n
+
+
+We abbreviate this to X = ΦU. The proof consists of calculating the
+inverse of the matrix above.
+204 Internal stability of SF L
+
+
+ [See video: V34 Simple feedback loop stabilization]
+ Definition (Internal stability)
+ The SF L system is internally stable if all the transfer functions in the
+ matrix Φ are stable, so
+                       1      G     GK      K
+                          ,      ,      ,       ,
+                    1 + GK 1 + GK 1 + GK 1 + GK
+ all belong to S.
+
+ The idea is that we want all the junctions in the diagram to be stable.
+ (Think of the x, y, z as representing the temperature of the components
+ of a tumble drier; we need to ensure that these do not overheat.)
+205 Youla’s stabilising controllers
+
+ Consider a SISO system (A, B, C, D) with transfer function G(s), and
+ consider the corresponding simple feedback loop with rational controller
+ K . We now allow G(s) to be an arbitrary rational function, and write it
+ in the form G = P/Q with coprime P, Q ∈ S as in Frame 190.
+ Theorem
+ Suppose that G = P/Q has a coprime factorisation PX + QY = 1 where
+ P, Q, X , Y ∈ S. Then K = X /Y internally stabilises SF L.
+
+ Actually Youla found all of the stabilising controllers, but we give the
+ simplest case. By previous results, there exists another SISO such that
+ K is the corresponding transfer function, so in this sense we have shown
+ that any SISO with rational transfer function can be stabilized by a
+ rational (possibly unstable) controller. In applications, one may have
+ other criteria in mind when selecting a controller. In the project topics,
+ there are discussions of how one can tune controllers so that they ensure
+ stability, but allow the system to be responsive.
+206 Proof
+
+
+Suppose that K = X /Y . Then, as in frame 200,
+
+                               X P   Y Q + XP    1
+                I + GK = 1 +       =          =    ;
+                               YQ       YQ      YQ
+     1
+so 1+GK = Y Q and hence Φ has all entries in S, since
+
+              1                 Y Q −Y P                      −Y Q
+            ⎡                ⎤ ⎡                                   ⎤
+                   −P/Q  −1
+   Φ = YQ ⎣ X /Y     1  −X /Y = X Q Y Q
+                             ⎦ ⎣                              −X Q ⎦ .
+           PX /Y Q P/Q    1      XP Y P                       YQ
+
+Hence we have found a controller that internally stabilizes the simple
+feedback loop system.
+207 Self-adjoint matrices
+
+          z = (zj )nj=1 and w = (wj )nj=1 , and introduce the inner product
+We write ∑︁
+⟨z, w⟩ = nj=1 zj w̄j . We define the adjoint of a n × n matrix A = [ajk ]
+by A′ = [ākj ], interchanging the rows and columns and taking the
+complex conjugate. If A is real then A′ = A⊤ , the transpose.
+Proposition
+Suppose that A is self-adjoint, so A = A′ .
+(i) Then the eigenvalues of A are all real, and
+(ii) there exists a unitary matrix U such that UU ′ = U ′ U = I and
+A = U∆U ′ where ∆ is a real diagonal matrix.
+
+The eigenvectors Xj of A corresponding to distinct eigenvalues are
+orthogonal, so we can choose them so that ⟨Xj , Xk ⟩ = 0 for j ̸= k and
+⟨Xj , Xj ⟩ = 1. Then U = [X1 . . . Xn ] satisfies U ′ U = I. Also U ′ AU is a
+diagonal matrix.
+208 Positive definite matrices
+
+
+An n × n complex matrix K is said to be positive definite if K = K ′ and
+⟨K z, z⟩ > 0 for all z ∈ Cn such that z ̸= 0. Beware that the product of
+positive definite matrices is generally not positive definite.
+
+Lemma (MATH220 Theorem 5.15)
+Let K be a (n × n) complex matrix such that K = K ′ . Then the
+following are equivalent:
+(i) ⟨K z, z⟩ > 0 for all z ∈ Cn such that z ̸= 0;
+(ii) the eigenvalues κj of K are all real and κj > 0 for all j;
+(iii) the leading principal minors ∆j of K are all positive, so ∆j > 0 for
+all j.
+
+For medium sized matrices, computers can handle (i).
+209 Principal minors in MATLAB
+
+
+For small matrices, (iii) is easy to check. Here is the MATLAB code for
+generating the sequence of principal minors. We need to create a simple
+computer program, a for loop.
+Type in a n × n matrix A; then create the for loop:
+>> n = 3 [for example]
+>> minors=zeros(1:n) [somewhere to put the result]
+>> for k = 1 : n [introduce a running variable k]
+>> minors=det(A(1:k,1:k)); [compute the determinant of the top left
+k × k corner]
+>> end [end the for loop]
+To recover the result,
+» minors
+210 Lyapunov’s criterion
+
+
+Theorem
+Suppose that A is a complex n × n matrix and that there exists a positive
+definite matrix K such that Q = −(A′ K + K A) is also positive definite.
+Then all the solutions of
+                              dX
+                                  = AX
+                               dt
+are bounded on (0, ∞).
+
+Note that a positive definite K satisfies K = K ′ and
+(A′ K + K A)′ ) = (K A + A′ K ), so the issue is whether Q satisfies the
+equivalent conditions (i)-(iii) of Lemma 153. One can either (i) try many
+positive definite K , and test whether Q is also positive definite, or (ii)
+choose a positive definite Q, and try to find K .
+211 Proof of Lyapunov’s criterion
+
+To show that ⟨X (t), X (t)⟩ is bounded, the trick is to consider
+V (t) = ⟨K X (t), X (t)⟩. Observe that V (t) ≥ 0 for all t ≥ 0, and use the
+differential equation to find
+                dV      ⟨︂ dX                  dX ⟩︂
+                     = K       , X (t) + K X ,
+                                      ⟩︂ ⟨︂
+                 dt     ⟨︁ dt                   dt
+                     = K AX (t), X (t) + K X (t), AX (t)
+                                        ⟩︁ ⟨︁              ⟩︁
+
+                     = K AX (t), X (t) + A′ K X (t), X (t)
+                        ⟨︁              ⟩︁ ⟨︁               ⟩︁
+
+                     = − −(A′ K + K A)X (t), X (t)
+                           ⟨︁                       ⟩︁
+
+                     = − QX (t), X (t)⟩ ≤ 0.
+                           ⟨︁
+
+Hence V (t) is decreasing on (0, ∞). Since K is positive definite, the
+eigenvalues of K are κ1 ≥ κ2 ≥ · · · ≥ κn , where κn > 0; so by W3.4
+
+         0 ≤ κn ⟨X (t), X (t)⟩ ≤ ⟨K X (t), X (t)⟩ ≤ ⟨K X (0), X (0)⟩,
+
+and so ∥X (t)∥ ≤ (⟨K X0 , X0 ⟩/κn )1/2 for all t ≥ 0.
+212 Sylvester’s equation
+
+
+
+Given n × n complex matrices A, B and C, the problem is to find a n × n
+matrix Y such that
+                          AY + Y B = −C.
+
+
+Proposition
+There are three possibilities for Sylvester’s equation: either
+(i) there exists a unique solution Y for all C;
+(ii) there exist infinitely many solutions Y for some C;
+(iii) there does not exist any solution for some C.
+213 Cases of Sylvester’s equation
+Proof.
+
+ In terms of the matrix entries, we can write A = [ajk ], B = [bjk ] and
+ C = [cjk ], and then the unknown Y = [yjk ] is given by the system
+                        n                 n
+                             ajℓ yℓk +         yjℓ bℓk = −cjk ,
+                       ∑︂                ∑︂
+
+                       ℓ=1               ℓ=1
+
+ which is a linear system of n2 equations in the n2 unknowns [yjk ]. So the
+ above possibilities arise from the general theory of linear equations.
+ Gauss–Jordan elimination reduces this system to reduced echelon form
+ and gives the solutions in cases
+ (i) if the rank of the system is n2 and the system is consistent, then there
+ exists a unique solution Y for any C, and
+ (ii) if the rank of the system is less than n2 and the system is consistent,
+ then there are infinitely many solutions Y for some C.
+ (iii) If the system is inconsistent, then there is no solution for some C.
+ For instance, case (iii) arises when A = B = 0, and C ̸= 0.
+214 Sylvester’s criterion
+
+ Remark. Fix A and B. Then the transformation
+ T : Mn×n (C) → Mn×n (C) : Y ↦→ AY + Y B is linear on the
+ n2 -dimensional vector space Mn×n (C), so either:
+ (i) T is invertible, and for all C there exists a unique Y such that
+ T (Y ) = −C; or
+ (ii), (iii) T is not invertible and hence does not have full rank, so
+ T (Y ) = −C has no solution for some C.
+ Proposition
+ Given A and B, Sylvester’s equation AY + Y B = −C has a unique
+ solution Y for all C if and only if A and −B have no common
+ eigenvalues.
+
+ Remark MATLAB regards Sylvester’s equation as AY + Y B + C = 0,
+ hence gives Y = lyap(A, B, C).
+215 An integral solution of Sylvester’s equation
+
+Proposition
+Suppose that all the eigenvalues of A and B are in the open left half
+plane {λ ∈ C : ℜλ < 0}. Then
+                          ∫︂ ∞
+                     Y =       exp(tA)C exp(tB) dt
+                               0
+
+gives the unique solution to
+
+                               AY + Y B = −C.
+
+We write the equations to be consistent ∫︁with MATLAB, which gives
+Y = lyap(A, B, C), so lyap(A, B, C) = 0 exp(tA)C exp(tB) dt.
+                                            ∞
+
+The formula in this Proposition is often not the most practical way of
+finding Y ; better to use the proof of 198.
+216 Solution of Sylvester’s equation
+
+Proof First observe that by Lemma 197 there exist M1 , M2 , δ1 , δ2 > 0
+such that ∥ exp(tA)∥ ≤ M1 e −δ1 t and ∥ exp(tB)∥ ≤ M2 e −δ2 t , so the
+integral is convergent. Also
+                  ∫︂ ∞ (︂
+    AY + Y B =            A exp(tA)C exp(tB) + exp(tA)C exp(tB)B dt
+                                                                    )︂
+
+                  ∫︂0 ∞ (︂
+                         d
+                             exp(tA)C exp(tB) dt
+                                             )︂
+               =
+                        dt
+                  [︂ 0                ]︂∞
+               = exp(tA)C exp(tB)
+                                       0
+               = −C.
+
+This shows that the map Y ↦→ AY + Y B from Mn×n (C) → Mn×n (C) is
+surjective, so by linear algebra as in frame 158, the map is also injective.
+Hence the solution is unique.
+217 A solution of Lyapunov’s equation
+
+Corollary
+Suppose that A is a n × n complex matrix such all its eigenvalues are in
+the open left half plane {λ ∈ C : ℜλ < 0}. Then for all positive definite
+P, the integral            ∫︂    ∞
+                      L=             exp(tA)P exp(tA′ )dt
+                             0
+gives a positive definite L such that
+
+                              AL + LA′ = −P.
+
+From the characteristic equation, it follows that λ is an eigenvalue of A,
+if and only if λ̄ is an eigenvalue of A′ . Hence the integrals converge, as in
+frame 201. Note that exp(tA)P exp(tA′ ) is positive definite by exercise
+A3.4. Indeed ⟨exp(tA)P exp(tA′ )Y , Y ⟩ = ⟨P exp(tA′ )Y , exp(tA′ )Y ⟩ is
+positive and continuous for t > 0 and Y ̸= 0.
+218 MATLAB solution of Lyapunov’s equation
+
+
+
+
+Hence, L is a positive definite solution of Lyapunov’s equation.
+MATLAB takes Lyapunov’s equation as
+
+                            AL + LA′ + P = 0
+
+for positive definite P, hence gives the solution as L = lyap(A, A′ , P) or
+L = lyap(A, P). Here A′ is the conjugate transpose of A; the online
+MATLAB help gives a confusing statement about A⊤ .
+where [MATLAB gives K = lyap(A, P).]
+219 Appendix: MATLAB commands for arithmetic
+
+
+>> x=3, t=2 [this assigns values x = 3 and t = 2
+>>x*t [multiply x and t]
+>>x+t [add x and t]
+>>x/t [divide x by t]
+>> xˆ(-1.5) [raises x to the power −1.5]
+>>2*((x+t)ˆ 3) [computes 2(x + t)3 ]
+>> pi [π area of disc of unit radius]
+>>j [i complex number]
+>> format rational [gives fractions instead of decimals.]
+>> format long [gives many decimal places]
+>> abs (z) [computes the modulus (absolute value) of complex z]
+>> angle (z) [computes the argument of the complex number z]
+>>exp (3); [creates e 3 ]
+>>syms x [introduces algebraic variable x]
+220 Appendix: MATLAB commands for matrices
+
+>>A=[5,7; 9,-2], B=[1,2,3;4,5,6] builds the matrices
+
+                        5 7                 1 2 3
+                      [︃       ]︃         [︃      ]︃
+                  A=              , B=
+                        9 −2                4 5 6
+
+>>inv(A) [computes the inverse matrix of A]
+>>det(A) [computes the determinant of A]
+>> trace(A) [computes the trace of A]
+>>B’ [computes the adjoint (conjugate transpose) B ′ of B]
+>> rref(A) [finds the reduced echelon form of A]
+>> rank(A) [finds the rank of A]
+>>poly(A) [finds the coefficients of the characteristic polynomial of A]
+>>eig(A) [finds the eigenvalues of square matrix A, in a list]
+>> jordan(A) [finds the Jordan canonical form of A]
+>>[W,D]=eig(A) [gives a matrix W with columns that are eigenvectors
+of A and diagonal matrix D with eigenvalues as entries]
+>> Aˆ︁2 [computes the matrix product A2 ]
+221 Appendix: MATLAB commands for matrices,
+continued
+
+>>A.ˆ︁2 [creates matrix by squaring each entry of A; note dot]
+>>A*B [calculates the matrix product AB]
+>>expm(A) [calculates the matrix exponential of A]
+>>exp(A) [calculates the matrix formed by taking the exponential of
+each entry of A]
+>> sym([1,2;3,4]) [introduces the matrix
+
+                                     5 7
+                                  [︃      ]︃
+                             A=
+                                     9 −2
+
+so that eig(A) gives the eigenvalues as surds (roots)]
+>>Q=lyap(A,P) [for positive definite P, and A, solves AQ + QA′ = −P]
+>> X=lyap(A,B,C) [solves AX + X B = −C]
+222 Appendix: MATLAB commands for algebra
+
+
+>> t=-100:0.1:100 [introduces the vector [-100, -100+0.1,. . . ,100]]
+>> y=(i*t+1).ˆ︁(-1) [creates a vector with entries y=1/(it+1); the dot
+indicates that the operations are applies to each entry at a time]
+>> plot(y) [plots the imaginary part of y versus the real part of y]
+>> [r,q]=polynomialReduce(P,Q) [polynomial long division to find
+remainder and quotient in P = Qq + r ]
+>> partfrac(1/((s + 1) ∗ (s 2 + 1)) [computes partial fractions]
+>> laplace((t2 )*exp(2*t)) [computes the Laplace transform of t 2 e 2t ]
+>> ilaplace(1/(1+s)) [computes the inverse Laplace transform]
+>> subs(G,t,s) [substitutes expression s for t in the expression G]
+>> [g,c,d]=gcd(a,b) [computes the greatest common divisor of a and b
+and expresses the gcd as ac + bd]
+223 Appendix: MATLAB commands for systems
+
+>> T=tf([1,2,3,4],[5,6,7,8]) [introduces the transfer function
+
+                               s 3 + 2s 2 + 3s + 4
+                        T =
+                              5s 3 + 6s 2 + 7s + 8
+>> pole(T) [finds the poles of rational transfer function T]
+>> zero(T) [finds the zeros of rational transfer function T]
+>> pzplot(sys) [plots poles x and zeros o of the transfer function of a
+given system]
+>> nyquist(T) [plots the Nyquist locus of a given real rational transfer
+function]
+>> bode(T) [creates the Bode pole of a real rational transfer function]
+>> sys=ss(A,B,C,B) [for specified matrices A,B,C,D, introduces the
+corresponding MIMO]
+>> tf(sys) [computes the transfer function of the specified MIMO
+system]
+224 Appendix: MATLAB commands for systems,
+concluded
+
+
+
+
+>> tf2ssm([1,2,3,4],[5,6,7,8]) [Finds (A,B,C,D) that has the
+corresponding transfer function]
+>> s=tf(’s’) [reconciles the MATLAB Laplace transform indeterminate s
+with the algebraic variable s]
+>> sys =tf(T) [converts an algebraic rational expression in s into a
+transfer function] >> S=minreal(R) [cancels zeros with poles in transfer
+function]
+225 Glossary of linear system terminology
+
+
+(A,B,C,D): standard linear system, usually with constant matrices;
+angular frequency see ω;
+amplitude: height of the crest of signal above the average level,
+regarded as a wave;
+BIBO: bounded input and bounded output stable system;
+Bode plot: plot of log gain and phase against angular frequency ω > 0;
+closed loop: system with feedback loop;
+differentiator: operation d/dt of differentiation with respect to time t;
+frequency domain: linear system in terms of ω, where s = iω;
+frequency response function: transfer function T (s) when s = iω and
+ω ∈ R;
+gain: (or amplitude gain)
+                       ∫︁ modulus of the transfer function, denoted Γ;
+integrator: operation of integration with respect to time t, from
+t = 0;
+226 Glossary of linear system terminology continued
+
+
+JCF: Jordan canonical form of square matrix (equivalently, Jordan
+normal form);
+L̂: Laplace transform of L;
+LHP: Open left half plane {s ∈ C : ℜs < 0};
+MIMO: multiple input and multiple output linear system;
+Nyquist plot: graph in complex plane of T (iω) for −∞ < ω < ∞;
+open loop: system without feedback, (also called straight-through);
+phase: (or phase shift) argument of the transfer function, denoted ϕ;
+sometimes expressed in degrees
+resolvent: of square matrix A is (sI − A)−1 ;
+RHP: open right half-plane {s ∈ C : ℜs > 0};
+s-domain: linear system in terms of Laplace transform variable s;
+SFL: simple feedback loop system;
+SISO: single input and single output linear system;
+227 Glossary of linear system terminology, concluded
+
+
+
+state-space model: linear system in terms of functions of time t, as in
+ss(A, B, C, D);
+summing junction: operator ⊕ for adding signals;
+tap: operator ⊙ for making a signal go along two routes;
+t: time, with t ∈ (0, ∞);
+transfer function: T (s) multiplies the Laplace transform of the input to
+give the Laplace transform of the output;
+unit impulse function: δ0 the unit point mass at time t = 0, also
+known as Dirac delta function.
+omega ω: angular frequency, often abbreviated to ‘frequency’, usually
+real-valued; usually expressed as radians per second.
+

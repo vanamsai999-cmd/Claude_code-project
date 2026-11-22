@@ -1,0 +1,126 @@
+                        MATH6321 Coursework 2
+
+                                        Sai Vanam
+
+
+
+Question 1
+
+(a)
+
+For the
+       plugboard, we first choose the four symbols connected by the two plugs. There
+     7
+are 4 choices. These four symbols can be partitioned into two unordered pairs in three
+ways. Hence, by the method of Lemma 2.1, there are
+                                      
+                                       7
+                                          · 3 = 105
+                                       4
+
+possible plugboard settings.
+The four rotors are chosen from six distinct rotors, and their order matters. Therefore
+there are
+                                   6 · 5 · 4 · 3 = 360
+ordered rotor selections. Each rotor has seven possible starting positions, giving 74 choices
+of initial positions. There are also three choices of reflector.
+Thus, treating the three specified reflectors as given and using the setting convention of
+the lecture notes, the total number of settings is
+
+                               105 · 360 · 74 · 3 = 272 273 400.
+
+
+(b)
+
+Yes. We should warn them that their encryption is vulnerable so that they can adopt a
+more secure system.
+
+
+
+
+                                              1
+Question 2
+Let ci be the ith encrypted pixel and let si = ai be the corresponding keystream bit. If
+mi is the original pixel, then
+                                      ci = mi ⊕ si .
+Since XORing twice with the same bit cancels it, we recover the original pixel using
+
+                                           m i = ci ⊕ s i .
+
+The keystream begins with the initial fill
+
+                          (a0 , a1 , a2 , a3 , a4 , a5 ) = (0, 1, 1, 0, 0, 1).
+
+We generate the remaining bits using an+6 = an+5 ⊕ an . For example,
+
+                                  a6 = a5 ⊕ a0 = 1 ⊕ 0 = 1,
+                                  a7 = a6 ⊕ a1 = 1 ⊕ 1 = 0,
+                                  a8 = a7 ⊕ a2 = 0 ⊕ 1 = 1,
+                                  a9 = a8 ⊕ a3 = 1 ⊕ 0 = 1.
+
+Continuing to a55 gives the following keystream, grouped into rows of eight bits to match
+the picture. Reading the encrypted pixels from left to right and top to bottom, with white
+represented by 0 and black by 1, gives:
+
+                Row    Encrypted pixels          Keystream         Decrypted pixels
+
+                  1        00010110               01100110              01110000
+                  2        11100101               11101101              00001000
+                  3        10110101               00100111              10010010
+                  4        01101000               00010111              01111111
+                  5        00000110               10010100              10010010
+                  6        01101001               01100001              00001000
+                  7        01110111               00000111              01110000
+
+The decrypted picture is therefore
+
+
+
+
+This depicts a bow and arrow, identifying Bowland College. Therefore the party is at
+Bowland College.
+
+                                                   2
+Question 3
+
+(a)
+
+The recurrence an+5 = an+2 ⊕ an has tap vector
+
+                                        b = (1, 0, 1, 0, 0).
+
+By Definition 3.15, its characteristic polynomial is
+
+                               cb (x) = x5 + x2 + 1 ∈ F2 [x].
+
+Let f (x) = x5 + x2 + 1. If f were reducible, it would have an irreducible factor of degree
+at most two. Indeed, a factorisation into at least two irreducible factors, all of degree at
+least three, would have total degree at least six.
+First,
+                           f (0) = 1,        f (1) = 1 + 1 + 1 = 1
+in F2 . Hence f has no root in F2 and therefore no linear factor.
+The only irreducible quadratic over F2 is x2 + x + 1. Polynomial division gives
+
+                            f (x) = (x2 + x + 1)(x3 + x2 ) + 1.
+
+Since the remainder is nonzero, x2 + x + 1 does not divide f . Thus f has no irreducible
+factor of degree one or two, so cb (x) = x5 + x2 + 1 is irreducible over F2 .
+
+
+(b)
+
+By part (a), Theorem 3.16 applies. For every nonzero initial fill a0 , the period is the
+smallest positive divisor j of 25 − 1 such that
+
+                                         cb (x) | xj + 1.
+
+Now 25 − 1 = 31 is prime, so j is either 1 or 31. However, j = 1 is impossible because the
+degree-five polynomial cb (x) cannot divide x + 1. Consequently,
+
+                        Per(a0 ) = 31         for every a0 ∈ F52 \ {0}.
+
+
+
+
+                                                 3
+

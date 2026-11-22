@@ -1,0 +1,745 @@
+               MATH6310
+        Metric Spaces & Topology
+              Sections 0–1 Simplified Revision Guide
+
+
+ A concise, exam-friendly guide to metric spaces, sets, functions, images,
+      equivalence relations, countability and Cantor’s theorem.
+
+  Built from the supplied lecture notes and exercises, with formal statements
+               retained but explanations made easier to follow.
+
+
+
+
+                             How to use this guide
+• Read the Key idea boxes first to understand the intuition.
+• Memorise the Definitions precisely.
+• Use the Exam focus boxes to practise standard proof structures.
+• Watch for the Common trap boxes: these are exactly where notation and logic often
+  go wrong.
+
+
+
+
+         Based on MATH6310 Part I, Sections 0 and 1 lecture notes (07.ix.2026).
+MATH6310 Metric Spaces & Topology                                                                Revision Guide
+
+
+Contents
+
+1 Section 0: What is a Metric Space?                                                                           3
+  1.1 The definition you must know . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .          3
+  1.2 The standard metric on R . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .          3
+  1.3   Euclidean metric on RN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        3
+  1.4   Discrete metric . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     3
+  1.5   Counting metric on finite subsets . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       4
+  1.6   Metrics on spaces of functions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      4
+        1.6.1   Integration metric . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      4
+        1.6.2   Supremum metric . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         4
+  1.7   Hausdorff metric: the idea . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      4
+
+2 Section 1: Sets and Basic Set Operations                                                                      6
+  2.1   Core notation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     6
+  2.2   De Morgan and distributive laws . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         6
+  2.3   Empty families . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      6
+  2.4   Cartesian products . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      6
+  2.5 Axiom of Choice . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         7
+
+3 Functions                                                                                                     7
+  3.1 What a function actually contains . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .           7
+  3.2   Important examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        7
+  3.3   Range and composition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         7
+  3.4   Restriction, extension and co-restriction . . . . . . . . . . . . . . . . . . . . . . . . . . . .       8
+
+4 Injective, Surjective and Bijective Maps                                                                     8
+  4.1   Composition facts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       8
+  4.2   Left and right inverses . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     8
+
+5 Direct and Inverse Images                                                                                     9
+  5.1   Direct image . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      9
+  5.2   Inverse image . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     9
+  5.3 What direct images preserve . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         9
+  5.4 What inverse images preserve . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .          9
+
+6 Schröder–Bernstein                                                                                           10
+
+7 Equivalence Relations and Partitions                                                                         10
+  7.1   Example: congruence modulo p . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         10
+  7.2   Partitions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   10
+  7.3   Canonical decomposition of a function . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        11
+
+
+
+                                                     1 / 15
+MATH6310 Metric Spaces & Topology                                                                Revision Guide
+
+
+8 Countability                                                                                                 11
+  8.1   Useful tests . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   11
+  8.2   Standard examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      11
+  8.3   Classic applications . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   12
+
+9 Cantor’s Theorem and Uncountability                                                                          12
+  9.1 The diagonal idea . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      12
+  9.2   Binary sequences are uncountable . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       12
+  9.3   Uncountability of R . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      12
+
+10 Optional / Non-examinable Material                                                                          13
+  10.1 Partial orders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    13
+
+11 Proof Templates You Should Be Able to Reproduce                                                             14
+
+12 Fast Memory Sheet                                                                                           14
+
+13 Mini Practice Check                                                                                         14
+
+
+
+
+                                                     2 / 15
+MATH6310 Metric Spaces & Topology                                                                      Revision Guide
+
+
+1 Section 0: What is a Metric Space?
+
+  Key idea
+  A metric space is simply a set together with a rule for measuring distance. The power of the idea is
+  that once a distance satisfies three basic axioms, we can study convergence, continuity and topology
+  in many settings using the same language.
+
+
+1.1 The definition you must know
+
+  Definition
+  A metric on a set S is a function
+                                               d : S × S → [0, ∞)
+  such that for all x, y, z ∈ S:
+
+                                    (MS1)      d(x, y) = 0 ⇐⇒ x = y,
+                                    (MS2)      d(x, y) = d(y, x),
+                                    (MS3)      d(x, z) ≤ d(x, y) + d(y, z).
+
+  The pair (S, d) is called a metric space.
+
+  Exam focus
+  When asked to prove that a proposed formula defines a metric, structure your answer as:
+   1. non-negativity / finiteness if needed;
+   2. d(x, y) = 0 ⇐⇒ x = y;
+   3. symmetry;
+   4. triangle inequality.
+  The triangle inequality is usually the only genuinely difficult part.
+
+
+1.2 The standard metric on R
+
+                                               d(x, y) = |y − x|.
+This works because absolute value satisfies:
+
+                        |a| = 0 ⇐⇒ a = 0,          | − a| = |a|,                |a + b| ≤ |a| + |b|.
+
+
+1.3 Euclidean metric on RN
+                                              v
+                                              uN
+                                              uX
+                                   d (x, y) = t (y − x )2 = ∥y − x∥ .
+                                    2                    i        i                   2
+                                                  i=1
+
+The triangle inequality comes from the Euclidean norm triangle inequality, itself linked to Cauchy–Schwarz.
+
+
+1.4 Discrete metric
+
+For any set S,                                               (
+                                                             0,       s = t,
+                                         ddisc (s, t) =
+                                                             1,       s ̸= t.
+
+                                                        3 / 15
+MATH6310 Metric Spaces & Topology                                                         Revision Guide
+
+
+  Key idea
+  The same underlying set can carry very different metrics. For example, R with the usual metric and
+  R with the discrete metric are different metric spaces.
+
+  Exam focus
+  To prove the triangle inequality for the discrete metric, the only nontrivial case is s ̸= t. Then
+  d(s, t) = 1, while d(s, u) + d(u, t) ≥ 1 because at least one of s ̸= u or u ̸= t must hold.
+
+
+1.5 Counting metric on finite subsets
+
+For a finite set S and A, B ⊆ S,
+                                             d(A, B) = #(A△B),
+where
+                                         A△B = (A \ B) ∪ (B \ A)
+is the symmetric difference.
+
+  Key idea
+
+  Interpretation: d(A, B) counts how many elements you must “toggle” to turn A into B.
+
+
+1.6 Metrics on spaces of functions
+
+Let I = [0, 1] and f, g ∈ C(I; R).
+
+
+Integration metric
+                                                      Z 1
+                                        d1 (f, g) =         |g(s) − f (s)| ds.
+                                                       0
+This measures the total accumulated difference between two functions.
+
+
+Supremum metric
+
+                                        dsup (f, g) = sup |g(s) − f (s)|.
+                                                           s∈I
+
+This measures the largest pointwise difference between two functions.
+
+  Common trap
+  For the integration metric, proving
+                                            Z 1
+                                                  |h| = 0 =⇒ h = 0
+                                             0
+
+  uses continuity. For arbitrary functions this implication can fail in pointwise form.
+
+
+1.7 Hausdorff metric: the idea
+
+For suitable nonempty, bounded, closed sets K, J ⊆ R2 , the Hausdorff distance is the smallest amount δ
+by which each set must be “fattened” so that each contains the other.
+
+
+
+
+                                                       4 / 15
+MATH6310 Metric Spaces & Topology                                                  Revision Guide
+
+
+ Key idea
+ The Hausdorff metric measures distance between sets themselves, not between individual points.
+
+
+
+
+                                             5 / 15
+MATH6310 Metric Spaces & Topology                                                     Revision Guide
+
+
+2 Section 1: Sets and Basic Set Operations
+
+2.1 Core notation
+
+    Notation      Meaning
+    A⊆S           every element of A lies in S
+    A⊊S           A ⊆ S and A ̸= S
+    A\B           elements in A but not in B
+    P(S)          the power set: all subsets of S
+    A△B           symmetric difference
+
+For a family C of subsets of S,       [
+                                          C = {s ∈ S : ∃C ∈ C, s ∈ C},
+                                      \
+                                          C = {s ∈ S : ∀C ∈ C, s ∈ C}.
+
+
+2.2 De Morgan and distributive laws
+                                               [        [
+                                          A∩        C =         (A ∩ C),
+                                                          C∈C
+                                               [        \
+                                          A\        C =         (A \ C),
+                                                          C∈C
+                                               \        [
+                                          A\        C =         (A \ C).
+                                                          C∈C
+
+
+  Exam focus
+  To prove equality of two sets, the standard method is:
+
+                                  X=Y        ⇐⇒      ∀s, s ∈ X ⇐⇒ s ∈ Y.
+
+  In practice, prove both inclusions X ⊆ Y and Y ⊆ X.
+
+
+2.3 Empty families
+
+If C = ∅, then                             [               \
+                                               C = ∅,           C = S.
+The second identity depends on knowing the ambient universe S.
+
+
+2.4 Cartesian products
+
+                                       S × T = {(s, t) : s ∈ S, t ∈ T }.
+More generally,                                      Y
+                                                          Sλ
+                                                    λ∈Λ
+
+is the set of indexed families (sλ )λ∈Λ with sλ ∈ Sλ .
+
+  Common trap
+
+  If one factor is empty, the whole product is empty. If the index set Λ itself is empty, the empty
+  product contains one element by convention.
+
+
+                                                     6 / 15
+MATH6310 Metric Spaces & Topology                                                        Revision Guide
+
+
+2.5 Axiom of Choice
+
+  Theorem / Proposition
+
+  If (Sλ )λ∈Λ is a family of nonempty sets, then
+                                                  Y
+                                                       Sλ ̸= ∅.
+                                                 λ∈Λ
+
+  Equivalently, for a family of nonempty subsets Cλ ⊆ S, there exists a choice function f : Λ → S such
+  that f (λ) ∈ Cλ for every λ.
+
+  Key idea
+  Think of the Axiom of Choice as saying: from every nonempty box in an arbitrary family of boxes,
+  you may choose one object simultaneously.
+
+
+
+3 Functions
+
+3.1 What a function actually contains
+
+A function f : S → T has three ingredients:
+1. a domain S;
+2. a codomain T ;
+3. a rule assigning exactly one value f (s) ∈ T to every s ∈ S.
+
+  Common trap
+  A function is not determined only by its formula. Changing the domain or codomain can change
+  whether it is injective, surjective or bijective.
+
+
+3.2 Important examples
+
+• Identity: idS (s) = s.
+• Inclusion: ιA→S : A → S, a 7→ a.
+• Indicator:                                             (
+                                                             1,   s ∈ A,
+                                              1A (s) =
+                                                             0,   s∈/ A.
+
+• Constant function: f (s) = t0 for all s.
+• Coordinate projection from a product: (sj )j∈J 7→ sk .
+
+
+3.3 Range and composition
+
+                                       Ran f = {f (s) : s ∈ S} ⊆ T.
+If f : S → T and g : T → U , then
+                                             (g ◦ f )(s) = g(f (s)).
+
+
+
+
+                                                      7 / 15
+MATH6310 Metric Spaces & Topology                                                  Revision Guide
+
+
+  Common trap
+  Composition is generally not commutative: f ◦ g and g ◦ f may be different, or one of them may
+  not even be defined.
+
+
+3.4 Restriction, extension and co-restriction
+
+If A ⊆ S,
+                                          f |A : A → T,         a 7→ f (a)
+is the restriction of f .
+If B ⊆ T and Ran f ⊆ B, then viewing f as a map S → B is a co-restriction.
+
+
+4 Injective, Surjective and Bijective Maps
+
+  Definition
+  For f : S → T :
+  • Injective: f (s1 ) = f (s2 ) ⇒ s1 = s2 .
+  • Surjective: Ran f = T .
+  • Bijective: both injective and surjective.
+
+  Key idea
+  Injection: no two inputs collide.
+  Surjection: no target is missed.
+  Bijection: perfect one-to-one matching.
+
+
+4.1 Composition facts
+
+For f : S → T and g : T → U :
+• if f and g are injective, then g ◦ f is injective;
+• if g ◦ f is injective, then f is injective;
+• if f and g are surjective, then g ◦ f is surjective;
+• if g ◦ f is surjective, then g is surjective;
+• if f and g are bijective, then g ◦ f is bijective.
+
+
+4.2 Left and right inverses
+
+  Theorem / Proposition
+
+  Ignoring the special empty-set edge case noted in the lectures:
+
+                                f injective ⇐⇒ ∃g : T → S with g ◦ f = idS ,
+                               f surjective ⇐⇒ ∃h : T → S with f ◦ h = idT ,
+                                f bijective ⇐⇒ f has a two-sided inverse.
+
+
+
+
+                                                       8 / 15
+MATH6310 Metric Spaces & Topology                                                        Revision Guide
+
+
+  Exam focus
+  A standard way to prove injectivity is to start with
+
+                                                    f (x) = f (y)
+
+  and algebraically deduce x = y. To prove surjectivity, start with an arbitrary target t ∈ T and solve
+  f (s) = t for an input s ∈ S.
+
+
+
+5 Direct and Inverse Images
+
+5.1 Direct image
+
+For A ⊆ S,
+                                         f (A) = {f (s) : s ∈ A} ⊆ T.
+
+
+5.2 Inverse image
+
+For C ⊆ T ,
+                                    f −1 (C) = {s ∈ S : f (s) ∈ C} ⊆ S.
+
+  Common trap
+
+  The notation f −1 (C) for an inverse image does not mean that f is invertible. Inverse images are
+  defined for every function.
+
+
+5.3 What direct images preserve
+                                                   [        [
+                                               f        A =         f (A).
+                                                              A∈A
+
+But in general only                                \        \
+                                               f        A ⊆         f (A).
+                                                              A∈A
+
+Equality can fail when f is not injective.
+
+
+5.4 What inverse images preserve
+
+Inverse images behave much more cleanly:
+                                                   [ 
+                                          f −1                      f −1 (C),
+                                                              [
+                                                        C =
+                                                              C∈C
+                                                   \ 
+                                          f −1                      f −1 (C),
+                                                              \
+                                                        C =
+                                                              C∈C
+                                         −1                 −1
+                                     f        (D \ C) = f        (D) \ f −1 (C).
+
+  Key idea
+  Memory rule: inverse images preserve the usual set operations exactly. Direct images preserve unions,
+  but intersections can become larger after mapping.
+
+
+
+
+                                                         9 / 15
+MATH6310 Metric Spaces & Topology                                                         Revision Guide
+
+
+6 Schröder–Bernstein
+
+  Theorem / Proposition
+
+  If there is an injection S → T and an injection T → S, then there is a bijection S → T .
+
+  Exam focus
+  The lecture notes explicitly state that you must know the theorem, but the proof is not exam-
+  inable.
+
+
+
+7 Equivalence Relations and Partitions
+
+  Definition
+  A relation ∼ on a nonempty set S is an equivalence relation if it is:
+  • reflexive: s ∼ s;
+  • symmetric: s ∼ t ⇒ t ∼ s;
+  • transitive: r ∼ s and s ∼ t ⇒ r ∼ t.
+
+For a ∈ S, the equivalence class is
+                                            [a] = {s ∈ S : s ∼ a}.
+The quotient set is
+                                            S/ ∼= {[a] : a ∈ S}.
+
+
+7.1 Example: congruence modulo p
+
+For prime p,
+                                          n ≡p m ⇐⇒ p | (m − n).
+The equivalence classes are the residue classes
+                                            [0]p , [1]p , . . . , [p − 1]p ,
+and these split Z into disjoint pieces.
+
+
+7.2 Partitions
+
+  Definition
+  A collection C of subsets of S is a partition if:
+            C = S;
+        S
+   1.
+   2. every C ∈ C is nonempty;
+   3. distinct members of C are disjoint.
+
+  Theorem / Proposition
+
+  Equivalence relations and partitions are two ways of describing the same structure:
+  • equivalence classes of an equivalence relation form a partition;
+  • a partition defines an equivalence relation by saying two elements are related exactly when they lie
+    in the same block.
+
+
+
+                                                      10 / 15
+MATH6310 Metric Spaces & Topology                                                          Revision Guide
+
+
+  Key idea
+  An equivalence relation tells you when two elements count as the same. A partition shows the resulting
+  groups of “same” elements.
+
+
+7.3 Canonical decomposition of a function
+
+Given f : S → T , define
+                                       s1 ∼f s2 ⇐⇒ f (s1 ) = f (s2 ).
+Then S/ ∼f corresponds bijectively to Ran f . Therefore every function decomposes canonically as
+                                                      ∼
+                                                      =
+                                        S ↠ S/ ∼f −
+                                                  → Ran f ,→ T.
+
+  Key idea
+  Every function can be viewed as: first collapse together inputs with the same output, then make a
+  perfect bijection with the range, then include the range inside the codomain.
+
+
+
+8 Countability
+
+  Definition
+  A set S is countable if there exists an injection
+
+                                                f : S → N.
+
+  Thus finite sets are countable, and an infinite countable set can be listed in a sequence.
+
+
+8.1 Useful tests
+
+If S ̸= ∅, then S is countable iff there is a surjection N → S.
+If T is countable, then S is countable whenever either:
+• there is an injection S → T , or
+• there is a surjection T → S.
+
+
+8.2 Standard examples
+
+• N is countable.
+• Z is countable.
+• NN is countable for each fixed finite N .
+• finite Cartesian products of countable sets are countable.
+• Q is countable because Z × N → Q, (n, m) 7→ n/m, is surjective.
+• a countable union of countable sets is countable.
+
+  Exam focus
+  For countability questions, try one of three standard moves:
+   1. build an injection into a known countable set;
+
+
+                                                  11 / 15
+MATH6310 Metric Spaces & Topology                                                         Revision Guide
+
+
+
+   2. build a surjection from a known countable set;
+   3. write the target as a countable union of countable pieces.
+
+
+8.3 Classic applications
+
+The lecture notes use the countable-union principle to show that:
+• polynomials with rational coefficients form a countable set;
+• the set of all finite subsets of N is countable.
+
+
+9 Cantor’s Theorem and Uncountability
+
+  Theorem / Proposition
+
+  For every set S, there is no surjection
+                                                  S → P(S).
+  Equivalently, the power set P(S) is strictly “larger” than S in cardinality.
+
+
+9.1 The diagonal idea
+
+Assume for contradiction that ϕ : S → P(S) is surjective. Define
+
+                                            D = {s ∈ S : s ∈
+                                                           / ϕ(s)}.
+
+Since D ⊆ S, surjectivity says D = ϕ(x) for some x ∈ S.
+Now ask whether x ∈ D:
+• If x ∈ D, then by definition x ∈
+                                 / ϕ(x) = D.
+• If x ∈
+       / D, then by definition x ∈ ϕ(x) = D.
+Either way gives a contradiction.
+
+  Key idea
+  The diagonal construction creates an object deliberately designed to differ from the sth listed object
+  at position s. Therefore no proposed list can contain everything.
+
+
+9.2 Binary sequences are uncountable
+
+The notes identify
+                                               P(N) ∼
+                                                    = {0, 1}N .
+By Cantor’s theorem, these sets are uncountable.
+
+
+9.3 Uncountability of R
+
+One exercise uses the injection
+                                                                      ∞
+                                                                      X an
+                                    ψ : {0, 1}N → R,       (an ) 7→
+                                                                      n=1
+                                                                            10n
+
+to deduce that R is uncountable.
+
+                                                     12 / 15
+MATH6310 Metric Spaces & Topology                                                 Revision Guide
+
+
+10 Optional / Non-examinable Material
+
+10.1 Partial orders
+
+A partial order ≤ satisfies reflexivity, antisymmetry and transitivity.
+Important vocabulary:
+• upper bound;
+• maximal element;
+• chain;
+• least upper bound.
+
+  Exam focus
+  The lecture notes label partial orders and Zorn’s Lemma as self-study / non-examinable. Learn
+  the vocabulary if useful, but prioritise the examinable material first.
+
+
+
+
+                                                  13 / 15
+MATH6310 Metric Spaces & Topology                                                          Revision Guide
+
+
+11 Proof Templates You Should Be Able to Reproduce
+
+1. Set equality: take an arbitrary element and prove membership both ways.
+2. Injectivity: assume f (x) = f (y) and derive x = y.
+3. Surjectivity: let t be arbitrary in the codomain and find s with f (s) = t.
+4. Equivalence relation: verify reflexive, symmetric, transitive separately.
+5. Metric: verify zero-distance criterion, symmetry and triangle inequality.
+6. Countability: construct an injection/surjection or decompose into countable pieces.
+7. Cantor diagonal argument: assume a complete listing exists, construct an object that differs from
+   every listed object on its diagonal position.
+
+
+12 Fast Memory Sheet
+
+                               distance function obeying identity of indiscernibles, symmetry, triangle
+ Metric                        inequality
+                               different inputs have different outputs
+ Injection
+                               every codomain element is hit
+ Surjection
+                               injection + surjection
+ Bijection
+                               push a subset of the domain forward
+ Direct image
+                               pull a subset of the codomain back
+ Inverse image
+                               reflexive + symmetric + transitive
+ Equivalence relation
+                               nonempty, pairwise disjoint blocks covering the whole set
+ Partition
+                               injects into N
+ Countable
+                               no surjection S → P(S)
+ Cantor
+                               injections both ways imply a bijection
+ Schröder–Bernstein
+
+
+13 Mini Practice Check
+
+Try these without looking back.
+1. State the three metric axioms.
+2. Prove the discrete metric satisfies the triangle inequality.
+3. Explain why the codomain matters when deciding surjectivity.
+4. State the definitions of injective, surjective and bijective.
+5. Why does f −1 (C) make sense even if f has no inverse function?
+
+                                                   14 / 15
+MATH6310 Metric Spaces & Topology                                                Revision Guide
+
+
+ 6. Give the three conditions for an equivalence relation.
+ 7. Explain why equivalence classes form a partition.
+ 8. Give one proof that Q is countable.
+ 9. State Cantor’s theorem and explain the diagonal set D.
+10. Which parts of the supplied Section 1 notes are explicitly non-examinable?
+
+    If you can state every definition precisely and reproduce the proof templates
+   above, you have the core language needed for the next parts of Metric Spaces &
+                                       Topology.
+
+
+
+
+                                                  15 / 15
+

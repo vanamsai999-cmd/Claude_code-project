@@ -1,0 +1,776 @@
+MATH6342 | Slides 41–59 explained                                                   Sai Vanam
+
+
+
+  Linear Systems
+  Slides 41–59 explained
+  Easy explanations, step-by-step proofs and exam methods
+  Prepared for Sai Vanam | MATH6342
+
+  What these slides are trying to teach you
+  These slides explain how matrices stretch vectors, how eigenvectors simplify a matrix,
+  and how this lets us solve differential equations such as X ′ (t) = AX(t).
+
+             Norms −→ diagonalisation −→ etA −→ solutions and bounds.
+
+  The numbering follows the numbers printed on the lecture slides: slides 41–59 are PDF
+  pages 43–61 in the supplied beamer deck. This explanation follows that deck and the
+  corresponding written notes by Gordon Blower. Worked solutions are explanatory model
+  answers, rather than official mark schemes.
+
+  Method | How to use this explanation
+  Read the meaning of each result before learning its formula. For a proof question, practise
+  the displayed argument without looking. For a calculation, follow the numbered method
+  and check the final answer. Attempt the purple questions before reading the green model
+  answers.
+
+  Notation
+  I is the identity matrix; v is a column vector; λ is an eigenvalue; ∆ is diagonal; S has
+  eigenvectors as its columns. Vector length is Euclidean, and matrix norm is the induced
+  operator norm. The number ℜλ is the real part of λ. The matrix exponential is etA , also
+  written exp(tA).
+
+
+
+
+                                              1
+MATH6342 | Slides 41–59 explained                        Sai Vanam
+
+
+Contents
+1 Slides 41–42: estimating the norm of a matrix                 3
+
+2 Slide 43: the three matrix-norm rules                         4
+
+3 Slide 44: rank                                                5
+
+4 Slides 45–46: matrix polynomials and eigenvalues              6
+
+5 Slides 47–50: diagonalisation                                 6
+
+6 Slide 51: Cayley–Hamilton                                     8
+
+7 Slides 52–55: the matrix exponential                          8
+
+8 Slide 56: calculating the exponential                        10
+
+9 Slides 57–58: solving a homogeneous system                   11
+
+10 Slides 57–59: growth bounds and long-time behaviour         12
+
+11 Final exam-style question and complete model answer         13
+
+
+
+
+                                      2
+MATH6342 | Slides 41–59 explained                                                        Sai Vanam
+
+
+1       Slides 41–42: estimating the norm of a matrix
+    Meaning: the largest possible stretching factor
+
+    For v = (v1 , . . . , vn )⊤ , its Euclidean length is
+                                                  q
+                                          ∥v∥ =       |v1 |2 + · · · + |vn |2 .
+
+    The matrix norm in the lecture notes is
+
+                                             ∥A∥ = sup ∥Av∥.
+                                                         ∥v∥≤1
+
+
+    This asks: among all input vectors of length at most one, how large can the output
+    vector become? Equivalently, ∥A∥ is the smallest constant M such that ∥Av∥ ≤ M ∥v∥
+    for every v.
+    If ∥A∥ = 3, applying A cannot make a vector more than three times as long, and three is
+    the largest stretching factor. The definition concerns vector lengths; it is not obtained by
+    taking the largest matrix entry in general.
+
+    The exact answer for a diagonal matrix
+    If ∆ = diag(λ1 , . . . , λn ), then
+                                                ∥∆∥ = max |λj |.
+                                                               j
+
+    Each coordinate is scaled separately, so the largest possible stretching comes from the
+    diagonal entry with largest modulus. For example,
+
+                               −2 0 0
+                                           
+
+                          ∆ =  0 5 0
+                              
+                                                 =⇒           ∥∆∥ = max{2, 5, 1} = 5.
+                                0 0 i
+
+    The minus sign in −2 does not give a negative length; the relevant quantity is its absolute
+    value.
+
+    Method | Prove the diagonal norm formula in an exam
+    Put m = maxj |λj |. For every v,
+                                                  n
+                                     ∥∆v∥2 =            |λj vj |2
+                                                  X
+
+                                                  j=1
+                                                        n
+                                             ≤ m2             |vj |2 = m2 ∥v∥2 .
+                                                        X
+
+                                                        j=1
+
+
+    Taking square roots gives ∥∆v∥ ≤ m∥v∥, so ∥∆∥ ≤ m.
+    To prove equality, choose k such that |λk | = m and take the unit vector ek . Then
+    ∥∆ek ∥ = |λk | = m, so ∥∆∥ ≥ m. Combining the inequalities proves the formula.
+
+
+
+
+                                                           3
+MATH6342 | Slides 41–59 explained                                                              Sai Vanam
+
+
+    Exam tips and common mistakes
+    An upper bound alone does not prove the exact norm. To prove equality, also exhibit a
+    unit vector that attains the bound. For a diagonal matrix, use the coordinate direction
+    belonging to the largest absolute diagonal entry.
+
+    A useful upper bound for a general matrix
+    If A = [A1 · · · An ] has columns Aj , then
+                                             1/2         1/2
+
+                               ∥A∥ ≤  ∥Aj ∥2  =  |aij |2  .
+                                      X             X
+
+                                              j                       i,j
+
+
+    In practical terms: square the absolute values of all entries, add them, and take the
+    square root. This
+                   # gives an upper bound, not usually the exact operator norm.
+              1 2
+             "
+    For A =         ,
+              3 4
+                                     √                     √
+                              ∥A∥ ≤ 12 + 22 + 32 + 42 = 30.
+    Do not replace this inequality by equality without additional reasoning.
+
+    Method | Slide 42: why the column bound works
+    The matrix-vector product can be written Av =                     j vj Aj . Therefore
+                                                                  P
+
+
+                                                   (triangle inequality)
+                           X
+                  ∥Av∥ ≤        |vj |∥Aj ∥
+                           j
+                                  1/2     1/2
+                                 2         2
+                                                                            (Cauchy–Schwarz)
+                           X             X
+                        ≤  |vj |   ∥Aj ∥ 
+                               j                      j
+                                                 1/2
+
+                        = ∥v∥             ∥Aj ∥2 
+                                       X
+                                                          .
+                                       j
+
+
+    Take the supremum over ∥v∥ ≤ 1. This proves the required matrix-norm bound.
+
+
+2      Slide 43: the three matrix-norm rules
+    Learn these three properties
+
+                                            ∥A + B∥ ≤ ∥A∥ + ∥B∥,
+                                               ∥αA∥ = |α|∥A∥,
+                                              ∥AB∥ ≤ ∥A∥∥B∥.
+    The last property is called submultiplicativity. Applying B and then A cannot stretch a
+    vector more than the product of their largest stretching factors.
+
+
+
+
+                                                              4
+MATH6342 | Slides 41–59 explained                                                      Sai Vanam
+
+
+    Method | The short proof of submultiplicativity
+    For every vector v,
+                               ∥ABv∥ ≤ ∥A∥∥Bv∥ ≤ ∥A∥∥B∥∥v∥.
+    Take the supremum over ∥v∥ ≤ 1 to obtain ∥AB∥ ≤ ∥A∥∥B∥. Repeating the argument
+    gives
+                                      ∥Ak ∥ ≤ ∥A∥k .
+    This later allows a matrix exponential series to be compared with an ordinary scalar
+    exponential series.
+
+    How to justify the other two properties
+    For the sum, use ∥(A + B)v∥ ≤ ∥Av∥ + ∥Bv∥ ≤ (∥A∥ + ∥B∥)∥v∥ and take the supremum.
+    For scalar multiplication, ∥(αA)v∥ = |α|∥Av∥, so the same factor comes outside the
+    supremum.
+
+    Try it first | Exam-style norm estimate
+
+    Suppose ∥A∥ ≤ 2 and ∥B∥ ≤ 3. Give a justified bound for ∥A2 + AB∥.
+
+    Model answer
+
+
+                                 ∥A2 + AB∥ ≤ ∥A2 ∥ + ∥AB∥
+                                           ≤ ∥A∥2 + ∥A∥∥B∥
+                                           ≤ 4 + 6 = 10.
+
+    The first line uses the triangle inequality; the second uses submultiplicativity. The result
+    is an upper bound, not necessarily the exact norm.
+
+
+3      Slide 44: rank
+    Meaning: how many independent directions?
+    The rank of a matrix can be described in four equivalent ways:
+    1. Dimension of its column space.
+    2. Number of linearly independent columns.
+    3. Number of linearly independent rows.
+    4. Number
+            " of #pivots, or nonzero rows in echelon form.
+             1 2
+    For A =        , the second column is twice the first, so the rank is 1. For a square n × n
+             2 4
+    matrix,
+                               rank(A) = n ⇐⇒ A is invertible.
+    This appears here because later we put eigenvectors into the columns of S. To use S −1 ,
+    those columns must be independent.
+
+
+
+
+                                                 5
+MATH6342 | Slides 41–59 explained                                                   Sai Vanam
+
+
+4      Slides 45–46: matrix polynomials and eigenvalues
+    Substitute a matrix into a polynomial carefully
+    If g(z) = z 2 + 3z + 2, then
+                                       g(A) = A2 + 3A + 2I.
+    The constant becomes a multiple of I. Also A2 means matrix multiplication, not squaring
+    each entry. By convention, A0 = I.
+    If Av = λv, then Ak v = λk v by induction. Hence
+
+                                           g(A)v = g(λ)v.
+
+    A matrix polynomial acts on an eigenvector by multiplying it by the corresponding scalar
+    polynomial value.
+
+    Method | Slide 46: why eigenvalues solve the characteristic equation
+    The eigenvalue equation is Av = λv with v ̸= 0. Rearranging gives (λI − A)v = 0. A
+    nonzero solution exists exactly when λI − A is singular. Therefore
+
+                            λ is an eigenvalue ⇐⇒ det(λI − A) = 0.
+
+    The characteristic polynomial is χA (s) = det(sI − A). Over C it has n roots counted
+    with algebraic multiplicity, although there may be fewer than n distinct roots.
+
+    Method | Find eigenvalues and eigenvectors in an exam
+    1. Form sI − A.
+    2. Calculate and factor its determinant.
+    3. The roots are the eigenvalues.
+    4. For each eigenvalue, solve (A − λI)v = 0 and choose a nonzero solution.
+    For a 2 × 2 matrix, the useful shortcut is
+
+                                    χA (s) = s2 − (tr A)s + det A.
+
+
+
+5      Slides 47–50: diagonalisation
+    The main calculation tool
+    A matrix is diagonalisable if
+                                             A = S∆S −1
+    for an invertible S and diagonal ∆. Choose eigenvectors vj as the columns of S, and put
+    the corresponding eigenvalues into ∆ in the same order:
+                           S = [v1 · · · vn ],    ∆ = diag(λ1 , . . . , λn ).
+    The condition is
+                  A is diagonalisable ⇐⇒ A has n independent eigenvectors.
+
+
+                                                  6
+MATH6342 | Slides 41–59 explained                                                   Sai Vanam
+
+
+
+  Having n distinct eigenvalues guarantees this, but is not necessary: I is already diagonal
+  even though its eigenvalue is repeated.
+
+  What the coordinate change means
+  S −1 changes into coordinates in an eigenvector basis. The diagonal matrix then acts
+  separately on those coordinates. Finally, S changes back to the original coordinates. In
+  eigenvector coordinates, the different directions do not mix.
+  Because Avj = λj vj , we have AS = S∆. Multiplying by S −1 gives A = S∆S −1 .
+  Independence of the columns is what makes that inverse exist.
+
+  Worked example | A diagonalisation used throughout the remaining explana-
+  tion
+  Take
+                                          −1 1
+                                            "        #
+                                       A=       .
+                                           0 −2
+  Its characteristic polynomial is (s + 1)(s + 2), so the eigenvalues are −1, −2.
+  For λ = −1, solve (A + I)v = 0: the second coordinate is zero, so choose v1 = (1, 0)⊤ . For
+  λ = −2, solve (A + 2I)v = 0: the coordinates satisfy x + y = 0, so choose v2 = (−1, 1)⊤ .
+  Thus
+                            1 −1               1 1              −1 0
+                          "       #           "     #         "        #
+                      S=            , S =−1
+                                                      , ∆=               .
+                            0 1                0 1               0 −2
+  The columns of S are independent, and A = S∆S −1 .
+
+  Method | Slides 48–50: evaluate a polynomial using diagonalisation
+  First,
+                            A2 = (S∆S −1 )(S∆S −1 ) = S∆2 S −1 .
+  The middle S −1 S cancels. Repeating gives Ak = S∆k S −1 . Substituting into a polynomial
+  gives
+                             g(A) = S diag(g(λ1 ), . . . , g(λn ))S −1 .
+  You evaluate the scalar function on the eigenvalues and then transform back. To prove
+  this in an exam, show the cancellation for powers and then substitute those powers into
+  the polynomial.
+
+  Exam tips and common mistakes
+  Eigenvectors are columns, not rows. Their order must match the eigenvalue order
+  in ∆. Do not assume a repeated eigenvalue automatically gives enough independent
+  eigenvectors.
+
+
+
+
+                                                7
+MATH6342 | Slides 41–59 explained                                                   Sai Vanam
+
+
+6      Slide 51: Cayley–Hamilton
+    A matrix satisfies its own characteristic polynomial
+    The theorem states
+                                              χA (A) = 0.
+    For our running example, χA (s) = s2 + 3s + 2, so
+
+                             A2 + 3A + 2I = 0,             A2 = −3A − 2I.
+
+    This reduces high powers to combinations of A and I. Slide 51 states the theorem without
+    proving it.
+
+    Try it first | Exam-style calculation: simplify a high power
+
+    Suppose χA (s) = s2 + 3s + 2. Use Cayley–Hamilton to express A3 as a combination of A
+    and I.
+
+    Model answer
+    Cayley–Hamilton gives A2 = −3A − 2I. Multiplying by A,
+
+                      A3 = −3A2 − 2A = −3(−3A − 2I) − 2A = 7A + 6I .
+
+    The constant term is 6I, not an unqualified scalar added to a matrix.
+
+
+7      Slides 52–55: the matrix exponential
+    The definition
+    For a scalar, eta = 1 + ta + t2 a2 /2! + · · · . For a matrix, define
+
+                                                     t2 A2 t3 A3
+                                 etA = I + tA +           +      + ··· .
+                                                       2!    3!
+
+    The series uses matrix powers. It is not the matrix obtained by exponentiating each
+    entry. The slides state the properties for complex parameters z, w; real time t is the
+    important case for differential equations.
+
+    Method | Slide 53: prove convergence
+    By the norm rule from slide 43,
+                                           tk Ak   |t|k ∥A∥k
+                                                 ≤           .
+                                             k!         k!
+    The sum of the scalar bounds is the convergent exponential series
+                                        ∞
+                                          |t|k ∥A∥k
+                                                          = e|t|∥A∥ .
+                                        X
+
+                                        k=0     k!
+
+
+                                                      8
+MATH6342 | Slides 41–59 explained                                                      Sai Vanam
+
+
+
+  Therefore the matrix series converges absolutely and
+
+                                         ∥etA ∥ ≤ e|t|∥A∥ .
+
+  In an exam, the essential comparison is ∥Ak ∥ ≤ ∥A∥k . This proves convergence for every
+  finite t; it does not by itself prove that etA stays bounded as t → ∞.
+
+  Method | Slide 54: the multiplication rule
+  For the same matrix A,
+                                       ezA ewA = e(z+w)A .
+  Multiply the absolutely convergent series and collect the coefficient of An . That coefficient
+  is                    n
+                            z j wn−j    1 X n
+                                                n j n−j (z + w)n
+                                                 !
+                                      =                     =
+                       X
+                                                   z w                   .
+                       j=0 j!(n − j)!   n! j=0 j                   n!
+
+  These are exactly the coefficients in the series for e(z+w)A . Absolute convergence justifies
+  regrouping the terms.
+
+  Exam tips and common mistakes
+
+  For different matrices, eA+B = eA eB is guaranteed if AB = BA, but not in general. The
+  slide’s multiplication rule uses multiples of the same A, which commute.
+
+  Slide 55: the inverse
+  Set w = −z in the multiplication rule:
+
+                                      ezA e−zA = e0A = I.
+
+  The reverse product is also I, so
+
+                                        (ezA )−1 = e−zA .
+
+  Every matrix exponential is invertible, even when A is singular. For example A = 0 has
+  exponential I.
+
+  Method | Slide 55: what happens to an eigenvector
+
+  If Av = λv with v ̸= 0, then Ak v = λk v, and hence
+                                              ∞ k k
+                                                t A v
+                                    etA v =
+                                              X
+
+                                              k=0   k!
+                                               ∞  k  k
+                                                  t λ
+                                         =            v = etλ v.
+                                              X
+
+                                              k=0  k!
+  Thus
+                                          etA v = etλ v.
+  The eigenvector stays the same and its eigenvalue becomes etλ . This is a short proof
+  worth being able to reproduce.
+
+
+                                                  9
+MATH6342 | Slides 41–59 explained                                                   Sai Vanam
+
+
+    Method | Slide 55: differentiation
+    Term-by-term differentiation gives
+
+                              d tA             t2 A3
+                                 e = A + tA2 +        + ···
+                              dt                 2!          !
+                                                  t2 A2
+                                   = A I + tA +         + ··· .
+                                                    2!
+
+    Therefore
+                                         d tA
+                                            e = AetA = etA A.
+                                         dt
+    The differentiation is justified because the series and its derivative series converge
+    uniformly on bounded time intervals. Commutation with A also follows directly because
+    each series term is a power of A.
+
+
+8      Slide 56: calculating the exponential
+    Diagonalise first, then exponentiate scalar entries
+    If A = S∆S −1 , then
+                                etA = S diag(etλ1 , . . . , etλn )S −1 .
+    This follows by substituting Ak = S∆k S −1 into the defining series. The slide assumes
+    distinct eigenvalues as a sufficient condition; the formula works whenever the matrix is
+    diagonalisable.
+
+    Method | The exam calculation routine
+    1. Find eigenvalues and independent eigenvectors.
+    2. Form S, ∆ and S −1 , matching their order.
+    3. Exponentiate each diagonal entry.
+    4. Multiply out if asked for the entries of etA .
+    5. Check e0A = I. A second check is E ′ (0) = A.
+
+    Worked example | The exponential of the running example
+
+            −1 1
+             "        #
+    For A =      , use the matrices calculated earlier:
+            0 −2
+
+                                     1 −1                e−t 0          1 1
+                                         "          #"             #"      #
+                               etA =                                        .
+                                     0 1                  0 e−2t        0 1
+                                 "                   #
+                                   e−t −e−2t
+    The first multiplication gives           . Multiplying by S −1 yields
+                                    0  e−2t
+                                                "                   #
+                                                e−t e−t − e−2t
+                                     e   tA
+                                              =                .
+                                                 0     e−2t
+
+
+                                                     10
+MATH6342 | Slides 41–59 explained                                                      Sai Vanam
+
+
+
+                                                  −1 1
+                                                        "              #
+    At t = 0 this is I. Its derivative at zero is       = A, as required.
+                                                   0 −2
+
+    Try it first | An alternative exam instruction: calculate from the definition
+
+              0 −1
+            "       #
+    For J =        , calculate etJ from the defining series and express it using trigonometric
+              1 0
+    functions.
+
+    Model answer
+    First, J 2 = −I, so
+                              J 2k = (−1)k I,                J 2k+1 = (−1)k J.
+    Separate even and odd powers:
+                                      X (−1)k t2k                 X (−1)k t2k+1
+                            etJ = I                         +J
+                                      k≥0       (2k)!             k≥0      (2k + 1)!
+                                = I cos t + J sin t.
+
+    Therefore
+                                                  cos t − sin t
+                                                  "                     #
+                                       e   tJ
+                                                =               .
+                                                  sin t cos t
+
+    This is rotation through angle t. The power pattern and the scalar sine/cosine series
+    provide the requested derivation from the definition.
+
+    Exam tips and common mistakes
+    The rotation-matrix calculation matches question types in the supplied 2024 and 2025
+    papers. If asked “from the definition”, show the series and power pattern, rather than
+    only writing down a memorised answer.
+
+
+9      Slides 57–58: solving a homogeneous system
+    The solution and its verification
+    For X ′ = AX with X(0) = X0 ,
+                                                X(t) = etA X0 .
+    Differentiate to check the equation: X ′ = AetA X0 = AX. At zero, X(0) = IX0 = X0 .
+    If the eigenvectors form a basis, write X0 = j aj vj . Since etA vj = etλj vj ,
+                                                 P
+
+
+                                                      n
+                                           X(t) =            aj eλj t vj .
+                                                      X
+
+                                                      j=1
+
+
+    Each eigenvector direction evolves separately. The coefficients are fixed by the initial
+    condition; in matrix form, (a1 , . . . , an )⊤ = S −1 X0 .
+
+
+
+                                                        11
+MATH6342 | Slides 41–59 explained                                                     Sai Vanam
+
+
+  Worked example | An initial-value problem in two equivalent ways
+  Solve
+                                −1 1                                        2
+                                    "           #                           " #
+                            X =
+                              ′
+                                      X,                        X(0) =        .
+                                 0 −2                                       1
+  Using the exponential,
+
+                                                           2          3e−t − e−2t
+                               "                     #" #         "               #
+                              e−t e−t − e−2t
+                       X(t) =                                =                    .
+                               0     e−2t                  1             e−2t
+
+  Alternatively, X0 = 3(1, 0)⊤ + (−1, 1)⊤ . These vectors are eigenvectors for −1 and −2, so
+
+                                               1
+                                                    " #           "     #
+                                                        −1
+                                   X(t) = 3e−t   + e−2t    ,
+                                               0         1
+
+  which is the same answer. Checking at zero gives (2, 1)⊤ .
+
+
+10        Slides 57–59: growth bounds and long-time be-
+          haviour
+  Why the real part of an eigenvalue matters
+  For λ = a + ib,
+                             etλ = eat eibt ,        |etλ | = eat = etℜλ .
+  The real part controls exponential growth or decay; the imaginary part produces oscillation.
+  For example −2 + 3i produces a decaying oscillation with amplitude factor e−2t and
+  angular frequency 3.
+
+  Method | Slide 59: derive the bound by combining earlier results
+
+  Suppose A = S∆S −1 and ℜλj ≤ κ for all j. Then
+
+                              ∥etA ∥ = ∥Set∆ S −1 ∥
+                                        ≤ ∥S∥∥et∆ ∥∥S −1 ∥
+                                        = ∥S∥∥S −1 ∥ max |etλj |
+                                                            j
+
+                                        ≤ ∥S∥∥S     −1
+                                                         ∥eκt
+                                                                  (t ≥ 0).
+
+  The inequality uses slide 43; the diagonal norm equality uses slide 41. Therefore
+
+                             ∥etA ∥ ≤ M eκt ,             M = ∥S∥∥S −1 ∥.
+
+  Consequently ∥X(t)∥ ≤ M eκt ∥X0 ∥. The constant M is independent of time.
+
+
+
+
+                                                    12
+MATH6342 | Slides 41–59 explained                                                Sai Vanam
+
+
+  Read the conclusion precisely
+  For a diagonalisable matrix:
+  • If every ℜλj < 0, choose κ < 0 to obtain exponential decay of every homogeneous
+     solution.
+  • If every ℜλj ≤ 0, take κ = 0 to obtain bounded homogeneous solutions.
+  • If some ℜλj > 0, an initial vector in a corresponding eigenvector direction produces
+     exponential growth.
+  The slides assume distinct eigenvalues, which guarantee diagonalisation. Do not remove
+  that assumption when quoting their boundary-case result.
+
+  Exam tips and common mistakes
+  Bounded homogeneous solutions do not automatically imply BIBO stability. An un-
+  damped oscillator has bounded free motion but can resonate under bounded forcing.
+  These slides analyse X ′ = AX; forced-system stability requires an additional argument
+  later in the module.
+
+  Worked example | Why the diagonalisation assumption matters at the bound-
+  ary
+
+          0 1
+           "    #
+  Let A =     . Its only eigenvalue is zero, but A2 = 0 and hence
+          0 0
+
+                                                   1 t
+                                                 "     #
+                                    etA = I + tA =     .
+                                                   0 1
+
+  This is unbounded. For example X0 = (0, 1)⊤ gives X(t) = (t, 1)⊤ . The matrix lacks two
+  independent eigenvectors, so the diagonalisation-based boundedness theorem does not
+  apply. This example explains why checking only ℜλ ≤ 0 can be insufficient.
+
+
+11     Final exam-style question and complete model an-
+       swer
+  Try it first | Combine the main techniques
+
+            −2 1
+           "        #
+  Let A =            . Find:
+             0 −3
+  1. The eigenvalues and corresponding eigenvectors.
+  2. A diagonalisation.
+  3. Every entry of etA .
+  4. The solution of X ′ = AX, X(0) = (1, 2)⊤ .
+  5. The long-time behaviour, with a justified exponential bound.
+
+  Model answer
+  1. Eigenvalues and eigenvectors. Since A is triangular, its eigenvalues are −2, −3.
+  For −2, solving (A+2I)v = 0 gives eigenvector v1 = (1, 0)⊤ . For −3, solving (A+3I)v = 0
+  gives x + y = 0, so take v2 = (−1, 1)⊤ .
+
+
+                                            13
+MATH6342 | Slides 41–59 explained                                                                Sai Vanam
+
+
+
+  2. Diagonalisation. Put
+
+                        1 −1                      −2 0                             1 1
+                               "        #             "             #                "       #
+                     S=      ,                 ∆=       ,               S   −1
+                                                                                 =     .
+                        0 1                        0 −3                            0 1
+
+  The columns are independent, and AS = S∆, so A = S∆S −1 .
+  3. Exponential. Exponentiate the diagonal entries and multiply:
+
+                                  e−2t 0
+                                    "             #             "                        #
+                                                                 e−2t e−2t − e−3t
+                      e   tA
+                               =S         S −1 =                                  .
+                                   0 e−3t                         0      e−3t
+
+  4. Initial-value solution.
+
+                                              1                3e−2t − 2e−3t
+                                                 " #       "                     #
+                                   X(t) = etA   =                            .
+                                              2                    2e−3t
+
+  At zero the vector is (1, 2)⊤ . Differentiating the first component gives −6e−2t + 6e−3t ,
+  matching −2x1 + x2 ; the second satisfies x′2 = −3x2 .
+  5. Behaviour and bound. Both eigenvalues have real part at most −2. Slide 59 gives
+
+                                            ∥etA ∥ ≤ ∥S∥∥S −1 ∥e−2t .
+
+  Thus every homogeneous solution decays exponentially, and in particular
+                                                                   √      X(t) → 0. √
+                                                                                    If a
+  numerical constant is desired, the entry-square bound gives ∥S∥ ≤ 3 and ∥S −1 ∥ ≤ 3,
+  so the valid estimate ∥etA ∥ ≤ 3e−2t follows.
+
+  Method | The exam checklist for slides 41–59
+  1. Distinguish an exact norm from an upper bound.
+  2. Use the identity matrix for constant terms in matrix polynomials.
+  3. Match the order of eigenvector columns and diagonal eigenvalues.
+  4. Check independent eigenvectors before diagonalising.
+  5. Use power patterns if asked for an exponential from its definition.
+  6. Check E(0) = I and, where helpful, E ′ (0) = A.
+  7. Impose the initial condition by X = etA X0 or eigenvector coefficients.
+  8. Keep the hypotheses when concluding boundedness from real parts.
+
+  Sources
+  Gordon Blower, MATH6342 Linear systems, 2026/27: numbered slides 41–59 in the
+  supplied beamer deck, corresponding to PDF pages 43–61; and the matching material
+  in the supplied written lecture notes. The rotation example also illustrates the type
+  of calculation appearing in the supplied 2024 and 2025 MATH319 papers. All worked
+  calculations here are independently explained.
+
+
+
+
+                                                          14
+

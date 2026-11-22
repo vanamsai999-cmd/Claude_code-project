@@ -1,0 +1,1313 @@
+                                                                 Video Clips
+                                                                  (1) Subsets of R
+                                                                      [36 minutes, covering pp. 1–14]
+                                                                  (2) Least upper bound principle
+                                                                      [22 minutes, covering pp. 15–24]
+                                                                  (3) Sequences in R
+                                                                      [35 minutes, covering pp. 25–42]
+                                                                 (4a) Subsequences & Bolzano–Weierstrass
+                              ·                                       [22 minutes, covering pp. 43–52]
+     Metric Spaces & Topology                                    (4b) Limsup, liminf & completeness of R
+                                                                      [15 minutes, covering pp. 53–60]
+                         (MATH6310)
+                                                                 (5a) Linear algebra I: Vector spaces
+                              ·
+                                                                      [23 minutes, covering pp. 62–70]
+                         Part I
+                                                                 (5b) Linear algebra II/III: Norms & inner products
+                              ·                                       [17 minutes, covering pp. 71–74]
+             Section 2.                                           (6) Continuity & boundedness
+  Real Analysis & Linear Algebra                                      [25 minutes, covering pp. 76–86]
+            (revision)                                            (7) IVT
+                                                                      [12 minutes, covering pp. 87–88]
+                 Lecture Notes & Exercises
+                                                                  (8) Integration
+                   Last edited: 07.ix.2026                            [8 minutes, covering pp. 92–94]
+
+                                                                                              2
+
+
+
+
+Introduction                                                       Specifically, the notes cover the following topics
+In this section the Real Analysis and Linear Algebra that we        2.1 Subsets of R.
+need is reviewed and a few (possibly) new ideas are intro-            Subintervals (open, closed & bounded); Archimidean
+duced. The review is intended to consolidate knowledge and            property; Least Upper Bound Principle; order density
+understanding gained in the Mathematical Analysis courses             of Q in R (and R \ Q in R);
+in Years 1 and 2, whose lecture notes you should turn to when
+                                                                    2.2 Sequences.
+necessary. The exercises are designed to help with revision of
+                                                                      Convergent, bounded & monotone sequences; Approxi-
+this material—you are strongly advised to seriously engage
+                                                                      mation of suprema by sequences; subsequences; Bolzano–
+with them! One possibly new idea is that of
+                                                                      Weierstrass Theorem; lim sup & lim inf; completeness
+                  lim sup xn and lim inf xn                           of R.
+                   n→∞             n→∞
+                                                                    2.3 Linear algebra.
+for suitably bounded sequences (xn)n∈N in R. Another is that          Vector spaces, examples; Linear maps, examples; (lin-
+of norms on a vector space which give a valid notion of length        ear) subspaces, examples; norms, examples inner prod-
+for vectors; this will serve as a great source of examples of         ucts, examples.
+metrics.
+                                                                    2.4 Continuity and boundedness.
+                                                                      Uniform & Lipschitz continuity; subspaces of the vec-
+                                                                      tor space F (A; R), for A ⊂ R; Uniform Continuity
+                                                                      Theorem; IVT.
+                                                                    2.5 Integration.
+                                                                      More subspace inclusions; linearity & order preserva-
+                                                                      tion of integration; fundamental order inequalities; FTC;
+                                                                      for a nondegenerate
+                                                                                            subinterval
+                                                                                                R        Jof R,
+                                                                      ·         f ∈ C(J; R) & |f | = 0 =⇒ f = 0.
+
+                              1                                                               2
+                                                           Definition. (Minima and maxima for subsets of R)
+                                                           Let A ⊂ R. We say that A has a minimum if there is x ∈ A
+                                                           such that a ≥ x for all a ∈ A:
+                                                                               ∃x∈A ∀a∈A a ≥ x;
+                                                           and A has a maximum if there is x ∈ A such that a ≤ x
+                                                           for all a ∈ A:
+                                                                            ∃x∈A ∀a∈A a ≤ x.
+                                                           When they exist minima and maxima are unique; we denote
+                                                           them as follows: min A and max A.
+
+2.1    Subsets of R                                        Remark. Let A ⊂ R. Then
+                                                                 A has a maximum ⇐⇒ −A has a minimum,
+                                                           where −A := {−a : a ∈ A}; in this case
+                                                                             max A = − min(−A).
+
+                                                           Examples.
+                                                               If A ⊂ R is nonempty and finite then A has a minumum
+                                                                and a maximum.
+                                                               The bounded half-open interval [a, b[, in which
+                                                                a, b ∈ R with a < b, has a minimum but does not have
+                                                                a maximum. The latter obvious looking fact actually
+                                                                depends on the Archimidean Property of R (see below).
+
+                                 3                                                      4
+
+
+
+
+Theorem. (Well-ordering of N)                              Exercise. (Max and min for subsets of Z)
+Let A ⊂ N be nonempty. Then A has a minimum.
+                                                            (a) Let A ⊂ Z be nonempty and bounded below:
+Proof. Suppose for a contradiction that A does not have
+                                                                                  ∃p∈Z ∀a∈A a ≥ p.
+a minimum. Set A∁ = N \ A. We prove (by induction) that
+A∁ = N so A = ∅, a contradiction.                               Show that A has a minimum.
+   Consider the following proposition
+                                                            (b) Let A ⊂ Z be nonempty and bounded above. Show
+             Pn : {1, ..., n} ⊂ A∁, for n ∈ N.                  that A has a maximum.
+                                                                [Hint: A has a maximum if and only if −A has a
+Then P1 holds since otherwise 1 ∈ A so A has a minimum,
+                                                                minimum, and, in this case, max A = − min(−A).]
+a contradiction. Suppose that Pn holds for n = k. Then
+k+1 ∈  / A, since otherwise it would be a minimum for A,
+thus k + 1 ∈ A∁ and so Pn holds for n = k + 1. Hence, by
+induction, Pn holds for all n ∈ N, thus
+
+             {1, . . . , n} ⊂ A∁, for all n ∈ N.
+
+Therefore
+                 [
+            N=         {1, . . . , n} ⊂ A∁, so A∁ = N,
+                 n∈N
+
+and we have our contradiction.
+
+
+
+
+                                 5                                                      6
+Subintervals of R                                              Remarks.
+
+The subintervals J of R come in nine distinct types, depend-     1. The terminology “open” and “closed” is topological
+ing on what combination of closed/open and lower-/upper-            and we shall see much more of it below.
+bounded they are. Let a, b, c, d ∈ R be such that a ≤ b and      2. If a = b then [a, b] = {a}. Such intervals are called
+c < d.                                                              degenerate.
+   I. The closed subintervals of R.                              3. The bounded subintervals are those of the type I(ii),
+                                                                    II(ii), III(i) or III(ii). The rest are unbounded subin-
+       (i) ]−∞, b] := {x ∈ R : x ≤ b}                               tervals.
+      (ii) [a, b] := {x ∈ R : a ≤ x ≤ b}
+                                                                 4. The closed and bounded interval [0, 1] is referred to as
+     (iiii) [a, ∞[:= {x ∈ R : a ≤ x}
+                                                                    the unit interval ; it is often denoted I.
+  II. The open subintervals of R.                                5. Germ of an important idea for us: “closedness”.
+       (i) ]−∞, d[:= {x ∈ R : x < d}                                By Proposition Algebra of Limits in R (below), if (xn)
+                                                                    is a sequence in a closed interval J and (xn) converges
+      (ii) ]c, d[:= {x ∈ R : c < x < d}
+                                                                    in R then lim xn ∈ J too.
+     (iiii) ]c, ∞[:= {x ∈ R : c < x}
+                                                                 6. For a subinterval J of R,
+ III. The half-open subintervals of R.
+                                                                    sup J exists (in R) in cases I(i), I(ii), II(i), II(ii) and III;
+       (i) [c, d[:= {x ∈ R : c ≤ x < d}                             sup J exists and sup J ∈ J in cases I(i), I(ii) and III(ii)
+      (ii) ]c, d] := {x ∈ R : c < x ≤ d}
+                                                                 7. Germ of another important idea for us: “openness”.
+ IV. The unique subinterval of R which is both open and             If p ∈ J where J is an open subinterval of R, then there
+     closed.                                                        is δ > 0 such that
+       (i) ]−∞, ∞[:= R                                                                 ]p − δ, p + δ[ ⊂ J.
+
+                             7                                                               8
+
+
+
+
+Definition. (Boundedness for subsets of R)                     Remarks.
+Let A ⊂ R.
+   A is bounded above if                                          If A is bounded above then it has many upper bounds,
+                                                                   in fact the set
+                     ∃x∈R ∀a∈A a ≤ x;                                           
+                                                                         UA := x ∈ R : x is an upper bound for A
+
+in this case x is called an upper bound for A.                     is a semi-infinite interval, equivalently,
+    A is bounded below if                                                                         
+                                                                                 x ∈ UA & y > x ⇒ y ∈ UA.
+                     ∃x∈R ∀a∈A x ≤ a;
+                                                                  If A has a maximum then
+
+in this case x is called a lower bound for A.                                          UA = [max A, ∞[,
+    A is bounded if                                                in particular A has a least upper bound, namely max A.
+                 ∃D∈R ∀a,b∈A |b − a| ≤ D.
+
+Remark.
+These are respectively equivalent to
+
+     ∃x∈R A ⊂ ]− ∞, x]
+     ∃x∈R A ⊂ [x, ∞[
+     ∃x∈R,D≥0 A ⊂ [x, x + D], OR ∃x,y∈R A ⊂ [x, y].
+
+
+
+
+                             9                                                               10
+Exercise. (Boundedness by modulus)
+Let A ⊂ R. Show that TFAE:
+  (i) A is bounded above and bounded below
+ (ii) ∃M ∈R ∀a∈A |a| ≤ M
+(iii) A is bounded.
+
+
+
+
+                            11                                                    12
+
+
+
+
+Theorem. (Archimidean property — equivalent forms)   Proof.
+The following are logically equivalent:                 (ii) ⇒ (i): Assume that (ii) holds, and let x < y in R.
+                                                        Case 1. y > 0. Since y − x > 0, there is n ∈ N such
+  (i) Q is ‘order dense’ in R:                       that n1 < (y − x). Since
+                                             
+                ∀x,y∈R x < y ⇒ ∃q∈Q x < q < y                            k
+                                                               {k ∈ N : 2n ≥ y} ⊃ {k ∈ N : k1 < 2ny
+                                                                                                 1
+                                                                                                    },
+
+ (ii)                                                                                    k
+                                                     (ii) implies that the set {k ∈ N : 2n ≥ y} is nonempty, and
+                                 1                   the well-ordering of N implies that it has a minimum, say p.
+                        ∀x>0 ∃n∈N < x
+                                 n                   Set q = p−1
+                                                               2n . Then q ∈ Q and q satisfies the following:
+(iii)
+                                                                q < y, and
+                      ∀x>0 ∀y∈R ∃n∈N nx ≥ y
+                                                                      p     1         1         1
+                                                                q=      −     ≥y−       > y − > x,
+(iv) N is unbounded in R:                                            2n 2n           2n         n
+                                                     so x < q < y.
+                        ∀x∈R ∃n∈N n > x.                 Case 2. y < 0. By Case 1 there is r ∈ Q such that
+                                                     −y < r < −x, and so q := −r ∈ Q satisfies x < q < y.
+                                                     Thus (i) holds.
+                                                         (i) ⇒ (iv) ⇒ (iii) ⇒ (ii): These are easily proved (exer-
+                                                     cise!).
+
+                                                     Remark.
+                                                     Below we show that R enjoys the Archimidean property; this
+                                                     is deduced from the Least Upper Bound Principle to be dis-
+                                                     cussed next.
+
+
+
+                            13                                                    14
+Least Upper Bound Principle                                Remarks.
+
+Let A ⊂ R be nonempty and bounded above. Then A has a        1. The LUB principle is absolutely fundamental.
+least upper bound (in R), denoted
+                                                             2. It is not a theorem but an axiom; it is an integral part
+                           sup A,                               of what we mean by R. For more on this point ask me
+                                                                (I have some notes for those interested, entitled ‘The
+and called the supremum of A.                                   complete ordered field’).
+                                                             3. From the LUB principle we derive
+
+                                                                    the ‘Archimedean property for R’, and
+                                                                    the ‘(Cauchy-)completeness of R’, that every Cauchy
+                                                                      sequence in R converges.
+
+                                                             4. The LUB Principle may be expressed as follows. For
+                                                                any nonempty subset A of R which is bounded above,
+
+                                                                    min UA exists, i.e. ‘UA has a minimum’,
+
+                                                                equivalently,
+
+                                                                    UA = [sA, ∞[ for some sA ∈ R.
+
+                                                                Then sA := min UA = sup A. Here (as above)
+                                                                                 
+                                                                           UA := x ∈ R : ∀a∈A x ≥ a ,
+
+                                                                the set of upper bounds of A.
+
+                             15                                                        16
+
+
+
+
+Exercise. (Approximation of suprema)                       Exercise. (Halving the work: infima)
+Let A ⊂ R be bounded above and nonempty, and set x =       Let A ⊂ R be nonempty.
+sup A. Show that, for all ε > 0 there is a ∈ A such that
+                                                            (a) Show that TFAE:
+                      x − ε < a ≤ x.
+                                                                  (i) x is a lower bound for A;
+In other words,                                                  (ii) −x is an upper bound for −A.
+                  ∀ε>0 ]x − ε, x] ∩ A ̸= ∅.                     Here −A := {−a : a ∈ A}.
+                                                            (b) Show that if A is bounded below then it has a greatest
+                                                                lower bound.
+                                                           When A is bounded below its greatest lower bound is denoted
+
+                                                                                      inf A
+
+                                                           and called the infimum of A.
+
+
+
+
+                             17                                                        18
+Theorem. (Archimidean Property for R)              Proof.
+The Archimedean Property holds for R.              We show that N is unbounded in R (i.e. version (iv) of the
+                                                   Archimidean Property holds for R).
+                                                       Suppose, for a contradiction, that N is bounded above.
+                                                   Then, by the LUB Principle, it has a least upper bound. Set
+                                                   s = sup N. Then s − 1 < s, so s − 1 is not an upper bound
+                                                   for N, and therefore there is N ∈ N such that s − 1 < N .
+                                                   But then
+                                                                           N + 1 > s.
+                                                   Since N + 1 ∈ N this contradicts s being an upper bound for
+                                                   N. Therefore N is not bounded above, and so is unbounded.
+
+
+                                                   Remark.
+                                                   The Archimidean Property of R ensures that there is at least
+                                                   one nonconstant convergent sequence in R, namely
+
+                                                                            (1/n)n∈N.
+
+
+
+
+                            19                                                  20
+
+
+
+
+Corollary. (Examples of sets without a maximum)    Proof.
+The bounded nonempty sets                              (a) Let x ∈ J. Then a ≤ x and x < b. By the order
+                                                   density of Q in R, there is q ∈ Q such that x < q < b. Since
+ (a) J = [a, b[ (where a, b ∈ R with a < b), and   also q > x ≥ a, it follows that
+ (b) S = [0, 2π] ∩ Q                                                    q ∈ J and q > x
+have no maximum.                                   so x is not a maximum for J. Thus J has no maximum.
+                                                      (b) Using the fact that 2π is irrational, and so 2π ∈
+                                                                                                          / S, a
+                                                   very similar appeal to the order density of Q in R yields the
+                                                   conclusion that S doesn’t have a maximum either.
+
+
+
+
+                            21                                                  22
+Exercise. (Order density of R \ Q in R)                         Remark.
+Show that the irrationals are order dense in R:                 The order density of Q in R implies that there is a rational
+                                                              between each pair of distinct irrationals, and the Exercise im-
+          x, y ∈ R & x < y ⇒ ∃z∈R\Q x < z < y.                  plies that there is an irrational between every pair of distinct
+[Hint: My solution uses the Archimedean Principle for R         rationals. Thus Q and R \ Q appear to ‘interlace’. However,
+three times (in different versions), and the existence of one   there are many more irrationals than rationals (R \ Q is
+positive irrational.]                                           uncountable, yet Q is countable). Strange?
+
+
+
+
+                             23                                                               24
+
+
+
+
+                                                                Definition.
+                                                                A real sequence is an assignment of a real number, xn say,
+                                                                to each n ∈ N, written
+                                                                               (xn)n∈N, (xn)n≥1, or simply (xn),
+                                                                or sometimes
+                                                                                       (x1, x2, x3, · · · ).
+                                                                In other words, a real sequence is an element of the product
+                                                                set
+                                                                                             RN .
+                                                                   Another way to think of a real sequence is as a function
+2.2    Sequences in R                                           from N to R. The real sequence (xn) corresponds to the
+                                                                function given by
+                                                                                     f : N → R,    n 7→ xn.
+                                                                Conversely, the function f : N → R corresponds to the se-
+                                                                quence
+                                                                                   (f (1), f (2), f (3), · · · ).
+                                                                In this way the following two sets are in (natural) bijective
+                                                                correspondence
+                                                                                       RN ↔ F (N; R).
+                                                                Remark.
+                                                                This is a special case of the correspondence
+                                                                                        T S ↔ F (S; T )
+                                                                discussed earlier.
+
+                             25                                                               26
+Remarks.                                                        Definition. (Set of terms of a sequence)
+                                                                Given a sequence (xn)n∈N we may form its set of terms
+    Sometimes it is convenient to have the index set running
+     from 0 instead of 1, thus                                                      X := {xn : n ∈ N}.
+
+             (xn)n∈Z+ , (xn)n≥0 or (x0, x1, x2, · · · ).        This is a countable nonempty subset of R:
+
+    The natural correspondence between real sequences x =                           X ∈ P(R) \ {∅}.
+     (xn) ∈ R and functions f ∈ F (N; R) gives us the way
+              N
+                                                                Example.
+     to add two sequences and to multiply a sequence by a
+                                                                If (xn)n∈N is a constant sequence then X is a singleton set.
+     real number. For real sequences x = (xn) and y = (yn)
+     and s, t ∈ R,
+
+            sx + ty is the sequence (sxn + tyn)n∈N.
+
+     In this way RN forms a real vector space, with zero
+     element the constant sequence
+
+                            (0, 0, 0, · · · ).
+
+     The correspondence RN ↔ F (N; R) is then actually a
+     linear isomorphism.
+
+
+
+
+                               27                                                            28
+
+
+
+
+Properties a real sequence may have                             Examples.
+
+Let (xn)n∈N be a real sequence and let X = {xn : n ∈ N} be        1. Constant sequences converge.
+its set of terms. We say that
+                                                                  2. The sequence (n)n∈N is bounded below, monotonic in-
+    the sequence (xn)n∈N is bounded above if the set X is           creasing and (by the Archimidean Property of R) not
+     bounded above, and write sup xn for sup X;                      bounded above.
+    the sequence (xn)n∈N is bounded below if the set X is        3. The sequence (1/n)n∈N is bounded above, monotonic
+     bounded below, and write inf xn for inf X;                      decreasing and (by the Archimidean Property of R)
+                                                                     convergent to 0.
+    the sequence (xn)n∈N is bounded if the set X is bounded;
+
+    the sequence (xn)n∈N is monotonic increasing if
+
+                          ∀n∈N xn+1 ≥ xn;
+
+    the sequence (xn)n∈N is monotonic decreasing if
+
+                          ∀n∈N xn+1 ≤ xn;
+
+    the sequence (xn)n∈N is convergent if
+
+               ∃a∈R ∀ε>0 ∃N ∈N ∀n≥N |xn − a| < ε,
+     and write lim xn for a, or xn → a as n → ∞;
+    the sequence (xn)n∈N is Cauchy if
+
+                  ∀ε>0 ∃N ∈N ∀n,m≥N |xn − xm| < ε.
+
+                               29                                                            30
+Proposition. (Approximation of suprema by sequences)       Proof. Set s := sup A.
+Let A ⊂ R be nonempty and bounded above. Then there is     Case 1. Suppose that s ∈ A. In this case the constant
+a sequence (an) in A such that                             sequence (s, s, s, . . .) satisfies (a) and (b).
+                                                           Case 2. Suppose that s ∈       / A. Define a sequence (an) in A
+ (a) (an) is monotonic increasing, and                     recursively as follows. Choose
+ (b) an → sup A.                                                                 a1 ∈]s − 1, s] ∩ A
+If sup A ∈/ A then the sequence (an) may be chosen to be   (appealing to the Approximation for Suprema Exercise). Since
+strictly monotonic increasing.                             s∈/ A and s is an upper bound for A, a1 < s. Suppose that
+                                                           a1, a2, · · · , an in A have been chosen so that
+                                                                              a1 < a2 < · · · < an < s.
+                                                           Appealing to the Approximation of Suprema Exercise once
+                                                           more, we may choose an+1 ∈ A such that
+                                                                                      1
+                                                                            
+                                                                        max an, s − n+1   < an+1 < s.
+                                                           Then
+                                                                                                           1
+                                                                    an < an+1 < s, and |s − an+1| <            .
+                                                                                                        n+1
+                                                           The resulting sequence (an) is strictly monotonic increasing
+                                                           and by the Archimedean Property (and the Sandwich Prin-
+                                                           ciple, see Proposition below), also convergent to s.
+                                                           Remark.
+                                                           There is a corresponding result for infima and monotonic
+                                                           decreasing sequences.
+
+                                31                                                       32
+
+
+
+
+Remark. (Convergence depends only on the tail)             Proposition. (Algebra of limits in R)
+For a real sequence (xn)n∈N and p ∈ N, TFAE:               Let (xn), (yn) and (zn) be real sequences, let s, t ∈ R and
+                                                           suppose that
+  (i) (xn) converges                                                          xn → a and yn → b.
+ (ii) (yn) converges, where yn = xp+n (n ∈ N).             Then
+In this case lim yn = lim xn.                               (1) sxn + tyn → sa + tb;
+                                                            (2) xnyn → ab;
+                                                            (3) |xn| → |a|.
+                                                            (4) If a ̸= 0 then xn ̸= 0 for sufficiently large n and
+
+                                                                                      1/xn → 1/a.
+
+                                                           (5a) If xn ≤ yn for sufficiently large n then a ≤ b.
+                                                           (5b) If a < b then xn < yn for sufficiently large n.
+                                                            (6) (The Sandwich Principle.) If a = b and xn ≤ zn ≤ yn
+                                                                for sufficiently large n then
+
+                                                                                         zn → a.
+
+                                                           Remark.
+                                                           The Sandwich principle is probably the most used criterion
+                                                           for proving convergence of real sequences.
+
+                                33                                                       34
+Exercise. (Uniqueness of limits in R)                       Remark. (Sequences in closed intervals)
+Let (xn) be a real sequence satisfying xn → a and xn → b.   An important consequence is the following. Let J be a closed
+Prove that a = b.                                           interval, thus
+
+                                                                       J = [a, b] or [a, ∞[ or ] − ∞, b] or R.
+
+                                                            If (xn) is a sequence in J and (xn) converges in R then
+
+                                                                                      lim xn ∈ J.
+
+                                                            For example
+                                                                                                
+                                                                    xn → p & xn ≥ a for all n ∈ N ⇒ p ≥ a.
+
+                                                            For non-closed intervals this need not be true, for example
+
+                                                                          (1/n)n∈N is a sequence in ]0, 1],
+
+                                                            but
+                                                                                             1
+                                                                                   0 = lim     ∈
+                                                                                               / ]0, 1].
+                                                                                             n
+
+                                                            Exercise. Prove this. [Hint: Prove by contradiction.]
+
+
+
+
+                           35                                                                36
+
+
+
+
+Theorem. (Bounded monotonic sequences converge)             Proof. Let s = sup xn and let ε > 0. By the Approx-
+Let (xn) be a real sequence which is monotonic increasing   imation of Suprema Exercise, there is N ∈ N such that
+and bounded above. Then (xn) converges and                  xN > s − ε. Since (xn) is monotonic increasing,
+
+               lim xn = sup{xn : n ∈ N}.                                  xn ≥ xN > s − ε for all n ≥ N.
+
+                                                            Thus, for all n ≥ N,
+
+                                                                              |s − xn| = s − xn < ε.
+
+                                                            Hence (xn) converges to s.
+
+                                                            Remark. Note that the proof of this basic result rests on the
+                                                            Least Upper Bound Principle.
+
+
+
+
+                           37                                                                38
+Corollary.                                                           Proof. The sequence (−xn) is monotonic increasing and
+Let (xn) be a real sequence which is monotonic decreasing            bounded above. Therefore by the theorem, (−xn) converges
+and bounded below. Then (xn) converges and                           with lim(−xn) = sup(−xn). Thus (xn) converges and, by
+                                                                     the Algebra of Limits and fact that, for a lower-bounded set
+                  lim xn = inf{xn : n ∈ N}.                          A ⊂ R, inf A = − sup(−A),
+
+                                                                            lim xn = − lim(−xn) = − sup(−xn) = inf xn.
+
+
+
+
+                               39                                                                 40
+
+
+
+
+Example. (Area of unit disc)                                         Exercise. (Area of unit disc)
+Let D be the closed unit disc in R2:                                 Find sup an, and prove your finding.
+                                                                     [Hint: Apart from basic trigonometry, you may find L’Hôpital’s
+              D = {(x, y) ∈ R2 : x2 + y 2 ≤ 1}.                      Rule useful.]
+For each n ≥ 3, let Dn denote the regular inscribed n-gon
+with one vertex at (1, 0), so that the vertices of Dn have
+polar coordinates (1, 2kπ
+                       n ), for k = 0, 1, · · · , n − 1. Set an :=
+Area Dn. Then
+                        a3 ≤ a4 ≤ · · ·
+and, since D ⊂ J × J where J = [−1, 1],
+
+    an ≤ Area D ≤ Area (J × J) ≤ 4             for all n ≥ 3.
+
+Thus (an) converges to sup an, and sup an ≤ 4.
+
+
+
+
+                               41                                                                 42
+Subsequences of real sequences                                     Remarks.
+
+Definition. (Subsequences)                                                If (x′k ) is a subsequence of (xn) and (x′′j ) is a subse-
+A subsequence of a (real) sequence (xn)n∈N is a sequence                   quence of (x′k ) then (x′′j ) is also a subsequence of (xn).
+(xnk )k∈N in which (nk )k∈N is a strictly increasing sequence in
+N:                                                                        The constant sequences (1, 1, 1, · · · ) and (−1, −1, −1, · · · )
+                        n1 < n2 < · · ·                                    are both subsequences of the sequence
+
+Equivalently, (x′k )k∈N is a subsequence of (xn)n∈N if there is                        ((−1)n)n∈N = (−1, 1, −1, 1, · · · ).
+an order-preserving injection
+
+                      N → N,       k 7→ nk
+
+such that
+                   x′k = xnk for all k ∈ N.
+
+
+
+
+                              43                                                                     44
+
+
+
+
+Theorem. (Existence of monotonic subsequences)                     Proof. We say that n ∈ N is a peak index for the sequence
+Let (xn) be a sequence in R. Then (xn) has a monotonic             if
+subsequence.                                                                     xn+p ≤ xn for all p ∈ N.
+                                                                   Set            
+                                                                              P := n ∈ N : n is a peak index for (xn) .
+                                                                      Case I. Suppose that P is infinite. By the well-ordering
+                                                                   of N, P has a minimum, say n1, and P \ {n1} has a mini-
+                                                                   mum, say n2. Since P is infinite we may continue in this way
+                                                                   indefinitely, giving a sequence
+
+                                                                                              n1 < n2 < · · ·
+
+                                                                   in P ⊂ N, for which the subsequence (xni ) is monotonic
+                                                                   decreasing.
+                                                                       Case II. Suppose that P is finite. Then P ∁ := N \ P is
+                                                                   infinite. Set
+                                                                                      (
+                                                                                       1            if P is empty,
+                                                                                 n1 =
+                                                                                       1 + max P if P ̸= ∅
+
+                                                                   Then n1 > p for all p ∈ P . Since n1 ∈ P ∁, there is n2 > n1
+                                                                   such that xn2 > xn1 . Since n2 > n1 > p for all p ∈ P ,
+                                                                   n2 ∈ P ∁, and so there is n3 > n2 such that xn3 > xn2 . Con-
+                                                                   tinuing in this way a subsequence (xni ) is generated, which
+                                                                   is monotonic increasing.
+
+
+                              45                                                                     46
+Theorem. (Bolzano-Weierstrass)                                     Proof.       By Proposition (Existence of monotonic subse-
+Let J be a closed and bounded subinterval of R, and let (xn)       quences in R), (xn) has a monotonic subsequence (xnk ). Be-
+be a sequence in J. Then there is a subsequence (xnk ) which       ing bounded and monotonic, (xnk ) is convergent. Since the
+converges with                                                     interval J is closed,
+                        lim xnk ∈ J.
+                         k→∞                                                                  lim xnk ∈ J,
+                                                                                             k→∞
+
+                                                                   as required.
+
+
+
+
+                               47                                                                  48
+
+
+
+
+Remark.                                                            Proof. Define a sequence (Jn)n∈Z+ recursively as follows:
+The classical proof of Bolzano-Weierstrass, uses the Com-          Let J0 = J and, for k ∈ N, set
+pleteness of R which is proved below. This is recalled next,                 (
+because it contains a very useful idea, which is easily modified               Jkℓ if the set {n ∈ N : xn ∈ Jkℓ} is infinite
+                                                                      Jk+1 =
+to cover RN .                                                                  Jku otherwise,
+
+   For the purposes of the proof, we adopt the following           noting that, in any case, the set {n ∈ N : xn ∈ Jk+1} is
+notation. For any closed and bounded interval J = [a, b], set      infinite. Then
+                                                                                                                   |J|
+              J ℓ := [a, a+b       u    a+b
+                          2 ] and J := [ 2 , b]                                    J = J0 ⊃ J1 ⊃ · · · , |Jk | =       ,
+                                                                                                                    2k
+(i.e. the closed lower and upper halves of J).                     and we may choose
+
+                                                                                     1 = n0 < n1 < n2 < . . . in N
+
+                                                                   such that xnk ∈ Jk for each k.
+                                                                      Since xnk+p ∈ Jk for each k, p ∈ N,
+
+                                                                                                               | diam J|
+                                                                                  |xnk+p − xnk | ≤ diam Jk =             .
+                                                                                                                   2k
+                                                                   It follows that (xnk ) is Cauchy and thus convergent, by the
+                                                                   completeness of R Theorem (see below). Since J is closed
+                                                                   and xnk ∈ J for each k, limk→∞ xnk ∈ J (by the Sequences
+                                                                   in closed intervals Remark), as required.
+
+
+
+
+                               49                                                                  50
+Lemma. (Subsequence Lemma)                                        Proof.
+Let (xn) be a real sequence and let a ∈ R. Then TFAE:             (i)⇒ (ii): Suppose that (xnk )k∈N is a subsequence of (xn)
+                                                                  converging to a, and let ε > 0. Then
+  (i) (xn) has a subsequence which converges to a
+                                                                                   ∃K∈N ∀k≥K |xnk − a| < ε,
+ (ii) for all ε > 0 the set {n ∈ N : |xn − a| < ε} is infinite.
+                                                                  so
+                                                                          {n ∈ N : |xn − a| < ε} ⊃ {nK , nK+1, · · · },
+                                                                  and this is manifestly infinite.
+                                                                     (ii)⇒ (i): Conversely, suppose that (ii) holds and, for each
+                                                                  N ∈ N set
+
+                                                                                SN := n ∈ N : |xn − a| < N1 .
+                                                                                        
+
+                                                                  Thus each SN is infinite. Define a sequence (nk ) in N recur-
+                                                                  sively as follows: choose n1 ∈ S1 and, for k ≥ 1, choose
+
+                                                                               nk+1 ∈ Sk+1 ∩ {nk + 1, nk + 2, ...}
+
+                                                                  (which we may do, since Sk+1 is infinite). Then, for all k ∈ N,
+
+                                                                             nk+1 ≥ nk + 1 > nk , and xnk ∈ Sk so
+                                                                                        1
+                                                                             |xnk − a| < .
+                                                                                        k
+                                                                  Thus (xnk ) is a subsequence which (by the Sandwich Princi-
+                                                                  ple) converges to a.
+
+
+                              51                                                                52
+
+
+
+
+Limit superior and limit inferior                                 Definition. (lim sup and lim inf)
+                                                                  For a bounded real sequence (xn)n∈N,
+Let (xn)n∈N be a bounded real sequence and let X be its set
+of terms. Then (xn) may or may not converge. However, if                            lim inf xn := lim inf xk ,
+                                                                                     n→∞          n→∞ k≥n
+we set
+                                                                  and
+     un := sup{xk : k ≥ n} and ln := inf{xk : k ≥ n}
+                                                                                    lim sup xn := lim sup xk .
+then something wonderful happens:                                                    n→∞             n→∞ k≥n
+
+
+ inf X = l1 ≤ l2 ≤ l3 ≤ · · · · · · ≤ u3 ≤ u2 ≤ u1 = sup X.
+
+Therefore, being monotone and bounded, (ln) and (un) both
+converge!
+
+
+
+
+                              53                                                                54
+Proposition. (lim sup as limit of subsequence)                      Proof. Set a = lim sup xn, thus a = lim uk , where
+Let (xn) be a real sequence. Suppose that
+                                                                                       uk := sup{xn : n ≥ k}.
+ (a) (xn) is bounded above, and
+                                                                    Using the Approximation of suprema Exercise, define a se-
+ (b) lim sup xn exists in R (this is automatic if (xn) is also      quence (nk )k∈N in N recursively as follows. Choose n1 ∈ N
+     bounded below).                                                such that xn1 > u1 − 1 and, for k ≥ 2, choose nk > nk−1
+                                                                    such that xnk > unk−1+1 − k1 . Then
+Then (xn) has a subsequence (xnk ) which converges to lim sup xn.
+                                                                                         1
+                                                                             uni−1+1 −     < xni ≤ uni    for each i ∈ N.
+                                                                                         i
+                                                                    Therefore xni → a as i → ∞ by the Sandwich Principle.
+
+
+
+
+                              55                                                                  56
+
+
+
+
+Theorem. (Completeness of R)                                        Proof.
+Let (xn) be a real sequence. Then TFAE:                             (i)⇒ (ii): This is easy (and true in any metric space!) since if
+                                                                    xn → a and ε > 0 then there is N ∈ N such that |xn −a| < ε
+  (i) (xn) converges                                                for all n ≥ N so
+ (ii) (xn) is Cauchy                                                   |xn − xm| ≤ |xn − a| + |a − xm| < 2ε for n, m ≥ N,
+(iii) (xn) is bounded and lim inf xn = lim sup xn.                  and so (xn) is Cauchy.
+In this case
+
+               lim xn = lim sup xn = lim inf xn.
+
+
+
+
+                              57                                                                  58
+  (ii)⇒ (iii): Suppose that (xn) is Cauchy. Then there is        (iii)⇒ (i): Suppose that (iii) holds and set
+N ∈ N such that
+                                                                              un = sup{xk : k ≥ n},
+               |xn − xm| < 1 for all n, m ≥ N,                                ln = inf{xk : k ≥ n}, and
+                                                                              a = lim sup xn = lim inf xn.
+so, for all n ≥ N ,
+                                                              Then
+      |xn| ≤ |xn − xN | + |xN | ≤ |xN | + 1 for n ≥ N.
+                                                                               ln ≤ xn ≤ un (n ∈ N).
+Thus, for all n ∈ N,                                          Since (ln) and (un) both converge to a, it follows (by the
+        |xn| ≤ max{|x1|, |x2|, · · · , |xN −1|, |xN | + 1},   Sandwich Principle) that (xn) converges to a too.
+
+and so (xn) is bounded.
+    Set l = lim inf xn and u = lim sup xn, and let ε > 0.
+Since (xn) is Cauchy there is N ∈ N such that |xn − xm| < ε
+for all n, m ≥ N . For this N there are n, m ≥ N such that
+|xn − l| < ε and |u − xm| < ε. Thus
+
+      |u − l| ≤ |u − xm| + |xm − xn| + |xn − l| < 3ε.
+
+Since ε > 0 is arbitrary, this implies that u = l.
+
+
+
+
+                                59                                                         60
+
+
+
+
+                                                              2.3    Linear algebra
+
+
+
+
+                                61                                                         62
+Definition. A vector space over a field K is a set V together       Remarks. Some immediate consequences of the axioms:
+with binary operations + : V × V → V and · : K × V → V ,
+called vector addition and scalar multiplication, and writ-             The identity element is unique.
+ten (u, v) 7→ u + v and (λ, v) 7→ λv respectively, satisfying           Inverses are unique.
+the following
+                                                                        ∀v∈V, λ∈F (−λ)v = −(λv), the inverse of λv.
+(V add) (V, +) is an abelian group: There is an element 0V
+     such that                                                          ∀v∈V 0Kv = 0V and ∀λ∈K λ0V = 0V
+
+         ∀v∈V v + 0V = v      (Identity element)                    Given this compatibility of the zeros of V and K, one does
+         ∀v∈V ∃−v∈V (−v) + v = 0V       (Inverse elements)          not usually notationally distinguish these, writing simply 0
+         ∀u,v,w∈V (u + v) + w = u + (v + w)       (Associativity)   for both 0V and 0K,
+         ∀u,v∈V v + u = u + v     (Commutativity)                   Examples. 0. The trivial vector space, {0}.
+                                                                       1. For N ∈ N, KN is a vector space over K with vector
+(V sc)
+                                                                    addition and scalar multiplication defined componentwise:
+                       ∀v∈V 1Kv = v
+                                                                      (u1, · · · , uN ) + (v1, · · · , vN ) := (u1 + v1, · · · , uN + vN )
+                       ∀v∈V, λ,µ∈K (λµ)v = λ(µv)
+                                                                      λ(u1, · · · , uN ) := (λu1, · · · , λuN )
+(V dist)                                                               2. For n, m ∈ N, Mn,m(K) is a vector space over K with
+                                                                    vector addition and scalar multiplication defined entrywise:
+                    ∀u,v∈V, λ∈K λ(u + v) = λu + λv
+                                                                                                                
+                    ∀v∈V, λ,µ∈K (λ + µ)v = λv + µv.                        aij + bij = aij + bij and λ aij = λaij .
+
+We are almost exclusively interested in the case where K = R,
+or K = C.
+
+
+                                63                                                                    64
+
+
+
+
+   3. Let V be a vector space over K and let S be a set.            Definition. Let U and V be vector spaces over K. A map T
+Then F (S; V ) is a vector space over K with vector addition        from U to V is linear if it satisfies
+and scalar multiplication defined pointwise:
+                                                                                  ∀u,v∈V, λ∈K T (u + λv) = T u + λT v.
+     (f + g)(s) := f (s) + g(s) and (λf )(s) := λf (s).
+                                                                    Exercise. Show that if T is a bijective linear map then its
+Question. What is the zero of this vector space? Answer.            inverse map is also linear.
+The constant function equal to 0V .
+    4. Let V be a vector space over K. Then s(V ), the              A bijective linear maps is called a linear isomorphism.
+collection of sequences whose entries are in V , is a vector
+space over K, with vector addition and scalar multiplication        Remark. One generally writes T v instead of T (v) — except
+defined componentwise:                                              in the situation where the target space is the (one-dimensional
+                                                                    space of) scalars (described next).
+                     (un) + (vn) := (un + vn)
+                     λ(un) := (λun).                                Definition. The dual of a vector space V over K is the set of
+                                                                    linear maps from V to K. Write V dual for this, and typically
+Here (vn) is shorthand for (v1, v2, · · · ), the sequence in V      write ϕ(v) for the value of the map ϕ ∈ V dual at element v
+whose nth term is vn.                                               of V .
+Question. What is the zero of this vector space?                                                  dual
+                                                                    Proposition. For all ϕ ∈ RN         there is a ∈ RN such that
+                                                                                    PN
+                                                                    ϕ(x) = a · x = i=1 aixi for all x ∈ RN .
+
+                                                                    Question. Given a map ϕ ∈ V dual, find a formula for getting
+                                                                    the vector a ∈ RN such that ϕ(x) = a · x for all x ∈ RN .
+
+
+
+
+                                65                                                                    66
+Exercise. Let U and V be vector spaces over K.                    Definition. A (linear ) subspace of a vector space V over K
+                                                                  is a subset U of V satisfying
+  (i) Which of the constant maps from U to V are linear?
+                                                                  (VSS.1) 0 ∈ U .
+ (ii) Let x ∈ V . When is the translation map
+                                                                  (VSS.2) ∀u,u′∈U, λ∈K u + λu′ ∈ U .
+                       Tx : V → V,       v 7→ v + x
+      linear?                                                     Theorem. A subspace of a vector space over K is itself a
+                                                                  vector space over K.
+ (iii) Let λ ∈ K. When is the dilation map
+                                                                  Remarks. (VSS.1) may be replaced by U ̸= ∅.
+                        Dλ : V → V,        v 7→ λv                  (VSS.2) may be replaced by
+      linear?                                                             ∀u,u′∈V u + u′ ∈ U and ∀u∈U, λ∈K λu ∈ U.
+Remark. Let A ∈ Mn,m(K). Then the map                                The most important “mother spaces” for us is F (S; V ).
+                          m         n
+                   MA : K → K ,           x 7→ Ax
+is linear. Every linear map from Km to Kn is of this form,
+for a unique matrix A.
+
+Example. (Evaluation maps) Let S be a set and let V be a
+vector space over K. Then, for each element s0 of S, the
+“evaluation at s0” map
+                   F (S; V ) → V,       f 7→ f (s0)
+is linear.
+
+                               67                                                             68
+
+
+
+
+Examples. 1. Let L(U ; V ) denote the set of linear maps          Examples. 1. Let P (R) denote the set of polynomial func-
+from U to V where U and V are vector spaces over K. Thus          tions with real coefficients. Then
+L(U ; V ) is a subset of the vector space F (U ; V ).
+                                                                   (a) P (R) is a subspace of the real vector space F (R; R).
+Exercise. Show that L(U ; V ) is a subspace of the vector space
+F (U ; V ).                                                        (b) The differentiation map
+
+                                                                                    D : P (R) → P (R),     p 7→ p′,
+    2. For T ∈ L(U ; V ), the kernel of T ,
+                                                                       is linear.
+             Ker T := {u ∈ U : T u = 0} = T −1({0}),
+                                                                  Question. What are the kernel and range of D?
+is a subspace of U , and the range (or image) of T ,
+                                                                    2. Let J be a closed subinterval of R and let R(J; R)
+Ran T = {T u : u ∈ U } = v ∈ V | ∃u∈U : T u = v = T (U ),         denote the set of (real-valued) Riemann-integrable functions
+                                                                  on J. Then
+is a subspace of V .
+                                                                   (a) R(J; R) is a subspace of the real vector space F (J; R).
+Theorem. Let n, m ∈ N. Then the map
+                                                                   (b) The integration map
+               Mn,m(K) → L(Km; Kn),          A 7→ MA                                                            Z
+                                                                                    ρ : R(J; R) → R,     f 7→       f,
+(defined earlier) is a linear isomorphism.                                                                      J
+
+                                                                       is linear.
+                                                                  Question. What is the range of the linear functional ρ?
+
+
+
+
+                               69                                                             70
+    For RN we have the familiar Euclidean length function,         Examples. 1. For N ∈ N, the prescription
+given by                  v                                                                          N
+                          u N                                                                        X
+                          uX                                                               ∥x∥1 :=           |xi|
+                  ∥x∥2 := t      |xi|2.                                                                i=1
+                                     i=1
+                              N                                    defines a norm on FN , for F = R or C.
+This works equally well for C with |·| now meaning modulus
+                                                                       2. For N ∈ N, the prescription
+(instead of absolute value).
+                                                                                                        N
+Definition. A norm on a vector space V over F = R or C is                               ∥x∥∞ := max |xi|
+                                                                                                       i=1
+a map ∥ · ∥ : V → [0, ∞[ satisfying                                                    N
+                                                                   defines a norm on F , for F = R or C.
+(N1) ∀v∈V ∥v∥ = 0 =⇒ v = 0 (Definiteness).                             3. For any closed and bounded interval J = [a, b],
+                                                                                                  Z
+(N2) ∀v∈V, λ∈F ∥λv∥ = |λ|∥v∥ (Homogeneity).
+                                                                                          ∥f ∥1 := |f |
+                                                                                                         J
+(N3) ∀u,v∈V ∥u + v∥ ≤ ∥u∥ + ∥v∥ (Triangle inequality).
+                                                                   defines a norm on the real vector space
+Remark. A special case of (N2) is the converse of (N1):                               
+                                                                          C(J; R) := f ∈ F (J; R) : f is continuous .
+                           ∥0V ∥ = 0
+                                                                   Warning. It is not (quite!) a norm on R(J; R).
+since 0V = 0F0V and ∥0F0V ∥ = |0F| ∥0V ∥ = 0∥0V ∥ = 0.               4. Another, quite different norm on C(J; R) is given by
+                                                                                 ∥f ∥sup := sup{|f (x)| : x ∈ J}.
+
+                                                                   Exercise. Show that the norms of Examples 3 and 4 are re-
+                                                                   lated by
+                                                                                      ∥f ∥1 ≤ |J| ∥f ∥sup.
+
+                                71                                                               72
+
+
+
+
+Definition. An inner product on a vector space V over F =          Examples. 1. V = FN , F = R or C,
+R or C is a map
+                                                                                                     N
+                                                                                                     X
+                     ⟨·, ·⟩ : V × V → F                                                 ⟨u, v⟩ :=            uivi.
+                                                                                                       i=1
+satisfying
+                                                                      2. V = C(J; R),
+(IP.1) ∀v∈V \{0} ⟨v, v⟩ > 0                                                                            Z
+                                                                                           ⟨f, g⟩ :=         f g.
+(IP.2) ∀u,v∈V ⟨v, u⟩ = ⟨u, v⟩                                                                            J
+
+(IP.3) ∀u,v,w∈V, λ∈F ⟨u, v + λw⟩ = ⟨u, v⟩ + λ⟨u, w⟩.                  3. The norm ∥ · ∥sup on C(J; R) is not an inner product
+                                                                   norm. Question. Why isn’t it?
+Basic facts.
+Let ⟨·, ·⟩ be an inner product on a vector space over F = R
+or C.
+   1. Cauchy-Schwarz inequality.
+
+               ∀u,v∈V |⟨u, v⟩|2 ≤ ⟨u, u⟩⟨v, v⟩.
+
+Equality holds if and only if the vectors are linearly dependent
+(in other words, iff one of the vectors is a multiple of the
+other).
+    2. The prescription
+                                p
+                       ∥v∥ := ⟨v, v⟩
+
+defines a norm. Norms arising in this way are called inner
+product norms.
+
+                                73                                                               74
+                                                                2.4    Continuity and boundedness
+
+
+
+
+                               75                                                            76
+
+
+
+
+Definition.                                                     Notation.
+Let f : A → R and p ∈ A, for a subset A of R. Then              For a bounded function f from A to R, we set
+    f is bounded if Ran f is a bounded set.                                   ∥f ∥sup := sup{|f (t)| : t ∈ A}.
+    f is continuous at p if
+                                                              This exists by the LUB Principle.
+      ∀ε>0 ∃δ>0 ∀x∈A |x − p| < δ ⇒ |f (x) − f (p)| < ε .
+                                                                Notation.
+    f is not continuous at p if                                We write C(A; R), CLip(A; R) and Fb(A; R) for the respec-
+                                                                tive classes of continuous, Lipschitz continuous, and bounded,
+                                                       
+      ∃ε>0 ∀δ>0 ∃x∈A |x − p| < δ but |f (x) − f (p)| ≥ ε .
+                                                                functions from A to R. Thus
+    f is sequentially continuous at p if, for every sequence
+     (an) in A,                                                 CLip(A; R) ⊂ C(A; R) ⊂ F (A; R) and Fb(A; R) ⊂ F (A; R).
+                   an → p ⇒ f (an) → f (p).                     Remark.
+                                                                Notice that CLip(A; R), C(A; R) and Fb(A; R) are subspaces
+    f is continuous if
+                                                              of the real vector space F (A; R) (because the constant func-
+     ∀ε>0 ∀x∈A∃δ>0 ∀y∈A |x−y| < δ ⇒ |f (x)−f (y)| < ε .         tion equal to zero is Lipschitz continuous and, for any scalar
+                                                                λ and functions f, g ∈ F (A; R), f + λg is respectively Lip-
+    f is uniformly continuous if
+                                                              schitz, continuous or bounded if f and g are (as is easily
+      ∀ε>0 ∃δ>0 ∀x,y∈A |x − y| < δ ⇒ |f (x) − f (y)| < ε .      verified from the definitions).
+
+    f is Lipschitz continuous if
+            ∃M ≥0∀x,y∈A |f (x) − f (y)| ≤ M |x − y|.
+
+Remark.
+f is Lipschitz ⇒ f is uniformly continuous ⇒ f is continuous
+
+                               77                                                            78
+Examples.                                                        Exercise. (Continuity ≡ sequential continuity)
+                                                                 Let f : A → R and p ∈ A for a subset A of R. Then TFAE:
+  1. Let A =]0, 1] and f (x) = x1 . Then f is not uniformly
+     continuous because, for all n ∈ N,                           (i) f is continuous at p
+                   
+           1          1                 1      1        1         (ii) f is sequentially continuous at p.
+     f          −f        = 1, yet          −     =          .
+         n+1         n                n+1 n         n(n + 1)
+
+  2. Let A = [1, ∞[ and f (x) = x1 . Then f is Lipschitz
+     continuous, because
+                       1 1
+      |f (x) − f (y)| = −
+                       x y
+                       y−x
+                     =     ≤ |y − x| for all x, y ∈ A.
+                        xy
+
+
+
+
+                            79                                                                80
+
+
+
+
+                            81                                                                82
+Theorem. (Uniform Continuity Theorem)                           Proof.
+Let f : J → R be continuous, where J is a closed and            (a) Suppose for a contradiction that f is not uniformly con-
+bounded interval. Then                                          tinuous. Then there is ε > 0 such that
+
+ (a) f is uniformly continuous,
+                                                                                h             1                        i
+                                                                   ∀n∈N ∃xn,yn∈I |xn − yn| < & |f (xn) − f (yn)| ≥ ε .
+                                                                                              n
+ (b) f is bounded, and
+                                                                By the Bolzano-Weierstrass Theorem (BWT), (xn) has a sub-
+ (c) f has a maximum value and a minimum value.                 sequence (xnk ) which converges with p := lim xnk ∈ J. Since
+                                                                                                         1
+Remark.                                                         |ynk − p| ≤ |ynk − xnk | + |xnk − p| ≤      + |xnk − p| (k ∈ N)
+                                                                                                         nk
+In particular, for any closed and bounded subinterval J of R,
+                                                                it follows that ynk → p too. But f is continuous, and thus
+                   C(J; R) ⊂ Fb(J; R).                          sequentially continuous at p, so we have our contradiction:
+
+                                                                            f (xnk ) − f (ynk ) → f (p) − f (p) = 0,
+
+                                                                but
+
+                                                                            |f (xnk ) − f (ynk )| ≥ ε for all k ∈ N.
+
+                                                                Thus f is uniformly continuous.
+
+
+
+
+                             83                                                               84
+
+
+
+
+    (b) Suppose for a contradiction that f is unbounded.           (c) By the LUB Principle we may set
+Then, for all n ∈ N there is xn ∈ J such that |f (xn)| ≥ n.
+Applying the BWT once more we see that there is a subse-                       l = inf f (J) and u = sup f (J).
+quence (xnk ) which converges with p = lim xnk ∈ J. But         By the Approximation of suprema by sequences Proposition,
+f is continuous, and thus sequentially continuous at p. This    there is a sequence (yn) in f (J) such that yn → u. For
+leads to a contradiction as follows. Choose K ∈ N such that     each n ∈ N there is (by the definition of f (J)) an element
+nK > |f (p)| + 1, then, for k ≥ K,                              xn ∈ J such that f (xn) = yn. Applying the BWT to the
+             |f (xnk )| ≥ nk ≥ nK > |f (p)| + 1                 sequence (xn), there is a convergent subsequence (xnk ) such
+                                                                that p = lim xnk ∈ J. By sequential continuity,
+but
+                      f (xnk ) → f (p).                                       f (p) = lim f (xnk ) = lim ynk = u.
+
+                                                                Thus sup f (J) = f (p), so f has a maximum value.
+                                                                   To prove that f also has a minimum value, we may apply
+                                                                the above to the continuous function −f , noting that f has
+                                                                a minimum value if (and only if) −f has a maximum value.
+
+
+
+
+                             85                                                               86
+Theorem. (Intermediate Value Theorem)                             Proof. There are 4 cases:
+Let f : J → R be continuous, where J is the closed and              (i) f (a) < p < f (b);   (ii) f (a) > p > f (b);
+bounded interval [a, b], and let p ∈ R be between f (a) and
+f (b). Then there is t ∈ J such that f (t) = p.                   (iii) p = f (a);   (iv) p = f (b).
+                                                                       Cases (iii) and (iv) are trivial and, by replacing p and f
+                                                                  by −p and −f and appealing to the continuity of −f , Case
+                                                                  (ii) may be deduced from Case (i).
+                                                                       Assume therefore that f (a) < p < f (b) and set
+                                                                           t = inf A where A = {x ∈ J : f (x) ≥ p}.
+                                                                  Claim: f (t) = p. By (the infimum couterpart to) the Ap-
+                                                                  proximation of Suprema Proposition, there is a sequence (xn)
+                                                                  in A converging to t. Since a ≤ xn ≤ b for all n ∈ N it fol-
+                                                                  lows (from the Sequences in Closed Intervals Remark) that
+                                                                  t ∈ J. Since f is continuous at t it follows that f (t) =
+                                                                  lim f (xn) ≥ p, in particular t ̸= a, thus t > a. Suppose now,
+                                                                  in contradiction to our claim, that f (t) > p. Then, by the
+                                                                  continuity of f at t there is δ > 0 such that δ < (t − a) and
+                                                                                                     
+                                                                                x ∈ J & |t − x| < δ ⇒ f (x) > p.
+                                                                  Setting x = t − 2δ , we have our contradiction:
+                                                                               x ∈ J & |t − x| < δ so f (x) > p,
+                                                                  thus
+                                                                                     x ∈ A but x < t = inf A.
+                                                                  The claim therefore holds, and so the proof is complete.
+
+                              87                                                                88
+
+
+
+
+Corollary. Let f and J be as in the IVT. Then the range of
+f is a closed and bounded interval.
+
+Proof. By the Uniform Continuity Theorem, there are
+p, q ∈ R and s, t ∈ J such that p = f (s) ≤ f (x) ≤ f (t) = q
+for all x ∈ J; in particular Ran f ⊂ [p, q].
+    Let α ∈ [p, q] and denote the interval with endpoints s
+and t by J ′. Then J ′ ⊂ J (why?), and so, by the IVT
+applied to f |J ′ , there is z ∈ J ′ such that f (z) = α. Hence
+Ran f ⊃ [p, q].
+    Therefore Ran f equals the closed and bounded interval
+[p, q].
+                                                                  2.5     Integration
+
+
+
+
+                              89                                                                90
+Let J = [a, b]. The set of Riemann integrable functions on           Fundamental Theorems of Calculus
+J, denoted R(J), has the following properties:                       I. If a function F from J to R is continuously differen-
+                                                                 tiable, that is F ′ ∈ C(J; R), then
+    C(J; R) ⊂ R(J) ⊂ Fb(J; R)
+                                                                            Z t
+    Like C(J; R) and Fb(J; R), R(J) is a subspace of the                       F ′ = F (t) − F (s) for a ≤ s < t ≤ b.
+     vector space F (J; R) of all real-valued functions on J.               s
+                                                                                                                      R·
+Riemann integration has the following properties. For f, g ∈         II. Let f ∈ C(J; R). Then the function F :=       af   is
+R(J) and λ, µ ∈ R.                                               differentiable and f ′(t) = f (t) for t ∈ J.
+
+    (λf + µg) = λ f + µ g (linearity)                           Remark. The hypotheses on F in I, respectively f in II, may
+     R               R        R
+                                                                 be considerably relaxed (see Bartle & Sherbert).
+    f ≤ g ⇒ f ≤ g (order preservation),
+               R     R
+
+    | f | ≤ |f | ≤ |J| ∥f ∥sup (fundamental integration ≤’s),
+      R      R
+
+where |J| denotes the length of J, i.e. (b − a).
+  In particular,
+   f ≥ 0 =⇒ 0 ≤ f ≤ |J| ∥f ∥sup, and
+                      R
+
+  
+     R
+       : R(J) → R is a linear map.
+
+
+
+
+                             91                                                              92
+
+
+
+
+                             R
+Exercise. (For f continuous, |f | = 0 =⇒ f = 0)                     ·
+Let J be a closed and bounded interval which is nondegen-
+erate, and let f ∈ R(J) satisfy
+                        Z
+                           |f | = 0.
+
+   (a) Give an example to show that f need not be the zero
+function.
+   (b) Suppose that f is continuous. Prove that, in that
+case, f = 0.
+   [ Hint: Prove this by contradiction, i.e. show
+                                                R that if f is
+continuous and f (p) ̸= 0 for some p ∈ J, then |f | > 0. ]
+
+
+
+
+                             93                                                              94
+                                                                Exercise. 2.1 (Max and min for subsets of Z)
+                                                                 (a) Let A ⊂ Z be nonempty and bounded below:
+                                                                                         ∃p∈Z ∀a∈A a ≥ p.
+                                                                      Show that A has a minimum.                  [10 marks]
+                                                                 (b) Let A ⊂ Z be nonempty and bounded above. Show
+                                                                     that A has a maximum.                    [5 marks]
+                                                                     [Hint: A has a maximum if and only if −A has a
+                                                                     minimum, and, in this case, max A = − min(−A).]
+
+Exercises for Section 2.                                        Exercise. 2.2 (Boundedness by modulus)
+                                                                Let A ⊂ R. Show that TFAE:
+                                                                  (i) A is bounded above and bounded below
+                                                                 (ii) ∃M ∈R ∀a∈A |a| ≤ M
+                                                                (iii) A is bounded.                               [10 marks]
+
+                                                                Exercise. 2.3 (Approximation of suprema)
+                                                                Let A ⊂ R be bounded above, and set x = sup A. Show
+                                                                that, for all ε > 0 there is a ∈ A such that
+                                                                                       x − ε < a ≤ x.
+                                                                In other words,
+                                                                                  ∀ε>0 ]x − ε, x] ∩ A ̸= ∅.
+
+                             95                                                               96                    [5 marks]
+
+
+
+
+Exercise. 2.4 (Halving the work: infima)                        Exercise. 2.8 (Area of unit disc)
+Let A ⊂ R be nonempty.                                          Let D be the closed unit disc in R2:
+ (a) Show that TFAE:                                                          D = {(x, y) ∈ R2 : x2 + y 2 ≤ 1}.
+       (i) x is a lower bound for A                             For each n ≥ 3, let Dn denote the regular inscribed n-gon
+      (ii) −x is an upper bound for −A.                         with one vertex at (1, 0), so that the vertices of Dn have
+                                                                polar coordinates (1, 2kπ
+                                                                                       n ), for k = 0, 1, · · · , n − 1. Set an :=
+     Here −A := {−a : a ∈ A}.                     [5 marks]     Area Dn.
+                                                                   Find sup an, and prove your finding.               [20 marks]
+ (b) Show that if A is bounded below then it has a greatest     [Hint: Apart from basic trigonometry, you may find L’Hôpital’s
+     lower bound.                               [5 marks]       Rule useful.]
+Exercise. 2.5 (Order density of R \ Q in R)                     Exercise. 2.9 (Continuity ≡ sequential continuity)
+Show that the irrationals are order dense in R:                 Let f : A → R and p ∈ A for a subset A of R. Then TFAE:
+                          
+           x, y ∈ R, x < y ⇒ ∃z∈R\Q x < z < y.                   (a) f is continuous at p.
+[Hint: My solution uses the Archimedean Principle for R          (b) f is sequentially continuous at p.           [20 marks]
+three times (in different versions), and the existence of one
+positive irrational.]                            [10 marks]
+
+Exercise. 2.6 (sup Q ∩ [0, 2π])
+Prove that sup Q ∩ [0, 2π] = 2π.                [10 marks]
+
+Exercise. 2.7 (Uniqueness of limits in R)
+Let (xn) be a real sequence satisfying xn → a and xn → b.
+Prove that a = b.                              [10 marks]
+
+                             97                                                               98
+                                   R
+Exercise. 2.10 (For f continuous, |f | = 0 =⇒ f = 0)
+Let J be a closed and bounded interval which is nondegen-
+erate, and let f ∈ R(J) satisfy
+                         Z
+                            |f | = 0.
+
+   (a) Give an example to show that f need not be the zero
+function.                                        [5 marks]
+   (b) Suppose that f is continuous. Prove that, in that
+case, f = 0.                                   [10 marks]
+[ Hint: Prove this by contradiction, i.e. showR that if f is
+continuous and f (p) ̸= 0 for some p ∈ J, then |f | > 0. ]
+
+
+
+
+                            99                                 100
+
+
+
+
+                            101
+102
+

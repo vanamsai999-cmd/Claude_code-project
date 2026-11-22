@@ -1,0 +1,592 @@
+MATH6342 | Linear Systems                                                                         Exam Cheat Sheet
+
+
+
+                   MATH6342 Linear Systems
+                             Exam Cheat Sheet + Worked Examples
+            Lancaster University | Based on Gordon Blower’s October 2026 lecture deck (frames 1–227)
+
+ HOW TO USE THIS GUIDE
+ This is a detailed compact revision guide organised by the five chapters of the supplied notes. In every
+ exam calculation, explain the principle, state assumptions, perform the algebra clearly, and check your answer.
+ The original slides contain additional proofs and diagrams; this guide does not guarantee coverage of all possible
+ examination questions.
+
+
+Contents
+
+1 Chapter 1: Linear systems and their description (frames 6–30)                                                       2
+
+2 Chapter 2: Matrix methods and solutions (frames 31–85)                                                              3
+
+3 Chapter 3: Laplace transforms and Jordan form (frames 86–134)                                                       4
+
+4 Chapter 4: Frequency response and stability (frames 135–161)                                                        5
+
+5 Chapter 5: Feedback control and algebraic stability (frames 162–218)                                                6
+
+6 MATLAB appendix, glossary, proof and question checklist (frames 219–227)                                            8
+
+
+
+
+                                                         1
+MATH6342 | Linear Systems                                                                                Exam Cheat Sheet
+
+
+1 Chapter 1: Linear systems and their description (frames 6–30)
+
+ KEY IDEA / DEFINITION
+
+ A system has input u(t), internal state x(t) and output y(t). The state contains sufficient information, together
+ with future input, to predict future behaviour. For n states, m inputs and p outputs,
+
+                                              ẋ = Ax + Bu,         y = Cx + Du
+
+ with A ∈ Cn×n , B ∈ Cn×m , C ∈ Cp×n , D ∈ Cp×m . A governs evolution, B input effects, C measurement, D
+ instantaneous feedthrough. SISO means one input/one output; MIMO means multiple inputs/outputs.
+
+ FORMULA / THEOREM
+
+ An operator L is linear when L(af +bg) = aLf +bLg for all scalars a, b. Examples: differentiation, integration from
+ a fixed endpoint, multiplication by a fixed function and evaluation at a fixed time (with suitable domain/codomain).
+ A time-varying coefficient a(t) may still define a linear operator.
+
+ KEY IDEA / DEFINITION
+
+ Reading block diagrams: a gain k sends u 7→ ku; a differentiator sends u 7→ u′ ; an integrator sends u 7→ u; a tap
+                                                                                                           R
+
+ copies a signal; a summing junction adds signals with their indicated signs. An open loop has no feedback circuit; in
+ a closed loop some downstream signal returns upstream. Kirchhoff’s current law balances currents entering/leaving
+ a junction, and voltage law says signed voltages around a closed circuit sum to zero.
+
+ WORKED: positive vs negative feedback
+
+ If y = u + θy, subtract θy: (1 − θ)y = u, so y = u/(1 − θ) if θ ̸= 1. If a forward block G receives error e = u − Hy,
+ then y = Ge = Gu − GHy, so
+                                                    y       G
+                                                      =            .
+                                                    u    1 + GH
+ The denominator sign comes from the actual summing equation, not from memorising a diagram. Feedback can
+ change amplification, disturbance rejection and stability.
+
+ FORMULA / THEOREM
+ A constant-coefficient differential equation
+
+                                         y (n) + an−1 y (n−1) + · · · + a1 y ′ + a0 y = u
+
+ can be reduced to first order by x = (y, y ′ , . . . , y (n−1) )T . Then ẋ = Ac x + Bu where
+
+                                          0             1      0             0
+                                                                               
+                                                                     ···
+                                        0              0      1     ···     0 
+                                 Ac =  .                             .      ..  , B = en .
+                                                                               
+                                        ..                             ..    . 
+                                        −a0 −a1 −a2 · · · −an−1
+
+ This is the companion matrix. The last row contains negative coefficients in ascending order.
+
+ WORKED: damped harmonic oscillator
+ For y ′′ + 3y ′ + 2y = u(t), choose x1 = y, x2 = y ′ . Then x′1 = x2 , x′2 = −2x1 − 3x2 + u, yielding
+
+                                           0    1             0
+                                                           
+                                    A=                 , B=       , C = 1 0 , D = 0.
+                                                                               
+                                          −2 −3               1
+
+ Check det(sI − A) = s2 + 3s + 2 = (s + 1)(s + 2); both free modes decay. Physically the y term is spring restoring
+ force and y ′ is damping.
+
+ EXAM TIPS / METHOD
+
+ For a reduction-of-order proof: (1) define every state variable; (2) differentiate the first n − 1 components; (3)
+ rearrange the original ODE to obtain the final component; (4) write A, B and check dimensions. For a block-
+
+
+
+                                                                2
+MATH6342 | Linear Systems                                                                                       Exam Cheat Sheet
+
+
+
+ diagram question, write each local signal equation before eliminating intermediate quantities.
+
+ COMMON ERROR
+ An indefinite integral introduces an integration constant: block-integrator diagrams need initial conditions when
+ modelling actual trajectories. Do not claim positive feedback is always unstable or negative feedback is always
+ stable.
+
+
+2 Chapter 2: Matrix methods and solutions (frames 31–85)
+
+ FORMULA / THEOREM
+
+ Matrix algebra toolkit. χA (λ) = det(λI − A) is the characteristic polynomial (the course’s convention). Roots
+ are eigenvalues. χA (λ) = λn − tr(A)λn−1 + · · · + (−1)n det A. The resolvent is (sI − A)−1 wherever det(sI − A) ̸= 0.
+ The adjugate identity gives A adj A = (det A)I, so A−1 = adj A/ det A for nonsingular A.
+
+ WORKED: characteristic polynomial, Cayley–Hamilton
+
+ Let A = −2 −3 . Then
+         0 1
+              
+                                                 
+                                            λ  −1
+                             χA (λ) = det           = λ2 + 3λ + 2.
+                                            2 λ+3
+ Cayley–Hamilton says χA (A) = A2 + 3A + 2I = 0. Thus A2 = −3A − 2I, which reduces all higher powers of A to
+ linear combinations of I, A.
+
+ KEY IDEA / DEFINITION
+
+ Complex inner products
+                      √       and norms. ⟨v, w⟩ = w∗ v in the convention used by the slides (check order of
+ conjugation); ∥v∥2 = v v. Cauchy–Schwarz: |w∗ v| ≤ ∥v∥2 ∥w∥2 . Triangle inequality: ∥v + w∥ ≤ ∥v∥ + ∥w∥. For
+                         ∗
+
+ a subordinate matrix norm, ∥Ax∥ ≤ ∥A∥∥x∥ and ∥AB∥ ≤ ∥A∥∥B∥. Rank is the dimension of the column space,
+ equal to the number of pivots. The adjoint is A∗ (conjugate transpose).
+
+ FORMULA / THEOREM
+                          P∞
+ Matrix exponential: eAt = k=0 (At)k /k! and dt e = AeAt for constant A. When A = P ΛP −1 ,
+                                             d At
+
+
+                                           eAt = P diag(eλ1 t , . . . , eλn t )P −1 .
+                                                                                        Pr−1
+ If A has Jordan block J = λI + N with nilpotent N r = 0, then eJt = eλt                  j=0 (N t) /j!.
+                                                                                                   j
+                                                                                                           A repeated eigenvalue
+ does not necessarily imply diagonalizability.
+
+ THE CENTRAL SOLUTION FORMULA (variation of constants)
+
+ For constant A, B and prescribed x(0) = x0 ,
+                                                             Z t
+                                          x(t) = e x0 +
+                                                   At
+                                                                   eA(t−τ ) Bu(τ ) dτ
+                                                              0
+
+                                                                   Z t
+                                   y(t) = CeAt x0 + Du(t) +              CeA(t−τ ) Bu(τ ) dτ.
+                                                                     0
+
+ The first term is the free/zero-input response; the integral is forced/zero-state response. Differentiate and check
+ the initial value to prove the formula.
+
+ WORKED: complete forced solution
+
+ Take A = diag(−1, −2), B = (1, 1)T , u(t) = 1, and x(0) = 0. The equations separate:
+
+                      x′1 = −x1 + 1 ⇒ x1 (t) = 1 − e−t ,      x′2 = −2x2 + 1 ⇒ x2 (t) = 12 (1 − e−2t ).
+
+ Verify x(0) = 0 and x′ (t) = Ax(t) + B; the steady-state is (1, 1/2)T .
+
+
+
+
+                                                               3
+MATH6342 | Linear Systems                                                                                      Exam Cheat Sheet
+
+
+ FORMULA / THEOREM
+ Transfer function from state space. For zero initial state, Laplace transformation of ẋ = Ax+Bu, y = Cx+Du
+ gives
+                                       T (s) = C(sI − A)−1 B + D.
+ For SISO this is a scalar rational function; for MIMO, a p × m matrix of rational functions. Proper rational means
+ numerator degree ≤ denominator degree; strictly proper means <.
+
+ WORKED: transfer function of an oscillator
+ With A = −2 −3 , B = (0, 1) , C = (1, 0) and D = 0,
+           0 1
+                           T
+
+
+                                              1         s+3         1                             1
+                                                                     
+                          (sI − A)−1 =                                  ,      T (s) =                     .
+                                         s2 + 3s + 2     −2         s                       (s + 1)(s + 2)
+
+ A quick alternative: apply Laplace transforms to y ′′ + 3y ′ + 2y = u with zero initial data.
+
+ KEY IDEA / DEFINITION
+
+ Realization. A realization of a rational transfer function T (s) is matrices (A, B, C, D) producing it. A scalar
+ strictly proper rational b(s)/a(s) with monic denominator can be realised using the companion matrix of a(s),
+ B = en and a suitable output row C built from numerator coefficients; a proper function may also require D ̸= 0.
+ Equivalent transfer functions can have distinct state-space realizations.
+
+ EXAM TIPS / METHOD
+ When asked to realise a rational function: divide polynomials first to identify any D term; construct A from
+ denominator; set B = en ; choose C to fit numerator; explicitly verify C(sI −A)−1 B +D. For eigenvalue/eigenvector
+ questions, solve (A − λI)v = 0 rather than dividing by a singular matrix.
+
+ COMMON ERROR
+ Do not confuse internal eigenvalues of A with poles of a nonminimal transfer function: pole–zero cancellation can
+ hide a state mode in T (s).
+
+
+3 Chapter 3: Laplace transforms and Jordan form (frames 86–134)
+
+ KEY IDEA / DEFINITION
+
+ For a suitable function f (t) on t ≥ 0, the unilateral Laplace transform is
+                                                                    Z ∞
+                                          F (s) = L{f }(s) =                e−st f (t) dt
+                                                                     0
+
+
+ where the integral converges (often in a right half-plane). It converts differentiation and convolution into algebraic
+ operations in s. The slides also discuss analytic dependence on s, growth estimates and uniqueness (Lerch’s
+ theorem): under appropriate hypotheses a transform determines its original function.
+
+ TRANSFORM TABLE: MEMORISE AND RE-DERIVE
+
+                                         f (t)                  L{f }(s)
+                                         1                      1/s
+                                         tn (n = 0, 1, . . .)   n!/sn+1
+                                         eat                    1/(s − a)
+                                         cos ωt                 s/(s2 + ω 2 )
+                                         sin ωt                 ω/(s2 + ω 2 )
+                                         eat tn                 n!/(s − a)n+1
+                                         eat sin ωt             ω/((s − a)2 + ω 2 )
+
+ Remember the domain of convergence, e.g. ℜ(s) > ℜ(a) for eat .
+
+
+
+
+                                                                4
+MATH6342 | Linear Systems                                                                                               Exam Cheat Sheet
+
+
+ RULES AND INITIAL VALUES
+
+                                   L{af + bg} = aF + bG,                L{f ′ } = sF (s) − f (0),
+                                                                                        n−1
+                                                                                        X
+                        L{f ′′ } = s2 F − sf (0) − f ′ (0),        L{f (n) } = sn F −          sn−1−j f (j) (0),
+                                                                                        j=0
+                                                                                          Z t
+                   L{e f (t)}(s) = F (s − a),
+                       at
+                                                         L{tf (t)}(s) = −F (s),
+                                                                              ′
+                                                                                     L{         f (τ )dτ } = F (s)/s.
+                                                                                           0
+                         Rt
+ Convolution (f ∗g)(t) = 0 f (t−τ )g(τ )dτ satisfies L{f ∗g} = F G whenever hypotheses justify exchange of integrals.
+ Convolution is associative under suitable conditions.
+
+ WORKED: inverse transform by partial fractions
+
+ Find L−1 {1/[(s + 1)(s + 2)]}. Write
+                                                        1           A   B
+                                                                 =    +    .
+                                                  (s + 1)(s + 2)   s+1 s+2
+
+ Setting s = −1 yields A = 1; setting s = −2 yields B = −1. Therefore f (t) = e−t − e−2t . Check f (0) = 0 as
+ expected for a strictly proper second-order transfer.
+
+ WORKED: nonzero initial conditions
+ Solve y ′ + 2y = 3, y(0) = 1. Laplace-transform both sides:
+
+                                                                               s+3       3/2    1/2
+                            sY (s) − 1 + 2Y (s) = 3/s =⇒ Y (s) =                       =     −      .
+                                                                              s(s + 2)    s    s+2
+
+ Thus y(t) = 23 − 12 e−2t . Check y(0) = 1 and y ′ + 2y = 3.
+
+ WORKED: convolution integral
+        Rt
+ Compute 0 e−(t−τ ) e−2τ dτ :
+                                                Z t
+                                       e   −t
+                                                      e−τ dτ = e−t (1 − e−t ) = e−t − e−2t .
+                                                 0
+
+ This matches L−1 {[(s + 1)(s + 2)]−1 } because multiplication of transforms corresponds to convolution.
+
+ FORMULA / THEOREM
+
+ Matrix-valued Laplace transforms: L{eAt }(s) = (sI − A)−1 for sufficiently large ℜs. For ẋ = Ax + Bu,
+ X(s) = (sI − A)−1 x0 + (sI − A)−1 BU (s). The output adds CX(s) + DU (s). The Jordan normal form A = P JP −1
+ provides eAt = P eJt P −1 even when A is not diagonalizable.
+
+ EXAM TIPS / METHOD
+
+ For any Laplace ODE question: (1) record initial conditions, (2) transform derivatives with initial-value terms, (3)
+ solve algebraically for Y (s), (4) decompose into familiar terms (possibly repeated or quadratic poles), (5) invert
+ and verify. For a repeated pole (s − a)−k , expect tk−1 eat /(k − 1)!.
+
+ COMMON ERROR
+ The formula L{f ′ } = sF is only valid if f (0) = 0. Never throw away initial-condition terms unless the question
+ specifies zero initial state.
+
+
+4 Chapter 4: Frequency response and stability (frames 135–161)
+
+ KEY IDEA / DEFINITION
+
+ A sinusoidal input can be represented using eiωt . If a stable LTI system has transfer function T (s), its steady-
+ state sinusoidal response uses T (iω): magnitude |T (iω)| gives gain and argument arg T (iω) gives phase shift. The
+ Nyquist plot traces T (iω) in the complex plane; Bode plots show gain (often 20 log10 |T (iω)| decibels) and phase
+ versus logarithmic frequency.
+
+
+
+                                                                    5
+MATH6342 | Linear Systems                                                                               Exam Cheat Sheet
+
+
+ WORKED: frequency response of a first-order filter
+ For T (s) = 1/(s + 2),
+
+                                     2 − iω                      1
+                          T (iω) =          ,   |T (iω)| = √          ,   arg T (iω) = − arctan(ω/2).
+                                     4 + ω2                    4 + ω2
+ At ω = 0, gain = 1/2 and phase = 0. At high frequency, gain tends to 0 and phase tends to −π/2. On a decibel
+ plot, DC gain = 20 log10 (1/2) ≈ −6.02 dB.
+
+ FORMULA / THEOREM
+ Three different stability notions:
+ • Asymptotic internal stability: every unforced state tends to zero, equivalently ℜλ < 0 for every eigenvalue
+    of A (continuous-time finite-dimensional LTI).
+ • Marginally stable free dynamics: bounded trajectories without universal decay can occur when imaginary-
+    axis eigenvalues are semisimple and all others lie in the open left half-plane.
+ • BIBO stability: every bounded input produces bounded zero-state output. For a proper rational transfer
+    function, no uncancelled poles may lie in the closed right half-plane.
+ A nonminimal realization can be BIBO stable without being internally asymptotically stable; check the question’s
+ exact definition. The lectures present sufficient internal eigenvalue conditions and their relationship to BIBO
+ stability.
+
+ WORKED: damping classifications
+
+ For y ′′ + βy ′ + γy = u, the free characteristic equation is λ2 + βλ + γ = 0 and
+
+                                                         −β ± β 2 − 4γ
+                                                               p
+                                                  λ1,2 =                 .
+                                                                 2
+ Assuming γ > 0, β > 0: if β 2 > 4γ it is overdamped (two real negative roots); = critically damped (repeated
+ negative root); < underdamped (complex conjugates with negative real part). If β = 0, purely imaginary roots
+ lead to persistent undamped oscillations; forcing near the natural frequency can produce resonance.
+
+ FORMULA / THEOREM
+
+ Useful bounds: If A is Hurwitz (all eigenvalues have negative real parts), there are M, α > 0 such that ∥eAt ∥ ≤
+ M e−αt . For bounded input ∥u(t)∥ ≤ U , the forced state is bounded by M ∥x0 ∥ + M ∥B∥U/α. The original slides
+ discuss bounded matrix exponentials, Jordan-block conditions and proofs.
+
+ EXAM TIPS / METHOD
+
+ To classify stability: find eigenvalues/poles, sketch their real parts, check multiplicities/Jordan blocks on the
+ imaginary axis, and distinguish state stability from input-output stability. For frequency plots calculate real and
+ imaginary parts, magnitude and phase separately. Explain which frequency range a sketch refers to.
+
+ COMMON ERROR
+ A pole on s = iω prevents the usual frequency-response value at that frequency. Also, 20 log10 is for amplitude
+ gain; power ratios use 10 log10 .
+
+
+5 Chapter 5: Feedback control and algebraic stability (frames 162–218)
+
+ KEY IDEA / DEFINITION
+ The control problem asks us to choose a controller so that a closed-loop interconnection is mathematically well
+ posed and meets stability/performance objectives. The notes cover stable rational functions, Nyquist’s argument-
+ principle method, PID, polynomial and stable-ring Bezout identities, Youla controllers and Lyapunov equations.
+
+
+
+
+                                                                 6
+MATH6342 | Linear Systems                                                                           Exam Cheat Sheet
+
+
+ THE CLOSED-LOOP DENOMINATOR
+ With negative unity feedback, plant P (s) and controller K(s), output Y = P (U − KY ), hence
+
+                              Y      P                        1                       PK
+                                =        ,        S(s) =          ,       T (s) =          .
+                              U   1 + PK                   1 + PK                   1 + PK
+
+ S is sensitivity and T complementary sensitivity; S+T = 1. Closed-loop characteristic factors arise from 1+P K = 0,
+ after correctly clearing denominators and checking for cancellations. Internal stability requires more than stability
+ of one observed transfer function.
+
+ WORKED: proportional feedback stabilisation
+ Let P (s) = 1/(s − 1) (open-loop unstable) and use K(s) = k with negative feedback. Then
+
+                                                   Y     1
+                                                     =       .
+                                                   U   s−1+k
+ Its only closed-loop pole is s = 1 − k. Therefore the closed loop is asymptotically stable exactly when k > 1,
+ assuming the standard interconnection. The answer must state the gain condition, not merely k > 0.
+
+ FORMULA / THEOREM
+                                                                                           Rt
+ PID controller: K(s) = kP + kI /s + kD s (an ideal PID law) yields uc (t) = kP e(t) + kI 0 e(τ )dτ + kD e′ (t), with
+ appropriate initial conditions. P reacts to present error, I accumulates sustained error, and D responds to error
+ slope. Practical derivatives may be filtered; an integral term adds a pole at the origin.
+
+ WORKED: PI characteristic equation
+ For P (s) = 1/(s + 2) and K(s) = kP + kI /s = (kP s + kI )/s, the loop denominator is
+
+                                                  kP s + kI   s2 + (2 + kP )s + kI
+                                   1 + PK = 1 +             =                      .
+                                                  s(s + 2)          s(s + 2)
+
+ The characteristic polynomial is s2 + (2 + kP )s + kI . For a real second-order continuous-time system, its roots are
+ in the left half-plane iff 2 + kP > 0 and kI > 0. State parameter assumptions and verify the sign of the feedback.
+
+ KEY IDEA / DEFINITION
+
+ Stable rational-function ring (course theme). The slides denote by S a class of rational functions stable
+ under addition and multiplication (subject to their specified stability/properness convention). Polynomial Euclidean
+ algorithms find greatest common divisors, and Bezout identities take the form a(s)x(s) + b(s)y(s) = d(s). If a, b
+ are coprime then d = 1. Related constructions over stable rational functions underpin controller parametrisation.
+
+ WORKED: Euclidean algorithm and Bezout
+
+ Let a(s) = s2 + 3s + 2 = (s + 1)(s + 2) and b(s) = s + 1. Polynomial division gives
+
+                                                a(s) = (s + 2)b(s) + 0.
+
+ So gcd(a, b) = s + 1, not 1. The identity a − (s + 2)b = 0 shows the shared factor; no polynomials x, y satisfy
+ ax + by = 1 because both left terms are divisible by s + 1. If b = s + 3 instead, division gives a = s(s + 3) + 2 so
+ 1 = 21 a − 2s b and they are coprime.
+
+ FORMULA / THEOREM
+
+ Youla idea (interpretation): after finding a suitable stable coprime factorisation and one stabilising con-
+ troller, further stabilising controllers are parametrised by a free stable rational parameter Q subject to well-
+ posedness/invertibility constraints. The exact matrix formulas depend on which factorisation and signal convention
+ the problem gives: reproduce these from frames 194–205 rather than swapping conventions.
+
+ NYQUIST PRINCIPLE: WHAT YOU MUST STATE
+ The argument principle relates the winding of the image of a closed contour around the origin to zeros minus poles
+ enclosed (counting multiplicity), provided there are no zeros/poles on the contour. Nyquist applies this to 1 + L(s),
+ equivalently the encirclements of −1 by L(s), to infer closed-loop right-half-plane zeros using the open-loop pole
+
+
+
+                                                           7
+MATH6342 | Linear Systems                                                                             Exam Cheat Sheet
+
+
+
+ count. State your contour orientation and sign convention before writing an encirclement count. Imaginary-axis
+ poles require a modified/indented contour.
+
+ LYAPUNOV AND SYLVESTER EQUATIONS
+ For ẋ = Ax, choose V (x) = x∗ P x with P = P ∗ > 0. Then
+
+                                                V̇ = x∗ (A∗ P + P A)x.
+
+ A standard continuous-time Lyapunov criterion: A is Hurwitz iff for each Q = Q∗ > 0 there is a unique P = P ∗ > 0
+ solving
+                                               A∗ P + P A = −Q.
+
+ Indeed V̇ = −x∗ Qx < 0 for nonzero x. The Sylvester equation has form AX + XB = C; uniqueness depends on
+ the spectra of A and −B being disjoint. Sylvester’s positive-definiteness criterion: a Hermitian matrix is positive
+ definite iff all leading principal minors are positive.
+
+ WORKED: one-dimensional Lyapunov proof
+ Take A = [−2] and choose Q = [1]. The Lyapunov equation reads (−2)P + P (−2) = −1, i.e. −4P = −1, so
+  P = 1/4 > 0 . Let V = x2 /4. Then V̇ = (x/2)(−2x) = −x2 < 0 for x ̸= 0: the origin is asymptotically stable.
+
+ WORKED: Sylvester equation
+
+ Solve AX + XB = C for scalars A = [2], B = [3], C = [10]. Then 2X + 3X = 10 so X = 2 . The relevant spectra
+ are {2} and {−3}, disjoint, so this solution is unique.
+
+ EXAM TIPS / METHOD
+
+ For controller questions: (1) label plant/controller and feedback sign; (2) write closed-loop equations and check
+ well-posedness; (3) derive the exact characteristic polynomial; (4) determine right-half-plane zeros/eigenvalues; (5)
+ check internal stability and cancellations. For Lyapunov: propose Hermitian Q > 0, solve for P , verify Hermitian
+ and positive definite, then explicitly compute V̇ .
+
+ COMMON ERROR
+ Nyquist counts cannot be used without a defined contour and an accurate number of open-loop unstable poles. A
+ stable closed-loop input-output transfer function alone need not guarantee stability of every internal signal.
+
+
+6 MATLAB appendix, glossary, proof and question checklist (frames 219–227)
+
+ MATLAB QUICK COMMANDS
+ A=[0 1;-2 -3]; construct matrix; eig(A) eigenvalues; det(A) determinant; rank(A) rank; expm(A*t) matrix
+ exponential; poly(A) characteristic polynomial coefficients; inv(s*eye(2)-A) symbolic/numeric resolvent (use
+ appropriate symbolic variable); ss(A,B,C,D) state space and tf(sys) transfer function (Control System Toolbox);
+ bode(sys) Bode plot; nyquist(sys) Nyquist plot; lyap(A’,Q) continuous Lyapunov equation in the real-data
+ convention used by MATLAB. Consult the course appendix for the exact commands and syntax expected in
+ projects.
+
+ GLOSSARY
+ State: information sufficient to continue dynamics. Realization: (A, B, C, D) representation of a transfer function.
+ Resolvent: (sI − A)−1 . Pole: singularity of a rational function. Zero: root of its numerator after appropriate
+ simplification. BIBO: bounded input yields bounded output. Hurwitz matrix: every     R t eigenvalue strictly in the
+ left half-plane. Companion matrix: matrix of a monic polynomial. Convolution: 0 f (t − τ )g(τ )dτ . Coprime:
+ gcd is a unit, e.g. 1 in polynomial arithmetic. Well posed: feedback equations determine the internal signals
+ uniquely in the stipulated class. Lyapunov function: positive energy-like function decreasing along trajectories.
+
+ HIGH-MARK PROOF STRUCTURE
+ 1. State exactly what is assumed and what must be proved.
+ 2. Define all matrices/functions and verify compatibility (dimensions, convergence, differentiability, invertibility).
+
+
+
+
+                                                           8
+MATH6342 | Linear Systems                                                                            Exam Cheat Sheet
+
+
+
+ 3. Cite or derive the required identity (e.g. Cayley–Hamilton, transform derivative rule, variation of constants).
+ 4. Perform each algebraic step without omitting signs or initial conditions.
+ 5. Explain why the final implication follows (eigenvalue location, positivity, transform uniqueness, etc.).
+ 6. Conclude in the language of the question; test with a limiting or initial-value check.
+
+ REVISION SELF-TEST: TRY BEFORE READING THE KEY
+ (1) Convert y ′′ + 5y ′ + 6y = u into state space and obtain its transfer function. (2) Solve x′ = −3x + 6, x(0) = 0.
+ (3) Find L−1 {1/(s + 4)2 }. (4) Calculate magnitude and phase of T (iω) = 1/(3 + iω). (5) Decide whether A = ( 00 10 )
+ has bounded eAt . (6) For P = 1/(s − 2) and controller k, identify the stabilising negative-feedback gains. (7) Solve
+ A∗ P + P A = −1 with A = −4.
+
+ FULLY WORKED SELF-TEST ANSWERS
+ 1. x = (y, y ′ )T gives A = −6  −5 , B = (0, 1) , C = (1, 0), D = 0. Hence T (s) = 1/(s +5s+6) = 1/[(s+2)(s+3)].
+                              0 1
+                                               T                                       2
+
+ 2. Integrating factor e : (e x) = 6e . Integrate e x = 2e + C. x(0) = 0 ⇒ C = −2, hence x(t) = 2(1 − e−3t ).
+                          3t  3t ′       3t           3t        3t
+
+ 3. From L{te√ } = 1/(s − a) , take a = −4: te .
+                 at            2                  −4t
+
+ 4. |T | = 1/ 9 + ω ; phase = − arctan(ω/3) for ω ≥ 0.
+                      2
+
+ 5. A2 = 0, so eAt = I + At = ( 10 1t ), unbounded as t → ∞. Zero eigenvalues alone do not establish boundedness;
+ Jordan blocks matter.
+ 6. Closed-loop T = 1/(s − 2 + k), pole 2 − k, so stable precisely when k > 2.
+ 7. −8P = −1, hence P = 1/8 > 0, giving V = x2 /8 and V̇ = −x2 .
+
+ FINAL 24-HOUR REVISION CHECK
+ I can derive A, B, C, D from ODEs; compute determinants/eigenvalues and use eAt ; solve forced IVPs; apply and
+ invert Laplace transforms with nonzero initial data; calculate transfer functions and gain/phase; distinguish free-
+ state from BIBO stability; derive negative-feedback denominators; identify a valid controller gain; explain Nyquist
+ assumptions and use a Lyapunov equation. If any item fails, revisit its corresponding lecture frames and complete
+ at least two unseen practice problems.
+
+
+
+
+                                                           9
+

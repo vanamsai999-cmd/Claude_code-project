@@ -1,0 +1,664 @@
+                  ·
+Metric Spaces & Topology
+            (MATH6310)
+
+                  ·
+             Part I
+                  ·
+        Section 6.
+ Sequential compactness
+
+     Lecture Notes & Exercises
+       Last edited: 07.ix.2026
+
+
+
+
+                                 Video Clips
+                                  (1) Sequential compactness intro [22 mins]
+                                 (2a) Sequential compactness under continuity [17 mins]
+                                 (2b) Sequential compactness under continuity (ctd.) [1 min]
+                                  (3) Sequential compactness under products [36 mins]
+                                  (4) Heine-Borel theorem [10 mins]
+                                  (5) Cantor’s middle thirds set Z [31 mins]
+                                  (6) Remarkable properties of Z [27 mins]
+                                                                Introduction
+                                                                In this section we develop the basic theory of sequential com-
+                                                                pactness in a metric space setting. In particular we cover
+                                                                    Tychonoff’s Theorem for countable products of sequen-
+                                                                     tially compact metric spaces
+                                                                    the Heine–Borel Theorem characterising the sequen-
+                                                                     tially compact subsets of Euclidean spaces.
+                                                                To conclude we derive the basic properties of Cantor’s middle
+                                                                thirds set, which we show to be homeomorphic to the space
+
+                                                                                             {0, 1}N
+
+                                                                with metric given by
+                                                                                             ∞
+                                                                                             X
+                                                                                d(a, b) :=         2−n|bn − an|,
+                                                                                             n=1
+
+                                                                known as the Cantor space.
+
+
+
+
+                                                                                               1
+
+
+
+
+Sequential compactness                                          Definition. (Sequential compactness)
+                                                                Let K ⊂ E for a metric space E. Then K is sequentially
+The starting point for the study of sequential compactness is
+                                                                compact if, for every sequence (xn) in K there is a subse-
+the Bolzano-Weierstrass Theorem. Here is a reminder of that
+                                                                quence (xnk ) such that
+result (again!).
+                                                                             (xnk ) converges and lim xnk ∈ K.
+Theorem. (Bolzano-Weierstrass)                                                                       k→∞
+Let J be a closed and bounded subinterval of R, and let (xn)
+be a sequence in J. Then there is a subsequence (xnk ) such     Remark.
+that                                                            The Bolzano-Weierstrass therefore says that all closed and
+             (xnk ) converges and lim xnk ∈ J.                  bounded subintervals of R are sequentially compact.
+                                  k→∞                              An immediate question then is: which other subsets of
+                                                                R are sequentially compact? This is answered fully by the
+                                                                Heine–Borel Theorem, as we shall see.
+
+
+
+
+                             2                                                                 3
+Proposition. (Seq. compact implies closed and bounded)         Theorem. (Seq. compactness is intrinsic)
+Let K ⊂ E for a metric space E, and suppose that K is          Let A ⊂ E for a metric space E, let A    e := (A, d)
+                                                                                                                 e be the
+sequentially compact. Then K is closed and bounded.            resulting metric subspace, and let K ⊂ A. Then TFAE:
+
+Proof.                                                           (i) K is sequentially compact in E.
+   (a) Let (xn) be a sequence in K which converges in E,
+                                                                (ii) K is sequentially compact in A.
+                                                                                                  e
+to a say. By the sequential compactness of K, (xn) has a
+subsequence (xnk ) which converges with                        In particular, these are equivalent to K being sequentially
+                                                               compact ‘in itself’, i.e. as a metric subspace of E.
+                        lim xnk ∈ K.
+                       k→∞
+                                                               Proof. The equivalence of (i) and (ii) follows from the fact
+Since (xn) converges to a, this implies that                   that, for any sequence (zi)i∈N in K and element p ∈ K,
+                     a = lim xnk ∈ K.
+                          k→∞                                     d(zi, p) → 0 as i → ∞ ⇐⇒ d(z
+                                                                                           e i, p) → 0 as i → ∞.
+
+Thus K is closed.
+    (b) Suppose for a contradiction that K is unbounded.
+Then we may recursively define a sequence (xn) in K as fol-    Remark. (Sequential compactness is intrinsic)
+lows: let x1 ∈ K (being supposedly unbounded, K is cer-        The theorem is a statement of the intrinsic nature of the
+tainly nonempty), and for k ∈ N, let xk+1 ∈ K be such that     property of sequential compactness. This contrasts sharply
+      distXk (xk+1) ≥ 1 where Xk := {x1, x2, . . . , xk }      with the properties of ‘openness’ and ‘closedness’, where it
+                                                               can easily depend on the reference metric space. [For ex-
+(such an element xk+1 exists by the assumed unboundedness      ample, let E be the metric space [0, 1[ viewed as a metric
+of K). Then, for n, p ∈ N, d(xn+p, xn) ≥ 1, so (xn) can        subspace of R. Then [0, 1[ is both open and closed in E,
+have no convergent subsequence, contradicting the sequential   but[0, 1[ is neither open nor closed in R.]
+compactness of K. Thus K is bounded.
+
+
+                              4                                                              5
+
+
+
+
+Proposition. (Seq. compactness implies completeness)           Proposition. (Seq. compactness and closedness)
+Let E be a sequentially compact metric space. Then E is        Let F ⊂ E, for a sequentially compact metric space E. Then
+complete.                                                      TFAE:
+
+Proof. Let (xn) be a Cauchy sequence in E. Then, by              (i) F is closed.
+sequential compactness, (xn) has a convergent subsequence       (ii) F is sequentially compact.
+(xnk ). Being a Cauchy sequence with a convergent subse-
+quence, (xn) itself converges. Thus E is complete.             Proof. In Proposition (Seq. compact implies closed and
+                                                               bounded), we already established that (ii) implies (i). Sup-
+Corollary. (Seq. compactness implies completeness)             pose therefore that (i) holds. Let (xn) be a sequence in F ;
+Let K be a sequentially compact set of a metric space E, and   we must show that this has a subsequence which converges
+let Ke denote K viewed as a metric subspace of E. Then K   e
+                                                               with limit in F . Since (xn) is a sequence in E, which is se-
+is complete.                                                   quentially compact, (xn) has a convergent subsequence (xni ).
+                                                               But (xni ) is a sequence in F and F is closed, so lim xni ∈ F .
+Proof. By Theorem (Sequential compactness is intrinsic)
+                                                               This shows that F is sequentially compact, so (ii) holds.
+Ke is sequentially compact, and so complete by the proposi-
+tion.
+
+
+
+
+                              6                                                              7
+Exercise. (Seq. compactness under union and intersection)
+Let A, B ⊂ E for a metric space E.Show that:
+ (a) A ∪ B is sequentially compact if A and B are;
+ (b) A ∩ B is sequentially compact if A and B are;
+ (c) A is sequentially compact if A is finite.
+
+
+
+
+                              8                                                              9
+
+
+
+
+Sequential compactness under continuity                         Theorem. (Sequential compactness under continuous maps)
+Before tackling the next result we make two observations:
+                                                                Let f ∈ C(E; E ′) for metric spaces E and E ′, and let K ⊂ E
+ (a) a continuous image of a bounded set need not be bounded,   be sequentially compact. Then the direct image f (K) is se-
+                                                                quentially compact.
+and
+ (b) a continuous image of a closed set need not be closed.
+
+Examples are easy to come by. For instance,
+
+              ]− π/2, π/2[ → R,           s 7→ tan s
+
+defines a homeomorphism from a bounded metric space onto
+an unbounded one, and
+                                           1
+                  [0, ∞[→ R,       t 7→
+                                          1+t
+defines a continuous injection with non-closed range ]0, 1].
+
+Remark.
+One of the reasons why sequential compactness is so impor-
+tant is the force of the following result.
+
+
+
+
+                              10                                                            11
+Proof. Let (yn) be a sequence in f (K). Then, for each            Exercise. (Continuous R-valued functions on sequentially com-
+n ∈ N there is xn ∈ K such that f (xn) = yn. Since K              pact sets attain their bounds)
+is sequentially compact (xn) has a convergent subsequence         Let f ∈ C(E; R) for a metric space E and let K ⊂ E be
+(xnk ) such that                                                  sequentially compact. Show that there are points p, q ∈ K
+                    a := lim xnk ∈ K.                             such that
+                          k→∞
+By the (sequential) continuity of f ,                                       f (p) ≤ f (x) ≤ f (q)      for all x ∈ K.
+
+              ynk = f (xnk ) → f (a) as k → ∞.                    [HINT: As usual you should use Proposition (Approximation
+                                                                  of suprema), or its sequence counterpart. You can also use
+Thus (yn) has a convergent subsequence (ynk ) and                 ideas from the proof of Proposition/Exercise (Realisation of
+                       lim ynk ∈ f (K).                           diam and dist for compacts).]
+
+Hence f (K) is sequentially compact.
+
+
+
+
+                              12                                                                13
+
+
+
+
+Theorem. (Cts. bijection from seq. compact ≡ homeom.) Let         Corollary. (Compactness is topological)
+f ∈ C(E; E ′) for metric spaces E and E ′. Suppose that f         Let d1 and d2 be topologically equivalent metrics on a set S,
+is bijective and E is sequentially compact. Then                  and let A ⊂ S. Then A is d1-sequentially compact if and
+ (a) f is a homeomorphism                                         only if A is d2-sequentially compact.
+
+ (b) E ′ is sequentially compact too.                             Proof. The theorem applies with E = A     e1 and E ′ = Ae2,
+Proof.                                                            where, for i = 1, 2, Ai is A viewed as a metric subspace of
+                                                                                       e
+   (a) Set g be the inverse function of f . We must show          (S, di), and f = idA : E → E ′.
+that g is continuous. To prove this we use Exercise (Conti-
+nuity via closed sets). Thus let F ⊂ E be closed; we must         Since the norm-metrics {dp : p ∈ [1, ∞]} on RN are all
+show that g −1(F ) is closed in E ′. Since g is bijective with    Lipschitz equivalent, we have the following result.
+inverse function f , the inverse image g −1(F ) coincides with    Corollary. (Compactness in ℓp(N ) ≡ compactness in ℓq (N ))
+the direct image f (F ). Being a closed set of the sequentially
+compact space E, F is sequentially compact and so f (F ) is       Let K ⊂ RN . Then TFAE:
+sequentially compact too, by Theorem (Continuous image of
+a compact is compact), and thus closed in E ′, as required.         (i) K is sequentially compact in ℓq (N ) for some q ∈ [1, ∞].
+   (b) Since E ′ = f (E) and f is continuous, (b) holds by
+Theorem (Continuous image of compact is compact).                  (ii) K is sequentially compact in ℓp(N ) for all p ∈ [1, ∞].
+
+Example. (Homeomorphism ̸≡ continuous bijection)                  Remark. Recall that, for a set S which has topologically
+Let deand d be the discrete and usual metric on R respectively,   equivalent metrics d1 and d2, and a subset A of S, A is
+and let f be the identity function from (R, d)
+                                            e to (R, d). Then     d1-closed if and only if A is d2-closed. Also, if d1 and d2 are
+f is continuous (because every function from a discrete metric    Lipschitz equivalent then A is d1-bounded if and only if A is
+space into another metric space is) and bijective. However        d2-bounded.
+its inverse is not continuous because, for example, singleton
+sets are open in (R, d)
+                      e but are certainly not open in (R, d)!
+
+                              14                                                                15
+                                                                                                                               (n)
+Compactness under products                                          Proof. 1. Let (x(n)) be a sequence in E. Then (x1 ) is a
+                                                                                                                       (n)
+Theorem. (Compactness under countable products)                     sequence in E1. Since E1 is sequentially compact (x1 ) has
+                                                                                       (n1 )
+Let E1 = (S1, d1), E2 = (S2, d2), · · · be sequentially compact     a subsequence (x1 j )j∈N which converges, with limit a1 say.
+                                                                                                                         1 
+metric spaces. Let                                                      2. Consider the corresponding subsequence x(nj ) j∈N of
+                                                                                                                   (n1 )
+                                                                     x(n) . By the sequential compactness of E2, (x2 j )j∈N has a
+                                                                          
+                      S := S1 × S2 × · · ·
+                                                                                    (n2 )
+and let d be the metric on S given by                               subsequence (x2 k )k∈N which converges, to a2 say. Note that
+                                                                    also
+                                                                                       (n2 )
+                             X
+                  d(x, y) :=    d′k (xk , yk )                                        x1 k → a1 as k → ∞.
+                                k≥1
+                                                                       3. Continuing in this way, we obtain successive subse-
+where, for each k, d′k is a metric on Sk topologically equivalent   quences of (x(n)) :
+to dk such that                                                                                    1      1          1
+                     X                                                                         x(n1), x(n2), x(n3), · · ·
+                           d′k - diam Sk < ∞.                                                      2      2          2
+                                                                                               x(n1), x(n2), x(n3), · · ·
+                     k≥1                                                                           3      3
+                                                                                               x(n1), x(n2), · · ·
+Then E := (S, d) is sequentially compact.                                                      ..
+
+Remark.
+This is a countable and metric version of a central theorem
+of General Topology, the so-called Tychonoff Theorem.
+
+
+
+
+                                16                                                                        17
+
+
+
+
+   4. Following Cantor, we extract from this array the diag-        Corollary. (Baby Tychonoff Theorem)
+onal subsequence                                                    Let E1 = (S1, d1), · · · , EN = (SN , dN ) be metric spaces. Let
+                           1    2      3                            E := (S, d) where
+                     x(n1), x(n2), x(n3), . . .
+                                                  k                                            S = S1 × · · · × SN
+of x(n), and note that, for each i ∈ N, (x(nk ))k≥i is a subse-
+              i
+quence of (x(nk ))k≥i, thus                                         and d is the metric on S given by
+          (nk )                                                               d(x, y) := d1(x1, y1) + · · · + dN (xN , yN ),
+        xi k → ai as k → ∞, for all i = 1, 2, · · ·
+We now appeal to Proposition (Convergence in product spaces).       and let
+                    k                                                                       A = A1 × · · · × AN
+This implies that xnk → a as k → ∞ where a = (ai) ∈ E.
+Thus E is sequentially compact.                                     where, for i = 1, · · · , N , Ai is sequentially compact in Ei.
+                                                                    Then A is sequentially compact.
+Minor adjustment to the above proof yields a proof of the
+following result.                                                   Proof. Let A     e denote A viewed as a metric subspace of
+                                                                    E. Then A = A1 × · · · × A
+                                                                               e     f          fN where, for i = 1, · · · , N , A
+                                                                                                                                 ei
+Theorem. (Compactness under finite products)                        is Ai with metric di := di|Ai×Ai , so that each Ai is sequen-
+                                                                                        e                           e
+Let E1 = (S1, d1), · · · , EN = (SN , dN ) be a finite sequence     tially compact by Theorem (Compactness is intrinsic). Thus
+of sequentially compact metric spaces. Let                          Ae is sequentially compact by Theorem (Compactness under
+                                                                    finite products), so A is sequentially compact by Theorem
+                  S := S1 × S2 × · · · × SN
+                                                                    (Compactness is intrinsic).
+and let d be the metric on S given by
+          d(x, y) := d1(x1, y1) + · · · + dN (xN , yN ).
+Then E := (S, d) is sequentially compact.
+
+                                18                                                                        19
+Example. (Sequential compactness of the Cantor space C)          Proposition. (Realisation of diam and dist for compacts)
+Let C be the metric space consisting of {0, 1}N, the set of      Let K be a sequentially compact subset of a metric space E,
+{0, 1}-valued sequences, with metric given by                    and let p ∈ E.
+                             ∞
+                             X                                    (a) There are a, b ∈ K such that d(a, b) = diam K.
+                d(x, y) :=         2−n|yn − xn|.
+                             n=1                                  (b) There is c ∈ K such that d(c, p) = distK (p).
+Here we are viewing {0, 1} as a metric subspace of R.            Proof.
+    Notice that the subspace metric on {0, 1} is precisely the      (a) By the definition of diameter and Proposition (Ap-
+discrete metric on the set {0, 1}).                              proximation
+    Being finite, {0, 1} is sequentially compact.                            of suprema by sequences), there is a sequence
+                                                                  (an, bn) in K × K such that d(an, bn) → diam K. By the
+    Since, for each n ∈ N,                                       sequential compactness of K × K, there is a subsequence
+                   dn(u, v) := 2−n|v − u|                         (ani , bni ) converging to an element (a, b) of K × K. Thus
+
+defines a metric (on R, and thus also) on {0, 1}, which is                   d(a, b) = lim d(ani , bni ) = diam K.
+                                                                                       i→∞
+(Lipschitz) equivalent to the standard metric on R, it follows
+that C is sequentially compact by Theorem (Compactness              (b) Exercise.
+under countable products).
+                                                                 Exercise. (Realisation of distance for compacts)
+                                                                 Prove part (b) of Proposition (Realisation of diameter and
+                                                                 distance for compacts).
+
+
+
+
+                              20                                                              21
+
+
+
+
+Heine–Borel Theorem                                              Remarks. (Independence of p)
+Exercise. (Boundedness implies boxed)                             (a) Recall the basic inequalities
+Let A ⊂ RN . Show that TFAE:
+                                                                               ∥x∥p ≤ N 1/p∥x∥∞ and ∥x∥∞ ≤ ∥x∥p             (⋆)
+                                           ∞
+  (i) A is bounded in the metric space ℓ (N ), in other words
+      d∞-diam(A) < ∞.                                                 for N ∈ N, p ∈ [1, ∞[ and x ∈ RN .
+
+ (ii) ∃L≥0 : A ⊂ [−L, L]N .                                       (b) As seen earlier, these inequalities imply that the norm-
+                                                                      metrics dp (p ∈ [1, ∞]) are all Lipschitz equivalent.
+                                                                  (c) Therefore, by Corollary (Compactnes is topological),
+                                                                      for any subset A of RN ,
+
+                                                                      A is sequentially compact in ℓp(N ) for some p ∈ [1, ∞]
+
+                                                                      if and only if
+
+                                                                       A is sequentially compact in ℓq (N ) for all q ∈ [1, ∞].
+
+                                                                      The same goes for openness/closedness of A.
+                                                                  (d) Also, by (⋆) and Corollary (Boundedness, openness and
+                                                                      closedness in ℓp(N )),
+
+                                                                            A is bounded in ℓp(N ) for some p ∈ [1, ∞]
+
+                                                                      if and only if
+
+                                                                             A is bounded in ℓq (N ) for all q ∈ [1, ∞].
+
+                              22                                                              23
+Theorem. (Heine–Borel Theorem)                  Proof. The remarks ensure that propositions (i) and (ii)
+Let A ⊂ RN and let p, q ∈ [1, ∞]. Then TFAE:    are independent of p, respectively q. We already know that
+                                                (ii) implies (i) when p = q. Therefore (ii) implies (i).
+  (i) A is closed and bounded in ℓp(N ).             (i) ⇒ (ii): Suppose that (i) holds. By the independence of
+ (ii) A is sequentially compact in ℓq (N ).     p, A is ℓ∞-bounded. Thus, by Exercise (Boundedness implies
+                                                boxed), there is L ≥ 0 such that
+                                                                       A ⊂ [−L, L]N .
+                                                Set K = [−L, L]N . By the Bolzano-Weierstrass Theorem,
+                                                [−L, L] is sequentially compact in R. It follows from the
+                                                Baby Tychonoff Theorem that the product set K is sequen-
+                                                tially compact in ℓ1(N ).
+                                                    Now we have A ⊂ K ⊂ ℓ1(N ), with K sequentially
+                                                compact and A closed. Therefore A is sequentially compact
+                                                in ℓ1(N ) too, and so (ii) holds, by independence of q.
+
+                                                Remark.
+                                                The classical Heine–Borel Theorem differs in two ways from
+                                                the above. Namely, the classical result
+                                                    is stated for the Euclidean case, where p = q = 2,
+
+                                                and
+                                                    is given in terms of a purely topological notion of com-
+                                                      pactness, rather than the metric space notion of sequen-
+                                                      tial compactness.
+
+                              24                                              25
+
+
+
+
+Example. (Closed balls and spheres in RN )      Corollary. (Images of closed and bounded subsets of RN )
+In ℓp(N ), the closed balls and spheres         Let f : RN → E be a continuous function into a metric space
+                     p                p         E and let A ⊂ RN be closed and bounded (both statements
+                  Brℓ (N )[a] and Srℓ (N )[a]   being with respect to the standard Euclidean metric). Then
+are compact.                                    the direct image f (A) is closed and bounded in E.
+
+                                                Proof. By the Heine–Borel Theorem A is sequentially com-
+                                                pact and so f (A) is sequentially compact, by Theorem (Con-
+                                                tinuous image of compact is compact). Therefore f (A) is
+                                                closed and bounded, by Proposition (Compact implies closed
+                                                and bounded).
+
+                                                Remark.
+                                                Let f be as in the Corollary. Then there are x, y ∈ A such
+                                                that                        
+                                                              d f (x), f (y) = diam Ran f |A.
+                                                Why is that?
+
+
+
+
+                              26                                              27
+Cantor’s middle thirds set                                                    Lemma. (Representation of the elements of Z)
+                                                                              The following hold.
+Let I denote the unit interval [0, 1] and define a decreasing
+                                                                               (a) LN = 2 N
+                                                                                           P            n
+sequence of closed and bounded subsets of R recursively as                                      n=1 cn /3 : c1 , . . . , cN ∈ {0, 1} , for N ∈
+follows:                                                                           N.
+     Z0 = I and, for n ∈ N, Zn = α(Zn−1) ∪ β(Zn−1),                            (b) Z = 2 ∞
+                                                                                         P            n
+                                                                                              n=1 cn /3 : c1 , c2 , · · · ∈ {0, 1} .
+for the functions
+                      x                       x 2                             Remark.
+    α : I → I, x 7→      and β : R → R, x 7→ + .                              (b) says that the Cantor middle thirds set consists precisely
+                      3                       3 3
+                                                                              of those real numbers between 0 and 1 having a base three
+Then Z := ∞
+          T
+            n=1 Z n is the Cantor middle thirds set.
+                                                                              expansion involving only the digits 0 and 2.
+Remarks.
+1. For each n ∈ N, Zn is a disjoint union of the sets α(Zn−1)
+and β(Zn−1); Zn is also a disjoint union of 2n closed intervals
+each of length 1/3n.
+    2. Since, for each n ∈ N, all 2n of the intervals which
+make up Zn are closed, Zn itself is closed. Thus Z itself
+is closed too. [Here we are appealing to the fact that finite
+unions of closed sets are closed, and arbitrary intersections of
+closed sets are closed.]
+    3. Set L := ∞
+                    S                     S∞
+                      n=1 Ln and E :=        n=1 En where, for
+each n ∈ N, Ln and En denote the sets of left endpoints,
+respectively all endpoints, of the intervals which make up
+Zn. Thus Z ⊃ E and E is the countable set
+               n      1 2 1 2 7 8             o
+                 0, 1, , , , , , , · · · .
+                      3 3 9 9 9 9
+                                    28                                                                        29
+
+
+
+
+Proof.                                                                           (b) Set Ze := RHS(b). First let z ∈ Z. Define a sequence
+     (a) For N = 1 this is true; the common set is {0, 2/3}.                  (zn) in L as follows. For each n ∈ N, let zn be the left
+Suppose that it is true for N = n. Then, by definition and a                  endpoint of the unique subinterval of Zn containing z; thus
+little thought,
+                                                                                        zn ∈ Ln, 0 ≤ zn ≤ z and z − zn ≤ 1/3n,
+        1       1           2
+  Ln+1 = Ln ∪ Ln +                                                            so zn → z as n → ∞. Also, setting z0 := 0, for all n ∈ N,
+        3       3           3
+             n
+        n X      ck          0                                    o
+                                                                                              zn − zn−1 ∈ 0, 2/3n ,
+                                                                                                          
+       = 2               +         : c 1 , . . . , c n  ∈    {0, 1}
+                 3k+1 3
+            k=1
+                    n                                                         so zn − zn−1 = 2 cn/3n for some cn ∈ {0, 1}. Thus,
+            n  X           dk        1                                  o
+          ∪ 2                     +          : d 1 , . . . , d n ∈ {0, 1}                            ∞
+                          3k+1 3                                                z = lim zn = z0 +
+                                                                                                     X
+                                                                                                            (zk − zk−1)
+                   k=1
+           n+1                                                                       n→∞
+        n X    ej                                         o                                           k=1
+       = 2        : e   , . . . , e        ∈   {0,   1}      ,                                              n                    ∞
+                      1             n+1
+               3j
+                                                                                                            X                    X
+           j=1                                                                                 = 0 + lim          2 ck /3k = 2         ck /3k ∈ Z.
+                                                                                                                                                e
+                                                                                                    n→∞
+                                                                                                            k=1                  k=1
+so it is true for N = n + 1. Hence, by induction it holds for
+all N ∈ N.                                                                    Therefore Z ⊂ Z.
+                                                                                            e
+                                                                                 The reverse inclusion follows easily from the following
+                                                                              three facts:
+
+                                                                                (i) L ⊂ Z;
+                                                                               (ii) Z is closed;
+                                                                               (iii) Ze ⊂ L.
+
+
+
+                                    30                                                                        31
+Definition. (Cantor middle thirds set)                               Theorem. (Remarkable properties of the Cantor set)
+The Cantor middle thirds set is the subset Z of the unit
+                                                                      (a) Z is sequentially compact.
+interval I of R described above. Let de be the metric on Z
+induced by the standard metric on R.                                  (b) (Z, d)
+                                                                              e and C are homeomorphic.
+
+   Recall the Cantor space C, namely the set {0, 1}N with             (c) Z is uncountable
+metric given by
+                                                                      (d) Z is nowhere dense in R.
+                                 ∞
+                                 X |yn − xn|
+                   d(x, y) :=                  .                      (e) Length Z = 0.
+                                 n=1
+                                       2n
+                                                                     Remarks.
+                                                                     Cantor’s middle thirds set Z is thus set-theoretically big but
+                                                                     both topologically and metrically small. It has many other
+                                                                     remarkable features—not least the fractal property
+                                                                                                         log 2
+                                                                                             dim Z =           ,
+                                                                                                         log 3
+                                                                     showing that, from another metric point of view, it is not too
+                                                                     small.
+                                                                         The precise meaning of ‘length’ here is Jordan content.
+                                                                     Length zero, for a subset A of R, means the following: for all
+                                                                     ε > 0, A is contained in a finite union of intervals the sum
+                                                                     of whose lengths is less than ε.
+                                                                         The precise meaning of ‘dimension’ here is beyond this
+                                                                     course; it is discussed further in Topology and Fractals.
+
+
+                                 32                                                                 33
+
+
+
+
+Proof.                                                                  We next show that ϕ is continuous. For x, y ∈ {0, 1}N,
+                                                                                                ∞
+    (a) Since Z is closed and bounded, it is sequentially com-                                 X    yn − x n
+pact by the Heine–Borel Theorem (or, more simply, since it                 |ϕ(y) − ϕ(x)| = 2
+                                                                                               n=1
+                                                                                                       3n
+is a closed subset of I which is sequentially compact by the                                   ∞
+Bolzano-Weierstrass Theorem). We have already established
+                                                                                              X    |yn − xn|
+                                                                                         ≤2
+the sequential compactness of the Cantor space C.                                             n=1
+                                                                                                       3n
+    (b) By Lemma (Representation of the elements of Z), it                                     ∞
+                                                                                              X    |yn − xn|
+follows that the map                                                                     ≤2                  = 2 d(x, y).
+                                            ∞                                                 n=1
+                                                                                                       2n
+                                           X   xn
+             ϕ : {0, 1} → Z, (xn) 7→ 2
+                       N
+                                                                     Thus ϕ is Lipschitz, and thus continuous.
+                                           n=1
+                                                3n
+                                                                         Being a continuous bijection from C, which is sequentially
+is surjective. To see that ϕ is injective too, and thus bijective,   compact, to (Z, d),
+                                                                                       e it follows from Theorem (Continuous bi-
+let x, y ∈ {0, 1}N with x ̸= y. Then (appealing to the well-         jection from compact) that ϕ is a homeomorphism.
+orderedness of N) set                                                    (c) By Cantor’s Theorem and its ramifications, we know
+                                                                     that {0, 1}N is uncountable (it is bijective with P(N)) so, by
+                  N := min{n ∈ N : xn ̸= yn}.                        (b), Z is uncountable too.
+By symmetry we may suppose    that xN = 0 and yN = 1.                    (d) Let J be an open subinterval of R, and let L be its
+Then ϕ(x) ̸= ϕ(y) since ∞
+                       P
+                            3 −k
+                                 = 3/2 < 3 so                        length. Choose N ∈ N sufficiently large that 1/3N < L.
+                        k=0
+                                                                     Then, since ZN consists
+                                                                                      T        of intervals of length 1/3N , J ̸⊂ ZN .
+           N −1          ∞                                           Thus J ̸⊂ Z = Zn. It follows that Int Z = ∅. Since Z is
+           X   xn     X xn
+ϕ(x) = 2         n
+                   +2                                                closed this means that Z is nowhere dense in R.
+               3        3n
+           n=1         n=N +1                                            (e) Since Zn consists of 2n disjoint intervals of length 1/3n,
+           N −1               ∞             N −1
+           X   xn        N +1
+                              X xk+N +1     X    xn    2                                                    2n
+     ≤2          n
+                   + 2/3            k
+                                        < 2        n
+                                                     + N ≤ ϕ(y),         0 ≤ Length Z ≤ Length Zn =            , for each n ∈ N.
+           n=1
+               3                  3         n=1
+                                                 3    3                                                     3n
+                                k=0
+
+Thus ϕ is bijective.                                                 Thus Length Z = 0.
+
+                                 34                                                                 35
+                                                                  Exercise. 6.1 (Compactness under union and intersection)
+                                                                  Let A, B ⊂ E for a metric space E. Show that:
+                                                                   (a) A ∪ B is sequentially compact if A and B are;
+                                                                   (b) A ∩ B is sequentially compact if A and B are;
+                                                                   (c) A is sequentially compact if A is finite.
+                                                                                                                       [10 marks]
+
+                                                                  Exercise. 6.2 (Realisation of distance for compacts)
+                                                                  Prove part (b) of Proposition (Realisation of diameter and
+                                                                  distance for compacts).
+Exercises for Section 6
+                                                                  Exercise. 6.3 (Continuous R-valued functions on sequentially
+                                                                  compact sets attain their bounds)
+                                                                  Let f ∈ C(E; R) for a metric space E and let K ⊂ E be
+                                                                  sequentially compact. Show that there are points p, q ∈ K
+                                                                  such that
+
+                                                                            f (p) ≤ f (x) ≤ f (q)     for all x ∈ K.
+
+                                                                  [HINT: As usual you should use Proposition (Approximation
+                                                                  of suprema), or its sequence counterpart. You can use ideas
+                                                                  from the proof of Proposition (Realisation of diam and dist
+                                                                  for compacts).]
+
+
+
+
+                              36                                                               37
+
+
+
+
+Exercise. 6.4 (Boundedness implies boxed)                         Exercise. 6.8 (Diameters of tails of Cauchy sequences)
+Let A ⊂ RN . Show that TFAE:                                      Let (xn) be a sequence in a metric space E and, for each
+  (i) A is bounded in the metric space ℓ∞(N ), in other words     n ∈ N, set Xn := {xk : k ≥ n}. Show that TFAE:
+      d∞-diam(A) < ∞.                                               (i) (xn) is Cauchy
+ (ii) ∃L≥0 : A ⊂ [−L, L]N .
+                                                                   (ii) diam Xn → 0 as n → ∞.
+                                                                                                                       [10 marks]
+Exercise. 6.5 (lim xn → a =⇒ {a} ∪ {xn : n ∈ N} closed)
+Let (xn) be a sequence in a metric space E which converges,       Exercise. 6.9 (Pseudo-metric to metric) 6.9
+with limit a. Show that the set                                   For a set S, let ρ : S × S → [0, ∞[ be a map satisfying all
+                  C := {a} ∪ {xn : n ∈ N}                         of the conditions for being a metric except (MS1b) (Definite-
+                                                                  ness).
+is closed.
+[HINT: Show that E \ C is open.]                    [10 marks]     (a) Show that
+Exercise. 6.6 (Continuity under composition)                                             x ∼ y if ρ(x, y) = 0
+Let f ∈ C(E; E ′) and g ∈ C(E ′; E ′′) for metric spaces E, E ′        defines an equivalence relation on S.
+and E ′′. Show that g ◦ f ∈ C(E; E ′′).              [5 marks]
+                                                                   (b) Show that there is a well-defined metric d on the quo-
+Exercise. 6.7 (Identity Theorem)                                       tient space S/∼ satisfying
+Let f, g ∈ C(E; E ′) for metric spaces E and E ′.                                        
+                                                                               d [x], [y] = ρ(x, y) for all x, y ∈ S.
+ (a) Show that the set
+                      {x ∈ E : f (x) = g(x)}
+                                                                                                   R
+                                                                   (c) In the case where ρ(f, g) := |g − f | on the space of
+     is closed.                                                        Riemann integrable functions on an interval [a, b], give
+                                                                       examples where ρ(f, g) = 0 but g ̸= f , and describe
+ (b) Suppose that f and g agree on a dense subset of E.                the quotient space and metric d induced as above.
+     Show that f = g.                        [10 marks]
+
+                              38                                                               39
+

@@ -1,0 +1,86 @@
+                               MATH6310 Coursework 4
+                                              Sai Vanam
+
+
+Q4.2
+
+Let E be a metric space with metric d, let V ⊆ E be open, and let F ⊆ E be finite. Put U = V \ F .
+We show that U is open using the open-ball definition.
+If U = ∅, then U is open. Otherwise, take any p ∈ U . Since p ∈ V and V is open, there exists
+r > 0 such that
+                                        BrE (p) ⊆ V.
+If F = ∅, then U = V and there is nothing more to prove. Hence suppose F ̸= ∅, and write
+F = {a1 , . . . , am }.
+Since p ∈
+        / F , we have d(p, ai ) > 0 for every i = 1, . . . , m. As there are only finitely many of these
+distances, their minimum
+                                          δ := min d(p, ai )
+                                               1≤i≤m
+
+is strictly positive. Define
+                                          t := min{r, δ} > 0.
+We claim that BtE (p) ⊆ U .
+Let x ∈ BtE (p). Then d(x, p) < t ≤ r, so x ∈ BrE (p) ⊆ V . Also, if x ∈ F , then x = ai for some i,
+and symmetry gives
+                                    d(x, p) = d(p, ai ) ≥ δ ≥ t,
+contradicting d(x, p) < t. Therefore x ∈
+                                       / F , and hence x ∈ V \ F = U .
+For every p ∈ U , we have found t > 0 such that BtE (p) ⊆ U . Thus U is open.
+
+
+
+
+                                                   1
+Q5.7
+
+Let (xn ) be a sequence in a metric space E with metric d.
+(a)
+We show that (xn ) is Cauchy if and only if
+
+                             ∀ε > 0 ∃N ∈ N ∀n ≥ N :           d(xN , xn ) < ε.
+
+Suppose (xn ) is Cauchy. Given ε > 0, there exists N ∈ N such that
+
+                                 d(xm , xn ) < ε        for all m, n ≥ N.
+
+Taking m = N gives d(xN , xn ) < ε for every n ≥ N , proving the stated condition.
+Suppose the stated condition holds. Given ε > 0, apply this condition with ε/2 to obtain N ∈ N
+such that
+                                             ε
+                               d(xN , xn ) <      for every n ≥ N.
+                                             2
+For any m, n ≥ N , the triangle inequality and symmetry give
+                                                                      ε ε
+                          d(xm , xn ) ≤ d(xm , xN ) + d(xN , xn ) <    + = ε.
+                                                                      2 2
+Therefore (xn ) is Cauchy, as required.
+(b)
+We show that (xn ) is not Cauchy if and only if it has a subsequence (xnk ) satisfying
+
+                                    inf{d(xnk , xnk+1 ) : k ∈ N} > 0.
+
+Suppose (xn ) is not Cauchy. By part (a), the condition stated in part (a) fails. Negating its
+quantifiers gives
+                         ∃ε0 > 0 ∀N ∈ N ∃n ≥ N : d(xN , xn ) ≥ ε0 .
+We construct strictly increasing indices recursively. Set n1 = 1. Given nk , apply the displayed
+statement with N = nk to choose nk+1 ≥ nk such that
+
+                                          d(xnk , xnk+1 ) ≥ ε0 .
+
+Since d(xnk , xnk ) = 0 < ε0 , this choice necessarily has nk+1 > nk . Thus (xnk ) is a subsequence, and
+
+                                 inf{d(xnk , xnk+1 ) : k ∈ N} ≥ ε0 > 0.
+
+Suppose the displayed infimum is strictly positive and denote this infimum by η > 0. If (xn ) were
+Cauchy, there would be N ∈ N such that d(xm , xn ) < η/2 for all m, n ≥ N . Choose k with nk ≥ N ;
+then nk+1 > nk ≥ N , giving
+                                                            η
+                                       η ≤ d(xnk , xnk+1 ) < ,
+                                                            2
+a contradiction. Therefore (xn ) is not Cauchy.
+
+
+
+
+                                                    2
+

@@ -1,0 +1,1710 @@
+MATH6321 | Original notes: pages 1–28                                              Sai Vanam | Lesson 1
+
+
+Scope and navigation
+
+
+Start here: what does page 28 include?
+
+  MATH6321 Mathematical Cryptography | A detailed walkthrough
+
+  Original lecture notes, printed pages 1–28
+  Prepared for Sai Vanam
+  This walkthrough explains the mathematical content in order, using simpler language, complete
+  intermediate steps, source examples, and practice with immediate model answers. It covers all of
+  Chapter 1, all of Chapter 2, and Section 3.1 through the period bound on printed page 28.
+  Page convention: the original PDF has a cover and two contents pages before printed page 1.
+  Therefore printed page 28 is PDF-viewer page 31. PDF-viewer page 28 is printed page 25, so its
+  content is included too. The characteristic-polynomial period theorem begins on printed page 29
+  and is outside this walkthrough.
+
+  Method: A route through the ideas
+
+   Original pages         What you should understand
+   1–4                    Encryption maps, keys, Caesar, substitutions, frequency analysis
+   5–6                    Repeating Vigenere shifts and Kasiski spacings
+   7–8                    One-time pads, perfect secrecy and reuse
+   9–12                   Partial ciphertexts, IoC, identifying key lengths
+   12–15                  Mutual IoC, relative key equations, the DICKENS example
+   16–19                  Enigma signal path and counting its settings
+   20–24                  Conjugation, cribs, loops and attack filtering
+   25–27                  XOR, LFSRs, stream encryption and good/bad choices
+   28                     Periods, repeated states and the 2n − 1 bound
+
+
+  Exam tip: How the exam guidance affects these pages
+  The supplied exam information says proofs are not examinable and the Attacking Enigma section is
+  excluded. It is still explained here because you requested all content through page 28. The reasons
+  behind formulas help understanding; they do not add an exam memorisation requirement. Reading
+  alone is insufficient: cover each model answer and attempt the preceding question first.
+
+
+
+
+                                                  1
+MATH6321 | Original notes: pages 1–28                                             Sai Vanam | Lesson 2
+
+
+Printed page 1
+
+
+Encryption is a reversible rule with a key
+
+  The four objects in the definition
+  A plaintext is a readable message m, chosen from a message set M . A ciphertext is the encrypted
+  result c, in a ciphertext set C. A key k selects one encryption rule from a family. The encryption
+  map is ek : M → C; the decryption map reverses its outputs.
+
+                                   c = ek (m),    dk (ek (m)) = m.
+
+  The identity dk ◦ ek = idM means: apply encryption first, then decryption, and recover every
+  original message. Composition is read right to left. The subscript k matters because a different
+  key usually chooses a different map.
+  The encryption map must be injective on the permitted messages: if ek (m1 ) = ek (m2 ), applying
+  decryption gives m1 = m2 . Otherwise the receiver could not tell which of two plaintexts had been
+  sent. When the two finite sets have equal size, injectivity makes the map a bijection.
+
+  Worked example: Why a replacement must have an inverse
+  Suppose both A and B encrypted to X under the same fixed key. Receiving X would leave two
+  possible plaintext letters, so no function dk could always reverse the operation. A substitution
+  permutation avoids this: each encrypted letter has one unique predecessor.
+
+  What the attacker is assumed to know
+  The notes emphasise keeping the key secret. A sound analysis normally allows the attacker to
+  know the algorithm: its security should not depend on nobody discovering the rule. For example,
+  an attacker can know that a Caesar cipher was used while not knowing its shift. Later public-key
+  ideas do not remove the need to protect private keys, but they lie beyond the present page range.
+
+  Exam-style question Check your understanding
+  What is wrong with saying that decryption only has to recover one particular example correctly?
+
+  Model answer Check your understanding
+  A scheme’s correctness condition must hold for every permitted plaintext under the given key.
+  Reversing one example only checks one input; a map that loses information elsewhere would still
+  fail to define reliable decryption.
+
+
+
+
+                                                  2
+MATH6321 | Original notes: pages 1–28                                                  Sai Vanam | Lesson 3
+
+
+Printed page 2
+
+
+Caesar: addition and subtraction modulo 26
+
+  Turn letters into clock positions
+
+  Use A = 0, B = 1, . . . , Z = 25. A Caesar key k ∈ {0, . . . , 25} encrypts by c ≡ m + k (mod 26) and
+  decrypts by m ≡ c − k (mod 26). Modulo 26 means keeping the remainder on division by 26, so
+  the alphabet wraps around.
+  The notes use key 3 in their first example. For instance O has value 14, and 14 + 3 = 17 gives R.
+  M has value 12 and becomes P, while G has value 6 and becomes J. Thus OMG becomes RPJ.
+
+  Worked example: A wraparound calculation
+
+  Encrypt XYZ with k = 3. Values (23, 24, 25) become (26, 27, 28), whose residues are (0, 1, 2), giving
+  ABC. To reverse, subtract 3: (0, 1, 2) − (3, 3, 3) = (−3, −2, −1) ≡ (23, 24, 25).
+  Negative intermediate values are normal. For example −3 ≡ 23 (mod 26), because adding a
+  complete cycle of 26 does not change a residue.
+
+  Method: The source exercise: why decryption works
+  For every m,
+                               dk (ek (m)) ≡ (m + k) − k ≡ m      (mod 26).
+  This verifies Exercise 1.3. In a practical computation, calculate one letter at a time and preserve
+  spaces if the convention leaves them untouched. There are only 26 candidate keys, so an attacker
+  can test every shift and inspect which complete message is plausible.
+
+  Exam-style question Check your understanding
+  Encrypt MATH with key 5 and explain why a huge message does not create a huge key space.
+
+  Model answer Check your understanding
+
+  (12, 0, 19, 7) + (5, 5, 5, 5) = (17, 5, 24, 12), giving RFYM. The same one-number key controls the whole
+  message, so there are still only 26 choices, independent of its length. A longer English ciphertext
+  can actually make the correct shift easier to recognise.
+
+
+
+
+                                                     3
+MATH6321 | Original notes: pages 1–28                                               Sai Vanam | Lesson 4
+
+
+Printed page 3
+
+
+Monoalphabetic substitution: replace the whole alphabet
+
+  A permutation generalises a shift
+
+  A permutation σ ∈ S26 is a rearrangement of the 26 letters. It gives c = σ(m), while decryption
+  is m = σ −1 (c). Caesar shifts are special permutations, but a general substitution need not move
+  every letter by the same numerical amount.
+  In the notes’ example σ = (0 1)(2 3) · · · (24 25), neighbours are swapped: A with B, C with D, and
+  so on. This particular key equals its own inverse because every cycle has length two. That is a
+  property of this key, not every substitution.
+
+  Worked example: Read cycles in both directions
+
+  For σ = (A D F )(B C), encryption sends A to D, D to F, F to A, and swaps B/C. An unlisted
+  letter such as E is fixed. Encrypting FACE gives ADBE. To decrypt, move backwards: A came from
+  F, D came from A, B came from C and E stayed E.
+
+  Method: Count all keys
+  There are 26 choices for the image of A. After it is chosen, only 25 images remain for B, then 24
+  for C, and so on:
+                                      |S26 | = 26 · 25 · · · 1 = 26!.
+  The images cannot repeat because the map must be reversible. This key space is vastly larger than
+  Caesar’s, but the substitution still uses the same replacement every time a given plaintext letter
+  appears.
+
+  Exam tip: Encryption and decryption tables have opposite directions
+  Write the row labels clearly. A ciphertext-to-plaintext table is useful for cracking; a plaintext-to-
+  ciphertext table is useful for verifying by re-encryption. Do not switch directions halfway through
+  a calculation.
+
+  Exam-style question Check your understanding
+
+  Under σ = (A B C), decrypt CAB.
+
+  Model answer Check your understanding
+  C came from B, A came from C, and B came from A, giving BCA. Applying σ forwards instead
+  would produce the wrong decryption.
+
+
+
+
+                                                   4
+MATH6321 | Original notes: pages 1–28                                                Sai Vanam | Lesson 5
+
+
+Printed page 4
+
+
+Frequency analysis: use several clues together
+
+  A substitution hides names, not counts
+  If plaintext E occurs 20 times, its substituted image also occurs 20 times. The collection of letter
+  counts is unchanged; the alphabet labels are rearranged. Common English letters include E, T, A,
+  O, I and N, but these are broad tendencies rather than guarantees about every short sentence.
+  In Example 1.7 the common ciphertext symbols include F and S. Guessing F represents E and S
+  represents T makes the frequent word SGF look like T?E. Guessing G represents H then gives THE.
+  This single extra assignment improves every occurrence of G throughout the passage.
+
+  Method: A disciplined way to crack a substitution
+  Count symbols, inspect repeated words and repeated-letter patterns, propose a few assignments,
+  then apply them everywhere. Keep a single consistent table. If one ciphertext symbol would need
+  two meanings, reject the guess. Also reject a table that maps two ciphertext letters to the same
+  plaintext letter. Use common words and digraphs such as TH/HE as corroborating evidence.
+
+  Worked example: What the original example eventually says
+  The problem with the monoalphabetic substitution cipher is that like letters always get sent to like
+  letters. The frequencies of letters in the plaintext are preserved in the ciphertext.
+  This plaintext explains its own weakness. The attack does not search all 26! keys. Each consistent
+  partial assignment constrains many letters and words simultaneously, allowing the table to be
+  extended incrementally.
+
+  Exam-style question Check your understanding: Exercise 1.8
+  Why should Alice avoid repeating LIKE so often? Would avoiding that one word make substitution
+  secure?
+
+  Model answer Check your understanding
+  Repeated LIKE always produces the same four-letter ciphertext block. Once an attacker guesses
+  one occurrence, the same four letter assignments explain all the others, giving strong reusable clues.
+  Avoiding the word reduces that particular repetition, but fixed substitutions still preserve general
+  frequencies and patterns, so it does not remove the underlying weakness.
+
+
+
+
+                                                    5
+MATH6321 | Original notes: pages 1–28                                                Sai Vanam | Lesson 6
+
+
+Printed page 5
+
+
+Vigenere: one Caesar shift per key position
+
+  Repeat a sequence of shifts
+
+  Choose k = (k1 , . . . , kn ). At position i, use key entry 1 + ((i − 1) mod n):
+
+                                  ci ≡ mi + k1+((i−1) mod n)    (mod 26),
+
+                                  mi ≡ ci − k1+((i−1) mod n)    (mod 26).
+  The key entries cycle; they do not increase indefinitely. A keyword is simply an easier way to write
+  those numbers. For example BOB represents (1, 14, 1).
+
+  Worked example: The notes’ alternating key on MACBOOK
+
+  The notes use key (1, 2). At an occurrence aligned with shifts (1, 2, 1, 2, 1, 2, 1), the values for
+  MACBOOK are (12, 0, 2, 1, 14, 14, 10). Adding the key gives (13, 2, 3, 3, 15, 16, 11), or NCDDPQL.
+  The two O letters can become different letters (P and Q) because their positions use different
+  shifts. C and B can both become D, since they are shifted by different amounts. There is no loss
+  of reversibility: the receiver also knows the position-dependent key entry.
+
+  Exam tip: What happens to frequency analysis?
+  The notes describe ordinary frequency analysis as defeated. More precisely, one overall ciphertext
+  histogram mixes several shifted distributions, so direct single-substitution frequency matching
+  becomes less useful. Once the key length is identified, column-by-column frequency analysis
+  becomes useful again. The later attack relies on exactly that fact.
+
+  Exam-style question Check your understanding: Exercise 1.10
+
+  Why is Caesar a Vigenere special case? Encrypt AAAA using key (1, 2).
+
+  Model answer Check your understanding
+
+  If n = 1, every position uses k1 , giving the Caesar rule. With key (1, 2), four A values (0, 0, 0, 0)
+  become (1, 2, 1, 2): BCBC. Decryption subtracts the same alternating sequence.
+
+
+
+
+                                                      6
+MATH6321 | Original notes: pages 1–28                                                Sai Vanam | Lesson 7
+
+
+Printed page 6
+
+
+Kasiski: repeated blocks suggest a key length
+
+  Repeated plaintext needs matching key alignment
+  If a plaintext block appears twice and the distance between its starting positions is a multiple of
+  the key length, both occurrences use the same sequence of shifts. They therefore produce identical
+  ciphertext blocks. Kasiski reverses this observation: find repeated ciphertext blocks, calculate their
+  spacings and look for common divisors.
+  The inference is statistical. Repeated ciphertext may happen accidentally, and a repeated plaintext
+  block can encrypt differently when it meets a different key alignment.
+
+  Worked example: The small THE example from the notes
+
+  For repeated text THETHETHETHE under key (1, 2), the first THE uses shifts (1, 2, 1), giving UJF.
+  The next THE begins three positions later and uses (2, 1, 2), giving VIG. The third returns to the
+  first alignment, giving UJF again. The distance 6 is divisible by key length 2.
+
+  Worked example: The long source example points towards 7
+  In the ciphertext beginning ZPGDL..., the trigram GDL occurs at positions 3 and 24, spacing 21.
+  DLR occurs at 4 and 25, also spacing 21. VWP occurs at 147 and 231, spacing 84. WPC occurs at
+  148 and 232, again spacing 84. Both 21 and 84 are divisible by 7.
+  Other spacings in the notes do not share that factor. They may be accidental coincidences. The
+  recurring evidence suggests 7, which will be tested using coincidence statistics and complete
+  decryption.
+
+  Exam-style question Check your understanding
+  Distances 21, 35, 84 and 98 recur. What key length is suggested, and why is it not proved?
+
+  Model answer Check your understanding
+  They all share factor 7. Their gcd is 7, making key length 7 a plausible candidate. This does not
+  prove the length: some repeats could be accidental, and a true shorter pattern can have repeated
+  multiples. Test column IoCs and an actual key before accepting it.
+
+
+
+
+                                                    7
+MATH6321 | Original notes: pages 1–28                                                 Sai Vanam | Lesson 8
+
+
+Printed page 7
+
+
+One-time pads: remove the short repeating pattern
+
+  The formula looks familiar, but the key assumptions change
+
+  For a message of length t, choose a secret key (k1 , . . . , kt ) of the same length, with independent
+  uniformly random entries from 0, . . . , 25. Encrypt ci = mi + ki (mod 26) and decrypt mi = ci − ki
+  (mod 26). Never reuse the key.
+  This resembles Vigenere with a message-length key, but a human-chosen long word or quotation is
+  not a uniformly random pad. The key must be independent of the message and generated with
+  the right distribution. These assumptions, not merely the written key length, provide the secrecy
+  result.
+
+  Worked example: Every proposed plaintext determines one possible key
+
+  For ciphertext AAA, plaintext CAT has values (2, 0, 19), so the required key is (24, 0, 7), or YAH.
+  Plaintext DOG has (3, 14, 6), so its required key is (23, 12, 20), or XMU. Both keys are equally likely
+  under uniform independent generation.
+  More generally, each candidate plaintext of length t has exactly one compatible key out of the 26t
+  equally likely keys. Hence Pr(C = c | M = m) = 26−t , independent of m.
+
+  Exam tip: A precise meaning of perfect secrecy
+  The ciphertext does not change the observer’s prior probabilities for the plaintext. It does not
+  make all plaintexts equally likely if some were more likely before encryption. For example a normal
+  English sentence may still have a higher prior probability than a nonsense string; the ciphertext
+  supplies no extra discrimination between them.
+
+  Exam-style question Check your understanding
+  Is AAAAAAAAAA a secure pad for a ten-letter message?
+
+  Model answer Check your understanding
+  No. Its numerical shifts are all zero, so the ciphertext is the plaintext. It has the right length but
+  no effective randomness or masking. Even selecting one random letter and repeating it ten times
+  gives only 26 possible keys, not 2610 .
+
+
+
+
+                                                    8
+MATH6321 | Original notes: pages 1–28                                                Sai Vanam | Lesson 9
+
+
+Printed page 8
+
+
+Pad reuse removes the secret from the equation
+
+  The practical price of perfect secrecy
+  A true pad must be as long as the message, distributed secretly, generated with suitable randomness,
+  stored securely and used once. These requirements explain why a mathematically strong construction
+  can be difficult to use in practice. The notes describe historical diplomatic distribution of random
+  material as an illustration of the key-distribution burden.
+
+  Method: Why reuse fails for letter pads
+
+  If ci = mi + ki and c′i = m′i + ki (mod 26), subtract:
+
+                                     ci − c′i ≡ mi − m′i   (mod 26).
+
+  The key cancels. This gives a relationship between the two plaintexts even when neither is initially
+  known. If one plaintext is known, compute ki = ci − mi and decrypt the other directly. The
+  relation alone need not uniquely determine both arbitrary messages; it is still a real leak.
+
+  Worked example: The bit version is XOR
+  For bits, addition modulo 2 is XOR, and subtraction equals addition. If m = 1010, k = 1100, then
+  c = 0110. If another message m′ = 0101 uses the same pad, c′ = 1001.
+
+                                        c ⊕ c′ = 1111 = m ⊕ m′ .
+
+  The pad has disappeared. In pictures, the result can expose shared outlines or other structure of
+  the original images, motivating the illustration in the notes.
+
+  Exam-style question Check your understanding
+  Explain both why XOR decrypts and why XOR pad reuse is insecure.
+
+  Model answer Check your understanding
+
+  Since ki ⊕ ki = 0, we have (mi ⊕ ki ) ⊕ ki = mi . The same cancellation becomes an attack when
+  two ciphertexts share the pad: (mi ⊕ ki ) ⊕ (m′i ⊕ ki ) = mi ⊕ m′i . Correct decryption and the reuse
+  weakness rely on the same algebraic property.
+
+
+
+
+                                                    9
+MATH6321 | Original notes: pages 1–28                                                    Sai Vanam | Lesson 10
+
+
+Printed page 9
+
+
+Partial ciphertexts isolate one shift at a time
+
+  Separate positions, not consecutive chunks
+  For a proposed Vigenere length n, define
+
+                                   si = ci ci+n ci+2n · · · ,   1 ≤ i ≤ n.
+
+  The letters of si all encountered key entry ki , so this is a Caesar-encrypted version of the corre-
+  sponding plaintext positions. Writing the ciphertext in rows of length n and reading vertically
+  makes the construction visible.
+  For n = 3, positions in the first column are 1,4,7,10,...; the second uses 2,5,8,11,...; the third uses
+  3,6,9,12,... . Cutting the message into three consecutive blocks would not isolate key entries.
+
+  Worked example: The source example with length 7
+  The 284-letter ciphertext beginning ZPGDL... gives:
+
+                         Column    Length    Letters
+                            1           41   ZLXRHRRHWLOEHDWEOKLILWVLHPHQBYNWHWFJULRXX
+                            2           41   PAZJZEZZITLWBOAMQBVUZPJPVMTIIMIQUPTIQJKTA
+                            3           41   GJPGQPYVVNDFJGJIHJPAGCQCKFKHVQVVCCQPMGTVN
+                            4           41   DKYDYVRRSLIIOCYSOOSVMDBFXKOBDMXGBDMDOQIKI
+                            5           40   LPYLJMIESIEIWQARAFRMSMRIJRZMAPMEOXOSEEWR
+                            6           40   RYGRZSGGAUAYRHGZVRTSEJNOBQRQRBTFRUOFAAVR
+                            7           40   JLLZQWZKOWQKHKGQLYGWVSKWJTGSDUZJVWWLVLEG
+
+  The first four columns contain 41 letters and the remaining three contain 40, totalling 4 · 41 + 3 · 40 =
+  284. Unequal final column lengths are normal when the ciphertext length is not a multiple of the
+  proposed key length.
+
+  Method: Why the key is not already known
+  Knowing the length tells us which positions share a shift, but not what the shift is. One might
+  compare letter frequencies in each column or test shifts directly. The notes first introduce IoC to
+  evaluate the proposed length, then Mutual IoC to estimate differences between the shifts.
+
+  Exam-style question Check your understanding
+  Split ABCDEFGHIJ into partial ciphertexts for proposed length 3.
+
+  Model answer Check your understanding
+  Take every third letter: s1 = ADGJ, s2 = BEH, s3 = CFI. The first column is one letter longer
+  because 10 is not divisible by 3.
+
+
+
+
+                                                        10
+MATH6321 | Original notes: pages 1–28                                               Sai Vanam | Lesson 11
+
+
+Printed page 10
+
+
+Index of Coincidence: count matching pairs
+
+  Derive the numerator and denominator
+  Let t ≥ 2 be the string length and Na the count of letter a. Select two distinct positions uniformly.
+  There are t(t − 1) ordered choices. For letter A, there are NA (NA − 1) matching choices, because
+  after choosing one A position only NA − 1 other A positions remain. Sum this over all letters:
+
+                                                   a Na (Na − 1)
+                                                   P
+                                        IoC(s) =                   .
+                                                       t(t − 1)
+
+  Equivalently, count unordered pairs with binomial coefficients; the factors of two cancel. Both
+  derivations give the same probability.
+
+  Worked example: A complete small calculation
+  For s = ABABA, t = 5, NA = 3, NB = 2, and other counts are zero:
+                                              3·2+2·1   8
+                                   IoC(s) =           =    = 0.4.
+                                                5·4     20
+  The value is large because this short string uses only two letters repeatedly. It does not need to
+  resemble a long English-language benchmark.
+
+  Worked example: Relate the formula to extreme cases
+  For AAAA, every pair matches, so IoC is 1. For ABCD, no distinct positions match, so it is 0. The
+  subtraction of one is essential: selecting the same position twice is not allowed in this statistic.
+
+  Exam-style question Check your understanding
+  Calculate IoC for AABBC.
+
+  Model answer Check your understanding
+  The counts are 2,2,1. The numerator is 2 · 1 + 2 · 1 + 1 · 0 = 4; the denominator is 5 · 4 = 20. Thus
+  IoC = 0.2. Do not use 22 + 22 + 12 , which would count same-position selections.
+
+
+
+
+                                                   11
+MATH6321 | Original notes: pages 1–28                                                  Sai Vanam | Lesson 12
+
+
+Printed page 11
+
+
+Why the two IoC reference values differ
+
+  Uniform letters: expected coincidence is 1/26
+
+  For independent uniform letters, the first selected letter can be anything. The second matches it
+  with probability 1/26, so the expected IoC is 1/26 ≈ 0.0385. This expectation is exact under the
+  independent-uniform model; an observed short sample can differ.
+  For a simplified language model with letter probabilities pA , . . . , pZ , two independent letters match
+  with probability a p2a . The reference English frequencies in the notes give about 0.0656. The
+                     P
+
+  uneven distribution of common and rare letters makes matches more likely than for a uniform
+  alphabet.
+
+  Method: Why fixed substitutions preserve IoC
+
+  If σ is a substitution, the number of plaintext a’s equals the number of ciphertext σ(a)’s. The same
+  set of counts therefore appears in the numerator, only reordered. The total length is unchanged.
+  Hence
+                                           IoC(eσ (s)) = IoC(s).
+  A Caesar shift is a substitution, so it also preserves IoC. This is why the statistic can recognise a
+  language-like frequency pattern without already knowing the key.
+
+  Worked example: The original first-column value
+
+                                                              a Na (Na − 1) is 102. Thus
+                                                            P
+  The source first column has length 41. Its count sum
+
+                                    IoC(s1 ) = 102/(41 · 40) ≈ 0.06220.
+
+  This agrees with the notes’ rounded 0.062 and is much nearer the English benchmark than the
+  uniform benchmark.
+
+  Exam tip: A benchmark is not a decision rule with no exceptions
+  Short samples, repeated wording and nonstandard language can alter the score. Different Vigenere
+  shifts do not make ciphertext positions literally independent uniform samples. Use the values as
+  evidence, then confirm by key recovery and full decryption.
+
+  Exam-style question Check your understanding
+  Does IoC change if you rename every A as Q and every Q as A?
+
+  Model answer Check your understanding
+  No. This is a permutation of the alphabet. The A and Q counts exchange labels; their total
+  contribution to the numerator stays the same, as does the denominator.
+
+
+
+
+                                                     12
+MATH6321 | Original notes: pages 1–28                                                     Sai Vanam | Lesson 13
+
+
+Printed page 12
+
+
+Test the key length on the original ciphertext
+
+  Method: Repeat the same experiment for each trial length
+  Choose a proposed length n, form all partial ciphertexts s1 , . . . , sn , and calculate each column’s
+  IoC. Look for a row whose columns consistently have language-like scores rather than accepting
+  one isolated high value.
+
+  Worked example: Recalculated source data
+
+                  Trial length   Column IoCs, rounded to three decimals
+                       4         0.034, 0.042, 0.039, 0.035
+                       5         0.038, 0.039, 0.043, 0.028, 0.036
+                       6         0.038, 0.040, 0.039, 0.038, 0.032, 0.033
+                       7         0.062, 0.057, 0.065, 0.060, 0.060, 0.064, 0.064
+                       8         0.037, 0.029, 0.038, 0.033, 0.034, 0.057, 0.040, 0.039
+                       9         0.032, 0.036, 0.028, 0.030, 0.028, 0.032, 0.045, 0.047, 0.056
+
+  The row n = 7 is consistently higher: approximately 0.062, 0.057, 0.065, 0.060, 0.060, 0.064 and
+  0.064. It agrees with the Kasiski evidence for 7. Minor final-decimal differences from the printed
+  table reflect rounding; the above values are computed from the full 284-letter ciphertext.
+  A wrong candidate can have one high column by chance. Here we compare the whole row and use
+  independent structural evidence, so the conclusion is substantially stronger.
+
+  Multiples can also look plausible
+  If the true period is 7, testing period 14 can split each real Caesar column into two smaller Caesar
+  columns. Both still carry one shift, so high IoCs can occur at multiples of the fundamental period.
+  Prefer the smallest coherent period and examine the actual decrypted text. A written keyword
+  with an internal repetition may itself have a smaller fundamental period.
+
+  Exam-style question Check your understanding
+  Why is “one column has IoC 0.066” insufficient to identify a proposed length?
+
+  Model answer Check your understanding
+  A single short column may have a high score accidentally. Under the correct length we expect
+  the whole set of columns to behave like fixed-shift language samples. Check all columns, compare
+  alternatives, and confirm that a complete key decrypts the full ciphertext.
+
+
+
+
+                                                      13
+MATH6321 | Original notes: pages 1–28                                                  Sai Vanam | Lesson 14
+
+
+Printed pages 12–13
+
+
+Mutual IoC compares two strings
+
+  One position comes from each string
+  For strings s, r of lengths t1 , t2 > 0,
+                                                         P
+                                                             a Na (s)Na (r)
+                                       MutIoC(s, r) =                          .
+                                                                   t1 t2
+
+  There are t1 t2 possible pairs and Na (s)Na (r) matching pairs for letter a. No minus one is needed
+  because the selections are from the two strings separately. The strings may even happen to be the
+  same.
+
+  Worked example: A small example distinguishes the statistics
+
+  Take s = ABABA, r = AABC. The numerator is 3 · 2 + 2 · 1 = 8, so Mutual IoC is 8/(5 · 4) = 0.4. For
+  s compared with itself, it becomes (32 + 22 )/25 = 0.52, whereas its ordinary IoC is 0.4.
+
+  Method: Exercise 1.28: the exact relation
+          P
+  Since       a Na = t,                 X                     X
+                                              Na (Na − 1) =         Na2 − t.
+                                          a                    a
+
+  Writing M = MutIoC(s, s) =
+                                   P    2 2
+                                     a Na /t ,
+
+                                             tM − 1                            1−M
+                               IoC(s) =             ,    M − IoC(s) =              .
+                                              t−1                              t−1
+  Thus the difference tends to zero for long strings, explaining the exercise’s approximation. For
+  ABABA, the difference is (1 − 0.52)/4 = 0.12, as observed.
+
+  Exam-style question Check your understanding
+  Calculate Mutual IoC for AA and AB.
+
+  Model answer Check your understanding
+
+  The numerator is 2 · 1 = 2; the denominator is 2 · 2 = 4, giving 1/2. Selecting any A from the first
+  string matches exactly when the selected position in the second string is its A position.
+
+
+
+
+                                                        14
+MATH6321 | Original notes: pages 1–28                                              Sai Vanam | Lesson 15
+
+
+Printed pages 13–14
+
+
+Turn shifted Mutual IoC into key differences
+
+  The same substitution tends to align frequencies
+  Applying the same permutation to both strings just renames the matching terms in the Mutual IoC
+  sum. Thus MutIoC(eσ (s), eσ (r)) = MutIoC(s, r). Two sufficiently language-like texts encrypted
+  with the same substitution often have Mutual IoC near the language benchmark.
+  Different substitutions often reduce the score, but not always: some preserve or similarly rearrange
+  common letters. Therefore 0.0385 and 0.0656 are useful approximate reference values, not universal
+  theorems about arbitrary pairs of substitutions.
+
+  Method: Derive the sign of the relative shift
+  Column si uses key shift ki ; column sj uses kj . Shift the second ciphertext column forwards by β.
+  Its effective encryption shift becomes kj + β. To align it with column i, require
+
+                         kj + β ≡ ki    (mod 26),    βij = ki − kj   (mod 26).
+
+  Compute 26 candidate scores for each pair and keep plausible alignments. Solve the resulting
+  congruences jointly; use unused pairs as consistency checks. A table entry gives a difference, not
+  the numerical value of a keyword letter.
+
+  Worked example: An immediate consistency identity
+
+  If β12 = 5 and β23 = 8, then k1 − k3 = (k1 − k2 ) + (k2 − k3 ) ≡ 13. A proposed β13 = 4 would
+  contradict those two choices. Revisit the statistical candidates instead of forcing an inconsistent
+  key.
+
+  Exam-style question Check your understanding
+  If ki = 3 and kj = 8, what forward shift aligns column j with column i?
+
+  Model answer Check your understanding
+
+  β = 3 − 8 = −5 ≡ 21 (mod 26). Then 8 + 21 ≡ 3, confirming the sign. A forward shift of 5 would
+  move the second column further in the wrong direction for this alignment.
+
+
+
+
+                                                    15
+MATH6321 | Original notes: pages 1–28                                                Sai Vanam | Lesson 16
+
+
+Printed pages 14–15
+
+
+Recover the original seven-letter keyword
+
+  The selected relative shifts in the source example
+  The notes’ promising pairwise scores give, among others,
+
+                       k1 − k3 = 1, k1 − k4 = 19, k1 − k6 = 16,
+                                                                         (mod 26).
+                       k2 − k3 = 6, k3 − k5 = 24, k3 − k7 = 10
+
+  Additional rows supply consistency checks. The following algebra shows explicitly how the remaining
+  free parameter arises.
+
+  Method: Solve the equations one key entry at a time
+  Put k1 = λ. Then
+                              k3 = λ − 1,    k4 = λ − 19,      k6 = λ − 16.
+  Since k2 − k3 = 6, k2 = λ − 1 + 6 = λ + 5 ≡ λ − 21. Also
+
+                           k5 = k3 − 24 = λ − 25,        k7 = k3 − 10 = λ − 11.
+
+  Therefore
+                   k = (λ, λ − 21, λ − 1, λ − 19, λ − 25, λ − 16, λ − 11)     (mod 26).
+  For example this predicts k4 − k6 = −3 ≡ 23, matching an unused table row. Only 26 common
+  shifts remain, rather than 267 unrelated keys.
+
+  Worked example: Resolve the common shift
+
+  Taking λ = 3 gives (3, 8, 2, 10, 4, 13, 18), the keyword DICKENS. Trying the full decryption gives
+  WHETHERISHALLTURNOUT.... By contrast λ = 0 gives key AFZHBKP and a shifted, unreadable
+  candidate. Relative scores cannot determine λ; language and the complete decryption resolve it.
+
+  Exam-style question Check your understanding
+  Verify the source check k6 − k7 = 21 using the recovered key.
+
+  Model answer Check your understanding
+
+  k6 = 13, k7 = 18, so 13 − 18 = −5 ≡ 21 (mod 26). This checks a relation not needed to introduce
+  the free parameter. A successful key must satisfy all the selected compatible relations.
+
+
+
+
+                                                    16
+MATH6321 | Original notes: pages 1–28                                                      Sai Vanam | Lesson 17
+
+
+Printed page 15
+
+
+Finish and verify the DICKENS decryption
+
+  Worked example: Decrypt the opening block with the actual key
+
+  The first seven ciphertext letters are ZPGDLRJ, with values (25, 15, 6, 3, 11, 17, 9). Subtract DICKENS,
+  or (3, 8, 2, 10, 4, 13, 18):
+
+                         (22, 7, 4, −7, 7, 4, −9) ≡ (22, 7, 4, 19, 7, 4, 17)   (mod 26),
+
+  which spells WHETHER. Continue with the next seven letters using the same keyword cycle. Do
+  not restart because a word boundary occurs: the original encryption treats a continuous letter
+  sequence.
+
+  The full plaintext in the notes
+  Whether I shall turn out to be the hero of my own life, or whether that station will be held by
+  anybody else, these pages must show. To begin my life with the beginning of my life, I record that
+  I was born, as I have been informed and believe, on a Friday at twelve o’clock at night. It was
+  remarked that the clock began to strike, and I began to cry simultaneously.
+  This is the opening passage of David Copperfield. Spaces and punctuation have been restored for
+  readability. The recovered letter sequence contains 284 letters, matching the source ciphertext.
+
+  Method: Verification is the last stage of the attack
+
+  Re-encrypt with repeated shifts (3, 8, 2, 10, 4, 13, 18).         For example WHETHER has values
+  (22, 7, 4, 19, 7, 4, 17); adding the key gives (25, 15, 6, 29, 11, 17, 35) ≡ (25, 15, 6, 3, 11, 17, 9), or
+  ZPGDLRJ. The complete re-encryption reproduces all 284 supplied letters.
+
+  Exam tip: What the complete classical attack achieved
+  Kasiski suggested a length; IoC supported length 7; Mutual IoC produced relative shifts; a common-
+  shift search recovered the key; full re-encryption verified it. Each stage answered a different question.
+  Recognising a book or author is corroboration, not a substitute for this chain of evidence.
+
+
+
+
+                                                        17
+MATH6321 | Original notes: pages 1–28                                               Sai Vanam | Lesson 18
+
+
+Printed pages 16–17
+
+
+Enigma: a machine changes the substitution for you
+
+  Why introduce a machine?
+  The classical methods required people to perform many replacements by hand, which encouraged
+  simple reusable patterns. The notes introduce Enigma as a device that could carry out a complicated
+  position-dependent substitution mechanically. Its secret key consists of initial settings, rather than
+  a new hand-written substitution table for every letter.
+  The same typed letter can produce different ciphertext letters at different positions because rotor
+  stepping changes the internal signal path. The initial key remains fixed while the machine evolves
+  deterministically through a sequence of effective permutations.
+
+  Method: Follow the electrical path in order
+  1. Plugboard: swap any paired letters; unpaired letters pass unchanged.
+  2. Rotors: pass through several wired permutations. Their positions affect the overall mapping.
+  3. Reflector: pair all contacts and send the signal back.
+  4. Reverse rotors: traverse the inverse mappings in reverse order.
+  5. Plugboard again: complete the path and illuminate the ciphertext letter.
+  The reflector and return path make encryption/decryption symmetric at a fixed rotor state.
+  Reproducing the same initial settings and stepping schedule lets the receiver reverse a message by
+  typing its ciphertext.
+
+  Worked example: The key and the state are different
+  Two operators may share the same chosen rotor order, starting positions, plugboard and reflector.
+  After 20 characters both machines must have advanced according to the same rule. If one operator
+  begins halfway through a ciphertext without advancing the machine correspondingly, matching the
+  initial key alone is not enough to decrypt that part correctly.
+
+  Exam-style question Check your understanding
+  Why is Enigma more like a position-dependent substitution than one fixed monoalphabetic cipher?
+
+  Model answer Check your understanding
+  Rotor stepping changes the effective letter map with the message position. Each position still uses
+  a permutation, but it is generally a different permutation from the previous position. The machine
+  implements a changing family of substitutions under one initial configuration.
+
+
+
+
+                                                   18
+MATH6321 | Original notes: pages 1–28                                               Sai Vanam | Lesson 19
+
+
+Printed page 17
+
+
+Count plugboard settings without overcounting
+
+  Choose letters, then make unordered pairs
+  With m plugs on 26 letters, exactly 2m letters are paired and the others remain fixed. First choose
+                   26
+  those letters in 2m ways. Now pair the selected set. Fix one selected letter; it has 2m − 1 possible
+  partners. Repeat with one remaining letter, giving 2m − 3 partners, and continue.
+                                                  !
+                                               26
+                              #settings =         (2m − 1)(2m − 3) · · · 1.
+                                               2m
+
+  Equivalently this is 26!/((26 − 2m)!2m m!). The factor 2m removes the order within each pair; m!
+  removes the order in which the pairs are listed.
+
+  Worked example: A four-letter sanity check
+
+  If all four letters A,B,C,D are paired, there are exactly three pairings: AB/CD, AC/BD, AD/BC.
+  The formula gives 44 (3)(1) = 3. Listing AB/CD and CD/AB separately would count the same
+                         
+
+  physical setting twice.
+
+  Method: Variable number of plugs versus a fixed number
+  If any number from 0 to 13 is allowed, add the mutually exclusive counts:
+                               13
+                               X          26!
+                                                   = 532985208200576.
+                               m=0
+                                   (26 − 2m)!2m m!
+
+  Zero plugs contributes one setting. If exactly ten plugs are required, do not sum:
+                                           26!
+                                                  = 150738274937250.
+                                        6!210 10!
+  These are different models, not two alternative arithmetic answers to the same model.
+
+  Exam-style question Check your understanding
+  On six letters with exactly two plug pairs, how many settings exist?
+
+  Model answer Check your understanding
+
+  Choose four of the six letters in 64 = 15 ways, and pair each chosen set in 3 ways. Total 15 · 3 = 45.
+                                    
+
+  The other two letters are left unpaired.
+
+
+
+
+                                                      19
+MATH6321 | Original notes: pages 1–28                                                Sai Vanam | Lesson 20
+
+
+Printed page 18
+
+
+Rotors: distinguish wiring, order and starting position
+
+  Three separate kinds of choice
+  An arbitrary rotor wiring is a permutation of 26 contacts, so it has 26! possibilities. Three
+  independently designed rotors would have (26!)3 wirings.
+  In the notes’ restricted historical-style model, however, only five already wired rotors are available,
+  and three are used. Their internal wirings are fixed. Choose which rotor goes into the first slot,
+  then the second and third: 5 · 4 · 3. Each chosen rotor has 26 starting positions, so multiply by 263 .
+
+                                         5 · 4 · 3 · 263 = 1054560.
+
+  Do not multiply by (26!)3 again: that would invent a wiring choice the restricted machine does not
+  permit.
+
+  Method: Why a combination alone is insufficient
+
+  Choosing a set of three rotors gives 53 , but the left/middle/right positions are distinct. Multiply
+                                          
+
+  by 3!, obtaining 53 3! = 5 · 4 · 3. In general ordered selection of r distinct rotors from R gives
+                     
+
+  R!/(R − r)!.
+
+  The notes use simplified stepping
+  The right rotor advances each keypress; after a full turn it advances the next rotor, and so on. This
+  explains why the effective mapping changes throughout a message. Use the simplified assumptions
+  actually stated in the problem when doing combinatorics; do not add extra ring, notch or historical
+  stepping choices that the question has not included.
+
+  Exam-style question Check your understanding
+  A toy device selects two distinct ordered rotors from four, each with six starting positions. Count
+  its rotor settings.
+
+  Model answer Check your understanding
+
+  There are 4 · 3 = 12 ordered selections and 62 = 36 starting-position pairs, so the product is 432.
+  Using only 42 · 36 = 216 would omit the two possible orders of each selected pair.
+
+
+
+
+                                                    20
+MATH6321 | Original notes: pages 1–28                                               Sai Vanam | Lesson 21
+
+
+Printed pages 18–19
+
+
+Reflectors and the total key count
+
+  A reflector pairs every contact
+  Unlike a partially plugged plugboard, the reflector pairs all 26 contacts into 13 disjoint swaps. Its
+  unconstrained wiring count is therefore
+                                26!
+                                       = 25 · 23 · · · 3 · 1 = 7905853580625.
+                               213 13!
+  In the restricted model only two fixed reflectors are available, so the reflector choice contributes a
+  factor of 2, not the enormous arbitrary-wiring count.
+
+  Worked example: Multiply the restricted independent choices
+  Use exactly ten plug pairs, three ordered rotors from five, 26 positions per rotor and one of two
+  fixed reflectors:
+                                #keys = 150738274937250 · 1054560 · 2
+                                        = 317925110435652720000.
+
+  The unrestricted machine instead multiplies the all-plugboard count, (26!)3 arbitrary rotor wirings
+  and the arbitrary reflector count. These modelling assumptions differ substantially.
+
+  Exam tip: Large key spaces do not prove security
+  A key count measures how many configurations exist, not whether every configuration must be
+  searched. Structural properties or known plaintext can eliminate many candidates at once. The
+  next pages explain such constraints. This is the same general lesson encountered with substitution’s
+  26! keys.
+
+  Exam-style question Check your understanding
+  A six-letter machine has one plug pair, the 432 rotor settings from the previous exercise and two
+  fixed reflectors. Count all its settings.
+
+  Model answer Check your understanding
+
+  The plugboard contributes 62 = 15. Multiply independent choices: 15 · 432 · 2 = 12960. The
+                                 
+
+  number of plug pairs is fixed at one; there is no sum over other pair counts.
+
+
+
+
+                                                    21
+MATH6321 | Original notes: pages 1–28                                               Sai Vanam | Lesson 22
+
+
+Printed pages 20–21 | excluded attack background
+
+
+Conjugation explains a structural restriction
+
+  The rotor path is a relabelling around the reflector
+  Let P be the plugboard permutation, Ri the combined forward rotor map at position i, and S the
+  reflector. The full fixed-state map is
+
+                                          σi = P −1 Ri−1 SRi P.
+
+  Putting Hi = Ri P , this becomes σi = Hi−1 SHi , a conjugate of S. Conjugation means: relabel the
+  input, apply the original map, then undo the relabelling.
+
+  Worked example: Cycle lengths survive a relabelling
+
+  If g cycles a1 → a2 → · · · → ar → a1 , then h−1 gh cycles h−1 (a1 ) → · · · → h−1 (ar ) → h−1 (a1 ).
+  The letters change, but the length remains r.
+  In Example 2.9, g = (1 4)(2 3 5), h = (1 2 3 4 5). Relabelling by h−1 gives (5 3)(1 2 4), equivalently
+  (1 2 4)(3 5). The cycle type remains one 2-cycle and one 3-cycle.
+
+  Method: Why Enigma cannot encrypt a letter to itself
+  The reflector is a product of 13 disjoint 2-cycles and has no fixed point. A conjugate has the same
+  cycle type, so neither does σi . Also S 2 = I gives σi2 = Hi−1 S 2 Hi = I, explaining why the same
+  fixed-state map reverses itself.
+
+  Exam-style question Check your understanding
+
+  If h−1 gh(x) = x, what does this imply about g?
+
+  Model answer Check your understanding
+
+  Multiply by h: g(h(x)) = h(x). Thus h(x) is a fixed point of g. A fixed-point-free permutation
+  therefore cannot acquire a fixed point by conjugation.
+
+
+
+
+                                                   22
+MATH6321 | Original notes: pages 1–28                                                 Sai Vanam | Lesson 23
+
+
+Printed pages 21–22 | excluded attack background
+
+
+A crib is a possible known-plaintext fragment
+
+  Try positions, then reject impossible alignments
+  A crib is a word or phrase thought to occur in the plaintext. Slide it along the ciphertext. At each
+  placement, compare the aligned letters. If any letter would have encrypted to itself, reject that
+  placement immediately, since Enigma’s fixed-state map has no fixed points.
+  An alignment with no equal letters is merely not yet ruled out. It is not automatically the correct
+  plaintext or rotor setting. Subsequent constraints are still needed.
+
+  Worked example: The CRYPTOGRAPHY alignment idea
+  The notes compare CRYPTOGRAPHY against a ciphertext fragment beginning XMRPTU.... At the
+  first placement, the fourth plaintext letter P aligns with ciphertext P, and the fifth T aligns with
+  T. Either coincidence rejects that placement.
+  Shifting the crib changes every pairwise alignment. Repeat the same test at the new position rather
+  than transferring the previous rejection to it. You are eliminating possible placements, not proving
+  that the crib word cannot occur anywhere.
+
+  Method: Separate the plugboard from guessed rotor settings
+
+  Write σi = P −1 Qi P , where Qi = Ri−1 SRi . The fixed rotor/reflector wirings are assumed known in
+  this simplified attack; a guess at their initial configuration determines each Qi . The plugboard P
+  is still unknown and accounts for many possible full keys. The aim is to test some rotor guesses
+  without exhaustively trying every plugboard.
+
+  Exam-style question Check your understanding
+  Can crib CAT align with ciphertext block CAR under Enigma? Can it align with DOG?
+
+  Model answer Check your understanding
+  CAR is impossible at that alignment because C would map to C and A to A. DOG has no equal aligned
+  letters, so this simple test does not reject it. That does not establish it as the true alignment; other
+  machine constraints must still be checked.
+
+
+
+
+                                                    23
+MATH6321 | Original notes: pages 1–28                                               Sai Vanam | Lesson 24
+
+
+Printed page 22 | excluded attack background
+
+
+Known-plaintext loops remove the plugboard
+
+  Follow one letter around a loop of observed pairs
+  In Example 2.12, the relevant pairs imply
+
+                            σ14 (E) = A,       σ9 (A) = M,        σ7 (M ) = E.
+
+  Thus following E through positions 14, 9 and 7 returns E:
+
+                                             σ7 σ9 σ14 (E) = E.
+
+  Products act rightmost first; the order is determined by the path E to A to M to E, not by sorting
+  the position numbers.
+
+  Method: Expand the conjugates and cancel adjacent maps
+
+  Using σi = P −1 Qi P ,
+
+                              σ7 σ9 σ14 = (P −1 Q7 P )(P −1 Q9 P )(P −1 Q14 P )
+                                        = P −1 Q7 Q9 Q14 P.
+
+  The adjacent P P −1 ’s cancel. Since this product fixes E, applying P to both sides gives
+
+                                        Q7 Q9 Q14 (P (E)) = P (E).
+
+  The plugboard value P (E) is unknown, but it must be a fixed point of a product determined by
+  the guessed rotor configuration. If that product has no fixed point, the configuration cannot be
+  correct for any plugboard.
+
+  Worked example: Why this test saves work
+  Imagine a rotor guess yields a product with no fixed letters at all. Testing millions of plugboards
+  under that guess is unnecessary: whichever letter P (E) might be, it cannot satisfy the loop equation.
+  The structural contradiction rejects all those full keys together.
+
+  Exam-style question Check your understanding
+
+  Why can we not simply set P (E) = E to test the loop?
+
+  Model answer Check your understanding
+
+  The plugboard might swap E with another letter, so P (E) need not be E. The correct test asks
+  whether some permissible fixed letter exists; a second loop can further restrict that same unknown
+  letter. Assuming E is unpaired would discard possible valid settings without justification.
+
+
+
+
+                                                     24
+MATH6321 | Original notes: pages 1–28                                               Sai Vanam | Lesson 25
+
+
+Printed page 23 | excluded attack background
+
+
+Expected fixed points: explain the probability calculation
+
+  A random permutation has expected one fixed point
+
+  Let Xi be 1 if a uniform random permutation fixes letter i, otherwise 0. There are (n − 1)!
+  permutations fixing a specified letter out of n! total, so Pr(Xi = 1) = 1/n. The total number of
+                     P
+  fixed points is X = i Xi , giving
+                                             X
+                                    E[X] =        E[Xi ] = n(1/n) = 1.
+                                              i
+
+  Linearity of expectation does not require the indicators for different letters to be independent. This
+  supplies the missing reason each expected contribution can be added.
+
+  Exam tip: An expectation is not a guaranteed value
+  Some permutations have no fixed points; the identity has n. Saying the expectation is one does
+  not mean every permutation fixes exactly one letter or that the probability of at least one fixed
+  point equals one. The notes’ qualitative motivation is that a second independent constraint can
+  substantially strengthen filtering.
+
+  Method: Two independent random permutations
+
+  For a fixed letter, the probability both permutations fix it is (1/n)2 , under independence between
+  the permutations. Summing over the n letters gives expected common fixed points
+
+                                             n(1/n2 ) = 1/n.
+
+  For 26 letters this is 1/26. The independence is between the two permutations for a specified letter,
+  not between all fixed-point events inside one permutation.
+
+  Exam-style question Check your understanding
+  What is the expected number of common fixed points of three independent uniform permutations
+  on 26 letters?
+
+  Model answer Check your understanding
+
+  For each specified letter the probability all three fix it is 1/263 . Summing over 26 letters gives
+  1/262 . This is a model calculation; actual Enigma loop products are constrained and need not be
+  independent uniform permutations.
+
+
+
+
+                                                     25
+MATH6321 | Original notes: pages 1–28                                             Sai Vanam | Lesson 26
+
+
+Printed pages 23–24 | excluded attack background
+
+
+A second loop and the overall filtering strategy
+
+  The same unknown plugboard letter must satisfy both loops
+  The further pairs in Example 2.14 connect E to M at position 7, M to W at 8, W to R by reversing
+  position 15, and R to E at 4. The relevant maps are involutions, so traversing an observed pair
+  backwards uses the same map. Combining the path gives the source condition
+
+                                    Q4 Q−1  −1
+                                        15 Q8 Q7 (P (E)) = P (E).
+
+  Together with the first loop, P (E) must lie in the intersection of two fixed-point sets. Having a
+  fixed point for each product separately is not enough if those fixed points are different.
+
+  Method: The simplified attack in the notes
+  1. Obtain a plausible crib placement using the no-self-encryption test.
+  2. Guess rotor order, starting positions and reflector: 1054560 · 2 = 2109120 possibilities in this
+     model.
+  3. Compute the position maps Qi and loop products for that guess.
+  4. Reject guesses with incompatible fixed-point constraints; repeat with more loops.
+  5. For surviving rotor guesses, solve the remaining plugboard assignments and check the full text.
+  The notes’ rough random model suggests repeated pairs of loops can reduce surviving possibilities
+  by factors around 26. Such estimates explain the sieve idea; expectations of common fixed points
+  alone do not prove an exact surviving fraction. Dependencies between actual loops also matter.
+
+  The historical lesson within the supplied notes
+  The notes attribute key mathematical groundwork on rotor wiring to Rejewski and describe
+  the loop-based work and mechanised search associated with Turing’s Bombe. The takeaway is
+  that structural mathematics can replace an infeasible full-key enumeration with a much smaller
+  constrained search.
+
+  Exam-style question Check your understanding
+
+  Products have fixed sets {A, D} and {D, G}. What can P (E) be? What if the sets are disjoint?
+
+  Model answer Check your understanding
+
+  The common candidate is D, so the two constraints force P (E) = D. If their fixed-point sets are
+  disjoint, the rotor guess is impossible. Both loops constrain the same letter, not two independent
+  plugboard choices.
+
+
+
+
+                                                  26
+MATH6321 | Original notes: pages 1–28                                                 Sai Vanam | Lesson 27
+
+
+Printed page 25
+
+
+LFSRs begin with arithmetic on bits
+
+  XOR means addition modulo 2
+  The field F2 has elements 0 and 1. XOR obeys
+
+                                                    ⊕ 0 1
+                                                    0 0 1 .
+                                                    1 1 0
+
+  Unlike ordinary logical OR, 1 ⊕ 1 = 0. An even number of ones sums to zero and an odd number
+  sums to one. This arithmetic lets a register combine selected stored bits into a new bit.
+
+  Length, fill, taps, update and output
+  A length-n LFSR stores an n-bit state
+
+                                         ai = (ai , ai+1 , . . . , ai+n−1 ).
+
+  Its initial fill is a0 . A tap vector b = (b0 , . . . , bn−1 ) says which stored positions are included:
+  coefficient 1 includes a bit, coefficient 0 ignores it. The new bit is
+
+                                      ai+n = b0 ai ⊕ · · · ⊕ bn−1 ai+n−1 .
+
+  Then shift left, discard the first bit and append the new one. Collecting the discarded bits gives
+  output a0 a1 a2 · · ·, so the output starts with the initial fill.
+
+  Worked example: The notes’ length-six device
+
+  Taps (1, 0, 1, 1, 0, 0) select the first, third and fourth stored bits, giving
+
+                                          ai+6 = ai ⊕ ai+2 ⊕ ai+3 .
+
+  There are six state positions, not three: the number of taps is not the register length. The last two
+  positions still matter because shifting eventually moves them into tapped positions.
+
+  Exam-style question Check your understanding
+
+  For state (1, 0, 1, 0, 1, 1) under those taps, find the next bit and next state.
+
+  Model answer Check your understanding
+
+  The new bit is 1 ⊕ 1 ⊕ 0 = 0. Shift and append: the next state is (0, 1, 0, 1, 1, 0). Do not add the
+  untapped fifth or sixth positions.
+
+
+
+
+                                                        27
+MATH6321 | Original notes: pages 1–28                                                    Sai Vanam | Lesson 28
+
+
+Printed pages 25–26
+
+
+Generate the source six-bit stream carefully
+
+  Use the source fill and recurrence
+  Start with (a0 , . . . , a5 ) = (0, 1, 1, 0, 1, 0) and recurrence ai+6 = ai ⊕ ai+2 ⊕ ai+3 . Compute new bits
+  using their absolute indices:
+
+                                       a6 = a0 ⊕ a2 ⊕ a3 = 0 ⊕ 1 ⊕ 0 = 1,
+                                       a7 = a1 ⊕ a3 ⊕ a4 = 1 ⊕ 0 ⊕ 1 = 0,
+                                       a8 = a2 ⊕ a4 ⊕ a5 = 1 ⊕ 1 ⊕ 0 = 0,
+                                       a9 = a3 ⊕ a5 ⊕ a6 = 0 ⊕ 0 ⊕ 1 = 1.
+
+  Notice a6 , a newly generated bit, is already used in the calculation of a9 . The recurrence proceeds
+  sequentially rather than repeatedly using only the initial fill.
+
+  Worked example: The state table and output
+
+                                 Time      Stored state    Next appended bit
+                                   0         011010        1
+                                   1         110101        0
+                                   2         101010        0
+                                   3         010100        1
+                                   4         101001        0
+
+  The output begins with the first bit of each state. Continuing the calculation gives
+
+                                        0110101001000101111101 · · · .
+
+  The first 16 bits are 0110101001000101. They include the initial six bits; do not skip them when
+  using the stream for encryption.
+
+  Method: A reliable handwritten layout
+  Write an index row, the bit row, and each new recurrence calculation beneath it. If the final stream
+  differs from the notes, find the first differing index and recompute its tapped positions. This is
+  much easier than restarting an entire long sequence without locating the error.
+
+  Exam-style question Check your understanding
+  Compute a10 from this stream and recurrence.
+
+  Model answer Check your understanding
+  a10 = a4 ⊕ a6 ⊕ a7 = 1 ⊕ 1 ⊕ 0 = 0. The relevant indices are 4,6,7, obtained by setting i = 4 in the
+  update rule.
+
+
+
+
+                                                      28
+MATH6321 | Original notes: pages 1–28                                               Sai Vanam | Lesson 29
+
+
+Printed page 26
+
+
+Encrypt HI and decrypt it again
+
+  Character encoding and encryption are different operations
+  The source encodes HI in eight-bit ASCII as 01001000 01001001. The H byte represents decimal
+  72 and the I byte decimal 73. ASCII is public encoding, not secrecy: the LFSR stream supplies the
+  bitwise mask.
+  For stream bits ai , encrypt ci = mi ⊕ ai , and decrypt by mi = ci ⊕ ai . Since ai ⊕ ai = 0, the same
+  operation reverses itself.
+
+  Worked example: The complete 16-bit source calculation
+
+                                 Plaintext HI     01001000 01001001
+                                 LFSR stream      01101010 01000101
+                                 Ciphertext       00100010 00001100
+
+  For the first eight bits, 0 ⊕ 0 = 0, 1 ⊕ 1 = 0, 0 ⊕ 1 = 1, 0 ⊕ 0 = 0, 1 ⊕ 1 = 0, 0 ⊕ 0 = 0, 0 ⊕ 1 = 1,
+  0 ⊕ 0 = 0: 00100010.
+  XORing the ciphertext with the same stream returns 01001000 01001001, which decodes to HI.
+  The stream continues into the second byte; it does not restart at the letter I.
+
+  Method: Pictures use the same idea
+  Represent white by 0 and black by 1. Flatten the picture in the specified order, such as row by row,
+  XOR it with consecutive stream bits, then reshape to the original dimensions. A stream 1 flips a
+  pixel; a stream 0 leaves it unchanged. Restarting the fill at each picture row would implement a
+  different scheme.
+
+  Exam-style question Check your understanding
+  What is the benefit and the cost of replacing a true pad by an LFSR stream?
+
+  Model answer Check your understanding
+  A short fill and recurrence can generate a long stream, reducing the secret material that must
+  be shared. But the stream is deterministic and linearly structured, not a uniformly random
+  independent pad. The perfect-secrecy proof for a true OTP therefore does not automatically apply.
+
+
+
+
+                                                   29
+MATH6321 | Original notes: pages 1–28                                                Sai Vanam | Lesson 30
+
+
+Printed page 27
+
+
+Initial fills and taps both affect the output
+
+  The zero fill is always a bad masking stream
+  If every stored bit is zero, every tapped XOR is zero, so the register stays zero. It outputs only
+  zeros. XORing any message with this stream leaves the message unchanged.
+  For the source length-six recurrence with three taps, the all-one fill also stays fixed: 1 ⊕ 1 ⊕ 1 = 1.
+  It outputs ones forever, which merely flips every message bit. The conclusion about the all-one
+  fill is specific to the chosen taps: with an even number of active taps, the XOR of all ones would
+  instead be zero, so the state would not remain all ones.
+
+  Worked example: The same fill behaves differently under different taps
+  The source compares length-five registers with initial fill 01101:
+
+                                ai+5 = ai ⊕ ai+2     versus ai+5 = ai ⊕ ai+1 .
+
+  The first outputs 011011101010000100101.... The second outputs 011011011011..., a repetition
+  of a three-bit block. The fill alone does not determine the sequence: the recurrence is also part of
+  the specification.
+
+  Exam tip: Long period is one quality measure, not a complete security proof
+  The notes next use repetition length to quantify stream quality. A long period avoids a very obvious
+  repeating mask, but an attacker might still exploit the recurrence’s linear structure. Do not equate
+  “looks random” or “has a long period” with the independence of a true one-time pad.
+
+  Exam-style question Check your understanding
+  Under ai+5 = ai ⊕ ai+1 , fill 01101, calculate a5 , a6 , a7 .
+
+  Model answer Check your understanding
+  a5 = a0 ⊕ a1 = 0 ⊕ 1 = 1, a6 = a1 ⊕ a2 = 1 ⊕ 1 = 0, a7 = a2 ⊕ a3 = 1 ⊕ 0 = 1. Appending gives
+  01101101, consistent with repeating 011.
+
+
+
+
+                                                       30
+MATH6321 | Original notes: pages 1–28                                                   Sai Vanam | Lesson 31
+
+
+Printed page 28
+
+
+A period is a repeated whole state
+
+  Read the definition with its indices
+  The state at time i is ai = (ai , . . . , ai+n−1 ). The notes define the period as the smallest positive j
+  such that
+                                            ai+j = ai for some i ≥ 0.
+  Once a state repeats, all later states follow the same deterministic updates. A repeated bit is not
+  enough: zeros and ones recur constantly without the entire register having returned.
+  The phrase “for some i” allows a transient before an eventual cycle. For general taps, the initial
+  state need not return. Example: recurrence ai+2 = ai+1 , fill 10, gives states 10,00,00,... . Its
+  eventual period is 1, even though the initial 10 never returns.
+
+  Worked example: The source short-cycle register has period 3
+  For length five, recurrence ai+5 = ai ⊕ ai+1 , fill 01101, the states are
+
+                                   01101 → 11011 → 10110 → 01101.
+
+  The three displayed states are distinct, and the initial state returns after 3 updates. Thus the cycle
+  length is exactly 3, not merely at most 3. Its output is repeating 011.
+
+  Method: How to measure a period by direct iteration
+  Record each complete state and its time. On the first repeat, subtract the earlier occurrence time
+  from the later one. Distinct states before the repeat establish minimality of the cycle length. For
+  an example whose initial state returns, this is its first return time. More advanced tests start on
+  page 29 and are not needed for this direct method.
+
+  Exam-style question Check your understanding
+  Can the presence of 11 twice in the output prove period 2?
+
+  Model answer Check your understanding
+  No. The update depends on the whole register state. Two occurrences of a short bit block need
+  not sit inside identical full states or be followed by identical future bits. Check the full state or
+  prove a genuinely repeating output pattern under the recurrence.
+
+
+
+
+                                                     31
+MATH6321 | Original notes: pages 1–28                                             Sai Vanam | Lesson 32
+
+
+Printed page 28
+
+
+Verify the source period-31 example in full
+
+  The other length-five register explores a longer cycle
+  Use recurrence ai+5 = ai ⊕ ai+2 , initial fill 01101. The following state table is generated by the
+  update rule, not inferred from a few repeated output bits.
+
+  Worked example: List every state before the first return
+
+                                    Time     State        Time   State
+                                         0   01101          16   00101
+                                         1   11011          17   01011
+                                         2   10111          18   10110
+                                         3   01110          19   01100
+                                         4   11101          20   11001
+                                         5   11010          21   10011
+                                         6   10101          22   00111
+                                         7   01010          23   01111
+                                         8   10100          24   11111
+                                         9   01000          25   11110
+                                        10   10000          26   11100
+                                        11   00001          27   11000
+                                        12   00010          28   10001
+                                        13   00100          29   00011
+                                        14   01001          30   00110
+                                        15   10010
+
+  The next update from time 30 state 00110 appends 0 ⊕ 1 = 1, producing 01101, the initial fill at
+  time 31. None of the preceding 31 states repeats. Therefore the period is exactly 31 .
+
+  Exam tip: Upper bound versus actual value
+
+  Length five allows at most 25 − 1 = 31 nonzero states. This example reaches that maximum. The
+  other length-five recurrence above had period 3, showing why length alone does not determine the
+  exact period. The notes announce a later theorem about all nonzero fills for suitable taps; that
+  theorem begins beyond this requested range.
+
+  Exam-style question Check your understanding
+  Why does observing a return after 31 steps only show an upper bound until earlier repeats are
+  excluded?
+
+  Model answer Check your understanding
+  A shorter cycle could return at several multiples of its true period. Showing 31 distinct preceding
+  states rules out every earlier repetition. Together with the return at time 31, it proves minimal
+  cycle length 31.
+
+
+
+
+                                                     32
+MATH6321 | Original notes: pages 1–28                                                  Sai Vanam | Lesson 33
+
+
+Printed page 28
+
+
+The finite-state proof of the LFSR period bound
+
+  There are only finitely many possible states
+  Each of the n stored positions is 0 or 1, so there are 2n possible states. A deterministic sequence of
+  states cannot remain distinct forever. Once a state repeats, its entire future repeats because the
+  update rule depends only on that current state.
+  The special zero state improves the general finite-state bound from 2n to 2n −1. The proof separates
+  cases so that it also covers a nonzero fill that later reaches zero.
+
+  Method: Proposition 3.9, explained one step at a time
+  1. If the initial state is zero, it stays zero, so the period is 1.
+  2. If any later state is zero, every state after it is zero. The eventual period is again 1.
+  3. Otherwise, every state is one of the 2n − 1 nonzero vectors. Consider states a0 , a1 , . . . , a2n −1 :
+     there are 2n states on this list but only 2n − 1 allowed values.
+  4. By the pigeonhole principle, ar = as for some 0 ≤ r < s ≤ 2n − 1. The gap s − r is at most
+     2n − 1, and the least repeating gap is no larger.
+  Thus Per(a0 ) ≤ 2n − 1 . Using r, s for time indices avoids confusing them with the register length
+  n.
+
+  Exam tip: What has not been proved here
+  The argument does not say every fill has maximal period, or that every nonzero fill returns to itself
+  for arbitrary taps. It proves an eventual period bound. A separate analysis is needed to calculate
+  the actual period for a specified fill and recurrence. The source’s next section develops further
+  tools.
+
+  Exam-style question Check your understanding
+  A length-four register is claimed to have eventual period 16. Is this compatible with Proposition
+  3.9?
+
+  Model answer Check your understanding
+
+  No. The bound is 24 − 1 = 15. The zero state is absorbing, so it cannot form one part of a cycle
+  visiting all 16 states. A claim of period 16 signals a counting or modelling error.
+
+
+
+
+                                                      33
+MATH6321 | Original notes: pages 1–28                                                Sai Vanam | Lesson 34
+
+
+Review of printed pages 1–28
+
+
+Choose the right method before calculating
+
+  Method: Match a question to its mathematical structure
+
+   Question type                    Method and decisive check
+   Caesar encryption or cracking    Add/subtract one shift modulo 26; test all 26 if needed
+   General substitution             Build a consistent inverse alphabet from frequencies and
+                                    patterns; re-encrypt
+   Vigenere encryption              Repeat the key over letter positions and use the right
+                                    alignment
+   Unknown Vigenere length          Kasiski spacings plus all column IoCs; check smaller peri-
+                                    ods
+   Shifted-MutIoC table             Write ki − kj = βij ; solve relatives and test the common
+                                    shift
+   Pad security/reuse               State randomness and one-use assumptions; cancel the
+                                    pad algebraically
+   Enigma settings                  Count independent choices, treating order/pairings cor-
+                                    rectly
+   Enigma crib/loops                Reject self-encryption; intersect fixed-point constraints
+   LFSR output or picture           Generate bits by indexed taps, include the fill, XOR
+                                    continuously
+   LFSR period through page 28      Use whole states, first repeated-state gap and the finite-
+                                    state bound
+
+
+  Five distinctions worth checking every time
+  1. Key versus algorithm: knowing the rule need not reveal a properly chosen secret key; small
+     key spaces remain easy to test.
+  2. Frequency evidence versus certainty: English benchmarks guide guesses; one full consistent
+     decryption verifies a candidate.
+  3. IoC versus Mutual IoC: distinct positions in one string use t(t − 1); positions in two strings
+     use t1 t2 .
+  4. Machine key versus current state: stepping changes state while the initial settings remain
+     the message key.
+  5. True pad versus generated stream: a deterministic LFSR output is not automatically
+     independent uniform pad material.
+
+  Exam tip: How to show enough working
+  State your convention, write the formula, show at least one representative calculation in full, present
+  the systematic remaining table, and check the result. An unexplained plaintext, key, count or
+  period does not show how it was obtained. For the non-examinable Enigma attack pages, focus on
+  understanding the restrictions rather than memorising loop products.
+
+
+
+
+                                                    34
+MATH6321 | Original notes: pages 1–28                                                  Sai Vanam | Lesson 35
+
+
+Review practice
+
+
+Try these mixed questions before reading the answers
+
+  Exam-style question 1: letter methods
+  Encrypt ZEBRA with Caesar key 4. Explain why the number of keys remains 26 even for a long
+  message.
+
+  Model answer 1
+  Values (25, 4, 1, 17, 0) become (3, 8, 5, 21, 4), or DIFVE. The same single shift controls every position,
+  so message length does not add independent key choices.
+
+  Exam-style question 2: statistics
+
+  For s = AAAB, r = AABB, calculate IoC(s) and Mutual IoC(s, r).
+
+  Model answer 2
+  IoC(s) = (3 · 2 + 1 · 0)/(4 · 3) = 1/2. The mutual numerator is 3 · 2 + 1 · 2 = 8, denominator 16, so
+  the mutual value is also 1/2. Their equality here is coincidental; their definitions count different
+  selections.
+
+  Exam-style question 3: relative shifts
+  A three-letter Vigenere key starts with C. Shifted-MutIoC evidence gives β12 = 2, β13 = 9. Recover
+  the key and predict β23 .
+
+  Model answer 3
+  k1 = 2, k2 = 2 − 2 = 0, k3 = 2 − 9 = −7 ≡ 19, giving CAT. Then β23 = 0 − 19 ≡ 7 (mod 26). The
+  known first letter fixes the common shift; relative data alone would not do that.
+
+  Exam-style question 4: counting
+  On eight letters, count plugboards with exactly two disjoint pairs.
+
+  Model answer 4
+                                                                                      8
+  Choose four of the eight letters, then one of the three pairings on that set:       4 · 3 = 70 · 3 = 210.
+  Equivalently 8!/(4!22 2!) = 210.
+
+  Exam-style question 5: states
+  For ai+5 = ai ⊕ ai+2 , fill 01101, generate ten bits and decrypt ciphertext 1101000101. What is
+  the length-five period upper bound?
+
+  Model answer 5
+  The stream begins 0110111010. XOR gives plaintext 1011111111. A length-five register has
+  eventual period at most 25 − 1 = 31. Obtaining ten output bits alone does not establish an exact
+  period; that needs a repeated-state analysis.
+
+
+
+
+                                                     35
+MATH6321 | Original notes: pages 1–28                                             Sai Vanam | Lesson 36
+
+
+Sources, scope and a suggested learning sequence
+
+
+Finish the range with a clear mental map
+
+  The story connecting these pages
+  Caesar uses one small shift. General substitution enlarges the key space but preserves frequencies.
+  Vigenere varies the shift with position, yet a repeating keyword creates structure that Kasiski, IoC
+  and Mutual IoC exploit. A true one-time pad removes that short repetition under strict random-key
+  and one-use assumptions, at the cost of difficult key distribution.
+  Enigma automates a changing substitution, but the reflector creates structural constraints. Known
+  plaintext, conjugation and fixed-point conditions can reject huge groups of key settings without
+  enumerating every plugboard. LFSRs then generate long binary streams from short initial fills and
+  recurrences. Their finite state spaces force eventual repetition; the taps and fill affect the cycle
+  actually obtained.
+  These connections are more useful than memorising isolated definitions. In every case ask what
+  structure survives encryption and what extra knowledge lets the receiver reverse the transformation.
+
+  Method: A practical sequence for revising this range
+  First make the modular letter calculations comfortable. Next reproduce the whole Vigenere attack,
+  including the sign in β = ki − kj . Then practise Enigma counting, separating arbitrary wiring
+  from fixed components and combinations from ordered choices. Read the excluded attack as a
+  mathematical explanation of structural filtering. Finally reproduce the six-bit HI example and
+  both length-five state cycles without referring to the answers.
+  If a practice question fails, identify whether the error was conceptual (wrong statistic or key
+  direction), representational (letter versus bit values), or arithmetic (wrong residue or tap index).
+  Redo the exact stage that failed before trying another complete question.
+
+  Sources and boundaries
+  Primary source: Dr Dan Fretwell, MATH6321 Notes(1).pdf, 2026/27, printed pages 1–28 (PDF
+  pages 4–31). Definitions, numbered examples and the two main Vigenere/LFSR source computations
+  have been checked against that material.
+  Assessment context: MATH6321 Exam Information.pdf supplies the proof/exclusion guidance.
+  Related classical-cipher and LFSR question styles appear in the supplied 2025 MATH320 paper.
+  This document explains the original note sequence; it does not extend into the characteristic-
+  polynomial theorem on page 29 or later public-key chapters.
+  Statistical qualifications are stated explicitly: approximate coincidence scores are evidence, ex-
+  pectation is not a guaranteed number of fixed points, and a long LFSR period alone is not a full
+  security proof. These distinctions make the original explanations more precise without changing
+  the intended computational methods.
+
+
+
+
+                                                  36
+

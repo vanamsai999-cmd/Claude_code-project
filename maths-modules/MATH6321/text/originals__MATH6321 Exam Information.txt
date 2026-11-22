@@ -1,0 +1,139 @@
+                        MATH6321 Exam Information
+
+
+
+The exam will last 2 hours and will feature 5 multi-part questions (covering the content of Chapter
+1, Chapters 2-3, Chapter 4, Chapters 5-6 and Chapter 7 respectively). The reason for this is not
+to make things difficult for you, but to allow you to play to your strengths!
+
+None of the proofs in the course are examinable...most parts of each question will be computational
+in nature, i.e. show me that you know how this scheme/algorithm works in practice. Always provide
+full working out where possible. Any valid method of doing such computations will be awarded
+marks, unless the question asks for a specific algorithm to be used.
+
+A calculator is allowed in the exam and a Useful Information sheet will also be provided (which
+will also be included on moodle in advance of the revision session). Despite this, I will try and
+make sure that the numbers are relatively small.
+
+A mock exam will also be provided in advance of the revision session, so that you can see the
+overall style of the questions and have a go yourself before we meet up.
+
+Some questions will have parts that require you to give a description of how certain crypt schemes
+work, or to compare and contrast the efficiency/security of certain schemes. Remember to be as
+precise as possible.
+
+I will not expect you to remember the full details of every single crypt scheme we covered...some
+are non-examinable and some will be outlined on the Useful Information sheet. I’ll make it clear
+below which schemes need to be remembered for the exam and which will be provided on the Useful
+Information sheet.
+
+As always, there will be a couple of parts of questions that are unseen. These are there to test
+your problem solving skills and your ability to use results from the course in unfamiliar territory.
+For example, you might be asked to explain weaknesses of certain public key schemes, e.g. why a
+certain key choice is completely insecure. There are many exercises on this that we didn’t have
+time to do in the tutorials...so it’s worth going back and getting some practice!
+
+Below is a list of core skills covered in each relevant chapter of the notes. Practicing these skills
+in advance will give you a much easier time in the exam. (Although as mentioned above, you will
+need to be able to apply your knowledge too!)
+
+If you have any questions at all, about either the content of the course or the format
+of the exam, then please get in touch!
+
+
+
+
+                                                 1
+1     Classical Cryptography: A brief history
+    1. Explain the Caesar, Monoalphabetic Substitution, Vigenère and One Time Pad ciphers.
+
+    2. Encrypt/decrypt messages using each type of cipher.
+
+    3. Discuss simple advantages/disadvantages of each type of cipher relative to the others.
+
+    4. Calculate the (Mutual) Index of Coincidence for simple (pairs of) strings.
+
+    5. Use a table of Mutual Index of Coincidence values to predict the most likely Vigenère keyword.
+
+
+
+2     Mechanical Cryptography: An industrial revolution in
+      security
+    1. Briefly understand what the components of the Enigma machine do and how they fit together
+       in the machine.
+
+    2. Do simple combinatorial computations to figure out how many machine settings exist (for a
+       simplified version of the machine).
+
+
+The content of the Attacking Enigma section is non-examinable.
+
+
+
+3     Linear Feedback Shift Registers
+    1. Understand what an LFSR is and how to use one to generate pseudorandom bit strings.
+
+    2. Know how to use the output of an LFSR to encrypt/decrypt either a bit string or a black
+       and white picture.
+
+    3. State and use the main theorems to calculate the period of an LFSR for various initial fills.
+
+
+
+4     Public Key Cryptography: Asymmetric security in the
+      digital era
+    1. Explain how Diffie-Hellman Key Exchange works and demonstrate with numerical examples.
+
+    2. Explain how the RSA scheme works and demonstrate with numerical examples.
+
+    3. Explain how RSA digital signatures are performed and demonstrate with numerical examples.
+
+    4. Encrypt/decrypt/sign using the El-Gamal scheme
+       (provided on the Useful Information sheet).
+
+
+                                                  2
+    5. Briefly understand the hard problems underlying the security of the above schemes, i.e. the
+       Discrete Log Problem and the Semiprime Factorization Problem.
+
+    6. Tackle unseen questions concerning the finer details of these schemes (e.g. weaknesses, bad
+       key choices/plaintexts etc).
+
+
+
+5     Factorisation methods
+    1. Factor a number using the Fermat and Pollard Rho methods.
+
+    2. Use Dixon’s method to factor a number
+      (provided on the Useful Information sheet).
+
+
+
+6     Discrete Log methods
+    1. Solve discrete log problems by using the Baby-Step Giant-Step method.
+
+    2. Use the Pollard Rho and Index Calculus methods to solve discrete log problems
+      (both provided on the Useful Information sheet).
+
+
+
+7     Post Quantum Cryptography: The potential future of
+      security
+    1. Encrypt/decrypt using the Knapsack scheme
+      (provided on the Useful Information sheet).
+
+    2. Briefly understand how an instance of the Knapsack problem can be interpreted as a Short
+       Vector Problem for a lattice.
+
+    3. Explain the Simple Noisy Scheme and demonstrate with numerical examples.
+
+    4. Break the Simple Noisy Scheme scheme by using Gauss reduction on a suitable rank 2 lattice.
+
+
+The content of the NTRU section is non-examinable.
+
+
+
+
+                                                 3
+

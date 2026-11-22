@@ -1,0 +1,651 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1.7cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,array,tabularx,multicol}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{lastpage}
+
+\definecolor{navy}{HTML}{17324D}
+\definecolor{blue}{HTML}{2D6A8A}
+\definecolor{teal}{HTML}{2A7F78}
+\definecolor{gold}{HTML}{B77B16}
+\definecolor{red}{HTML}{A23B3B}
+\definecolor{pale}{HTML}{F5F8FB}
+\definecolor{paleblue}{HTML}{EEF5F8}
+\definecolor{paleteal}{HTML}{EEF8F6}
+\definecolor{palegold}{HTML}{FFF8E8}
+\definecolor{palered}{HTML}{FFF1F1}
+\definecolor{darkgray}{HTML}{3E4650}
+
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlist[itemize]{leftmargin=1.4em,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=1.6em,itemsep=2pt,topsep=3pt}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{navy}{\textbf{MATH6310 Metric Spaces \& Topology}}}
+\rhead{\textcolor{darkgray}{Revision Guide}}
+\cfoot{\textcolor{darkgray}{\thepage\,/\,\pageref{LastPage}}}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{blue}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{teal}}{}{0em}{}
+
+\newtcolorbox{keybox}[1][]{enhanced,breakable,colback=paleblue,colframe=blue,boxrule=0.7pt,arc=2mm,left=2.5mm,right=2.5mm,top=2mm,bottom=2mm,title=\textbf{Key idea},fonttitle=\bfseries,#1}
+\newtcolorbox{defbox}[1][]{enhanced,breakable,colback=paleteal,colframe=teal,boxrule=0.7pt,arc=2mm,left=2.5mm,right=2.5mm,top=2mm,bottom=2mm,title=\textbf{Definition},fonttitle=\bfseries,#1}
+\newtcolorbox{exambox}[1][]{enhanced,breakable,colback=palegold,colframe=gold,boxrule=0.7pt,arc=2mm,left=2.5mm,right=2.5mm,top=2mm,bottom=2mm,title=\textbf{Exam focus},fonttitle=\bfseries,#1}
+\newtcolorbox{trapbox}[1][]{enhanced,breakable,colback=palered,colframe=red,boxrule=0.7pt,arc=2mm,left=2.5mm,right=2.5mm,top=2mm,bottom=2mm,title=\textbf{Common trap},fonttitle=\bfseries,#1}
+\newtcolorbox{theorembox}[1][]{enhanced,breakable,colback=pale,colframe=navy,boxrule=0.8pt,arc=2mm,left=2.5mm,right=2.5mm,top=2mm,bottom=2mm,title=\textbf{Theorem / Proposition},fonttitle=\bfseries,#1}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\id}{\operatorname{id}}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{2.2cm}
+{\Huge\bfseries\color{navy} MATH6310\\[0.25cm] Metric Spaces \& Topology\par}
+\vspace{0.6cm}
+{\LARGE\color{blue} Sections 0--1 Simplified Revision Guide\par}
+\vspace{1.0cm}
+\begin{tcolorbox}[width=0.88\textwidth,colback=pale,colframe=navy,arc=3mm,boxrule=0.9pt]
+\centering
+\large
+A concise, exam-friendly guide to \textbf{metric spaces, sets, functions, images, equivalence relations, countability and Cantor's theorem}.\\[0.4cm]
+Built from the supplied lecture notes and exercises, with formal statements retained but explanations made easier to follow.
+\end{tcolorbox}
+\vfill
+{\large \textbf{How to use this guide}}\\[0.25cm]
+\begin{minipage}{0.82\textwidth}
+\begin{itemize}
+\item Read the \textcolor{blue}{Key idea} boxes first to understand the intuition.
+\item Memorise the \textcolor{teal}{Definitions} precisely.
+\item Use the \textcolor{gold}{Exam focus} boxes to practise standard proof structures.
+\item Watch for the \textcolor{red}{Common trap} boxes: these are exactly where notation and logic often go wrong.
+\end{itemize}
+\end{minipage}
+\vfill
+{\small Based on MATH6310 Part I, Sections 0 and 1 lecture notes (07.ix.2026).}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Section 0: What is a Metric Space?}
+
+\begin{keybox}
+A metric space is simply a set together with a rule for measuring distance. The power of the idea is that once a distance satisfies three basic axioms, we can study convergence, continuity and topology in many settings using the same language.
+\end{keybox}
+
+\subsection{The definition you must know}
+\begin{defbox}
+A \textbf{metric} on a set $S$ is a function
+\[
+d:S\times S\to [0,\infty)
+\]
+such that for all $x,y,z\in S$:
+\begin{align*}
+\text{(MS1)}\quad & d(x,y)=0 \iff x=y,\\
+\text{(MS2)}\quad & d(x,y)=d(y,x),\\
+\text{(MS3)}\quad & d(x,z)\le d(x,y)+d(y,z).
+\end{align*}
+The pair $(S,d)$ is called a \textbf{metric space}.
+\end{defbox}
+
+\begin{exambox}
+When asked to prove that a proposed formula defines a metric, structure your answer as:
+\begin{enumerate}
+\item non-negativity / finiteness if needed;
+\item $d(x,y)=0\iff x=y$;
+\item symmetry;
+\item triangle inequality.
+\end{enumerate}
+The triangle inequality is usually the only genuinely difficult part.
+\end{exambox}
+
+\subsection{The standard metric on $\R$}
+\[
+d(x,y)=|y-x|.
+\]
+This works because absolute value satisfies:
+\[
+|a|=0\iff a=0,\qquad |-a|=|a|,\qquad |a+b|\le |a|+|b|.
+\]
+
+\subsection{Euclidean metric on $\R^N$}
+\[
+d_2(x,y)=\sqrt{\sum_{i=1}^N (y_i-x_i)^2}=\|y-x\|_2.
+\]
+The triangle inequality comes from the Euclidean norm triangle inequality, itself linked to Cauchy--Schwarz.
+
+\subsection{Discrete metric}
+For any set $S$,
+\[
+d_{\mathrm{disc}}(s,t)=
+\begin{cases}
+0,&s=t,\\
+1,&s\ne t.
+\end{cases}
+\]
+
+\begin{keybox}
+The same underlying set can carry very different metrics. For example, $\R$ with the usual metric and $\R$ with the discrete metric are different metric spaces.
+\end{keybox}
+
+\begin{exambox}
+To prove the triangle inequality for the discrete metric, the only nontrivial case is $s\neq t$. Then $d(s,t)=1$, while $d(s,u)+d(u,t)\ge 1$ because at least one of $s\neq u$ or $u\neq t$ must hold.
+\end{exambox}
+
+\subsection{Counting metric on finite subsets}
+For a finite set $S$ and $A,B\subseteq S$,
+\[
+d(A,B)=\#(A\triangle B),
+\]
+where
+\[
+A\triangle B=(A\setminus B)\cup(B\setminus A)
+\]
+is the symmetric difference.
+
+\begin{keybox}
+Interpretation: $d(A,B)$ counts how many elements you must ``toggle'' to turn $A$ into $B$.
+\end{keybox}
+
+\subsection{Metrics on spaces of functions}
+Let $I=[0,1]$ and $f,g\in C(I;\R)$.
+
+\subsubsection{Integration metric}
+\[
+d_1(f,g)=\int_0^1 |g(s)-f(s)|\,ds.
+\]
+This measures the \emph{total accumulated difference} between two functions.
+
+\subsubsection{Supremum metric}
+\[
+d_{\sup}(f,g)=\sup_{s\in I}|g(s)-f(s)|.
+\]
+This measures the \emph{largest pointwise difference} between two functions.
+
+\begin{trapbox}
+For the integration metric, proving
+\[
+\int_0^1 |h|=0 \implies h=0
+\]
+uses continuity. For arbitrary functions this implication can fail in pointwise form.
+\end{trapbox}
+
+\subsection{Hausdorff metric: the idea}
+For suitable nonempty, bounded, closed sets $K,J\subseteq \R^2$, the Hausdorff distance is the smallest amount $\delta$ by which each set must be ``fattened'' so that each contains the other.
+
+\begin{keybox}
+The Hausdorff metric measures distance between \textbf{sets themselves}, not between individual points.
+\end{keybox}
+
+\newpage
+\section{Section 1: Sets and Basic Set Operations}
+
+\subsection{Core notation}
+\begin{center}
+\begin{tabularx}{0.95\textwidth}{>{\bfseries}l X}
+\toprule
+Notation & Meaning\\
+\midrule
+$A\subseteq S$ & every element of $A$ lies in $S$\\
+$A\subsetneq S$ & $A\subseteq S$ and $A\ne S$\\
+$A\setminus B$ & elements in $A$ but not in $B$\\
+$\PP(S)$ & the power set: all subsets of $S$\\
+$A\triangle B$ & symmetric difference\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+For a family $\mathcal C$ of subsets of $S$,
+\[
+\bigcup \mathcal C=\{s\in S: \exists C\in\mathcal C,\ s\in C\},
+\]
+\[
+\bigcap \mathcal C=\{s\in S: \forall C\in\mathcal C,\ s\in C\}.
+\]
+
+\subsection{De Morgan and distributive laws}
+\[
+A\cap\left(\bigcup \mathcal C\right)=\bigcup_{C\in\mathcal C}(A\cap C),
+\]
+\[
+A\setminus\left(\bigcup \mathcal C\right)=\bigcap_{C\in\mathcal C}(A\setminus C),
+\]
+\[
+A\setminus\left(\bigcap \mathcal C\right)=\bigcup_{C\in\mathcal C}(A\setminus C).
+\]
+
+\begin{exambox}
+To prove equality of two sets, the standard method is:
+\[
+X=Y \quad\Longleftrightarrow\quad \forall s,\; s\in X \iff s\in Y.
+\]
+In practice, prove both inclusions $X\subseteq Y$ and $Y\subseteq X$.
+\end{exambox}
+
+\subsection{Empty families}
+If $\mathcal C=\varnothing$, then
+\[
+\bigcup \mathcal C=\varnothing,
+\qquad
+\bigcap \mathcal C=S.
+\]
+The second identity depends on knowing the ambient universe $S$.
+
+\subsection{Cartesian products}
+\[
+S\times T=\{(s,t):s\in S,\ t\in T\}.
+\]
+More generally,
+\[
+\prod_{\lambda\in\Lambda}S_\lambda
+\]
+is the set of indexed families $(s_\lambda)_{\lambda\in\Lambda}$ with $s_\lambda\in S_\lambda$.
+
+\begin{trapbox}
+If one factor is empty, the whole product is empty. If the index set $\Lambda$ itself is empty, the empty product contains one element by convention.
+\end{trapbox}
+
+\subsection{Axiom of Choice}
+\begin{theorembox}
+If $(S_\lambda)_{\lambda\in\Lambda}$ is a family of nonempty sets, then
+\[
+\prod_{\lambda\in\Lambda}S_\lambda\neq\varnothing.
+\]
+Equivalently, for a family of nonempty subsets $C_\lambda\subseteq S$, there exists a choice function $f:\Lambda\to S$ such that $f(\lambda)\in C_\lambda$ for every $\lambda$.
+\end{theorembox}
+
+\begin{keybox}
+Think of the Axiom of Choice as saying: from every nonempty box in an arbitrary family of boxes, you may choose one object simultaneously.
+\end{keybox}
+
+\section{Functions}
+
+\subsection{What a function actually contains}
+A function $f:S\to T$ has three ingredients:
+\begin{enumerate}
+\item a domain $S$;
+\item a codomain $T$;
+\item a rule assigning exactly one value $f(s)\in T$ to every $s\in S$.
+\end{enumerate}
+
+\begin{trapbox}
+A function is not determined only by its formula. Changing the domain or codomain can change whether it is injective, surjective or bijective.
+\end{trapbox}
+
+\subsection{Important examples}
+\begin{itemize}
+\item Identity: $\id_S(s)=s$.
+\item Inclusion: $\iota_{A\to S}:A\to S$, $a\mapsto a$.
+\item Indicator:
+\[
+\mathbf 1_A(s)=\begin{cases}1,&s\in A,\\0,&s\notin A.\end{cases}
+\]
+\item Constant function: $f(s)=t_0$ for all $s$.
+\item Coordinate projection from a product: $(s_j)_{j\in J}\mapsto s_k$.
+\end{itemize}
+
+\subsection{Range and composition}
+\[
+\Ran f=\{f(s):s\in S\}\subseteq T.
+\]
+If $f:S\to T$ and $g:T\to U$, then
+\[
+(g\circ f)(s)=g(f(s)).
+\]
+
+\begin{trapbox}
+Composition is generally \textbf{not commutative}: $f\circ g$ and $g\circ f$ may be different, or one of them may not even be defined.
+\end{trapbox}
+
+\subsection{Restriction, extension and co-restriction}
+If $A\subseteq S$,
+\[
+f|_A:A\to T,\qquad a\mapsto f(a)
+\]
+is the restriction of $f$.
+
+If $B\subseteq T$ and $\Ran f\subseteq B$, then viewing $f$ as a map $S\to B$ is a co-restriction.
+
+\section{Injective, Surjective and Bijective Maps}
+
+\begin{defbox}
+For $f:S\to T$:
+\begin{itemize}
+\item \textbf{Injective}: $f(s_1)=f(s_2)\Rightarrow s_1=s_2$.
+\item \textbf{Surjective}: $\Ran f=T$.
+\item \textbf{Bijective}: both injective and surjective.
+\end{itemize}
+\end{defbox}
+
+\begin{keybox}
+\textbf{Injection:} no two inputs collide.\\
+\textbf{Surjection:} no target is missed.\\
+\textbf{Bijection:} perfect one-to-one matching.
+\end{keybox}
+
+\subsection{Composition facts}
+For $f:S\to T$ and $g:T\to U$:
+\begin{itemize}
+\item if $f$ and $g$ are injective, then $g\circ f$ is injective;
+\item if $g\circ f$ is injective, then $f$ is injective;
+\item if $f$ and $g$ are surjective, then $g\circ f$ is surjective;
+\item if $g\circ f$ is surjective, then $g$ is surjective;
+\item if $f$ and $g$ are bijective, then $g\circ f$ is bijective.
+\end{itemize}
+
+\subsection{Left and right inverses}
+\begin{theorembox}
+Ignoring the special empty-set edge case noted in the lectures:
+\begin{align*}
+f\text{ injective} &\iff \exists g:T\to S\text{ with }g\circ f=\id_S,\\
+f\text{ surjective} &\iff \exists h:T\to S\text{ with }f\circ h=\id_T,\\
+f\text{ bijective} &\iff f\text{ has a two-sided inverse}.
+\end{align*}
+\end{theorembox}
+
+\begin{exambox}
+A standard way to prove injectivity is to start with
+\[
+f(x)=f(y)
+\]
+and algebraically deduce $x=y$. To prove surjectivity, start with an arbitrary target $t\in T$ and solve $f(s)=t$ for an input $s\in S$.
+\end{exambox}
+
+\section{Direct and Inverse Images}
+
+\subsection{Direct image}
+For $A\subseteq S$,
+\[
+f(A)=\{f(s):s\in A\}\subseteq T.
+\]
+
+\subsection{Inverse image}
+For $C\subseteq T$,
+\[
+f^{-1}(C)=\{s\in S:f(s)\in C\}\subseteq S.
+\]
+
+\begin{trapbox}
+The notation $f^{-1}(C)$ for an inverse image does \textbf{not} mean that $f$ is invertible. Inverse images are defined for every function.
+\end{trapbox}
+
+\subsection{What direct images preserve}
+\[
+f\left(\bigcup \mathcal A\right)=\bigcup_{A\in\mathcal A}f(A).
+\]
+But in general only
+\[
+f\left(\bigcap\mathcal A\right)\subseteq\bigcap_{A\in\mathcal A}f(A).
+\]
+Equality can fail when $f$ is not injective.
+
+\subsection{What inverse images preserve}
+Inverse images behave much more cleanly:
+\[
+f^{-1}\left(\bigcup\mathcal C\right)=\bigcup_{C\in\mathcal C}f^{-1}(C),
+\]
+\[
+f^{-1}\left(\bigcap\mathcal C\right)=\bigcap_{C\in\mathcal C}f^{-1}(C),
+\]
+\[
+f^{-1}(D\setminus C)=f^{-1}(D)\setminus f^{-1}(C).
+\]
+
+\begin{keybox}
+Memory rule: inverse images preserve the usual set operations exactly. Direct images preserve unions, but intersections can become larger after mapping.
+\end{keybox}
+
+\section{Schr\"oder--Bernstein}
+\begin{theorembox}
+If there is an injection $S\to T$ and an injection $T\to S$, then there is a bijection $S\to T$.
+\end{theorembox}
+
+\begin{exambox}
+The lecture notes explicitly state that you \textbf{must know the theorem}, but the proof is \textbf{not examinable}.
+\end{exambox}
+
+\section{Equivalence Relations and Partitions}
+
+\begin{defbox}
+A relation $\sim$ on a nonempty set $S$ is an \textbf{equivalence relation} if it is:
+\begin{itemize}
+\item reflexive: $s\sim s$;
+\item symmetric: $s\sim t\Rightarrow t\sim s$;
+\item transitive: $r\sim s$ and $s\sim t\Rightarrow r\sim t$.
+\end{itemize}
+\end{defbox}
+
+For $a\in S$, the equivalence class is
+\[
+[a]=\{s\in S:s\sim a\}.
+\]
+The quotient set is
+\[
+S/\!\sim=\{[a]:a\in S\}.
+\]
+
+\subsection{Example: congruence modulo $p$}
+For prime $p$,
+\[
+n\equiv_p m \iff p\mid(m-n).
+\]
+The equivalence classes are the residue classes
+\[
+[0]_p,[1]_p,\dots,[p-1]_p,
+\]
+and these split $\Z$ into disjoint pieces.
+
+\subsection{Partitions}
+\begin{defbox}
+A collection $\mathcal C$ of subsets of $S$ is a partition if:
+\begin{enumerate}
+\item $\bigcup \mathcal C=S$;
+\item every $C\in\mathcal C$ is nonempty;
+\item distinct members of $\mathcal C$ are disjoint.
+\end{enumerate}
+\end{defbox}
+
+\begin{theorembox}
+Equivalence relations and partitions are two ways of describing the same structure:
+\begin{itemize}
+\item equivalence classes of an equivalence relation form a partition;
+\item a partition defines an equivalence relation by saying two elements are related exactly when they lie in the same block.
+\end{itemize}
+\end{theorembox}
+
+\begin{keybox}
+An equivalence relation tells you \emph{when two elements count as the same}. A partition shows the resulting groups of ``same'' elements.
+\end{keybox}
+
+\subsection{Canonical decomposition of a function}
+Given $f:S\to T$, define
+\[
+s_1\sim_f s_2 \iff f(s_1)=f(s_2).
+\]
+Then $S/\!\sim_f$ corresponds bijectively to $\Ran f$. Therefore every function decomposes canonically as
+\[
+S\twoheadrightarrow S/\!\sim_f\xrightarrow{\cong}\Ran f\hookrightarrow T.
+\]
+
+\begin{keybox}
+Every function can be viewed as: first collapse together inputs with the same output, then make a perfect bijection with the range, then include the range inside the codomain.
+\end{keybox}
+
+\section{Countability}
+
+\begin{defbox}
+A set $S$ is \textbf{countable} if there exists an injection
+\[
+f:S\to\N.
+\]
+Thus finite sets are countable, and an infinite countable set can be listed in a sequence.
+\end{defbox}
+
+\subsection{Useful tests}
+If $S\neq\varnothing$, then $S$ is countable iff there is a surjection $\N\to S$.
+
+If $T$ is countable, then $S$ is countable whenever either:
+\begin{itemize}
+\item there is an injection $S\to T$, or
+\item there is a surjection $T\to S$.
+\end{itemize}
+
+\subsection{Standard examples}
+\begin{itemize}
+\item $\N$ is countable.
+\item $\Z$ is countable.
+\item $\N^N$ is countable for each fixed finite $N$.
+\item finite Cartesian products of countable sets are countable.
+\item $\Q$ is countable because $\Z\times\N\to\Q$, $(n,m)\mapsto n/m$, is surjective.
+\item a countable union of countable sets is countable.
+\end{itemize}
+
+\begin{exambox}
+For countability questions, try one of three standard moves:
+\begin{enumerate}
+\item build an injection into a known countable set;
+\item build a surjection from a known countable set;
+\item write the target as a countable union of countable pieces.
+\end{enumerate}
+\end{exambox}
+
+\subsection{Classic applications}
+The lecture notes use the countable-union principle to show that:
+\begin{itemize}
+\item polynomials with rational coefficients form a countable set;
+\item the set of all finite subsets of $\N$ is countable.
+\end{itemize}
+
+\section{Cantor's Theorem and Uncountability}
+
+\begin{theorembox}
+For every set $S$, there is no surjection
+\[
+S\to\PP(S).
+\]
+Equivalently, the power set $\PP(S)$ is strictly ``larger'' than $S$ in cardinality.
+\end{theorembox}
+
+\subsection{The diagonal idea}
+Assume for contradiction that $\phi:S\to\PP(S)$ is surjective. Define
+\[
+D=\{s\in S:s\notin\phi(s)\}.
+\]
+Since $D\subseteq S$, surjectivity says $D=\phi(x)$ for some $x\in S$.
+
+Now ask whether $x\in D$:
+\begin{itemize}
+\item If $x\in D$, then by definition $x\notin\phi(x)=D$.
+\item If $x\notin D$, then by definition $x\in\phi(x)=D$.
+\end{itemize}
+Either way gives a contradiction.
+
+\begin{keybox}
+The diagonal construction creates an object deliberately designed to differ from the $s$th listed object at position $s$. Therefore no proposed list can contain everything.
+\end{keybox}
+
+\subsection{Binary sequences are uncountable}
+The notes identify
+\[
+\PP(\N)\cong \{0,1\}^{\N}.
+\]
+By Cantor's theorem, these sets are uncountable.
+
+\subsection{Uncountability of $\R$}
+One exercise uses the injection
+\[
+\psi:\{0,1\}^{\N}\to\R,\qquad (a_n)\mapsto\sum_{n=1}^\infty\frac{a_n}{10^n}
+\]
+to deduce that $\R$ is uncountable.
+
+\section{Optional / Non-examinable Material}
+
+\subsection{Partial orders}
+A partial order $\le$ satisfies reflexivity, antisymmetry and transitivity.
+
+Important vocabulary:
+\begin{itemize}
+\item upper bound;
+\item maximal element;
+\item chain;
+\item least upper bound.
+\end{itemize}
+
+\begin{exambox}
+The lecture notes label partial orders and Zorn's Lemma as \textbf{self-study / non-examinable}. Learn the vocabulary if useful, but prioritise the examinable material first.
+\end{exambox}
+
+\newpage
+\section{Proof Templates You Should Be Able to Reproduce}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+\item \textbf{Set equality:} take an arbitrary element and prove membership both ways.
+\item \textbf{Injectivity:} assume $f(x)=f(y)$ and derive $x=y$.
+\item \textbf{Surjectivity:} let $t$ be arbitrary in the codomain and find $s$ with $f(s)=t$.
+\item \textbf{Equivalence relation:} verify reflexive, symmetric, transitive separately.
+\item \textbf{Metric:} verify zero-distance criterion, symmetry and triangle inequality.
+\item \textbf{Countability:} construct an injection/surjection or decompose into countable pieces.
+\item \textbf{Cantor diagonal argument:} assume a complete listing exists, construct an object that differs from every listed object on its diagonal position.
+\end{enumerate}
+
+\section{Fast Memory Sheet}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{>{\bfseries\color{navy}}p{0.25\textwidth} X}
+Metric & distance function obeying identity of indiscernibles, symmetry, triangle inequality\\
+Injection & different inputs have different outputs\\
+Surjection & every codomain element is hit\\
+Bijection & injection + surjection\\
+Direct image & push a subset of the domain forward\\
+Inverse image & pull a subset of the codomain back\\
+Equivalence relation & reflexive + symmetric + transitive\\
+Partition & nonempty, pairwise disjoint blocks covering the whole set\\
+Countable & injects into $\N$\\
+Cantor & no surjection $S\to\PP(S)$\\
+Schr\"oder--Bernstein & injections both ways imply a bijection\\
+\end{tabularx}
+\end{center}
+
+\section{Mini Practice Check}
+Try these without looking back.
+\begin{enumerate}
+\item State the three metric axioms.
+\item Prove the discrete metric satisfies the triangle inequality.
+\item Explain why the codomain matters when deciding surjectivity.
+\item State the definitions of injective, surjective and bijective.
+\item Why does $f^{-1}(C)$ make sense even if $f$ has no inverse function?
+\item Give the three conditions for an equivalence relation.
+\item Explain why equivalence classes form a partition.
+\item Give one proof that $\Q$ is countable.
+\item State Cantor's theorem and explain the diagonal set $D$.
+\item Which parts of the supplied Section 1 notes are explicitly non-examinable?
+\end{enumerate}
+
+\begin{tcolorbox}[colback=navy!4,colframe=navy,arc=2mm]
+\centering\large\bfseries\color{navy}
+If you can state every definition precisely and reproduce the proof templates above, you have the core language needed for the next parts of Metric Spaces \& Topology.
+\end{tcolorbox}
+
+\end{document}

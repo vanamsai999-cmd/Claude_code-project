@@ -1,0 +1,2344 @@
+MATH6321 | Exam-focused study guide                                               Sai Vanam | 1
+
+
+Start here
+
+
+
+Section 2.1, Chapter 3 and all of Chapter 4
+  Detailed explanations for Sai Vanam
+  This guide follows the supplied MATH6321 lecture notes, with the focus refined using the
+  attached exam information.
+  Included: Section 2.1 Enigma; Sections 3.1 and 3.2 on LFSRs; Sections 4.1 Diffie–Hellman,
+  4.2 RSA, 4.3 ElGamal encryption and 4.4 digital signatures.
+  Each section has explanations, methods, worked calculations and questions immediately
+  followed by model answers. The original examples are retained alongside additional practice.
+  Boxes make formulas and conclusions easy to locate.
+  The non-examinable Section 2.2 Enigma attacks is excluded. Supporting proof explanations
+  are retained to help understanding, although the supplied exam information states that no
+  proofs are examinable. Corrected calculations are clearly identified where the original LFSR
+  example is inconsistent.
+
+  Method: How to use the pack
+  Read one concept box, then reproduce the worked example using your own working. Cover
+  the green model answer when you attempt a purple question. Check the modulus at each
+  step.
+  For a first pass, follow the four-hour route on the next page. There is more practice here
+  than you need to finish in one sitting; revisit questions you cannot complete without help.
+
+
+
+
+                                               1
+MATH6321 | Exam-focused study guide                                                 Sai Vanam | 2
+
+
+Study route
+
+
+
+A 1–5 pm first pass
+  Method: Four hours, including breaks
+
+   1:00–1:25          Section 2.1: components and machine-setting counts.
+   1:25–2:00          Section 3.1: recurrence, XOR, pictures and periods.
+   2:00–2:35          Section 3.2: companion matrices and the main theorem.
+   2:35–2:45          Break.
+   2:45–3:10          Section 4.1: Diffie–Hellman and discrete logs.
+   3:10–3:40          Section 4.2: RSA keys and modular exponentiation.
+   3:40–3:50          Break.
+   3:50–4:15          Section 4.3: ElGamal encryption and group operations.
+   4:15–4:50          Section 4.4: RSA and ElGamal digital signatures.
+   4:50–5:00          Closed-book recall and final mixed questions.
+
+  What changes when signatures enter the question?
+  For encryption, use the recipient’s public key; the recipient decrypts with their private key.
+  For signing, use the sender’s private key; verify with the sender’s public key.
+  Chapter 4 problems often combine two users, two schemes and two moduli. Before calculating,
+  label the sender, recipient, encryption parameters and signature parameters.
+
+  Exam tip: Exam priorities from the supplied guidance
+  Know how to explain and execute DH, RSA and RSA signatures. ElGamal encryption and
+  signatures are supplied on the Useful Information sheet, but you must still interpret the
+  formulas and perform the computations. Practise comparisons, weak key choices and other
+  unfamiliar variations as well as routine arithmetic.
+
+
+
+
+                                                2
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 3
+
+
+Arithmetic toolkit
+
+
+
+Extended Euclid: see every back-substitution
+  What the algorithm is trying to produce
+  To invert a (mod n), find integers u, v with ua + vn = 1. Reducing this integer identity
+  modulo n leaves ua ≡ 1, making u the inverse. Euclid finds the gcd; back-substitution
+  converts the remainder calculations into the required identity.
+  The inverse exists exactly when the final nonzero remainder is 1. This is the reason an
+  unsuccessful inverse calculation should stop at a gcd greater than 1, rather than produce an
+  ordinary fraction.
+
+  Worked example: Find 17 inverse modulo 43
+  Divide repeatedly:
+                           43 = 2 · 17 + 9,   17 = 9 + 8,   9 = 8 + 1.
+  Now reverse the chain:
+                            1=9−8
+                             = 9 − (17 − 9) = 2 · 9 − 17
+                             = 2(43 − 2 · 17) − 17 = 2 · 43 − 5 · 17.
+
+  Thus 17−1 ≡ −5 ≡ 38 (mod 43). Check 17 · 38 = 646 = 15 · 43 + 1. The negative coefficient
+  is entirely acceptable; converting it to a standard residue is the final step.
+
+  Method: Solve a nonunit linear congruence
+  For 6x ≡ 8 (mod 14), the gcd is 2 and divides 8. Divide the coefficient, right side and
+  modulus to get 3x ≡ 4 (mod 7). Since 3−1 = 5 (mod 7), x ≡ 20 ≡ 6 (mod 7). Lifting to
+  residues modulo 14 gives x = 6, 13. Both work: 36 ≡ 8 and 78 ≡ 8 (mod 14).
+
+  Exam-style question Practice
+  Find 9−1 (mod 26) and explain how you checked it.
+
+  Model answer Practice
+  Since 3 · 9 = 27 ≡ 1 (mod 26), the inverse is 3. This short observation is a valid computation;
+  extended Euclid is a systematic method when the inverse is not immediately visible. The
+  multiplication check is still worth writing.
+
+
+
+
+                                                3
+MATH6321 | Exam-focused study guide                                              Sai Vanam | 4
+
+
+Arithmetic toolkit
+
+
+
+Repeated squaring, Euler and exponent cycles
+  Calculate powers without writing enormous integers
+  Repeated squaring uses a2r = (ar )2 , reducing modulo the chosen modulus at every step. A
+  binary expansion of the exponent then tells you which squared powers to multiply. This
+  requires a number of squarings proportional to the number of binary digits of the exponent,
+  rather than one multiplication for every unit of the exponent.
+  Euler’s theorem says aφ(n) ≡ 1 (mod n) when gcd(a, n) = 1. For a prime p, φ(p) = p − 1,
+  giving Fermat’s little theorem. The coprimality hypothesis matters: 24 ≡ 0 (mod 8), not 1,
+  although φ(8) = 4.
+
+  Worked example: Compute 7 to the power 13 modulo 23
+  Since 13 = 8 + 4 + 1, calculate
+
+                            72 ≡ 3,   74 ≡ 9,   78 ≡ 12   (mod 23).
+
+  Therefore 713 ≡ 12 · 9 · 7 = 756 ≡ 20 (mod 23). Each squared remainder represents exactly
+  the same residue as the corresponding enormous power.
+  We can also simplify exponents when their cycle is known. For nonzero a (mod 23), a22 = 1,
+  so a57 = a13 , because 57 = 2 · 22 + 13. This exponent reduction uses modulo 22; the final
+  group element still uses modulo 23.
+
+  Exam tip: A negative exponent means an inverse
+  If a is a unit, a−r = (a−1 )r . For an element of known order q, it also equals aq−r after
+  reducing the exponent modulo q. Without invertibility the negative power is not defined in
+  the unit-group calculation.
+
+  Exam-style question Practice
+  Compute 310 (mod 17) by repeated squaring.
+
+  Model answer Practice
+ 32 = 9, 34 ≡ 81 ≡ 13, 38 ≡ 169 ≡ 16 (mod 17). Since 10 = 8 + 2, 310 ≡ 16 · 9 = 144 ≡ 8
+ (mod 17).
+
+
+
+
+                                                4
+MATH6321 | Exam-focused study guide                                                   Sai Vanam | 5
+
+
+Section 2.1 | The Enigma cipher
+
+
+
+Enigma components and counting | explanation
+  A changing substitution with a reversible path
+  A keypress sends a signal through the plugboard, the rotors, the reflector, then back through
+  the inverse rotor path and the plugboard. The plugboard swaps disjoint pairs. Rotors
+  permute letters; stepping changes the effective permutation from one position to another.
+  The reflector pairs all letters and sends the signal backwards. With identical initial settings,
+  the machine decrypts by the same process.
+  For a fixed rotor state, if the forward permutation is R, reflector U , and plugboard P = P −1 ,
+  the overall permutation is P R−1 U RP (rightmost map acts first). Since U 2 = I, the overall
+  map is an involution. If U has no fixed points, no letter encrypts to itself. These structural
+  restrictions helped attacks, despite the huge key space.
+  The module uses a simplified stepping/counting model. Answer using the assumptions stated
+  in the question rather than adding historical ring/notch choices not requested.
+
+  Method: Count independent choices without overcounting
+  For L letters and exactly m disjoint plugboard pairs,
+                                                 !
+                              L!          L
+                                       =    (2m − 1)(2m − 3) · · · 1.
+                        (L − 2m)! 2 m!
+                                   m     2m
+
+  Choose the paired letters, then pair them: divide by 2 for the order within each pair and
+  by m! for the order of the pairs. If the number of pairs is optional, sum over permitted m,
+  including m = 0 if allowed.
+  Choose r ordered distinct rotors from R: R!/(R − r)!. If each has L starting positions,
+  multiply by Lr . A fully variable paired reflector on even L has L!/(2L/2 (L/2)!) wirings; a
+  choice of h fixed reflectors contributes only h. Multiply independent factors.
+
+  Separate the device from the counting assumptions
+  An Enigma key specifies machine settings, whereas a message position specifies how far the
+  rotors have advanced since those settings were established. Therefore two identical letters at
+  different positions need not have the same ciphertext. The effective permutation changes
+  even though the initial secret key has not changed.
+  The reflector is more than an extra random substitution. It makes the electrical path return
+  through the inverse rotor mappings. If the forward path sends a letter to one contact,
+  the reflector pairs that contact with another and the reverse path returns to a new letter.
+  Applying the complete fixed-state map twice cancels the path and reflector pairing, so it is
+  its own inverse. Sender and receiver can therefore use the same initial settings for encryption
+  and decryption.
+  For counting, write down exactly which choices are independent. A choice of three already
+  manufactured rotors does not include a choice of their internal wiring. Starting positions are
+  additional choices only when the model treats the fixed wiring separately. The simplified
+  model in the notes is the one to use unless the question explicitly specifies another. A
+  defensible product of labelled factors is better than an unexplained huge integer.
+
+
+
+                                                 5
+MATH6321 | Exam-focused study guide                                                     Sai Vanam | 6
+
+
+Section 2.1 | The Enigma cipher
+
+
+
+Enigma components and counting | worked practice
+  Worked example: The notes’ restricted machine
+  Exactly ten plug pairs on 26 letters give 26!/(6!210 10!) = 150738274937250. Three ordered
+  rotors from five and 26 positions each give 5 · 4 · 3 · 263 = 1054560. Choosing one of two
+  fixed reflectors gives total
+
+                   150738274937250 · 1054560 · 2 = 317925110435652720000.
+
+  Counting arbitrary rotor wirings as (26!)3 is a different model and must not be mixed into
+  this restricted count.
+
+  Exam tip: Use permutations, not combinations, for rotor slots
+                                                                                
+  Left, middle and right are distinct positions. Choosing three rotors with     5
+                                                                                3
+                                                                                     misses their 3!
+  orderings; equivalently use 5 · 4 · 3 directly.
+
+  Exam-style question 2.1
+  A toy machine has six letters, one plug pair, two ordered rotors from four, six starting
+  positions per rotor, and one of two fixed reflectors. Count its settings.
+
+  Model answer 2.1
+              
+  There are 62 = 15 plug pairs, 4 · 3 = 12 rotor orders, 62 = 36 starting positions and 2
+  reflectors. Their product is 15 · 12 · 36 · 2 = 12960. No factorial for arbitrary rotor wiring is
+  needed because the four available rotors are fixed.
+
+  Exam-style question Practice
+  A toy six-letter plugboard can use either zero, one or two pairs. How many possible
+  plugboards are there?
+
+  Model answer Practice
+                                               
+  Zero pairs gives 1 setting. One pair gives 62 = 15. Two pairs gives 6!/(2! 22 2!) = 45. Add
+  the mutually exclusive cases: 1 + 15 + 45 = 61. Multiplying the three answers would be
+  wrong because the machine chooses one pair-count case, rather than making all three choices
+  simultaneously.
+
+
+
+
+                                                 6
+MATH6321 | Exam-focused study guide                                                Sai Vanam | 7
+
+
+Section 2.1 | The Enigma cipher
+
+
+
+Reflectors and the total key count
+  A reflector pairs every contact
+  Unlike a partially plugged plugboard, the reflector pairs all 26 contacts into 13 disjoint
+  swaps. Its unconstrained wiring count is therefore
+                            26!
+                                     = 25 · 23 · · · 3 · 1 = 7905853580625.
+                           213 13!
+  In the restricted model only two fixed reflectors are available, so the reflector choice con-
+  tributes a factor of 2, not the enormous arbitrary-wiring count.
+
+  Worked example: Multiply the restricted independent choices
+  Use exactly ten plug pairs, three ordered rotors from five, 26 positions per rotor and one of
+  two fixed reflectors:
+                            #keys = 150738274937250 · 1054560 · 2
+                                  = 317925110435652720000.
+
+  The unrestricted machine instead multiplies the all-plugboard count, (26!)3 arbitrary rotor
+  wirings and the arbitrary reflector count. These modelling assumptions differ substantially.
+
+  Exam tip: Large key spaces do not prove security
+  A key count measures how many configurations exist, not whether every configuration must
+  be searched. Structural properties or known plaintext can eliminate many candidates at
+  once. The next pages explain such constraints. This is the same general lesson encountered
+  with substitution’s 26! keys.
+
+  Exam-style question Check your understanding
+  A six-letter machine has one plug pair, the 432 rotor settings from the previous exercise and
+  two fixed reflectors. Count all its settings.
+
+  Model answer Check your understanding
+                                
+  The plugboard contributes 62 = 15. Multiply independent choices: 15 · 432 · 2 = 12960.
+  The number of plug pairs is fixed at one; there is no sum over other pair counts.
+
+
+
+
+                                                   7
+MATH6321 | Exam-focused study guide                                                     Sai Vanam | 8
+
+
+Section 2.1 | The Enigma cipher
+
+
+
+Section 2.1: the full counting model and daily keys
+  History and the operational model
+  The notes introduce Arthur Scherbius’s 1918 machine as a device for commercial, diplomatic
+  and military communication, then focus on its wartime use. The user selects a secret setting,
+  types the plaintext and records the illuminated letters. Resetting an identical machine to
+  the same starting setting lets the receiver type the ciphertext to recover plaintext.
+  In the simplified stepping model, the right rotor advances every keypress, the middle advances
+  after 26 right-rotor steps, and the left advances after 26 middle-rotor steps. The rotor wirings
+  stay fixed; rotation changes the induced substitution.
+  The attack section assumes the fixed wirings are known. The notes credit Marian Rejewski
+  and other Polish cryptographers, using intelligence from the French, for foundational work
+  recovering those wirings through group theory. A known-plaintext attack also needs a correct
+  crib; structural weaknesses do not automatically reveal every message.
+  Daily codebooks supplied new settings. An attack therefore had to be fast enough to exploit
+  that day’s messages. The key is the initial configuration; the position-dependent permutation
+  σi then gives ci = σi (mi ) and mi = σi−1 (ci ).
+
+  Worked example: Propositions 2.2–2.4 and Corollary 2.5
+  Allowing any number of plugs on 26 letters gives
+                                13
+                                          26!
+                          T =                      = 532985208200576.
+                                X
+
+                                m=0 (26 − 2m)!2 m!
+                                               m
+
+
+  The m = 0 term is 1: no plugs. If each of three rotor wirings may be any permutation, there
+  are (26!)3 choices (Proposition 2.3). A fully paired reflector has
+
+                                           26!
+                                     U=             = 7905853580625
+                                          213 13!
+  possible wirings. The unrestricted total is exactly T (26!)3 U . This product is the large integer
+  in Corollary 2.5; its factored form makes the source of every factor clear.
+  For the restricted machine, instead use exactly ten plugs, three ordered rotors from five
+  with 263 positions, and two fixed reflectors. The answer is 317925110435652720000. Do not
+  multiply a fixed-rotor selection count by an arbitrary-wiring count: they describe different
+  models.
+
+
+
+
+                                                     8
+MATH6321 | Exam-focused study guide                                                            Sai Vanam | 9
+
+
+Section 3.1 | LFSR basics
+
+
+
+LFSR generation, XOR and pictures | explanation
+  A small secret state produces a long deterministic stream
+  An LFSR of length n has initial fill (a0 , . . . , an−1 ) ∈ Fn2 and taps (b0 , . . . , bn−1 ), with update
+
+                                ai+n = b0 ai ⊕ b1 ai+1 ⊕ · · · ⊕ bn−1 ai+n−1 .
+
+  The state at time i is (ai , . . . , ai+n−1 ); shift left and append the new bit. The output
+  convention used here and in the notes is the stream a0 a1 a2 · · ·, including the initial fill.
+  Encrypt bits by ci = mi ⊕ ai ; decrypt by the identical XOR.
+  Pictures are flattened in the specified order (the paper uses left to right, top to bottom,
+  0 white/1 black), XORed, then reshaped. A long period does not make a bare LFSR
+  cryptographically secure: its linear structure can reveal states from enough known output.
+
+  Method: A safe LFSR calculation table
+  Write the initial bits with indices. Compute one new bit per column using the original absolute
+  indices, never by guessing a visual pattern. For ai+5 = ai ⊕ ai+2 , calculate a5 = a0 ⊕ a2 , then
+  a6 = a1 ⊕ a3 , and so on. Keep a row of indices, stream, ciphertext and plaintext. Count the
+  required output length before stopping.
+
+  Follow the indices, not an imagined random pattern
+ The register is a moving window through an infinite sequence. At time zero it contains
+ (a0 , . . . , an−1 ). One update discards the first stored bit, shifts the remaining bits, and
+ appends an . The output convention used by the notes lists the sequence starting at a0 , so
+ those initial stored bits count towards the requested output length.
+ A tap vector is a list of coefficients in F2 , not a list of ordinary counts. Two tapped ones
+ contribute 1 + 1 = 0, while three tapped ones contribute 1. Reducing the sum modulo 2
+ after adding the tapped bits is equivalent to repeated XOR.
+ When encrypting a picture, turn its pixels into a single long sequence before applying XOR.
+ A four-by-five picture has 20 positions, not four independent messages of length five. The
+ first row uses stream bits 0–4, the next uses 5–9, and so on. A receiver who restarts the
+ initial fill for every row is using a different key stream, so even correct XOR arithmetic will
+ produce the wrong picture. Label the index ranges explicitly to prevent that error.
+
+
+
+
+                                                      9
+MATH6321 | Exam-focused study guide                                                       Sai Vanam | 10
+
+
+Section 3.1 | LFSR basics
+
+
+
+Definitions 3.1–3.2 and reading an LFSR diagram
+  XOR and the exact update definition
+  XOR is addition modulo 2:
+                                                      ⊕ 0 1
+                                                      0 0 1 .
+                                                      1 1 0
+  For state ai = (ai , . . . , ai+n−1 ), calculate the feedback from the old state first, then shift:
+                                    n−1
+                           ai+n =                       ai+1 = (ai+1 , . . . , ai+n ).
+                                    M
+                                          bj ai+j ,
+                                    j=0
+
+  The initial fill is the state at time 0. The discarded leftmost bits form the output a0 a1 a2 . . ..
+  The feedback is not an extra bit placed before this initial fill.
+
+  Method: Read the source diagrams from the taps
+ The boxes are the stored bits. A connection from a box into the feedback XOR means its
+ tap is 1; no connection means tap 0. For the six-bit example the connections are from offsets
+ 0, 2 and 3, so ai+6 = ai ⊕ ai+2 ⊕ ai+3 . For the two five-bit examples, connect offsets (0, 2) or
+ (0, 1).
+ A short fill and recurrence generate a long deterministic sequence. This is convenient to
+ share, but it does not create the independent uniform randomness of an actual one-time
+ pad. A long period alone does not prove cryptographic security. The original diagrams and
+ bit tables appear in the reference appendix.
+
+  Exam-style question Check the diagram interpretation
+  For five boxes, connections from offsets 1 and 4 give which recurrence and tap vector?
+
+  Model answer Check the diagram interpretation
+  ai+5 = ai+1 ⊕ ai+4 and b = (0, 1, 0, 0, 1). The untapped initial offset 0 suggests the smaller-
+  register analysis of Lemma 3.10.
+
+
+
+
+                                                        10
+MATH6321 | Exam-focused study guide                                                     Sai Vanam | 11
+
+
+Section 3.1 | LFSR basics
+
+
+
+LFSR generation, XOR and pictures | worked practice
+  Worked example: The 2025 paper’s length-five stream
+  With fill 11010 and ai+5 = ai ⊕ ai+2 :
+
+       a5 = 1 ⊕ 0 = 1, a6 = 1 ⊕ 1 = 0, a7 = 0 ⊕ 0 = 0, a8 = 1 ⊕ 1 = 0, a9 = 0 ⊕ 0 = 0.
+
+  Continuing gives the first 20 bits
+
+                                    11010 10000 10010 11001.
+
+  For a ciphertext row 11011, XOR with the first five bits gives 00001. Continue with the
+  next five stream bits for the next row; do not restart the fill at every picture row.
+
+  Exam tip: The zero fill always stays zero
+  Every feedback sum is zero, so its period is one and it provides no masking at all. Do not
+  apply a theorem for nonzero fills to the zero fill.
+
+  Exam-style question 3.1
+  Use ai+3 = ai ⊕ ai+1 , fill 100, to generate nine bits. Decrypt ciphertext 010011101.
+
+  Model answer 3.1
+  The new bits are a3 = 1, a4 = 0, a5 = 1, a6 = 1, a7 = 1, a8 = 0, giving stream 100101110.
+  XOR gives
+                           010011101 ⊕ 100101110 = 110110011.
+  Applying the same stream to this result recovers the ciphertext, since ai ⊕ ai = 0.
+
+  Exam-style question Practice
+  A stream bit is 1. What happens to a white pixel encoded 0 and a black pixel encoded 1?
+  Why does applying the stream again recover the picture?
+
+  Model answer Practice
+  XOR with 1 flips the bit: 0 ⊕ 1 = 1, 1 ⊕ 1 = 0. XOR with 0 leaves it unchanged. Applying
+  the same stream twice gives (mi ⊕ ai ) ⊕ ai = mi ⊕ (ai ⊕ ai ) = mi , so it restores either original
+  pixel. This explains why encryption and decryption use the same operation.
+
+
+
+
+                                                  11
+MATH6321 | Exam-focused study guide                                               Sai Vanam | 12
+
+
+Section 3.1 | LFSR basics
+
+
+
+ASCII, binary strings and the cipher are separate
+  An encoding is not itself encryption
+  ASCII assigns numbers to characters. For example uppercase A has decimal code 65, B has
+  66, and space has 32. Writing these codes in binary merely changes their representation;
+  anyone knowing the encoding can reverse it. A stream cipher subsequently combines those
+  bits with a secret stream using XOR.
+
+  Worked example: Encode a short message before masking
+
+                               Character    Decimal      8-bit form
+                               Space                32   00100000
+                               A                    65   01000001
+                               B                    66   01000010
+                               Z                    90   01011010
+                               a                    97   01100001
+                               0                    48   00110000
+
+  For message AB, concatenate 01000001 01000010. If the first eight stream bits are 10101010,
+  the first ciphertext byte is 01000001 ⊕ 10101010 = 11101011. Decryption XORs that byte
+  with the same stream and recovers the original A byte.
+
+  Exam tip: Do not confuse alphabet values and ASCII values
+  The classical-cipher convention A=0 uses arithmetic modulo 26 on letters. ASCII uses
+  character codes such as A=65 and includes spaces, digits and punctuation. A binary LFSR
+  example works modulo 2 on encoded bits. State the representation before applying an
+  algorithm; switching between these systems without conversion changes the problem.
+
+  Exam-style question Practice
+  How many stream bits are needed to XOR-mask five characters encoded as eight bits each?
+
+  Model answer Practice
+  5 · 8 = 40 bits. Leading zeros remain part of each byte. Dropping them would alter byte
+  boundaries and lose the original encoding. An initial LFSR fill contributes to those first 40
+  output bits under the notes’ convention.
+
+
+
+
+                                               12
+MATH6321 | Exam-focused study guide                                                     Sai Vanam | 13
+
+
+Section 3.1 | LFSR basics
+
+
+
+Generate the source six-bit stream carefully
+  Use the source fill and recurrence
+  Start with (a0 , . . . , a5 ) = (0, 1, 1, 0, 1, 0) and recurrence ai+6 = ai ⊕ ai+2 ⊕ ai+3 . Compute
+  new bits using their absolute indices:
+
+                                a6 = a0 ⊕ a2 ⊕ a3 = 0 ⊕ 1 ⊕ 0 = 1,
+                                a7 = a1 ⊕ a3 ⊕ a4 = 1 ⊕ 0 ⊕ 1 = 0,
+                                a8 = a2 ⊕ a4 ⊕ a5 = 1 ⊕ 1 ⊕ 0 = 0,
+                                a9 = a3 ⊕ a5 ⊕ a6 = 0 ⊕ 0 ⊕ 1 = 1.
+
+  Notice a6 , a newly generated bit, is already used in the calculation of a9 . The recurrence
+  proceeds sequentially rather than repeatedly using only the initial fill.
+
+  Worked example: The state table and output
+
+                             Time    Stored state      Next appended bit
+                               0        011010         1
+                               1        110101         0
+                               2        101010         0
+                               3        010100         1
+                               4        101001         0
+
+  The output begins with the first bit of each state. Continuing the calculation gives
+
+                                   0110101001000101111101 · · · .
+
+  The first 16 bits are 0110101001000101. They include the initial six bits; do not skip them
+  when using the stream for encryption.
+
+  Method: A reliable handwritten layout
+  Write an index row, the bit row, and each new recurrence calculation beneath it. If the
+  final stream differs from the notes, find the first differing index and recompute its tapped
+  positions. This is much easier than restarting an entire long sequence without locating the
+  error.
+
+  Exam-style question Check your understanding
+  Compute a10 from this stream and recurrence.
+
+  Model answer Check your understanding
+  a10 = a4 ⊕ a6 ⊕ a7 = 1 ⊕ 1 ⊕ 0 = 0. The relevant indices are 4,6,7, obtained by setting i = 4
+  in the update rule.
+
+
+
+
+                                                  13
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 14
+
+
+Section 3.1 | LFSR basics
+
+
+
+Encrypt HI and decrypt it again
+  Character encoding and encryption are different operations
+  The source encodes HI in eight-bit ASCII as 01001000 01001001. The H byte represents
+  decimal 72 and the I byte decimal 73. ASCII is public encoding, not secrecy: the LFSR
+  stream supplies the bitwise mask.
+  For stream bits ai , encrypt ci = mi ⊕ ai , and decrypt by mi = ci ⊕ ai . Since ai ⊕ ai = 0, the
+  same operation reverses itself.
+
+  Worked example: The complete 16-bit source calculation
+
+                              Plaintext HI     01001000 01001001
+                              LFSR stream      01101010 01000101
+                              Ciphertext       00100010 00001100
+
+  For the first eight bits, 0 ⊕ 0 = 0, 1 ⊕ 1 = 0, 0 ⊕ 1 = 1, 0 ⊕ 0 = 0, 1 ⊕ 1 = 0, 0 ⊕ 0 = 0,
+  0 ⊕ 1 = 1, 0 ⊕ 0 = 0: 00100010.
+  XORing the ciphertext with the same stream returns 01001000 01001001, which decodes
+  to HI. The stream continues into the second byte; it does not restart at the letter I.
+
+  Method: Pictures use the same idea
+  Represent white by 0 and black by 1. Flatten the picture in the specified order, such as row
+  by row, XOR it with consecutive stream bits, then reshape to the original dimensions. A
+  stream 1 flips a pixel; a stream 0 leaves it unchanged. Restarting the fill at each picture row
+  would implement a different scheme.
+
+  Exam-style question Check your understanding
+  What is the benefit and the cost of replacing a true pad by an LFSR stream?
+
+  Model answer Check your understanding
+  A short fill and recurrence can generate a long stream, reducing the secret material that
+  must be shared. But the stream is deterministic and linearly structured, not a uniformly
+  random independent pad. The perfect-secrecy proof for a true OTP therefore does not
+  automatically apply.
+
+
+
+
+                                                14
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 15
+
+
+Section 3.1 | LFSR basics
+
+
+
+Initial fills and taps both affect the output
+  The zero fill is always a bad masking stream
+  If every stored bit is zero, every tapped XOR is zero, so the register stays zero. It outputs
+  only zeros. XORing any message with this stream leaves the message unchanged.
+  For the source length-six recurrence with three taps, the all-one fill also stays fixed: 1⊕1⊕1 =
+  1. It outputs ones forever, which merely flips every message bit. The conclusion about the
+  all-one fill is specific to the chosen taps: with an even number of active taps, the XOR of all
+  ones would instead be zero, so the state would not remain all ones.
+
+  Worked example: The same fill behaves differently under different taps
+  The source compares length-five registers with initial fill 01101:
+
+                             ai+5 = ai ⊕ ai+2    versus ai+5 = ai ⊕ ai+1 .
+
+  The first outputs 011011101010000100101.... The second outputs 011011011011..., a
+  repetition of a three-bit block. The fill alone does not determine the sequence: the recurrence
+  is also part of the specification.
+
+  Exam tip: Long period is one quality measure, not a complete security proof
+  The notes next use repetition length to quantify stream quality. A long period avoids a very
+  obvious repeating mask, but an attacker might still exploit the recurrence’s linear structure.
+  Do not equate “looks random” or “has a long period” with the independence of a true
+  one-time pad.
+
+  Exam-style question Check your understanding
+  Under ai+5 = ai ⊕ ai+1 , fill 01101, calculate a5 , a6 , a7 .
+
+  Model answer Check your understanding
+  a5 = a0 ⊕ a1 = 0 ⊕ 1 = 1, a6 = a1 ⊕ a2 = 1 ⊕ 1 = 0, a7 = a2 ⊕ a3 = 1 ⊕ 0 = 1. Appending
+  gives 01101101, consistent with repeating 011.
+
+
+
+
+                                                    15
+MATH6321 | Exam-focused study guide                                                    Sai Vanam | 16
+
+
+Section 3.1 | LFSR basics
+
+
+
+A period is a repeated whole state
+  Read the definition with its indices
+  The state at time i is ai = (ai , . . . , ai+n−1 ). The notes define the period as the smallest
+  positive j such that
+                                   ai+j = ai for some i ≥ 0.
+  Once a state repeats, all later states follow the same deterministic updates. A repeated bit
+  is not enough: zeros and ones recur constantly without the entire register having returned.
+  The phrase “for some i” allows a transient before an eventual cycle. For general taps, the
+  initial state need not return. Example: recurrence ai+2 = ai+1 , fill 10, gives states 10,00,00,...
+  . Its eventual period is 1, even though the initial 10 never returns.
+
+  Worked example: The source short-cycle register has period 3
+  For length five, recurrence ai+5 = ai ⊕ ai+1 , fill 01101, the states are
+
+                               01101 → 11011 → 10110 → 01101.
+
+  The three displayed states are distinct, and the initial state returns after 3 updates. Thus
+  the cycle length is exactly 3, not merely at most 3. Its output is repeating 011.
+
+  Method: How to measure a period by direct iteration
+  Record each complete state and its time. On the first repeat, subtract the earlier occurrence
+  time from the later one. Distinct states before the repeat establish minimality of the cycle
+  length. For an example whose initial state returns, this is its first return time. More advanced
+  tests start on page 29 and are not needed for this direct method.
+
+  Exam-style question Check your understanding
+  Can the presence of 11 twice in the output prove period 2?
+
+  Model answer Check your understanding
+  No. The update depends on the whole register state. Two occurrences of a short bit block
+  need not sit inside identical full states or be followed by identical future bits. Check the full
+  state or prove a genuinely repeating output pattern under the recurrence.
+
+
+
+
+                                                 16
+MATH6321 | Exam-focused study guide                                                 Sai Vanam | 17
+
+
+Section 3.1 | LFSR basics
+
+
+
+Verify the source period-31 example in full
+  The other length-five register explores a longer cycle
+  Use recurrence ai+5 = ai ⊕ ai+2 , initial fill 01101. The following state table is generated by
+  the update rule, not inferred from a few repeated output bits.
+
+  Worked example: List every state before the first return
+
+                                 Time     State        Time   State
+                                      0   01101          16   00101
+                                      1   11011          17   01011
+                                      2   10111          18   10110
+                                      3   01110          19   01100
+                                      4   11101          20   11001
+                                      5   11010          21   10011
+                                      6   10101          22   00111
+                                      7   01010          23   01111
+                                      8   10100          24   11111
+                                      9   01000          25   11110
+                                     10   10000          26   11100
+                                     11   00001          27   11000
+                                     12   00010          28   10001
+                                     13   00100          29   00011
+                                     14   01001          30   00110
+                                     15   10010
+
+  The next update from time 30 state 00110 appends 0 ⊕ 1 = 1, producing 01101, the initial
+  fill at time 31. None of the preceding 31 states repeats. Therefore the period is exactly 31 .
+
+  Exam tip: Upper bound versus actual value
+  Length five allows at most 25 − 1 = 31 nonzero states. This example reaches that maximum.
+  The other length-five recurrence above had period 3, showing why length alone does not
+  determine the exact period. The notes announce a later theorem about all nonzero fills for
+  suitable taps; that theorem begins beyond this requested range.
+
+  Exam-style question Check your understanding
+  Why does observing a return after 31 steps only show an upper bound until earlier repeats
+  are excluded?
+
+  Model answer Check your understanding
+  A shorter cycle could return at several multiples of its true period. Showing 31 distinct
+  preceding states rules out every earlier repetition. Together with the return at time 31, it
+  proves minimal cycle length 31.
+
+
+
+                                                  17
+MATH6321 | Exam-focused study guide                                                         Sai Vanam | 18
+
+
+Section 3.1 | LFSR basics
+
+
+
+The finite-state proof of the LFSR period bound
+  There are only finitely many possible states
+  Each of the n stored positions is 0 or 1, so there are 2n possible states. A deterministic
+  sequence of states cannot remain distinct forever. Once a state repeats, its entire future
+  repeats because the update rule depends only on that current state.
+  The special zero state improves the general finite-state bound from 2n to 2n − 1. The proof
+  separates cases so that it also covers a nonzero fill that later reaches zero.
+
+  Method: Proposition 3.9, explained one step at a time
+  1. If the initial state is zero, it stays zero, so the period is 1.
+  2. If any later state is zero, every state after it is zero. The eventual period is again 1.
+  3. Otherwise, every state is one of the 2n −1 nonzero vectors. Consider states a0 , a1 , . . . , a2n −1 :
+     there are 2n states on this list but only 2n − 1 allowed values.
+  4. By the pigeonhole principle, ar = as for some 0 ≤ r < s ≤ 2n − 1. The gap s − r is at
+     most 2n − 1, and the least repeating gap is no larger.
+  Thus Per(a0 ) ≤ 2n − 1 . Using r, s for time indices avoids confusing them with the register
+  length n.
+
+  Exam tip: What has not been proved here
+  The argument does not say every fill has maximal period, or that every nonzero fill returns
+  to itself for arbitrary taps. It proves an eventual period bound. A separate analysis is needed
+  to calculate the actual period for a specified fill and recurrence. The source’s next section
+  develops further tools.
+
+  Exam-style question Check your understanding
+  A length-four register is claimed to have eventual period 16. Is this compatible with
+  Proposition 3.9?
+
+  Model answer Check your understanding
+  No. The bound is 24 − 1 = 15. The zero state is absorbing, so it cannot form one part of a
+  cycle visiting all 16 states. A claim of period 16 signals a counting or modelling error.
+
+
+
+
+                                                    18
+MATH6321 | Exam-focused study guide                                                    Sai Vanam | 19
+
+
+Section 3.2 | The main theorem
+
+
+
+LFSR periods and irreducibility | explanation
+  The theorems and their hypotheses
+  The characteristic polynomial is
+
+                         cb (x) = xn + bn−1 xn−1 + · · · + b1 x + b0 ∈ F2 [x].
+
+  With the notes’ row-state convention, the companion matrix has ones below the diagonal
+  and taps in its final column, and ai+1 = ai Bb .
+  If b0 = 1, Bb is invertible: the period is the first return to the initial state and divides
+  ord(Bb ). Every length-n LFSR is eventually periodic; the eventual cycle has length at most
+  2n − 1. If b0 = 0, a transient can occur; leading untapped bits can be discarded to analyse
+  the smaller recurrence.
+  Main theorem: if cb is irreducible (and has nonzero constant term), every nonzero fill has
+  the same period, the smallest positive divisor j | 2n − 1 for which cb | xj + 1. An irreducible
+  polynomial is primitive when this order is 2n − 1. Irreducible does not automatically mean
+  maximal period.
+
+  Method: Period questions without generating a huge stream
+  1. Write cb from the update rule and check its constant term.
+  2. Establish irreducibility if the theorem requires it. For degree 3, excluding roots 0 and 1 is
+     enough. For degree 4, also exclude division by the only irreducible quadratic x2 + x + 1.
+  3. List divisors of 2n − 1 in increasing order.
+  4. Reduce xj modulo cb ; test for remainder 1. The first successful j is the nonzero-fill period.
+  5. Treat the zero fill separately. If reducible, use state iteration or another valid matrix-order
+     argument, not the irreducible theorem.
+
+  A state cycle is different from a repeated individual bit
+  A binary output necessarily contains many repeated zeros and ones. That does not identify
+  its period. We must look for a return of the whole register state, or prove a recurrence
+  repeats from that point. If b0 = 1, the update can be reversed, so a repeated state forces a
+  repeated initial state; there is no transient leading into a different cycle.
+  There are 2n possible states. The zero state is fixed and, under an invertible update, nonzero
+  states cannot enter it. This leaves at most 2n − 1 states on a nonzero cycle. But the state
+  space can split into several shorter cycles, so this upper bound is not automatically attained.
+  Irreducibility makes the nonzero-fill period independent of the particular fill, through the
+  field F2 [x]/(cb ). Primitivity is a stronger assertion: multiplication by the class of x must
+  pass through every nonzero field element. Distinguishing these two assertions is essential.
+  An irreducible quartic can have period 5 even though the maximum possible nonzero cycle
+  length is 15. State which theorem applies before using its conclusion.
+
+
+
+
+                                                  19
+MATH6321 | Exam-focused study guide                                                    Sai Vanam | 20
+
+
+Section 3.2 | The main theorem
+
+
+
+LFSR periods and irreducibility | worked practice
+
+  Worked example: Actual 2025 Q2(c)
+
+  The recurrence ai+4 = ai + ai+1 gives f = x4 + x + 1. Neither 0 nor 1 is a root. A reducible
+  quartic with no linear factor must be a product of irreducible quadratics; the only possibility
+  over F2 is (x2 + x + 1)2 = x4 + x2 + 1, which differs from f . Hence f is irreducible.
+  The possible periods divide 15: 1, 3, 5, 15. Degree rules out dividing x + 1 or x3 + 1. The
+  supplied factorisation
+                             x5 + 1 = (x + 1)(x4 + x3 + x2 + x + 1)
+  shows that f ∤ x5 + 1. Thus every nonzero fill has period 15; the zero fill has period 1.
+
+  Exam tip: No roots is insufficient for a quartic
+  x4 + x2 + 1 = (x2 + x + 1)2 has no roots in F2 but is reducible. For an irreducible quartic,
+  periods can be 5 or 15; quote the theorem and exclude the smaller divisors.
+
+  Exam-style question 3.2
+  Find the period of nonzero fills when cb = x3 +x+1, and compare with cb = x4 +x3 +x2 +x+1.
+
+  Model answer 3.2
+  The cubic has no roots at 0 or 1, so is irreducible. Since 23 − 1 = 7 is prime and degree
+  excludes order 1, every nonzero fill has period 7. For the quartic, no roots occur; it differs
+  from (x2 + x + 1)2 , so it is irreducible. It divides x5 + 1, and smaller divisors of 15 are ruled
+  out by degree. Its nonzero-fill period is 5, not 15. Both zero fills have period 1.
+
+  Exam-style question Practice
+  An irreducible characteristic polynomial has degree 6. List the possible nonzero-fill periods
+  before performing divisibility tests.
+
+  Model answer Practice
+  The period divides 26 − 1 = 63, whose divisors are 1, 3, 7, 9, 21, 63. Degree immediately rules
+  out divisibility by x + 1 and x3 + 1. Further order restrictions can exclude more, but the
+  divisibility theorem itself still requires testing candidates such as 7, 9, 21 and 63. Do not
+  jump directly to 63 merely because the degree is 6.
+
+
+
+
+                                                 20
+MATH6321 | Exam-focused study guide                                              Sai Vanam | 21
+
+
+Section 3.2 | The main theorem
+
+
+
+Polynomial arithmetic over F2
+  Coefficients wrap modulo 2
+ In F2 [x], coefficients are 0 or 1, and addition/subtraction are the same operation. Thus
+ (x2 + x + 1) + (x2 + 1) = x: the matching x2 and constant terms cancel. Polynomial
+ multiplication still distributes, but repeated coefficients are reduced modulo 2.
+ Reduction modulo a polynomial is a different second operation. For f = x3 + x + 1, the
+ relation f = 0 in the quotient gives x3 = x + 1. Use it to replace every power of degree at
+ least 3. The remainder has degree below 3, which makes equality in the quotient easy to
+ check.
+
+  Worked example: Build the order test one power at a time
+  Working modulo f = x3 + x + 1,
+
+                                       j   xj (mod f )
+                                       0   1
+                                       1   x
+                                       2   x2
+                                       3   x+1
+                                       4   x2 + x
+                                       5   x2 + x + 1
+                                       6   x2 + 1
+                                       7   1
+
+  For example x6 = x(x2 + x + 1) = x3 + x2 + x ≡ (x + 1) + x2 + x = x2 + 1. The final step is
+  x(x2 + 1) = x3 + x ≡ 1. No earlier listed positive power equals 1, so the order is 7.
+
+  Exam tip: An integer remainder calculation will not substitute for this
+  The statement f | xj + 1 concerns polynomials, not the numerical value obtained by setting
+  x = 2. Work with coefficients modulo 2 and a polynomial remainder. Evaluation at 0 and 1
+  only tests possible linear factors.
+
+  Exam-style question Practice
+  Reduce x5 modulo x3 + x2 + 1.
+
+  Model answer Practice
+  Here x3 = x2 +1, so x4 = x3 +x = x2 +x+1. Thus x5 = x3 +x2 +x = (x2 +1)+x2 +x = x+1.
+  Every cancellation takes place modulo 2.
+
+
+
+
+                                              21
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 22
+
+
+Section 3.2 | The main theorem
+
+
+
+Recover taps from known output
+  Linearity can make a long stream predictable
+  If the recurrence length is known but the taps are unknown, each observed new bit gives a
+  linear equation in the tap coefficients. Enough independent equations can determine those
+  coefficients. Known plaintext reveals output bits because ai = mi ⊕ ci , so a cipher that
+  exposes enough plaintext/ciphertext pairs may expose the stream’s generating rule.
+  The number of equations is not the only issue: they must be independent. A run of zeros
+  can supply only zero equations, leaving taps undetermined. Explain the actual system rather
+  than claiming any arbitrary set of observed bits always determines the recurrence.
+
+  Exam-style question H.1: a known-plaintext stream attack
+  A length-three LFSR has unknown taps (b0 , b1 , b2 ) and observed output 100101. Recover its
+  taps. Explain why even a maximal-period LFSR is not a true one-time pad.
+
+  Model answer H.1
+  Use ai+3 = b0 ai + b1 ai+1 + b2 ai+2 in F2 . From a0 a1 a2 = 100 and a3 = 1, get b0 = 1. From
+  a1 a2 a3 = 001, a4 = 0 gives b2 = 0. From a2 a3 a4 = 010, a5 = 1 gives b1 = 1. Thus the
+  recurrence is ai+3 = ai + ai+1 , characteristic polynomial x3 + x + 1, with period 7 for nonzero
+  fills.
+  Known plaintext and ciphertext reveal stream bits by XOR. Enough stream bits provide
+  linear equations for taps and expose the fill. A maximal period describes repetition, not
+  computational unpredictability. An OTP instead requires independent uniformly random
+  key bits, with no short deterministic recurrence.
+
+  Method: Check a recovered recurrence
+  After solving for taps, regenerate every observed output bit, including some not needed for
+  solving the equations if available. Then predict the next bit. A successful check demonstrates
+  consistency with the observations; the known recurrence length is part of the assumption.
+
+  Exam-style question Practice
+  With the recovered recurrence ai+3 = ai + ai+1 and observed 100101, predict a6 .
+
+  Model answer Practice
+  Use the bits at indices 3 and 4: a6 = a3 + a4 = 1 + 0 = 1. Do not combine the last two
+  observed bits unless those are the positions specified by the taps. All arithmetic is in F2 .
+
+
+
+
+                                                22
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 23
+
+
+Section 3.2 | The main theorem
+
+
+
+Reducible examples and theorem boundaries
+  Why a failed hypothesis changes the problem
+  The irreducible-characteristic-polynomial theorem is powerful because the quotient is a field
+  and every nonzero element can be cancelled. With a reducible polynomial the quotient can
+  have zero divisors, so that cancellation reasoning no longer applies. Different fills can have
+  different periods, and those periods need not divide 2n − 1.
+  A direct state table remains valid when the irreducibility theorem is unavailable. If b0 = 1,
+  stop at the first return to the initial state. To prove minimality, check that the preceding
+  states were distinct. Merely seeing a visually repetitive pattern in some initial output bits is
+  insufficient.
+
+  Exam-style question H.2: reducible LFSRs
+  An LFSR has recurrence ai+4 = ai + ai+2 . Find the period for fill 0101 and explain why the
+  irreducible-polynomial theorem is unavailable.
+
+  Model answer H.2
+  Its polynomial is x4 + x2 + 1 = (x2 + x + 1)2 , so it is reducible. Starting 0101, the next
+  bits are a4 = 0 + 0 = 0, a5 = 1 + 1 = 0, a6 = 0 + 0 = 0, a7 = 1 + 0 = 1. Continue:
+  a8 = a4 + a6 = 0, a9 = a5 + a7 = 1. The first states are
+
+                             0101, 1010, 0100, 1000, 0001, 0010, 0101.
+
+  The initial state first returns at time 6, so its period is 6. It need not divide 15 because
+  irreducibility is absent. This explicit calculation also guards against trusting an incorrect
+  visual-period claim without checking the recurrence.
+
+  Exam tip: Check this example against the recurrence itself
+  For ai+4 = ai + ai+2 , fill 0101 has period 6. Some statements in the supplied notes’ reducible
+  example do not satisfy the displayed recurrence. The explicit state table above is the
+  calculation to trust; it checks every appended bit. This is a local correction, not a change to
+  the irreducible theorem.
+
+
+
+
+                                                23
+MATH6321 | Exam-focused study guide                                                      Sai Vanam | 24
+
+
+Section 3.2 | The main theorem
+
+
+
+Example 3.17: all three cases and a source correction
+  Worked example: Irreducible quartics: periods 5 and 15
+  For b = (1, 1, 1, 1), f = x4 + x3 + x2 + x + 1. It has no binary root and is not (x2 + x + 1)2 ,
+  so it is irreducible. Since x5 + 1 = (x + 1)f , its nonzero-fill period is 5. Fill 1001 produces
+  1001010010 . . ..
+  For b = (1, 1, 0, 0), f = x4 + x + 1 is likewise irreducible. Divisors of 15 are 1, 3, 5, 15. Degrees
+  rule out 1 and 3; the factorisation of x5 + 1 above excludes 5. Its nonzero-fill period is 15.
+  Fill 1001 produces 100110101111000 . . ..
+  These are the two positive cases of Example 3.17. The zero fill always has period 1.
+
+  Worked example: The reducible case must be calculated directly
+  For b = (1, 0, 1, 0), f = x4 + x2 + 1 = (x2 + x + 1)2 , so Theorem 3.16 does not apply.
+  The supplied notes claim period 2 for fill 0101 and period 4 for fill 0011. These claims do
+  not follow the displayed recurrence ai+4 = ai ⊕ ai+2 . Direct calculation gives
+
+                      0101 → 1010 → 0100 → 1000 → 0001 → 0010 → 0101,
+
+  so the first fill has period 6. The second gives
+
+                      0011 → 0111 → 1111 → 1110 → 1100 → 1001 → 0011
+
+  so its period is 6. To demonstrate different periods correctly, use the verified cycle
+
+                                    0110 → 1101 → 1011 → 0110
+
+  of period 3. Thus different nonzero fills really can have different periods, and their periods
+  need not divide 15. The conceptual warning in the source remains valid; the numerical
+  examples need this correction.
+
+
+
+
+                                                   24
+MATH6321 | Exam-focused study guide                                                   Sai Vanam | 25
+
+
+Section 3.2 | The main theorem
+
+
+
+Build and check a companion matrix
+  The row-vector convention used in the lecture notes
+  For taps b = (b0 , . . . , bn−1 ), the matrix has ones immediately below the diagonal and the tap
+  vector in its last column. States are rows, and ai+1 = ai Bb .
+  For ai+3 = ai ⊕ ai+1 , the taps are (1, 1, 0) and
+
+                                                 0 0 1
+                                                            
+
+                                          Bb = 1 0 1 .
+                                                     
+
+                                                 0 1 0
+
+  Check the definition by multiplying a general state:
+
+                                      (u, v, w)Bb = (v, w, u + v).
+
+  The first two bits shift and the last is the prescribed feedback bit. All entries and operations
+  are modulo 2.
+
+  Worked example: Compute a cycle and understand matrix order
+  Starting at 100, the states are
+
+                      100 → 001 → 010 → 101 → 011 → 111 → 110 → 100.
+
+  So this fill has period 7. These are all seven nonzero states. The remaining state 000 is fixed,
+  hence Bb7 fixes every state and equals I. No smaller positive power is I, because it would
+  return 100 sooner. Thus ord(Bb ) = 7.
+  When b0 = 1, Proposition 3.13 gives Per(a0 ) | ord(Bb ). It need not equal the matrix order
+  for every fill; the zero fill here has period 1.
+
+  Exam-style question Matrix practice
+  Write the row-state companion matrix for ai+4 = ai ⊕ ai+2 ⊕ ai+3 .
+
+  Model answer Matrix practice
+  The taps are (1, 0, 1, 1), giving
+                                                0    0   0   1
+                                                            
+                                              1     0   0   0
+                                         Bb =                .
+                                                              
+                                              0     1   0   1
+                                              
+
+                                                0    0   1   1
+  The notes give ord(Bb ) = 7, so periods divide 7, a stronger conclusion than the upper bound
+  15.
+
+
+
+
+                                                    25
+MATH6321 | Exam-focused study guide                                                       Sai Vanam | 26
+
+
+Section 3.2 | The main theorem
+
+
+
+Lemma 3.10, Exercise 3.11 and Proposition 3.13
+  A proof of the truncated-register statement
+  Suppose b0 = · · · = bk−1 = 0 and define ui = ai+k . Then
+                                               n−1               n−k−1
+                            ui+n−k = ai+n =          bj ai+j =
+                                               M                  M
+                                                                         bk+ℓ ui+ℓ .
+                                               j=k                ℓ=0
+
+
+  Thus u follows a length-(n − k) LFSR with taps (bk , . . . , bn−1 ) and fill (ak , . . . , an−1 ). Its
+  output is exactly the original output after discarding a0 , . . . , ak−1 .
+  A finite discarded prefix does not affect the eventual cycle period. Hence the two fills have
+  the same period in the notes’ sense. This proves Lemma 3.10 and answers Exercise 3.11.
+
+  Why invertibility makes the first return sufficient
+  When b0 = 1, the new last bit and the retained bits determine the discarded old bit uniquely.
+  Equivalently, det(Bb ) = b0 = 1 over F2 .
+  If ai+j = ai , then
+                                        a0 Bbi+j = a0 Bbi .
+  Multiplying on the right by Bb−i gives a0 Bbj = a0 . Thus every later cycle already starts at
+  the initial state.
+  Let t be its first-return time and k = ord(Bb ). Write k = qt + r with 0 ≤ r < t. Since
+  ak = a0 and aqt = a0 , a nonzero remainder would return after r < t, a contradiction. Hence
+  r = 0 and t | k. This proves both parts of Proposition 3.13.
+
+
+
+
+                                                     26
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 27
+
+
+Section 3.2 | The main theorem
+
+
+
+Why the main theorem works
+  Replace a matrix problem by multiplication in a field
+  Let f = cb be irreducible, with nonzero constant term. The quotient
+
+                                          K = F2 [x]/⟨f ⟩
+
+  is a field with 2n elements. Every element has a unique representative of degree less than n.
+  There are n binary coefficients, hence 2n choices.
+  Let α = [x]. Multiplication by α has the usual column-vector companion matrix, which is
+  Bb as displayed in the notes. For the row-state update, the corresponding column update is
+  BbT . A matrix and its transpose have the same characteristic and minimal polynomials; this
+  preserves the relevant polynomial-order calculation. Keeping the row/column convention
+  explicit avoids a misleading coordinate identification.
+
+  Irreducibility forces one common nonzero period
+  Equivalently, regard the state space as a module where x acts by the LFSR update. Cayley–
+  Hamilton gives f (Bb ) = 0. Since f is irreducible of degree n, this equips the n-dimensional
+  binary state space with the structure of a one-dimensional vector space over K.
+  The update acts as multiplication by α. For a nonzero state represented in this field structure
+  by v, returning after j steps means
+                                             αj v = v.
+  Since v is invertible, this is equivalent to αj = 1. Thus all nonzero fills have the same period,
+  the multiplicative order of α.
+  The group K × has 2n − 1 elements, so Lagrange gives j | 2n − 1. Finally,
+
+                           αj = 1 ⇐⇒ [xj + 1] = 0 ⇐⇒ f | xj + 1.
+
+  This is Theorem 3.16. For computations, use its five-step procedure rather than rebuilding
+  the field argument.
+
+
+
+
+                                                 27
+MATH6321 | Exam-focused study guide                                                    Sai Vanam | 28
+
+
+Section 4.1 | Diffie–Hellman
+
+
+
+Cyclic groups, generators and discrete logarithms
+  An exponent is naturally a residue class
+  The order of an element g is the least positive q such that g q = 1. Its generated subgroup
+  is {1, g, . . . , g q−1 }. If g generates the whole group, it is a generator; in (Z/pZ)× it is also
+  called a primitive root.
+  If g k = h, then g k+tq = h for every integer t. The full set of discrete logs is therefore k + qZ,
+  rather than one special integer. A standard answer chooses a representative in 0, . . . , q − 1,
+  together with the modulus.
+
+  Worked example: Compare 2 and 3 modulo 7
+  Powers of 2 give 2, 4, 1, then repeat. Its order is 3, so it does not generate 3, 5, 6. The
+  discrete log of 3 to base 2 does not exist in this subgroup.
+  Powers of 3 give 3, 2, 6, 4, 5, 1. Its order is 6, so it is a generator. We read log3 5 = 5 (mod 6)
+  from the fifth power. Both calculations use the same element modulus 7 but different
+  exponent periods.
+
+  Method: Test a proposed generator efficiently
+
+  If the group has known order q, factor q. An element has order q exactly when g q/r = ̸ 1 for
+  each distinct prime divisor r | q. Any proper divisor of q misses at least one of these tests.
+  For order 6, check powers 3 and 2. For 3 modulo 7 these are 6 and 2, both different from 1.
+
+  Exam-style question Practice
+  What are log3 4 and log3 1 modulo 7?
+
+  Model answer Practice
+ The table gives 34 ≡ 4, so the first log is 4 (mod 6). The identity is 30 = 1, so its log is 0
+ (mod 6), equivalently any multiple of 6. Do not report these exponents modulo 7.
+
+
+
+
+                                                  28
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 29
+
+
+Section 4.1 | Diffie–Hellman
+
+
+
+Diffie–Hellman key exchange | explanation
+  Agreeing a secret without sending it
+  Choose a public finite cyclic group G = ⟨g⟩ of order q. In the notes, a standard choice is
+  G = (Z/pZ)× , q = p − 1. Alice privately chooses a, Bob privately chooses b. They exchange
+  A = g a , B = g b and compute
+                                     K = B a = Ab = g ab .
+  An observer sees G, g, A, B. Computing a discrete log would recover a or b, hence the shared
+  key. The discrete log problem asks for k with g k = h; logs are determined modulo q. DH
+  itself establishes a shared value rather than encrypting a message.
+  DH requires a suitable group and parameter choices. A small-order base provides only a
+  small number of possible secrets. Basic unauthenticated DH is also vulnerable to an active
+  intermediary who performs separate exchanges with the two parties; computational hardness
+  alone does not authenticate identities.
+
+  Method: A DH computation or explanation
+  State the public group/base and private exponents, calculate both public powers by repeated
+  squaring, then compute the shared value in both directions. Show that both equal g ab . For
+  an insecure-key question, inspect the order of g, trivial exponents, and whether the chosen
+  group makes logs easy.
+
+  Public powers hide exponents, not the group operation
+  An observer knows how to multiply and invert elements of the public group. Those operations
+  are supposed to be easy. The intended difficulty is recovering an exponent from a power, or
+  computing the shared power from the two public powers without the secret exponents.
+  Alice can raise Bob’s public value to a because she knows a. Bob can raise Alice’s public
+  value to b. Both calculations reach g ab because integer multiplication of exponents commutes.
+  The attacker cannot obtain g ab merely by multiplying the public values: g a g b = g a+b , which
+  has the wrong exponent.
+  The discrete-log problem is sufficient to break the exchange: learning a lets the attacker
+  compute B a . However, this does not prove that every way to compute the shared value
+  must solve a discrete log. Keep a distinction between a useful attack and a mathematical
+  equivalence of problems.
+  Finally, the order of the chosen base controls the true search space. If g has order 4, then all
+  powers depend only on exponents modulo 4, however many decimal digits the parties write
+  in their private exponents.
+
+
+
+
+                                                29
+MATH6321 | Exam-focused study guide                                              Sai Vanam | 30
+
+
+Section 4.1 | Diffie–Hellman
+
+
+
+Diffie–Hellman key exchange | worked practice
+  Worked example: A complete small exchange
+  Take p = 23, g = 5, a = 6, b = 15. Since 52 ≡ 2, 54 ≡ 4, Alice publishes A = 56 ≡ 8. Bob
+  computes 58 ≡ 16, so B = 515 ≡ 16 · 4 · 2 · 5 ≡ 19 (mod 23).
+  Alice computes 192 ≡ 16, 194 ≡ 3, hence 196 ≡ 3 · 16 ≡ 2. Bob similarly computes 815 ≡ 2.
+  Their shared value is 2. All element arithmetic is modulo 23; exponent equivalences are
+  modulo 22.
+
+  Exam tip: Do not claim every group makes discrete logs hard
+
+  In the additive group Z/pZ, the analogue of g k is kg; solving for k is just multiplying by
+  g −1 (mod p). A large group size alone is insufficient.
+
+  Exam-style question 4.1
+  In (Z/11Z)× , use g = 2, a = 3, b = 4 for DH. What happens if instead g = −1?
+
+  Model answer 4.1
+  A = 23 = 8, B = 24 ≡ 5. Alice gets 53 = 125 ≡ 4; Bob gets 82 ≡ 9, 84 ≡ 4. With g = −1,
+  every public value and shared value lies in {1, −1}. There are at most two candidate keys,
+  so secrecy fails regardless of how large the nominal exponent range is.
+
+  Exam-style question Practice
+
+  Alice publishes g a , Bob publishes g b . An attacker multiplies them and claims to know the
+  shared secret. Explain the mistake with g = 2, p = 11, a = 3, b = 4.
+
+  Model answer Practice
+  The public values are 8 and 5. Their product is 8 · 5 ≡ 7 (mod 11), equal to 23+4 . The
+  shared value is 23·4 = 212 ≡ 4. The attacker has computed a sum in the exponent, whereas
+  DH requires a product. Easy multiplication of public group elements is not the same as
+  knowing either secret exponent.
+
+
+
+
+                                              30
+MATH6321 | Exam-focused study guide                                                      Sai Vanam | 31
+
+
+Section 4.1 | Diffie–Hellman
+
+
+
+The original Diffie–Hellman example
+  Worked example: Example 4.6: p=89, g=3
+  Alice chooses kA = 10 and Bob chooses kB = 25. Build a repeated-squaring table:
+
+                    32 = 9,    34 ≡ 81 = −8,      38 ≡ 64,     316 ≡ 2   (mod 89).
+
+  Alice sends
+                                    cA = 310 ≡ 64 · 9 = 576 ≡ 42.
+  Bob sends
+                                cB = 325 ≡ 316 38 3 ≡ 2 · 64 · 3 ≡ 28.
+  Alice then computes 2810 . Since
+
+                              282 ≡ 72 = −17,      284 ≡ 22,    288 ≡ 39,
+
+  she obtains 2810 ≡ 39 · 72 ≡ 49.
+  Check Bob’s result: 422 ≡ 73, 424 ≡ 78, 428 ≡ 32, 4216 ≡ 45, so
+
+                                4225 ≡ 45 · 32 · 42 ≡ 49     (mod 89).
+
+  The common key is 49.
+
+  Exam-style question Read the discrete-log table
+  In (Z/11Z)× , powers of 2 are 2, 4, 8, 5, 10, 9, 7, 3, 6, 1. Find the full sets of logs of 3 and 10.
+
+  Model answer Read the discrete-log table
+  We find 28 = 3 and 25 = 10 modulo 11. Since the generator has order 10, the answers
+  are 8 + 10Z and 5 + 10Z. Group elements are reduced modulo 11; logarithms are reduced
+  modulo 10.
+
+
+
+
+                                                  31
+MATH6321 | Exam-focused study guide                                                   Sai Vanam | 32
+
+
+Section 4.1 | Diffie–Hellman
+
+
+
+Chapter 4: motivation, history and the hardness discussion
+  What changes from symmetric to asymmetric cryptography?
+  The earlier schemes require shared secret information before communication. Increased
+  computing power makes both using and attacking ciphers easier, while digital financial,
+  health and personal data increase the need for protection. The notes mention DES, 3DES,
+  AES and Blowfish as examples of symmetric ciphers; they are background names here, not
+  algorithms developed in these sections.
+  Public-key cryptography separates public operations from secret information. Diffie–Hellman
+  establishes a shared key; RSA and ElGamal let others encrypt to a recipient. The algorithms
+  are public: the intended obstacle is a hard mathematical problem, rather than concealing
+  the method.
+  The notes date public Diffie–Hellman to 1976 and RSA to Rivest, Shamir and Adleman’s
+  1977 announcement, with Clifford Cocks’s earlier GCHQ work in 1973. These historical
+  points explain the shift in viewpoint, rather than adding calculations to memorise.
+
+  The primitive-root remark and the scatter plot
+  Theorem 4.2 says the nonzero residues modulo a prime form a cyclic group; Definition 4.3
+  names its generators primitive roots. The notes mention the Artin-conjecture heuristic that
+  2 is a primitive root for roughly 37.4% of primes. This is background motivation, not a test
+  for any particular prime.
+  The source plot of 6j mod 17627 for j = 1, . . . , 100 illustrates the lack of ordinary increasing
+  size in modular powers. Real-number logarithm intuition therefore does not directly give
+  an efficient modular logarithm method. The plot illustrates behaviour; it is not a proof of
+  computational hardness.
+  The notes discuss number-theoretic attacks and illustrative digit lengths for discrete logs and
+  factorisation. Those sizes are course context, not a current parameter recommendation. For
+  questions here, identify the group, public data, secret exponent and mathematical problem;
+  keep the one-way implications precise.
+
+
+
+
+                                                 32
+MATH6321 | Exam-focused study guide                                               Sai Vanam | 33
+
+
+Section 4.2 | RSA
+
+
+
+RSA encryption and insecure parameter choices | explana-
+tion
+  The trapdoor is knowing the prime factors
+ Choose distinct secret primes p, q, set N = pq and φ(N ) = (p − 1)(q − 1). Choose e coprime
+ to φ(N ), then calculate d ≡ e−1 (mod φ(N )). Public key: (N, e). Private exponent: d; the
+ factors must also remain secret.
+ For the course’s message space m ∈ (Z/N Z)× , encrypt c ≡ me (mod N ), decrypt m ≡ cd
+ (mod N ). Since ed = 1 + tφ(N ), Fermat–Euler gives med = m(mφ(N ) )t ≡ m. This explains
+ correctness without being an examinable proof requirement.
+ Factoring N reveals φ(N ) and d. Factoring is the course’s underlying hard problem; it is
+ not a proved equivalence between every RSA attack and factorisation. These are textbook
+ examples; deterministic unpadded RSA has additional weaknesses.
+
+  Method: RSA question checklist
+  1. Compute N and φ(N ).
+  2. Check gcd(e, φ(N )) = 1. If not, no private exponent exists by the stated construction.
+  3. Use extended Euclid to find d; verify ed ≡ 1.
+  4. Encrypt modulo N using repeated squaring.
+  5. Demonstrate decryption by an explicit power calculation, not only by quoting correctness.
+
+  RSA uses two very different kinds of modular arithmetic
+  The modulus N specifies where messages and ciphertexts live. The totient φ(N ) describes
+  the exponent cycle on the unit group. Consequently the equation defining the private
+  exponent is ed ≡ 1 (mod φ(N )), while the actual message operations are computed modulo
+  N.
+  The public exponent is chosen to make exponentiation reversible on that group. If e shares
+  a factor with φ(N ), the standard inverse construction fails; choosing a large-looking e does
+  not repair the missing coprimality. Conversely, any representative d + tφ(N ) produces the
+  same power map on units, so the private exponent is naturally an equivalence class modulo
+  the totient.
+  Factoring N exposes p, q, hence the totient and the inverse exponent. This explains why the
+  factors are valuable trapdoor information. It does not mean that RSA hides the algorithms
+  or that no other attack could exist. In small exam examples, trial division might be easy;
+  you are demonstrating how the construction works, not asserting that these toy numbers
+  provide real security. Always show a decryption calculation if the question asks you to
+  demonstrate recovery.
+
+
+
+
+                                               33
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 34
+
+
+Section 4.2 | RSA
+
+
+RSA encryption and insecure parameter choices | worked
+practice
+  Worked example: Actual 2025 Q3(b): p=5, q=17, e=11
+  N = 85, φ(N ) = 4 · 16 = 64, d = 35. Public key (85, 11), private exponent 35. For m = 4,
+
+                             42 = 16,   44 ≡ 1,    48 ≡ 1   (mod 85),
+
+  so c = 411 = 48 · 42 · 4 ≡ 64 (mod 85).
+  To decrypt, 642 = 4096 ≡ 16, 644 ≡ 1, hence 6432 ≡ 1. Thus
+
+                    6435 ≡ 6432 · 642 · 64 ≡ 1 · 16 · 64 = 1024 ≡ 4   (mod 85).
+
+  How to spot bad RSA choices
+  If two public moduli share a prime, gcd(N1 , N2 ) reveals it immediately. If primes are too
+  close, Fermat factorisation can succeed quickly. If e = 1, ciphertext equals plaintext. If
+  a positive integer message satisfies me < N , textbook encryption does not wrap modulo
+  N , so an ordinary integer e-th root reveals m. Messages 0, 1 are obvious fixed points, and
+  gcd(m, N ) > 1 itself reveals a factor (these are outside the course’s unit-message assumption).
+
+  Exam tip: Use the public data available to the attacker
+  An unseen weakness answer should give a concrete procedure: “Compute gcd of the two
+  published moduli, divide to find each other factor, compute the totient, invert the public
+  exponent.” Saying merely “the primes repeat” leaves the attack unexplained.
+
+  Exam-style question 4.2
+  Two users publish N1 = 77, N2 = 91. Explain the attack. Separately, show why e = 6 is
+  invalid for primes 5 and 11.
+
+  Model answer 4.2
+  gcd(77, 91) = 7, so 77 = 7·11, 91 = 7·13. Their totients are 60 and 72. Each private exponent
+  can now be calculated from its public exponent by modular inversion. For p = 5, q = 11,
+  φ(55) = 40, and gcd(6, 40) = 2 ̸= 1. Thus 6 has no inverse modulo 40 and is not a valid
+  RSA public exponent under the stated scheme.
+
+  Exam-style question Practice
+  For p = 3, q = 11, e = 3, calculate N, φ(N ), d, encrypt m = 2, and decrypt.
+
+  Model answer Practice
+  We have N = 33, φ(N ) = 2 · 10 = 20, and d = 7, since 3 · 7 = 21 ≡ 1 (mod 20). Encryption
+  gives c = 23 = 8 (mod 33). To decrypt, 82 ≡ 31 ≡ −2, 84 ≡ 4, so 87 ≡ 4(−2)8 = −64 ≡ 2.
+  The inverse was computed modulo 20, while both power calculations used modulo 33.
+
+
+                                                  34
+MATH6321 | Exam-focused study guide                                                Sai Vanam | 35
+
+
+Section 4.2 | RSA
+
+
+
+RSA foundations and the original example
+  Units, the totient and Fermat–Euler
+  A unit modulo N is a residue a with gcd(a, N ) = 1. Precisely these residues have multiplica-
+  tive inverses. The totient φ(N ) counts them. For example, the units modulo 10 are 1, 3, 7, 9,
+  so φ(10) = 4.
+  For distinct primes p, q, exclude multiples of each prime from the residues modulo pq to get
+  φ(pq) = (p − 1)(q − 1).
+  Fermat–Euler says aφ(N ) ≡ 1 (mod N ) for units a. Multiplication by a unit permutes the
+  unit group. Comparing the product of all units before and after this permutation, then
+  cancelling that invertible product, proves the identity.
+  If ed = 1 + tφ(N ), then med = m(mφ(N ) )t ≡ m. Thus raising to d reverses raising to e, as in
+  Lemma 4.12.
+
+  Worked example: Example 4.14: N=55, e=3, m=12
+  The secret factors are 5 and 11; φ(55) = 40. Euclid gives 40 = 13 · 3 + 1, so 1 = 40 − 13 · 3
+  and d ≡ −13 ≡ 27 (mod 40).
+  Encrypt: 123 = 1728 ≡ 23 (mod 55).
+  Decrypt: 232 ≡ 34, 234 ≡ 1, and therefore 238 ≡ 2316 ≡ 1. Since 27 = 16 + 8 + 2 + 1,
+
+                             2327 ≡ 1 · 1 · 34 · 23 ≡ 12   (mod 55).
+
+  Finding d used modulus 40; encryption and decryption used modulus 55.
+
+
+
+
+                                               35
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 36
+
+
+Section 4.3 | ElGamal encryption
+
+
+
+El-Gamal encryption | explanation
+  A fresh shared mask for each message
+
+  Choose cyclic G = ⟨g⟩ of order q, private k, and public h = g k . The public key is (G, q, g, h).
+  To send m ∈ G, choose fresh secret s and send
+
+                                      c1 = g s ,        c2 = mhs .
+
+  The recipient computes m = c2 c−k   1 , because c1 = g
+                                                     k      sk
+                                                                = hs . Unlike RSA’s textbook
+  deterministic map, fresh s can give different ciphertexts for the same message. If s is reused,
+  c2 (c′2 )−1 = m(m′ )−1 : the common mask cancels.
+  A discrete log of public h recovers k, hence breaks the scheme. The underlying group must
+  make the relevant exponent problems difficult; cyclicity alone is not enough.
+
+  Method: El-Gamal decryption
+
+  Compute ck1 , find its inverse in the group, and multiply it by c2 . In (Z/pZ)× , the group
+  operations are multiplication and modular inversion. Do not subtract the mask: that would
+  be an additive-group protocol.
+
+  El-Gamal is a group-valued masking operation
+  The factor hs is a temporary mask. The sender can calculate it using the public h and the
+  chosen secret nonce s. The recipient can reconstruct exactly the same mask as ck1 , using the
+  transmitted c1 = g s and private k. These agree because both are g ks .
+  The ciphertext therefore has two components for a reason. The first lets the recipient rebuild
+  the mask; the second contains the message multiplied by that mask. Dropping the first
+  component would usually make legitimate decryption impossible. Sending the nonce itself
+  would make decryption easy for everyone, since the public h would reveal hs .
+  Multiplication is the group operation here, so remove the mask by multiplying by its inverse.
+  In the usual prime-modulus examples this means a modular inverse, not ordinary fraction
+  arithmetic. You can compute ck1 first and invert its result, or compute c−k
+                                                                           1 directly by a valid
+  equivalent exponent. The two approaches are mathematically identical.
+  The nonce is not the long-term private key. It is a fresh per-encryption choice; disclosing it
+  can expose that ciphertext even when the long-term key is still unknown. Reuse can expose
+  relationships between messages without giving the key outright.
+
+
+
+
+                                                   36
+MATH6321 | Exam-focused study guide                                                 Sai Vanam | 37
+
+
+Section 4.3 | ElGamal encryption
+
+
+
+El-Gamal encryption | worked practice
+  Worked example: A small message
+  Let p = 23, g = 5, k = 6, so h = 8. For message m = 10 and nonce s = 3,
+
+                        c1 = 53 ≡ 10,    h3 = 83 ≡ 6,    c2 = 10 · 6 ≡ 14.
+
+  The recipient computes c61 = 106 ≡ 6. Since 6−1 ≡ 4 (mod 23), the message is 14 · 4 ≡ 10.
+
+  Exam tip: Stay within Section 4.3
+  For encryption, remove the multiplicative mask with its group inverse. In an additive group
+  the corresponding removal is subtraction.
+
+  Exam-style question 4.4
+  In (Z/11Z)× , take g = 2, k = 3, m = 7, s = 4. Encrypt and decrypt.
+
+  Model answer 4.4
+  h = 23 = 8, c1 = 24 ≡ 5, h4 ≡ 4, so c2 = 7 · 4 ≡ 6. The recipient gets ck1 = 53 ≡ 4, inverse
+  4−1 ≡ 3, hence m = 6 · 3 ≡ 7 (mod 11).
+
+  Exam-style question Practice
+  Two ciphertexts share the same c1 , and have c2 = 14, c′2 = 9 modulo 23. If the first plaintext
+  is 10, recover the second.
+
+  Model answer Practice
+  The common c1 implies the same recipient mask, so c′2 /c2 = m′ /m. Equivalently the first
+  mask is 14 · 10−1 (mod 23). Since 10−1 = 7, it is 14 · 7 ≡ 6. Its inverse is 4, so the second
+  plaintext is 9 · 4 ≡ 13 (mod 23). This recovers the other message without recovering the
+  long-term private exponent.
+
+
+
+
+                                                37
+MATH6321 | Exam-focused study guide                                              Sai Vanam | 38
+
+
+Section 4.3 | ElGamal encryption
+
+
+
+The original ElGamal example
+  Worked example: Example 4.22: multiplicative group modulo 31
+  Let G = (Z/31Z)× , q = 30, g = 3 and Alice’s private k = 11. Her public value is
+  h = 311 ≡ 13.
+  Bob sends m = 7 using secret s = 4:
+
+                          c1 = 34 ≡ 19,      132 ≡ 14,      134 ≡ 10,
+
+  so c2 = 7 · 10 ≡ 8. The ciphertext is (19, 8).
+  Alice reconstructs the mask 1911 . Repeated squaring gives
+
+                               192 ≡ 20,   194 ≡ 28,     198 ≡ 9,
+
+  so 1911 ≡ 9 · 20 · 19 ≡ 10. The inverse is 10−1 ≡ 28, because 10 · 28 = 280 ≡ 1 modulo 31.
+  Finally,
+                               m ≡ 8 · 28 = 224 ≡ 7 (mod 31).
+
+  What is public, private and temporary?
+  Public: G, q, g, h and the transmitted pair (c1 , c2 ). Alice keeps k private. Bob keeps the
+  temporary exponent s secret. The mask is hs = ck1 .
+  An attacker who solves the discrete log of h obtains k and can decrypt. This shows a
+  sufficient attack, rather than proving that every way of attacking a ciphertext must solve a
+  discrete logarithm. All toy groups here are deliberately small for calculation.
+
+  Exam tip: Why there are two ciphertext components
+  The first component lets Alice rebuild the temporary mask using her private key. The second
+  carries the masked message. Transmitting s itself would let everyone compute hs from public
+  information.
+
+
+
+
+                                              38
+MATH6321 | Exam-focused study guide                                                   Sai Vanam | 39
+
+
+Section 4.3 | ElGamal encryption
+
+
+
+ElGamal in other cyclic groups
+  Definitions 4.15–4.17: the operation controls the notation
+
+  In a cyclic group G = ⟨g⟩ of order q, a discrete log solves g k = h. All solutions are exactly
+  k + qZ: g k+tq = g k , and equality of two powers implies their exponent difference is a multiple
+  of the order.
+  In an additive group, g k in multiplicative-style notation means kg. In Z/10Z, g = 7 and
+  h = 3 give 7k ≡ 3, so k ≡ 9 (mod 10).
+  In the tenth roots of unity, g = e14πi/10 and h = e6πi/10 give g 9 = e126πi/10 = h. Again the
+  logs are 9 + 10Z. These groups are isomorphic, but their representations can make logarithms
+  look and behave very differently.
+
+  Method: Translate the complete algorithm into addition
+  For additive G = Z/N Z, write
+
+                    h = kg,      c1 = sg,      c2 = m + sh,       m = c2 − kc1 .
+
+  If g generates this group, gcd(g, N ) = 1. Solving a discrete log is then easy: kg = h gives
+  k = g −1 h modulo N . Example 4.24 uses N = 13, g = 7, h = 9: 7−1 = 2, so k ≡ 18 ≡ 5
+  modulo 13. This is not a suitable hard-log setting.
+
+  Exam-style question Additive ElGamal
+  In Z/13Z, take g = 7, k = 5, s = 2 and m = 4. Encrypt and decrypt.
+
+  Model answer Additive ElGamal
+  h = 5 · 7 ≡ 9. Then c1 = 2 · 7 ≡ 1 and c2 = 4 + 2 · 9 ≡ 9. Decrypt: 9 − 5 · 1 = 4 modulo 13.
+  Also anyone can recover k = 7−1 · 9 = 5, demonstrating the weakness.
+
+
+
+
+                                                 39
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 40
+
+
+Section 4.3 | ElGamal encryption
+
+
+
+The end of Section 4.3: representations and elliptic curves
+  Why abstractly identical groups can differ computationally
+  Every cyclic group of order q is isomorphic to Z/qZ. But this does not make discrete logs
+  easy in every representation. If you could efficiently convert an arbitrary element h = g k
+  into its additive exponent coordinate k, that conversion would itself solve the discrete-log
+  problem.
+  In the additive representation Z/N Z, the input h is already an ordinary residue and recovering
+  k from kg = h is just modular division. In a multiplicative representation, the exponent is
+  not supplied as a coordinate.
+
+  The final paragraph: elliptic-curve groups
+  The notes also mention E(Fp ), the group of points of an elliptic curve over a finite field. Its
+  operation is a geometrically defined point addition, and the analogue of exponentiation is
+  scalar multiplication kP .
+  The discrete-log question becomes: given P and Q = kP , recover k. Cryptographic
+  constructions usually choose a suitable cyclic subgroup generated by P . This connects
+  to Remark 4.23’s idea of obtaining a cyclic group by choosing a generator and using its
+  generated subgroup.
+  The notes list ECDH, ECDSA and Bitcoin as applications. Elliptic-curve formulas and
+  digital signatures are not developed in Sections 2.1–4.3; understanding their mention here
+  requires only recognising another group representation. The next section develops digital
+  signatures, which are included in this guide.
+
+  Exam-style question Representation check
+  Why does an abstract isomorphism to an additive cyclic group not automatically break
+  multiplicative-group ElGamal?
+
+  Model answer Representation check
+  Existence of an isomorphism is not the same as an efficient algorithm evaluating it on
+  arbitrary encoded elements. Mapping g k to the coordinate k is precisely a discrete-log
+  computation.
+
+
+
+
+                                                40
+MATH6321 | Exam-focused study guide                                                  Sai Vanam | 41
+
+
+Section 4.3 | ElGamal encryption
+
+
+
+Section 4.3: final remarks and checkpoint
+  What the last remarks add
+  A cyclic subgroup can be constructed from an element g by taking H = ⟨g⟩. This is a way
+  to obtain a group for ElGamal; it does not by itself guarantee hardness.
+  The message must be encoded as an element of G. The notes do not develop the encoding
+  methods, so questions normally give a numerical or group-valued message.
+  The order q is included in the public key because it might not be apparent from the
+  presentation of G. It controls exponent congruences. Do not confuse the prime modulus p
+  with the group order q = p − 1 in (Z/pZ)× .
+
+  Method: Ten-minute closed-book recall
+  1. Write the Enigma pairing formula and explain each factor.
+  2. Generate six new bits from an initial fill of your choice.
+  3. State the hypothesis and conclusion of Theorem 3.16.
+  4. Explain why irreducible need not mean maximal period.
+  5. Write both parties’ Diffie–Hellman calculations.
+  6. State the two moduli used in RSA and their different jobs.
+  7. Write ElGamal encryption and show the mask cancellation.
+
+  Exam tip: How to decide whether to revisit a topic
+  If you can reproduce an algorithm but cannot complete a numerical example, revisit modular
+  arithmetic. If you can calculate but do not know which algorithm applies, use the question-
+  type table near the start. If a proof-style question stalls, begin with the definition and state
+  the theorem’s hypotheses explicitly.
+
+
+
+
+                                                41
+MATH6321 | Exam-focused study guide                                                Sai Vanam | 42
+
+
+Section 4.4 | Digital signatures
+
+
+
+What does a signature establish?
+  Confidentiality and authentication have different jobs
+  Encryption is intended to keep a message private. A signature is intended to let the receiver
+  check who authorised the signed data, and whether those data have changed.
+  Sending Alice’s private key is not a solution: it exposes her secret, and Bob cannot establish
+  authenticity just by receiving an unfamiliar secret number. The notes instead ask Alice to
+  demonstrate an operation requiring her private key, while revealing only the result.
+
+  Method: Write this key-use table before a mixed problem
+
+   Task                            Key used
+   Alice encrypts to Bob           Bob’s public key
+   Bob decrypts                    A private key belonging to Bob
+   Alice signs                     A private key belonging to Alice
+   Bob verifies Alice’s signature  Alice’s public key
+  The recipient of the communication does not determine the verification key. The identity of
+  the signer does.
+
+  The auxiliary-message convention in these notes
+  The notes sign an auxiliary value m0 . In the RSA description Bob selects a challenge m0
+  and asks Alice to apply her private operation to it. In the ElGamal description Alice selects
+  the auxiliary value.
+  The transmitted plaintext message m and signed auxiliary value m0 are different roles. Later
+  the notes suggest setting m0 = H(m), a hash of the message, to bind the signature to the
+  actual message.
+  An unrelated auxiliary challenge does not by itself bind a signature to a particular message.
+  In exam calculations follow the stated challenge convention; when explaining authentication,
+  specify exactly which value is verified.
+
+  Exam-style question Key selection
+  Alice sends Bob a confidential message and proves it came from her. Whose public key
+  encrypts it, and whose public key verifies her signature?
+
+  Model answer Key selection
+  Encrypt using Bob's public key so he can decrypt using his private key. Verify using Alice's
+  public key, because she signed using her private key.
+
+
+
+
+                                               42
+MATH6321 | Exam-focused study guide                                                Sai Vanam | 43
+
+
+Section 4.4 | Digital signatures
+
+
+
+RSA signatures: sign, then verify
+  The signature reverses the RSA public operation
+  Alice’s RSA keys are public (NA , eA ) and private exponent dA , satisfying eA dA ≡ 1
+  (mod φ(NA )).
+  For an auxiliary value m0 ∈ (Z/NA Z)× , Alice calculates
+
+                                      m1 ≡ md0A    (mod NA ).
+
+  She supplies (m0 , m1 ). Bob verifies by checking
+
+                                      me1A ≡ m0    (mod NA ).
+
+  This works by the same inverse-power identity used for RSA decryption. The signature
+  value is produced with Alice’s private exponent and checked with her public exponent.
+
+  Worked example: A short complete signature
+  Take Alice’s NA = 33, eA = 3, dA = 7 and challenge m0 = 2. Then
+
+                                    27 = 128 ≡ 29      (mod 33),
+
+  so the signature pair is (2, 29). Verify:
+
+                               293 ≡ (−4)3 = −64 ≡ 2       (mod 33).
+
+  No private key is transmitted. Bob checks a relation using public information.
+
+  Exam-style question Valid or invalid?
+  With public key (33, 3) and auxiliary value m0 = 2, compare signature values 29 and 28.
+
+  Model answer Valid or invalid?
+  293 ≡ 2, so 29 passes. But 283 ≡ (−5)3 = −125 ≡ 7 (mod 33), so 28 fails the required
+  equality.
+
+
+
+
+                                                  43
+MATH6321 | Exam-focused study guide                                               Sai Vanam | 44
+
+
+Section 4.4 | Digital signatures
+
+
+
+Example 4.25: RSA encryption and signing together
+  Separate Alice’ s and Bob’ s parameters
+
+                                    User    Primes       N    e     d
+                                    Alice    5,13        65 11      35
+                                    Bob      7,13        91 5       29
+
+  Alice’s totient is 48 and 11 · 35 ≡ 1 (mod 48). Bob’s totient is 72 and 5 · 29 ≡ 1 (mod 72).
+
+  Worked example: Alice encrypts the message m=6 to Bob
+  Use Bob’s public key, so calculations are modulo 91:
+
+                        62 = 36,        64 ≡ 22,         c = 65 ≡ 22 · 6 ≡ 41.
+
+  For Bob’s decryption, the repeated squares of 41 are
+
+                        412 ≡ 43,      414 ≡ 29,     418 ≡ 22,       4116 ≡ 29.
+
+  Since 29 = 16 + 8 + 4 + 1,
+
+                               4129 ≡ 29 · 22 · 29 · 41 ≡ 6       (mod 91).
+
+  Worked example: Alice signs the challenge m0=2
+  Use Alice’s private exponent and modulus:
+
+                                     m1 = 235 ≡ 33       (mod 65).
+
+  For example 27 = 128 ≡ −2, hence 235 ≡ (−2)5 = −32 ≡ 33. The transmitted signature is
+  (2, 33).
+  Verify with Alice’s public key. The squares are 332 ≡ 49, 334 ≡ 61, 338 ≡ 16 modulo 65.
+  Thus
+                              3311 ≡ 16 · 49 · 33 ≡ 2 (mod 65).
+  The message decrypts to 6 and the signature verifies against 2. These are two separate
+  checks with different moduli.
+
+  Exam tip: These are classroom parameters
+  The two moduli in this source example share the factor 13. Their arithmetic illustrates the
+  algorithms, but computing gcd(65, 91) = 13 would expose both private keys.
+
+
+
+
+                                                    44
+MATH6321 | Exam-focused study guide                                                Sai Vanam | 45
+
+
+Section 4.4 | Digital signatures
+
+
+
+Example 4.26: a second RSA two-key calculation
+  Worked example: Keys, encryption and signature
+  Alice has (NA , eA ) = (143, 13), with primes 11 and 13. Hence φ(NA ) = 120 and dA = 37,
+  because 13 · 37 = 481 ≡ 1 (mod 120).
+  Bob has (NB , eB ) = (55, 23), with primes 5 and 11. Hence φ(NB ) = 40 and dB = 7, because
+  23 · 7 = 161 ≡ 1 (mod 40).
+  Alice sends m = 2 using Bob’s key:
+
+                                     c = 223 ≡ 8     (mod 55).
+
+  One route is 220 ≡ 1 and therefore 223 ≡ 8.
+  For challenge m0 = 17, she signs with her own key. Modulo 143,
+
+                   172 ≡ 3,    174 ≡ 9,   178 ≡ 81,      1716 ≡ 126,   1732 ≡ 3.
+
+  Thus 1737 ≡ 3 · 9 · 17 ≡ 30 and the signature is (17, 30).
+
+  Worked example: Bob performs the two recovery checks
+  Decrypt using Bob’s modulus: 82 ≡ 9, 84 ≡ 26, so
+
+                                 87 ≡ 26 · 9 · 8 ≡ 2     (mod 55).
+
+  Verify using Alice’s modulus: 302 ≡ 42, 304 ≡ 48, 308 ≡ 16, so
+
+                              3013 ≡ 16 · 48 · 30 ≡ 17    (mod 143).
+
+  The recovered values match the message and challenge respectively.
+
+  Exam-style question What if the user labels disappear?
+  Given an encryption modulus and a different signature modulus, which one should Bob use
+  to decrypt and which one to verify?
+
+  Model answer What if the user labels disappear?
+  Decryption uses the recipient's encryption modulus and private exponent. Verification uses
+  the signer's signature modulus and public exponent. Label identities before assigning either
+  modulus.
+
+
+
+
+                                                45
+MATH6321 | Exam-focused study guide                                                 Sai Vanam | 46
+
+
+Section 4.4 | Digital signatures
+
+
+
+Hashes, message binding and separate signing keys
+  Why introduce a hash function?
+  A hash function H maps a variable-length message to a short, fixed-length value. The notes
+  use this to replace an unrelated challenge by m0 = H(m).
+  The signer signs this message-dependent value. The receiver recomputes H(m) and compares
+  it with the value recovered or checked during signature verification. Altering the message
+  should then make verification fail unless the attacker can defeat the signature or the required
+  hash properties.
+  Relevant hash properties include difficulty of finding a preimage and difficulty of finding
+  different messages with the same hash. A hash is not reversible encryption and is not a
+  promise that every short, predictable message remains secret.
+
+  Interpret the notes’ security discussion carefully
+  The notes suggest using a separate signing key so the encryption key is not also used for
+  signing. Separate keys distinguish purposes and reduce cross-protocol misuse; a correctly
+  designed signature scheme is intended to tolerate many publicly visible signatures.
+  The simplified RSA calculation here is a classroom construction, not a full description of a
+  deployed signature format. Do not conclude that an arbitrary pair (m0 , m1 ) authenticates a
+  message that is unrelated to m0 .
+  In a question asking only for the notes’ numerical signature, calculate m1 = md0 and verify
+  me1 = m0 exactly as specified.
+
+  Exam-style question Message binding
+  Alice's signature verifies the fixed challenge 2. Does that calculation alone prove that a
+  particular attached message was signed by Alice?
+
+  Model answer Message binding
+  No. The equality verifies a private-key operation on 2. To authenticate the particular
+  message, the verified value must be bound to it, for example through an appropriate message
+  hash as described in the notes.
+
+
+
+
+                                                46
+MATH6321 | Exam-focused study guide                                               Sai Vanam | 47
+
+
+Section 4.4 | Digital signatures
+
+
+
+ElGamal signatures: the formula and the two moduli
+  Use the notes’ m0, m1, m2 notation
+
+  Alice chooses prime p, q = p − 1, primitive root g and private k. Her public value is h = g k
+  (mod p).
+  For auxiliary value m0 , choose a fresh secret s with gcd(s, q) = 1. Calculate
+
+                   m1 = g s   (mod p),      m2 = (m0 − km1 )s−1     (mod q).
+
+  The signature sent in the notes is (m0 , m1 , m2 ). Verify by comparing
+
+                                   hm1 mm
+                                        1 ≡ g
+                                          2   m0
+                                                     (mod p).
+
+  m1 is a group element, represented by its ordinary integer residue when it appears in the
+  exponent congruence. m2 is calculated modulo the group order q.
+
+  Method: Write the moduli beside the steps
+
+    Calculate h and m1                         modulo p
+    Find s −1
+                                               modulo q = p − 1
+    Calculate m2                               modulo q = p − 1
+    Check both verification expressions        modulo p
+  Unlike an ElGamal encryption exponent, the signing nonce needs an inverse modulo q, so
+  its coprimality condition is essential.
+
+  Proposition 4.27: why verification succeeds
+  The definition gives sm2 ≡ m0 − km1 (mod q). Therefore
+
+                               1 = (g )
+                          hm1 mm         (g ) = g km1 +sm2 = g m0 ,
+                                2    k m1 s m2
+
+
+  because exponents are equivalent modulo the order q.
+
+
+
+
+                                               47
+MATH6321 | Exam-focused study guide                                              Sai Vanam | 48
+
+
+Section 4.4 | Digital signatures
+
+
+
+Example 4.28: encrypt to Bob, sign as Alice
+  Identify both sets of parameters
+  Alice: p = 17, q = 16, g = 6, k = 8, h = 68 ≡ 16.
+  Bob: p′ = 23, q ′ = 22, g ′ = 11, k ′ = 4, h′ = 114 ≡ 13.
+  The encryption nonce is s1 = 3; the signature nonce is s2 = 7. They are separate choices for
+  separate operations.
+
+  Worked example: Encrypt and decrypt the message m=16
+  Use Bob’s public parameters modulo 23:
+
+                             c1 = 113 ≡ 20,       c2 = 16 · 133 ≡ 8.
+
+  Bob reconstructs the mask: 202 ≡ 9 and 204 ≡ 12. Its inverse is 2 since 12 · 2 ≡ 1 modulo
+  23. Thus he recovers
+                                m = 8 · 2 ≡ 16 (mod 23).
+
+  Worked example: Sign and verify the auxiliary value m0=5
+  Use Alice’s parameters. Since gcd(7, 16) = 1 and 7−1 ≡ 7 (mod 16),
+
+                                   m1 = 67 ≡ 14     (mod 17),
+
+                         m2 = (5 − 8 · 14) · 7 = −749 ≡ 3    (mod 16).
+  So the signature is (5, 14, 3).
+  For verification, work modulo 17:
+
+                                   1 = 16 14 ≡ 1 · (−3) ≡ 7,
+                              hm1 mm2    14 3          3
+
+
+                                         g m0 = 65 ≡ 7.
+  The values agree, so the signature passes.
+
+
+
+
+                                               48
+MATH6321 | Exam-focused study guide                                                 Sai Vanam | 49
+
+
+Section 4.4 | Digital signatures
+
+
+
+Example 4.29: a second ElGamal signing calculation
+  Worked example: Encryption and recovery use Bob’ s key
+  Alice has p = 23, q = 22, g = 5, k = 11, h = 22. Bob has p′ = 17, q ′ = 16, g ′ = 3, k ′ = 7,
+  h′ = 11.
+  Alice encrypts m = 13 with s1 = 3 modulo 17:
+
+                             c1 = 33 ≡ 10,       c2 = 13 · 113 ≡ 14.
+
+  Bob’s mask is 107 ≡ 5 (mod 17), with inverse 7. Hence m = 14 · 7 ≡ 13 (mod 17).
+
+  Worked example: Signature and verification use Alice’ s key
+  For m0 = 19 and s2 = 9, compute 9−1 ≡ 5 (mod 22), since 9 · 5 = 45 ≡ 1.
+
+                                   m1 = 59 ≡ 11      (mod 23),
+
+                       m2 = (19 − 11 · 11) · 5 = −510 ≡ 18       (mod 22).
+  The signature is (19, 11, 18). Verify modulo 23:
+
+                   2211 ≡ −1,    112 ≡ 6,    114 ≡ 13,   118 ≡ 8,      1116 ≡ 18.
+
+  Thus 1118 ≡ 18 · 6 ≡ 16, and
+
+                             2211 1118 ≡ (−1) · 16 ≡ 7   (mod 23).
+
+  Also 519 ≡ 7 (mod 23). Both sides match.
+
+  Exam tip: A one-line modulus check catches many errors
+  Signing used moduli 23 and 22; encryption used modulus 17. The value 18 is the signature
+  exponent modulo 22, not a group element that must be reduced modulo 23 during its
+  calculation.
+
+
+
+
+                                                49
+MATH6321 | Exam-focused study guide                                                    Sai Vanam | 50
+
+
+Section 4.4 | Digital signatures
+
+
+
+Signature security and unfamiliar questions
+  What the final paragraph in the notes is trying to explain
+
+  The public verification relation is hb bc = g a . Taking logarithms formally gives
+
+                            b dlogg (h) + c dlogg (b) ≡ a (mod p − 1).
+
+  This illustrates the appearance of the secret exponent and discrete logs. Recovering k =
+  dlogg (h) would enable an attacker to sign chosen values.
+  This observation is not a proof that every possible forgery requires a discrete-log solution.
+  The signed value must be tied to the intended message, and correct nonce/key choices matter.
+  State the sufficient attack that has actually been established.
+
+  Method: If a signing nonce is disclosed
+  The signature equation gives
+
+                                   km1 ≡ m0 − sm2      (mod q).
+
+  If gcd(m1 , q) = 1, invert m1 to recover k. Otherwise solve the linear congruence and use
+  h = g k to distinguish candidates. Do not assume that m1 is always invertible modulo q.
+
+  Exam-style question Disclosed-nonce example
+  An ElGamal signature has p = 23, q = 22, g = 5, h = 16, m0 = 9, m1 = 17, m2 = 7. The
+  signing nonce is revealed as s = 7. Recover k.
+
+  Model answer Disclosed-nonce example
+  The congruence is 17k ≡ 9 − 7 · 7 = −40 ≡ 4 (mod 22). Since 17−1 ≡ 13, k ≡ 52 ≡ 8
+  (mod 22). Check 58 ≡ 16, which matches the public value. Thus k = 8 is recovered. A valid
+  solution should check the public key as well as solving the congruence.
+
+
+
+
+                                                50
+MATH6321 | Exam-focused study guide                                              Sai Vanam | 51
+
+
+Section 4.4 | Digital signatures
+
+
+
+Signature practice: complete the calculations
+  Exam-style question RSA signature and encrypted message
+  Alice has public RSA key (33, 3) and private exponent 7. Bob has public RSA key (55, 3)
+  and private exponent 27. Alice sends m = 12 and signs auxiliary value m0 = 4. Find the
+  ciphertext, signature value, recovered message and verification result.
+
+  Model answer RSA signature and encrypted message
+  Encrypt using Bob’s key: c = 123 ≡ 23 (mod 55). Sign using Alice’s key: m1 = 47 ≡ 16
+  (mod 33). For example 42 = 16, 44 ≡ 25, so 47 ≡ 25 · 16 · 4 ≡ 16.
+  Bob decrypts 2327 ≡ 12 (mod 55). He verifies 163 = 4096 ≡ 4 (mod 33). The signature pair
+  is (4, 16), distinct from the ciphertext 23.
+
+  Exam-style question ElGamal signing and nonce condition
+  Let p = 11, q = 10, g = 2, k = 3, h = 8, m0 = 4 and s = 3. Calculate the signature and
+  verify. Explain why choosing s = 2 would fail the stated signing construction.
+
+  Model answer ElGamal signing and nonce condition
+  m1 = 23 ≡ 8 (mod 11). Since 3−1 ≡ 7 (mod 10),
+
+                          m2 = (4 − 3 · 8) · 7 = −140 ≡ 0   (mod 10).
+
+  The signature is (4, 8, 0). Verify 88 · 80 ≡ 5 and 24 ≡ 5 (mod 11). The exponent m2 = 0 is
+  allowed by this congruence formula.
+  If s = 2, then gcd(2, 10) = 2, so s−1 modulo 10 does not exist. The signing algorithm cannot
+  be executed as stated.
+
+
+
+
+                                              51
+MATH6321 | Exam-focused study guide                                                Sai Vanam | 52
+
+
+Final review
+
+
+
+One method for each section
+  Write these from memory
+
+   2.1 Enigma         Plugboard pairs, ordered rotors, positions and reflectors:
+                      multiply independent factors.
+   3.1 LFSR basics    Output starts with initial fill. Apply taps to old state.
+                      Encrypt/decrypt with XOR.
+   3.2 LFSR periods   Check hypotheses, write characteristic polynomial, estab-
+                      lish irreducibility and test divisors.
+   4.1 DH             Public powers g a , g b ; common key (g b )a = (g a )b .
+   4.2 RSA            N = pq, φ = (p − 1)(q − 1), d = e−1 (mod φ); powers
+                      modulo N .
+   4.3 ElGamal en- (c1 , c2 ) = (g s , mhs ); decrypt c2 c−k
+                                                          1 .
+   cryption
+   4.4 RSA signatures Sign m1 = md0 ; verify me1 = m0 .
+   4.4 ElGamal signa- m1 = g s modulo p; m2 = (m0 − km1 )s−1 modulo p − 1;
+   tures              compare hm1 mm    1 and g
+                                         2        m0
+                                                     modulo p.
+
+  Exam tip: A reliable answer structure
+  Name the scheme and identities. State the parameters and modulus. Write the formula
+  before substitution. Show repeated squaring or Euclid where needed. Give the result with its
+  modulus and verify the relevant equality. Explain any failed hypothesis rather than forcing
+  an invalid inverse or theorem.
+
+
+
+
+                                              52
+MATH6321 | Exam-focused study guide                                               Sai Vanam | 53
+
+
+Sources and navigation
+
+
+
+Section-by-section reading map
+  Grounding in the supplied documents
+  Primary content: MATH6321 Notes(2).pdf, Dr Dan Fretwell, 2026/27. Section 2.1 uses
+  printed pages 16–20 up to the Section 2.2 heading; Chapter 3 uses printed pages 25–32;
+  Chapter 4 uses printed pages 33–47. The exam priorities come from the supplied MATH6321
+  Exam Information.pdf.
+  All four Chapter 4 sections are included here. Source examples 4.25–4.29 are worked in
+  the signature section; Proposition 4.27 explains the verification identity. Source arithmetic
+  errors in Example 3.17 are corrected by explicit state iteration.
+  The security discussions distinguish an algorithm’s correctness calculation from a com-
+  plete security proof. Numerical classroom examples show how to calculate; they are not
+  recommendations for real cryptographic parameters.
+
+  Method: Find your section
+
+   Arithmetic toolkit                                         3–4
+   Section 2.1 | The Enigma cipher                            5–8
+   Section 3.1 | LFSR basics                                  9–18
+   Section 3.2 | The main theorem                             19–27
+   Section 4.1 | Diffie–Hellman                               28–32
+   Section 4.2 | RSA                                          33–35
+   Section 4.3 | ElGamal encryption                           36–41
+   Section 4.4 | Digital signatures                           42–51
+   Final review                                               52–52
+
+
+
+
+                                               53
+

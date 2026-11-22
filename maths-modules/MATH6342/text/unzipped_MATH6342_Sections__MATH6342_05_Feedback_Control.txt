@@ -1,0 +1,1018 @@
+162 Chapter 5 Feedback control
+
+
+
+Transfer functions and stability criteria: In this chapter we combine ideas
+about transfer functions with the notion of stability, so as to obtain
+criteria for stability of a system solely in terms of properties of transfer
+functions. The idea is to describe the properties of solutions of the
+differential equation, without having to solve the differential equations
+explicitly. Thus, we go from differential equations to algebra via the
+Laplace transform. When building devices from components, the main
+operations on the transfer functions are:
+• amplification λf (s)
+• addition f (s) + g(s)
+• multiplication f (s)g(s)
+163 Maxwell’s problem
+
+[See video: V21 stable polynomials]
+Definition (Stable polynomials)
+A polynomial h(x) is said to be stable if all of its zeros are in the open
+left half plane LHP = {s ∈ C : ℜs < 0}.
+
+Problem
+Given a monic polynomial, find necessary and sufficient conditions on the
+coefficients for the polynomial to be stable.
+
+Finding the zeros exactly can be very difficult. Practical modern method:
+given a monic complex polynomial p(s), there exists a complex matrix A
+such that det(sI − A) = p(s). Then one can find the eigenvalues of A
+numerically. If all the eigenvalues are comfortably in the open left half
+plane, then p(s) is stable. We now give a necessary condition for stability,
+which is not sufficient. Routh extended this to a sufficient condition.
+164 Necessary condition for stability
+
+[See video: V22 Stablepolynomialsrationals1]
+Proposition
+Suppose that h(s) is a monic real polynomial that is stable. Then all the
+coefficients of h(s) are positive.
+
+Proof. Here h(s) has real coefficients, so h(λ) = 0 if and only if
+h(λ̄) = 0. Hence the roots of h(s) are either real µj < 0; or pairs of
+conjugate complex roots λk and λ̄k with ℜλk < 0, which combine to
+give real quadratic factors (s − λk )(s − λ̄k ) = s 2 − 2sℜλk + |λk |2 . Hence
+h(s) factorizes as
+                         n            m
+               h(s) =                   (s 2 − 2sℜλk + |λk |2 ),
+                        ∏︂           ∏︂
+                           (s − µj )
+                        j=1         k=1
+
+where −µj > 0, −2ℜλk > 0 and |λk |2 > 0; hence all the coefficients that
+we obtain on multiplying out are positive.
+165 Stable rational functions S
+
+
+[See video: V23 Stable rationals]
+Definition (Stable rational functions)
+Let LHP = {s ∈ C : ℜs < 0} be the open left half plane. A rational
+function f (s) is said to be stable if
+(i) f (s) is proper, and
+(ii) all the poles of f (s) are the open left half plane.
+The space of stable rational functions is denoted S.
+
+Equivalently, f (s) = g(s)/h(s) is stable if
+(i) degree(g(s)) ≤ degree(h(s)), so f (s) is proper, and
+(ii) all the zeros of h(s) have ℜs < 0, so h(s) is stable.
+So a polynomial h(s) is stable as in 164, if and only if 1/h(s) is a stable
+rational function as in 165.)
+166 Differential rings
+
+
+
+ Proposition
+ (i) The set S of stable rational functions forms a differential ring on
+ RHP = {s ∈ C : ℜs > 0} , so
+ (R) S is a ring under pointwise multiplication and addition, so that
+ f (s), g(s) ∈ S and λ, µ ∈ C imply f (s)g(s) ∈ S and λf (s) + µg(s) ∈ S;
+ (C) multiplication is commutative f (s)g(s) = g(s)f (s);
+ (ID2) f (s)g(s) = 0 for all s ∈ RHP implies f (s) = 0 or g(s) = 0 on
+ RHP;
+ (Diff) For all f (s) ∈ S the derivative f ′ (s) also belongs to S, and
+ satisfies Leibniz’s rule (f (s)g(s))′ = f ′ (s)g(s) + f (s)g ′ (s).
+ (ii) However, S is not a field.
+167 The stable rational functions form a differential ring
+
+
+Proof. (i) (R) Multiplication and addition: Given f1 (s) = g1 (s)/h1 (s)
+and f2 (s) = g2 (s)/h2 (s) with degree(g1 (s)) ≤ degree(h1 (s)) and
+degree(g2 (s)) ≤ degree(h2 (s)) we have
+
+                    f1 (s)f2 (s) = g1 (s)g2 (s)/h1 (s)h2 (s)
+
+where degree(g1 (s)g2 (s)) ≤ degree(h1 (s)h2 (s)). Also, the zeros of
+h1 (s)h2 (s) are either zeros of h1 (s) or zeros of h2 (s), hence are in LHP.
+By partial fractions, we can write f ∈ S as
+                                    ∑︂N
+                      f (s) = q +           aj (s − λj )−nj .
+                                      j=1
+168 Partial fractions
+
+
+ where here q ∈ C is a constant since f ∈ S is proper, and all the λj have
+ ℜλj < 0. So we can take linear combinations of such f , and stay in S.
+ Also f1 (s) + f2 (s) = (g1 (s)h2 (s) + h1 (s)g2 (s))/h1 (s)h2 (s) ∈ S.
+ (C) Commutativity of multiplication follows from the corresponding
+ property for polynomials;
+ (ID2) likewise;
+ (Diff) Also, we can differentiate
+                                      N
+                                            −nj aj
+                         f ′ (s) =
+                                     ∑︂
+                                                   nj +1
+                                                         ,
+                                     j=1
+                                         (s − λ j )
+
+ and the poles are at λj in open left half plane.
+ (ii) Whereas 1/(s + 1) belongs to S, the inverse s + 1 is not proper,
+ hence not in S.
+169 Poles of the transfer function of the damped harmonic
+oscillator
+
+
+Consider 1/(s 2 + βs
+                   √+ γ) with γ > 0 and β real with poles at
+λ± = (1/2)(−β ± ∆) where ∆ = β 2 − 4γ. Then
+
+        poles      β   ∆<0      ∆=0          ∆>0
+                      λ+ = λ̄− λ+ = λ− distinct real roots
+       unstable β < 0 ℜλ± > 0 λ± > 0     0 < λ− < λ+
+       marginal β = 0 ℜλ+ = 0 λ± = 0     λ− < 0 < λ +
+        stable β > 0 ℜλ± < 0 λ± < 0      λ− < λ + < 0
+
+For a damped harmonic oscillator, we have β, γ > 0, so only the last row
+matters. The last row gives the stable cases.
+170 Stability for systems and transfer functions
+
+[See video: V25 Notions of stability] For a linear system such as
+(A, B, C, B), we have two notions of stability, one is BIBO stability,
+relating to the solutions of the associated differential equation; the other
+is stability of the transfer function as a rational function. The following
+result resolves these two interpretations, and can often determine
+whether transfer functions are stable by basic algebra.
+Theorem
+Let T be a complex rational function. Then T is stable if and only if T
+is the transfer function of some linear system (A, B, C, D) that is BIBO
+stable.
+Proof. Suppose that the system (A, B, C, D) is BIBO stable with
+transfer function T (s); prove that T (s) is stable as a rational function.
+Recall Ŷ (s) = T (s)Û(s). Then we can choose a bounded input U = 1
+such that Û(s) = 1/s. But Σ is BIBO stable, so Y is bounded,
+171 If (A,B,C,D) is BIBO stable, then T is stable
+
+so |Y (t)| ≤ M for some M and all t > 0, so
+                                ⃓∫︂ ∞                 ⃓
+                     |Ŷ (s)| = ⃓      e −st Y (t) dt ⃓
+                                ⃓                     ⃓
+                                ∫︂ 0∞
+                                                        M
+                              ≤       e −tℜs M dt ≤        .
+                                  0                     ℜs
+Hence Ŷ (s) is holomorphic on {s : ℜs > 0} and Ŷ (s) → 0 as s → ∞
+along (0, ∞). So T (s) = s Ŷ (s) must be proper rational.
+• Suppose that T has a pole at λ; we prove by contradiction that
+ℜλ < 0. If ℜλ > 0, then T (s)Û(s) = T (s)/s also has a pole at λ. But
+Ŷ (s) cannot have a pole at s = λ by Prop 98.
+• Now suppose that ℜλ = 0, so λ = iν for some real ν. The idea is to
+cause resonance, so we let U(t) = cos νt, which is bounded, and
+                                  s       1/2      1/2
+                     Û(s) =           =        +
+                               s2 + ν2   s − iν   s + iν
+172 A stable T is realised by a BIBO stable (A,B,C,D)
+
+
+
+has a pole at iν, and hence Ŷ (s) = T (s)Û(s) has a double (or triple, ...)
+pole at iν. Now consider s with ℜs > 0 and s → iν. Now T (s)Û(s)
+diverges like 1/(s − iν)2 or 1/(s − iν)3 etc.; whereas Ŷ (s) can only
+diverge like M/ℜs at worst. This contradicts the identity
+Ŷ (s) = T (s)Û(s). Hence T has no poles on the imaginary axis. Hence
+T (s) has all its poles in LHP, so T is stable.
+Conversely, suppose that T is stable. Then by Proposition 74, there
+exists a SISO (A, B, C, D) such that the transfer function is T and the
+eigenvalues λ of A are the poles of T , hence satisfy ℜλ < 0. Then by
+Theorem 159, (A, B, C, D) is BIBO stable.
+[See video: V26 (A,B,C,D) BIBO stable]
+173 Realization
+
+
+Theorem
+(i) Every monic complex polynomial is the characteristic polynomial of
+some complex matrix.
+(ii) Every proper complex rational function is the transfer function T (s)
+of some SISO system (A, B, C, D).
+(iii) Every stable complex rational function is the transfer function of
+some BIBO stable system (A, B, C, D).
+
+Realization suggests building a gadget with desired properties. In
+contemporary English, argument is often used to mean a dispute; it also
+means the summary of a story; in mathematics, the term applies to the
+angle in the polar decomposition of a complex number. The latter is
+denoted arg, or Arg, especially when the values is taken in (−π, π].
+MATLAB uses angle for argument, while engineers often use phase.
+174 Nyquist’s criterion for stability of T
+
+
+ [See video: V29 Nyquist plots in MATLAB]
+ Here we focus attention on Nyquist’s criterion for stability, which is the
+ starting point for the other application. Nyquist’s criterion tells us how
+ close a stable system is from instability through feedback. Consider the
+ feedback loop with constant feedback −1, so the transfer function is
+ T = R/(1 + R).
+ Nyquist’s criterion
+ Let R be the transfer function of a plant such that R is stable. Suppose
+ that the contour R(iω) (−∞ ≤ ω ≤ ∞) does not pass through or wind
+ around −1. Then T = R/(1 + R) is also stable, so the feedback system
+ with constant feedback −1 is also stable.
+175 Functions in Nyquist’s criterion
+
+
+
+We let c = lims→∞ R(s) where c ̸= −1 by assumption. Hence we can
+write R(s) = c + p(s)/q(s) where p(s) and q(s) are polynomials, and
+degree p(s) is less than the degree of q(s). Then
+
+                 R(s)       c + p(s)/q(s)        cq(s) + p(s)
+     T (s) =            =                   =                    .
+               1 + R(s)   c + 1 + p(s)/q(s)   (1 + c)q(s) + p(s)
+and the degree of (1 + c)q(s) + p(s) equals the degree of q(s), hence
+T (s) is proper.
+Now we check that the poles of T are all in LHP. First, note that poles
+of R give finite values of T . So the possible poles of T (s) are the zeros
+of 1 + R(s), and these are not cancelled by the zeros of R(s).
+176 Argument principle
+
+Next we consider the Nyquist contour of R. Let
+• N be the net number of times that the Nyquist contour of R winds
+around −1, clockwise [we count clockwise windings since we go up the
+imaginary axis then should go clockwise to the complete contour in RHP,
+see 166]; let
+• Z be the number of zeros of R(s) + 1 in the right half plane;
+• P be the number of poles of R(s) + 1 in the right half plane;
+Then, by the Argument Principle of complex analysis applied to a
+semicircular contour in the right half plane,
+
+                             N = Z − P.
+
+(We have N since we are counting clockwise windings, and s describes
+the semicircular contour in the negative sense). Here N = P = 0 by
+hypothesis, so Z = 0. Hence T has no poles in the right half plane,
+hence T is stable.
+177 Left and Right Semicircles
+
+                  5
+
+                  4
+
+                  3
+
+                  2
+
+                  1
+
+                  0
+
+                  -1
+
+                  -2
+
+                  -3
+
+                  -4
+
+                  -5
+                    -5                  0                   5
+
+
+
+
+          Figure: Semicircular contours in left and right half planes
+
+ The Nyquist contour goes up the imaginary axis, so we count N as the
+               number of clockwise windings round −1.
+178 Describing the stability of (A, B, C , D)
+
+
+                                          Nyquist plot, Bode plot
+
+
+           block diagram                    T (iω) = Γ(ω)e iϕ(ω)
+
+
+                                    L
+ dX /dt = AX + BU;    Y = CX + DU       T (s) = D + C(sI − A)−1 B
+
+
+            (A, B, C, D)                Poles, zeros, factors of T (s)
+
+
+                                             Stability criterion
+179 Feedback Control
+
+
+Vehicles are usually under human control.
+Example 1. An airliner starts at rest on the runway and then is
+accelerated until it achieves lift-off. To achieve this, the engines are run
+almost flat out. Once the aircraft reaches cruising altitude, the pilot will
+reduce the amount of fuel going into the engines, and fly at a steady
+speed.
+Example 2. A car on the motor way is not run flat out. Instead, the
+driver regulates the speed by means of the accelerator, so that when the
+car is going too fast, say over 70 miles per hour, the driver can reduce
+the amount of fuel going into the engine, and thus slow down the car.
+Likewise the driver can speed up the car by allowing more fuel to go into
+the engine. Regulating speed thus involves the continual attention of the
+driver; so can we automate this?
+180 Feedback controllers
+
+
+In 1788, the engineer James Watt produced various controllers
+(governors) for steam engines. In 1868, Maxwell presented a general
+theory of feedback control. The idea is to feed the output from a
+machine through a controller back into the input, and thereby regulate
+the output. Consider a plant given by a linear system G (m × k) and a
+controller represented by a linear system −K (k × m). The output from
+G is fed back into the input. The minus sign indicates that we want
+negative feedback (if the engine goes too fast, the controller will slow it
+down).
+• Controllers generally use negative feedback.
+• Usually, plants are described by their Laplace transforms.
+• Rational transfer functions and controllers are simplest to deal with.
+• Proportional-integral-differentiator controllers PID are widely used.
+181 Simple feedback loop diagram
+
+
+
+
+                           -K
+                  -Ky
+                                   y
+
+      u                                    y
+             +             G           .
+182 Stability problem
+
+Definition (Simple Feedback Loop)
+(i) Suppose that G has k inputs and m outputs. We choose K to have m
+inputs and k outputs. Then the simple feedback loop (SFL) has transfer
+function
+                          T = (I + GK )−1 G.
+(ii) Suppose that G and K are rational matrix functions. The poles of G
+are called open loop poles; the poles of T are called closed loop poles.
+
+Problem
+Given a SISO system with rational transfer function G, can we find a
+rational controller −K such that T = (I + GK )−1 G is stable rational?
+
+When G = p/q is strictly proper and stable, Nyquist’s criterion is useful,
+especially for K = 1, the constant negative feedback loop.
+183 PID controllers
+
+
+PID (proportional-integral-derivative) controllers K have the form
+
+                                         b
+                           K (s) = a +     + cs
+                                         s
+where a, b, c are constants, usually real. In 1866, Robert Whitehead, a
+naval engineer from Bolton, invented PD controllers for torpedoes, in
+which the differentiator moves an errant torpedo abruptly back on track.
+In other applications, one may wish to have a milder form of controller,
+such as a PI controller, which gently guides the system on course. When
+selecting a controller, one needs to ensure that the system is stable, and
+also adequately responsive. For instance, the steering of a car should be
+stable, so that the car does not drift off the intended route, but the
+driver should still be able to change direction of the vehicle.
+184 Example of proportional feedback
+
+Consider a SISO system with transfer function G(s) = p(s)/q(s) with
+p, q complex polynomials. The zeros of p are called open loop zeros,
+while the zeros of q are called open loop poles. Then the controller
+−K = −k with constant k > 0 gives a proportional negative feedback
+loop with
+                                               p
+                      T = (I + K G)−1 G =          .
+                                            kp + q
+Example. Let p(s) = s 2 and q(s) = bs + c where b, c > 0. Then G(s)
+is not proper; whereas
+                                         s2
+                          T (s) =
+                                  ks 2 + bs + c
+is proper and has poles in the open left half plane at
+                                    √
+                              −b ± b 2 − 4ck
+                          s=                     ,
+                                      2k
+so the controlled system with T is stable.
+185 Example of proportional-integral feedback
+
+[See video: V28 Simple feedback loop controller]
+Example
+Find a feedback controller of the form −a − b/s that stabilises the plant
+with transfer function G(s) = s/(s − 1)(s + 3).
+
+The plant has poles at s = 1, −3, hence is unstable. We consider
+               G         1               s
+                   =           = 2                   .
+            1 + GK   (1/G) + K  s + (2 − a)s − b − 3
+
+For stability we require positive coefficients, so 2 − a > 0 and
+−b − 3 > 0. In particular, we choose b = −4 and a = 0, and get
+
+                             G        s
+                                 =          ,
+                          1 + GK   (1 + s)2
+
+which is stable.
+186 Euclidean algorithm for polynomials
+
+How to find the highest common factor of two nonzero polynomials over
+C, and express the highest common factor in terms of the original
+polynomials.
+• Step 0. Given polynomials P0 and P1 with deg P0 ≥ deg P1 , find by
+long division polynomials Q1 and P2 such that P0 = Q1 P1 + P2 , where
+either P2 = 0 or deg P1 > deg P2 . In the latter case, we continue.
+• Step 1. Find by long division polynomials Q2 and P3 such that
+P1 = Q2 P2 + P3 , where either P3 = 0 or deg P2 > deg P3 . In the latter
+case, we continue.
+The degrees of the polynomials satisfy
+
+               deg P0 ≥ deg P1 > deg P2 > deg P3 > . . . ,
+
+so eventually we must have Pn+1 = 0 for some n. This identifies Pn as
+the highest common factor of P0 and P1 .
+187 Bezout’s identity for polynomials
+
+• Work back. We write
+                          Pn = Pn−2 − Qn−1 Pn−1
+and eliminate Pn−1 via
+                         Pn−1 = Pn−3 − Qn−2 Pn−2 ;
+then use
+                         Pn−2 = Pn−4 − Qn−3 Pn−3 ;
+to eliminate Pn−2 , and so on until we get back to the start, so
+                             Pn = MP0 + NP1
+where M and N are polynomials, and Pn is the highest common factor.
+MATLAB can find the greatest common divisor (highest common factor)
+g for polynomials P and Q with g = MP + NQ via the command
+>>[g,M,N]=gcd(P,Q)
+188 Highest common factor and common zeros
+
+
+Let G be a complex rational function. Then we can write G = P/Q for
+complex polynomials P and Q. We can find the highest common factor
+of P and Q by the Euclidean algorithm. Note that the Euclidean
+algorithm can be carried out in exact arithmetic–no need to find roots of
+polynomial equations.
+Lemma
+Nonzero complex polynomials P and Q have no common complex zeros
+if and only if there exist complex polynomials M and N such that
+
+                            PM + QN = 1.
+189 Zeros of the highest common factor
+
+
+Proof. If P and Q have a common zero λ, then
+
+                     P(λ)M(λ) + Q(λ)N(λ) = 0,
+
+contrary to the equality. Conversely, suppose that P and Q have no
+common zeros and carry out the Euclidean algorithm for P and Q to
+obtain complex polynomials M, N, R such that R is the highest common
+factor of P and Q and PM + QN = R. If R = r is a nonzero constant,
+then we can multiply through by r −1 to obtain PM/r + QN/r = 1, as
+required. Otherwise, R is a complex polynomial of positive degree, and
+hence by the fundamental theorem of algebra has a complex zero λ. Now
+R is a factor of both P and of Q, so s − λ is a factor of both P and Q,
+so λ is a common zero of P and Q, contrary to assumption.
+190 Matrix completion problem
+
+
+Let R be a commutative ring with 1. Given n ∈ N, and f1 , . . . , fn ,
+consider the n × n matrix
+
+                                 f1 , . . . fn
+                              [︃               ]︃
+                          F =
+                                  ∗ ... ∗
+
+where the unspecified entries are to be chosen.
+Problem
+When can we choose the unspecified entries so that F has an inverse
+with entries in R? That is, when does there exist G ∈ Mn×n (R) such
+that GF = In ?
+This is a really difficult problem, and depends upon R. We will solve the
+case n = 2 for some rings that arise from linear systems.
+191 Completing integer matrices
+
+Let R = Z, n = 2 and consider a, b ∈ Z. When can we find c, d ∈ Z
+such that
+                                     a b
+                                  [︃     ]︃
+                            F =
+                                    c d
+has an inverse matrix with entries in Z?
+(i) Clearly this is impossible when a, b = 0. The inverse
+
+                                   1       d −b
+                                        [︃       ]︃
+                          G=
+                                ad − bc −c a
+
+exists if and only if ad − bc ̸= 0. However, G might have entries in Q,
+rather than Z. We require det G, det F ∈ Z such that
+
+                       det(G) det(F ) = det I2 = 1,
+
+so we need to have det F = ±1, that is ad − bc = ±1. Equivalently, c, d
+exist if and only if a, b have highest common factor 1.
+192 Completing complex polynomial entries
+
+
+
+Proposition
+Given f (s), g(s) ∈ C[s], the following conditions are equivalent:
+(i) there exist h(s), k(s) ∈ C[s] such that
+
+                                      f (s) g(s)
+                                   [︃            ]︃
+                             F =
+                                     h(s) k(s)
+
+has an inverse G ∈ M2×2 (C[s]);
+(ii) f (s)k(s) − g(s)h(s) = ∆ for some ∆ ∈ C \ {0};
+(iii) f (s), g(s) have highest common factor 1;
+(iv) f (s) and g(s) have no common zeros.
+193 Proof of polynomial matrix completion
+
+
+
+
+(i) ⇒ (ii) This follows from det G det F = 1, where det G, det F ∈ C[s].
+(ii) ⇒ (i) The required inverse is
+
+                       1 k(s) −g(s)
+                          [︃             ]︃
+                 G=                         ∈ M2×2 (C[s]);
+                      ∆ −h(s) f (s)
+
+we are allowed to divide by the nonzero constant ∆.
+(ii) ⇔ (iii) Essentially, this is a definition.
+(iii) ⇔ (iv) This is Lemma 188.
+194 Changes of variable in the rational functions
+
+
+[See video: V31 Coprime factorization theory] Consider C(s) and let
+g(s) ∈ C(s). Then the map λ ↦→ g(s) and 1 ↦→ 1 determines a
+homomorphism of fields C(λ) → C(s) via f (λ) ↦→ f (g(s)). Consider
+a, b, c, b ∈ C such that ad − bc ̸= 0, and write
+                           as + b          dλ − b
+                      λ=          ,   s=           .
+                           cs + d          −cλ + d
+                                                             as+b
+There is an isomorphism of fields C(λ) → C(s) : f (λ) ↦→ f ( cs+d ) with
+                     dλ−b
+inverse f (s) ↦→ f ( −cλ+d ). In particular, we can take
+
+                               1           λ−1
+                        λ=        ,   s=       .
+                             s +1           −λ
+Let P(λ) ∈ C[λ]. Then P(1/(1 + s)) gives a stable rational function in s.
+195 Coprime factorisation in the stable rational functions
+
+Definition (Coprime)
+Let P(s), Q(s) ∈ S be non zero. We say that P and Q are coprime if
+there exist X (s) and Y (s) in S such that
+
+                       P(s)X (s) + Q(s)Y (s) = 1.
+
+
+Proposition
+Let G(s) be a complex rational function. Then there exist P(s) and Q(s)
+in S such that
+                                      P(s)
+                             G(s) =
+                                      Q(s)
+and P(s) and Q(s) are coprime in S, and which may be found in exact
+arithmetic.
+196 Example
+
+[See video: V32 Coprime factorization example] Let
+                                      s2 + 5
+                           G(s) =              .
+                                    s2 − s + 1
+Then with s = (1 − λ)/λ, we have
+                        (1 − λ)2 + 5λ2        6λ2 − 2λ + 1
+          G(s) =                            =              .
+                   (1 − λ)2 − λ(1 − λ) + λ2   3λ2 − 3λ + 1
+Then by the Euclidean algorithm
+     (︂ 24λ − 2 )︂(︂             )︂ (︂ 12λ − 9 )︂(︂
+                     3λ2 − 3λ + 1 −                 6λ2 − 2λ + 1 = 1
+                                                                )︂
+           7                              7
+so letting λ = 1/(1 + s), we have PX + QY = 1 with P, Q, X , Y ∈ S
+(︂ 22 − 2s )︂(︂  3        3     )︂ (︂ 3 − 9s )︂(︂ 6      2
+                                                                   = 1.
+                                                                )︂
+                     −       +1   −                   −       +1
+  7(1 + s) (1 + s)2 1 + s            7(1 + s) (1 + s)2 1 + s
+197 Proof
+
+(1) We have shown that C(s) and C(1/(s + 1)) are isomorphic. The
+issue is to show that we can choose P(s) and Q(s) coprime in S. Since
+G(s) is rational, we can write G(s) = M(s)/N(s) where complex
+polynomials M, N have no common zeros. [Otherwise, find their highest
+common factor by Euclid’s algorithm and divide through by the hcf]
+(2) We introduce a new variable λ = 1/(1 + s) and write
+                                        (︂ 1 − λ )︂
+                          M̃(λ) = λm M
+                                             λ
+                                       (︂ 1 − λ )︂
+                          Ñ(λ) = λm N
+                                             λ
+where m is the maximum of the degrees of M and N, so that M̃(λ) and
+Ñ(λ) are polynomials. Now M̃(λ) and Ñ(λ) have no common zeros. The
+problematic case is λ = 0, but we note that M̃(0) is the mth coefficient
+of M, and Ñ(0) is the mth coefficient of N; so either M̃(0) or Ñ(0) is not
+zero by the choice of m.
+198 Conclusion of proof
+
+(3) By the Lemma, we can use Euclid’s algorithm to find complex
+polynomials X̃ (λ) and Ỹ (λ) such that
+
+                      M̃(λ)X̃ (λ) + Ñ(λ)Ỹ (λ) = 1.
+
+(4) Finally we convert back to the original variable s = (1 − λ)/λ and
+introduce                 (︂ 1 )︂                  (︂ 1 )︂
+                P(s) = M̃          ; Q(s) = Ñ             ;
+                             1+s                     1+s
+                            (︂ 1 )︂              (︂ 1 )︂
+                 X (s) = X̃         ; Y (s) = Ỹ         ;
+                              1+s                   1+s
+so that P(s), Q(s), X (s), Y (s) belong to S. Indeed, they are all proper
+and the only poles are at s = −1. Furthermore, P(s) and Q(s) satisfy
+
+                        P(s)X (s) + Q(s)Y (s) = 1
+199 Coprime factorisation algorithm
+
+
+and
+                         M(s)   M̃(1/(1 + s))   P(s)
+                G(s) =        =               =      .
+                         N(s)   Ñ(1/(1 + s))   Q(s)
+We have shown that C(s) is the field generated by S.
+Algorithm
+1) Write G(s) as a quotient of polynomials in s with no common zeros.
+2) Introduce λ via s = (1 − λ)/λ and clear the denominators.
+3) Apply the Euclidean algorithm for polynomials in λ.
+4) Convert back to the original variable s by λ = 1/(1 + s).
+
+[See video: V33 Coprime factorization by MATLAB]
+200 Controlling rational systems
+
+Proposition
+Let G = P/Q be a complex rational function, as above. Then the
+rational K = X /Y is such that
+
+                   G           K          1         GK
+                       ,           ,          ,
+                1 + GK      1 + GK     1 + GK     1 + GK
+are all stable rational functions.
+Proof. We recall that PX + QY = 1, we we have
+                         G         P/Q
+                             =            = PY ;
+                      1 + GK   1 + PX /QY
+
+                         K         X /Y
+                             =            = X Q;
+                      1 + GK   1 + PX /QY
+186 Proof
+
+
+
+
+                       1          1
+                           =            = QY ;
+                    1 + GK   1 + PX /QY
+                      GK       PX /QY
+                           =            = PX .
+                    1 + GK   1 + PX /QY
+Given any rational SISO, we have produced an algorithm for finding a
+controller to stabilise it.
+201 Wellposedness of the SFL diagram
+
+
+                                               n
+
+
+                             -1            +
+                                       z
+
+
+
+    r           x                 y
+           +            K    +         G   .
+
+
+                             d
+
+
+The additional inputs are:
+r = reference input
+d = external disturbance
+n = sensor noise
+202 Wellposedness of the SFL
+
+The standard form of the rational simple feedback loop linear system has
+inputs r , d and n and states x, y and z so that
+                                 x =r −z
+                               y = d + Kx
+                                z = n + Gy
+for some rational functions G and K , hence
+                         1    0 1       x   r
+                      ⎡            ⎤⎡ ⎤ ⎡ ⎤
+                      ⎣−K     1 0⎦ ⎣y ⎦ = ⎣d ⎦ .
+                         0 −G 1         z   n
+
+Definition (Well posed)
+The system is said to be well posed if the inputs (r , d, n) uniquely
+determine the states (x, y, z).
+203 Criterion for well posed SF L
+
+
+
+Lemma
+The SF L system is well posed if and only if 1 + GK ̸= 0, and in this
+case, the inputs determine the states by
+
+                  x                 1 −G −1           r
+                ⎡ ⎤              ⎡                ⎤⎡ ⎤
+                ⎣y ⎦ =     1     ⎣K      1 −K        d⎦ .
+                        1 + GK
+                                                  ⎦ ⎣
+                  z               GK G          1     n
+
+
+We abbreviate this to X = ΦU. The proof consists of calculating the
+inverse of the matrix above.
+204 Internal stability of SF L
+
+
+ [See video: V34 Simple feedback loop stabilization]
+ Definition (Internal stability)
+ The SF L system is internally stable if all the transfer functions in the
+ matrix Φ are stable, so
+                       1      G     GK      K
+                          ,      ,      ,       ,
+                    1 + GK 1 + GK 1 + GK 1 + GK
+ all belong to S.
+
+ The idea is that we want all the junctions in the diagram to be stable.
+ (Think of the x, y, z as representing the temperature of the components
+ of a tumble drier; we need to ensure that these do not overheat.)
+205 Youla’s stabilising controllers
+
+ Consider a SISO system (A, B, C, D) with transfer function G(s), and
+ consider the corresponding simple feedback loop with rational controller
+ K . We now allow G(s) to be an arbitrary rational function, and write it
+ in the form G = P/Q with coprime P, Q ∈ S as in Frame 195.
+ Theorem
+ Suppose that G = P/Q has a coprime factorisation PX + QY = 1 where
+ P, Q, X , Y ∈ S. Then K = X /Y internally stabilises SF L.
+
+ Actually Youla found all of the stabilising controllers, but we give the
+ simplest case. By previous results, there exists another SISO such that
+ K is the corresponding transfer function, so in this sense we have shown
+ that any SISO with rational transfer function can be stabilized by a
+ rational (possibly unstable) controller. In applications, one may have
+ other criteria in mind when selecting a controller. In the project topics,
+ there are discussions of how one can tune controllers so that they ensure
+ stability, but allow the system to be responsive.
+206 Proof
+
+
+Suppose that K = X /Y . Then, as in frame 200,
+
+                               X P   Y Q + XP    1
+                I + GK = 1 +       =          =    ;
+                               YQ       YQ      YQ
+     1
+so 1+GK = Y Q and hence Φ has all entries in S, since
+
+              1                 Y Q −Y P                      −Y Q
+            ⎡                ⎤ ⎡                                   ⎤
+                   −P/Q  −1
+   Φ = YQ ⎣ X /Y     1  −X /Y = X Q Y Q
+                             ⎦ ⎣                              −X Q ⎦ .
+           PX /Y Q P/Q    1      XP Y P                       YQ
+
+Hence we have found a controller that internally stabilizes the simple
+feedback loop system.
+207 Self-adjoint matrices
+
+          z = (zj )nj=1 and w = (wj )nj=1 , and introduce the inner product
+We write ∑︁
+⟨z, w⟩ = nj=1 zj w̄j . We define the adjoint of a n × n matrix A = [ajk ]
+by A′ = [ākj ], interchanging the rows and columns and taking the
+complex conjugate. If A is real then A′ = A⊤ , the transpose.
+Proposition
+Suppose that A is self-adjoint, so A = A′ .
+(i) Then the eigenvalues of A are all real, and
+(ii) there exists a unitary matrix U such that UU ′ = U ′ U = I and
+A = U∆U ′ where ∆ is a real diagonal matrix.
+
+The eigenvectors Xj of A corresponding to distinct eigenvalues are
+orthogonal, so we can choose them so that ⟨Xj , Xk ⟩ = 0 for j ̸= k and
+⟨Xj , Xj ⟩ = 1. Then U = [X1 . . . Xn ] satisfies U ′ U = I. Also U ′ AU is a
+diagonal matrix.
+208 Positive definite matrices
+
+
+An n × n complex matrix K is said to be positive definite if K = K ′ and
+⟨K z, z⟩ > 0 for all z ∈ Cn such that z ̸= 0. Beware that the product of
+positive definite matrices is generally not positive definite.
+
+Lemma (MATH220 Theorem 5.15)
+Let K be a (n × n) complex matrix such that K = K ′ . Then the
+following are equivalent:
+(i) ⟨K z, z⟩ > 0 for all z ∈ Cn such that z ̸= 0;
+(ii) the eigenvalues κj of K are all real and κj > 0 for all j;
+(iii) the leading principal minors ∆j of K are all positive, so ∆j > 0 for
+all j.
+
+For medium sized matrices, computers can handle (i).
+209 Principal minors in MATLAB
+
+
+For small matrices, (iii) is easy to check. Here is the MATLAB code for
+generating the sequence of principal minors. We need to create a simple
+computer program, a for loop.
+Type in a n × n matrix A; then create the for loop:
+>> n = 3 [for example]
+>> minors=zeros(1:n) [somewhere to put the result]
+>> for k = 1 : n [introduce a running variable k]
+>> minors=det(A(1:k,1:k)); [compute the determinant of the top left
+k × k corner]
+>> end [end the for loop]
+To recover the result,
+» minors
+210 Lyapunov’s criterion
+
+
+Theorem
+Suppose that A is a complex n × n matrix and that there exists a positive
+definite matrix K such that Q = −(A′ K + K A) is also positive definite.
+Then all the solutions of
+                              dX
+                                  = AX
+                               dt
+are bounded on (0, ∞).
+
+Note that a positive definite K satisfies K = K ′ and
+(A′ K + K A)′ ) = (K A + A′ K ), so the issue is whether Q satisfies the
+equivalent conditions (i)-(iii) of Lemma 208. One can either (i) try many
+positive definite K , and test whether Q is also positive definite, or (ii)
+choose a positive definite Q, and try to find K .
+211 Proof of Lyapunov’s criterion
+
+To show that ⟨X (t), X (t)⟩ is bounded, the trick is to consider
+V (t) = ⟨K X (t), X (t)⟩. Observe that V (t) ≥ 0 for all t ≥ 0, and use the
+differential equation to find
+                dV      ⟨︂ dX                  dX ⟩︂
+                     = K       , X (t) + K X ,
+                                      ⟩︂ ⟨︂
+                 dt     ⟨︁ dt                   dt
+                     = K AX (t), X (t) + K X (t), AX (t)
+                                        ⟩︁ ⟨︁              ⟩︁
+
+                     = K AX (t), X (t) + A′ K X (t), X (t)
+                        ⟨︁              ⟩︁ ⟨︁               ⟩︁
+
+                     = − −(A′ K + K A)X (t), X (t)
+                           ⟨︁                       ⟩︁
+
+                     = − QX (t), X (t)⟩ ≤ 0.
+                           ⟨︁
+
+Hence V (t) is decreasing on (0, ∞). Since K is positive definite, the
+eigenvalues of K are κ1 ≥ κ2 ≥ · · · ≥ κn , where κn > 0; so by W3.4
+
+         0 ≤ κn ⟨X (t), X (t)⟩ ≤ ⟨K X (t), X (t)⟩ ≤ ⟨K X (0), X (0)⟩,
+
+and so ∥X (t)∥ ≤ (⟨K X0 , X0 ⟩/κn )1/2 for all t ≥ 0.
+212 Sylvester’s equation
+
+
+
+Given n × n complex matrices A, B and C, the problem is to find a n × n
+matrix Y such that
+                          AY + Y B = −C.
+
+
+Proposition
+There are three possibilities for Sylvester’s equation: either
+(i) there exists a unique solution Y for all C;
+(ii) there exist infinitely many solutions Y for some C;
+(iii) there does not exist any solution for some C.
+213 Cases of Sylvester’s equation
+Proof.
+
+ In terms of the matrix entries, we can write A = [ajk ], B = [bjk ] and
+ C = [cjk ], and then the unknown Y = [yjk ] is given by the system
+                        n                 n
+                             ajℓ yℓk +         yjℓ bℓk = −cjk ,
+                       ∑︂                ∑︂
+
+                       ℓ=1               ℓ=1
+
+ which is a linear system of n2 equations in the n2 unknowns [yjk ]. So the
+ above possibilities arise from the general theory of linear equations.
+ Gauss–Jordan elimination reduces this system to reduced echelon form
+ and gives the solutions in cases
+ (i) if the rank of the system is n2 and the system is consistent, then there
+ exists a unique solution Y for any C, and
+ (ii) if the rank of the system is less than n2 and the system is consistent,
+ then there are infinitely many solutions Y for some C.
+ (iii) If the system is inconsistent, then there is no solution for some C.
+ For instance, case (iii) arises when A = B = 0, and C ̸= 0.
+214 Sylvester’s criterion
+
+ Remark. Fix A and B. Then the transformation
+ T : Mn×n (C) → Mn×n (C) : Y ↦→ AY + Y B is linear on the
+ n2 -dimensional vector space Mn×n (C), so either:
+ (i) T is invertible, and for all C there exists a unique Y such that
+ T (Y ) = −C; or
+ (ii), (iii) T is not invertible and hence does not have full rank, so
+ T (Y ) = −C has no solution for some C.
+ Proposition
+ Given A and B, Sylvester’s equation AY + Y B = −C has a unique
+ solution Y for all C if and only if A and −B have no common
+ eigenvalues.
+
+ Remark MATLAB regards Sylvester’s equation as AY + Y B + C = 0,
+ hence gives Y = lyap(A, B, C).
+215 An integral solution of Sylvester’s equation
+
+Proposition
+Suppose that all the eigenvalues of A and B are in the open left half
+plane {λ ∈ C : ℜλ < 0}. Then
+                          ∫︂ ∞
+                     Y =       exp(tA)C exp(tB) dt
+                               0
+
+gives the unique solution to
+
+                               AY + Y B = −C.
+
+We write the equations to be consistent ∫︁with MATLAB, which gives
+Y = lyap(A, B, C), so lyap(A, B, C) = 0 exp(tA)C exp(tB) dt.
+                                            ∞
+
+The formula in this Proposition is often not the most practical way of
+finding Y ; better to use the proof of 198.
+216 Solution of Sylvester’s equation
+
+Proof First observe that by Lemma 123 there exist M1 , M2 , δ1 , δ2 > 0
+such that ∥ exp(tA)∥ ≤ M1 e −δ1 t and ∥ exp(tB)∥ ≤ M2 e −δ2 t , so the
+integral is convergent. Also
+                  ∫︂ ∞ (︂
+    AY + Y B =            A exp(tA)C exp(tB) + exp(tA)C exp(tB)B dt
+                                                                    )︂
+
+                  ∫︂0 ∞ (︂
+                         d
+                             exp(tA)C exp(tB) dt
+                                             )︂
+               =
+                        dt
+                  [︂ 0                ]︂∞
+               = exp(tA)C exp(tB)
+                                       0
+               = −C.
+
+This shows that the map Y ↦→ AY + Y B from Mn×n (C) → Mn×n (C) is
+surjective, so by linear algebra as in frame 214, the map is also injective.
+Hence the solution is unique.
+217 A solution of Lyapunov’s equation
+
+Corollary
+Suppose that A is a n × n complex matrix such all its eigenvalues are in
+the open left half plane {λ ∈ C : ℜλ < 0}. Then for all positive definite
+P, the integral            ∫︂    ∞
+                      L=             exp(tA)P exp(tA′ )dt
+                             0
+gives a positive definite L such that
+
+                              AL + LA′ = −P.
+
+From the characteristic equation, it follows that λ is an eigenvalue of A,
+if and only if λ̄ is an eigenvalue of A′ . Hence the integrals converge, as in
+frame 216. Note that exp(tA)P exp(tA′ ) is positive definite by exercise
+A3.4. Indeed ⟨exp(tA)P exp(tA′ )Y , Y ⟩ = ⟨P exp(tA′ )Y , exp(tA′ )Y ⟩ is
+positive and continuous for t > 0 and Y ̸= 0.
+218 MATLAB solution of Lyapunov’s equation
+
+
+
+
+Hence, L is a positive definite solution of Lyapunov’s equation.
+MATLAB takes Lyapunov’s equation as
+
+                            AL + LA′ + P = 0
+
+for positive definite P, hence gives the solution as L = lyap(A, A′ , P) or
+L = lyap(A, P). Here A′ is the conjugate transpose of A; the online
+MATLAB help gives a confusing statement about A⊤ .
+where [MATLAB gives K = lyap(A, P).]
+

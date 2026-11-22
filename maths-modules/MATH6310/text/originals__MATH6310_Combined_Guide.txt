@@ -1,0 +1,783 @@
+                Metric Spaces & Topology
+                                         MATH6310
+
+        Combined master cheat sheet and fully worked exercise solutions
+
+   Sections 0 and 1: Metrics, sets, functions, equivalence relations, countability and orders
+
+
+
+
+         Understand the idea → learn the definition → recognise the proof
+                          pattern → solve the question.
+
+
+
+
+     Based on both MATH6310 lecture-note and exercise PDFs dated 7 September 2026.
+
+
+A student-friendly companion; proofs and worked answers are newly written, not transcriptions of the
+                                       empty solution slides.
+MATH6310 — Metric Spaces & Topology                                                             Sections 0–1
+
+
+Contents
+
+1 How to use this guide                                                                                    2
+
+2 Section 0: The metric-space cheat sheet                                                                  2
+  2.1 What is the point of metric spaces? . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        2
+  2.2 The important metric examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .          2
+  2.3   Useful worked examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        3
+
+3 Section 1: Sets and functions cheat sheet                                                                3
+  3.1   Sets and logic . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    3
+  3.2   Products and the axiom of choice . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        4
+  3.3   Functions, domain, codomain, range . . . . . . . . . . . . . . . . . . . . . . . . . . . .          4
+  3.4   Direct and inverse images . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       4
+  3.5   Equivalence relations and partitions . . . . . . . . . . . . . . . . . . . . . . . . . . . .       4
+  3.6   Countability and Cantor . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       5
+  3.7   Orders and optional material . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       5
+
+4 Complete worked solutions: Section 0                                                                     6
+  Exercise 0.1: Discrete metric (10 marks) . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        6
+  Exercise 0.2: Integration metric: definiteness (10 marks) . . . . . . . . . . . . . . . . . . . .         6
+  Exercise 0.3: Supremum metric: triangle and definiteness (10 marks) . . . . . . . . . . . . .             6
+  Exercise 0.4: Counting metric: triangle inequality (10 marks) . . . . . . . . . . . . . . . . .           6
+  Exercise 0.5: Two unusual metrics on R2 (20 marks)         . . . . . . . . . . . . . . . . . . . . . .    7
+  Exercise 0.6: Hausdorff metric: triangle inequality (10 marks) . . . . . . . . . . . . . . . . .          7
+
+5 Complete worked solutions: Section 1                                                                     8
+  Exercise 1.1: Subset equivalences and symmetric difference . . . . . . . . . . . . . . . . . .            8
+  Exercise 1.2: Distributivity and De Morgan . . . . . . . . . . . . . . . . . . . . . . . . . . .         8
+  Exercise 1.3: Counting injections and surjections . . . . . . . . . . . . . . . . . . . . . . . .         8
+  Exercise 1.4: Composition preserves injectivity and surjectivity . . . . . . . . . . . . . . . .          8
+  Exercise 1.5: Injectivity of a rational function . . . . . . . . . . . . . . . . . . . . . . . . . .     9
+  Exercise 1.6: Functions as indexed products . . . . . . . . . . . . . . . . . . . . . . . . . . .         9
+  Exercise 1.7: Power sets and indicator functions . . . . . . . . . . . . . . . . . . . . . . . . .        9
+  Exercise 1.8: Images of unions and intersections . . . . . . . . . . . . . . . . . . . . . . . . .        9
+  Exercise 1.9: Inverse images of unions and differences       . . . . . . . . . . . . . . . . . . . . .   10
+  Exercise 1.10: Disjoint union of equivalence relations . . . . . . . . . . . . . . . . . . . . . .       10
+  Exercise 1.11: Symmetry and transitivity do not imply reflexivity . . . . . . . . . . . . . . .          10
+  Exercise 1.12: Explicit bijection from N to Z . . . . . . . . . . . . . . . . . . . . . . . . . .        10
+  Exercise 1.13: Rational-coefficient polynomials are countable . . . . . . . . . . . . . . . . .          10
+  Exercise 1.14: Finite subsets of N are countable . . . . . . . . . . . . . . . . . . . . . . . . .       11
+
+
+
+                                                     1
+MATH6310 — Metric Spaces & Topology                                                           Sections 0–1
+
+
+  Exercise 1.15: Total versus strict total orders . . . . . . . . . . . . . . . . . . . . . . . . . .    11
+  Exercise 1.16: Bijections of two three-element sets . . . . . . . . . . . . . . . . . . . . . . .      11
+  Exercise 1.17: A relation defined from a function and partition . . . . . . . . . . . . . . . .        11
+  Exercise 1.18: Real numbers are uncountable . . . . . . . . . . . . . . . . . . . . . . . . . .        12
+  Exercise 1.19: A set is infinite iff it contains a copy of N . . . . . . . . . . . . . . . . . . . .   12
+
+6 Quick-reference formula sheet and proof templates                                                      13
+  6.1 Which method should I use? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       13
+
+
+
+
+                                                    2
+MATH6310 — Metric Spaces & Topology                                                          Sections 0–1
+
+
+1     How to use this guide
+
+This guide covers the mathematical definitions, examples and main theorems in the two supplied
+documents, then gives worked solutions to all six numbered Section 0 exercises and all nineteen
+numbered Section 1 exercises. Exercises repeated inside the lecture notes are answered in their
+numbered exercise counterparts; two extra image/difference identities appearing in the teaching slides
+are proved with Exercise 1.8. An optional-theory review is included for Schröder–Bernstein and Zorn’s
+lemma.
+
+    A good proof-exam strategy
+
+    Write down the definition before calculating. For a metric, check non-negativity/finiteness,
+    identity of indiscernibles, symmetry, and the triangle inequality. For an equality of sets, take
+    an arbitrary element and show membership in both directions. For a bijection, give an explicit
+    inverse and verify both compositions.
+
+
+
+2     Section 0: The metric-space cheat sheet
+
+2.1    What is the point of metric spaces?
+
+In R, distance usually means |x − y|. In Rn , it might be straight-line distance. For functions, we may
+measure the biggest difference between two graphs, or the total area between them. A metric space
+packages all these possibilities into one language. The same proofs of continuity and convergence can
+then be used in many settings.
+
+    Metric: learn this precisely
+
+    A metric on a set S is d : S × S → [0, ∞) with, for all x, y, z ∈ S,
+
+                                   (MS1) d(x, y) = 0 ⇐⇒ x = y,
+                                   (MS2) d(x, y) = d(y, x),
+                                   (MS3) d(x, z) ≤ d(x, y) + d(y, z).
+
+    The codomain [0, ∞) supplies non-negativity and finiteness. The notes also split MS1 into
+    MS1a d(x, x) = 0 and MS1b d(x, y) = 0 ⇒ x = y. A metric space is the pair (S, d), not merely
+    the set S.
+
+
+2.2    The important metric examples
+
+Standard metric on R
+        d(x, y) = |x − y|. Its triangle inequality is |a + b| ≤ |a| + |b|.
+
+Euclidean metric on Rn          pPn
+         d2 (x, y) = ∥x − y∥2 =                 2
+                                  i=1 (xi − yi ) . The norm triangle inequality follows from Cauchy–
+         Schwarz.
+
+Discrete metric on any set
+         ddisc (x, y) = 0 if x = y, and 1 otherwise. It ignores how far distinct points look geometrically.
+
+Counting metric on P(S), S finite
+        d(A, B) = |A△B|, where A△B = (A \ B) ∪ (B \ A). It counts membership disagreements.
+
+Hausdorff metric
+        On nonempty bounded closed sets K, J ⊂ Rn , define K δ = {x : ∃k ∈ K, ∥x − k∥2 ≤ δ} and
+
+                                                    3
+MATH6310 — Metric Spaces & Topology                                                           Sections 0–1
+
+
+           dH (K, J) = inf{δ ≥ 0 : K δ ⊇ J, J δ ⊇ K}. Intuition: how much must each set be thickened
+           to cover the other?
+
+Integration metric on continuous     R 1functions
+         On C([0, 1]; R), d1 (f, g) = 0 |f (t)−g(t)| dt. Measures total absolute discrepancy. Continuity
+         is essential for positive definiteness.
+
+Uniform/supremum metric
+        d∞ (f, g) = supt∈[0,1] |f (t) − g(t)|. Measures worst-case discrepancy. Continuity on the
+        compact interval ensures finiteness.
+
+Two unusual metrics on R2
+        dTGV (u, v) = 0 if u = v and ∥u∥ + ∥v∥ otherwise. The variant d′TGV (u, v) = ∥u − v∥ when
+        u, v are linearly dependent, and ∥u∥ + ∥v∥ when independent.
+
+    Think before using the ordinary triangle inequality
+
+    If a distance is defined in cases, split your proof into cases. If it is defined by an integral, use
+    |f − h| ≤ |f − g| + |g − h| pointwise then integrate. If it is defined by a supremum, use the same
+    inequality then take suprema. If it counts differing positions or set membership, show that every
+    difference between the endpoints must appear in at least one intermediate difference.
+
+
+2.3    Useful worked examples
+
+Example: counting metric. For S = {1, 2, 3, 4}, A = {1, 3} and B = {2, 3}, the symmetric difference
+is {1, 2}: the element 3 is in both, so it is not counted. Hence d(A, B) = 2.
+Example:
+R1            integration versus sup metric. Let f (t) = 0 and g(t) = t on [0, 1]. Then d1 (f, g) =
+          1
+ 0 t dt = 2 whereas d∞ (f, g) = sup[0,1] t = 1. Neither formula is a mistake: they measure different
+            ,
+things.
+
+
+3     Section 1: Sets and functions cheat sheet
+
+3.1    Sets and logic
+
+    Set-notation essentials
+    A ⊆ B means ∀x (x ∈ A ⇒ x ∈ B); A ⊊ B means additionally A =
+                                                               ̸ B; A \ B = {x ∈ A : x ∈
+                                                                                       / B};
+    P(S) = {A : A ⊆ S}. The symmetric difference A△B = (A \ B) ∪ (B \ A) contains the
+    elements belonging to exactly one of A, B.
+
+For a family C of subsets of a universe S,
+                     [                                             \
+                 x∈     C ⇐⇒ (∃C ∈ C) x ∈ C,                x∈         C ⇐⇒ (∀C ∈ C) x ∈ C.
+                       S               T
+For an empty family,       ∅ = ∅ and       ∅ = S (relative to the stated universe). Important identities:
+                                               [        [
+                                           A∩     C=       (A ∩ C),
+                                                C∈C        C∈C
+                                                [          \
+                                           A\         C=         (A \ C),
+                                                C∈C        C∈C
+                                                \          [
+                                           A\         C=         (A \ C).
+                                                C∈C        C∈C
+
+
+
+                                                       4
+MATH6310 — Metric Spaces & Topology                                                                 Sections 0–1
+
+
+3.2    Products and the axiom of choice
+                                                                  Q
+S × T = {(s, t) : s ∈ S, t ∈ T }. An indexed Cartesian product λ∈Λ Sλ consists of all families (sλ )
+such that sλ ∈ Sλ for every λ. It has one empty family if Λ = ∅; it is empty if some factor is empty.
+Axiom of choice (AC): any indexed family of nonempty sets admits a choice function c(λ) ∈ Sλ . In
+a substantial infinite family, choosing one element from each set may require AC.
+
+
+3.3    Functions, domain, codomain, range
+
+A function f : S → T specifies a value f (s) ∈ T for every s ∈ S. Its range is Ran f = {f (s) : s ∈ S} ⊆ T ,
+which can be smaller than its codomain. The notes write the set of maps as F(S; T ).
+Useful examples: idS (s) = s; inclusion ι : A ,→ S sends a 7→ a; indicator 1A (s) = 1 on A and 0
+otherwise; a constant map sends everything to one fixed point. For finite |S| = n, |T | = m, the number
+of maps S → T is mn . An empty domain has exactly one function into every T ; a nonempty domain
+has no function into ∅.
+
+   Injective, surjective, bijective
+
+   Injective: f (x) = f (y) ⇒ x = y (different inputs cannot collide). Surjective: every t ∈ T
+   has a preimage in S (range = T ). Bijective: both, so every output has exactly one input.
+   Composition: (g ◦ f )(s) = g(f (s)): apply the right-hand function first.
+
+A restriction f |A : A → T only changes the domain; a co-restriction f : S → B, Ran f ⊆ B ⊆ T ,
+changes the codomain. Inverses: a left inverse g ◦ f = idS implies injectivity; a right inverse f ◦ h = idT
+implies surjectivity. Conversely, for nonempty domain the left inverse can be constructed for an
+injection; a surjection has a right inverse using choice. A bijection has a unique two-sided inverse.
+
+
+3.4    Direct and inverse images
+
+For A ⊆ S, f [A] = {f (s) : s ∈ A} (direct image). For C ⊆ T , f −1 [C] = {s ∈ S : f (s) ∈ C} (inverse
+image): this inverse-image notation does not require an inverse function.
+                    [        [                              \         \
+                 f [ Ai ] =     f [Ai ],                 f [ Ai ] ⊆      f [Ai ],
+                          i         i                                i         i
+                                                                     [       [
+                                                               −1
+                    f [A \ B] ⊇ f [A] \ f [B],             f        [ Ci ] =   f −1 [Ci ],
+                                                                     i         i
+                          \       \
+                    −1
+                f        [ Ci ] =   f −1 [Ci ],           f   −1
+                                                                   [D \ C] = f −1 [D] \ f −1 [C].
+                          i         i
+
+The direct-image containments can be strict: if f (0) = f (1) and A = {0}, B = {1} then f [A ∩ B] = ∅
+while f [A] ∩ f [B] ̸= ∅.
+
+
+3.5    Equivalence relations and partitions
+
+An equivalence relation ∼ on S is reflexive (x ∼ x), symmetric (x ∼ y ⇒ y ∼ x), and transitive
+(x ∼ y ∧ y ∼ z ⇒ x ∼ z). Its equivalence class is [x] = {y : y ∼ x}; the quotient S/∼ is the set of classes.
+Equivalence classes are either identical or disjoint and partition S. Conversely, every partition into
+nonempty disjoint blocks gives an equivalence relation: x ∼ y iff they lie in the same block. Example:
+m ∼ n when p divides m − n.
+Canonical factorisation of a function. The relation x ∼ y iff f (x) = f (y) yields a quotient S/∼;
+the map S → S/∼ is surjective, the induced map S/∼ → Ran f is bijective, and Ran f ,→ T is injective.
+Their composition is f . This separates the many-to-one, one-to-one, and codomain features of any
+map.
+
+                                                     5
+MATH6310 — Metric Spaces & Topology                                                         Sections 0–1
+
+
+3.6   Countability and Cantor
+
+In the notes, a set is countable if it is finite or can be listed by natural numbers; equivalently, it is
+empty or is the image of a surjection N → S. Basic facts: subsets of countable sets are countable; finite
+products of countable sets are countable; countable unions of countable sets are countable (the general
+statement uses choice). Z and Q are countable; a countable infinite set is bijective to N.
+
+   Cantor’s theorem: a major result
+
+   For every set S, there is no surjection S → P(S). The proof assumes a proposed list f : S → P(S)
+   and forms D = {s ∈ S : s ∈     / f (s)}. If D = f (a), then a ∈ D ⇐⇒ a ∈  / D, a contradiction.
+   Consequently P(N) and the set {0, 1}N are uncountable.
+
+
+3.7   Orders and optional material
+
+A partial order ≤ is reflexive, antisymmetric and transitive. A total order additionally compares any
+two elements. A strict total order < is transitive and satisfies trichotomy: exactly one of x < y, x = y,
+y < x. A chain is a totally ordered subset; a maximal element has no strictly larger element in the
+poset.
+Zorn’s lemma (optional section): If a nonempty partially ordered set has an upper bound for
+every chain, it has a maximal element. Under the usual set-theoretic framework, it is equivalent to AC;
+it can be used to prove that every vector space has a Hamel basis.
+Schröder–Bernstein: If there are injections S → T and T → S, there is a bijection S → T . The
+notes explicitly require knowing the statement, but say the proof is not examinable. Its key lesson is
+that two injections suffice to prove equality of cardinality.
+
+
+
+
+                                                   6
+MATH6310 — Metric Spaces & Topology                                                            Sections 0–1
+
+
+4    Complete worked solutions: Section 0
+
+Exercise 0.1: Discrete metric (10 marks)
+
+Define d(s, t) = 0 when s = t, and 1 otherwise. MS0: values lie in {0, 1} ⊂ [0, ∞), so are finite and
+nonnegative. MS1: by its definition d(s, t) = 0 precisely when s = t. MS2: s = t iff t = s, so the
+same case applies to d(s, t) and d(t, s). MS3: let s, t, u ∈ S. If s = u, the left side is 0 and the
+inequality follows. If s ̸= u, d(s, u) = 1. At least one of s ̸= t or t ̸= u must hold: otherwise s = t = u,
+contradiction. Thus at least one of d(s, t), d(t, u) equals 1, giving 1 ≤ d(s, t) + d(t, u). All axioms hold.
+□
+
+
+Exercise 0.2: Integration metric: definiteness (10 marks)
+
+Let h ∈ C([0, 1]; R), and suppose h ̸≡ 0. Choose t0 ∈ [0, 1] with |h(t0 )| = a > 0. By continuity at
+t0 , there exists ε > 0 such that |h(t) − h(t0 )| < a/2 whenever t ∈ [0, 1] and |t − t0 | < ε. The reverse
+triangle inequality yields |h(t)| ≥ |h(t0 )| − |h(t) − h(t0 )| > a/2 throughout this neighbourhood. Its
+intersection with [0, 1] contains an interval of positive length ℓ > 0 (including if t0 is an endpoint).
+Consequently                  Z 1             Z
+                                                                         a
+                                  |h(t)| dt ≥                 |h(t)| dt ≥ ℓ > 0.
+                               0                that interval            2
+                                   R1
+This proves the contrapositive: if 0 |h| = 0, then h ≡ 0. Taking h = f − g proves d1 (f, g) = 0 ⇒ f = g.
+Why continuity matters: a function equal to 1 at one point and 0 elsewhere would have zero integral
+without being identically zero. □
+
+
+Exercise 0.3: Supremum metric: triangle and definiteness (10 marks)
+
+Write d∞ (f, g) = supt∈I |f (t) − g(t)| with I = [0, 1]. MS1b: if d∞ (f, g) = 0, for every t we have
+0 ≤ |f (t) − g(t)| ≤ 0, hence f (t) = g(t) for every t, i.e. f = g. MS3: for each t ∈ I,
+
+                   |f (t) − h(t)| ≤ |f (t) − g(t)| + |g(t) − h(t)| ≤ d∞ (f, g) + d∞ (g, h).
+
+Taking the supremum on the left (right side is independent of t) yields d∞ (f, h) ≤ d∞ (f, g) + d∞ (g, h).
+□
+
+
+Exercise 0.4: Counting metric: triangle inequality (10 marks)
+
+For A, B, C ⊆ S, the crucial set inclusion is
+
+                                        A△C ⊆ (A△B) ∪ (B△C).
+
+To justify it, take x ∈ A△C: its membership in A and C differs. If membership in A also differs from
+that in B, then x ∈ A△B. Otherwise its membership in A and B agrees, so membership in B and C
+differs, giving x ∈ B△C. Because S is finite, cardinalities obey
+
+                                      d(A, C) = |A△C|
+                                                ≤ |(A△B) ∪ (B△C)|
+                                                ≤ |A△B| + |B△C|
+                                                = d(A, B) + d(B, C).
+
+Hence the counting distance satisfies MS3. Intuition: each change from A to C must occur either on
+the A–B leg or the B–C leg. □
+
+
+
+                                                      7
+MATH6310 — Metric Spaces & Topology                                                         Sections 0–1
+
+
+Exercise 0.5: Two unusual metrics on R2 (20 marks)
+
+Set r(u) = ∥u∥2 . For the first metric, if u = w, d(u, w) = 0 ≤ d(u, v) + d(v, w). If u = ̸ w, there
+are three cases. If v = u, then d(u, v) = 0 and d(v, w) = d(u, w). If v = w, similarly equality holds.
+Otherwise both u ̸= v and v ̸= w, and
+
+              d(u, v) + d(v, w) = (r(u) + r(v)) + (r(v) + r(w)) ≥ r(u) + r(w) = d(u, w).
+
+Thus dTGV satisfies MS3.
+For d′TGV , observe first that
+                                    d′ (a, b) ≥ ∥a − b∥2   for all a, b,
+because on dependent pairs it is equality, and on independent pairs this is the norm triangle inequality.
+If u, w are dependent, then
+
+                   d′ (u, w) = ∥u − w∥2 ≤ ∥u − v∥2 + ∥v − w∥2 ≤ d′ (u, v) + d′ (v, w).
+
+If u, w are independent, then u, w ̸= 0 and d′ (u, w) = r(u) + r(w). If v = 0, the two legs have lengths
+r(u) and r(w), so equality holds. If v ̸= 0, it cannot be dependent on both independent vectors u, w. If
+u, v are independent, d′ (u, v) = r(u) + r(v), while d′ (v, w) ≥ ∥v − w∥ ≥ r(w) − r(v), so their sum is at
+least r(u) + r(w). Otherwise u, v are dependent, hence v, w independent, and d′ (v, w) = r(v) + r(w)
+while d′ (u, v) ≥ r(u) − r(v); again the total is at least r(u) + r(w). All cases prove MS3. □
+
+
+Exercise 0.6: Hausdorff metric: triangle inequality (10 marks)
+
+(a)(i) If A ⊆ B and x ∈ Aδ , choose a ∈ A with ∥x − a∥ ≤ δ. Since a ∈ B, x ∈ B δ . Therefore Aδ ⊆ B δ .
+(a)(ii) If x ∈ (Aγ )δ , choose y ∈ Aγ with ∥x − y∥ ≤ δ. Choose a ∈ A with ∥y − a∥ ≤ γ. Euclidean MS3
+gives ∥x − a∥ ≤ δ + γ, hence x ∈ Aγ+δ . Thus (Aγ )δ ⊆ Aγ+δ .
+(b) Let K, J, L be nonempty bounded closed sets and write α = dH (K, J), β = dH (J, L). Given any
+ε > 0, the definition of infimum permits admissible radii γ < α + ε/2 and δ < β + ε/2 so that K γ ⊇ J,
+J γ ⊇ K, J δ ⊇ L and Lδ ⊇ J. Applying (a),
+
+                                       L ⊆ J δ ⊆ (K γ )δ ⊆ K γ+δ ,
+
+and likewise K ⊆ Lγ+δ . Thus dH (K, L) ≤ γ + δ < α + β + ε. As ε > 0 was arbitrary, dH (K, L) ≤
+dH (K, J) + dH (J, L). Together with the other properties established in the notes, this proves the
+metric axioms. □
+
+
+
+
+                                                    8
+MATH6310 — Metric Spaces & Topology                                                               Sections 0–1
+
+
+5     Complete worked solutions: Section 1
+
+Exercise 1.1: Subset equivalences and symmetric difference
+
+(a) Assume A ⊆ B. Then every member of A belongs to both A and B, so A ⊆ A ∩ B; conversely
+A ∩ B ⊆ A, hence A ∩ B = A. Conversely, if A ∩ B = A, then each x ∈ A also lies in B, giving A ⊆ B.
+Similarly A ⊆ B ⇒ A ∪ B = B because adjoining members of A adds nothing to B. If A ∪ B = B,
+every a ∈ A lies in B, hence A ⊆ B. Thus all three assertions are equivalent.
+(b) For any x, membership in (A ∪ B) \ (A ∩ B) means x belongs to at least one set but not both,
+exactly equivalent to (x ∈ A ∧ x ∈
+                                 / B) or (x ∈ B ∧ x ∈
+                                                    / A). This is membership in (A \ B) ∪ (B \ A). (c)
+Draw two overlapping circles: shade only the two outer crescent regions, leaving the overlap unshaded.
+□
+
+
+Exercise 1.2: Distributivity and De Morgan
+
+Let x ∈ S. (a)
+                                        [
+                              x∈A∩          C ⇐⇒ x ∈ A and (∃C ∈ C) x ∈ C
+                                              ⇐⇒ (∃C ∈ C) x ∈ A ∩ C
+                                                     [
+                                              ⇐⇒ x ∈    (A ∩ C).
+                                                           C∈C
+
+(b)
+                                    \
+                            x∈A\        C ⇐⇒ x ∈ A and not [(∀C ∈ C) x ∈ C]
+                                            ⇐⇒ (∃C ∈ C) [x ∈ A and x ∈
+                                                                     / C]
+                                                   [
+                                            ⇐⇒ x ∈    (A \ C).
+                                                     C∈C
+
+Both equivalences hold for an empty family with the stated universe conventions. □
+
+
+Exercise 1.3: Counting injections and surjections
+
+For S = {1, 2}, T = {1, 2, 3}: (a) choose f (1) in 3 ways; to avoid collision choose f (2) among the
+remaining 2. Answer 3 · 2 = 6 . (b) A function from a two-element domain has at most two different
+outputs and cannot cover three targets: 0 . (c) There are 23 = 8 total maps T → S; exactly two are
+not onto (both constant maps). Hence 6 . Alternatively choose the nonempty preimage of 1: any of
+23 − 2 = 6 proper, nonempty subsets. □
+
+
+Exercise 1.4: Composition preserves injectivity and surjectivity
+
+(a)(i) If (g ◦ f )(x) = (g ◦ f )(y), then g(f (x)) = g(f (y)). Injectivity of g gives f (x) = f (y); injectivity
+of f then gives x = y. (a)(ii) If f (x) = f (y) then (g ◦ f )(x) = (g ◦ f )(y); injectivity of the composition
+yields x = y.
+(b)(i) For any u ∈ U , surjectivity of g supplies t ∈ T with g(t) = u. Surjectivity of f supplies s ∈ S
+with f (s) = t. Thus (g ◦ f )(s) = u. (b)(ii) If g ◦ f is onto and u ∈ U , find s with g(f (s)) = u and set
+t = f (s), proving g is onto.
+(c)(i) Parts (a)(i), (b)(i) say the composition is both injective and surjective. (c)(ii) Parts (a)(ii),
+(b)(ii) give the necessary conditions. Warning: g ◦ f bijective need not make both f and g bijective.
+□
+
+
+                                                       9
+MATH6310 — Metric Spaces & Topology                                                        Sections 0–1
+
+
+Exercise 1.5: Injectivity of a rational function
+
+Let f : R \ {1} → R be f (x) = 2x/(x − 1). (a) If 2x/(x − 1) = 2y/(y − 1), cross multiplication
+(denominators nonzero) gives x(y − 1) = y(x − 1), hence xy − x = xy − y and x = y. Thus f injective.
+(b) Put t = 2x/(x − 1). Rearrangement gives t(x − 1) = 2x, so (t − 2)x = t. If t = 2 this would read
+                             ̸ 2, x = t/(t − 2) is well-defined and differs from 1 (otherwise t = t − 2).
+0 = 2, impossible. For any t =
+So Ran f = R \ {2} .
+(c) On t ̸= 2 the inverse formula is t/(t − 2). To make a left inverse with domain all of R, assign any
+permissible value at 2, say 0:
+                                                 t , t ̸= 2,
+                                                
+
+                                         g(t) = t − 2
+                                                0,      t = 2.
+Then g : R → R \ {1}, and g(f (x)) = (2x/(x − 1))/(2x/(x − 1) − 2) = x. Thus g ◦ f = idR\{1} . □
+
+
+Exercise 1.6: Functions as indexed products
+          Q
+Let P = s∈S Ts with Ts = T , and F = F(S; T ). Define ϕ : P → F by ϕ((ts )s∈S )(s) = ts . Define the
+proposed inverse ψ : F → P by ψ(f ) = (f (s))s∈S . This is well-defined since each f (s) ∈ T = Ts . For
+p = (ts ) ∈ P , ψ(ϕ(p)) = (ϕ(p)(s))s∈S = (ts )s∈S = p. For f ∈ F , ϕ(ψ(f ))(s) = f (s) for all s, hence
+ϕ(ψ(f )) = f . Both compositions are identities, so ϕ is bijective. If S = ∅, both sets have one element;
+if S ̸= ∅, T = ∅, both sets are empty. The argument remains valid in each case. □
+
+
+Exercise 1.7: Power sets and indicator functions
+
+Define χ : P(S) → F(S; {0, 1}) by χ(A) = 1A . Given h : S → {0, 1} define σ(h) = {s ∈ S : h(s) =
+1} ∈ P(S). Then σ(χ(A)) = {s : 1A (s) = 1} = A. Conversely, for every h and s, 1σ(h) (s) = 1 iff
+h(s) = 1, and is 0 iff h(s) = 0. Because h(s) has only these two possible values, χ(σ(h)) = h. Thus
+σ = χ−1 and the sets are bijective. □
+
+
+Exercise 1.8: Images of unions and intersections
+
+Let A be a family of subsets of S. (a) For t ∈ T ,
+                                   [               [
+                            t ∈ f [ A] ⇐⇒ (∃s ∈      A) f (s) = t
+                                          ⇐⇒ (∃A ∈ A)(∃s ∈ A) f (s) = t
+                                                 [
+                                          ⇐⇒ t ∈    f [A].
+                                                   A∈A
+              T              T
+(b) If t ∈ T
+           f [ A], choose s ∈ A with f (s) = t. The same s is in every A, so t ∈ f [A] for every A,
+hence t ∈ A f [A]. It need not be equality when f is not injective.
+Additional identity from the lecture slides: If t ∈ f [A] \ f [B], choose a ∈ A with f (a) = t. If
+a ∈ B then t ∈ f [B], contradiction. Thus a ∈ A \ B and t ∈ f [A \ B], proving f [A \ B] ⊇ f [A] \ f [B].
+Equality need not hold, e.g. a constant map on distinct a, b, with A = {a}, B = {b}. □
+
+
+
+
+                                                   10
+MATH6310 — Metric Spaces & Topology                                                              Sections 0–1
+
+
+Exercise 1.9: Inverse images of unions and differences
+
+For any s ∈ S,
+                                            [              [
+                                  s ∈ f −1 [ C] ⇐⇒ f (s) ∈   C
+                                                  ⇐⇒ (∃C ∈ C) f (s) ∈ C
+                                                         [
+                                                  ⇐⇒ s ∈    f −1 [C].
+                                                             C∈C
+
+Likewise
+
+                             s ∈ f −1 [D \ C] ⇐⇒ f (s) ∈ D and f (s) ∈
+                                                                     /C
+                                              ⇐⇒ s ∈ f −1 [D] and s ∈
+                                                                    / f −1 [C]
+                                              ⇐⇒ s ∈ f −1 [D] \ f −1 [C].
+
+SinceTf −1 [TT
+             ] = S, taking D = T gives f −1 [T \ C] = S \ f −1 [C]. Further lecture-slide identity:
+f −1 [ C] = C∈C f −1 [C], by replacing “there exists” by “for every” in the first proof. □
+
+
+Exercise 1.10: Disjoint union of equivalence relations
+
+Let S = A1 ∪A2 with A1 ∩A2 = ∅. Define x ∼ y if they belong to the same Ai and x ∼i y. Reflexivity:
+any x lies in exactly one Ai , so x ∼i x and therefore x ∼ x. Symmetry: if x ∼ y, then x, y ∈ Ai and
+x ∼i y for some i. Symmetry of ∼i yields y ∼i x, hence y ∼ x. Transitivity: if x ∼ y and y ∼ z, then
+the first pair is in some Ai and the second in some Aj . Since the shared y belongs to both and the sets
+are disjoint, i = j. Transitivity in Ai gives x ∼i z, hence x ∼ z. All three properties hold. □
+
+
+Exercise 1.11: Symmetry and transitivity do not imply reflexivity
+
+(a) The argument silently assumes the existence of a y with x ∼ y for each x. Symmetry can reverse a
+relation only if one already holds; it cannot produce a pair relating a completely unrelated element.
+Therefore the step “take y such that x ∼ y” may have no witness.
+(b) Take nonempty S = {1} with ∼= ∅ (the empty binary relation). Symmetry and transitivity are
+vacuously true because there are no pairs (x, y) in the relation and no applicable chains. Reflexivity
+fails, since 1 ̸∼ 1. □
+
+
+Exercise 1.12: Explicit bijection from N to Z
+
+Assume N = {1, 2, 3, . . .}. Enumerate Z as 0, 1, −1, 2, −2, 3, −3, . . . via
+
+                         f (1) = 0,     f (2k) = k,        f (2k + 1) = −k      (k ≥ 1).
+
+Every z ∈ Z is hit: z = 0 by input 1, positive z = k by 2k, and negative z = −k by 2k + 1. Different
+positive even inputs give distinct positive outputs, distinct odd inputs beyond 1 give distinct negative
+outputs, and 1 uniquely gives 0. So no outputs collide. Hence f is a bijection, proving Z countably
+infinite. □
+
+
+Exercise 1.13: Rational-coefficient polynomials are countable
+
+For each n ≥ 0, a polynomial     P of degree at most n is uniquely represented by its coefficient vector
+(a0 , . . . , an ) ∈ Qn+1 through nk=0 ak xk . Thus the set Sn of such polynomials is in bijection with Qn+1 .
+Since Q is countable and finite Cartesian products of countable sets are countable, each Sn is countable.
+Every polynomial has some finite degree (the zero polynomial also lies in every Sn ), so S = ∞
+                                                                                                     S
+                                                                                                       n=0 Sn .
+
+
+                                                      11
+MATH6310 — Metric Spaces & Topology                                                             Sections 0–1
+
+
+A countable union of countable sets is countable; hence S is countable. Pitfall: “infinitely many
+possible coefficients” does not mean uncountable: each individual polynomial uses only finitely many
+coefficients. □
+
+
+Exercise 1.14: Finite subsets of N are countable
+
+First proof (binary encoding, especially elegant). Define
+                                                       X
+                          E : P00 (N) → N0 ,   E(A) =     2n−1 ,
+                                                                     n∈A
+
+where N0 = {0, 1, 2, . . .} and the empty sum equals zero. Every A is finite so the sum is defined. Unique
+binary expansion implies E(A) = E(B) only if A = B. Thus E is injective and P00 (N) is countable. In
+fact every nonnegative integer has a unique finite binary expansion, so E is bijective.
+Proof following the lecture hint. Decompose P00 (N) = k≥0 P (k) (N) by cardinality. Associate to
+                                                              S
+
+each k-element subset its uniquely increasing k-tuple (a1 < · · · < ak ) in Nk . This injects P (k) (N) into
+the countable set Nk , so each layer is countable. Their countable union is countable. □
+
+
+Exercise 1.15: Total versus strict total orders
+
+(a) From a total order ≤, define s < t iff s ≤ t and s =
+                                                       ̸ t. Trichotomy: totality gives s ≤ t or t ≤ s;
+if s ̸= t, antisymmetry prevents both, so exactly one strict direction holds. If equal, neither strict
+direction holds. Transitivity: s < t and t < u give s ≤ t ≤ u, hence s ≤ u; if s = u, antisymmetry
+applied along the chain forces s = t, contradiction. Therefore s < u.
+(b) Conversely define s ≤ t iff s < t or s = t. Reflexivity: s = s, hence s ≤ s. Antisymmetry: if s ≤ t
+and t ≤ s with s ≠ t, then s < t and t < s, contradicting trichotomy. Transitivity: if s ≤ t ≤ u, cases
+involving equality are immediate; otherwise s < t and t < u, hence s < u by strict transitivity. Totality:
+trichotomy gives one of s < t, s = t, t < s, ensuring s ≤ t or t ≤ s. Thus ≤ is a total order. □
+
+
+Exercise 1.16: Bijections of two three-element sets
+
+A bijection is specified by the ordered triple (f (x), f (y), f (z)), a permutation of (a, b, c). Evaluate
+statements A : f (x) = a, B : f (y) ̸= a, and C : f (z) ̸= b:
+
+                                (f (x), f (y), f (z))   A    B   C   true count
+                                      (a, b, c)         T    T   T        3
+                                      (a, c, b)         T    T   F        2
+                                      (b, a, c)         F    F   T        1
+                                      (b, c, a)         F    T   T        2
+                                      (c, a, b)         F    F   F        0
+                                      (c, b, a)         F    T   T        2
+
+(a) Exactly two true: (a, c, b), (b, c, a), (c, b, a) . (b) Exactly one true: (b, a, c) . This exhaustive
+table works because there are 3! = 6 bijections. □
+
+
+Exercise 1.17: A relation defined from a function and partition
+
+The notes define t1 ∼ t2 iff there is a block A ∈ C such that f −1 [{t1 , t2 }] ⊆ A, where C partitions S.
+(a) Reflexivity: not necessarily. Let S = {p, q}, T = {t}, f (p) = f (q) = t, and partition
+C = {{p}, {q}}. The fibre f −1 [{t}] = {p, q} lies in no single block, so t ̸∼ t. If f is injective, yes: each
+fibre f −1 [{t}] is empty or a singleton, and any singleton lies in some block. Provided the partition of
+nonempty S has a block, the empty fibre is also a subset of a block. Hence t ∼ t for all t.
+
+                                                        12
+MATH6310 — Metric Spaces & Topology                                                            Sections 0–1
+
+
+(b) Symmetry: always. Since {t1 , t2 } = {t2 , t1 }, their inverse images coincide. Thus t1 ∼ t2 iff
+t2 ∼ t1 , with or without bijectivity.
+(c) Transitivity: not necessarily. Let S = {p, q}, T = {a, b, c}, f (p) = a, f (q) = c, and C =
+                    / Ran f , its fibre is empty. We have f −1 [{a, b}] = {p} and f −1 [{b, c}] = {q}, so
+{{p}, {q}}. Since b ∈
+a ∼ b and b ∼ c. But f −1 [{a, c}] = {p, q} is not contained in any block, so a ̸∼ c.
+If f is surjective, transitivity does hold. Suppose t1 ∼ t2 and t2 ∼ t3 . Choose blocks A, B with
+f −1 [{t1 , t2 }] ⊆ A and f −1 [{t2 , t3 }] ⊆ B. Surjectivity makes f −1 [{t2 }] nonempty, so a point in that
+fibre belongs to both blocks. Since blocks in a partition are disjoint unless equal, A = B. Therefore
+f −1 [{t1 , t3 }] ⊆ A and t1 ∼ t3 . □
+
+
+Exercise 1.18: Real numbers are uncountable
+                                          P∞         −n . It converges absolutely since 0 ≤ ψ(a) ≤
+(a)
+P Define     ψ : {0, 1}N → R by ψ(a) =     n=1 an 10
+      −n
+   10 = 1/9. Let a ̸= b and let k be their first differing index. Without loss, ak = 1, bk = 0. Their
+difference is                              X                           X
+                      ψ(a) − ψ(b) = 10−k +    (an − bn )10−n ≥ 10−k −     10−n .
+                                              n>k                           n>k
+
+The tail is n>k 10−n = 10−k /9, so ψ(a) − ψ(b) ≥ (8/9)10−k > 0. Thus ψ is injective. The use of
+            P
+digits 0 and 1 only avoids ambiguous decimal expansions.
+(b) The set {0, 1}N is bijective to F(N; {0, 1}), which is bijective to P(N) via indicator functions. By
+Cantor’s theorem P(N) is uncountable, hence so is {0, 1}N . If R were countable, every subset of it,
+including the image of the injection ψ, would be countable, contradiction. So R is uncountable . □
+
+
+Exercise 1.19: A set is infinite iff it contains a copy of N
+
+(⇐) If f : N → S is injective, its outputs f (1), f (2), . . . are all distinct. A finite S cannot contain
+infinitely many different elements (pigeonhole principle), so S is infinite.
+(⇒) Suppose S is infinite. Choose s1 ∈ S. After selecting distinct s1 , . . . , sn , the complement
+S \ {s1 , . . . , sn } is nonempty: otherwise S would be finite. Choose sn+1 from this complement.
+Recursively obtain distinct elements and define f (n) = sn . Then f is injective. Set-theoretic nuance:
+the unrestricted infinite-set-to-injection direction uses a choice principle (typically dependent choice) in
+this recursive construction. In standard mathematics with AC, as in these lecture notes, the argument
+is valid; without choice, infinite sets need not contain a countably infinite subset. □
+
+
+
+
+                                                     13
+MATH6310 — Metric Spaces & Topology                                                                    Sections 0–1
+
+
+6     Quick-reference formula sheet and proof templates
+
+    Everything worth memorising at a glance
+
+
+               d(x, y) = 0 ⇐⇒ x = y,              d(x, y) = d(y, x),    d(x, z) ≤ d(x, y) + d(y, z);
+               ddisc (x, y) = 1x̸=y , dcount (A, B) = |A△B|;
+                            Z 1
+               d1 (f, g) =      |f − g|, d∞ (f, g) = sup |f (t) − g(t)|;
+                            0                                 t∈[0,1]
+                                              δ           δ
+               dH (K, J) = inf{δ ≥ 0 : K ⊇ J, J ⊇ K};
+               A△B = (A \ B) ∪ (B \ A);
+               f injective ⇐⇒ [f (x) = f (y) ⇒ x = y];
+               f surjective ⇐⇒ (∀t ∈ T )(∃s ∈ S) f (s) = t;
+               f −1 [C] = {s : f (s) ∈ C};
+                  [        [                 \       \
+               f [ Ai ] =      f [Ai ], f [ Ai ] ⊆     f [Ai ];
+                     [        [                     \       \
+               f −1 [ Ci ] =      f −1 [Ci ], f −1 [ Ci ] =     f −1 [Ci ];
+               f −1 [T \ C] = S \ f −1 [C],        |F(S; T )| = |T ||S| (finite).
+
+
+
+6.1    Which method should I use?
+
+“Show this is a metric.” Verify MS0, MS1a, MS1b, MS2 and MS3 separately; use cases, absolute
+values, cardinality inclusion, a supremum or integral as appropriate.
+“Show two sets are equal.” Start “Take x in the left-hand side” and show it belongs to the right;
+reverse direction. Or build a chain of equivalent membership statements.
+“Find the range / inverse.” Set y = f (x), solve for x and identify forbidden outputs. If a left inverse
+ must be defined outside the range, supply arbitrary legal values there.
+“Prove countability.” Exhibit a list/bijection, inject into a known countable set, or express the set as
+ a countable union of countable sets.
+“Show uncountability.” Use Cantor’s theorem and an injection from a known uncountable set;
+alternatively construct a diagonal contradiction.
+“Prove equivalence relation.” Check reflexive, symmetric and transitive one by one; if asked whether
+ a condition always holds, one valid counterexample is enough to disprove it.
+
+
+Source and scope note
+
+Both supplied lecture PDFs are by MATH6310, Part I, Sections 0 and 1, marked “Last edited:
+07.ix.2026”. This study aid retains the notes’ conventions and sequence of topics. It expands
+explanations and supplies original full arguments for the numbered exercises. Optional results are
+marked as such; the statement of Schröder–Bernstein is specifically required by the lecture notes, while
+its proof is labelled non-examinable there. The source PDFs themselves remain the authority for
+course-specific assessment guidance.
+
+
+
+
+                                                           14
+

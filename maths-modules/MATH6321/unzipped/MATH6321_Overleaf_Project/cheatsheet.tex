@@ -1,0 +1,196 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,mathtools,array,booktabs}
+\usepackage[margin=19mm,headheight=15pt]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{enumitem,fancyhdr,hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black}
+\setlist{itemsep=3pt,topsep=4pt,leftmargin=*}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\definecolor{navy}{HTML}{14344B}\definecolor{teal}{HTML}{087E8B}
+\tcbset{enhanced,breakable,boxrule=.6pt,arc=2mm,left=3mm,right=3mm,top=2mm,bottom=2mm,before skip=8pt,after skip=8pt,colback=blue!2,colframe=navy,fonttitle=\bfseries}
+\newtcolorbox{concept}[1]{title={#1}}
+\newtcolorbox{method}[1]{title={Method: #1},colframe=teal,colback=teal!3}
+\newtcolorbox{example}[1]{title={Worked example: #1},colframe=blue!60!black,colback=blue!2}
+\newtcolorbox{tip}[1]{title={Exam tip: #1},colframe=orange!80!black,colback=orange!5}
+\newtcolorbox{question}[1]{title={Exam-style question #1},colframe=purple!65!black,colback=purple!3}
+\newtcolorbox{answer}[1]{title={Model answer #1},colframe=green!40!black,colback=green!3}
+\newcommand{\R}{\mathbb R}\newcommand{\C}{\mathbb C}\newcommand{\lap}{\mathcal L}\newcommand{\Srat}{\mathcal S}\newcommand{\dd}{\,\mathrm d}\newcommand{\ii}{\mathrm i}\newcommand{\Rea}{\operatorname{Re}}\newcommand{\I}{I}
+\pagestyle{fancy}\fancyhf{}\lhead{\small MATH6321 | Mathematical Cryptography}\rhead{\small Sai Vanam}\cfoot{\thepage}
+\newcommand{\F}{\mathbb F}\newcommand{\Z}{\mathbb Z}
+\begin{document}
+\small
+\begin{concept}{MATH6321 | Quick-reference cheat sheet | Sai Vanam}
+\Large\textbf{1. Classical ciphers and statistical attacks}\small
+
+Current supplied guidance: \textbf{2 hours, 5 multipart questions, no examinable proofs}. The five areas are Ch.1; Ch.2--3; Ch.4; Ch.5--6; Ch.7. Full worked examples and immediate model answers are in the companion detailed guide. This sheet is for revision; the supplied guidance does not say it may be taken into the exam.
+\end{concept}
+\begin{concept}{Letter arithmetic and the four schemes}
+Use \(A=0,\ldots,Z=25\), except a permutation explicitly numbered 1--26.
+
+\textbf{Caesar:} \(c=m+k\pmod{26}\); decrypt \(m=c-k\). Test all 26 keys to crack.
+
+\textbf{Substitution:} \(c=\sigma(m)\); decrypt \(\sigma^{-1}(c)\). Move backwards in cycles. \(26!\) keys, but frequencies/word patterns are preserved.
+
+\textbf{Vigenere:} repeat keyword shifts \((k_1,\ldots,k_n)\); add for encryption, subtract for decryption. Split into columns \(s_i=c_ic_{i+n}c_{i+2n}\cdots\) for an attack.
+
+\textbf{OTP:} key uniformly random, independent, secret, message-length, never reused. For bits \(c=m\oplus k\), decrypt with the same XOR. Reuse gives \(c\oplus c'=m\oplus m'\), removing the key. Key length alone does not imply OTP security.
+\end{concept}
+\begin{concept}{IoC versus MutIoC}
+\[\operatorname{IoC}(s)=\frac{\sum_aN_a(N_a-1)}{t(t-1)},\qquad
+\operatorname{MutIoC}(s,r)=\frac{\sum_aN_a(s)N_a(r)}{t_1t_2}.\]
+IoC selects two distinct positions from one string; MutIoC selects one from each. English-like long strings: about 0.0656; independent uniform letters: about 0.0385. Statistical evidence is not certainty. A fixed substitution leaves IoC unchanged.
+\end{concept}
+\begin{method}{Vigenere cracking}
+Find repeated trigrams and factor their spacings (Kasiski). Test candidate lengths using column IoCs; multiples of the true length can also score highly. For a table that shifts \(s_j\) forwards by \(\beta\),
+\[\boxed{\beta_{ij}=k_i-k_j\pmod{26}.}\]
+Set \(k_1=t\), solve relative shifts, check unused rows, then test the 26 common shifts. Verify a coherent complete decryption and re-encryption. Actual 2025 shifts \((7,4,18,23,11,14)\) yield key \texttt{EXAM}, \((4,23,0,12)\).
+\end{method}
+\begin{tip}{Fast checks}
+IoC uses \(N(N-1)\), not \(N^2\). MutIoC has no \(-1\). A high table entry is a key difference, not a key letter. Substitution decryption uses the inverse permutation. State whether punctuation advances the key.
+\end{tip}
+\clearpage
+\begin{concept}{2. Enigma and LFSRs}
+Enigma signal path: plugboard, forward rotors, reflector, reverse rotors, plugboard. Rotor stepping changes the substitution by position. The reflector makes each fixed-state map an involution with no self-encrypted letters. Use the question's simplified model for counting.
+\end{concept}
+\begin{method}{Enigma counting formulas}
+On \(L\) letters, exactly \(m\) disjoint plug pairs:
+\[\frac{L!}{(L-2m)!2^m m!}.\]
+Ordered selection of \(r\) rotors from \(R\): \(R!/(R-r)!\). Starting positions: \(L^r\). Choose one of \(h\) fixed reflectors: multiply by \(h\). If \emph{all} paired reflector wirings are variable, use \(L!/(2^{L/2}(L/2)!)\) for even \(L\). Sum over \(m\) if the number of plug pairs is optional. Do not count arbitrary wirings when fixed rotors are specified.
+\end{method}
+\begin{concept}{LFSR generation and encryption}
+Length \(n\), initial fill \(a_0,\ldots,a_{n-1}\), taps \(b_0,\ldots,b_{n-1}\):
+\[a_{i+n}=b_0a_i\oplus\cdots\oplus b_{n-1}a_{i+n-1}.\]
+Stream starts with the initial fill. Bits/pixels: \(c_i=m_i\oplus a_i\), \(m_i=c_i\oplus a_i\). Flatten pictures in the stated order; do not restart the stream every row. For \(11010\), rule \(a_{i+5}=a_i\oplus a_{i+2}\), first 20 bits are \texttt{11010 10000 10010 11001}.
+\end{concept}
+\begin{concept}{Period theorem and hypotheses}
+\[c_b(x)=x^n+b_{n-1}x^{n-1}+\cdots+b_1x+b_0.\]
+Zero fill: period 1. If \(b_0=1\), updates are invertible; period is first return to the fill and divides matrix order. If \(c_b\) is irreducible with nonzero constant term, all nonzero fills have the same period: smallest \(j\mid2^n-1\) with \(c_b\mid x^j+1\). Primitive means this order equals \(2^n-1\).
+
+Degree 3: no roots in \(\F_2\) implies irreducible. Degree 4: also exclude factor \(x^2+x+1\); no roots alone is insufficient. \(x^4+x+1\): period 15. \(x^4+x^3+x^2+x+1\): period 5. \(x^4+x^2+1\) is reducible, so the theorem is unavailable.
+\end{concept}
+\begin{tip}{LFSR security and exclusions}
+Long period does not imply unpredictable output: linear recurrences can be recovered from sufficient known bits. An LFSR pad is pseudorandom, not a true OTP. Attacking Enigma and NTRU are \textbf{non-examinable} under the supplied guidance.
+\end{tip}
+\clearpage
+\begin{concept}{3. Modular arithmetic, DH and RSA}
+An inverse modulo \(n\) exists iff gcd is 1. Extended Euclid gives \(ua+vn=1\), so \(a^{-1}=u\pmod n\). For \(ax=b\pmod n\), let \(d=\gcd(a,n)\): no solution if \(d\nmid b\); otherwise divide \(a,b,n\) by \(d\), solve modulo \(n/d\), then lift to all candidates modulo \(n\).
+
+Use repeated squaring for powers. Reduce after each multiplication. In \((\Z/p\Z)^\times\), elements use mod \(p\), exponents use mod \(p-1\) or subgroup order.
+\end{concept}
+\begin{method}{Diffie--Hellman}
+Public \(G=\langle g\rangle\), order \(q\). Private exponents \(a,b\). Exchange \(A=g^a,B=g^b\); both compute \(K=B^a=A^b=g^{ab}\). In modulo-prime examples reduce elements modulo \(p\), not modulo \(q\). A discrete log can recover a secret exponent. A low-order base has few possible keys; \(g=1\) or \(-1\) is disastrous. An additive prime-order group makes its scalar-log analogue easy. Basic unauthenticated DH does not prevent active impersonation.
+\end{method}
+\begin{method}{RSA encryption and decryption}
+Choose distinct secret primes \(p,q\); \(N=pq\), \(\varphi(N)=(p-1)(q-1)\). Pick \(e\) with \(\gcd(e,\varphi(N))=1\), find \(d=e^{-1}\pmod{\varphi(N)}\). Public \((N,e)\), private \(d\).
+\[c=m^e\pmod N,\qquad m=c^d\pmod N.\]
+Course message space: units modulo \(N\). Correctness uses \(ed=1+t\varphi(N)\) and \(m^{\varphi(N)}=1\pmod N\). Actual 2025 values: \(p=5,q=17,e=11\), hence \(N=85,\varphi=64,d=35\); \(4\mapsto64\mapsto4\).
+\end{method}
+\begin{concept}{RSA signatures and weaknesses}
+Sign auxiliary \(m_0\) with \(\sigma=m_0^d\pmod N\); verify \(\sigma^e=m_0\pmod N\). Actual 2025: \(N=33,e=3,d=7,m_0=14\), signature 20, since \(20^3\equiv14\).
+
+Shared public prime: gcd of moduli reveals factors, hence totients/private exponents. Close primes: try Fermat. \(e=1\): no encryption. If \(m^e<N\), an ordinary integer root recovers \(m\). Invalid exponent: no inverse if gcd is not 1. Raw RSA signatures multiply: signatures on \(m_1,m_2\) yield one on \(m_1m_2\). These are textbook protocols, not complete secure implementations.
+\end{concept}
+\begin{tip}{Which key is used?}
+Encrypt to a recipient with the recipient's public key. Sign with the signer's private key. Verify with the signer's public key. RSA exponent inversion is modulo \(\varphi(N)\); message powers are modulo \(N\).
+\end{tip}
+\clearpage
+\begin{concept}{4. El-Gamal encryption and signatures (supplied)}
+The exam guidance says El-Gamal's formulas are provided. Practise executing them and keeping their two moduli separate.
+\end{concept}
+\begin{method}{El-Gamal encryption}
+Public \((G,q,g,h)\), where \(G=\langle g\rangle\), \(|G|=q\), \(h=g^k\). Private \(k\). Fresh secret encryption exponent \(s\):
+\[c_1=g^s,\quad c_2=mh^s,\qquad m=c_2c_1^{-k}.\]
+Example modulo 23: \(g=5,k=6,h=8,m=10,s=3\). Then \(c_1=10,h^s=6,c_2=14\); decrypt with \(6^{-1}=4\) to get 10. If the nonce repeats, dividing second ciphertext components removes the common mask. If \(s\) is disclosed, anyone can compute \(h^s\) and unmask.
+\end{method}
+\begin{method}{El-Gamal signatures}
+For \(G=(\Z/p\Z)^\times\), \(q=p-1\), \(h=g^k\), choose a fresh \(s\) with \(\gcd(s,q)=1\). Then
+\[m_1=g^s\pmod p,\qquad m_2=(m_0-km_1)s^{-1}\pmod q.\]
+Verify
+\[h^{m_1}m_1^{m_2}=g^{m_0}\pmod p.\]
+Example \(p=23,g=5,k=6,s=7,m_0=9\): \(h=8,m_1=17,s^{-1}=19\pmod{22},m_2=15\). Verification gives 11 on both sides modulo 23.
+\end{method}
+\begin{tip}{Common traps}
+Encryption decryption is multiplication by an inverse, not subtraction. Signature nonce inversion is modulo \(p-1\), not \(p\). A fresh encryption nonce does not need the signature formula's coprimality condition. If a signature nonce is reused, subtract the two congruences to recover information about it; solve nonunit congruences rather than dividing illegally. The course's auxiliary-value signatures should not be described as a full document-binding construction without further steps.
+\end{tip}
+\begin{concept}{Comparisons worth being able to state precisely}
+Symmetric schemes require a shared secret; public-key schemes publish an encryption/verification key while keeping a decryption/signing trapdoor secret. DH establishes a shared key; RSA and El-Gamal encrypt messages; signatures support verification of origin under the relevant key assumptions. Factoring an RSA modulus recovers the private exponent. Computing the relevant discrete log breaks DH/El-Gamal. These are different problems and attacks: do not call a discrete log a factorisation.
+\end{concept}
+\clearpage
+\begin{concept}{5. Factorisation methods}
+\textbf{Trial division:} test primes up to \(\sqrt N\). A square or even input should be recognised immediately.
+
+\textbf{Congruence of squares:} if \(A^2=B^2\pmod N\), test \(\gcd(A-B,N)\) and \(\gcd(A+B,N)\). Success means \(1<d<N\). If \(A=\pm B\pmod N\), gcd results are trivial.
+\end{concept}
+\begin{method}{Fermat}
+Notes' version: test \(N+B^2=A^2\) for successive \(B\). Equivalent version: begin \(A=\lceil\sqrt N\rceil\), test \(A^2-N=B^2\). Then factors \(A-B,A+B\). Use the version explicitly requested. Close factors help because \(B=|p-q|/2\). Example: \(221+2^2=15^2\), so \(221=13\cdot17\).
+\end{method}
+\begin{method}{Pollard rho for factors}
+Set seed \(x_0=y_0\), \(f(x)=x^2+1\pmod N\). At every row do
+\[x\leftarrow f(x),\quad y\leftarrow f(f(y)),\quad d=\gcd(|x-y|,N).\]
+Continue if \(d=1\); stop if \(1<d<N\); restart/change choices if \(d=N\). The notes also consider plus gcds. For \(N=143\), seed 2: rows \((x,y)=(5,26),(26,15)\), yielding gcd 11 and factors 11,13.
+\end{method}
+\begin{method}{Dixon (supplied)}
+Choose prime factor base up to bound \(B\). Find smooth reduced-square relations \(a_j^2=b_j=\prod p_i^{e_{ij}}\pmod N\). Put parity vectors \((e_{ij}\bmod2)_i\) into \emph{columns} of \(E\). Find nonzero \(v\) with \(Ev=0\) over \(\F_2\). Multiply selected \(a_j\) to get \(A\); take the integer square root of the product of selected \(b_j\) using full exponents to get \(B_0\). Try both gcds. A dependency can still be trivial: retry if needed.
+\end{method}
+\begin{example}{2025 Dixon results for a quick check}
+\(N=1219\), bound 11, base \(2,3,5,7,11\).
+\[36^2\equiv77=7\cdot11,\quad41^2\equiv462=2\cdot3\cdot7\cdot11,\]
+\[43^2\equiv630=2\cdot3^2\cdot5\cdot7,\quad74^2\equiv600=2^3\cdot3\cdot5^2.\]
+Discard seed 67: residue \(832=2^6\cdot13\) is not 11-smooth. Select seeds 36,41,74, giving \(A=733,B_0=4620\equiv963\). The gcds are 23 and 53.
+\end{example}
+\begin{tip}{Keep the algorithm's ring straight}
+Dixon dependencies use exponent \emph{parity} modulo 2. Index-calculus equations use exponents modulo the group order. Factorisation rho's final operation is a gcd; discrete-log rho's is a linear congruence. Never interchange these.
+\end{tip}
+\clearpage
+\begin{concept}{6. Discrete-log methods}
+Find \(k\) in \(h=g^k\), where \(q=\operatorname{ord}(g)\). Exponents are modulo \(q\); element operations stay in the original group. Brute force takes order \(q\) operations. BSGS uses order \(\sqrt q\) time and storage; collision methods offer another approach.
+\end{concept}
+\begin{method}{Baby-Step Giant-Step}
+\(m=\lceil\sqrt q\rceil\). Baby list \(g^i\), \(0\le i<m\). Set \(z=g^{-m}\), giant list \(hz^j\), \(0\le j<m\). If \(g^i=hz^j\), then \(k=i+jm\pmod q\). Verify \(g^k=h\).
+
+2025: \(p=53,g=2,h=7,q=52,m=8\). Babies \(1,2,4,8,16,32,11,22\), \(z=47\). First giants \(7,11\); collision \(i=6,j=1\). Hence \(k=14\pmod{52}\).
+\end{method}
+\begin{method}{Pollard rho for logs (supplied)}
+Track \(x=g^ah^b\), reducing elements modulo \(p\), exponents modulo \(p-1\). The three branch updates are
+\[gx:(a+1,b),\quad x^2:(2a,2b),\quad hx:(a,b+1).\]
+Use the supplied thirds-of-interval branch rule. A collision with pairs \((a_i,b_i),(a_j,b_j)\) gives
+\[(b_i-b_j)k=a_j-a_i\pmod{p-1}.\]
+If gcd of the coefficient with \(p-1\) is \(d>1\), divide the entire congruence/modulus by \(d\) when possible and test the \(d\) candidates. A zero-information collision requires a new attempt.
+\end{method}
+\begin{method}{Index calculus (supplied)}
+Find smooth relations \(g^{a_j}=\prod p_i^{e_{ji}}\pmod p\). Set \(\ell_i=\log_gp_i\) and solve
+\[\sum_i e_{ji}\ell_i=a_j\pmod{p-1}.\]
+Use valid pivots: a nonzero entry need not be invertible modulo composite \(p-1\). Add relations if needed. Find smooth \(hg^s=\prod p_i^{f_i}\), then
+\[\boxed{\log_gh=\sum_i f_i\ell_i-s\pmod{p-1}.}\]
+\end{method}
+\begin{tip}{A quick index-calculus sign check}
+Taking logs of \(hg^s\) gives \(\log_gh+s\), so the final answer \emph{subtracts} \(s\). Example modulo 29, base 2: \(\log_2 2=1,\log_2 3=5,\log_2 5=22\). Thus \(\log_2 15=27\pmod{28}\), checked by \(2^{27}=2^{-1}=15\).
+\end{tip}
+\clearpage
+\begin{concept}{7. Knapsack, simple noise and Gauss reduction}
+These schemes connect a private easy representation to a public hard-looking problem. The simple noisy scheme is deliberately breakable by a two-dimensional lattice attack.
+\end{concept}
+\begin{method}{Knapsack (supplied)}
+Private superincreasing weights: \(a_{j+1}>\sum_{i\le j}a_i\). Choose \(M>\sum a_i\), \(\gcd(w,M)=1\); publish ordered \(b_i=wa_i\pmod M\). Encrypt bits with ordinary integer \(c=\sum x_ib_i\). Decrypt \(c'=w^{-1}c\pmod M\), then greedy private subset-sum largest weight first. Do not sort public weights and lose bit positions.
+
+Lattice link: rows \(r_i=(2e_i,b_i)\), \(r_{n+1}=(1,\ldots,1,c)\). Then \(\sum x_ir_i-r_{n+1}=(2x_1-1,\ldots,2x_n-1,0)\), norm \(\sqrt n\). Recover bits from the signs and verify the sum; a generic short vector need not have the desired form.
+\end{method}
+\begin{method}{Simple noisy scheme}
+Private coprime \(s,t\), with \(\sqrt{p/4}<s<\sqrt{p/2}\), \(1<t<\sqrt{p/2}\). Public \(v=st^{-1}\pmod p\). Encode message as \(0\le r<\sqrt{p/4}\), choose \(1<a<\sqrt{p/2}\), send \(e=av+r\pmod p\).
+
+Decrypt \(b=te\pmod p\), taking its nonnegative representative, then \(r=t^{-1}b\pmod s\). Different inverse moduli! The bounds ensure integer equality \(b=as+tr<p\), and \(r<s\) makes its residue unique.
+
+2025: \(p=199,s=8,t=3\) gives \(v=69\). For \(a=6,r=2\), \(e=18\); \(b=54\); \(3^{-1}=3\pmod8\), hence \(r=2\).
+\end{method}
+\begin{method}{Gauss reduction and the attack}
+Construct \(L=\Z(v,1)+\Z(p,0)\). Private \((s,t)\) lies in \(L\), since \(s=tv\pmod p\). Sort basis \(u,w\) by squared norm. Compute \(\mu=\operatorname{round}((u\cdot w)/\|u\|^2)\); replace \(w\leftarrow w-\mu u\); reorder and repeat. Stop when \(\mu=0\). Test recovered signs/coprimality/bounds/congruence.
+
+2025: \((69,1),(199,0)\) gives \((-8,-3)\) using \(\mu=3\), then \((5,-23)\) using \(\mu=-8\). Final quotient \(29/73\) rounds to zero. Negate the short vector to recover \((8,3)\).
+\end{method}
+\begin{tip}{Final checks before handing in}
+Round nearest integer, not floor. Verify each claimed key or log in its defining equation. Check gcds are nontrivial. Label every modulus. Give a reasoned method even for an incomplete answer. For the five-question exam, practise computations across all five topic groups. Do not spend revision time memorising the explicitly excluded Enigma-attack/NTRU sections.
+\end{tip}
+\end{document}

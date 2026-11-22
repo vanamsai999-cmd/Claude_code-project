@@ -1,0 +1,701 @@
+MATH6321 | Chapter 1 explained                                                 Classical Cryptography
+
+
+                      LANCASTER UNIVERSITY | MATH6321
+
+
+
+    Chapter 1: Classical Cryptography
+                          A complete, step-by-step study guide
+
+
+
+                    Caesar → Substitution → Vigenère → One-Time Pad
+                   → Index of Coincidence → Mutual Index of Coincidence
+
+
+
+  Based on the uploaded MATH6321 Mathematical Cryptography lecture notes (2026/27),
+                            Chapter 1, sections 1.1–1.6.
+
+
+
+       How to use this guide. Start with the plain-English idea. Follow each calculation
+       slowly. Try the “Your turn” questions without looking at the answer section, then
+       use the end-of-chapter checklist to test your understanding. No prior cryptography
+       knowledge is assumed, although basic modular arithmetic and permutations help.
+
+
+
+
+Learning outcomes By the end, you should be able to encrypt and decrypt classical ciphers,
+explain their weaknesses, calculate and interpret the two coincidence statistics, and follow the lecture
+notes’ complete Vigenère attack.
+
+                                                   1
+MATH6321 | Chapter 1 explained       Classical Cryptography
+
+
+Contents
+
+
+
+
+                                 2
+MATH6321 | Chapter 1 explained                                             Classical Cryptography
+
+
+1    The basics you need before Section 1.1
+
+Cryptography is about making a message unreadable to someone who does not have the secret infor-
+mation required to decode it. A plaintext is the original message, a ciphertext is the scrambled
+message, and a key tells us how the scrambling works.
+
+                         Plaintext + key −→ Encryption −→ Ciphertext
+
+                         Ciphertext + key −→ Decryption −→ Plaintext
+
+The lecture notes use M for the set of possible plaintexts, C for ciphertexts and K for keys. For a
+particular key k, encryption is a function ek and decryption is dk . The vital condition is
+
+                                         dk (ek (m)) = m.
+
+This says: if you encrypt and then decrypt with the correct key, you must get back the original
+message. In function notation, dk ◦ ek = idM , where idM is the identity function (it leaves every
+message unchanged).
+
+
+Turn letters into numbers
+
+Throughout the chapter, letters correspond to numbers:
+
+                              Letter    A   B   C    D   E   ···   Z
+                             Number     0   1   2    3   4   ···   25
+
+So C = 2, E = 4, T = 19, and Z = 25. Spaces and punctuation are usually ignored in the
+mathematical calculations.
+
+
+What does “mod 26” mean?
+
+It means “keep the remainder after division by 26”—or simply wrap around the alphabet. For
+example, 28 ≡ 2 (mod 26), because 28 = 26 + 2; and −3 ≡ 23 (mod 26), because −3 + 26 = 23.
+
+    Worked example
+
+    Take letter Z (=25) and shift forward by 4: 25+4 = 29. Reduce modulo 26: 29 ≡ 3 (mod 26),
+    which corresponds to D. Thus Z becomes D.
+
+    Remember
+    A frequent mistake is to label A as 1. In these notes, A is 0 and Z is 25. Use this
+    consistently.
+
+
+
+2    1.1 The Caesar cipher
+
+    Key idea
+
+    The Caesar cipher encrypts every letter using the same forward shift. Its secret key is an
+    integer k ∈ {0, 1, . . . , 25}.
+
+
+                                                3
+MATH6321 | Chapter 1 explained                                                     Classical Cryptography
+
+
+
+                         c≡m+k          (mod 26)        m≡c−k           (mod 26)
+Here m is the plaintext-letter number and c is the ciphertext-letter number.
+
+    Worked example
+
+    Encrypt CAT with key k = 3.
+    C = 2: 2 + 3 = 5 ⇒ F.
+    A = 0: 0 + 3 = 3 ⇒ D.
+    T = 19: 19 + 3 = 22 ⇒ W.
+    So CAT −→ FDW .
+
+    Decrypt FDW. Subtract 3: F(5) → C(2), D(3) → A(0), W(22) → T(19). The original
+    word is CAT.
+
+
+Why does decryption work? (Exercise 1.3)
+
+First add the key, then subtract it:
+
+                             dk (ek (m)) ≡ (m + k) − k ≡ m       (mod 26).
+
+Since m is already a number between 0 and 25, this recovers exactly the same letter. This is the
+required proof that dk ◦ ek = id.
+
+
+Why it is insecure
+
+There are only 26 keys. An attacker can simply try k = 0, 1, . . . , 25 and look for sensible English.
+This is called a brute-force attack. The lecture notes illustrate Caesar encryption with shift 3 in
+Example 1.2.
+
+    Remember
+    Exam pattern: If given a Caesar key, apply the formula to each letter. If asked to prove
+    correctness, show that the two shifts cancel modulo 26. If asked about security, say only 26
+    possible keys.
+
+
+
+3    1.2 Monoalphabetic substitution ciphers
+
+Caesar always shifts by the same amount, so it is a particularly simple example of a more general
+scheme: choose an arbitrary rearrangement of the 26 letters.
+
+    Key idea
+
+    A substitution key is a permutation σ ∈ S26 , meaning a one-to-one, onto map from the
+    alphabet to itself. Each plaintext letter is always replaced by the same ciphertext letter.
+
+
+                                       c = σ(m)        m = σ −1 (c) .
+
+The notation S26 is the group of all permutations of 26 objects. The inverse permutation σ −1
+reverses the substitutions.
+
+
+                                                   4
+MATH6321 | Chapter 1 explained                                                       Classical Cryptography
+
+
+    Worked example
+
+    Suppose the key swaps A ↔ B, C ↔ D, E ↔ F, and so on (as in Example 1.5 of the notes).
+    Then BAD encrypts to ABC: B→A, A→B, D→C. Applying the swaps again decrypts it.
+
+
+How many keys? (Example 1.6)
+
+You can send A to any of 26 letters. Once A’s destination is used, B has 25 choices, C has 24, etc.
+Hence
+                                 |S26 | = 26! = 26 × 25 × · · · × 1 .
+The notes give 26! = 403291461126605635584000000. This is huge—but a huge keyspace does not
+automatically imply good security.
+
+
+The important weakness: frequency analysis
+
+Because the substitution never changes, a plaintext letter appearing 100 times produces one particu-
+lar ciphertext letter appearing 100 times. The identities are hidden, but the counts are preserved.
+In typical English, E is common (the notes give about 12.7%); T, A, O, I and N are also frequent.
+In a long ciphertext, its most frequent symbol may therefore stand for E. Then look for short words,
+double letters, and common sequences such as THE.
+
+    Worked example
+
+    Suppose the ciphertext often contains TGE. Guess that it represents THE. This predicts T→T,
+    G→H and E→E for these ciphertext symbols under decryption. Test the guess throughout the
+    message. If many words emerge, the guess becomes more convincing. This is the reasoning
+    used in Example 1.7 of the notes (with different intermediate replacements).
+
+
+
+Exercise 1.8 explained
+
+Alice keeps repeating the word LIKE. In a monoalphabetic substitution, this always turns into
+the same four-letter ciphertext block. Repeating words reveal the message’s structure and give
+an attacker strong clues. Using less repetitive language removes some clues, but does not fix the
+underlying frequency weakness.
+
+
+4    1.3 The Vigenère cipher
+
+    Key idea
+
+    Vigenère uses a sequence of Caesar shifts, cycling through the same short key over and
+    over. The key changes with the position of the letter.
+
+Write the key as k = (k1 , . . . , kn ). For plaintext letter mi in position i, use key entry k1+((i−1) mod n) .
+This 1-based indexing is an explicit way to understand the cyclic subscripts in the notes.
+
+                                   ci ≡ mi + k1+((i−1) mod n)     (mod 26)
+
+                                   mi ≡ ci − k1+((i−1) mod n)     (mod 26)
+
+
+
+                                                       5
+MATH6321 | Chapter 1 explained                                                  Classical Cryptography
+
+
+How to encrypt with a keyword
+
+A keyword is converted to number shifts, so BOB means (1, 14, 1), just as in Example 1.13. Repeat
+it as many times as necessary.
+
+   Worked example
+
+   Encrypt CATCAT using key BOB.
+
+                           Position            1        2    3   4    5    6
+                           Plaintext           C        A    T   C   A     T
+                           Plaintext number    2        0   19   2    0   19
+                           Repeated key        B       O     B   B   O     B
+                           Key number          1       14    1   1   14    1
+                           Cipher number       3       14   20   3   14   20
+                           Ciphertext          D       O    U    D   O     U
+
+   So CATCAT → DOUDOU . To decrypt, subtract the repeated key numbers instead.
+
+
+
+Why this improves on substitution
+
+An E encrypted at one position might become F, while an E at the next position might become G.
+The same letter can have different ciphertext symbols, so simple overall frequency counting is far
+less useful. However, because the key repeats, patterns remain.
+
+
+Exercise 1.10: Caesar is Vigenère with key length 1
+
+When n = 1, every position uses k1 . Therefore ci ≡ mi + k1 (mod 26) at every position, which is
+exactly Caesar.
+
+
+How the Kasiski test finds a key length
+
+If a plaintext sequence repeats at positions using the same part of the repeating key, the ciphertext
+sequence repeats too. Those two starting positions differ by a multiple of the key length. So:
+
+1. Search the ciphertext for repeated three-letter blocks (trigrams) or longer patterns.
+
+2. Measure the distances between their starting positions.
+
+3. Factor those distances and look for a small factor that occurs repeatedly.
+
+4. Treat that common factor as a candidate key length—not a proof.
+
+   Worked example
+
+   The notes’ Example 1.15 includes repeated trigrams with distances 21, 98, 84. Factor them:
+
+                           21 = 3 · 7,    98 = 2 · 72 ,      84 = 22 · 3 · 7.
+
+   All three are divisible by 7, so n = 7 is a strong candidate. Other coincidences in the notes
+   have distances not divisible by 7: repeats can occur by chance.
+
+
+
+
+                                                   6
+MATH6321 | Chapter 1 explained                                                   Classical Cryptography
+
+
+    Remember
+    The Kasiski test suggests a key length, not the individual shift values. We need more tools
+    for those.
+
+
+
+5    1.4 The One-Time Pad (OTP)
+
+    Key idea
+
+    The OTP looks like Vigenère, but its key is as long as the entire message, generated
+    uniformly at random and never reused. Under these conditions it has perfect secrecy.
+
+For a length-t message, take k = (k1 , . . . , kt ). There is a separate independent shift for every
+plaintext position:
+                      ci ≡ mi + ki    (mod 26) ,           mi ≡ ci − ki   (mod 26) .
+
+    Worked example
+
+    Encrypt CAT with the one-time key (4, 1, 7):   C(2)+4=6→G; A(0)+1=1→B;
+    T(19)+7=26≡0→A. So CAT→GBA. Each number is only used for this particular mes-
+    sage position.
+
+
+Why does the OTP reveal no information?
+
+Fix any ciphertext c and any possible plaintext m of equal length. There is exactly one key that
+produces it:
+                                    ki ≡ ci − mi (mod 26).
+If all keys are equally likely, each possible plaintext is compatible with the observed ciphertext with
+exactly the same key probability. Thus observing ciphertext does not update which plaintext was
+more likely (beyond prior information). This is perfect secrecy—the logic behind the lecture
+notes’ Example 1.17 involving ciphertext AAA.
+
+
+What goes wrong if you reuse the key?
+
+Encrypt messages m and m′ using the same key k:
+                             ci ≡ mi + ki ,      c′i ≡ m′i + ki   (mod 26).
+Subtract:
+                                     ci − c′i ≡ mi − m′i    (mod 26) .
+The key cancels! This reveals a relation between the two messages, so reuse destroys the perfect
+secrecy argument. The lecture notes show this visually with two black-and-white images in their
+page 8 illustration.
+
+
+Three practical limitations
+
+1. Key distribution: senders and receivers need a shared key as long as the message.
+2. True randomness: all possible keys must be sampled uniformly.
+3. One use only: a used key must not be used again.
+
+                                                    7
+MATH6321 | Chapter 1 explained                                                          Classical Cryptography
+
+
+6    1.5 The Index of Coincidence (IoC)
+
+Why we need it
+
+For Vigenère with key length n, every n-th letter was encrypted with the same Caesar shift. Split
+the ciphertext into partial ciphertexts:
+
+               s1 = c1 c1+n c1+2n · · · ,   s2 = c2 c2+n c2+2n · · · ,   ...,     sn = cn c2n · · · .
+
+Each si is therefore a Caesar-encrypted piece of ordinary text when the guessed key length is correct.
+Such pieces should preserve English-like letter frequencies. The Index of Coincidence checks
+whether that is plausible.
+
+    Key idea
+
+    IoC is the probability that two different positions sampled uniformly from one string
+    contain the same letter.
+
+For a string of length t, let NA , NB , . . . , NZ be its letter counts:
+
+                                                    L=A NL (NL − 1)
+                                                   PZ
+                                        IoC(s) =                           .
+                                                            t(t − 1)
+
+
+Understand the formula before memorising it
+
+For one letter, say A, there are NA ways to choose an A first and NA − 1 remaining ways to choose
+another A. Add that over all 26 letters for the favourable ordered pairs. The denominator counts all
+ordered pairs of distinct positions, t(t − 1). Their ratio is exactly the matching probability (Lemma
+1.22).
+
+    Worked example
+
+    Find IoC of AABBC. There are 5 letters, with NA = 2, NB = 2, NC = 1 and all other counts
+    zero:
+                           2(2 − 1) + 2(2 − 1) + 1(1 − 1)    4
+                     IoC =                                =     = 0.20 .
+                                       5(5 − 1)             20
+    Note: This is a very short and deliberately repetitive word, so don’t expect it to match the
+    long-text benchmarks.
+
+
+The two benchmark values (Theorem 1.24)
+
+               Text source                                                      Approximate IoC
+               Uniform random alphabet (each letter probability                      0.0385
+               1/26)
+               Ordinary English, even after one fixed substitution                   0.0656
+
+
+Why? If letters have probabilities pA , . . . , pZ , the long-text coincidence chance is approximately
+  L pL . For uniform letters this is 26(1/26) = 1/26. English uses letters unequally, making a
+P    2                                           2
+
+match more likely. A fixed substitution just renames the letters, so it does not change the sum or
+IoC.
+
+
+
+                                                        8
+MATH6321 | Chapter 1 explained                                                Classical Cryptography
+
+
+Use IoC to estimate Vigenère key length
+
+1. Guess a key length a.
+
+2. Split ciphertext into a partial ciphertexts.
+
+3. Compute IoC for each.
+
+4. If values cluster around 0.0656, the guess is promising. If they cluster near 0.0385, try another
+   length.
+
+    Worked example
+
+    The notes’ Example 1.25 tests key lengths 4–9. For a = 7, its seven partial IoCs are
+
+                           0.062, 0.057, 0.065, 0.059, 0.060, 0.064, 0.064.
+
+    These are closer to the English-like value 0.0656 than the other candidate lengths’ mostly
+    smaller values. This supports n = 7 , agreeing with the Kasiski test.
+
+    Remember
+    IoC is a statistical clue, not a mathematical guarantee for finite ciphertexts. Short text
+    and coincidences can give misleading values.
+
+
+
+7    1.6 The Mutual Index of Coincidence (MutIoC)
+
+The new problem
+
+After using Kasiski/IoC, we might know the Vigenère key length, but not its shifts. We need a way
+to compare two partial ciphertexts and ask whether their shift patterns match.
+
+    Key idea
+
+    MutIoC is the probability that a random position from string s and a random position from
+    r contain the same letter. It compares two strings, rather than two positions in one string.
+
+For strings of lengths t1 and t2 ,
+
+                                                       L=A NL (s)NL (r)
+                                                      PZ
+                                     MutIoC(s, r) =                       .
+                                                            t1 t2
+
+For a fixed letter L, there are NL (s)NL (r) ways to match L across the two strings; sum and divide
+by t1 t2 possible cross-string pairs (Lemma 1.27).
+
+    Worked example
+
+    Calculate MutIoC(AAB, ABC).
+    Counts in AAB: A=2, B=1, C=0. Counts in ABC: A=1, B=1, C=1. Therefore
+
+                                                2·1+1·1+0·1   1
+                                     MutIoC =               =   .
+                                                    3·3       3
+
+
+
+
+                                                      9
+MATH6321 | Chapter 1 explained                                                              Classical Cryptography
+
+
+Why does comparing shifts work?
+
+Suppose partial ciphertext si was made by shifting its plaintext by ki , while sj used kj . If we shift
+all of sj forward by β, its effective shift becomes kj + β. To line it up with si , choose
+
+                        kj + β ≡ ki      (mod 26),       so     βi,j ≡ ki − kj    (mod 26) .
+
+Then both strings behave like English encrypted under the same Caesar key. In the notes’ Theorem
+1.29, their MutIoC is therefore expected to be around 0.0656 for long English-like text. Unrelated
+shifts often give smaller values, commonly near 0.0385, but not always.
+
+
+The complete attack algorithm
+
+1. Estimate the key length n using Kasiski or IoC.
+2. Divide ciphertext into s1 , . . . , sn .
+3. For pairs (i, j), shift sj by each β = 0, . . . , 25 and compute MutIoC(si , eβ (sj )).
+4. When MutIoC is relatively high (roughly 0.0656), guess ki − kj ≡ β (mod 26).
+5. Solve these modular equations for the unknown key entries.
+6. If one common shift remains free, test its 26 possible values and look for meaningful English.
+
+   Worked example
+
+   Solve a small model system. Suppose a 3-letter key obeys
+
+                                   k1 − k2 ≡ 4,         k2 − k3 ≡ 7         (mod 26).
+
+   Let k1 = λ. Then k2 ≡ λ − 4, and from the second equation k3 ≡ k2 − 7 ≡ λ − 11. Therefore
+
+                                 (k1 , k2 , k3 ) = (λ, λ − 4, λ − 11)       (mod 26) .
+
+   All 26 choices λ = 0, . . . , 25 satisfy the two equations. Try them against the ciphertext and
+   see which produces intelligible English.
+
+
+The lecture notes’ full Example 1.31: DICKENS
+
+The notes use the ciphertext first introduced in Example 1.15, and settle on length 7. Their MutIoC
+comparisons give several relationships, including
+
+                          k1 − k3 ≡ 1,        k1 − k4 ≡ 19,      k2 − k3 ≡ 6      (mod 26).
+
+After solving the full set of congruences, the notes obtain
+
+                     k = (λ, λ − 21, λ − 1, λ − 19, λ − 25, λ − 16, λ − 11)             (mod 26) .
+
+Try λ = 3. Modulo 26 the numbers are
+
+                                                (3, 8, 2, 10, 4, 13, 18),
+
+which correspond to letters DICKENS . Decrypting reveals the opening words of David Copperfield:
+“WHETHER I SHALL TURN OUT TO BE THE HERO OF MY OWN LIFE ...”. This is the
+end-to-end attack in the original chapter.
+
+
+                                                           10
+MATH6321 | Chapter 1 explained                                                       Classical Cryptography
+
+
+    Remember
+    If the inferred equations contradict one another, one of the statistically suggested shifts may
+    be wrong. The notes explicitly warn that this is a heuristic process.
+
+
+Exercise 1.28: why IoC and MutIoC(s,s) are close
+
+Let S =      L NL (s) , with |s| = t. Then
+                     2
+          P
+
+                                                S                       S−t
+                               MutIoC(s, s) =      ,        IoC(s) =            .
+                                                t2                     t(t − 1)
+
+The first permits selecting the same position twice; the second does not. Subtracting,
+
+                                                                  t2 − S
+                                   MutIoC(s, s) − IoC(s) =                   ,
+                                                                t2 (t − 1)
+
+which lies between 0 and 1/(t − 1). This tends to zero as t → ∞, proving the requested approxima-
+tion.
+
+
+8    Side-by-side summary of the whole chapter
+
+    Cipher/tool             What it does                               Key weakness or purpose
+
+    Caesar                  One fixed shift k                          Only 26 possible keys
+    Monoalphabetic sub-     One arbitrary fixed alphabet permu-        Letter frequencies are preserved
+    stitution               tation
+    Vigenère                Cycles through n shifts                    Repetition reveals key length; each
+                                                                       partial string is Caesar-like
+    One-Time Pad            Independent random key for each            Perfect secrecy requires random,
+                            message position                           message-length, one-use key
+    Kasiski test            Looks for repeat spacings                  Suggests Vigenère key length
+    IoC                     Match probability within one string        Distinguishes   English-like    from
+                                                                       roughly uniform partial strings
+    MutIoC                  Match probability across two strings       Helps determine differences between
+                                                                       Vigenère key shifts
+
+
+Quick decision tree for exam questions
+
+1. “Encrypt/decrypt with shift k”: Caesar addition/subtraction modulo 26.
+
+2. “Permutation key”: apply σ; decrypt with σ −1 .
+
+3. “Keyword/repeating key”: Vigenère; write repeated shifts above letters.
+
+4. “Key length unknown”: repeated trigrams/Kasiski, then test with partial-string IoC.
+
+5. “Key length known but shifts unknown”: use pairwise shifted MutIoC, modular congru-
+   ences, and finally a short search.
+
+6. “Prove perfect secrecy or explain key reuse”: use uniqueness of OTP key or subtract two
+   ciphertext equations.
+
+
+
+                                                       11
+ MATH6321 | Chapter 1 explained                                               Classical Cryptography
+
+
+ 9    Practice questions: try without looking at the answers
+
+ 1. Encrypt MATH using Caesar key 5. Then explain in a line how to decrypt it.
+
+ 2. Decrypt the Caesar ciphertext KHOOR using key 3.
+
+ 3. Explain why the number of substitution cipher keys is 26! but that still doesn’t make it secure.
+
+ 4. Encrypt DOG with Vigenère keyword CAT (use A=0).
+
+ 5. A ciphertext has repeated trigrams 24, 36 and 60 positions apart. Give candidate key lengths
+    and a sensible first guess.
+
+ 6. Explain exactly why one-time-pad key reuse leaks information, writing the relevant equation.
+
+ 7. Compute IoC of AAABB.
+
+ 8. Compute MutIoC of AAB and ABB.
+
+ 9. A ciphertext split using proposed key length 6 gives IoCs 0.040, 0.036, 0.043, 0.037, 0.039, 0.035.
+    Is 6 a compelling choice? Explain.
+
+10. Solve k1 − k2 ≡ 5 and k2 − k3 ≡ 9 (mod 26), giving a one-parameter general solution.
+
+
+
+
+                                                  12
+ MATH6321 | Chapter 1 explained                                                 Classical Cryptography
+
+
+ 10     Fully worked practice answers
+
+ 1. M(12)+5 = 17=R; A(0)+5 = 5=F; T(19)+5 = 24=Y; H(7)+5 = 12=M. RFYM . Decrypt by
+    subtracting 5 and reducing modulo 26.
+
+ 2. K(10)−3 = 7=H; H(7)−3 = 4=E; O(14)−3 = 11=L; O→L; R(17)−3 = 14=O. HELLO .
+
+ 3. The first alphabet letter has 26 choices of image, the next has 25, and so on; multiply to get 26!.
+    But fixed substitution preserves frequency counts, allowing statistical attacks on long texts.
+
+ 4. D=3, O=14, G=6; key C=2, A=0, T=19. Add to get 5, 14, 25, i.e. FOZ .
+
+ 5. 24 = 23 · 3, 36 = 22 · 32 , 60 = 22 · 3 · 5. The gcd is 12; factors 2, 3, 4, 6 and 12 merit checking.
+    n = 12 is an initial candidate, but repeated patterns can be accidental or come from multiples
+    of the underlying period. Validate with IoC.
+
+ 6. With ci = mi + ki and c′i = m′i + ki mod 26, subtraction yields ci − c′i ≡ mi − m′i (mod 26) .
+    The secret key vanishes.
+
+ 7. Counts NA = 3, NB = 2, length t = 5; IoC = [3(2) + 2(1)]/[5(4)] = 8/20 = 0.4 .
+
+ 8. s = AAB has A=2,B=1; r = ABB has A=1,B=2. Hence MutIoC = (2 · 1 + 1 · 2)/(3 · 3) = 4/9 .
+
+ 9. Not compelling: the partial IoCs are clustered near random-alphabet 0.0385, not English-
+    substitution 0.0656. Test other lengths.
+
+10. Let k1 = λ. Then k2 = λ − 5, k3 = λ − 5 − 9 = λ − 14. Thus (λ, λ − 5, λ − 14) (mod 26) ,
+    λ = 0, . . . , 25.
+
+
+ 11     Final checklist and memory sheet
+
+    Make sure you can explain each statement without looking at the notes.
+
+    • I know the difference between plaintext, ciphertext, encryption, decryption and key.
+
+    • I can calculate modulo 26, including negative numbers.
+
+    • I understand dk ◦ ek = id.
+
+    • I know why Caesar has just 26 keys and substitution has 26!.
+
+    • I can explain and apply letter-frequency analysis.
+
+    • I can encrypt/decrypt Vigenère using a repeating keyword.
+
+    • I can carry out a Kasiski factorisation and understand why it is only a guess.
+
+    • I know the exact conditions for one-time-pad secrecy and why reuse breaks it.
+
+    • I can calculate IoC and interpret 0.0385 versus 0.0656.
+
+    • I can calculate MutIoC and turn high values into equations ki − kj ≡ β.
+
+    • I understand how the full chapter’s example leads to keyword DICKENS.
+
+ Source and scope. This guide follows MATH6321 Mathematical Cryptography, Dr Dan Fretwell,
+ 2026/27, Chapter 1, lecture-note pages 1–15 (PDF pages 4–18). The small practice words, numerical
+
+                                                   13
+MATH6321 | Chapter 1 explained                                          Classical Cryptography
+
+
+demonstrations, expanded explanations, and quiz solutions are additional teaching examples, not
+quotations from the notes. The lecture-note example numbers are included to help you cross-
+reference.
+
+
+
+
+                                              14
+

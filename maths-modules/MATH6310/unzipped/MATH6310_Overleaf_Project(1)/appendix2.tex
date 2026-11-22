@@ -1,0 +1,21 @@
+\clearpage
+\section{Lipschitz Extension Theorem}
+\begin{note}{Appendix II: extension from a set that need not be dense}
+For continuous real-valued functions on a closed subset of a metric space, Tietze's theorem gives a continuous extension, preserving bounds when bounded. The supplied appendix treats this as non-examinable.
+
+For $f:A\to\R$ with Lipschitz constant $L$, at one new point $p$ the permitted value $z$ must satisfy
+\[\sup_{a\in A}(f(a)-Ld(p,a))\le z\le\inf_{a\in A}(f(a)+Ld(p,a)).\]
+The interval is nonempty, since for $a,b\in A$,
+\[f(a)-f(b)\le Ld(a,b)\le Ld(a,p)+Ld(p,b).\]
+The appendix extends one point at a time and uses Zorn's lemma to obtain a maximal extension, which must have full domain. The optimal Lipschitz constant remains $L$ because restriction already attains its supremal ratio.
+
+An alternative explicit real-valued extension for nonempty $A$ is
+\[F(x)=\inf_{a\in A}\{f(a)+Ld(x,a)\}.\]
+It is finite: fixing $a_0\in A$, the expression is bounded below by $f(a_0)-Ld(x,a_0)$ and above by $f(a_0)+Ld(x,a_0)$. On $A$ the Lipschitz inequality and the choice $a=x$ give $F=f$. Triangle inequality gives $F(x)\le F(y)+Ld(x,y)$ and the reverse, proving $L$-Lipschitz continuity. Unlike dense extension, extension from a nondense set need not be unique. The real-valued target assumption matters.
+\end{note}
+\begin{exam}{Appendix II practice: range of possible values}
+For $A=\{0,2\}\subset\R$, $f(0)=0$, $f(2)=2$, which values at $1$ permit a $1$-Lipschitz extension? What if $A=\{0\}$ and we allow constant at most $1$?
+\end{exam}
+\begin{answer}
+For the first case, the value $z$ must satisfy $|z|\le1$ and $|z-2|\le1$. Hence $z\in[-1,1]\cap[1,3]=\{1\}$. In the second case the sole requirement is $|z|\le1$, so every $z\in[-1,1]$ works on $\{0,1\}$. For example $F(x)=x$, $F(x)=-x$ and $F(x)=0$ are different extensions with Lipschitz constant at most $1$. This illustrates that nondensity can allow nonuniqueness; it does not assert that the optimal constant of the original singleton map is $1$ (it is $0$).
+\end{answer}

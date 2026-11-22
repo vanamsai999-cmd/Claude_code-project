@@ -1,0 +1,945 @@
+                  ·
+Metric Spaces & Topology
+            (MATH6310)
+
+                  ·
+             Part I
+                  ·
+       Section 5.
+ Complete metric spaces
+
+     Lecture Notes & Exercises
+       Last edited: 07.ix.2026
+
+
+
+
+                                 Video Clips
+                                  (1) Completeness intro [20 mins]
+                                  (2) Completeness, closedness & Lipschitz [5 mins]
+                                  (3) Countable products & Paradigm example [31 mins]
+                                  (4) Embedding [29 mins]
+                                  (5) Completion [15 mins]
+                                  (6) Contraction mapping theorem [19 mins]
+                                  (7) Applications of Banach’s CMT [30 mins]
+                                  (8) Cantor’s intersection theorem [9 mins]
+                                  (9) Baire category theorem [20 mins]
+Introduction
+In this section we introduce the concept of completeness for
+a metric space. This is a property, that a metric space may,
+or may not, have—namely that each of its Cauchy sequences
+actually converges. [Thus R, for example, is complete as
+a metric space, but [0, 1[ and Q (with respect to their rel-
+ative metrics) are not.] In particular, the following results
+are covered. Let E and E ′ be metric spaces, with E ′ being
+complete.
+     the completeness of ℓ∞(S; E ′) and Cb(E; E ′), dsup
+                                                          
+
+    E embeds isometrically into the normed vector space
+     ℓ∞(E; R), and every metric space has a “completion”
+    Banach’s Contraction Mapping Theorem, on fixed points
+     of a strict contraction
+    Cantor’s Intersection Theorem, providing another view
+     of completeness
+    the Baire Category Theorem, giving the density of count-
+     able intersections of open dense subsets of a complete
+     metric space (non-examinable).
+Some of the many applications of these three theorems are
+given.
+
+                               1
+
+
+
+
+Two more basic facts about sequences                               Let E be a metric space. We know that every convergent
+                                                                sequence (xn) in E is Cauchy.
+Proposition. (Uniqueness of limits)
+Let (xn) be a sequence in a metric space E. Suppose that        Proposition. (Cauchy with cgt. subseq. =⇒ convergent)
+xn → a and xn → b. Then b = a.                                  Let (xn) be a Cauchy sequence in a metric space E which has
+                                                                a convergent subsequence (xnk ). Then (xn) converges and
+Proof. This is very similar to the proof of Uniqueness of
+Limits in R, and so is left as an exercise.                                           lim xn = lim xnk .
+                                                                                               k→∞
+
+Remarks. 1. For a convergent sequence (xn) this fact allows     Proof.    Let a = lim xnk , and let ε > 0. First choose
+us to unambiguously set a := lim xn.                            N ∈ N such that d(xn, xm) < ε for n, m ≥ N , then choose
+    2. Let (xn) be a sequence in a metric space converging to   K1 ∈ N such that d(xnk , a) < ε for k ≥ K1. Finally, choose
+a. Then every subsequence converges to a too.                   K2 ∈ N such that nk ≥ N for all k ≥ K2, and set K =
+                                                                max{K1, K2}. Then, for n ≥ N ,
+
+                                                                             d(xn, a) ≤ d(xn, xnK ) + d(xnK , a)
+                                                                                      < ε + ε = 2ε.
+
+                                                                Thus xn → a.
+
+                                                                Remark.
+                                                                Notice that the proof is again very similar to the proof for R.
+
+
+
+
+                               3                                                              4
+Lemma (Metrics for a finite product of metric spaces)                 Proof. (a) This is a straightforward exercise (Minkowski’s
+Let E = E1 × · · · × EN for metric spaces E1, · · · , EN , and        inequality is needed).
+let p ∈ [1, ∞].                                                          (b&c) These follow from the following readily verified in-
+    (a) The formula                                                   equalities:
+                                  1/p
+             PN                                                            dEk (zk , ak ) ≤ d∞(z, a)
+                  i=1 dEi (xi, yi)p              if 1 ≤ p < ∞
+dp(x, y) :=                                                                                ≤ dp(z, a)
+            max d (x , y ); i = 1, · · · , N   if p = ∞
+                       Ei   i   i                                                                                        N
+                                                                                                                         X
+                                                                                              1/p                  1/p
+                                                                                         ≤N         d∞(z, a) ≤ N               di(z, a),
+defines a metric on E.
+                                                                                                                         i=1
+    (b) These metrics are all Lipschitz equivalent.
+    (c) For an element a of E and sequence (x(n)) in E, the           for p ∈ [1, ∞], a, z ∈ E and k = 1, · · · , N .
+following equivalences hold:
+  (i) (x(n)) is dp-convergent to a for some exponent p ∈
+      [1, ∞] if and only if (x(n)) is dp-convergent to a for
+      all exponents p ∈ [1, ∞] if and only if the sequence
+         (n)
+      (xk )n≥1 converges to ai in Ei, for i = 1, · · · , N .
+ (ii) (x(n)) is dp-Cauchy for some exponent p ∈ [1, ∞] if and
+      only if (x(n)) is dp-Cauchy for all exponents p ∈ [1, ∞]
+                        (n)
+      if and only if (xk ) is Cauchy in Ek , for k = 1, · · · , N .
+
+
+
+
+                                    5                                                                   6
+
+
+
+
+Completeness                                                          Proposition. (Cgce. in & completeness of finite product spaces)
+                                                                      Let E, E1, · · · , EN and dp (p ∈ [1, ∞]) be as in Lemma
+Definition.
+                                                                      (Metrics for a finite product of metric spaces). Then E is
+Let E be a metric space. Then E is complete if all its Cauchy
+                                                                      dp-complete if and only if Ei is complete, for i = 1, · · · , N .
+sequences converge.
+                                                                      Proof. This is a corollary to Lemma (Metrics on a finite
+Exercise. (Lipschitz maps preserve Cauchyness)
+                                                                      product of metric spaces).
+Let ϕ : E → E ′ be a Lipschitz map between metric spaces.
+ (a) If (xn) is a Cauchy sequence in E then (ϕ(xn)) is Cauchy         Corollary. (Completeness of ℓp(N ))
+     in E ′.                                                          For N ∈ N and p ∈ [1, ∞], the metric space ℓp(N ) is com-
+                                                                      plete.
+ (b) Suppose that ϕ is bi-Lipschitz. Then TFAE:
+                                                                      Proof. This is the special case of the Proposition where
+       (i) E is complete.                                             E = R for k = 1, · · · , N .
+      (ii) E ′ is complete.
+
+Corollary. (Completeness under Lipschit equivalence) Let d1
+and d2 be Lipschitz equivalent metrics on a set E. Then E
+is d1-complete if and only if E is d2-complete.
+
+
+
+
+                                    7                                                                   8
+Example.                                                                   (a) Suppose for a contradiction that there is a ∈ R such
+With its nonstandard metric, given by                                   that n → a w.r.t. dNS, as n → ∞. Then
+
+               dNS(x, y) := | tan−1 x − tan−1 y|                                               dNS(n, a) → 0,
+
+(in terms of the bijection tan : ]− π/2, π/2[→ R), R is not             that is,
+complete.                                                                                | tan−1(a) − tan−1 n| → 0,
+To see this, consider the sequence (n) in (R, dNS), and note            in other words, tan−1 n → tan−1(a) (w.r.t. the standard met-
+first that                                                              ric on R). But, as already mentioned, tan−1 n → π/2 w.r.t.
+                                                                        the standard metric on R. Therefore, by the Uniqueness of
+ tan−1 n → π/2 as n → ∞ (w.r.t. the standard metric).
+                                                                        Limits in R, a satisfies
+We show
+                                                                                               tan−1(a) = π/2.
+ (a) the sequence (n) does not converge with respect to dNS,            But this gives us our contradiction, since
+     but
+                                                                                                 / Ran(tan−1).
+                                                                                             π/2 ∈
+ (b) the sequence (n) is Cauchy with respect to dNS.
+                                                                        Thus (n) does not converge w.r.t. dNS.
+                                                                          (b) Let ε > 0. Choose N ∈ N such that
+                                                                                     | tan−1 n − π/2| < ε for n ≥ N.
+                                                                        Then, for n, m ≥ N ,
+                                                                          dNS(n, m) = | tan−1 m − tan−1 n|
+                                                                                    ≤ | tan−1 m − π/2| + |π/2 − tan−1 n| < 2ε.
+                                                                        It follows that (n) is Cauchy w.r.t. dNS.
+
+                                   9                                                                 10
+
+
+
+
+Completeness of countable products                                      Completeness, closedness and Lipschitz
+Proposition. (Convergence in countable product spaces)                  Proposition. (Closed subsets of complete spaces) .
+For a sequence of metric spaces E1 = (S1, d1), E2 = (S2, d2), . . . ,   Let E = (S, d) be a metric space, let A ⊂ S, and let A
+                                                                                                                             e
+set d′i := 2−iα ◦ di where α : [0, ∞[→ [0, ∞[ is the function           denote A viewed as a metric subspace of E.
+given by either s 7→ min{s, 1} or s 7→ s/(1 + s), for each i.
+Let S = S1 ×P   S2 × · · · and let d be the metric on S given             (i) Suppose that A
+                                                                                           e is complete. Then A is a closed set of
+by d(x, y) := i≥1 d′i(xi, yi)). Then the following hold.                      E.
+ (a) For a ∈ E and a sequence (x(n)) in E, x(n) → a as                   (ii) Suppose that E is complete and A is a closed set of E.
+                           (n)
+     n → ∞ if and only if xi → ai in Ei as n → ∞, for                         Then A
+                                                                                   e is complete.
+     i = 1, 2, ...
+                                                                        Proof.
+ (b) For a sequence (x(n)) in E, (x(n)) is d-Cauchy if and                  (i) Let (an) be a sequence in A which converges in E,
+               (n)
+     only if (xi )n≥1 is di-Cauchy, for i = 1, 2, ...                   to p say. Then (an) is a Cauchy sequence in A.   e Since Ae is
+ (c) E is complete if and only if Ei is complete, for i =               complete, (an) converges in A, to a, say. But then an → a
+                                                                                                       e
+     1, 2, ... (provided that S ̸= ∅).                                  also in E, so a = p by Proposition (Uniqueness of Limits).
+                                                                        Thus p ∈ A. Therefore A is closed.
+Proof.      Parts (a) and (b) are contained in Proposition
+                                                                            (ii) Let (an) be a Cauchy sequence in A.
+                                                                                                                  e Then (an) is also
+(Convergence in countable product spaces), in Section 4.
+                                                                        a Cauchy sequence in E. Since E is complete, it follows that
+    (c) Suppose that Ei is complete for i = 1, 2, · · · . Then,
+                                                                        (an) converges in E, to p say. But A is closed, so p ∈ A. But
+for any sequence (x(n)) in E, applying (b) and (a),
+                                                                        this means that (an) converges in A.e Hence A   e is complete.
+                             (n)
+(x(n)) is d-Cauchy =⇒ (xi )n≥1 is di-Cauchy, for i = 1, 2, ...
+                             (n)
+                     =⇒ (xi )n≥1 is di-convergent, for i = 1, 2, ...
+                     =⇒ (x(n)) is d-convergent.
+Thus E is complete. The converse is also straightforward.
+                               11                                                                    12
+Paradigm example again                                             Theorem. (Paradigm example again)
+                                                                   Let S be a set and E a metric space. Suppose that E is
+We return now to the Paradigm Example
+                                                                   complete. Then the metric space ℓ∞(S; E) is complete.
+                ℓ∞(S; E) = Fb(S; E), dsup .
+                                         
+
+Note that, for functions f, f1, f2, · · · ∈ Fb(S; E), TFAE:
+  (i) dsup(fn, f ) → 0.
+ (ii) fn → f uniformly, that is, in the following sense:
+
+           ∀ε>0 ∃N ∈N ∀n≥N ∀s∈S dE (fn(s), f (s)) < ε.
+
+In other words, the sup-metric captures the property of uni-
+form convergence.
+
+
+
+
+                              13                                                                   14
+
+
+
+
+Proof. We prove this in stages.                                       (d) Let ε > 0. Choose N ∈ N such that
+   (a) Let (fn) be a Cauchy sequence in ℓ∞(S; E), and let                       dsup(fn, fm) < ε        for n, m ≥ N.
+s ∈ S, Then, since
+                                                                   Then, for all s ∈ S and n ≥ N ,
+    dE (fn(s), fm(s)) ≤ dsup(fn, fm)        (for n, m ∈ N),
+                                                                        dE (fn(s), fm(s)) ≤ dsup(fn, fm) < ε      for m ≥ N.
+it follows that (fn(s)) is a Cauchy sequence in E (doesn’t it!).
+So, by the completeness of E, (fn(s)) converges.                   Here comes the crafty move.
+                                                                   Letting m → ∞, this implies that, for all s ∈ S,
+     (b) We may therefore define a function f : S → E by
+                                                                                 d(fn(s), f (s)) ≤ ε,    for n ≥ N.             (*)
+                      f (s) := lim fn(s).
+                                                                   Therefore firstly, by the Triangle Inequality, for all s, t ∈ S,
+                                                                                       
+   (c) We must now show the following                                   d f (s), f (t)
+                                                                                                                             
+                                                                     ≤ d f (s), fN (s) + d fN (s), fN (t) + d fN (t), f (t)
+  1. The function f is bounded, so that it belongs to the
+                                                                     ≤ ε + diam fN (S) + ε.
+     metric space ℓ∞(S; E)
+                                                                   Thus, as fN is bounded,
+  2. dsup(fn, f ) → 0, in other words fn → f uniformly.
+                                                                             diam f (S) ≤ ε + diam fN (S) + ε < ∞,
+Then we’re done!
+                                                                   so f is bounded.
+                                                                   Secondly, (∗) implies that
+                                                                                   dsup(fn, f ) ≤ ε     for n ≥ N.
+                                                                   Thus, since ε is an arbitrary positive number, fn → f in the
+                                                                   metric space ℓ∞(S; E).
+
+                              15                                                                   16
+Theorem. (Completeness of C = Cb(E; E ′), dsup .)
+                                                 
+                                                                Proof. This is the famous “epsilon by three” argument
+Let E and E ′ be metric spaces and suppose that E ′ is com-     from Real Analysis, for a uniform limit of a sequence of
+plete. Then the following metric space is complete:             continuous functions to be continuous, modified for metric
+                      Cb(E; E ′), dsup ,
+                                                               spaces.
+                                                                   Write C for this metric space. In view of Proposition
+where Cb(E; E ′) denotes the set of bounded continuous func-    (Closed subsets of complete spaces), it suffices to show that
+tions from E to E ′.                                            C is a closed set in the metric space ℓ∞(E; E ′).
+                                                                   Let (fn) be a sequence in C which converges in ℓ∞(E; E ′),
+                                                                to f say. Then f is bounded (why?), and so we must show
+                                                                that f is continuous, so that f ∈ C. Therefore let x ∈ E
+                                                                and ε > 0. First choose N ∈ N such that dsup(fn, f ) < ε for
+                                                                n ≥ N , and then let δ > 0 be such that
+                                                                                           
+                                                                     y ∈ E & dE (x, y) < δ ⇒ dE ′ (fN (x), fN (y)) < ε.
+                                                                Then, for y ∈ E satisfying dE (x, y) < δ,
+                                                                    d(f (x), f (y))
+                                                                   ≤ d(f (x), fN (x)) + d(fN (x)), fN (y)) + d(fN (y), f (y))
+                                                                   ≤ ε + ε + ε = 3ε.
+                                                                Thus, since ε > 0 is arbitrary, f is continuous at x. Since
+                                                                x ∈ E is arbitrary, it follows that f is continuous, as required.
+                                                                    [To summarise: This proves that Cb(E; E ′) is a closed
+                                                                set in ℓ∞(E; E ′). Since ℓ∞(E; E ′) is complete, it follows
+                                                                that Cb(E; E ′) is complete by Proposition (Closed subsets of
+                                                                complete spaces).]
+
+                             17                                                                18
+
+
+
+
+Corollary.                                                      Remark.
+C := (C(I; R), dsup) is a complete metric space.                This corollary has the following considerable extension: for
+                                                                any complete metric space E and sequentially compact met-
+Proof. Every continuous real-valued function f on a closed      ric space K,
+and bounded interval (such as the unit interval I) is bounded                          
+[by Real Analysis]. Thus C is the metric space                           C(K; E), dsup is a complete metric space.
+
+                                                                Sequential compactness is treated in the final section, where
+                                     
+                       Cb(I; R), dsup ,
+                                                                it is shown that Cb(K; E) = C(K; E) for such K.
+which is of the type of the above theorem.
+
+
+
+
+                             19                                                                20
+Embedding into a complete normed vector space                 Proof.
+                                                              We prove this under the assumption that E is bounded:
+Theorem. (Embedding into a complete normed space)
+Let E be a metric space. Then there is a complete metric                             diam E < ∞.                     (*)
+space F and an isometry j : E → F , moreover, F may be
+chosen to be a normed vector space.                           The modification needed in case E is unbounded is given as
+                                                              an exercise, guided by hints.
+                                                                 The proof is broken into parts.
+                                                              For the exam, you are not expected to reproduce the proof
+                                                              from memory.
+
+
+
+
+                              21                                                          22
+
+
+
+
+   1. Set F := ℓ∞(E; R) := Fb(E; R), dsup .
+                                           
+                                                              Exercise. (Embedding into a complete metric space)
+   We already know that this metric space is complete, and    Extend the proof of the theorem to the general case, where
+that dsup is a norm-metric:                                   the metric space E is not bounded.
+                                                              [Hint: In this case the functions dx are not bounded.
+                  dsup(f, g) = ∥g − f ∥sup.
+                                                                 1. Verify that, for any two elements x, y ∈ E
+Our task therefore is to find an isometry j : E → F .
+  2. For each x ∈ E define the function                                    the function (dx − dy ) is bounded.
+
+                dx : E → R,        p 7→ d(x, p).                 2. Fix a “reference element” ω of E.
+                                                                 3. Verify that the new map
+(In other words, dx := distA, where A = {x}.) By the Re-
+arranged Triangle Inequality, for all x, p, q ∈ E,                        jω : E → ℓ∞(E; R),    x 7→ dx − dω
+  dx(p) − dx(q) = d(x, p) − d(x, q) ≤ d(p, q) ≤ diam E.
+                                                              is an isometry.
+Thus, for all x ∈ E, dx is bounded. In other words, dx ∈
+Fb(E; R) for all x ∈ E.
+   3. Define the map
+                   j : E → F,       x 7→ dx.
+Then, by another application of the Rearranged Triangle In-
+equality, for all x, y, p ∈ E,
+       dx(p) − dy (p) = d(x, p)) − d(y, p) ≤ d(x, y)
+whereas
+                  dx(y) − dy (y) = d(x, y),
+and so dsup(dx, dy ) = d(x, y). Thus j is isometric, as re-
+quired.
+
+                              23                                                          24
+Unique Lipschitz extension from a dense subset                   Idea. Since Lipschitz functions are (sequentially) continuous,
+                                                                 f must satisfy the following: for any sequence (an) in E0
+Theorem. (Unique Lipschitz/isometric extension)
+                                                                 converging to x ∈ E,
+Let E and E ′ be metric spaces, let E0 be a dense subset
+of E, let f0 : E0 → E ′ be Lipschitz and suppose that E ′                       f (x) = lim f (an) = lim f0(an).
+is complete. Then there is a unique extension of f0 to a
+continuous function f : E → E ′. Moreover                        The idea of the proof is to turn this requirement on f into a
+                                                                 “definition” of f . This means that we need to carefully check
+  1. f is Lipschitz and Lip f = Lip f0, and                      well-definedness.
+  2. f is isometric if f0 is.
+                                                                 Proof. Set L0 = Lip f0. Let x ∈ E and suppose that (an)
+                                                                 and (bn) are sequences in E0 converging to x. Then, since
+   The theorem has a picture to remember it by:
+                                                                      d′(f0(an), f0(am)) ≤ L0 d(an, am)     for n, m ∈ N,
+                          E
+                         i
+                                 f
+                                          .                      (f0(an)) is Cauchy in E ′. But E ′ is complete so (f0(an))
+                                                                 converges. Since
+                         E0     f0
+                                     E′
+                                                                      d′(f0(an), f0(bn)) ≤ L0 d(an, bn)
+                                                                                                                 
+                                                                                         ≤ L0 d(an, x) + d(x, bn) → 0,
+
+                                                                 it follows that lim f0(an) is the same for all sequences (an)
+                                                                 from E0 converging to x.
+                                                                     We may therefore define a function unambiguously as fol-
+                                                                 lows:
+                                                                                f : E → E ′, x 7→ lim f0(an),
+                                                                 where (an) is any sequence in E0 which converges to x.
+
+                                25                                                             26
+
+
+
+
+   It now remains to prove:                                          2. Let x ∈ E. Then there is a sequence (an) in E0 such
+                                                                 that an → x. By the sequential continuity of g at x, and the
+  1. f is Lipschitz and Lip f = L0                               fact that g extends f0,
+  2. Let g : E → E ′ be continuous and extend f0. Then                      g(x) = lim g(an) = lim f0(an) = f (x).
+     g = f.
+                                                                 Thus g = f , as required.
+  3. If f0 is isometric then f is isometric too.
+                                                                    3. Suppose that f0 is isometric. We claim that f is then
+Then we are done.                                                isometric too. Thus let x, y ∈ E. Taking sequences (an) and
+                                                                 (bn) in E0, as in 1. Then
+   1. Let x, y ∈ E. Take sequences (an) and (bn) from
+E0 which converge to x and y respectively. Then, for each               d′(f0(an), f0(bn)) = d(an, bn) for all n ∈ N.
+n ∈ N,
+                                                                 Since (an, bn) → (x, y) and (f0(an), f0(bn)) → (f (x), f (y)),
+            d′(f0(an), f0(bn)) ≤ L0 d(an, bn),
+                                                                 it follows, by Exercise (Convergence of metric values) that
+and, as n → ∞,
+                                                                                   d′(f (x), f (y)) = d(x, y).
+              ′                      ′
+            d (f0(an), f0(bn)) → d (f (x), f (y)),
+                                                                 Thus f is isometric.
+and
+                      d(an, bn) → d(x, y).                       Exercise. (Uniformly continuous extension)
+                                                                 Prove that if f0 is only assumed to be uniformly continuous
+Thus by Proposition (Order preservation under limits),           then there is still a unique continuous funtion f : E → E ′
+                                                                 which extends f0, and that f is necessarily uniformly contin-
+                  d′(f (x), f (y)) ≤ L0 d(x, y).
+                                                                 uous. Uniform continuity means
+Thus f is Lipschitz and Lip f ≤ L0. Since f extends f0 the
+                                                                   ∀ε>0∃δ>0∀x,y∈E0 : d(x, y) < δ =⇒ d(f (x), f (y)) < ε.
+reverse inequality holds too, so we have equality. This proves
+1.                                                               [Hint: The given proof needs small, but careful, adjustment.]
+
+                                27                                                             28
+Completion of a metric space                                     Proof. (NON-EXAMINABLE )
+                                                                     (a) By Theorem (Embedding into a Complete Metric Space)
+Definition.
+                                                                 there is a complete metric space F and an isometry j : E →
+A completion of a metric space E is a pair (E,
+                                            e ι) consisting
+                                                                 F . Set E e := Ran j, viewed as a metric subspace of F , and
+of                                                                        E
+                                                                 ι := j| , the co-restriction of the map j to E.   e Then E
+                                                                          e                                                 e
+    a complete metric space E,
+                             e and                               is complete by Proposition (Closed Subspaces of Completes
+                                                                 Spaces), ι is isometric, and Ran ι is dense in E.
+                                                                                                                e Thus (E,
+                                                                                                                         e ι)
+    an isometry ι : E → E,
+                         e such that
+                                                                 is a completion of E.
+    ι(E) is dense in E.
+                      e                                              (b) Set E0 = ι1(E) and define a function
+
+Theorem. (Existence and Uniqueness of Completions)                             j0 : E0 → E
+                                                                                         e2,        ι1(x) 7→ ι2(x).
+
+ (a) Every metric space E has a completion.                      Since Ee2 is complete, j0 is isometric and E0 is dense in E
+                                                                                                                           e1, it
+                                                                 follows from Proposition (Unique Lipschitz/isometric Exten-
+ (b) If (E
+         e1, ι1) and (E
+                      e2, ι2) are completions of E, then there
+                                                                 sion) that j0 extends uniquely to an isometry j : E  e1 → E e2.
+     is a unique isometry j : E e1 → Ee2 such that
+                                                                 Note that
+                             j ◦ ι1 = ι2.                               j(ι1(x)) = j0(ι(x)) = ι2(x)            for all x ∈ E,
+
+   Illustrative picture for part (b):                            so j ◦ ι1 = ι2, as claimed.
+                                                                     The proof that j is the only isometry from E
+                                                                                                                e1 to E
+                                                                                                                      e2 sat-
+                              E                                  isfying j ◦ ι1 = ι2 is left as an exercise.
+                        ι1              ι2
+
+
+                   E
+                   e1
+                               j
+                                             E
+                                             e2
+
+
+
+                              29                                                               30
+
+
+
+
+Exercise. (Uniqueness of completions)                            Example. (* For optional further study. *)
+Prove the uniqueness of metric space completions, in the pre-    The completion of the metric space
+cise sense described in the theorem.                                                                
+                                                                                        C(I; R), d1 ,
+                                                                                                                
+                                                                 where d1 is the integration metric, is L1(I), q , where L1(I)
+                                                                 is the Lebesgue space
+                                                                                           L1(I)/ ∼
+                                                                 in which L1(I) equals
+                                                                                                            Z
+                                                                 
+                                                                   f : I → R : f is Lebesgue measurable and   |f | < ∞ ,
+                                                                                                                          I
+                                                                 for the equivalence relation given by f ∼ g if
+                                                                        
+                                                                          s ∈ I : f (s) ̸= g(s) is a Lebesgue null set,
+                                                                 and q is the associated quotient map.
+                                                                    The metric for L1(I) is given by
+                                                                                                   Z
+                                                                                    d([f ], [g]) := |g − f |,
+                                                                                                    I
+                                                                            R
+                                                                 where now is the Lebesgue integral.
+                                                                     A subset A of I is Lebesgue null if, for all ε > 0 there is
+                                                                 a sequence of subintervals (Jn) of I such that
+                                                                               ∞
+                                                                               [                        ∞
+                                                                                                        X
+                                                                                     Jn ⊃ A and               |Jn| < ε.
+                                                                               n=1                      n=1
+
+
+                              31                                                               32
+Banach’s Contraction Mapping Theorem                              Theorem. (Banach’s Contraction Mapping Theorem.)
+                                                                  Let E be a complete metric space, and let ϕ ∈ F (E; E) be
+Definition.
+                                                                  a strict contraction. Then there is a unique a ∈ E such that
+Let ϕ ∈ F (S; S) for a set S, and let a ∈ S. Then a is a fixed
+                                                                  ϕ(a) = a. Moreover, for all x ∈ E,
+point of the map ϕ if
+                                                                                    ϕ◦n(x) → a as n → ∞,
+                            ϕ(a) = a.
+                                                                  where ϕ◦n := ϕ ◦ · · · ◦ ϕ (n-fold composition).
+Example. (Towards Brouwer’s Fixed Point Theorem)
+Let f ∈ C(I; I) for the unit interval I. As an example, take      Exercise. (Weakened hypotheses for Banach’s CMT)
+f : I → I, t 7→ 1 − sin(πt/2). Then f has a fixed point.          Show that the hypothesis of strict contractivity (in Banach’s
+    Here is a reminder of the proof. Define the new function      Contraction Mapping Theorem) can be weakened as follows:
+                                                                  it suffices for there to be a sequence αn in R satisfying
+               g : I → R,        s 7→ f (s) − s.
+                                                                  ∞
+                                                                  X
+Note that g is continuous and satisfies                                αn < ∞, and
+                                                                   n=1
+      g(0) = f (0) − 0 ≥ 0 and g(1) = f (1) − 1 ≤ 0.
+                                                                  d(f (x), f ◦n(y)) ≤ αn d(x, y) for all x, y ∈ E and n ∈ N.
+                                                                      ◦n
+
+Therefore, by the Intermediate Value Theorem, between 0
+and 1 there is a such that g(a) = 0, in other words f (a) = a.
+
+Example. (Towards the Contraction Mapping Theorem)
+Let f ∈ C(I; I), for the unit interval I, and suppose that
+there is L ∈ [0, 1[ such that
+       |f (s) − f (t)| ≤ L|t − s|,      for all s, t ∈ I.
+Then f has a unique fixed point.
+
+                                33                                                              34
+
+
+
+
+Proof. Set L := Lip ϕ. Thus L < 1. We divide the proof            Thus, for all n, p ∈ N,
+into stages.
+                                                                     0 ≤ d(xn, xn+p) ≤ Ln(1 + L + · · · + Lp−1) d x0, x1
+                                                                                                                           
+    1. Uniqueness. Let a, b ∈ E. Suppose for a contradiction
+that a ̸= b but a and b are both fixed points of ϕ. Then                                Ln
+                                                                                     ≤       d(x, ϕ(x)).
+                                                                                       1−L
+             d(a, b) = d(ϕ(a), ϕ(b)) ≤ Ld(a, b).
+                                                                  Since Ln → 0 as n → ∞, it follows that (xn) is Cauchy and
+Since L < 1 and d(a, b) > 0 we have our contradiction.            so, by the completeness of E, convergent. Set ax = lim xn.
+Therefore ϕ has at most one fixed point.                              By the continuity of ϕ, and the fact that ϕ(xn) = xn+1
+   2. Let x ∈ E. Consider the sequence (xn)n≥0 in E defined       for each n ∈ N,
+recursively by
+           x0 = x,        xk = ϕ(xk−1) for k ∈ N.                      ϕ(ax) = lim ϕ(xn) = lim xn+1 = lim xn = ax.
+                                                                                 n→∞           n→∞          n→∞
+                                        ◦n
+Thus, with the understanding that ϕ          = idE when n = 0,    Thus ax is a fixed point of ϕ.
+                       ◦n
+               xn = ϕ (x) for n = 0, 1, · · ·                         3. Combining 1. and 2., we now see that ϕ has a unique
+                                                                  fixed point a and, for all x ∈ E,
+Then, for all n, p ∈ N,
+                                                                                    ϕ◦n(x) → a as n → ∞.
+              d(xn, xn+p) ≤ L d(xn−1, xn+p−1)
+                          ..
+                                                                  Exercise. (Weakened hypotheses for Banach’s CMT)
+                          ≤ Ln d(x0, xp).                         Show that the hypothesis of strict contractivity (in Banach’s
+In particular, for all k ∈ N,                                     Contraction Mapping Theorem) can be weakened as follows:
+                                                                  it suffices for there to be a sequence αn in R satisfying
+                d(xk−1, xk ) ≤ Lk−1d(x0, x1).
+                                                                  ∞
+                                                                  X
+So, by repeated application of the Triangle Inequality,                αn < ∞, and
+                                                                   n=1
+d(x0, xp) ≤ d(x0, x1) + d(x1, x2) + · · · + d(xp−1, xp)
+                                                                  d(f (x), f ◦n(y)) ≤ αn d(x, y) for all x, y ∈ E and n ∈ N.
+                                                                      ◦n
+          ≤ d x0, x1 1 + L + · · · + Lp−1 ≤ 1−L   1
+                                           
+                                                     d(x0, x1).
+
+                                35                                                              36
+Fractal application                                           Q. What is the unique fixed point of ϕ?
+                                                              A. Cantor’s middle thirds set (which we call Z)!
+The metric space K(RN ), dHaus) is complete, for each N ∈
+                                                            Thus, for example,
+N.
+    An example of a strict contraction on K(R), dHaus) is              dHaus ϕ◦n({0}), Z → 0 as n → ∞.
+                                                                                        
+given by
+                         1     1      2                   More familiarly, perhaps
+               ϕ : K 7→ K ∪        K+     .
+                         3       3     3
+                                                                        dHaus ϕ◦n(I), Z → 0
+                                                                                       
+                                                                                                 as n → ∞,
+This has Lipschitz constant 1/3.
+                                                            where I is the unit interval.
+                                                            Remark.
+                                                            For the proofs of the above, and much more on this exciting
+                                                            topic, I recommend (to all MSci students at least) the module
+                                                            ‘Topology and Fractals’.
+
+
+
+
+                           37                                                               38
+
+
+
+
+                           39                                                               40
+                                                                                                     
+Application to integral/differential equations                          1. Set C := C [a, b]; R , dsup .
+Consider the following integral equation:                            Exercise. (Verification of continuity)
+                                                                                                      
+                             Z t
+                                                                    Verify that, for f ∈ C [a, b]; R , the function
+              y(t) = α(t) +      β y(s), s ds,
+                                 a                                              F : [a, b] → R × [a, b],           s 7→ (f (s), s)
+in the interval [a, b], in which                                     is continuous.
+                                              
+          α ∈ C [a, b]; R , β ∈ C R × [a, b]; R ,
+                                                                        2. Now, for f ∈ C,
+and assume that there is M ∈ [0, ∞[ such that
+                                                                                          β(f (s), s) = (β ◦ F )(s)
+β(v, s) − β(u, s) ≤ M |v − u|        for all u, v ∈ R, s ∈ [a, b].
+                                                                     for F as above. Therefore, being a composition of continuous
+Q. How does Banach’s CMT apply here?                                 functions, the function
+A. Let’s see!
+                                                                                      [a, b] → R,          s 7→ β(f (s), s)
+
+                                                                     is continuous. It follows that the following prescription de-
+                                                                     fines a map ϕ : C → C:
+                                                                                               Z t
+                                                                                                             
+                                                                             ϕ(f )(t) = α(t) +     β f (s), s ds, t ∈ [a, b].
+                                                                                                      a
+
+
+
+
+                                41                                                                         42
+
+
+
+
+   3. Claim. For all n ∈ N and f, g ∈ C,                                The claim now follows since, as is easily verified,
+                              [M (b − a)]n
+         dsup ϕ◦n(f ), ϕ◦n(g) ≤             dsup(f, g).                        Z t Z s1         Z sn−1
+                                                                                                                            (t − a)n
+                                    n!                                                    ···             dsn · · · ds1 =            .
+                                                                                a     a          a                             n!
+Proof of claim. Let f, g ∈ C. Then, for all t ∈ [a, b],
+                                                                        4. Since [M (b − a)]n/n! < ∞, Banach’s CMT (in its
+                                                                                 P
+                          Z t
+   ϕ(g)(t) − ϕ(f )(t) =       [β(g(s), s) − β(f (s), s)]ds           extended form) applies:
+                         Z at
+                                                                         There is a unique y ∈ C([a, b]; R) s.t. ϕ(y) = y, i.e.
+                      ≤       β(g(s), s) − β(f (s), s) ds                                       Z t
+                          a                                                                                    
+                             Z t                                            y(t) = α(t) +             β y(s), s ds,         for all t ∈ [a, b].
+                      ≤M         g(s) − f (s) ds                                                 a
+                                a
+                                                                         For all f ∈ C([a, b]; R), dsup(ϕ◦n(f ), y) → 0, i.e. the
+This may be iterated! For n ∈ N,
+                                                                          sequence of functions defined as follows converges uni-
+   ϕ◦n(g)(t) − ϕ◦n(f )(t)                                                 formly on [a, b] to the function y:
+        Z t
+   ≤M          ϕ◦(n−1)(g)(s1) − ϕ◦(n−1)(f )(s1) ds1                       f0(t) := f (t)
+                                                                                                Z t
+          Za t Z s1                                                       f1(t) := α(t) +     β(f (s), s)ds
+   ≤M   2
+                    ϕ◦(n−2)(g)(s2) − ϕ◦(n−2)(f )(s2) ds2ds1                               Za t          Z s
+             a   a                                                                                                           
+    ..                                                                    f2(t) := α(t) +     β α(s) +       β(f (r), r)dr, s ds, etc.
+            Z t Z s1
+                   Z sn−1                                                                        a                  a
+
+   ≤ Mn        ···           g(sn) − f (sn) dsn · · · ds1                Here f could be an intelligent guess at (an approxima-
+        a   a
+                   Z at Z s1     Z sn−1                                   tion to) the solution or, in the absence of the availability
+      n
+   ≤ M ∥g − f ∥sup           ···        dsn · · · ds1.                    of that, a simple continuous function from [a, b] to R,
+                        a   a        a
+                                                                          such as the constant function zero!
+
+                                43                                                                         44
+Cantor’s Intersection Theorem                                    Remark.
+                                                                 For all n ∈ N, F ⊂ Fn so
+Theorem.T(Cantor’s Intersection Theorem)
+Let F = ∞   n=1 Fn for a sequence of nonempty subsets (Fn ) of                         diam F ≤ diam Fn.
+a metric space E. Suppose that E is complete and the Fn’s
+satisfy the following conditions:                                It therefore follows from (b) that diam F = 0. Thus F con-
+                                                                 tains at most one element. So what has to be proved is that
+ (a) The sequence is decreasing: F1 ⊃ F2 ⊃ · · ·                 F contains at least one element.
+ (b) diam Fn → 0 as n → ∞.
+ (c) Each Fn is closed
+Then F is a singleton set, in particular F is nonempty.
+
+
+
+
+                             45                                                                 46
+
+
+
+
+Proof. For each n ∈ N, Fn is nonempty so we may choose           Exercise. (Necessary hypotheses in Cantor’s Theorem)
+xn ∈ Fn. Then, for n, p ∈ N,                                     Show that the theorem is false if either of (b) or (c) is dropped.
+                                                                 In other words, find counter-examples for both of these cases.
+                     xn+p ∈ Fn+p ⊂ Fn,                     (*)
+
+thus
+                   d(xn, xn+p) ≤ diam Fn.
+By (b) this implies that the sequence (xn) is Cauchy, and
+therefore convergent, since E is complete. Set
+
+                         a := lim xn.
+
+It remains to show that a ∈ F .
+    Let n ∈ N. Then, by (*), xn+p ∈ Fn for all p ∈ N. Since
+Fn is closed and
+
+                  a = lim xn = lim xn+p,
+                      n→∞         p→∞
+
+           that a ∈ Fn. Since n ∈ N is arbitrary, it follows
+it follows T
+that a ∈ Fn = F . Thus F is nonempty, and the proof is
+complete in view of the remark preceding the proof.
+
+
+
+
+                             47                                                                 48
+Baire Category Theorem                                            Theorem.T(Baire Category Theorem)
+                                                                  Let A = ∞  n=1 Vn for a sequence (Vn ) of open dense subsets
+The final topic of this section is a theorem important for its
+                                                                  of a complete metric space E. Then A is dense.
+deep and useful applications (in topology, functional analysis
+and probability theory, for example). It comes in a variety of
+forms. We give the simplest, and briefly discuss some of the
+ramifications afterwards.
+Remarks.
+  1. An infinite intersection of open sets need not be open.
+     For example,
+                      ∞
+                      \
+                             − n1 , n+1
+                                       
+                                     n    = [0, 1].
+                      n=1
+
+  2. We proved earlier that the intersection of two dense
+     subsets of a metric space is dense if at least one of the
+     subsets is open. It follows that the intersection of a
+     finite number of open dense subsets is dense.
+  3. Let (qn) be an enumeration of the rationals. Then the
+     set VTn := R \ {qn } is open and dense, for each n ∈ N,
+     and ∞   n=1 Vn = R \ Q, the set of irrationals. The latter
+     set is still dense (like the set of rationals). The Baire
+     Category Theorem generalises this example.
+
+
+
+                               49                                                                50
+
+
+
+
+Proof. (NON-EXAMINABLE )                                             Continuing in this way, using the density and openness of
+Let p ∈ E and r > 0. We must show that                            each Vn in turn, we obtain sequences (rn) and (xn) in ]0, ∞[
+                                                                  and E respectively, such that for each n ∈ N
+                       Br (p) ∩ A ̸= ∅.
+                                                                                           rn ≤ r/2n,
+Since V1 is dense in E the set Br (p) ∩ V1 must contain some
+element, x1 say. Since Br (p) ∩ V1 is open there is s1 > 0 such   and
+that
+                    Bs1 (x1) ⊂ Br (p) ∩ V1.                          Brn [xn] ⊂ Brn−1 (xn−1) ∩ Vn ⊂ Br (p) ∩ V1 ∩ · · · ∩ Vn,
+
+Set r1 = s1/2. Then                                               in particular
+                            r1 ≤ r/2                                                Br1 [x1] ⊃ Br2 [x2] ⊃ · · ·
+and                                                               and
+
+                                                                             diam Brn [xn] ≤ 2r/2n for all n ∈ N.
+                                                                                          
+              Br1 [x1] ⊂ Bs1 (x1) ⊂ Br (p) ∩ V1.
+
+Since V2 is dense in E we may choose x2 ∈ Br1 (x1) ∩ V2.          Since closed balls are closed sets, and 2r/2n → 0 as n → ∞,
+Since Br1 (x1) ∩ V2 is open there is s2 > 0 such that             the result now follows by Cantor’s Intersection Theorem:
+                                                                                                 ∞
+                  Bs2 (x2) ⊂ Br1 (x1) ∩ V2.                                                      \
+                                                                                  Br (p) ∩ A ⊃         Brn [xn] ̸= ∅.
+Set r2 = s2/2. Then                                                                              n=1
+
+                            r2 ≤ r/22
+and
+
+   Br2 [x2] ⊂ Bs2 (x2) ⊂ Br1 (x1) ∩ V2 ⊂ Br (p) ∩ V1 ∩ V2.
+
+
+
+                               51                                                                52
+Remark.                                                          Theorem. (Baire  Category Theorem equivalent)
+                                                                 Let B = ∞
+                                                                           S
+Recall the interior-closure-complement identites: for a subset               n=1 n for a sequence (Fn ) of closed nowhere
+                                                                                 F
+A of a metric space E,                                           dense subsets of a complete metric space E. Then B has
+               ∁
+                                                                 dense complement. In particular, B ̸= E.
+             A = Int A∁ and (Int A)∁ = A∁.
+                                                                 Remark.
+Here A∁ denotes the complement of A in E, namely E \ A.          Thus complete metric spaces are never meagre.
+Definition.                                                      Examples.
+Let A ⊂ E for a metric space E.
+                                                                   1. Finite subsets of R are closed and nowhere dense, thus
+  (i) A is nowhere dense if                                           countable subsets, such as Q, are meagre. Therefore
+                                                                      the Baire Category theorem confirms what we know by
+                            Int A = ∅,
+                                                                      direct proof: R \ Q is dense in R.
+     equivalently, Int A∁ is dense.
+                                                                   2. Let L be a line in the Euclidean plane, then L is nowhere
+ (ii) A is meagre if it is a countable union of nowhere dense         dense. Moreover, the Euclidean plane cannot be re-
+      sets.                                                           alised as a countable union of lines.
+
+Remark.                                                            3. Most functions are nowhere differentiable.
+For a closed set F in E, nowhere density is equivalent to             The following subset
+                                                                                         of the complete metric space
+empty interior, or dense complement.                                  C = C(I; R), dsup is meagre:
+                                                                           
+                                                                      D := f ∈ C : f is differentiable at some point in I
+
+
+
+
+                              53                                                              54
+
+
+
+
+                                                                 Exercises for Section 5
+
+
+
+
+                              55                                                              56
+Exercise. 5.1 (Lipschitz maps preserve Cauchyness)                 Exercise. 5.4 (Weakened hypotheses for Banach’s CMT)
+Let ϕ : E → E ′ be a Lipschitz map between metric spaces.          Show that the hypothesis of strict contractivity (in Banach’s
+                                                                   Contraction Mapping Theorem) can be weakened as follows:
+    (a) If (xn) is a Cauchy sequence in E then (ϕ(xn)) is Cauchy
+                                                                   it suffices for there to be a sequence αn in R satisfying
+        in E ′.
+                                                                       ∞
+    (b) Suppose that ϕ is bi-Lipschitz. Then TFAE:
+                                                                       X
+                                                                           αn < ∞, and
+                                                                       n=1
+          (i) E is complete.
+                                                                   d(f (x), f ◦n(y)) ≤ αn d(x, y) for all x, y ∈ E and n ∈ N.
+                                                                          ◦n
+         (ii) E ′ is complete.
+                                                                   ·                                                        [15 marks]
+·                                                    [10 marks]
+Exercise. 5.2 (Embedding into a complete metric space)             Exercise. 5.5 (Verification of continuity)
+                                                                                                    
+Extend the proof of the theorem to the case where the metric       Verify that, for f ∈ C [a, b]; R , the function
+space E is not bounded.
+                                                                               F : [a, b] → R × [a, b],   s 7→ (f (s), s)
+[Hint: In this case the functions dx are not bounded.
+   1. Verify that, for any two elements x, y ∈ E                   is continuous.                                            [5 marks]
+                      (dx − dy ) is bounded.
+                                                                   Exercise. 5.6 (Necessary hypotheses in Cantor’s Theorem)
+     2. Fix a “reference element” ω of E.                          Show that the theorem is false if either of (b) or (c) is dropped.
+     3. Verify that the new map                                    In other words, find counter-examples for both of these cases.
+                                                                   ·                                                       [10 marks]
+               jω : E → ℓ∞(E; R),     x 7→ dx − dω
+is an isometry.                                       [5 marks]
+Exercise. 5.3 (Uniqueness of completions)
+Prove the uniqueness of metric space completions, in the pre-
+cise sense described in the theorem.
+                                 57                                                               58
+
+
+
+
+Exercise. 5.7 (What does not Cauchy mean, for a sequence?)         Exercise. 5.9 (Uniformly continuous extension)
+Let (xn) be a sequence in a metric space E.                        Prove that if f0 is only assumed to be uniformly continuous
+                                                                   then there is still a unique continuous funtion f : E → E ′
+    (a) Show that TFAE:                                            which extends f0, and that f is necessarily uniformly contin-
+         (i) (xn) is Cauchy.                                       uous. Uniform continuity means
+         (ii) ∀ε>0 ∃N ∈N ∀n≥N d(xN , xn) < ε.                           ∀ε>0∃δ>0∀x,y∈E0 : d(x, y) < δ =⇒ d(f (x), f (y)) < ε.
+    (b) Show that TFAE:                                            [Hint: The given proof needs small, but careful, adjustment.]
+         (i) (xn) is not Cauchy.
+         (ii) (xn) has a subsequence (xnk ) satisfying
+                          
+                      inf d(xnk , xnk+1 ) : k ∈ N > 0.      (*)
+
+[10 marks]
+
+Exercise. 5.8 (Integration over I as Lipschitz map) Let (E, d)
+be C(I; R) with the supremum metric, given by
+                                   
+   dsup(f, g) = ∥g − f ∥sup := sup |g(s) − f (s)| : s ∈ I
+
+where I := [0, 1]. Define a map as follows:
+                                       Z
+                   R : E → R, f 7→ f.
+
+Show that R is Lipschitz and find Lip R.             [10 marks]
+
+
+                                 59                                                               60
+

@@ -1,0 +1,113 @@
+\documentclass[11pt,a4paper,landscape]{article}
+\usepackage[margin=18mm]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+\pagestyle{empty}
+\tikzset{>=Latex,thick, every node/.style={font=\large},
+block/.style={draw,rectangle,minimum width=13mm,minimum height=11mm,inner sep=2pt},
+junction/.style={draw,circle,minimum size=8mm,inner sep=0pt},
+tap/.style={draw,circle,minimum size=2.5mm,inner sep=0pt,fill=white}}
+\begin{document}
+\begin{center}
+{\Large\bfseries MATH6342 Linear Systems --- A1.2(i)}\\[7pt]
+$\displaystyle \frac{dx}{dt}=ax+bu,\qquad \frac{dy}{dt}=cx+du$\\[7pt]
+$\displaystyle x=\int(ax+bu)\,dt,\qquad y=\int(cx+du)\,dt$
+\end{center}
+\vspace{15mm}
+\begin{center}
+\begin{tikzpicture}
+\coordinate (u) at (0,0);
+\node[tap] (ut) at (1,0) {};
+\node[block] (b) at (3,0) {$b$};
+\node[junction] (sx) at (5.3,0) {$+$};
+\node[block] (ix) at (7.4,0) {$\int$};
+\node[tap] (xt) at (9.5,0) {};
+\node[block] (c) at (11.5,0) {$c$};
+\node[junction] (sy) at (14,0) {$+$};
+\node[block] (iy) at (16,0) {$\int$};
+\draw[->] (u) -- node[above] {$u$} (ut);
+\draw[->] (ut) -- (b);
+\draw[->] (b) -- node[above] {$bu$} (sx);
+\draw[->] (sx) -- (ix);
+\draw[->] (ix) -- node[above] {$x$} (xt);
+\draw[->] (xt) -- (c);
+\draw[->] (c) -- node[above] {$cx$} (sy);
+\draw[->] (sy) -- (iy);
+\draw[->] (iy) -- (18,0) node[right] {$y$};
+% Upper feedback loop: x to a to first summing junction
+\node[block] (a) at (7.4,2.6) {$a$};
+\draw[-] (xt) -- (9.5,2.6);
+\draw[->] (9.5,2.6) -- (a);
+\draw[-] (a) -- (5.3,2.6);
+\draw[->] (5.3,2.6) -- node[left] {$ax$} (sx.north);
+% Lower input feedforward: u to d to second summing junction
+\node[block] (d) at (11.5,-2.6) {$d$};
+\draw[-] (ut) -- (1,-2.6);
+\draw[->] (1,-2.6) -- (d);
+\draw[-] (d) -- (14,-2.6);
+\draw[->] (14,-2.6) -- node[right] {$du$} (sy.south);
+\end{tikzpicture}
+\end{center}
+\vspace{9mm}
+\noindent\textbf{Lecture-note notation:} The upper path feeds the state $x$ through amplifier $a$ back into the first summing junction. The lower path sends $du$ into the second summing junction. Both differential equations are realised by integrators, with no differentiators. (Zero initial conditions are implicit.)
+\newpage
+\begin{center}
+{\Large\bfseries MATH6342 Linear Systems --- A1.2(ii)}\\[7pt]
+$\displaystyle \frac{dx}{dt}=ax+b_1u_1+b_2u_2,\qquad \frac{dy}{dt}=cx+d_1u_1+d_2u_2$\\[7pt]
+$\displaystyle x=\int(ax+b_1u_1+b_2u_2)\,dt,\qquad y=\int(cx+d_1u_1+d_2u_2)\,dt$
+\end{center}
+\vspace{7mm}
+\begin{center}
+\begin{tikzpicture}[scale=.91,transform shape]
+% Inputs, taps, and state pathway
+\node[tap] (u1t) at (.5,1.5) {};
+\node[tap] (u2t) at (1,-.2) {};
+\node[block] (b1) at (3.4,1.5) {$b_1$};
+\node[block] (b2) at (3.4,-.2) {$b_2$};
+\node[junction] (s1) at (6,1.5) {$+$};
+\node[junction] (s2) at (7.5,0) {$+$};
+\node[block] (ix) at (9.3,0) {$\int$};
+\node[tap] (xt) at (11.1,0) {};
+\node[block] (c) at (13,0) {$c$};
+\node[junction] (s3) at (15.2,0) {$+$};
+\node[junction] (s4) at (16.8,0) {$+$};
+\node[block] (iy) at (18.5,0) {$\int$};
+\draw[->] (-.4,1.5) -- node[above] {$u_1$} (u1t);
+\draw[->] (.7,-.2) -- node[above] {$u_2$} (u2t);
+\draw[->] (u1t) -- (b1);
+\draw[->] (u2t) -- (b2);
+\draw[->] (b1) -- (s1);
+\draw[-] (b2) -- (6,-.2);
+\draw[->] (6,-.2) -- (s1.south);
+\draw[-] (s1) -- (7.5,1.5);
+\draw[->] (7.5,1.5) -- (s2.north);
+\draw[->] (s2) -- (ix);
+\draw[->] (ix) -- node[above] {$x$} (xt);
+\draw[->] (xt) -- (c);
+\draw[->] (c) -- (s3);
+\draw[->] (s3) -- (s4);
+\draw[->] (s4) -- (iy);
+\draw[->] (iy) -- (20.3,0) node[right] {$y$};
+% Feedback at top
+\node[block] (a) at (9.3,3.55) {$a$};
+\draw[-] (xt) -- (11.1,3.55);
+\draw[->] (11.1,3.55) -- (a);
+\draw[-] (a) -- (7.5,3.55);
+\draw[->] (7.5,3.55) -- node[left] {$ax$} (s2.north);
+% Feedforward paths under main path
+\node[block] (d1) at (10,-2.1) {$d_1$};
+\node[block] (d2) at (10,-3.9) {$d_2$};
+\draw[-] (u1t) -- (.5,-2.1);
+\draw[->] (.5,-2.1) -- (d1);
+\draw[-] (u2t) -- (1.7,-.2) -- (1.7,-3.9);
+\draw[->] (1.7,-3.9) -- (d2);
+\draw[-] (d1) -- (15.2,-2.1);
+\draw[->] (15.2,-2.1) -- (s3.south);
+\draw[-] (d2) -- (16.8,-3.9);
+\draw[->] (16.8,-3.9) -- (s4.south);
+\end{tikzpicture}
+\end{center}
+\vspace{3mm}
+\noindent\textbf{Lecture-note notation:} The two inputs are tapped and amplified independently. The state $x$ is fed back by $a$; the two output contributions $d_1u_1,d_2u_2$ are added before the final integrator. No differentiators are used. (Zero initial conditions are implicit.)
+\end{document}

@@ -1,0 +1,27 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,mathtools,array,booktabs,longtable}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{enumitem,fancyhdr,hyperref,microtype,needspace}
+\definecolor{navy}{HTML}{16324F}
+\definecolor{teal}{HTML}{087F8C}
+\definecolor{gold}{HTML}{AA6600}
+\hypersetup{colorlinks=true,linkcolor=navy,urlcolor=teal}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small MATH6342 | Linear Systems}\fancyhead[R]{\small Sai Vanam}\fancyfoot[C]{\thepage}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\setlist{nosep,leftmargin=*}
+\tcbset{enhanced,breakable,colback=blue!2,colframe=navy!70,boxrule=.6pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,before skip=8pt,after skip=8pt,fonttitle=\bfseries}
+\newenvironment{concept}[1]{\begin{tcolorbox}[title={#1}]}{\end{tcolorbox}}
+\newenvironment{method}[1]{\begin{tcolorbox}[title={Method | #1},colback=teal!4,colframe=teal]}{\end{tcolorbox}}
+\newenvironment{worked}[1]{\begin{tcolorbox}[title={Worked example | #1},colback=gray!3,colframe=gray!65]}{\end{tcolorbox}}
+\newenvironment{tip}{\begin{tcolorbox}[title={Exam tips and common mistakes},colback=yellow!5,colframe=gold]}{\end{tcolorbox}}
+\newenvironment{question}[1]{\begin{tcolorbox}[title={Try it first | #1},colback=purple!3,colframe=purple!65!black]}{\end{tcolorbox}}
+\newenvironment{answer}{\begin{tcolorbox}[title={Model answer},colback=green!3,colframe=green!40!black]}{\end{tcolorbox}}
+\newcommand{\R}{\mathbb R}\newcommand{\C}{\mathbb C}\newcommand{\Sstable}{\mathcal S}
+\newcommand{\Lap}{\mathcal L}\newcommand{\dd}{\,\mathrm d}\newcommand{\ii}{\mathrm i}
+\newcommand{\topic}[1]{\clearpage\section{#1}}
+\newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\allowdisplaybreaks

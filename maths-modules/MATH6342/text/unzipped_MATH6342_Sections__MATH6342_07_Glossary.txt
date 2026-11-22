@@ -1,0 +1,51 @@
+225 Glossary of linear system terminology
+
+
+(A,B,C,D): standard linear system, usually with constant matrices;
+angular frequency see ω;
+amplitude: height of the crest of signal above the average level,
+regarded as a wave;
+BIBO: bounded input and bounded output stable system;
+Bode plot: plot of log gain and phase against angular frequency ω > 0;
+closed loop: system with feedback loop;
+differentiator: operation d/dt of differentiation with respect to time t;
+frequency domain: linear system in terms of ω, where s = iω;
+frequency response function: transfer function T (s) when s = iω and
+ω ∈ R;
+gain: (or amplitude gain)
+                       ∫︁ modulus of the transfer function, denoted Γ;
+integrator: operation of integration with respect to time t, from
+t = 0;
+226 Glossary of linear system terminology continued
+
+
+JCF: Jordan canonical form of square matrix (equivalently, Jordan
+normal form);
+L̂: Laplace transform of L;
+LHP: Open left half plane {s ∈ C : ℜs < 0};
+MIMO: multiple input and multiple output linear system;
+Nyquist plot: graph in complex plane of T (iω) for −∞ < ω < ∞;
+open loop: system without feedback, (also called straight-through);
+phase: (or phase shift) argument of the transfer function, denoted ϕ;
+sometimes expressed in degrees
+resolvent: of square matrix A is (sI − A)−1 ;
+RHP: open right half-plane {s ∈ C : ℜs > 0};
+s-domain: linear system in terms of Laplace transform variable s;
+SFL: simple feedback loop system;
+SISO: single input and single output linear system;
+227 Glossary of linear system terminology, concluded
+
+
+
+state-space model: linear system in terms of functions of time t, as in
+ss(A, B, C, D);
+summing junction: operator ⊕ for adding signals;
+tap: operator ⊙ for making a signal go along two routes;
+t: time, with t ∈ (0, ∞);
+transfer function: T (s) multiplies the Laplace transform of the input to
+give the Laplace transform of the output;
+unit impulse function: δ0 the unit point mass at time t = 0, also
+known as Dirac delta function.
+omega ω: angular frequency, often abbreviated to ‘frequency’, usually
+real-valued; usually expressed as radians per second.
+

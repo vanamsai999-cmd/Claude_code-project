@@ -1,0 +1,1859 @@
+\input{preamble}
+\hypersetup{pdftitle={MATH6342 Linear Systems - Expanded Lecture Notes},pdfauthor={Prepared for Sai Vanam}}
+\renewcommand{\topic}[1]{\par\Needspace{10\baselineskip}\section{#1}}
+\begin{document}
+\begin{tcolorbox}[colback=navy,coltext=white,colframe=navy]
+{\Huge\bfseries Linear Systems}\par\bigskip
+{\Large MATH6342 expanded lecture notes}\par
+Lecture explanations, solution methods, worked examples and topic practice\par\bigskip
+Prepared for Sai Vanam | Lancaster University | 2026/27 | Expanded edition
+\end{tcolorbox}
+\begin{concept}{What this guide covers}
+These expanded notes synthesise both supplied MATH6342 lecture-note versions (frames 6--227), the four supplied MATH319 examinations, 2022--2025, and Assessed Exercise 1. The file named \texttt{MATH319.pdf} is the \textbf{2023} paper. The older module code is retained in question references.
+
+The aim is to make the main ideas usable: understand what a formula means, recognise which method a question needs, carry out the calculation and explain why the conclusion follows. No study guide can guarantee that every possible examination question is covered. Use the original notes alongside this guide for the lecturer's exact presentation.
+
+All solutions here are independently worked model answers, not official mark schemes. Questions explicitly labelled ``adapted'' or ``original'' are practice questions; past-paper references identify the supplied source. Additional tools such as the cubic Hurwitz test are labelled as extensions.
+\end{concept}
+\begin{method}{How to study each topic}
+\begin{enumerate}
+\item Read the explanation and rewrite its key definition from memory.
+\item Cover the worked solution and attempt the method yourself.
+\item Attempt the purple question before reading the green model answer immediately below it.
+\item Check signs, initial conditions, properness and the exact meaning of stability.
+\item Use the separate rapid revision sheet only after studying the full explanation.
+\end{enumerate}
+\end{method}
+\begin{concept}{Notation used consistently}
+Time is $t\geq0$; $s$ is the Laplace variable; $\omega$ is real angular frequency. States are $X(t)$, input $u(t)$ and output $y(t)$. $I$ is an identity matrix of the required size. $A^*=\overline A^{\top}$ is the adjoint (written $A'$ in the notes); for real matrices it is $A^{\top}$. A hat denotes a Laplace transform. $\Sstable$ denotes proper rational functions whose poles are strictly in the left half-plane. Feedback has controller \emph{$-K$}, hence denominator $1+GK$.
+\end{concept}
+\clearpage\begin{concept}{Length and level of explanation}The original written lecture notes contain 73 pages; the companion slide deck contains 231 slides. This expanded edition uses the written notes as its length benchmark. It develops the same module through slower explanations, intermediate calculations, proof commentary and additional practice, while retaining the exam and assessed-exercise material.\end{concept}
+\tableofcontents\clearpage
+\topic{The module as a set of connected problems}
+\begin{concept}{The five chapters in plain language}
+\textbf{Frames 6--30: description.} Turn a physical law or differential equation into integrators, gains and state variables.
+
+\textbf{Frames 31--85: matrix solution.} Replace a higher-order equation by a first-order vector equation, compute $e^{tA}$ and solve the forced problem.
+
+\textbf{Frames 86--134: Laplace transforms.} Turn differentiation and convolution into algebra. Jordan blocks and partial fractions explain why time responses contain $t^ke^{\lambda t}$.
+
+\textbf{Frames 135--161: transfer and stability.} Study how the system changes sinusoids and whether bounded inputs can generate unbounded outputs.
+
+\textbf{Frames 162--218: feedback.} Choose a controller and prove that the resulting loop is stable, using poles, Nyquist, coprime factorisation or Lyapunov functions.
+\end{concept}
+\begin{method}{Recognise the question from its wording}
+\begin{tabular}{p{.34\linewidth}p{.59\linewidth}}
+\textbf{Question trigger}&\textbf{Start with}\\ \hline
+``Introduce $(A,B,C,D)$''&Choose states; differentiate each; read off coefficients.\\
+``No differentiators''&Use a companion realization or an input-adjusted state.\\
+``From the definition of $e^{tA}$''&Write the power series and identify a pattern in $A^k$.\\
+``Solve with initial conditions''&Use variation of constants or Laplace transforms, retaining initial terms.\\
+``Realize and verify''&Divide out the feedthrough $D$, use companion form, solve $(sI-A)v=B$.\\
+``First principles Laplace''&Start from the integral; integrate derivative terms by parts.\\
+``Gain and phase''&Substitute $s=\ii\omega$; modulus and quadrant-correct argument.\\
+``Necessary PID conditions''&Clear fractions in $1+GK$; normalise the polynomial before testing signs.\\
+``Internally stable''&Check all four transfer functions, including properness.\\
+``Coprime in stable rationals''&Use $\lambda=(1+s)^{-1}$ and a B\'ezout identity.\\
+``Without eigenvalues''&Try Lyapunov: positive definite $K$ and $-(A^*K+KA)$.\\
+\end{tabular}
+\end{method}
+\begin{question}{Original orientation question}
+A bounded sinusoidal input produces an output containing $t\sin t$. Which concept is relevant, and what conclusion follows?
+\end{question}
+\begin{answer}
+The oscillation has an amplitude growing proportionally to $t$. This is the characteristic resonant response of an undamped mode driven at its natural frequency. A bounded input has produced an unbounded output, so the system is not BIBO stable. This conclusion does not require every input to produce an unbounded output: one counterexample is enough.
+\end{answer}
+
+\subsection{A slower explanation: what makes a system linear?}
+\begin{concept}{Superposition is a test, not just a slogan}
+A signal is a function of time. To say that an operator $L$ is linear is to say that it respects both addition and scalar multiplication:
+\[L(\alpha f+\beta g)=\alpha Lf+\beta Lg.\]
+You can check this without solving a differential equation. Differentiation passes because $(\alpha f+\beta g)'=\alpha f'+\beta g'$. Integration from a fixed starting point passes because the integral distributes over a sum. Multiplication by a \emph{known} function $h(t)$ also passes: $h(\alpha f+\beta g)=\alpha hf+\beta hg$.
+
+This last example is useful: linear does not mean constant coefficients. The map $f\mapsto tf(t)$ is linear, although its coefficient depends on time. It is not time invariant: delaying $f$ does not have the same effect as delaying the product $tf(t)$. In contrast, $f\mapsto f(t)^2$ is nonlinear: $(f+g)^2$ contains $2fg$.
+
+There is also a difference between a linear rule and a rule containing a fixed offset. If $L(f)=3f+2$, then $L(0)=2$, whereas every linear map must send zero to zero. Such a map is affine. A fixed nonzero initial state has a similar effect on the input-output map: the free response is an additional term independent of the input. That is why superposition of input responses is normally stated with zero initial conditions.
+\end{concept}
+\begin{worked}{Checking linearity with actual signals}
+Let $L(f)=2f'+3\int_0^t f(r)\dd r$. For arbitrary $f,g$ and scalars $\alpha,\beta$,
+\begin{align*}
+L(\alpha f+\beta g)&=2(\alpha f'+\beta g')+3\int_0^t(\alpha f+\beta g)\dd r\\
+&=\alpha\left(2f'+3\int_0^t f\right)+\beta\left(2g'+3\int_0^t g\right)\\
+&=\alpha L(f)+\beta L(g).
+\end{align*}
+The proof works for all suitable signals, which is stronger than testing only $f(t)=t$ and $g(t)=1$. One counterexample can disprove linearity, but a few successful numerical examples cannot prove it.
+\end{worked}
+\begin{question}{Additional practice: identify the hidden nonlinearity}
+Which of $L_1(f)=tf'+f$, $L_2(f)=f'f$ and $L_3(f)=\int_0^t f+f(0)$ are linear? Explain each decision.
+\end{question}
+\begin{answer}
+$L_1$ is linear because differentiation, multiplication by known $t$, and addition are linear. $L_3$ is linear because integration and evaluation $f\mapsto f(0)$ are linear; the value $f(0)$ is then regarded as a constant output signal. $L_2$ is nonlinear: $L_2(2f)=4f'f$, which is not $2L_2(f)$ for a general $f$. For example $f(t)=t$ gives $4t$ versus $2t$.
+\end{answer}
+\begin{concept}{Why the field is usually complex}
+Physical inputs can be real, but complex numbers make eigenvalues and sinusoidal signals easier to handle. For a real-coefficient system, solve using $e^{\ii\omega t}$ and take real parts to obtain the response to $\cos\omega t$. This is valid because a real linear differential operator commutes with taking real parts. Complex algebra is a calculation tool; the final physical output can still be real.
+\end{concept}
+
+\topic{Modelling: states, block diagrams and reduction of order}
+\begin{concept}{What the four matrices actually do}
+A continuous-time, constant-coefficient linear system is
+\[\dot X=AX+Bu,\qquad y=CX+Du.\]
+$A$ describes how states influence their own rates of change; $B$ tells where input enters; $C$ selects or combines states into the measured output; $D$ is immediate feedthrough. The state stores the information needed to predict future evolution once the input is known.
+
+For $n$ states, $k$ inputs and $m$ outputs, the dimensions are
+\[A:n\times n,\quad B:n\times k,\quad C:m\times n,\quad D:m\times k.\]
+SISO means $k=m=1$; MIMO allows several inputs and outputs. Dimensions are a useful error detector. Linearity means superposition of zero-initial-state responses; a fixed nonzero initial state adds a free response.
+\end{concept}
+\begin{method}{Reduce an $n$th-order ODE}
+For $y^{(n)}+a_{n-1}y^{(n-1)}+\cdots+a_0y=u$, define
+\[X=(y,y',\ldots,y^{(n-1)})^{\top}.\]
+Then $\dot X=AX+Bu$, with $B=e_n$, $C=e_1^{\top}$, $D=0$, and
+\[A=\mat{0&1&0&\cdots&0\\0&0&1&\cdots&0\\\vdots&&\ddots&\ddots&\vdots\\0&\cdots&0&0&1\\-a_0&-a_1&\cdots&-a_{n-2}&-a_{n-1}}.\]
+The first $n-1$ rows shift derivatives; the last row is the ODE rearranged to isolate $y^{(n)}$. The same reduction works with time-dependent $a_j(t)$, but the constant-matrix exponential formula then does not apply in general.
+\end{method}
+\begin{concept}{How block components translate into equations}
+A summing junction outputs the signed sum of incoming signals. A tap copies a signal; it does not split its numerical value. A gain $a$ multiplies its input by $a$. An integrator has output $x(t)=x(0)+\int_0^t v(r)\dd r$, so $\dot x=v$.
+
+Series components multiply transfer functions, parallel components add them, and a negative-feedback loop gives $G/(1+GK)$. State-space integrator diagrams implement $AX+Bu$ before integration, then form $CX+Du$ at the output.
+\end{concept}
+\begin{worked}{An integrator-only diagram with an input derivative}
+Take the 2024 Q3 equation $y''+5y'+4y=u'-7u$. Direct states $(y,y')$ would leave $u'$ in the state equation. Instead set
+\[x_1=y,\qquad x_2=y'-u.\]
+Then
+\[x_1'=x_2+u,\qquad x_2'=y''-u'=-4x_1-5x_2-12u.\]
+Thus $A=\mat{0&1\\-4&-5}$, $B=\mat{1\\-12}$, $C=\mat{1&0}$, $D=0$. Initial states are $(y(0),y'(0)-u(0))$, not automatically $(y(0),y'(0))$.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,block/.style={draw,minimum width=12mm,minimum height=8mm},sum/.style={draw,circle,inner sep=1pt,minimum size=6mm},font=\small]
+\node (u) at (0,0) {$u$};\node[sum] (s2) at (2,0) {$\Sigma$};\node[block] (i2) at (4,0) {$\int$};\node (x2) at (5.5,0) {$x_2$};
+\node[sum] (s1) at (7,0) {$\Sigma$};\node[block] (i1) at (9,0) {$\int$};\node (y) at (10.5,0) {$x_1=y$};
+\draw[->] (u)--node[above]{$-12$}(s2);\draw[->] (s2)--(i2);\draw[->] (i2)--(x2);\draw[->] (x2)--(s1);\draw[->] (s1)--(i1);\draw[->] (i1)--(y);
+\draw[->] (u) |- (0.5,1.3) -| node[pos=.25,above]{$+1$}(s1);
+\draw[->] (x2) |- (5.5,-1.2) -| node[pos=.25,below]{$-5$}(s2);
+\draw[->] (y) |- (10.5,-2.2) -| node[pos=.25,below]{$-4$}(s2);
+\end{tikzpicture}
+\end{center}
+Every labelled gain acts on its branch before the summing junction. This diagram is exactly the pair of first-order equations above.
+\end{worked}
+\begin{tip}
+Do not introduce a differentiator just because $u'$ appears in the ODE. Shift a state by a multiple of $u$, or realize the transfer function. State variables need not literally be output derivatives. Always specify output and initial state as well as the state equation.
+\end{tip}
+\begin{question}{2023 Q3(i), integrator-only representation}
+Represent $y''+3y'+4y=u'-u$ without input differentiators. Give matrices and explain the integrator construction.
+\end{question}
+\begin{answer}
+Set $x_1=y$, $x_2=y'-u$. Then $x_1'=x_2+u$ and
+\[x_2'=y''-u'=-3y'-4y-u=-4x_1-3x_2-4u.\]
+Hence
+\[A=\mat{0&1\\-4&-3},\quad B=\mat{1\\-4},\quad C=\mat{1&0},\quad D=0.\]
+Use two integrators: integrate $-4x_1-3x_2-4u$ to obtain $x_2$, then integrate $x_2+u$ to obtain $x_1=y$. Replace the diagram's gains $-12,-5,-4$ in the worked example by $-4,-3,-4$ respectively. The input feedforward gain remains $+1$.
+\end{answer}
+
+\subsection{Building a state model one decision at a time}
+\begin{concept}{A state must remember the information that the output alone forgets}
+Suppose two masses on springs are at the same position at time zero. One is moving to the right, the other to the left. Even with identical future forces, their positions will immediately become different. Position alone is therefore not enough to specify the state: velocity is also needed.
+
+For a second-order scalar ODE, two initial values are normally required. The state vector simply collects these values into a first-order description. For an $n$th-order equation, the derivative-state construction stores $n$ values. The first-order equation has more components, but each component only involves one derivative.
+
+The output need not reveal every state. In a vehicle suspension model the state may contain displacement and velocity, while the sensor reports only displacement. Then $C=(1,0)$ selects the first component. If the sensor reports $2x+3v$, use $C=(2,3)$. The dynamics $A,B$ do not change just because a different quantity is measured.
+\end{concept}
+\begin{worked}{Reduction of a third-order equation, including verification}
+Consider $y'''+2y''+5y'+6y=3u$ and output $z=y'+2y$. Put $x_1=y$, $x_2=y'$, $x_3=y''$. Differentiating each definition gives
+\[x_1'=x_2,\qquad x_2'=x_3,\qquad x_3'=-6x_1-5x_2-2x_3+3u.\]
+Therefore
+\[A=\mat{0&1&0\\0&0&1\\-6&-5&-2},\quad B=\mat{0\\0\\3},\quad C=\mat{2&1&0},\quad D=0.\]
+To verify, use the first two rows to identify $x_2=y'$ and $x_3=y''$, then substitute into the third row. It becomes the original ODE. The output equation becomes $z=2y+y'$, also as required. The initial state is $(y(0),y'(0),y''(0))^{\top}$.
+\end{worked}
+\begin{concept}{Reading an integrator diagram backwards}
+Begin at an integrator output $x$. The signal immediately before that integrator must be $x'$. Trace every branch entering its summer and add its signed contributions. Repeat for every integrator. Finally trace the output summer to get the algebraic output equation.
+
+For example, if the input to the first integrator is $-2x_1+4x_2+u$ and the second receives $3x_1-u$, then the rows of $A$ are $(-2,4)$ and $(3,0)$, and the entries of $B$ are $1,-1$. This read-back step is the quickest check of your own diagram.
+\end{concept}
+\begin{question}{Additional practice: a change of measurement}
+For $x''+3x'+2x=u$, choose displacement and velocity as states. Give the matrices when the output is $y=x+2x'+5u$. Does $D=5$ change the state evolution?
+\end{question}
+\begin{answer}
+With $X=(x,x')^{\top}$,
+\[A=\mat{0&1\\-2&-3},\quad B=\mat{0\\1},\quad C=\mat{1&2},\quad D=5.\]
+The state equation is unaffected by the measurement choice. $D=5$ adds an instantaneous input contribution to the output. For zero state, a sudden input change can therefore change the output immediately, even before displacement and velocity have evolved. The high-frequency transfer limit is $5$, consistent with this feedthrough.
+\end{answer}
+\begin{tip}
+If the ODE starts with $my''$ rather than $y''$, divide by $m$ first. If the question changes the output, revisit $C,D$, not just $A$. If it changes the input scaling, revisit $B$.
+\end{tip}
+
+\subsection{The opening feedback examples worked through fully}
+\begin{worked}{Positive feedback and Black's algebraic amplifier}
+The lecture example has $y=u+\theta y$, where $0<\theta<1$. Rearranging gives $(1-\theta)y=u$ and hence $y=u/(1-\theta)$. For $\theta=0.9$, the gain is $10$.
+
+This particular model is algebraic rather than dynamic: it has no time derivative and no stored state. Its solvability requires $1-\theta\ne0$. At $\theta=1$, the equation reads $y=u+y$, so a nonzero $u$ gives no solution, while $u=0$ gives infinitely many possible outputs. That is a simple illustration of failure of well-posedness.
+
+If noise $n$ is added at the same input junction, the equation becomes $y=u+n+\theta y$ and the noise is multiplied by the same gain. Amplifying the desired input also amplifies that noise. The diagram alone does not promise good signal quality.
+\end{worked}
+\begin{worked}{Negative feedback from resistance: a complete physical model}
+For a cyclist with mass $m>0$, linear resistance coefficient $k>0$ and driving force $u$, the equation is $mv'=-kv+u$. Put it into standard form:
+\[v'=-\frac{k}{m}v+\frac1m u.\]
+The one-state matrices with output speed are $A=-k/m$, $B=1/m$, $C=1$, $D=0$. Under constant force $u_0$,
+\[v(t)=\frac{u_0}{k}+e^{-kt/m}\left(v(0)-\frac{u_0}{k}\right).\]
+The equilibrium speed is $u_0/k$ and the decay time scale is $m/k$. Increasing the mass slows the approach to equilibrium; increasing resistance reduces the equilibrium speed and speeds up the decay factor. These conclusions follow directly from the formula.
+
+The integrator diagram forms $u-kv$, applies gain $1/m$, then integrates to obtain $v$. The feedback branch has a negative sign because higher speed creates a force opposing motion. With zero initial speed, the transfer is $1/(ms+k)$ and its pole is $-k/m<0$.
+\end{worked}
+\begin{question}{Additional practice: destabilising the physical model}
+Replace resistance by positive reinforcement: $mv'=kv+u$, with $m,k>0$. Solve for zero input and explain the change from the preceding model.
+\end{question}
+\begin{answer}
+With $u=0$, $v'=kv/m$, so $v(t)=v(0)e^{kt/m}$. Unless the initial speed is zero, the solution grows exponentially. The state matrix is now $A=k/m>0$, and the transfer is $1/(ms-k)$ with a right-half-plane pole. Reversing the feedback sign changed decay into growth. This is why the sign must be derived from the physical law before writing a feedback denominator.
+\end{answer}
+\begin{concept}{General differential operators and the meaning of order}
+An operator $L=a_n(t)\mathcal D^n+\cdots+a_0(t)$ is linear because it combines differentiation and multiplication by known coefficients. Its order is the highest derivative with a nonzero coefficient. When the leading coefficient is nonzero, divide through before reducing order. If the leading coefficient vanishes at a time, the usual first-order reduction may fail there. The constant-coefficient state-space tools in this module assume that the resulting $A$ is constant; time-varying linearity alone does not justify writing $e^{tA}$.
+\end{concept}
+
+\topic{Linear algebra foundations and matrix functions}
+\begin{concept}{Determinants, adjugates and characteristic polynomials}
+The cofactor of entry $(i,j)$ is $(-1)^{i+j}$ times the determinant obtained by removing row $i$ and column $j$. The adjugate is the \emph{transpose} of the cofactor matrix, and
+\[M\operatorname{adj}(M)=\det(M)I,\qquad M^{-1}=\frac{\operatorname{adj}(M)}{\det(M)}\quad(\det M\ne0).\]
+The characteristic polynomial is $p_A(s)=\det(sI-A)$, which is monic. Its roots are the eigenvalues. In particular, the companion matrix of the previous topic has characteristic polynomial $s^n+a_{n-1}s^{n-1}+\cdots+a_0$.
+
+For $2\times2$ matrices, $p_A(s)=s^2-(\operatorname{tr}A)s+\det A$. Rank equals the number of pivots, the dimension of the column span, and the dimension of the row span.
+\end{concept}
+\begin{concept}{Inner products, norms and why estimates matter}
+The notes use $\langle z,w\rangle=w^*z$, linear in the first variable. The Euclidean norm is $\|z\|=(z^*z)^{1/2}$. Cauchy--Schwarz gives $|\langle z,w\rangle|\leq\|z\|\|w\|$, and the triangle inequality follows by expanding $\|z+w\|^2$.
+
+The induced matrix norm is $\|A\|=\sup_{\|v\|\leq1}\|Av\|$. It satisfies
+\[\|Av\|\leq\|A\|\|v\|,\quad\|AB\|\leq\|A\|\|B\|,\quad\|A+B\|\leq\|A\|+\|B\|.\]
+For diagonal $\Delta$, $\|\Delta\|=\max_j|\lambda_j|$. For arbitrary $A=[A_1\ \cdots\ A_n]$,
+\[\|A\|\leq\left(\sum_j\|A_j\|^2\right)^{1/2}.\]
+This bound follows from $\|Av\|\leq\sum_j|v_j|\|A_j\|$ and Cauchy--Schwarz. It controls series and integrals without calculating every entry.
+\end{concept}
+\begin{method}{Diagonalisation and Cayley--Hamilton}
+If there are $n$ independent eigenvectors, put them into the columns of $S$. Then $A=S\Delta S^{-1}$, so $A^k=S\Delta^kS^{-1}$ and $f(A)=Sf(\Delta)S^{-1}$ for polynomials and the convergent exponential series.
+
+Cayley--Hamilton says $p_A(A)=0$. Therefore any sufficiently high power of $A$ reduces to a combination of $I,A,\ldots,A^{n-1}$. This is especially useful when finding $e^{tA}$ without an awkward inverse eigenvector matrix.
+
+For two distinct eigenvalues $\lambda_1,\lambda_2$,
+\[e^{tA}=e^{\lambda_1t}\frac{A-\lambda_2I}{\lambda_1-\lambda_2}+e^{\lambda_2t}\frac{A-\lambda_1I}{\lambda_2-\lambda_1}.\]
+The fractions are spectral projectors: they select the corresponding eigenspaces.
+\end{method}
+\begin{worked}{2023 Q1(ii): a two-eigenvalue calculation}
+For $A=\mat{-1&-2\\1&-4}$,
+\[p_A(s)=(s+1)(s+4)+2=(s+2)(s+3).\]
+For $\lambda=-2$, $(A+2I)v=0$ gives $v=(2,1)^{\top}$. For $\lambda=-3$, $(A+3I)v=0$ gives $v=(1,1)^{\top}$. Thus $S=\mat{2&1\\1&1}$ is invertible. The projector formula gives
+\[e^{tA}=e^{-2t}(A+3I)-e^{-3t}(A+2I)
+=\mat{2e^{-2t}-e^{-3t}&-2e^{-2t}+2e^{-3t}\\e^{-2t}-e^{-3t}&-e^{-2t}+2e^{-3t}}.\]
+At $t=0$ this is $I$, and its derivative at zero is $A$.
+\end{worked}
+\begin{question}{Original proof practice}
+Prove $\|AB\|\leq\|A\|\|B\|$ and show that $Av=\lambda v$, $v\ne0$, implies $p(A)v=p(\lambda)v$ for any polynomial $p$.
+\end{question}
+\begin{answer}
+For every $v$, $\|ABv\|\leq\|A\|\|Bv\|\leq\|A\|\|B\|\|v\|$. Take the supremum over $\|v\|\leq1$ to obtain the norm inequality.
+
+Inductively, $A^kv=\lambda^kv$ for all $k\geq0$. If $p(z)=\sum_{k=0}^m a_kz^k$, then
+\[p(A)v=\sum_{k=0}^ma_kA^kv=\sum_{k=0}^ma_k\lambda^kv=p(\lambda)v.\]
+The same reasoning extends to the exponential because its series converges absolutely in matrix norm.
+\end{answer}
+\begin{tip}
+Eigenvectors go in columns, in the same order as the eigenvalues on the diagonal. Do not assume $e^{A+B}=e^Ae^B$ unless $A$ and $B$ commute. A repeated eigenvalue does not automatically imply diagonalisation.
+\end{tip}
+
+\subsection{The algebra behind the formulas, explained in smaller steps}
+\begin{concept}{Why eigenvectors simplify repeated multiplication}
+An eigenvector $v$ points in a direction that $A$ does not mix with other directions: $Av=\lambda v$. Applying $A$ again gives $A^2v=\lambda^2v$. After $k$ applications, $A^kv=\lambda^kv$. If a basis consists of eigenvectors, every vector can be split into these independent directions, and each direction evolves by a scalar factor.
+
+This explains diagonalisation. With eigenvectors as columns, $AS=S\Delta$. Multiplying by $S^{-1}$ yields $A=S\Delta S^{-1}$. The matrix $S^{-1}$ changes coordinates into the eigenvector basis, $\Delta$ acts component by component, and $S$ changes back.
+
+The operation is similarity, not equality. The original matrix need not be diagonal even though its action becomes diagonal in a suitable basis. Similar matrices share characteristic polynomials because
+\[sI-SAS^{-1}=S(sI-A)S^{-1}\]
+and determinants multiply, leaving $\det(S)\det(S^{-1})=1$.
+\end{concept}
+\begin{worked}{Computing a polynomial in a matrix without high powers}
+Let $A=\mat{0&1\\-2&-3}$. Its characteristic polynomial is $s^2+3s+2$. Cayley--Hamilton gives $A^2+3A+2I=0$, so $A^2=-3A-2I$. Multiplying by $A$,
+\[A^3=-3A^2-2A=7A+6I.\]
+Thus
+\[A^3+4A^2+2I=(7A+6I)+4(-3A-2I)+2I=-5A.\]
+The constant term in a matrix polynomial always multiplies $I$. Writing $A^2+3A+2=0$ is ambiguous because a scalar cannot be added to a matrix without specifying how it acts.
+\end{worked}
+\begin{concept}{A proof of Cauchy--Schwarz using a projection}
+For $w\ne0$, choose $\alpha=\langle z,w\rangle/\|w\|^2$ and use positivity of the squared norm:
+\[0\leq\|z-\alpha w\|^2=\|z\|^2-\frac{|\langle z,w\rangle|^2}{\|w\|^2}.\]
+Rearranging gives $|\langle z,w\rangle|^2\leq\|z\|^2\|w\|^2$. If $w=0$, the result is immediate. Equality occurs precisely when $z$ is a scalar multiple of $w$ (including the zero cases).
+
+Now expand $\|z+w\|^2$. The cross terms sum to $2\Re\langle z,w\rangle$, at most $2\|z\|\|w\|$. Therefore $\|z+w\|^2\leq(\|z\|+\|w\|)^2$, proving the triangle inequality. These inequalities make the later series and convolution estimates possible.
+\end{concept}
+\begin{question}{Additional practice: a norm estimate}
+Suppose $\|A\|\leq2$ and $\|B\|\leq3$. Give a justified bound for $\|A^2+AB\|$. Is your answer necessarily the exact norm?
+\end{question}
+\begin{answer}
+By the triangle inequality and submultiplicativity,
+\[\|A^2+AB\|\leq\|A^2\|+\|AB\|\leq\|A\|^2+\|A\|\|B\|\leq4+6=10.\]
+This is an upper bound, not necessarily equality. The matrices could partly cancel; for example $B=-A$ gives $A^2+AB=0$ while satisfying suitable norm bounds. An estimate is useful because it guarantees control without requiring an exact norm calculation.
+\end{answer}
+
+\topic{Matrix exponentials and Jordan blocks}
+\begin{concept}{Definition, convergence and essential properties}
+\[e^{tA}=\sum_{k=0}^{\infty}\frac{t^kA^k}{k!}=I+tA+\frac{t^2A^2}{2!}+\cdots.\]
+Since $\|t^kA^k/k!\|\leq |t|^k\|A\|^k/k!$, the series converges absolutely and $\|e^{tA}\|\leq e^{|t|\|A\|}$. Termwise differentiation on bounded time intervals gives
+\[\frac{\mathrm d}{\mathrm dt}e^{tA}=Ae^{tA}=e^{tA}A,\quad e^{0A}=I.\]
+Multiplying absolutely convergent series and using the binomial theorem gives $e^{(t+r)A}=e^{tA}e^{rA}$; consequently $e^{tA}$ is invertible with inverse $e^{-tA}$. Also $e^{tSAS^{-1}}=Se^{tA}S^{-1}$.
+
+If $Av=\lambda v$, then $e^{tA}v=e^{t\lambda}v$. This proves the eigenvalue assertion directly, rather than merely quoting it.
+\end{concept}
+\begin{method}{Choose the shortest exponential method}
+\begin{enumerate}
+\item Compute $A^2$ first. If $A^2=-I$, use sine and cosine; if $A^2=I$, use hyperbolic functions; if $A^m=0$, the series terminates.
+\item If $A=\alpha I+N$ with $N^m=0$, use $e^{tA}=e^{\alpha t}\sum_{j=0}^{m-1}t^jN^j/j!$.
+\item If independent eigenvectors are available, diagonalise.
+\item Otherwise use Jordan form or Cayley--Hamilton. Check $E(0)=I$, $E'(0)=A$ and ideally $E'=AE$.
+\end{enumerate}
+\end{method}
+\begin{worked}{2024 Q2(iv)--(v) and 2025 Q2(b): rotation}
+Let $A=\mat{0&-1\\1&0}$. Then $A^2=-I$, $A^{2k}=(-1)^kI$ and $A^{2k+1}=(-1)^kA$. Splitting the defining series gives
+\[e^{tA}=I\sum_{k\geq0}\frac{(-1)^kt^{2k}}{(2k)!}+A\sum_{k\geq0}\frac{(-1)^kt^{2k+1}}{(2k+1)!}=I\cos t+A\sin t.\]
+Therefore
+\[e^{tA}=\mat{\cos t&-\sin t\\\sin t&\cos t}.\]
+Its columns are orthonormal, so $(e^{tA})^{\top}e^{tA}=I$. Its determinant is $\cos^2t+\sin^2t=1$. This is rotation, with constant norm rather than decay.
+\end{worked}
+\begin{concept}{Jordan blocks explain polynomial factors}
+A Jordan block is $J_k(\lambda)=\lambda I+N$, where $N$ has ones just above the diagonal and $N^k=0$. Thus
+\[e^{tJ_k(\lambda)}=e^{\lambda t}\left(I+tN+\cdots+\frac{t^{k-1}N^{k-1}}{(k-1)!}\right).\]
+For $k=3$, the matrix inside is $\mat{1&t&t^2/2\\0&1&t\\0&0&1}$. Algebraic multiplicity counts all occurrences of an eigenvalue; geometric multiplicity counts its Jordan blocks. Diagonalisation is possible precisely when every block has size one.
+
+For arbitrary $A$, entries of $e^{tA}$ are combinations of $t^je^{\lambda t}$. If $\max\Re\lambda<\beta$, every $t^je^{(\Re\lambda-\beta)t}$ is bounded, so $\|e^{tA}\|\leq Me^{\beta t}$. Strictly negative eigenvalue real parts therefore give exponential decay, including in the non-diagonalisable case.
+\end{concept}
+\begin{question}{Original repeated-eigenvalue practice}
+Find $e^{tA}$ for $A=\mat{-2&1\\0&-2}$. Does the repeated eigenvalue prevent decay? Compare with $B=\mat{0&1\\0&0}$.
+\end{question}
+\begin{answer}
+Write $A=-2I+N$, where $N=\mat{0&1\\0&0}$ and $N^2=0$. Since $-2I$ and $N$ commute,
+\[e^{tA}=e^{-2t}(I+tN)=e^{-2t}\mat{1&t\\0&1}.\]
+Both $e^{-2t}$ and $te^{-2t}$ tend to zero, so the system decays despite being non-diagonalisable. For $B=N$, $e^{tB}=I+tB$ is unbounded. A nontrivial Jordan block on the imaginary axis changes bounded oscillation into polynomial growth.
+\end{answer}
+\begin{tip}
+When asked ``from the definition'', display the power series, powers of the matrix and identification of the scalar series. An unsupported final rotation matrix misses the requested reasoning.
+\end{tip}
+
+\subsection{Deriving exponentials instead of memorising special cases}
+\begin{concept}{Why the exponential solves the homogeneous equation}
+The scalar equation $x'=ax$ has solution $x=e^{at}x_0$. For matrices, replace scalar powers by matrix powers. Differentiating the series shifts the summation index:
+\[\frac{\mathrm d}{\mathrm dt}\sum_{k=0}^{\infty}\frac{t^kA^k}{k!}
+=\sum_{k=1}^{\infty}\frac{t^{k-1}A^k}{(k-1)!}
+=A\sum_{j=0}^{\infty}\frac{t^jA^j}{j!}.\]
+This is $Ae^{tA}$. At $t=0$ the only surviving term is $I$. Therefore $X=e^{tA}X_0$ has derivative $AX$ and initial state $X_0$.
+
+There is no general entrywise shortcut: exponentiating each number in $A$ does not produce $e^A$. The off-diagonal entries mix states, and the matrix powers record that mixing. MATLAB distinguishes the matrix function \texttt{expm(A)} from the entrywise function \texttt{exp(A)} for exactly this reason.
+\end{concept}
+\begin{worked}{A damped rotation without diagonalisation}
+Take $A=\mat{-2&-3\\3&-2}=-2I+3J$, where $J=\mat{0&-1\\1&0}$ and $J^2=-I$. Since $-2I$ commutes with $3J$,
+\[e^{tA}=e^{-2t}e^{3tJ}=e^{-2t}\mat{\cos3t&-\sin3t\\\sin3t&\cos3t}.\]
+This combines rotation with shrinking amplitude. Its eigenvalues are $-2\pm3\ii$: the real part $-2$ produces decay, and the imaginary part $3$ produces angular frequency $3$.
+
+For $X_0=(1,0)^{\top}$, the solution is $e^{-2t}(\cos3t,\sin3t)^{\top}$ and its norm is exactly $e^{-2t}$. This is a concrete interpretation of a complex conjugate pair of eigenvalues.
+\end{worked}
+\begin{method}{Finding a $2\times2$ exponential by an ansatz}
+Cayley--Hamilton suggests $E(t)=a(t)I+b(t)A$. If $A^2+3A+2I=0$, substitute this into $E'=AE$:
+\[a'I+b'A=aA+bA^2=-2bI+(a-3b)A.\]
+Thus $a'=-2b$, $b'=a-3b$, with $a(0)=1$, $b(0)=0$. Solving this scalar system yields $a=2e^{-t}-e^{-2t}$ and $b=e^{-t}-e^{-2t}$. Therefore
+\[e^{tA}=(2e^{-t}-e^{-2t})I+(e^{-t}-e^{-2t})A.\]
+This method avoids computing eigenvectors and still gives an exact answer. If $I$ and $A$ are dependent, simplify $A$ first rather than treating them as a basis.
+\end{method}
+\begin{question}{Additional practice: a nilpotent chain}
+Let $N=\mat{0&1&0\\0&0&1\\0&0&0}$. Find $e^{tN}(0,0,1)^{\top}$ and verify the differential equation componentwise.
+\end{question}
+\begin{answer}
+$N^3=0$, so $e^{tN}=I+tN+t^2N^2/2$. Multiplying by $e_3$ gives $X=(t^2/2,t,1)^{\top}$. Its derivative is $(t,1,0)^{\top}$, and $NX=(t,1,0)^{\top}$, so $X'=NX$. At zero it equals $e_3$. The third state feeds the second, and the second feeds the first, creating one and then two integrations.
+\end{answer}
+
+
+\subsection{Proof workshop: convergence, products and spectral growth}
+\begin{concept}{The convergence proof in full}
+The exponential series is a series of matrices. To show it makes sense, compare its tail with a familiar scalar series. Submultiplicativity gives $\|A^k\|\leq\|A\|^k$, so for real $t$,
+\[\sum_{k=0}^{\infty}\left\|\frac{t^kA^k}{k!}\right\|\leq\sum_{k=0}^{\infty}\frac{|t|^k\|A\|^k}{k!}=e^{|t|\|A\|}<\infty.\]
+The space of finite-dimensional matrices is complete, so absolute convergence in norm defines a matrix. On any bounded interval $|t|\leq T$, the same bound with $T$ gives uniform convergence. The differentiated series is likewise dominated by $\|A\|e^{T\|A\|}$, which justifies term-by-term differentiation.
+
+This is a useful pattern in proofs throughout the module: replace a matrix quantity by its norm, apply a scalar comparison, then return to the matrix statement. The comparison need not be sharp; finiteness is enough.
+\end{concept}
+\begin{method}{Prove the semigroup identity by collecting coefficients}
+Multiply the two absolutely convergent series:
+\[e^{tA}e^{rA}=\sum_{j,k\geq0}\frac{t^jr^kA^{j+k}}{j!k!}.\]
+For total degree $n=j+k$, the coefficient of $A^n$ is
+\[\sum_{j=0}^{n}\frac{t^jr^{n-j}}{j!(n-j)!}=\frac1{n!}\sum_{j=0}^{n}\binom njt^jr^{n-j}=\frac{(t+r)^n}{n!}.\]
+Thus the product is $e^{(t+r)A}$. Taking $r=-t$ gives $e^{tA}e^{-tA}=I$. The regrouping is legitimate because the series of product norms is bounded by $e^{|t|\|A\|}e^{|r|\|A\|}$.
+
+For different matrices $A,B$, the same argument yields $e^{A+B}=e^Ae^B$ when they commute, since the binomial expansion for $(A+B)^n$ then applies. Without commutation, mixed products such as $AB$ and $BA$ cannot be combined freely.
+\end{method}
+\begin{concept}{From Jordan form to a uniform decaying bound}
+Suppose every eigenvalue satisfies $\Re\lambda\leq-\eta$ for some $\eta>0$. Choose $0<\delta<\eta$. A Jordan-block term is $t^je^{\lambda t}$, whose modulus is at most
+\[t^je^{-\eta t}=\big(t^je^{-(\eta-\delta)t}\big)e^{-\delta t}.\]
+For $j>0$, the bracket has a maximum at $t=j/(\eta-\delta)$; for $j=0$ it is at most $1$. Hence each term is bounded by a constant times $e^{-\delta t}$. There are only finitely many terms and finitely many blocks. Multiplying by the fixed similarity matrices contributes a finite factor $\|S\|\|S^{-1}\|$. This proves $\|e^{tA}\|\leq Me^{-\delta t}$.
+
+Notice why the decay rate is chosen slightly weaker than the spectral rate: the spare exponential factor absorbs all powers of $t$. A claim $\|e^{tA}\|\leq Me^{-\eta t}$ need not hold for a nontrivial Jordan block at real part $-\eta$, because it would require $t^j$ to remain bounded.
+\end{concept}
+\begin{question}{Proof practice: choose an admissible bound}
+For $A=\mat{-2&1\\0&-2}$, explain why a bound $\|e^{tA}\|\leq Me^{-t}$ exists, while a bound with $Me^{-2t}$ cannot hold for all $t\geq0$.
+\end{question}
+\begin{answer}
+Here $e^{tA}=e^{-2t}(I+tN)$ with $\|N\|=1$. Therefore $\|e^{tA}\|\leq e^{-2t}(1+t)=e^{-t}((1+t)e^{-t})$, and the bracket is bounded. In contrast, applying the matrix to $e_2$ gives $e^{-2t}(t,1)^{\top}$, so $e^{2t}\|e^{tA}\|\geq\sqrt{t^2+1}$, which is unbounded. Thus no fixed $M$ works at the exact rate $2$.
+\end{answer}
+
+\topic{Forced solutions, oscillators and resonance}
+\begin{concept}{The solution separates memory from forcing}
+For continuous $u$, the unique solution of $\dot X=AX+Bu$, $X(0)=X_0$, is
+\[X(t)=e^{tA}X_0+\int_0^t e^{(t-r)A}Bu(r)\dd r.\]
+The first term is the free or zero-input response. The integral is the forced or zero-state response. The kernel $e^{(t-r)A}B$ propagates an input applied at time $r$ to time $t$.
+
+To derive the formula, multiply the equation by $e^{-tA}$ and observe
+\[\frac{\mathrm d}{\mathrm dt}(e^{-tA}X)=e^{-tA}Bu.\]
+Integrate from $0$ to $t$ and multiply by $e^{tA}$. This also proves uniqueness: the difference of two solutions solves the homogeneous equation with zero initial value.
+\end{concept}
+\begin{method}{Verify a convolution solution properly}
+At $t=0$, the integral vanishes, giving $X(0)=X_0$. By Leibniz's rule,
+\begin{align*}
+X'(t)&=Ae^{tA}X_0+e^{0A}Bu(t)+\int_0^t Ae^{(t-r)A}Bu(r)\dd r\\
+&=AX(t)+Bu(t).
+\end{align*}
+The upper-limit term $Bu(t)$ is essential. Omitting it incorrectly turns the forced equation into a homogeneous one.
+\end{method}
+\begin{worked}{2022 Q2: undamped oscillator away from resonance}
+For $x''+x=\cos(\omega t)$, choose $X=(x,x')^{\top}$,
+\[A=\mat{0&1\\-1&0},\ B=\mat{0\\1},\ C=\mat{1&0},\ D=0.\]
+Here $e^{tA}=\mat{\cos t&\sin t\\-\sin t&\cos t}$. If $\omega\ne\pm1$, try $x_p=a\cos(\omega t)$; then $(1-\omega^2)a=1$. Imposing $x(0)=x_0$, $x'(0)=v_0$ gives
+\[x(t)=x_0\cos t+v_0\sin t+\frac{\cos(\omega t)-\cos t}{1-\omega^2}.\]
+Check the initial displacement and velocity directly. The correction $-\cos t/(1-\omega^2)$ ensures the forcing term contributes zero initial displacement.
+\end{worked}
+\begin{concept}{What resonance means here}
+At $\omega=1$, the previous particular-solution ansatz is part of the homogeneous solution. Multiply the trial by $t$ and find
+\[x_p(t)=\tfrac12t\sin t,\quad x_p''+x_p=\cos t.\]
+Thus $x=x_0\cos t+v_0\sin t+\frac12t\sin t$. Input $\cos t$ is bounded; output is unbounded. The undamped oscillator has bounded free solutions but is not BIBO stable. Damping changes the picture: for $x''+2\zeta\nu x'+\nu^2x=u$, $\zeta>0$ and $\nu>0$ place both characteristic roots strictly in the left half-plane.
+\end{concept}
+\begin{question}{2025 Q2(c)--(f): watch the sign convention}
+For $A=\mat{0&-1\\1&0}$, $B=(0,1)^{\top}$ and $X_0=(x_0,0)^{\top}$, simplify the solution for general $u$, then evaluate it for $u(r)=\cos r$. Explain resonance.
+\end{question}
+\begin{answer}
+Since $e^{(t-r)A}B=(-\sin(t-r),\cos(t-r))^{\top}$,
+\[X(t)=\mat{x_0\cos t-\int_0^t\sin(t-r)u(r)\dd r\\x_0\sin t+\int_0^t\cos(t-r)u(r)\dd r}.\]
+Product-to-sum identities or expansion of $\sin(t-r)$ and $\cos(t-r)$ gives
+\[\int_0^t\sin(t-r)\cos r\dd r=\tfrac12t\sin t,\]
+\[\int_0^t\cos(t-r)\cos r\dd r=\tfrac12(t\cos t+\sin t).\]
+Hence
+\[X(t)=\mat{x_0\cos t-\frac12t\sin t\\x_0\sin t+\frac12t\cos t+\frac12\sin t}.\]
+Here $x_1'=-x_2$, so $x_1''+x_1=-u$. This explains the minus sign in the first component compared with the preceding oscillator. The growing terms $t\sin t$ and $t\cos t$ show resonant excitation by a bounded input at the natural frequency $1$.
+\end{answer}
+\begin{tip}
+Two oscillator matrices differing by signs can both be correct, but their input and state interpretations differ. Derive the scalar equation from your chosen states before importing a memorised solution.
+\end{tip}
+
+\subsection{Understanding forcing, transient motion and steady response}
+\begin{concept}{What the two parts of the solution tell you}
+The term $e^{tA}X_0$ records what the system would do if the input were switched off. If $A$ is stable, this term tends to zero and is called a transient. The convolution term records the accumulated effect of the input. The factor $e^{(t-r)A}$ tells you that an input applied long ago is damped more strongly than one applied just now.
+
+An input can also create a transient. Switching on a constant force at time zero does not usually put the system immediately at its new equilibrium. The forced response contains an equilibrium part plus a part that corrects the initial mismatch. Thus ``forced'' does not mean ``already steady'', and ``transient'' does not mean ``caused only by the initial state''.
+
+For constant input $u_0$, an equilibrium $X_{\mathrm e}$ satisfies $AX_{\mathrm e}+Bu_0=0$. If $A$ is invertible, it is $X_{\mathrm e}=-A^{-1}Bu_0$. Subtracting the equilibrium gives $(X-X_{\mathrm e})'=A(X-X_{\mathrm e})$, so
+\[X(t)=X_{\mathrm e}+e^{tA}(X_0-X_{\mathrm e}).\]
+If $A$ is stable, $X(t)$ tends to $X_{\mathrm e}$. If $A$ is singular, the equilibrium equation can have no solution or many solutions, so do not use $A^{-1}$ without checking.
+\end{concept}
+\begin{worked}{A constant input solved by convolution and equilibrium}
+Solve $x'=-2x+3$, $x(0)=4$. Variation of constants gives
+\[x=4e^{-2t}+3\int_0^t e^{-2(t-r)}\dd r=4e^{-2t}+\tfrac32(1-e^{-2t}).\]
+Thus $x=\tfrac32+\tfrac52e^{-2t}$. The equilibrium method gives $x_{\mathrm e}=3/2$ immediately, followed by $x=x_{\mathrm e}+e^{-2t}(4-x_{\mathrm e})$. Both methods agree.
+
+Check the original equation: $x'=-5e^{-2t}$, while $-2x+3=-5e^{-2t}$. The final value is not zero because the nonzero force continues to act, even though the homogeneous dynamics decay.
+\end{worked}
+\begin{concept}{Damping regimes from the characteristic roots}
+For $y''+\beta y'+\gamma y=u$, with $\gamma>0$, the homogeneous roots are
+\[\lambda_{\pm}=\frac{-\beta\pm\sqrt{\beta^2-4\gamma}}2.\]
+If $\beta>0$ and $\beta^2>4\gamma$, there are two negative real roots: overdamping. If $\beta^2=4\gamma$, there is a repeated negative root, producing terms $(a+bt)e^{-\beta t/2}$: critical damping. If $0<\beta^2<4\gamma$, the roots are complex with negative real part: underdamped oscillation. At $\beta=0$, the roots are purely imaginary and resonance becomes possible. The sign of the real part, rather than the presence of oscillation itself, controls decay.
+\end{concept}
+\begin{question}{Additional practice: solve a step-driven second-order equation}
+Find the solution of $y''+3y'+2y=2$ with $y(0)=y'(0)=0$, and identify its equilibrium and transient.
+\end{question}
+\begin{answer}
+The equilibrium is $y=1$. Homogeneous roots are $-1,-2$, so write $y=1+ae^{-t}+be^{-2t}$. Initial displacement gives $a+b=-1$, and initial velocity gives $-a-2b=0$. Hence $b=1$, $a=-2$:
+\[y(t)=1-2e^{-t}+e^{-2t}=(1-e^{-t})^2.\]
+The constant $1$ is the equilibrium; $-2e^{-t}+e^{-2t}$ is the transient. Substitution and the initial values verify the answer.
+\end{answer}
+
+\topic{Laplace transforms: definitions, proofs and inversion}
+\begin{concept}{Definition and the region where it is valid}
+For a continuous function of exponential type $|f(t)|\leq Me^{\beta t}$,
+\[\widehat f(s)=\Lap f(s)=\int_0^\infty e^{-st}f(t)\dd t,\qquad\Re s>\beta.\]
+Indeed,
+\[|\widehat f(s)|\leq M\int_0^\infty e^{-(\Re s-\beta)t}\dd t=\frac{M}{\Re s-\beta}.\]
+This proves absolute convergence. All identities below are asserted in a common half-plane of convergence. The transform is holomorphic there, with derivatives obtained by differentiation under the integral, justified on smaller closed half-planes by an integrable exponential bound.
+\end{concept}
+\begin{concept}{The transform table to learn}
+\begin{center}
+\begin{tabular}{c c c}
+\toprule $f(t)$&$\widehat f(s)$&Sufficient region\\\midrule
+$1$&$1/s$&$\Re s>0$\\
+$t^n$&$n!/s^{n+1}$&$\Re s>0$\\
+$t^\alpha$, $\alpha>-1$&$\Gamma(\alpha+1)/s^{\alpha+1}$&$s>0$ real\\
+$e^{at}$&$1/(s-a)$&$\Re s>\Re a$\\
+$\cos bt$&$s/(s^2+b^2)$&$\Re s>0$\\
+$\sin bt$&$b/(s^2+b^2)$&$\Re s>0$\\
+$H(t-a)$, $a\geq0$&$e^{-as}/s$&$\Re s>0$\\
+$\delta_a$&$e^{-as}$&measure interpretation\\\bottomrule
+\end{tabular}
+\end{center}
+$\delta_a$ is a point mass, not an ordinary function: $\int f(t)\delta_a(\dd t)=f(a)$. A step $H(t-a)$ begins at time $a$.
+\end{concept}
+\begin{method}{Derivatives from first principles}
+Assume the necessary derivatives have exponential growth bounds. Integration by parts gives
+\begin{align*}
+\Lap(f')(s)&=[e^{-st}f(t)]_0^\infty+s\int_0^\infty e^{-st}f(t)\dd t\\
+&=s\widehat f(s)-f(0).
+\end{align*}
+The boundary at infinity is zero for $\Re s$ sufficiently large. Applying the formula repeatedly,
+\[\Lap(f'')=s^2\widehat f-sf(0)-f'(0),\]
+\[\Lap(f^{(n)})=s^n\widehat f-\sum_{j=0}^{n-1}s^{n-1-j}f^{(j)}(0).\]
+For an ODE, transform every term \emph{before} substituting zero initial data. Then collect the output transform on one side and input transform on the other.
+\end{method}
+\begin{concept}{Shifts, time factors and integration}
+Linearity follows from the integral. Direct substitution gives
+\[\Lap(e^{at}f(t))(s)=\widehat f(s-a),\qquad\Lap(tf(t))=-\widehat f'(s).\]
+More generally, $\Lap(t^nf)=(-1)^n\widehat f^{(n)}$. Also
+\[\Lap\!\left(\int_0^t f(r)\dd r\right)=\frac{\widehat f(s)}s,\]
+\[\Lap(H(t-a)f(t-a))=e^{-as}\widehat f(s).\]
+For example, $\Lap(te^{-2t})=1/(s+2)^2$, and $\Lap(t\cos bt)=(s^2-b^2)/(s^2+b^2)^2$. Do not confuse a time delay $e^{-as}$ with a frequency shift $s\mapsto s-a$.
+\end{concept}
+\begin{worked}{Computing cosine from the definition}
+Use $\cos bt=(e^{\ii bt}+e^{-\ii bt})/2$ and integrate exponentials:
+\[\Lap(\cos bt)=\frac12\left(\frac1{s-\ii b}+\frac1{s+\ii b}\right)=\frac{s}{s^2+b^2}.\]
+Alternatively, two integrations by parts produce the same identity. The displayed exponential calculation is still a first-principles derivation because the integrals of $e^{-(s\mp\ii b)t}$ are evaluated directly.
+\end{worked}
+\begin{method}{Invert a rational function by partial fractions}
+First check whether it is strictly proper. Divide if necessary; polynomial terms correspond to distributions rather than ordinary continuous responses. Factor the denominator and include every repeated-pole term:
+\[\frac{c_1}{s-a}+\frac{c_2}{(s-a)^2}+\cdots\quad\longleftrightarrow\quad e^{at}\left(c_1+c_2t+\cdots\right).\]
+In general $c/(s-a)^k$ transforms back to $ct^{k-1}e^{at}/(k-1)!$. For a quadratic, complete the square to match shifted sine and cosine. Lerch's uniqueness theorem says that equal transforms of continuous exponential-type functions imply equal functions; this justifies identifying the inverse from the table.
+\end{method}
+\begin{question}{Original inversion and initial-data practice}
+Solve $y''+3y'+2y=1$, $y(0)=1$, $y'(0)=0$, by Laplace transforms.
+\end{question}
+\begin{answer}
+Transforming and retaining initial data gives
+\[(s^2Y-s)+(3sY-3)+2Y=1/s.\]
+Therefore
+\[Y=\frac{s+3+1/s}{(s+1)(s+2)}=\frac1{2s}+\frac1{s+1}-\frac1{2(s+2)}.\]
+Thus $y(t)=\frac12+e^{-t}-\frac12e^{-2t}$. Substitution gives $y(0)=1$, $y'(0)=-1+1=0$ and $y''+3y'+2y=1$. The final value $1/2$ is consistent with the equilibrium equation $2y=1$.
+\end{answer}
+\begin{tip}
+A transfer function is the zero-initial-data relation $Y=T U$. A nonzero initial condition produces an extra term; absorbing it into $T$ gives an incorrect transfer function.
+\end{tip}
+
+\subsection{Laplace calculations with every boundary term visible}
+\begin{concept}{Why transforming a derivative introduces an initial value}
+Integration by parts transfers differentiation from $f$ to $e^{-st}$. The derivative of the exponential is $-se^{-st}$, so moving it across produces a factor $+s$. The endpoint at time zero is $-f(0)$ because the evaluation is upper endpoint minus lower endpoint.
+
+For $f''$, the first integration gives $-f'(0)+s\Lap(f')$. Substituting $\Lap(f')=sF-f(0)$ gives $s^2F-sf(0)-f'(0)$. This recursive route is safer than memorising signs in a long list. For the third derivative it gives $s^3F-s^2f(0)-sf'(0)-f''(0)$.
+
+The boundary at infinity is not automatically zero for every $s$. If $|f(t)|\leq Me^{\beta t}$, then $|e^{-st}f(t)|\leq Me^{-(\Re s-\beta)t}$, which tends to zero only in a suitable right half-plane. State this once clearly when a question requests first principles.
+\end{concept}
+\begin{worked}{A transform from the integral: $t^2$}
+For real $s>0$, first integrate over a finite interval:
+\[\int_0^R t^2e^{-st}\dd t=\left[-\frac{t^2e^{-st}}s\right]_0^R+\frac2s\int_0^R te^{-st}\dd t.\]
+Apply integration by parts again to the remaining integral, then use $\int_0^R e^{-st}\dd t=(1-e^{-sR})/s$. As $R\to\infty$, every polynomial times $e^{-sR}$ vanishes. The result is $\Lap(t^2)=2/s^3$. Repeating the argument gives $\Lap(t^n)=n!/s^{n+1}$.
+\end{worked}
+\begin{method}{Repeated poles: solve coefficients systematically}
+To invert $F=(2s+5)/((s+1)^2(s+2))$, write
+\[F=\frac A{s+1}+\frac B{(s+1)^2}+\frac C{s+2}.\]
+Multiplying through gives $2s+5=A(s+1)(s+2)+B(s+2)+C(s+1)^2$. Set $s=-1$ to get $B=3$, and $s=-2$ to get $C=1$. Compare coefficients of $s^2$ to get $A+C=0$, so $A=-1$. Therefore
+\[f(t)=-e^{-t}+3te^{-t}+e^{-2t}.\]
+The term $B/(s+1)^2$ is indispensable. Including only simple fractions would leave too few parameters to reproduce the numerator.
+\end{method}
+\begin{question}{Additional practice: complete the square before inverting}
+Find the inverse transform of $F(s)=(s+4)/(s^2+4s+13)$.
+\end{question}
+\begin{answer}
+Complete the square: $s^2+4s+13=(s+2)^2+9$. Split the numerator as $(s+2)+2$. Thus
+\[F=\frac{s+2}{(s+2)^2+3^2}+\frac23\frac3{(s+2)^2+3^2}.\]
+The first term is the transform of $e^{-2t}\cos3t$; the second is the transform of $(2/3)e^{-2t}\sin3t$. Therefore $f=e^{-2t}(\cos3t+\frac23\sin3t)$. The decay factor comes from the shift $s\mapsto s+2$, while the number $3$ is the oscillation frequency.
+\end{answer}
+\begin{tip}
+Match both numerator and denominator to the transform table. A sine transform needs the frequency in the numerator. A cosine transform needs the shifted variable, not the unshifted $s$.
+\end{tip}
+
+
+\subsection{Proof workshop: differentiating a transform and uniqueness}
+\begin{concept}{Why a factor of time becomes a derivative in frequency}
+Start from $F(s)=\int_0^\infty e^{-st}f(t)\dd t$. Formally differentiating gives $F'(s)=-\int_0^\infty te^{-st}f(t)\dd t$. To justify the interchange, fix a smaller half-plane $\Re s\geq\beta+\varepsilon$, with $\varepsilon>0$. Then
+\[|te^{-st}f(t)|\leq Mt e^{-\varepsilon t},\]
+and the right-hand side is integrable. For higher derivatives use $Mt^ne^{-\varepsilon t}$, also integrable. A dominated differentiation argument gives
+\[F^{(n)}(s)=(-1)^n\int_0^\infty t^ne^{-st}f(t)\dd t.\]
+The same reasoning with complex difference quotients establishes holomorphicity in the convergence half-plane. For an exam answer at the module's level, identify the integrable bound and the resulting differentiation identity; avoid claiming interchange without any growth control.
+\end{concept}
+\begin{worked}{Using frequency differentiation to obtain a new table entry}
+Since $\Lap(\sin bt)=b/(s^2+b^2)$,
+\[\Lap(t\sin bt)=-\frac{\mathrm d}{\mathrm ds}\frac b{s^2+b^2}=\frac{2bs}{(s^2+b^2)^2}.\]
+Differentiate again to find
+\[\Lap(t^2\sin bt)=\frac{\mathrm d^2}{\mathrm ds^2}\frac b{s^2+b^2}=\frac{2b(3s^2-b^2)}{(s^2+b^2)^3}.\]
+The sign alternates with the number of time factors. Checking the leading large-$s$ behaviour can catch an error: $t\sin bt\sim bt^2$ near zero, whose transform begins like $2b/s^3$, matching the first expression.
+\end{worked}
+\begin{concept}{What the uniqueness theorem does and does not say}
+If two continuous functions of exponential type have the same transform throughout a sufficiently far-right interval, Lerch's theorem says they agree on positive time. Thus finding a known table entry with the required transform identifies the actual solution, rather than merely a plausible candidate.
+
+The continuity assumption matters for a pointwise conclusion. Changing an integrable function at one isolated point does not change its integral transform. More general uniqueness results therefore use equality almost everywhere rather than at every point. The lecture theorem is stated for a regularity class in which pointwise recovery is justified.
+
+Existence and uniqueness are different logical steps: first display a function with the required transform, then invoke uniqueness to rule out other admissible functions. A rational expression alone does not automatically specify a continuous causal function when it is improper; polynomial terms can require distributions.
+\end{concept}
+\begin{question}{Additional practice: recognise a derivative-generated transform}
+Find the inverse transform of $F(s)=2s/(s^2+1)^2$, then apply an exponential shift to invert $2(s+3)/(((s+3)^2+1)^2)$.
+\end{question}
+\begin{answer}
+Since $-\frac{\mathrm d}{\mathrm ds}(1/(s^2+1))=2s/(s^2+1)^2$ and $\Lap(\sin t)=1/(s^2+1)$, the first inverse is $t\sin t$. Replacing $s$ by $s+3$ multiplies the time function by $e^{-3t}$, so the second inverse is $te^{-3t}\sin t$. Both are continuous and of exponential type, and uniqueness identifies them from these transform calculations.
+\end{answer}
+
+\topic{Convolution, integral equations and the resolvent}
+\begin{concept}{Convolution changes into multiplication}
+For causal scalar functions,
+\[(f*g)(t)=\int_0^t f(t-r)g(r)\dd r,\qquad\Lap(f*g)=\widehat f\widehat g.\]
+To prove it, integrate over $0\leq r\leq t<\infty$, put $v=t-r$, and use absolute convergence to interchange integrals:
+\[\int_0^\infty\!\int_0^\infty e^{-s(v+r)}f(v)g(r)\dd v\dd r=\widehat f(s)\widehat g(s).\]
+Scalar convolution is commutative and associative. Matrix convolution requires compatible dimensions and retains the order of multiplication; it is generally not commutative.
+\end{concept}
+\begin{worked}{Frames 105--106: a Volterra integral equation}
+Solve $y(t)=2e^{at}+\int_0^t e^{b(t-r)}y(r)\dd r$. Taking transforms,
+\[Y=\frac2{s-a}+\frac{Y}{s-b},\quad Y=\frac{2(s-b)}{(s-a)(s-b-1)}.\]
+For $a\ne b+1$, partial fractions give
+\[y(t)=\frac{2(a-b)e^{at}-2e^{(b+1)t}}{a-b-1}.\]
+At the excluded value $a=b+1$, use a repeated pole instead:
+\[Y=\frac2{s-a}+\frac2{(s-a)^2},\qquad y(t)=2(1+t)e^{at}.\]
+The exceptional parameter does not mean the integral equation has no solution; it changes the algebraic form.
+\end{worked}
+\begin{concept}{The resolvent is the transformed exponential}
+For $\Re s$ sufficiently large,
+\[\Lap(e^{tA})(s)=(sI-A)^{-1}.\]
+Indeed,
+\[\frac{\mathrm d}{\mathrm dt}\big(e^{-st}e^{tA}\big)=-(sI-A)e^{-st}e^{tA}.\]
+Integrate from $0$ to infinity. The upper endpoint vanishes and the lower endpoint is $I$, giving $(sI-A)\int_0^\infty e^{-st}e^{tA}\dd t=I$. A sufficient condition is $\Re s>\|A\|$; sharper convergence follows from the spectral bounds in the Jordan topic.
+
+Thus Laplace transforming $\dot X=AX+Bu$ gives
+\[\widehat X=(sI-A)^{-1}X_0+(sI-A)^{-1}B\widehat u.\]
+Multiplication by $C$ and addition of $D\widehat u$ recovers both free and forced output terms.
+\end{concept}
+\begin{question}{Original convolution practice}
+Solve $y(t)=1+\int_0^t y(r)\dd r$ using transforms. Then check the result without transforms.
+\end{question}
+\begin{answer}
+The integral is $1*y$. Hence $Y=1/s+Y/s$, and $(s-1)Y=1$, so $Y=1/(s-1)$ for $\Re s>1$. Therefore $y=e^t$ by uniqueness. Directly, $1+\int_0^t e^r\dd r=1+(e^t-1)=e^t$. Differentiating the original equation also gives $y'=y$ and $y(0)=1$, confirming the same answer.
+\end{answer}
+\begin{tip}
+Recognise the difference between $e^{b(t-r)}y(r)$, which is a convolution kernel, and $e^{bt}y(r)$, which generally is not the same convolution. Write the kernel carefully before transforming.
+\end{tip}
+
+\subsection{Convolution as accumulated influence}
+\begin{concept}{Interpreting the variable inside the integral}
+In $(f*g)(t)=\int_0^t f(t-r)g(r)\dd r$, $r$ is the time at which the input contribution occurs. The elapsed time until observation is $t-r$. If $f$ is the impulse-response kernel, the product $f(t-r)g(r)$ describes how a small piece of input at $r$ affects the output at $t$.
+
+The integration range is triangular when considering all times: $0\leq r\leq t$. Introducing the nonnegative elapsed time $v=t-r$ turns that triangular region into the first quadrant $(v,r)\in[0,\infty)^2$. This is the geometric reason that the Laplace transform of convolution separates into two independent integrals.
+
+To justify interchange, work where the exponential weights make the absolute double integral finite. If $|f(v)|\leq M_fe^{\beta_fv}$ and $|g(r)|\leq M_ge^{\beta_gr}$, choose $\Re s>\max(\beta_f,\beta_g)$. Then the absolute bound is a product of two convergent exponential integrals.
+\end{concept}
+\begin{worked}{Two exponentials and the repeated-rate limit}
+For $f(t)=e^{at}$ and $g(t)=e^{bt}$,
+\[(f*g)(t)=e^{at}\int_0^t e^{(b-a)r}\dd r.\]
+If $a\ne b$, this becomes $(e^{bt}-e^{at})/(b-a)$. If $a=b$, the integrand inside the last integral is $1$, so the result is $te^{at}$. The repeated-rate case produces a polynomial factor without any difficult integration.
+
+In transform language, distinct factors give $1/((s-a)(s-b))$, while a repeated factor gives $1/(s-a)^2$. This is the same link between repeated poles, Jordan blocks and $te^{at}$ that appears elsewhere in the module.
+\end{worked}
+\begin{method}{Solve an integral equation without losing a special parameter case}
+For $y=f+h*y$, transforming gives $Y=F+HY$, hence $(1-H)Y=F$. Solve this algebraic equation as a rational identity, then invert. If parameters make two denominator roots coincide, go back to the unsimplified rational expression and use repeated-pole inversion rather than dividing by a zero parameter difference.
+
+Always verify the recovered solution by substitution into the integral equation or by differentiating the equation together with its initial value. That catches sign errors which can survive several lines of partial fractions.
+\end{method}
+\begin{question}{Additional practice: an exponential kernel}
+Solve $y(t)=e^{-t}+2\int_0^t e^{-(t-r)}y(r)\dd r$ and check your answer.
+\end{question}
+\begin{answer}
+Here $F=1/(s+1)$ and $H=2/(s+1)$. Therefore
+\[Y=\frac1{s+1}+\frac{2Y}{s+1},\quad(s-1)Y=1,\quad Y=\frac1{s-1}.\]
+Thus $y=e^t$. Direct substitution gives
+\[e^{-t}+2e^{-t}\int_0^t e^{2r}\dd r=e^{-t}+e^{-t}(e^{2t}-1)=e^t.\]
+The decaying kernel does not by itself guarantee that the integral equation's solution decays: repeated reinforcement through the equation can overcome the kernel's damping.
+\end{answer}
+
+\topic{Transfer functions and realization}
+\begin{concept}{The central formula and its limitations}
+With zero initial state,
+\[T(s)=D+C(sI-A)^{-1}B.\]
+It is rational and proper; $T(\infty)=D$. For MIMO, $T$ has size $m\times k$. Its finite poles can only occur at eigenvalues of $A$, but some eigenvalue factors may cancel. A transfer function records input-output behaviour, not every possible hidden state mode.
+
+For a scalar ODE $a(D)y=b(D)u$ with suitable zero initial data, $T(s)=b(s)/a(s)$. For instance $y''+5y'+4y=u'-7u$ gives $T=(s-7)/(s^2+5s+4)$.
+\end{concept}
+\begin{method}{Calculate $T$ without taking a full inverse}
+\begin{enumerate}
+\item Form $sI-A$ with particular care over signs.
+\item Solve $(sI-A)v=B$ for the vector $v$ using elimination.
+\item Compute $T=D+Cv$ and simplify.
+\item Factor numerator and denominator; cancel common factors before listing poles.
+\item Check the large-$s$ limit: it must equal $D$.
+\end{enumerate}
+The adjugate formula is also valid, but computing every entry of a $3\times3$ inverse is often unnecessary.
+\end{method}
+\begin{method}{Realize any proper scalar rational function}
+Normalise the denominator:
+\[T(s)=\frac{b_ns^n+b_{n-1}s^{n-1}+\cdots+b_0}{s^n+a_{n-1}s^{n-1}+\cdots+a_0}.\]
+Let $D=b_n$ (zero when strictly proper) and define $r_j=b_j-Da_j$ for $0\leq j<n$. Take the companion matrix $A$ above, $B=e_n$ and $C=(r_0,\ldots,r_{n-1})$.
+
+To verify, solve $(sI-A)v=B$. The first rows give $v_j=s^{j-1}v_1$, and the final row gives $v_1=1/q(s)$. Therefore
+\[(sI-A)^{-1}B=\frac{(1,s,\ldots,s^{n-1})^{\top}}{q(s)},\quad D+Cv=D+\frac{r(s)}{q(s)}=T(s).\]
+This verification explains both the order and the signs of the coefficients.
+\end{method}
+\begin{worked}{2024 Q1: numerator and denominator have equal degree}
+\[T=\frac{s^3-s^2+6s+4}{s^3+2s^2+4s-7}=1+\frac{-3s^2+2s+11}{s^3+2s^2+4s-7}.\]
+Thus
+\[A=\mat{0&1&0\\0&0&1\\7&-4&-2},\quad B=\mat{0\\0\\1},\quad C=\mat{11&2&-3},\quad D=1.\]
+The verification vector is $(1,s,s^2)^{\top}/q(s)$, so $D+Cv=1+(11+2s-3s^2)/q(s)$, exactly the specified transfer function. Setting $D=0$ would lose the leading term and make realization impossible with these matrices.
+\end{worked}
+\begin{question}{2025 Q1: realization and verification}
+Realize $T(s)=(s^2-5s+2)/(s^3+6s^2+7s+4)$ and verify your answer.
+\end{question}
+\begin{answer}
+The function is strictly proper, so $D=0$. With denominator coefficients in ascending order $4,7,6$ and numerator coefficients $2,-5,1$, use
+\[A=\mat{0&1&0\\0&0&1\\-4&-7&-6},\quad B=\mat{0\\0\\1},\quad C=\mat{2&-5&1}.\]
+Let $(sI-A)v=B$. Then $v_2=sv_1$, $v_3=s^2v_1$, and
+\[4v_1+7v_2+(s+6)v_3=1.\]
+Hence $v=(1,s,s^2)^{\top}/(s^3+6s^2+7s+4)$, and multiplying by $C$ gives the required $T$. The calculation is valid away from the denominator roots and establishes equality of rational functions.
+\end{answer}
+\begin{concept}{Inverse systems and a determinant identity}
+For SISO with $D\ne0$, solve $u=D^{-1}(y-CX)$ and substitute into the state equation. An inverse realization is
+\[A_1=A-BD^{-1}C,\quad B_1=BD^{-1},\quad C_1=-D^{-1}C,\quad D_1=D^{-1}.\]
+It treats the old output as new input and old input as new output. If $D=0$, $T^{-1}$ may be improper, so ordinary finite-dimensional state-space realization need not exist.
+
+Another useful identity is
+\[\det\mat{sI-A&-B\\C&D}=\det(sI-A)\big(D+C(sI-A)^{-1}B\big).\]
+It follows by block elimination (the Schur complement). It expresses the scalar transfer numerator as a determinant.
+\end{concept}
+\begin{tip}
+Write $C$ in ascending powers of $s$, while the denominator is usually printed in descending powers. These are the same ordering convention applied to $(1,s,\ldots)$. A realization is not unique: changing state coordinates gives $(SAS^{-1},SB,CS^{-1},D)$ with the same transfer function.
+\end{tip}
+
+\subsection{Realization as a construction you can reproduce}
+\begin{concept}{Why the denominator determines the internal dynamics}
+The equation $(sI-A)v=e_n$ for a companion matrix produces a chain $v_2=sv_1$, $v_3=s^2v_1$, and so on. The last row closes that chain by requiring $q(s)v_1=1$. Thus the denominator is built into the state dynamics before the output coefficients are chosen.
+
+The row $C$ then mixes the components $(1,s,\ldots,s^{n-1})/q(s)$ into any desired strictly proper numerator. Feedthrough $D$ supplies the constant part of a proper rational function. These are separate jobs: $A,B$ create a basis of dynamic responses; $C,D$ combine them into the required input-output map.
+
+An improper rational function such as $s+1$ cannot be realized by finite matrices in the standard form $D+C(sI-A)^{-1}B$, because the resolvent term tends to zero at high frequency, leaving a finite limit $D$. This provides an immediate impossibility check before attempting a construction.
+\end{concept}
+\begin{worked}{A complete second-order realization with feedthrough}
+Let $T=(2s^2+7s+8)/(s^2+3s+2)$. Divide:
+\[2s^2+7s+8=2(s^2+3s+2)+(s+4).\]
+Thus $D=2$, $r=s+4$, and take
+\[A=\mat{0&1\\-2&-3},\quad B=\mat{0\\1},\quad C=\mat{4&1}.\]
+Solving $(sI-A)v=B$ gives $v_2=sv_1$, $2v_1+(s+3)v_2=1$, so $v=(1,s)^{\top}/q$. Then
+\[D+Cv=2+\frac{4+s}{s^2+3s+2}=T.\]
+The denominator has poles $-1,-2$. No numerator cancellation occurs, since $p(-1)=3$ and $p(-2)=2$. The realization uses two states because both dynamic pole factors remain.
+\end{worked}
+\begin{concept}{Changing state coordinates leaves the transfer unchanged}
+Let $Z=SX$ for invertible constant $S$. Then $Z'=SAS^{-1}Z+SBu$ and $y=CS^{-1}Z+Du$. Moreover,
+\[(sI-SAS^{-1})^{-1}=S(sI-A)^{-1}S^{-1}.\]
+Substituting into the transfer formula cancels the adjacent $S^{-1}S$ factors and gives the original $T$. Therefore two apparently different matrix answers can both be valid. To compare them, verify their transfer functions or show they are related by a coordinate transformation; do not reject an answer just because its states differ from the lecturer's.
+\end{concept}
+\begin{question}{Additional practice: cancellation and nonminimal realization}
+Realize $T=(s+2)/(s^2+3s+2)$ in companion form, then simplify the transfer function. Explain why one state is enough after simplification.
+\end{question}
+\begin{answer}
+The unsimplified companion construction gives $A=\mat{0&1\\-2&-3}$, $B=(0,1)^{\top}$, $C=(2,1)$, $D=0$. But $T=(s+2)/((s+1)(s+2))=1/(s+1)$. A one-state realization is $A=-1$, $B=C=1$, $D=0$. The two-state construction contains a mode whose pole factor cancels from the input-output map. It is valid, but not minimal in state dimension. Cancellation must be performed before listing the poles of the rational function itself.
+\end{answer}
+
+\subsection{A fully worked multiple-input, multiple-output example}
+\begin{concept}{A transfer matrix is a table of input-output relationships}
+When there is more than one input and output, the entry $T_{ij}$ is the transfer from input $j$ to output $i$ when the other inputs are zero and the initial state is zero. Each column describes one input experiment; each row describes one measured output. The multiplication $\widehat Y=T\widehat U$ adds all simultaneous contributions.
+
+The same formula $T=D+C(sI-A)^{-1}B$ works because the dimensions line up. Scalar multiplication may be reordered freely, but matrix factors generally cannot. In particular, placing $B$ before the resolvent would normally have the wrong interpretation and may even have the wrong dimensions.
+\end{concept}
+\begin{worked}{Compute every entry of a $2\times2$ transfer matrix}
+Take
+\[A=\mat{-1&0\\0&-2},\quad B=\mat{1&1\\0&1},\quad C=\mat{1&0\\1&1},\quad D=\mat{0&1\\0&0}.\]
+The state equations are $x_1'=-x_1+u_1+u_2$ and $x_2'=-2x_2+u_2$. Outputs are $y_1=x_1+u_2$, $y_2=x_1+x_2$. First,
+\[(sI-A)^{-1}B=\mat{1/(s+1)&1/(s+1)\\0&1/(s+2)}.\]
+Multiplying by $C$ and adding $D$ gives
+\[T(s)=\mat{\frac1{s+1}&1+\frac1{s+1}\\\frac1{s+1}&\frac1{s+1}+\frac1{s+2}}.\]
+The high-frequency limit is exactly $D$. The first input affects both outputs through the first state. The second input affects both states and also has direct feedthrough to the first output.
+
+For input $u_1=1$, $u_2=0$ and zero state, $x_1=1-e^{-t}$ and $x_2=0$, so $y_1=y_2=1-e^{-t}$. For $u_1=0$, $u_2=1$, the states are $x_1=1-e^{-t}$ and $x_2=(1-e^{-2t})/2$, giving
+\[y_1=2-e^{-t},\qquad y_2=\tfrac32-e^{-t}-\tfrac12e^{-2t}.\]
+The immediate value $y_1(0)=1$ in the second experiment is the direct-feedthrough effect, not a contradiction of zero initial state.
+\end{worked}
+\begin{question}{Additional practice: transpose the system}
+For compatible matrices, show that the system $(A^{\top},C^{\top},B^{\top},D^{\top})$ has transfer matrix $T(s)^{\top}$.
+\end{question}
+\begin{answer}
+Use $((sI-A)^{-1})^{\top}=(sI-A^{\top})^{-1}$ and reverse order under transposition:
+\[T^{\top}=D^{\top}+B^{\top}(sI-A^{\top})^{-1}C^{\top}.\]
+This is the transfer formula for the stated transposed system. Its number of inputs and outputs are exchanged. This is an algebraic transpose identity; it does not require $A$ to be real. The Laplace variable is not conjugated when taking this transpose.
+\end{answer}
+
+\topic{Stability: matrices, polynomials and input-output behaviour}
+\begin{concept}{Three questions that must be kept distinct}
+\textbf{Stable matrix / asymptotic decay:} every eigenvalue of $A$ has $\Re\lambda<0$. Equivalently, $e^{tA}$ decays exponentially.
+
+\textbf{Bounded homogeneous motion:} $e^{tA}$ is bounded exactly when every eigenvalue has $\Re\lambda\leq0$ and all imaginary-axis Jordan blocks have size one. This includes undamped oscillation, which need not be BIBO stable.
+
+\textbf{Stable rational function:} after cancellation, the function is proper and every finite pole lies strictly in $\Re s<0$. A constant is stable. $s+1$ is not a stable rational function, despite having no finite poles, because it is improper.
+
+In the lecture framework a system is BIBO stable when bounded inputs give bounded outputs for the permitted initial states. A stable $A$ is sufficient. Stability of $T$ alone does not certify all hidden state behaviour of an arbitrary nonminimal realization. The notes' realization theorem asserts that every stable proper $T$ has \emph{some} BIBO-stable realization.
+\end{concept}
+\begin{method}{Prove BIBO stability from eigenvalues}
+If $\|e^{tA}\|\leq Me^{-\delta t}$ and $\|u(t)\|\leq U$, variation of constants gives
+\begin{align*}
+\|X(t)\|&\leq Me^{-\delta t}\|X_0\|+M\|B\|U\int_0^t e^{-\delta(t-r)}\dd r\\
+&\leq M\|X_0\|+\frac{M\|B\|U}{\delta}.
+\end{align*}
+Then $\|y(t)\|\leq\|C\|\|X(t)\|+\|D\|U$. The uniform bound proves BIBO stability. The strict $\delta>0$ matters: a merely bounded exponential leaves an integral potentially proportional to $t$.
+\end{method}
+\begin{concept}{Polynomial stability tests and their scope}
+A real monic stable polynomial must have strictly positive coefficients. Proof: its real roots are negative, producing factors $s+a$, $a>0$; conjugate pairs $\alpha\pm\ii\beta$, $\alpha<0$, produce $s^2-2\alpha s+(\alpha^2+\beta^2)$ with positive coefficients. Multiplying preserves positivity.
+
+Positive coefficients are \textbf{not sufficient} in degree three or higher. For a monic quadratic $s^2+as+b$, they \emph{are} sufficient: the roots have sum $-a$ and product $b$, or are conjugates with real part $-a/2$.
+
+\textbf{Extension useful for checking PID answers:} a real cubic $d_3s^3+d_2s^2+d_1s+d_0$, with $d_3>0$, is strictly Hurwitz precisely when all coefficients are positive and $d_2d_1>d_3d_0$. This is the cubic Routh--Hurwitz test. The papers sometimes only ask for the necessary coefficient conditions taught in the notes; label a stronger test when using it.
+\end{concept}
+\begin{worked}{2023 Q2(iii)--(iv): why positive coefficients can fail}
+\[s^3+s^2+s+1=(s+1)(s^2+1).\]
+Its roots are $-1,\ii,-\ii$, so it is not strictly stable even though all coefficients are positive. The companion matrix
+\[C=\mat{0&1&0\\0&0&1\\-1&-1&-1}\]
+has exactly this characteristic polynomial, hence is an unstable matrix in the strict sense of the module. It is enough to give imaginary-axis roots; positive real-part roots are not required to refute strict stability.
+\end{worked}
+\begin{question}{Original stability distinctions}
+Classify $A=\operatorname{diag}(-1,2)$ and the realization $B=(1,0)^{\top}$, $C=(1,0)$, $D=0$. What does its transfer function reveal and conceal?
+\end{question}
+\begin{answer}
+$A$ is unstable because of eigenvalue $2$. However,
+\[T(s)=(1,0)\mat{(s+1)^{-1}&0\\0&(s-2)^{-1}}\mat{1\\0}=\frac1{s+1},\]
+which is stable. The second state is neither driven by the input nor observed at the output. Its initial value can grow as $e^{2t}$ while the output remains bounded. Thus transfer stability concerns the observed input-output map; it does not prove that every internal state is stable. This is why internal feedback stability checks more than one external transfer function.
+\end{answer}
+\begin{tip}
+Always say which object is stable: matrix, polynomial, transfer function, output, or feedback interconnection. Cancel common factors when identifying rational poles, but do not use cancellation to dismiss hidden internal instability.
+\end{tip}
+
+\subsection{Stability explained through signals and counterexamples}
+\begin{concept}{What a stability proof must actually establish}
+To prove a matrix stable, locate every eigenvalue strictly to the left of the imaginary axis or supply an equivalent certificate such as a strict Lyapunov inequality. To prove a rational transfer stable, establish properness and locate every uncancelled pole. To prove BIBO stability, obtain a bound that is uniform in time for every bounded admissible input.
+
+The word ``uniform'' is crucial. A bound like $|y(t)|\leq t+1$ does not prove bounded output on the infinite time interval: the right-hand side itself grows without bound. A valid BIBO argument needs a finite constant, possibly depending on the input bound and initial state, but not on $t$.
+
+To disprove BIBO stability, it is enough to provide one bounded input with an unbounded output. You do not have to show that every input is dangerous. The oscillator input $\cos t$ is an especially useful example because the resulting $t\sin t$ term makes growth explicit.
+\end{concept}
+\begin{worked}{A simple pole at zero already breaks BIBO stability}
+The integrator has $x'=u$, $y=x$, zero initial state and transfer $T=1/s$. The input $u=1$ is bounded, but $y=t$ is unbounded. Thus a pole at zero is not allowed by strict transfer stability.
+
+The homogeneous solution with $u=0$ is constant, so it is bounded. This one-state example shows the distinction between bounded zero-input motion and BIBO stability without needing a second-order oscillator.
+
+For $T=1/(s+\varepsilon)$ with $\varepsilon>0$, the unit-step response is $(1-e^{-\varepsilon t})/\varepsilon$, bounded by $1/\varepsilon$. It is stable for every fixed positive $\varepsilon$, but the bound becomes large as the pole approaches zero. Stability is a qualitative condition; good performance may require poles comfortably away from the boundary.
+\end{worked}
+\begin{method}{Use a quadratic root argument without explicit square roots}
+For $s^2+as+b$ with $a,b>0$, if the roots are real, their product is positive so they have the same sign, and their sum $-a<0$ forces both negative. If they are nonreal, they are a conjugate pair with real part half their sum, $-a/2<0$. This proves sufficiency of positive coefficients in degree two.
+
+For a cubic, positive coefficients only exclude positive real roots: for real $s\geq0$, every term is nonnegative and the constant is positive. Complex roots can still have nonnegative real part. That is why the corresponding general assertion fails.
+\end{method}
+\begin{question}{Additional practice: a cubic with positive real-part roots}
+Show that $p(s)=s^3+s^2+s+2$ has positive coefficients but is not Hurwitz. You may use the cubic Hurwitz test from the guide.
+\end{question}
+\begin{answer}
+The coefficients are $d_3=d_2=d_1=1$, $d_0=2$. The required inequality $d_2d_1>d_3d_0$ becomes $1>2$, which fails. There are no imaginary-axis roots: substituting $s=\ii\omega$ gives real part $2-\omega^2$ and imaginary part $\omega-\omega^3$, which cannot both vanish. Thus the failure is not merely a marginal root at the boundary. Since the polynomial is not Hurwitz and has no imaginary-axis roots, it has at least one right-half-plane root. Positive coefficients were only a necessary test.
+\end{answer}
+\begin{concept}{Stable rational functions form a ring}
+Adding or multiplying two proper rational functions preserves properness. Their combined poles can only come from the original poles, and cancellation can remove poles but cannot create new ones elsewhere. Thus sums and products of stable rational functions are stable. Differentiation also preserves membership: a derivative has the same pole locations with possibly increased multiplicity and remains proper. Taking reciprocals is different: a zero in the right half-plane becomes an unstable pole, or the reciprocal may be improper.
+\end{concept}
+
+
+\subsection{A full stable-realization argument}
+\begin{concept}{How pole locations become time-domain terms}
+Let $T$ be a strictly proper scalar rational function. After partial fractions over $\C$, it is a finite sum of terms $c_{jk}/(s-\lambda_j)^k$. Its inverse transform is therefore a finite sum of
+\[\frac{c_{jk}}{(k-1)!}t^{k-1}e^{\lambda_jt}.\]
+If every $\Re\lambda_j<0$, each term decays exponentially after weakening the rate slightly. It is also absolutely integrable on $[0,\infty)$. Thus the impulse-response kernel $h$ satisfies $\int_0^\infty|h(t)|\dd t<\infty$.
+
+For zero initial state and bounded input $|u(t)|\leq U$, convolution gives
+\[|y(t)|\leq\int_0^t |h(t-r)|\,|u(r)|\dd r\leq U\int_0^\infty|h(v)|\dd v.\]
+This is a uniform BIBO bound. If $T=D+T_0$ is merely proper, add the direct term $Du(t)$, also bounded. This is the input-output form of the stability argument.
+\end{concept}
+\begin{method}{Construct a realization whose matrix is stable}
+Write a reduced stable transfer $T=D+r/q$, with monic $q$ and all roots of $q$ strictly in the left half-plane. Build the companion realization of $r/q$. Its state matrix has characteristic polynomial exactly $q$, so all its eigenvalues are stable. Therefore the earlier matrix bound proves bounded states and output for bounded input and arbitrary fixed initial state.
+
+This proves the existence statement used in the notes: a stable proper rational function has a stable realization. It does not say every realization of the same function has a stable matrix. You could append an unobserved unstable state without changing the input-output transfer, as the counterexample in the guide shows.
+\end{method}
+\begin{worked}{An impulse-response bound you can evaluate exactly}
+Let $T=1/((s+1)(s+2))=1/(s+1)-1/(s+2)$. Its impulse response is $h=e^{-t}-e^{-2t}\geq0$ for $t\geq0$. Consequently
+\[\int_0^\infty|h(t)|\dd t=1-\tfrac12=\tfrac12.\]
+For every zero-state input with $|u|\leq U$, the output satisfies $|y(t)|\leq U/2$. This is sharper than bounding the two exponential terms separately, which would give the valid but larger estimate $3U/2$.
+\end{worked}
+\begin{question}{Additional practice: a repeated stable pole}
+For $T=1/(s+2)^2$, find the impulse response and a BIBO output bound for zero initial state and $|u|\leq U$.
+\end{question}
+\begin{answer}
+The inverse transform is $h(t)=te^{-2t}\geq0$. Its integral is $\int_0^\infty te^{-2t}\dd t=1/4$, obtained by integration by parts or the transform of $t$ evaluated at $s=2$. Therefore
+\[|y(t)|\leq U\int_0^\infty h(v)\dd v=U/4.\]
+The repeated pole produces a time factor, but its strictly negative location still makes the kernel integrable and the system BIBO stable.
+\end{answer}
+
+\topic{Frequency response, gain, phase and Nyquist curves}
+\begin{concept}{Why evaluate at $s=\ii\omega$?}
+For a stable system driven by $e^{\ii\omega t}$, the long-term output is $T(\ii\omega)e^{\ii\omega t}$. Writing
+\[T(\ii\omega)=\Gamma(\omega)e^{\ii\phi(\omega)}\]
+shows that gain $\Gamma=|T(\ii\omega)|$ scales the amplitude and phase $\phi=\arg T(\ii\omega)$ shifts the oscillation. The real response to $\cos\omega t$ is $\Gamma\cos(\omega t+\phi)$ after decaying transients. This steady-state interpretation needs stability; algebraically $T(\ii\omega)$ can still be evaluated where finite for unstable systems.
+
+A Bode magnitude plot uses $20\log_{10}\Gamma$ decibels against logarithmic frequency. A phase plot shows $\phi$, often in degrees. Nyquist puts the same frequency response into the complex plane, retaining both magnitude and phase simultaneously.
+\end{concept}
+\begin{method}{Calculate gain and phase without quadrant mistakes}
+For $T(\ii\omega)=(a+\ii b)/(c+\ii d)$, where all four quantities are real,
+\[\Gamma=\sqrt{\frac{a^2+b^2}{c^2+d^2}},\qquad\phi=\operatorname{atan2}(b,a)-\operatorname{atan2}(d,c)\pmod{2\pi}.\]
+Equivalently, rationalise:
+\[\Re T=\frac{ac+bd}{c^2+d^2},\qquad\Im T=\frac{bc-ad}{c^2+d^2}.\]
+For phase in $(-\pi,\pi]$, reduce the difference to that interval. An ordinary $\arctan(b/a)$ cannot distinguish quadrants I and III, or II and IV.
+\end{method}
+\begin{worked}{2024 Q3: frequency response and real-axis crossings}
+For $R(s)=(s-7)/(s^2+5s+4)$,
+\[R(\ii\omega)=\frac{-7+\ii\omega}{4-\omega^2+5\ii\omega}.\]
+Thus
+\[\Gamma=\sqrt{\frac{49+\omega^2}{(4-\omega^2)^2+25\omega^2}},\quad
+\phi=\operatorname{atan2}(\omega,-7)-\operatorname{atan2}(5\omega,4-\omega^2).\]
+Multiply by the denominator conjugate to get
+\[\Re R=\frac{12\omega^2-28}{(\omega^2+1)(\omega^2+16)},\qquad\Im R=\frac{\omega(39-\omega^2)}{(\omega^2+1)(\omega^2+16)}.\]
+The real-axis frequencies are $\omega=0,\pm\sqrt{39}$. At zero the value is $-7/4$; at either nonzero crossing it is $1/5$. As $\omega\to\pm\infty$, $R(\ii\omega)\to0$. The full curve is symmetric across the real axis because $R$ has real coefficients.
+\end{worked}
+\begin{method}{Sketch or describe a Nyquist curve systematically}
+\begin{enumerate}
+\item Find poles first; note whether any lie on the imaginary axis.
+\item Compute $R(0)$ and the common endpoint $R(\pm\ii\infty)$ (zero if strictly proper).
+\item Rationalise and solve $\Im R(\ii\omega)=0$; substitute to find the actual crossing points.
+\item Solve $\Re R=0$ if imaginary-axis crossings help the sketch.
+\item Determine the signs of the real and imaginary parts between crossings.
+\item Add arrows for increasing $\omega$, and use conjugate symmetry for real coefficients.
+\item Check the position relative to $-1$; combine geometry with the pole count when concluding feedback stability.
+\end{enumerate}
+The contour's ``initial'' point for the full parameter range $-\infty<\omega<\infty$ is the high-frequency limit. A plot of only $\omega\geq0$ instead begins at $R(0)$.
+\end{method}
+\begin{question}{2022 Q4(a): gain and a phase of $\pi$}
+For $R(s)=(-3s+2)/(s^2+2s+3)$, find gain and phase, and determine whether its phase takes the value $\pi$.
+\end{question}
+\begin{answer}
+Substitution gives
+\[\Gamma=\sqrt{\frac{4+9\omega^2}{(3-\omega^2)^2+4\omega^2}},\quad
+\phi=\operatorname{atan2}(-3\omega,2)-\operatorname{atan2}(2\omega,3-\omega^2)\pmod{2\pi}.\]
+Rationalising yields
+\[\Re R=\frac{6-8\omega^2}{\omega^4-2\omega^2+9},\qquad\Im R=\frac{\omega(3\omega^2-13)}{\omega^4-2\omega^2+9}.\]
+A principal phase $\pi$ occurs at a negative real value. Apart from $\omega=0$, where $R=2/3>0$, the real-axis frequencies satisfy $\omega^2=13/3$. Substituting gives $R=-3/2$. Therefore the phase does attain $\pi$ (equivalently $-\pi$ under the alternative branch convention).
+\end{answer}
+\begin{tip}
+Solving $\Im R=0$ is only half the work: a positive real crossing has phase $0$, not $\pi$. Check the sign of the real part. Nyquist arrows should represent increasing frequency, not an arbitrary preferred direction.
+\end{tip}
+
+\subsection{Seeing the meaning of gain and phase in an actual output}
+\begin{concept}{From a complex response back to a real sinusoid}
+Suppose a stable system has input $u(t)=\cos\omega t$. First use the complex input $e^{\ii\omega t}$. A candidate particular state is $X_p=e^{\ii\omega t}v$. Substituting into $X'=AX+Be^{\ii\omega t}$ gives $(\ii\omega I-A)v=B$. Hence the particular output is $T(\ii\omega)e^{\ii\omega t}$.
+
+Write $T(\ii\omega)=\Gamma e^{\ii\phi}$. Taking real parts gives $y_p=\Gamma\cos(\omega t+\phi)$. If $A$ is stable, any correction needed to match initial data decays, so this becomes the long-term response. Gain and phase describe this sinusoidal steady response, rather than the full output immediately after the input is applied.
+
+For a stable real-coefficient system, negative frequencies give the complex conjugate of positive frequencies. This is why a complete Nyquist curve is symmetric about the real axis, even though the direction of traversal reverses under reflection.
+\end{concept}
+\begin{worked}{A first-order low-pass response}
+Take $T(s)=1/(s+2)$. Then
+\[T(\ii\omega)=\frac{2-\ii\omega}{4+\omega^2},\quad\Gamma=\frac1{\sqrt{4+\omega^2}},\quad\phi=-\arctan(\omega/2)\quad(\omega\geq0).\]
+At zero frequency the gain is $1/2$. At high frequency the gain tends to zero: fast oscillations are suppressed. At $\omega=2$, the gain is $1/(2\sqrt2)$ and phase is $-\pi/4$. Thus input $\cos2t$ produces long-term output $(1/(2\sqrt2))\cos(2t-\pi/4)$.
+
+For a zero-state experiment, an additional decaying term ensures the output starts at its required initial value. You can find it by solving $y'+2y=\cos2t$ and imposing $y(0)=0$.
+\end{worked}
+\begin{method}{Describe a Nyquist curve algebraically before sketching}
+For the same first-order function, write $x=\Re T=2/(4+\omega^2)$ and $y=\Im T=-\omega/(4+\omega^2)$. Then
+\[(x-\tfrac14)^2+y^2=\tfrac1{16}.\]
+So the full Nyquist locus is the circle centred at $(1/4,0)$ with radius $1/4$, approached at the origin at both infinite-frequency endpoints. For positive frequencies it goes from $1/2$ through the lower half-plane toward zero. This exact geometric description excludes any winding around $-1$.
+\end{method}
+\begin{question}{Additional practice: correct the phase quadrant}
+For $T(s)=(s-2)/(s+1)$, evaluate $T(\ii)$, its gain and a principal phase. Explain why using only $\arctan(\Im T/\Re T)$ can be wrong.
+\end{question}
+\begin{answer}
+\[T(\ii)=\frac{-2+\ii}{1+\ii}=\frac{-1+3\ii}{2}.\]
+Thus $\Gamma=\sqrt{10}/2$ and the value lies in quadrant II. Its principal phase is $\pi-\arctan3$. A bare $\arctan((3/2)/(-1/2))=\arctan(-3)$ produces a quadrant-IV angle, differing by $\pi$. The function \(\operatorname{atan2}(3,-1)\) retains the signs of both components and gives the correct quadrant.
+\end{answer}
+\begin{tip}
+A phase angle is defined modulo $2\pi$. A principal phase can jump from $\pi$ to $-\pi$ even when the complex curve is continuous. A phase-unwrapped plot removes such artificial jumps for visual continuity; state the convention when comparing answers.
+\end{tip}
+
+
+\subsection{Why the Nyquist locus closes and has finite length}
+\begin{concept}{Compactifying the infinite frequency range}
+For proper stable $R$, polynomial division gives $R(s)=c+r(s)/q(s)$ with $\deg r<\deg q$. Thus $R(\ii\omega)\to c$ as $\omega\to\pm\infty$. Both ends of the infinite-frequency trace approach the same point.
+
+To express this as a finite-parameter curve, set $\omega=\tan\theta$ with $-\pi/2<\theta<\pi/2$. Define the endpoint values by the common limit $c$. Then $\gamma(\theta)=R(\ii\tan\theta)$ extends continuously to both endpoints and closes there. Stability ensures there are no poles on the imaginary axis, so the middle of the curve is well defined.
+
+The limit $c$ is the ratio of leading coefficients if numerator and denominator have equal degree, and zero if the function is strictly proper. This same limit is the feedthrough $D$ in state-space realization. The high-frequency endpoint therefore links the geometry of Nyquist curves to the algebra of $D$.
+\end{concept}
+\begin{method}{Estimate the length using partial fractions}
+Write
+\[R(s)=c+\sum_{j,k}\frac{c_{jk}}{(s-\lambda_j)^k},\qquad\Re\lambda_j<0.\]
+Differentiating gives terms $-kc_{jk}/(s-\lambda_j)^{k+1}$. For large $|\omega|$, each is $O(|\omega|^{-2})$ or faster because $k+1\geq2$. On a bounded frequency interval the derivative is continuous and bounded, since there are no imaginary-axis poles. Combining the compact and large-frequency bounds gives
+\[|R'(\ii\omega)|\leq\frac M{1+\omega^2}\]
+for a sufficiently large constant $M$. Since $\int_{-\infty}^{\infty}(1+\omega^2)^{-1}\dd\omega=\pi$, the curve has finite length. The speed is $|\frac{\mathrm d}{\mathrm d\omega}R(\ii\omega)|=|\ii R'(\ii\omega)|=|R'(\ii\omega)|$.
+\end{method}
+\begin{question}{Additional practice: a nonzero Nyquist endpoint}
+For $R(s)=(2s+1)/(s+3)$, find the common high-frequency endpoint and the zero-frequency point. Rewrite it as a constant plus a strictly proper term.
+\end{question}
+\begin{answer}
+Polynomial division gives $R=2-5/(s+3)$. Therefore $R(\ii\omega)\to2$ as $\omega\to\pm\infty$, while $R(0)=1/3$. The endpoint is $2$, not zero, because the numerator and denominator have the same degree. The only pole is $-3$, so there is no singularity on the frequency path. In a state-space realization, the direct feedthrough is $D=2$.
+\end{answer}
+\begin{tip}
+Do not assume every Nyquist locus starts at the origin. Check proper versus strictly proper. Do not assume a plot of positive frequencies is already a closed contour; the full frequency range and the common endpoint matter to winding.
+\end{tip}
+
+\topic{Negative feedback and Nyquist stability}
+\begin{concept}{Derive the feedback formula rather than memorising a sign}
+For plant $G$ and controller branch $-K$, the plant input is $u-Ky$. Therefore
+\[y=G(u-Ky),\qquad (1+GK)y=Gu,\qquad \frac yu=\frac G{1+GK}.\]
+Positive feedback would produce $1-GK$ instead. For scalar rational functions $G=n/d$, $K=k/\ell$,
+\[\frac G{1+GK}=\frac{n\ell}{d\ell+nk}.\]
+The candidate closed-loop characteristic polynomial is $d\ell+nk$. After cancellation, it determines the poles of this particular external map, but the other internal maps must still be checked.
+\end{concept}
+\begin{concept}{Nyquist criterion in the convention of the notes}
+Assume the loop transfer $L=GK$ has no poles on the imaginary axis, $1+L(\infty)\ne0$, and its Nyquist contour does not pass through $-1$. Traverse the imaginary axis upwards, $\omega:-\infty\to+\infty$, and close through the right half-plane. Let $P$ be the number of right-half-plane poles of $L$ and $Z$ the number of right-half-plane zeros of $1+L$, counting multiplicity. If $N$ is the net number of \textbf{clockwise} windings about $-1$, then
+\[N=Z-P,\qquad Z=N+P.\]
+Consequently stability requires $N=-P$ and no imaginary-axis zeros of $1+L$. In the lecturer's principal case, $L$ is stable ($P=0$), so avoiding $-1$ with zero net winding gives a stable closed loop.
+
+If the locus passes through $-1$, then $1+L(\ii\omega)=0$: the ordinary criterion cannot be applied as if the contour avoided the point. For unity feedback $L/(1+L)$, this gives an uncancelled imaginary-axis pole, since the numerator there equals $-1$.
+\end{concept}
+\begin{worked}{A stable plant destabilised by unity feedback: 2024 Q3}
+The plant $R=(s-7)/((s+1)(s+4))$ is stable. However,
+\[\frac R{1+R}=\frac{s-7}{s^2+6s-3},\]
+whose roots are $-3\pm2\sqrt3$. One is positive, so the feedback system is unstable. There is no cancellation because the numerator zero is $7$.
+
+Here $P=0$ and $Z=1$, so the full Nyquist curve of $R$ makes one net clockwise winding around $-1$. This agrees with the real-axis point $R(0)=-7/4$ to the left of $-1$. That crossing alone would not be a complete winding proof; the pole count establishes the exact winding number.
+\end{worked}
+\begin{worked}{2023 Q3(vi): a gain bound that proves stability}
+For $R=(s-1)/(s^2+3s+4)$,
+\[|R(\ii\omega)|^2=\frac{\omega^2+1}{\omega^4+\omega^2+16}<1\]
+because denominator minus numerator is $\omega^4+15>0$. The poles of $R$ have real part $-3/2$, so $R$ is stable. Its entire Nyquist curve lies strictly inside the unit circle, which excludes $-1$ and cannot wind about $-1$. Unity negative feedback is therefore stable.
+
+A direct algebra check gives $R/(1+R)=(s-1)/(s^2+4s+3)$, with poles $-1,-3$. This independently confirms the conclusion.
+\end{worked}
+\begin{question}{2025 Q3(c)--(f): a boundary case}
+Let $R(s)=(14s-5)/(s^2-7s+10)$ and $T=R/(1+R)$. Classify $R$ and $T$, find gain and phase of $T$, and show its Nyquist curve passes through $-1$. What does this imply?
+\end{question}
+\begin{answer}
+$R$ has poles $2,5$, so it is unstable. Combining numerator and denominator,
+\[T(s)=\frac{14s-5}{s^2+7s+5}.\]
+The denominator roots are $(-7\pm\sqrt{29})/2<0$, so $T$ is stable. Its gain and phase are
+\[\Gamma_T=\sqrt{\frac{25+196\omega^2}{(5-\omega^2)^2+49\omega^2}},\]
+\[\phi_T=\operatorname{atan2}(14\omega,-5)-\operatorname{atan2}(7\omega,5-\omega^2)\pmod{2\pi}.\]
+At $\omega=0$, $T(0)=-1$. Thus its Nyquist curve passes through the critical point. This does \emph{not} contradict stability of $T$ itself. It warns about applying an \emph{additional} unity feedback loop to $T$:
+\[\frac T{1+T}=\frac{14s-5}{s^2+21s}=\frac{14s-5}{s(s+21)}.\]
+There is an uncancelled pole at zero, so this new loop is not strictly stable. State which transfer function is being treated as the plant when using Nyquist.
+\end{answer}
+\begin{tip}
+``Passes through $-1$'' is not the same as ``winds around $-1$''. Neither statement says that the plant itself has a right-half-plane pole. Always connect the critical point to zeros of the appropriate $1+L$.
+\end{tip}
+
+\subsection{Why the critical Nyquist point is exactly minus one}
+\begin{concept}{The geometry comes directly from the feedback equation}
+Closed-loop poles arise when $1+L(s)=0$, where $L=GK$ is the loop transfer. Rearranging gives $L(s)=-1$. Thus the point $-1$ is not an arbitrary plotting convention: it is the image of the values of $s$ that make the feedback equation singular.
+
+If $L(\ii\omega_0)=-1$, the dangerous value occurs on the stability boundary. If the loop is perturbed, a boundary root can move into either half-plane, so simply saying ``the curve nearly avoids $-1$'' does not establish strict stability. Evaluate the closed-loop denominator if the curve meets the point exactly.
+
+For a stable plant and no critical-point passage, the argument principle turns geometric winding into a root count. The winding includes the complete curve, not just positive frequencies. With the convention of this module, clockwise counts positively and $N=Z-P$. When $P=0$, each net clockwise winding corresponds to an additional right-half-plane closed-loop zero of $1+L$.
+\end{concept}
+\begin{worked}{A gain parameter and the exact stability threshold}
+Let $G(s)=1/(s+1)$ and $K=k$ be real. The closed-loop transfer is
+\[\frac G{1+kG}=\frac1{s+1+k}.\]
+It is stable exactly when $1+k>0$, or $k>-1$. At $k=-1$ the pole is zero; for $k<-1$ it moves into the right half-plane.
+
+The loop transfer is $L=k/(s+1)$. At zero frequency, $L(0)=k$. When $k=-1$, the Nyquist curve therefore passes through $-1$ at $\omega=0$, matching the algebraic boundary. This example also shows why you must include the sign of $k$ rather than assuming every feedback gain is a positive number.
+\end{worked}
+\begin{method}{Use both algebra and geometry to check an exam conclusion}
+If a question gives a low-degree rational $L$, form the closed-loop denominator as an independent check. Count its right-half-plane roots and use $N=Z-P$ to infer the expected winding. Then compare this with the crossing information from the plotted curve. A mismatch usually signals a sign convention error, an omitted part of the curve or an incorrect pole count.
+
+Do not use this as circular reasoning when the task specifically asks you to prove stability \emph{using} Nyquist: in that case your geometric argument must carry the proof. The algebraic check is still valuable for detecting errors before submission.
+\end{method}
+\begin{question}{Additional practice: a stable plant and a negative gain}
+For $G=1/(s+2)$ and constant controller $K=k$, find the stable range and the value of $k$ at which the Nyquist curve of $L=kG$ passes through $-1$ at zero frequency.
+\end{question}
+\begin{answer}
+The closed-loop transfer is $1/(s+2+k)$, so stability requires $k>-2$. At zero frequency $L(0)=k/2$, which equals $-1$ exactly when $k=-2$. At that gain the closed-loop pole is $0$. These two calculations describe the same threshold in algebraic and geometric language.
+\end{answer}
+
+\topic{PID controllers and internal stability}
+\begin{concept}{The roles of P, I and D}
+A PID controller is $K(s)=k_Ds+k_P+k_I/s$. The proportional term reacts to the current error, the integral term accumulates it, and the derivative term responds to its rate. An ideal derivative is improper, so properness of the \emph{closed-loop maps} must be checked. The papers use different letters for these coefficients: copy their exact convention before calculating.
+
+Internal stability requires all four functions
+\[S=\frac1{1+GK},\quad GS=\frac G{1+GK},\quad KS=\frac K{1+GK},\quad GKS=\frac{GK}{1+GK}\]
+to belong to $\Sstable$. They describe responses at different loop junctions to independently injected disturbances. Since $S+GKS=1$, one can sometimes infer one map from another, but properness still matters.
+\end{concept}
+\begin{method}{Solve a PID parameter question}
+\begin{enumerate}
+\item Write $G=n/d$ and $K=k/\ell$ as polynomial quotients.
+\item Form $h=d\ell+nk$ without dropping factors of $s$.
+\item Determine its actual degree. If the leading coefficient can vanish, handle that case separately.
+\item Normalise the leading coefficient to be positive before requiring positive coefficients. This gives necessary conditions.
+\item To prove sufficiency, factor the polynomial, calculate roots, or apply a justified complete test such as the quadratic or cubic Hurwitz criterion.
+\item For internal stability, write the four numerators over $h$: $d\ell$, $n\ell$, $kd$, $nk$. Check poles after any cancellations and compare numerator and denominator degrees in every map.
+\end{enumerate}
+\end{method}
+\begin{worked}{2024 Q2: necessary conditions that are not sufficient}
+For $G=(s+1)/(s^2+s-6)$ and $K=as+b+c/s$, $c>0$, let $k=as^2+bs+c$. Then
+\begin{align*}
+h(s)&=s(s^2+s-6)+(s+1)(as^2+bs+c)\\
+&=(1+a)s^3+(1+a+b)s^2+(b+c-6)s+c.
+\end{align*}
+In the cubic case, positivity of the monic coefficients and $c>0$ require
+\[1+a>0,\qquad1+a+b>0,\qquad b+c-6>0.\]
+For a complete cubic pole test also require
+\[(1+a+b)(b+c-6)>(1+a)c.\]
+The proposed $a=0,b=3,c=4$ gives $h=s^3+4s^2+s+4=(s+4)(s^2+1)$. It satisfies the simple necessary sign conditions, but has poles $\pm\ii$ and is not strictly stable. None is cancelled in $GS=s(s+1)/h$.
+
+For internal stability there is an extra issue: if $a\ne0$, $KS=k(s)(s^2+s-6)/h$ has degree four over degree three and is improper. Thus this particular strictly proper plant cannot have an internally stable loop under an ideal nonzero derivative term. The choice $a=0,b=7,c=1$ gives $h=s^3+8s^2+2s+1$, which passes the cubic test ($16>1$), and all four maps are proper with stable denominator.
+\end{worked}
+\begin{concept}{Why degree-drop cases cannot be ignored}
+If $1+a=0$ in the previous example, $h=bs^2+(b+c-6)s+c$. The sensitivity numerator $s(s^2+s-6)$ still has degree three, so $S$ is improper. Cancelling common factors cannot change the excess of numerator degree over denominator degree. Thus the degree-drop case cannot give internal stability, although a question about only one external transfer might require separate examination.
+\end{concept}
+\begin{question}{2025 Q4: the plant is an improper polynomial}
+For $G=6s-5$ and $K=a+b/s+cs$, $c>0$, derive necessary conditions for $G/(1+KG)$ to be stable. Give valid parameter values and check internal stability.
+\end{question}
+\begin{answer}
+Write $K=(cs^2+as+b)/s$. Clearing the fraction gives
+\[h=s+(6s-5)(cs^2+as+b)=6cs^3+(6a-5c)s^2+(1-5a+6b)s-5b.\]
+Since $6c>0$, necessary conditions are
+\[6a-5c>0,\qquad1-5a+6b>0,\qquad b<0.\]
+For instance $c=1/100$, $a=1/10$, $b=-1/100$ gives
+\[h=\tfrac3{50}s^3+\tfrac{11}{20}s^2+\tfrac{11}{25}s+\tfrac1{20}.\]
+The complete cubic inequality holds because $(11/20)(11/25)=121/500>3/1000=(3/50)(1/20)$. Hence every root is in the open left half-plane.
+
+The four maps have numerators
+\[s,\quad s(6s-5),\quad cs^2+as+b,\quad(6s-5)(cs^2+as+b),\]
+all over $h$. Their degrees are respectively $1,2,2,3$, compared with degree $3$ for $h$. They are proper and have only stable poles, so the feedback loop is internally stable in the rational framework of the notes. Although $G$ and $K$ themselves are improper here, the question's closed-loop maps satisfy the required properness conditions.
+\end{answer}
+\begin{question}{2022 Q3(c)--(d): another PID denominator}
+For $G=(s+2)/(s^2+s-6)$ and $K=as+b+c/s$, derive the cubic and exhibit a choice that makes $G/(1+KG)$ stable.
+\end{question}
+\begin{answer}
+\[h=s(s^2+s-6)+(s+2)(as^2+bs+c)
+=(1+a)s^3+(1+2a+b)s^2+(-6+2b+c)s+2c.\]
+In the nondegenerate cubic case the necessary sign conditions are
+\[\frac{1+2a+b}{1+a}>0,\quad\frac{-6+2b+c}{1+a}>0,\quad\frac{2c}{1+a}>0.\]
+Do not silently assume $1+a>0$ unless it is justified. A simple successful choice is $a=0,b=4,c=1$, yielding $h=s^3+5s^2+3s+2$. Coefficients are positive and $5\cdot3>2$, so the cubic is Hurwitz. Therefore $G/(1+KG)=s(s+2)/h$ is stable. All four maps are also proper for this PI choice.
+
+If $a=-1$, inspect the resulting lower-degree polynomial separately for external stability. For example $b=0,c=0$ gives $h=-s(s+6)$ and $G/(1+KG)=-(s+2)/(s+6)$ after cancellation, a stable external transfer. Thus the cubic conditions cannot be claimed to cover every possible degenerate case.
+\end{answer}
+\begin{tip}
+A list of coefficient inequalities answers ``necessary conditions'', not ``prove stable''. If the question asks whether a proposed choice really works, explicitly test for imaginary-axis roots or use a sufficient criterion. For internal stability, a stable denominator is not enough when a map is improper.
+\end{tip}
+
+\subsection{Controller calculations: organise the algebra before testing stability}
+\begin{concept}{Why clearing the fraction introduces an extra power of $s$}
+An integral controller has a factor $1/s$. If $G=n/d$ and $K=(k_Ds^2+k_Ps+k_I)/s$, then
+\[1+GK=\frac{sd+n(k_Ds^2+k_Ps+k_I)}{sd}.\]
+The characteristic polynomial is the numerator of this expression, not just $d+nK$, which is still a rational expression. Multiplying out in stages helps: first $sd$, then $nk_Ds^2$, then $nk_Ps$, then $nk_I$.
+
+The labels P, I and D describe the controller's terms; they do not give a stability guarantee. A large integral gain may reduce steady error in some settings but also change the pole locations unfavourably. In the exam, the mathematical obligation is to derive and test the resulting maps, not to rely on a general engineering slogan.
+\end{concept}
+\begin{worked}{A PI controller with a complete quadratic test}
+Let $G=1/(s+2)$ and $K=a+b/s=(as+b)/s$. Then
+\[h=s(s+2)+(as+b)=s^2+(2+a)s+b.\]
+The quadratic is Hurwitz exactly when $a>-2$ and $b>0$. The four internal transfer functions are
+\[S=\frac{s(s+2)}h,\quad GS=\frac s h,\quad KS=\frac{(as+b)(s+2)}h,\quad GKS=\frac{as+b}h.\]
+All numerators have degree at most two, and every denominator root is strictly left of the imaginary axis under the stated inequalities. Hence these conditions prove internal stability, not just external stability. For example $a=1,b=2$ gives $h=(s+1)(s+2)$, making the pole locations transparent.
+\end{worked}
+\begin{concept}{Properness is a high-frequency check on hidden trouble}
+Suppose $G(s)\to0$ as $|s|\to\infty$ and $K(s)\sim k_Ds$. If $GK\to0$, then $KS=K/(1+GK)\sim k_Ds$, which is improper. If $GK$ tends to a finite nonzero constant other than $-1$, $KS$ still grows linearly. In either case the ideal derivative can obstruct internal stability even when $GS$ looks harmless.
+
+This issue concerns the specific plant-controller combination. It does not justify a universal claim that every ideal PID loop fails: the 2025 plant $G=6s-5$ grows at infinity, and its feedback denominator can make all four maps proper. Work from degrees or high-frequency limits for the given question.
+\end{concept}
+\begin{question}{Additional practice: detect an incomplete argument}
+For $G=1/(s+1)^2$ and $K=s$, show that $G/(1+GK)$ is stable but the interconnection is not internally stable in the stable-rational sense.
+\end{question}
+\begin{answer}
+\[GS=\frac1{(s+1)^2+s}=\frac1{s^2+3s+1},\]
+which is proper and Hurwitz because both quadratic coefficients are positive. But
+\[KS=\frac{s(s+1)^2}{s^2+3s+1}\]
+has degree three over degree two, so it is improper. Thus one external transfer is stable while one internal map fails the definition. This explicitly demonstrates why all four maps must be checked.
+\end{answer}
+
+\topic{Coprime factorisation, B\'ezout identities and controller design}
+\begin{concept}{Why stable factors can represent an unstable plant}
+A fraction $G=P/Q$ can have unstable poles even when $P,Q\in\Sstable$: zeros of $Q$ become poles of the quotient. Stable rational functions form a commutative ring under addition and multiplication (and are closed under differentiation), but they do not form a field: $1/f$ need not be proper or stable.
+
+The pair $P,Q\in\Sstable$ is \textbf{coprime in $\Sstable$} if there are $X,Y\in\Sstable$ satisfying
+\[PX+QY=1.\]
+This is the required certificate. Merely observing no visible common factors in a representation is not the full stable-ring proof.
+\end{concept}
+\begin{method}{The lecture algorithm, expanded step by step}
+\begin{enumerate}
+\item Cancel common polynomial factors in $G=M/N$ and put $m=\max(\deg M,\deg N)$.
+\item Introduce $\lambda=1/(1+s)$, equivalently $s=(1-\lambda)/\lambda$.
+\item Form polynomials $P(\lambda)=\lambda^mM((1-\lambda)/\lambda)$ and $Q(\lambda)=\lambda^mN((1-\lambda)/\lambda)$.
+\item Find polynomial $X,Y$ with $PX+QY=1$, either by Euclid and back-substitution or coefficient matching.
+\item Substitute $\lambda=(1+s)^{-1}$ into all four polynomials. Each becomes proper with its only possible pole at $s=-1$, hence lies in $\Sstable$.
+\item Verify the identity by expansion and the plant ratio $G=P/Q$.
+\end{enumerate}
+The choice of $m$ prevents a spurious shared zero at $\lambda=0$: at least one leading coefficient survives there. For two coprime quadratics it is often sufficient to try linear $X=x_1\lambda+x_0$, $Y=y_1\lambda+y_0$ and solve four linear coefficient equations.
+\end{method}
+\begin{worked}{2023 Q4(i)--(iii): coefficient matching in full}
+For $G=(7s^2+9s+1)/(9s^2+22s+14)$, substitution gives
+\[P=-\lambda^2-5\lambda+7,\qquad Q=\lambda^2+4\lambda+9.\]
+For example the numerator becomes $7(1-\lambda)^2+9\lambda(1-\lambda)+\lambda^2$. Put $X=a\lambda+b$, $Y=c\lambda+d$. Equating coefficients in $PX+QY=1$ gives
+\begin{align*}
+-a+c&=0,\\-5a-b+4c+d&=0,\\7a-5b+9c+4d&=0,\\7b+9d&=1.
+\end{align*}
+The first two give $c=a$, $d=a+b$; the third gives $20a-b=0$; the last gives $329a=1$. Thus
+\[X=\frac{\lambda+20}{329},\qquad Y=\frac{\lambda+21}{329}.\]
+Expansion verifies $PX+QY=1$. The controller is
+\[K=X/Y=\frac{\lambda+20}{\lambda+21}=\frac{20s+21}{21s+22}.\]
+No guessing of desired closed-loop poles was needed.
+\end{worked}
+\begin{concept}{Why $K=X/Y$ stabilises all internal maps}
+For $G=P/Q$ and $K=X/Y$ with $PX+QY=1$,
+\[1+GK=\frac{QY+PX}{QY}=\frac1{QY}.\]
+Consequently
+\[\frac1{1+GK}=QY,\quad\frac G{1+GK}=PY,\quad\frac K{1+GK}=QX,\quad\frac{GK}{1+GK}=PX.\]
+Each product is in $\Sstable$, proving internal stability. In matrix form,
+\[\frac1{1+GK}\mat{1&G\\K&GK}=\mat{QY&PY\\QX&PX}.\]
+This is the simplest stabilising-controller construction in the notes (frames 200--206). The controller itself is allowed to have unstable poles; the claim concerns all interconnection maps.
+\end{concept}
+\begin{question}{2024 Q4: factorisation and a stabilising controller}
+For $G=(s^2+5s-7)/(s^2-4s+2)$, construct $P,Q,X,Y\in\Sstable$ with $PX+QY=1$ and give an internally stabilising controller.
+\end{question}
+\begin{answer}
+After $\lambda=1/(1+s)$,
+\[P=1+3\lambda-11\lambda^2,\qquad Q=1-6\lambda+7\lambda^2.\]
+One certificate is
+\[X=\frac{16-35\lambda}{9},\qquad Y=\frac{-7-55\lambda}{9}.\]
+Indeed,
+\begin{align*}
+9PX&=16+13\lambda-281\lambda^2+385\lambda^3,\\
+9QY&=-7-13\lambda+281\lambda^2-385\lambda^3,
+\end{align*}
+whose sum is $9$. After substitution into $s$, all four are proper rational functions with poles only possibly at $-1$, and $G=P/Q$. Therefore
+\[K=\frac XY=\frac{19-16s}{7s+62}\]
+internally stabilises the loop. The four internal maps equal $QY,PY,QX,PX$, all stable by closure under multiplication. This is a full proof, including stable-ring membership, rather than only a claimed factorisation.
+\end{answer}
+\begin{question}{2025 Q5: prove stable coprimeness}
+Show that $(9s^2+13s+10)/(9s^2+12s+10)$ has a coprime factorisation in $\Sstable$.
+\end{question}
+\begin{answer}
+Substituting and clearing $\lambda^2$ gives
+\[P=9-5\lambda+6\lambda^2,\qquad Q=9-6\lambda+7\lambda^2.\]
+Choose
+\[X=\frac{69-7\lambda}{90},\qquad Y=\frac{-59+6\lambda}{90}.\]
+The products are
+\[90PX=621-408\lambda+449\lambda^2-42\lambda^3,\]
+\[90QY=-531+408\lambda-449\lambda^2+42\lambda^3.\]
+Adding gives $90$, so $PX+QY=1$. Every polynomial in $\lambda=(1+s)^{-1}$ is proper and has only possible pole $-1$. Hence $P,Q,X,Y\in\Sstable$, the original function is $P/Q$, and $P,Q$ are coprime in the required ring.
+\end{answer}
+\begin{concept}{Well-posedness and matrix completion}
+In the rational framework of the notes, the loop equations
+\[x=r-z,\qquad y=d+Kx,\qquad z=n+Gy\]
+have a unique rational solution precisely when $1+GK\not\equiv0$. Eliminating gives
+\[\mat{x\\y\\z}=\frac1{1+GK}\mat{1&-G&-1\\K&1&-K\\GK&G&1}\mat{r\\d\\n}.\]
+This is well-posedness over the rational field; internal stability adds membership of all entries in $\Sstable$. In a proper physical realization, direct algebraic loops also require appropriate nonsingularity at infinite frequency.
+
+The algebra behind B\'ezout is matrix completion: if $PX+QY=1$, then
+\[\det\mat{P&-Y\\Q&X}=PX+QY=1.\]
+Euclid's algorithm proves polynomial B\'ezout identities by successive divisions with decreasing remainder degree, then back-substitution. Over $\C$, two polynomials have no common root exactly when their greatest common divisor is a nonzero constant.
+\end{concept}
+\begin{tip}
+Use the same power of $\lambda$ to clear both numerator and denominator. Track whether your identity is $PX+QY=1$ or $PY+QX=1$: swapping the labels also swaps the controller ratio. Verify the identity numerically only as a check; use an exact algebraic identity in the proof.
+\end{tip}
+
+\subsection{B\'ezout and Euclid without a black box}
+\begin{concept}{What it means to solve $PX+QY=1$}
+We are looking for combinations of the two given factors that reproduce the constant function $1$. If $P$ and $Q$ both vanish at a point, every combination vanishes there and cannot equal $1$. For ordinary complex polynomials, the converse holds because Euclid's algorithm produces their greatest common divisor as a polynomial combination.
+
+In the stable-rational setting, the identity must use $X,Y$ from the stable ring as well. This additional membership requirement is why changing to $\lambda=(1+s)^{-1}$ is useful: every polynomial in $\lambda$ turns into a proper rational function with poles only possibly at $s=-1$. Once the polynomial identity is found, stable membership follows immediately.
+\end{concept}
+\begin{worked}{Euclid and back-substitution in a small example}
+Let $P(\lambda)=\lambda^2+1$ and $Q(\lambda)=\lambda+1$. Long division gives
+\[P=(\lambda-1)Q+2.\]
+The last nonzero remainder is the constant $2$, so the greatest common divisor is a unit. Rearrange and divide by $2$:
+\[1=\tfrac12P+\tfrac{1-\lambda}{2}Q.\]
+Thus $X=1/2$, $Y=(1-\lambda)/2$. Check directly:
+\[\tfrac12(\lambda^2+1)+\tfrac12(1-\lambda)(\lambda+1)=1.\]
+Substitute $\lambda=1/(1+s)$. Then $X=1/2$ and $Y=s/(2(s+1))$, both stable proper functions. The stabilising controller for $G=P/Q$ is
+\[K=X/Y=(s+1)/s.\]
+The controller has a pole at zero, so it is not itself stable. Nevertheless the four internal maps are stable products $QY,PY,QX,PX$. This gives a concrete example of a stable interconnection with an individually unstable controller.
+\end{worked}
+\begin{concept}{Why matrix completion requires a unit determinant}
+For a matrix with polynomial entries to have a polynomial inverse, its determinant must have a polynomial reciprocal. The only such nonzero polynomials are constants: if $fg=1$, then $\deg f+\deg g=0$. Thus nonzero determinant is enough for an inverse over the rational field, but not over the polynomial ring.
+
+If $PX+QY=1$, the matrix $F=\mat{P&Q\\-Y&X}$ has determinant $1$, so
+\[F^{-1}=\mat{X&-Q\\Y&P},\]
+with entries in the same ring. This explains the connection between coprimeness, B\'ezout identities and invertible matrix completion in lecture frames 190--193.
+\end{concept}
+\begin{question}{Additional practice: complete a polynomial matrix}
+Complete the first row $(\lambda,\lambda+1)$ to a $2\times2$ polynomial matrix with polynomial inverse, and display that inverse.
+\end{question}
+\begin{answer}
+Since $(\lambda+1)-\lambda=1$, take
+\[F=\mat{\lambda&\lambda+1\\-1&-1}.\]
+Its determinant is $-\lambda+(\lambda+1)=1$. Therefore
+\[F^{-1}=\mat{-1&-(\lambda+1)\\1&\lambda}.\]
+Multiplying gives the identity matrix. The key was arranging determinant $1$, not merely a nonzero polynomial determinant.
+\end{answer}
+\begin{tip}
+When clearing denominators after substitution, use $m=\max(\deg M,\deg N)$ for both numerator and denominator. Multiplying them by unnecessarily high common powers of $\lambda$ creates an artificial common factor at zero and prevents a polynomial B\'ezout identity equal to $1$.
+\end{tip}
+
+
+\subsection{The change of variable and full feedback equations}
+\begin{concept}{Why the substitution can be reversed}
+The map $\lambda=1/(1+s)$ is invertible as a rational change of variable, with inverse $s=(1-\lambda)/\lambda$. Substituting into a rational expression and then substituting back recovers the original expression wherever both sides are defined, hence as an identity of rational functions.
+
+More generally, $\lambda=(as+b)/(cs+d)$ has a rational inverse when $ad-bc\ne0$. Solving $\lambda(cs+d)=as+b$ gives $s=(b-d\lambda)/(c\lambda-a)$. This is an algebraic coordinate change; the special choice in the notes is valuable because polynomials in $1/(1+s)$ are automatically proper with possible pole only at $-1$.
+
+For example $2+3\lambda-\lambda^2$ becomes $2+3/(1+s)-1/(1+s)^2$. Its numerator has degree at most two over denominator $(1+s)^2$, so it is proper, regardless of whether its numerator has zeros in the right half-plane. Zeros do not prevent stable-ring membership; poles do.
+\end{concept}
+\begin{method}{Derive the entire internal feedback map by elimination}
+Start from $x=r-z$, $y=d+Kx$, $z=n+Gy$. Substitute the last two equations into the first:
+\[x=r-n-G(d+Kx),\qquad(1+GK)x=r-Gd-n.\]
+Hence $x=S(r-Gd-n)$, where $S=(1+GK)^{-1}$. Next,
+\[y=d+KS(r-Gd-n)=KSr+Sd-KSn,\]
+because $1-KSG=S$ in the scalar case. Finally,
+\[z=r-x=GKSr+GSd+Sn.\]
+Collecting the coefficients yields the $3\times3$ matrix in the main discussion. Every coefficient is one of $S,GS,KS,GKS$ or its negative. This proves why those four maps are sufficient to check every junction's response to independent disturbances.
+\end{method}
+\begin{question}{Additional practice: one disturbance exposes an unstable controller map}
+If $r=d=0$ but $n$ is a bounded disturbance added to the output equation $z=n+Gy$, identify the transfer from $n$ to $y$. Why is checking only the external plant response inadequate?
+\end{question}
+\begin{answer}
+The elimination formula gives $y=-KSn=-K/(1+GK)\,n$. Thus a disturbance at this location tests $KS$, which is different from the external map $GS$. A loop can have a stable $GS$ while $KS$ is improper or has an unstable pole. Internal stability rules out that possibility by demanding stable proper transfer functions for independent disturbances at all junctions.
+\end{answer}
+
+\subsection{A short coprime controller calculation from beginning to end}
+\begin{question}{Original design problem: stabilise an unstable one-state plant}
+For $G(s)=1/(s-2)$, construct stable coprime factors by the lecture substitution, find a B\'ezout certificate and controller, and check all four internal maps explicitly.
+\end{question}
+\begin{answer}
+The plant has a pole at $2$, so it is unstable. Use $\lambda=1/(1+s)$ and $s=(1-\lambda)/\lambda$. Then
+\[G=\frac1{(1-\lambda)/\lambda-2}=\frac\lambda{1-3\lambda}.\]
+Take $P=\lambda$, $Q=1-3\lambda$. Both become stable proper rational functions after substitution. The identity
+\[3P+Q=3\lambda+(1-3\lambda)=1\]
+gives $X=3$, $Y=1$, and hence controller $K=X/Y=3$.
+
+Now verify the actual closed-loop maps. Since $1+GK=1+3/(s-2)=(s+1)/(s-2)$,
+\[S=\frac{s-2}{s+1},\qquad GS=\frac1{s+1},\]
+\[KS=\frac{3(s-2)}{s+1},\qquad GKS=\frac3{s+1}.\]
+Every expression is proper and has its only possible pole at $-1$, so the loop is internally stable. Equivalently they are $QY,PY,QX,PX$, exactly as the theorem predicts.
+
+A state-space check makes the effect easy to see. The original realization is $x'=2x+u$, $y=x$. Negative feedback with $K=3$ means replacing the plant input by $r-3y$. Thus $x'=2x+r-3x=-x+r$. The unstable exponent $e^{2t}$ has been replaced by the stable exponent $e^{-t}$. The external closed-loop transfer is $1/(s+1)$.
+\end{answer}
+\begin{concept}{What changes if you use a different constant gain?}
+For arbitrary real $k$, the external transfer is $1/(s-2+k)$, which is stable exactly when $k>2$. The coprime algorithm produced one convenient choice, $k=3$, rather than all possible choices. You can inspect the whole family directly here because the denominator is only linear. In more complicated examples, the constructive B\'ezout method gives a reliable starting controller without first solving a difficult parameter-inequality problem.
+\end{concept}
+\begin{tip}
+Stable factors $P,Q$ do not imply that $P/Q$ is stable. Here $Q=(s-2)/(s+1)$ is stable as a rational function even though it has a zero at $2$. That zero becomes the plant's unstable pole after division. Keep zeros and poles separate at every stage.
+\end{tip}
+
+\topic{Positive definite matrices, Lyapunov and Sylvester equations}
+\begin{concept}{Positive definiteness is an inequality for every vector}
+A Hermitian matrix $K=K^*$ is positive definite when $z^*Kz>0$ for every $z\ne0$. For real symmetric matrices, Sylvester's positive-definiteness criterion is that all \textbf{leading} principal minors are positive: the top-left $1\times1$, $2\times2$, and so on. Positive diagonal entries alone do not suffice.
+
+For $K=\mat{a&b\\b&c}$, the criterion is $a>0$, $ac-b^2>0$. If $K>0$ and $S$ is invertible, $S^*KS>0$, because $z^*S^*KSz=(Sz)^*K(Sz)>0$. Also
+\[\lambda_{\min}(K)\|z\|^2\leq z^*Kz\leq\lambda_{\max}(K)\|z\|^2.\]
+This converts an energy estimate into a norm estimate.
+\end{concept}
+\begin{method}{The Lyapunov proof template}
+Suppose $A^*K+KA=-L$, with $K,L>0$. For $\dot X=AX$, define $V=X^*KX$. Then
+\[V'=X^*(A^*K+KA)X=-X^*LX<0\quad(X\ne0).\]
+The notes conclude boundedness from $\lambda_{\min}(K)\|X(t)\|^2\leq V(t)\leq V(0)$.
+
+A stronger conclusion follows from the same strict hypotheses:
+\[V'\leq-\lambda_{\min}(L)\|X\|^2\leq-\frac{\lambda_{\min}(L)}{\lambda_{\max}(K)}V.\]
+Hence $V(t)\leq V(0)e^{-ct}$, proving exponential decay. Equivalently every eigenvalue of $A$ has negative real part: apply the identity to an eigenvector to obtain $2\Re\lambda\,v^*Kv=-v^*Lv<0$.
+
+This method avoids solving the characteristic polynomial: multiply matrices and check positive definiteness instead.
+\end{method}
+\begin{worked}{2024 Q5: complete numerical certificate}
+Let
+\[A=\mat{-3&1&-2\\-1&-5&2\\1&-3&-10},\quad K=\mat{3&1&1\\1&2&3\\1&3&9}.\]
+Direct multiplication gives
+\[L=-(A^{\top}K+KA)=\mat{18&7&11\\7&36&69\\11&69&172}.\]
+The leading minors of $K$ are $3,5,22$; those of $L$ are $18,599,23600$. All are positive and both matrices are symmetric. Thus $K,L>0$, and $V=X^{\top}KX$ decreases strictly along every nonzero trajectory. Therefore $A$ is stable and its homogeneous solutions decay; the constant-matrix system with bounded forcing is BIBO stable as shown in the previous proof.
+\end{worked}
+\begin{concept}{Sylvester's equation and uniqueness}
+The general equation is
+\[AY+YB=-C.\]
+Its entries form $n^2$ linear equations in the $n^2$ unknown entries of $Y$ (or the corresponding rectangular dimensions). There is a unique solution for every $C$ exactly when $A$ and $-B$ have no common eigenvalue, equivalently $\lambda_i(A)+\lambda_j(B)\ne0$ for every pair. Otherwise some right-hand sides have no solution and consistent ones can have infinitely many.
+
+If both $A$ and $B$ are stable, the unique solution is
+\[Y=\int_0^\infty e^{tA}Ce^{tB}\dd t.\]
+Exponential bounds prove convergence. Differentiating the integrand and integrating gives
+\[AY+YB=[e^{tA}Ce^{tB}]_0^\infty=-C.\]
+For $A^*K+KA=-L$, the corresponding positive solution is
+\[K=\int_0^\infty e^{tA^*}Le^{tA}\dd t,\qquad L>0,\ A\text{ stable}.\]
+For $v\ne0$, each integrand quadratic form is $(e^{tA}v)^*L(e^{tA}v)>0$, so $K>0$.
+\end{concept}
+\begin{question}{2023 Q5: positive-definite integral proof}
+Let $A,C$ be real symmetric positive definite matrices and define $K=\int_0^\infty e^{-tA}Ce^{-tA}\dd t$. Prove convergence, positive definiteness and $AK+KA=C$.
+\end{question}
+\begin{answer}
+Orthogonal diagonalisation gives $A=U\operatorname{diag}(a_j)U^{\top}$ with $a_j>0$. Thus
+\[e^{-tA}=U\operatorname{diag}(e^{-ta_j})U^{\top}>0,\quad\|e^{-tA}\|=e^{-t a_{\min}}.\]
+The integrand norm is at most $\|C\|e^{-2ta_{\min}}$, whose integral is finite, proving convergence. Since $e^{-tA}$ is symmetric and invertible,
+\[v^{\top}e^{-tA}Ce^{-tA}v=(e^{-tA}v)^{\top}C(e^{-tA}v)>0\quad(v\ne0).\]
+Integrating gives $v^{\top}Kv>0$, so $K>0$. Finally,
+\[\frac{\mathrm d}{\mathrm dt}(e^{-tA}Ce^{-tA})=-Ae^{-tA}Ce^{-tA}-e^{-tA}Ce^{-tA}A.\]
+Integrate from zero to infinity; the endpoint at infinity is zero and at zero is $C$. Therefore $-C=-AK-KA$, or $AK+KA=C$. No commutation of $A$ with $C$ has been assumed.
+\end{answer}
+\begin{question}{Original calculation: solve a Lyapunov equation}
+For $A=\mat{-1&1\\0&-2}$, solve $A^{\top}K+KA=-I$ with $K=\mat{p&q\\q&r}$ and verify $K>0$.
+\end{question}
+\begin{answer}
+Multiplication gives
+\[A^{\top}K+KA=\mat{-2p&p-3q\\p-3q&2q-4r}.\]
+Equate to $-I$: $p=1/2$, $q=p/3=1/6$, $r=(1+2q)/4=1/3$. Hence
+\[K=\mat{1/2&1/6\\1/6&1/3},\qquad\det K=\tfrac16-\tfrac1{36}=\tfrac5{36}>0.\]
+The first leading minor is $1/2>0$, so $K>0$ by Sylvester's criterion. Together with $L=I>0$, this certifies stability of $A$.
+\end{answer}
+\begin{tip}
+There are two different Sylvester results: leading principal minors test \emph{positive definiteness}; the eigenvalue-sum condition tests \emph{unique solvability of a matrix equation}. State which you mean. In Lyapunov equations, distinguish $A^*K+KA$ from $AK+KA^*$; both conventions occur, but their unknown solutions differ.
+\end{tip}
+
+\subsection{Energy proofs, positivity and matrix equations at a slower pace}
+\begin{concept}{Why an energy can be useful when the Euclidean norm is awkward}
+For $X'=AX$, differentiating $\|X\|^2=X^*X$ gives $X^*(A^*+A)X$. Even if $A$ is stable, this expression need not be negative for every $X$. The Euclidean distance can increase temporarily because states are mixed by off-diagonal entries.
+
+A weighted energy $V=X^*KX$ changes the shape of the level sets from spheres to ellipsoids. The goal is to find weights $K>0$ for which every nonzero solution moves toward lower energy. The identity $A^*K+KA=-L$, $L>0$, does exactly that. Positive definiteness ensures that small energy means small state norm and that energy cannot hide a nonzero direction with zero cost.
+
+A decreasing function alone is not enough to prove state decay unless it also controls the state norm. For example, a constant zero ``energy'' decreases weakly but tells us nothing. The lower bound $V\geq\lambda_{\min}(K)\|X\|^2$ is therefore a necessary part of the argument, not a decorative final line.
+\end{concept}
+\begin{worked}{A stable matrix for which ordinary norm can initially increase}
+Let $A=\mat{-1&4\\0&-1}$. Both eigenvalues are $-1$, and
+\[e^{tA}=e^{-t}\mat{1&4t\\0&1},\]
+so every homogeneous solution decays. However,
+\[A^{\top}+A=\mat{-2&4\\4&-2}.\]
+At $X=(1,1)^{\top}$, the derivative of $\|X\|^2$ is $X^{\top}(A^{\top}+A)X=4>0$. Thus strict eigenvalue stability does not force the ordinary norm to decrease at every instant.
+
+Find a weighted energy by solving $A^{\top}K+KA=-I$, $K=\mat{p&q\\q&r}$. The equations are $-2p=-1$, $4p-2q=0$, $8q-2r=-1$, giving
+\[K=\mat{1/2&1\\1&9/2}.\]
+Its first leading minor is $1/2$ and its determinant is $9/4-1=5/4>0$, so $K>0$. This weighted energy decreases even during the initial growth of the unweighted norm.
+\end{worked}
+\begin{method}{Diagonal Sylvester equations reveal the eigenvalue-sum rule}
+If $A=\operatorname{diag}(a_i)$ and $B=\operatorname{diag}(b_j)$, then the $(i,j)$ equation in $AY+YB=-C$ is
+\[(a_i+b_j)y_{ij}=-c_{ij}.\]
+When every sum is nonzero, each entry is uniquely determined. If one sum vanishes, a corresponding nonzero $c_{ij}$ makes the equation impossible, while zero $c_{ij}$ leaves $y_{ij}$ free. The general theorem extends this same phenomenon to matrices expressed in suitable bases.
+\end{method}
+\begin{question}{Additional practice: solve and diagnose a Sylvester equation}
+Let $A=\operatorname{diag}(-1,-2)$, $B=\operatorname{diag}(-3,-4)$ and $C=\mat{1&2\\3&4}$. Solve $AY+YB=-C$. What changes if $b_1=1$?
+\end{question}
+\begin{answer}
+Divide each entry by the negative eigenvalue sum:
+\[Y=\mat{1/4&2/5\\3/5&2/3}.\]
+For example the $(2,2)$ equation is $(-2-4)y_{22}=-4$, giving $y_{22}=2/3$. If $b_1$ changes to $1$, then $a_1+b_1=0$ but $c_{11}=1$, so the $(1,1)$ equation becomes $0=-1$ and no solution exists. This is a compatibility failure, not a request to divide by zero.
+\end{answer}
+
+
+\subsection{Writing the integral proof with all three obligations separated}
+\begin{method}{Obligation 1: convergence before calculation}
+For $K=\int_0^\infty e^{tA^*}Le^{tA}\dd t$, with stable $A$ and $L>0$, use $\|e^{tA}\|\leq Me^{-\delta t}$ and $\|e^{tA^*}\|=\|e^{tA}\|$ in the Euclidean operator norm. Then
+\[\|e^{tA^*}Le^{tA}\|\leq M^2\|L\|e^{-2\delta t}.\]
+The scalar majorant has finite integral $M^2\|L\|/(2\delta)$, so the matrix integral converges entrywise and in norm. This justifies defining $K$ before using its algebraic properties.
+\end{method}
+\begin{method}{Obligation 2: positive definiteness, not just symmetry}
+The integrand is Hermitian because $L=L^*$. Thus $K=K^*$. For any fixed $v\ne0$,
+\[v^*Kv=\int_0^\infty(e^{tA}v)^*L(e^{tA}v)\dd t.\]
+The vector $e^{tA}v$ is nonzero for every finite $t$, since $e^{tA}$ is invertible. Therefore the integrand is strictly positive and continuous, so its integral is strictly positive. This proves $K>0$.
+
+An integral of positive-semidefinite matrices is always positive semidefinite, but strict definiteness requires an argument preventing a nonzero direction from having zero integral. The invertibility argument supplies that missing step here.
+\end{method}
+\begin{method}{Obligation 3: the equation and its sign}
+Differentiate $F(t)=e^{tA^*}Le^{tA}$:
+\[F'=A^*F+FA.\]
+Multiplying the convergent integral by the fixed matrices gives
+\[A^*K+KA=\int_0^\infty F'(t)\dd t=F(\infty)-F(0)=0-L=-L.\]
+The sign comes from the endpoint order. Replacing $A$ by $-A$ in the exponents changes the derivative sign, which explains the positive identity $AK+KA=C$ in the 2023 exam's positive-definite setting.
+\end{method}
+\begin{question}{Additional practice: a scalar check of the matrix theorem}
+For $A=-a$ and $L=\ell$, with $a,\ell>0$, evaluate the integral for $K$ and verify $A^*K+KA=-L$.
+\end{question}
+\begin{answer}
+Here $K=\int_0^\infty \ell e^{-2at}\dd t=\ell/(2a)>0$. Since $A$ is real scalar,
+\[A^*K+KA=-a\frac\ell{2a}-a\frac\ell{2a}=-\ell=-L.\]
+The scalar calculation confirms the factor of two and the negative sign in the matrix formula. A useful habit is to check a complicated matrix identity in dimension one before trusting a memorised sign convention.
+\end{answer}
+
+\topic{Further worked answers from the supplied papers}
+\begin{concept}{How to use this section}
+These additional worked solutions fill out recurring calculation types from the four papers. Each question is followed immediately by its answer. Combine them with the earlier topic questions to practise the whole set of core methods. The source map at the end locates every numbered question in the supplied papers.
+\end{concept}
+\begin{question}{2022 Q1: a $3\times3$ transfer function and inverse}
+For $A=\mat{1&3&5\\1&2&-1\\4&1&2}$, $B=(0,1,2)^{\top}$, $C=(-3,1,1)$, $D=1$, calculate the transfer function and poles, then give an inverse realization.
+\end{question}
+\begin{answer}
+Let $q=\det(sI-A)$. Expansion along the first row gives
+\begin{align*}
+q&=(s-1)((s-2)^2+1)+3(6-s)-5(4s-7)\\
+&=s^3-5s^2-14s+48=(s-6)(s^2+s-8).
+\end{align*}
+Solving $(sI-A)v=B$ gives
+\[v=\frac1q\mat{13s-27\\s^2-5s-6\\2s^2-5s+9}.\]
+A quick check of the first row is $(s-1)(13s-27)-3(s^2-5s-6)-5(2s^2-5s+9)=0$; the other rows give $q$ and $2q$. Hence
+\[Cv=\frac{3s^2-49s+84}{q},\qquad T=1+Cv=\frac{s^3-2s^2-63s+132}{q}.\]
+There are no common factors with $q$: at $s=6$ the numerator is $-102$, and modulo $s^2+s-8$ it is $156-52s$, nonzero at either root. Thus the poles are
+\[6,\qquad\frac{-1+\sqrt{33}}2,\qquad\frac{-1-\sqrt{33}}2.\]
+The first two lie in the right half-plane. Since $D=1$, an inverse realization is
+\[A_1=A-BC=\mat{1&3&5\\4&1&-2\\10&-1&0},\quad B_1=B,\quad C_1=(3,-1,-1),\quad D_1=1.\]
+This follows by solving the original output equation for the original input.
+\end{answer}
+\begin{question}{2022 Q3(a)--(b): first-principles Laplace and instability}
+For $y''+y'-6y=u'+2u$ with all specified initial values zero, derive the transfer function and classify it.
+\end{question}
+\begin{answer}
+Start with $Y=\int_0^\infty e^{-st}y(t)\dd t$, $U=\int_0^\infty e^{-st}u(t)\dd t$. Integration by parts gives $\Lap y'=sY-y(0)$, $\Lap y''=s^2Y-sy(0)-y'(0)$, and $\Lap u'=sU-u(0)$. Substituting the zero values,
+\[(s^2+s-6)Y=(s+2)U,\qquad T(s)=\frac{s+2}{(s+3)(s-2)}.\]
+It is proper but has an uncancelled pole at $s=2$, so it is unstable. The numerator zero is $-2$, not $2$, and does not remove that pole. The corresponding PID calculation appears in the controller topic.
+\end{answer}
+\begin{question}{2022 Q4(b)--(d): poles and Nyquist interpretation}
+Classify $R=(-3s+2)/(s^2+2s+3)$ and $R/(1+R)$, then explain what Nyquist adds.
+\end{question}
+\begin{answer}
+$R$ has poles $-1\pm\ii\sqrt2$, so it is stable. But
+\[\frac R{1+R}=\frac{-3s+2}{s^2-s+5}\]
+has poles $(1\pm\ii\sqrt{19})/2$, both with positive real part. Thus unity negative feedback is unstable. There is no numerator cancellation. With $P=0$ and $Z=2$, Nyquist gives two net clockwise windings around $-1$ in the stated convention.
+
+Nyquist can infer feedback stability from measured frequency response without solving a high-degree polynomial. It also shows how near a loop is to the critical point. It requires the correct open-loop pole count and care at imaginary-axis poles or critical-point crossings; a rough plot alone can hide a small loop or tangency.
+\end{answer}
+\begin{question}{2023 Q2(i)--(ii): a stable $3\times3$ matrix}
+Determine whether $A=\mat{-14&-31&-41\\14&32&43\\-7&-16&-21}$ is stable by calculating its characteristic polynomial.
+\end{question}
+\begin{answer}
+Here
+\[sI-A=\mat{s+14&31&41\\-14&s-32&-43\\7&16&s+21}.\]
+Expansion along the first row yields
+\begin{align*}
+p_A(s)&=(s+14)((s-32)(s+21)+688)\\
+&\quad-31(-14(s+21)+301)+41(-224-7(s-32))\\
+&=s^3+3s^2+9s+7=(s+1)(s^2+2s+7).
+\end{align*}
+The eigenvalues are $-1$ and $-1\pm\ii\sqrt6$. All have negative real parts, so $A$ is stable. This is stronger than merely noting positive coefficients: the factorisation identifies the actual real parts.
+\end{answer}
+\begin{question}{2023 Q3(ii)--(iv): the remaining frequency details}
+For $y''+3y'+4y=u'-u$ with zero data, derive $R$, gain and phase, and identify its real-axis Nyquist crossings.
+\end{question}
+\begin{answer}
+Using the integration-by-parts transform identities proved earlier,
+\[(s^2+3s+4)Y=(s-1)U,\qquad R=\frac{s-1}{s^2+3s+4}.\]
+For a first-principles answer, write the integral and the boundary terms from that derivation explicitly. Frequency substitution gives
+\[\Gamma=\sqrt{\frac{1+\omega^2}{(4-\omega^2)^2+9\omega^2}},\]
+\[\phi=\operatorname{atan2}(\omega,-1)-\operatorname{atan2}(3\omega,4-\omega^2)\pmod{2\pi}.\]
+Rationalising gives
+\[\Re R=\frac{4(\omega^2-1)}{\omega^4+\omega^2+16},\quad\Im R=\frac{\omega(7-\omega^2)}{\omega^4+\omega^2+16}.\]
+Thus crossings occur at $\omega=0$ with value $-1/4$, and $\omega=\pm\sqrt7$ with value $1/3$. The gain bound, Nyquist stability argument, and a direct closed-loop check were worked in the feedback topic. For Q4(v), the controller found in the coprime topic applies to the ODE because its zero-data transfer function is exactly the same $G$.
+\end{answer}
+\begin{question}{2024 Q3(ii): a complete first-principles derivation}
+Show in detail that $y''+5y'+4y=u'-7u$, with $y(0)=y'(0)=u(0)=0$, has transfer function $(s-7)/(s^2+5s+4)$.
+\end{question}
+\begin{answer}
+For $\Re s$ sufficiently large, the boundary terms at infinity vanish. Define $Y=\int_0^\infty e^{-st}y(t)\dd t$ and $U=\int_0^\infty e^{-st}u(t)\dd t$. Then
+\[\int_0^\infty e^{-st}y'(t)\dd t=[e^{-st}y(t)]_0^\infty+sY=sY,\]
+\[\int_0^\infty e^{-st}y''(t)\dd t=[e^{-st}y'(t)]_0^\infty+s\Lap y'=s^2Y,\]
+\[\int_0^\infty e^{-st}u'(t)\dd t=[e^{-st}u(t)]_0^\infty+sU=sU.\]
+Multiplying the ODE by $e^{-st}$ and integrating gives $(s^2+5s+4)Y=(s-7)U$. Hence the zero-state transfer is $R=(s-7)/(s^2+5s+4)$. It is a rational identity; no assertion that $U(s)$ is nonzero at every point is needed.
+\end{answer}
+\begin{question}{2025 Q3(a): an unstable ODE transformed from first principles}
+Derive the transfer function of $y''-7y'+10y=14u'-5u$ under the specified zero initial data.
+\end{question}
+\begin{answer}
+Use the same integral definitions as in the previous answer. Integrate each derivative by parts, retaining its endpoint term until the zero data are inserted:
+\[\Lap y'=sY-y(0)=sY,\quad\Lap y''=s^2Y-sy(0)-y'(0)=s^2Y,\]
+\[\Lap u'=sU-u(0)=sU.\]
+Therefore $(s^2-7s+10)Y=(14s-5)U$, giving
+\[R=\frac{14s-5}{(s-2)(s-5)}.\]
+Although $u$ is bounded, $y$ need not be bounded because the system is unstable. The transforms can initially be taken for $\Re s$ sufficiently large to dominate the output growth, then the resulting rational expressions give the algebraic continuation. The pole, feedback and frequency analysis is in the Nyquist topic.
+\end{answer}
+\topic{Assessed Exercise 1: diagrams, physical models and triangular inverses}
+\begin{concept}{What this extra source adds to your preparation}
+The supplied \texttt{MATH6342LinearsystemsAssessedexercise1(2).pdf} tests short modelling tasks that differ from the longer examination questions. It asks for parallel derivative/integral branches, removal of differentiators, coupled equations with one or two inputs, a physical oscillator and a symbolic triangular inverse. The methods below address all four questions and explain how to adapt them.
+
+Write $Jf(t)=\int_0^t f(r)\dd r$ for a causal integrator. For diagrams involving derivatives, write $\mathcal Df=f'$ and $\mathcal D^2f=f''$. The worksheet's indefinite integral notation is interpreted with a fixed starting value; constants and integrator initial values must be specified when a particular solution is required. Transfer-function constructions use the corresponding zero-state convention.
+\end{concept}
+\begin{question}{A1.1(i): parallel branches}
+Express $y=4u''+3Ju+6u$ as a block diagram. Differentiators are permitted in this part.
+\end{question}
+\begin{answer}
+Split $u$ at a tap into three branches. The first applies two differentiations and gain $4$, the second integrates and applies gain $3$, and the third applies gain $6$. Add the three outputs.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,font=\small,block/.style={draw,minimum width=19mm,minimum height=9mm},sum/.style={draw,circle,minimum size=7mm,inner sep=1pt}]
+\node (u) at (0,0) {$u$};\coordinate (tap) at (1,0);
+\node[block] (der) at (3,1.4) {$4\mathcal D^2$};\node[block] (integ) at (3,0) {$3J$};\node[block] (gain) at (3,-1.4) {$6$};\node[sum] (sum) at (5.5,0) {$+$};\node (y) at (7,0) {$y$};
+\draw (u)--(tap);\fill (tap) circle (1.4pt);\draw[->] (tap)|-(der);\draw[->] (tap)--(integ);\draw[->] (tap)|-(gain);\draw[->] (der)-|(sum);\draw[->] (integ)--(sum);\draw[->] (gain)-|(sum);\draw[->] (sum)--(y);
+\end{tikzpicture}
+\end{center}
+Verification: the summing junction outputs $4\mathcal D^2u+3Ju+6u$, exactly the required equation. Placing all three blocks in series would multiply their operators and would represent a different system.
+\end{answer}
+\begin{method}{A1.1(ii): use an input-adjusted state and an integrated input}
+For $y+4y''=2u'+7Ju$, rearrange to
+\[y''=\tfrac12u'+\tfrac74Ju-\tfrac14y.\]
+Introduce $w=Ju$ and $z=y'-u/2$. The derivative of the adjusted state cancels the unwanted input derivative:
+\[w'=u,\qquad z'=y''-u'/2=\tfrac74w-\tfrac14y,\qquad y'=z+\tfrac12u.\]
+These three first-order equations use only sums, gains and integrators. They are also a direct recipe for drawing the diagram.
+\end{method}
+\begin{answer}
+\begin{center}
+\begin{tikzpicture}[>=Stealth,font=\small,block/.style={draw,minimum width=12mm,minimum height=9mm},sum/.style={draw,circle,minimum size=6mm,inner sep=1pt}]
+\node (u) at (0,0) {$u$};\node[block] (iw) at (1.6,0) {$J$};\node (w) at (2.8,0) {$w$};\node[sum] (sz) at (4.2,0) {$\Sigma$};\node[block] (iz) at (5.7,0) {$J$};\node (z) at (6.8,0) {$z$};\node[sum] (sy) at (8,0) {$\Sigma$};\node[block] (iy) at (9.4,0) {$J$};\node (y) at (10.6,0) {$y$};
+\draw[->] (u)--(iw);\draw[->] (iw)--(w);\draw[->] (w)--node[above]{$7/4$}(sz);\draw[->] (sz)--(iz);\draw[->] (iz)--(z);\draw[->] (z)--(sy);\draw[->] (sy)--(iy);\draw[->] (iy)--(y);
+\draw[->] (u)|-(0.4,1.3)-|node[pos=.25,above]{$+1/2$}(sy);
+\draw[->] (y)|-(10.6,-1.3)-|node[pos=.25,below]{$-1/4$}(sz);
+\end{tikzpicture}
+\end{center}
+The first integrator creates $w$; the next creates $z$; the last creates $y$. Reading the diagram back gives the three equations above. Differentiating $y'=z+u/2$ and substituting $z'$ recovers $4y''+y=2u'+7w$, with $w=Ju$.
+
+In state order $(w,z,y)$, an optional matrix check is
+\[A=\mat{0&0&0\\7/4&0&-1/4\\0&1&0},\quad B=\mat{1\\0\\1/2},\quad C=\mat{0&0&1},\quad D=0.\]
+For $J$ defined from zero, $w(0)=0$; set $z(0)=y'(0)-u(0)/2$ and the output integrator initial value to $y(0)$. Zero states require the compatible initial relation $y'(0)=u(0)/2$. A transfer check under zero-state conventions gives $T=(2s^2+7)/(s(4s^2+1))$.
+\end{answer}
+\begin{tip}
+Integrate or adjust the equation enough to remove \emph{every} differentiator, including input derivatives. Replacing $u'$ by a block labelled ``differentiate'' does not satisfy A1.1(ii). When integrating an identity, remember constants; an integrator diagram can carry them through its initial values.
+\end{tip}
+\begin{question}{A1.2(i): two coupled derivative equations}
+Draw an integrator-only diagram for $x'=ax+bu$, $y'=cx+du$.
+\end{question}
+\begin{answer}
+The first summer forms $ax+bu$ and its integrator outputs $x$. Tap $x$ into a branch of gain $c$. The second summer forms $cx+du$ and its integrator outputs $y$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,font=\small,block/.style={draw,minimum width=13mm,minimum height=9mm},sum/.style={draw,circle,minimum size=7mm,inner sep=1pt}]
+\node (u) at (0,0) {$u$};\node[sum] (sx) at (2,0) {$\Sigma$};\node[block] (ix) at (3.8,0) {$J$};\node (x) at (5.2,0) {$x$};\node[sum] (sy) at (7.2,0) {$\Sigma$};\node[block] (iy) at (9,0) {$J$};\node (y) at (10.5,0) {$y$};
+\draw[->] (u)--node[above]{$b$}(sx);\draw[->] (sx)--(ix);\draw[->] (ix)--(x);\draw[->] (x)--node[above]{$c$}(sy);\draw[->] (sy)--(iy);\draw[->] (iy)--(y);
+\draw[->] (x)|-(5.2,-1.2)-|node[pos=.25,below]{$a$}(sx);
+\draw[->] (u)|-(0.5,1.2)-|node[pos=.25,above]{$d$}(sy);
+\end{tikzpicture}
+\end{center}
+In the full state vector $Z=(x,y)^{\top}$,
+\[A=\mat{a&0\\c&0},\quad B=\mat{b\\d},\quad C=\mat{0&1},\quad D=0.\]
+Do not use $y=cx+du$: the worksheet gives $y'=cx+du$, so an output integrator is required.
+\end{answer}
+\begin{question}{A1.2(ii): two inputs}
+Construct the diagram for $x'=ax+b_1u_1+b_2u_2$, $y'=cx+d_1u_1+d_2u_2$.
+\end{question}
+\begin{answer}
+Use the same two-integrator structure. Feed both inputs into both summers, through the indicated gains:
+\begin{center}
+\begin{tikzpicture}[>=Stealth,font=\small,block/.style={draw,minimum width=12mm,minimum height=9mm},sum/.style={draw,circle,minimum size=7mm,inner sep=1pt}]
+\node (u1) at (0,1) {$u_1$};\node (u2) at (0,-1) {$u_2$};\node[sum] (sx) at (2.5,0) {$\Sigma$};\node[block] (ix) at (4,0) {$J$};\node (x) at (5.2,0) {$x$};\node[sum] (sy) at (7,0) {$\Sigma$};\node[block] (iy) at (8.6,0) {$J$};\node (y) at (10,0) {$y$};
+\draw[->] (u1)-|node[pos=.2,above]{$b_1$}(sx);\draw[->] (u2)-|node[pos=.2,below]{$b_2$}(sx);\draw[->] (sx)--(ix);\draw[->] (ix)--(x);\draw[->] (x)--node[above]{$c$}(sy);\draw[->] (sy)--(iy);\draw[->] (iy)--(y);
+\draw[->] (x)|-(5.2,-2.1)-|node[pos=.25,below]{$a$}(sx);
+\draw[->] (u1)|-(0.5,2)-|node[pos=.25,above]{$d_1$}(sy);
+\draw[->] (u2)|-(0.5,-3)-|node[pos=.25,below]{$d_2$}(sy);
+\end{tikzpicture}
+\end{center}
+The state equations are $Z'=AZ+BU$ with $Z=(x,y)^{\top}$, $U=(u_1,u_2)^{\top}$,
+\[A=\mat{a&0\\c&0},\quad B=\mat{b_1&b_2\\d_1&d_2},\quad C=\mat{0&1},\quad D=\mat{0&0}.\]
+This is a multiple-input, single-output system. Check each input separately: $u_1$ contributes $b_1u_1$ to $x'$ and $d_1u_1$ to $y'$, while $u_2$ contributes the analogous terms. A wire crossing without a tap dot does not introduce a connection.
+\end{answer}
+\begin{question}{A1.3: physical units and the oscillator}
+For $mx''+kx=u$, $m,k>0$, introduce $v=x'$ and give $(A,B,C,D)$, with output $x$.
+\end{question}
+\begin{answer}
+Divide by $m$ first. With $X=(x,v)^{\top}$,
+\[x'=v,\quad v'=-\frac{k}{m}x+\frac1m u,\]
+so
+\[A=\mat{0&1\\-k/m&0},\quad B=\mat{0\\1/m},\quad C=\mat{1&0},\quad D=0.\]
+The initial state is $(x(0),v(0))^{\top}$. A verification is
+\[C(sI-A)^{-1}B=\frac{1/m}{s^2+k/m}=\frac1{ms^2+k}.\]
+The natural angular frequency is $\nu=\sqrt{k/m}$ and the eigenvalues are $\pm\ii\nu$. The homogeneous motion is bounded, but a force $u=\cos(\nu t)$ produces a resonant term $t\sin(\nu t)/(2m\nu)$, so the input-output system is not BIBO stable.
+\end{answer}
+\begin{method}{A1.4: invert a triangular matrix column by column}
+For $M=sI-A$, find its inverse by solving $Mv_j=e_j$ for each column $v_j$. Upper triangular $M$ allows back-substitution from the bottom row. The inverse is upper triangular and its diagonal entries are the reciprocals of the diagonal entries of $M$.
+
+Do not reciprocate off-diagonal entries. They depend on the intervening diagonal factors and sometimes on several paths through the matrix.
+\end{method}
+\begin{question}{A1.4: the exact symbolic inverse}
+Find $(sI-A)^{-1}$ for $A=\mat{1&4&10\\0&2&0\\0&0&3}$.
+\end{question}
+\begin{answer}
+\[sI-A=\mat{s-1&-4&-10\\0&s-2&0\\0&0&s-3}.\]
+For the first inverse column, back-substitution gives $(1/(s-1),0,0)^{\top}$. For the second, $v_3=0$, $v_2=1/(s-2)$ and $(s-1)v_1-4v_2=0$, giving $v_1=4/((s-1)(s-2))$. For the third, $v_3=1/(s-3)$, $v_2=0$, and $(s-1)v_1-10v_3=0$. Thus
+\[(sI-A)^{-1}=\mat{
+\frac1{s-1}&\frac4{(s-1)(s-2)}&\frac{10}{(s-1)(s-3)}\\
+0&\frac1{s-2}&0\\
+0&0&\frac1{s-3}}.\]
+It exists for $s\notin\{1,2,3\}$. Multiply by $sI-A$ to check that the $(1,2)$ entry of the product is $4/(s-2)-4/(s-2)=0$, and similarly for $(1,3)$. The diagonal product entries are all one.
+\end{answer}
+\begin{question}{Original variation: an extra upper-triangular coupling}
+Replace the zero in position $(2,3)$ of $A$ by $5$. Find the new $(1,3)$ entry of $(sI-A)^{-1}$. Why is it no longer just $10/((s-1)(s-3))$?
+\end{question}
+\begin{answer}
+For the third inverse column, back-substitution gives
+\[v_3=\frac1{s-3},\quad v_2=\frac5{(s-2)(s-3)},\quad v_1=\frac{4v_2+10v_3}{s-1}.\]
+Hence
+\[v_1=\frac{20}{(s-1)(s-2)(s-3)}+\frac{10}{(s-1)(s-3)}=\frac{10s}{(s-1)(s-2)(s-3)}.\]
+There is a direct contribution through the $(1,3)$ coupling and an indirect contribution through $(2,3)$ followed by $(1,2)$. Column-by-column substitution automatically includes both.
+\end{answer}
+\begin{tip}
+For diagram questions, write the signal entering every integrator, then check it against the required derivative equation. For physical models, divide by the highest-derivative coefficient before reading off $B$. For symbolic inverses, state exceptional $s$ values and multiply back to verify. These short questions reward exact interpretation as much as lengthy algebra.
+\end{tip}
+
+\topic{Proof-writing methods and a practical exam routine}
+\begin{method}{How to write a definition or theorem answer}
+Give the mathematical condition, its domain and its strictness. For example: ``A rational function is stable if it is proper and all its poles lie in the open left half-plane.'' Mentioning only negative poles misses properness; writing $\Re s\leq0$ changes the definition.
+
+For a theorem, state assumptions before the conclusion. In a proof, choose the object that makes the statement easy: a power series for exponentials, an integration-by-parts identity for Laplace derivatives, a quadratic form for positivity, or an exact identity for coprimeness.
+\end{method}
+\begin{method}{Four reusable proof skeletons}
+\textbf{Exponential identity:} write the series; justify absolute convergence; manipulate powers or coefficients; identify the resulting scalar series.
+
+\textbf{Matrix integral identity:} bound the integrand to prove convergence; compute its derivative; integrate to obtain an endpoint difference; evaluate both endpoints explicitly.
+
+\textbf{Positive-definite integral:} insert an arbitrary nonzero vector; move matrices into a congruence expression; use strict positivity pointwise; integrate. Do not infer positive definiteness just from positive matrix entries.
+
+\textbf{Stability by frequency response:} identify the loop transfer and its poles; exclude critical-point passage; determine winding (or bound the entire curve inside a safe region); apply Nyquist with the correct sign convention and conclude about the specified loop.
+\end{method}
+\begin{concept}{Budgeting time using the supplied papers}
+Each supplied paper states three hours, 100 marks, and all questions to be answered. That suggests roughly $1.8$ minutes per mark before allowing time for checking. The current MATH6342 format may differ; use the actual examination instructions when released.
+
+Start with work you can complete reliably. In a long calculation, keep a reusable denominator symbol $q(s)$ until the end. If stuck on expansion, write the correct setup and method clearly, then move on. Return to verify boundary conditions, factorisations and properness. A short exact argument is preferable to a long unsupported assertion.
+\end{concept}
+\begin{tip}
+\begin{enumerate}
+\item Re-read the requested object: $R$, $T=R/(1+R)$, or another feedback around $T$?
+\item Check the sign of every last-row companion entry and feedback denominator.
+\item Check $e^{0A}=I$ and, where useful, $E'(0)=A$.
+\item Check transformed initial terms before setting them to zero.
+\item Check phase quadrants and whether a real-axis crossing is negative.
+\item Check all four internal maps, including high-frequency degree behaviour.
+\item Check a claimed B\'ezout identity by expansion.
+\item Check every leading principal minor, not just the determinant.
+\end{enumerate}
+\end{tip}
+\begin{question}{Original mixed-method diagnostic}
+A student says: ``My cubic denominator has positive coefficients, my Nyquist plot starts at zero, and the plant is stable, so every PID feedback loop is internally stable.'' Identify three independent defects.
+\end{question}
+\begin{answer}
+First, positive cubic coefficients are only necessary: $s^3+4s^2+s+4=(s+4)(s^2+1)$ is a counterexample. A complete pole test is still needed.
+
+Second, ``starts at zero'' needs a frequency-range convention. A strictly proper full Nyquist curve begins at zero at $\omega=-\infty$, but its positive-frequency branch begins at $G(0)$; neither endpoint alone determines winding about $-1$.
+
+Third, a stable plant can be destabilised by feedback. Internal stability also requires all four closed-loop maps to be stable and proper. An ideal derivative controller can make $K/(1+GK)$ improper for a strictly proper plant, even when one external transfer is stable.
+\end{answer}
+
+\subsection{A guided mixed problem: choose the method before calculating}
+\begin{question}{Original integrated practice problem}
+A system satisfies $y''+4y'+3y=u'+2u$, with the usual zero initial data. (i) Build an integrator-only state model. (ii) Find and verify its transfer function. (iii) Find gain and phase. (iv) Determine whether unity negative feedback is stable. (v) Give a direct BIBO argument for the resulting closed-loop transfer.
+\end{question}
+\begin{answer}
+\textbf{(i) Remove the input derivative first.} Set $x_1=y$, $x_2=y'-u$. Then $x_1'=x_2+u$ and
+\[x_2'=y''-u'=-4y'-3y+2u=-3x_1-4x_2-2u.\]
+Thus $A=\mat{0&1\\-3&-4}$, $B=(1,-2)^{\top}$, $C=(1,0)$, $D=0$. Two integrators generate $x_2$ from $-3x_1-4x_2-2u$ and $y$ from $x_2+u$.
+
+\textbf{(ii) Transform the differential equation.} With zero data, $(s^2+4s+3)Y=(s+2)U$, so
+\[G=\frac{s+2}{(s+1)(s+3)}.\]
+For an independent matrix check, solve $(sI-A)v=B$:
+\[sv_1-v_2=1,\qquad3v_1+(s+4)v_2=-2.\]
+Substitute $v_2=sv_1-1$ into the second equation to get $(s^2+4s+3)v_1=s+2$. Since $Cv=v_1$, the model gives the same $G$.
+
+\textbf{(iii) Substitute the imaginary frequency.}
+\[\Gamma=\sqrt{\frac{4+\omega^2}{(3-\omega^2)^2+16\omega^2}},\]
+\[\phi=\operatorname{atan2}(\omega,2)-\operatorname{atan2}(4\omega,3-\omega^2)\pmod{2\pi}.\]
+The phase formula retains the correct denominator quadrant when $3-\omega^2$ becomes negative.
+
+\textbf{(iv) Combine the unity-feedback denominator.}
+\[T=\frac G{1+G}=\frac{s+2}{s^2+5s+5}.\]
+The roots are $(-5\pm\sqrt5)/2$, both negative. The transfer is strictly proper, so it is stable. Because unity controller $K=1$ is proper and stable, $S=1-T$, $GS=T$, $KS=S$ and $GKS=T$ are all stable: this loop is internally stable too.
+
+\textbf{(v) Turn the poles into a kernel bound.} Write $a=(5-\sqrt5)/2$, $b=(5+\sqrt5)/2$, both positive. Partial fractions give
+\[T=\frac{2-a}{b-a}\frac1{s+a}+\frac{b-2}{b-a}\frac1{s+b}.\]
+The coefficients are positive, so $h(t)$ is a positive sum of two decaying exponentials. Its absolute integral is $T(0)=2/5$. Hence for zero initial state and $|u|\leq U$, $|y(t)|\leq2U/5$. This is a direct uniform BIBO bound.
+\end{answer}
+\begin{tip}
+Each part uses a different representation of the same system. State variables are best for diagrams, transforms for transfer functions, complex substitution for frequency response, polynomial roots for the simple feedback test, and convolution for a direct BIBO bound. Choosing the representation before calculating makes a long question manageable.
+\end{tip}
+
+\topic{Source map, lecture coverage and computational checks}
+\begin{concept}{The seven supplied sources}
+\begin{enumerate}
+\item \texttt{MATH6342 lecture notes (2).pdf}: 2026/27 typed lecture notes, Gordon Blower; core chapter order, definitions, proofs and glossary.
+\item \texttt{MATH6342 Linear systems beamer (1)(2).pdf}: accompanying 2026 slides; matching frames, diagrams and matrix conventions.
+\item \texttt{MATH319Exam2022.pdf}: transfer/inverse system, oscillator, Laplace/PID, gain and Nyquist.
+\item \texttt{MATH319.pdf}: 2023 examination; matrix exponential, stability counterexample, block diagrams, coprime control, positive-definite integral.
+\item \texttt{MATH319LinearSystemsMainSummer2024.pdf}: realization, PID caveat, destabilising feedback, coprime factorisation and Lyapunov certificate.
+\item \texttt{MATH319Exam2025.pdf}: realization, resonance, critical-point passage, improper plant with PID, stable coprimeness.
+\item \texttt{MATH6342LinearsystemsAssessedexercise1(2).pdf}: A1.1--A1.4; integrator and differentiator diagrams, coupled input systems, physical oscillator and triangular resolvent.
+\end{enumerate}
+Both lecture versions cover the same five principal chapters. This guide reorganises some material into smaller study topics while preserving the main mathematical conventions. The following map is an index to the supplied questions, rather than a prediction of a future paper.
+\end{concept}
+\begin{concept}{Every exam question mapped to a method}
+\small
+\begin{tabular}{p{.13\linewidth}p{.19\linewidth}p{.59\linewidth}}
+\toprule Year&Question&Study-guide location / method\\\midrule
+2022&1(a)--(c)&Further worked answers; transfer by elimination, poles, inverse realization.\\
+&2(a)--(e)&Forced solutions; oscillator matrices, exponential, differentiation under the integral, resonance.\\
+&3(a)--(b)&Further worked answers; Laplace from first principles, unstable pole.\\
+&3(c)--(d)&PID practice; derive cubic, distinguish necessary/sufficient.\\
+&3(e)&Lyapunov proof template; avoid eigenvalue calculation.\\
+&4(a)&Frequency-response practice; negative-real crossing gives phase $\pi$.\\
+&4(b)--(d)&Further worked answers; two unstable feedback poles and Nyquist interpretation.\\\midrule
+2023&1(i)--(ii)&Matrix foundations and exponentials; series properties, eigenvalue proof, explicit exponential.\\
+&2(i)--(iv)&Stability plus further worked answers; characteristic factorisation and positive-coefficient counterexample.\\
+&3(i)&Modelling practice; input-adjusted state, integrators only.\\
+&3(ii)--(iv)&Further worked answers; derivative transforms and crossings.\\
+&3(v)--(vi)&Nyquist topic; criterion and strict gain bound.\\
+&4(i)--(v)&Coprime topic; coefficient matching, controller, internal-map proof.\\
+&5(i)--(iv)&Lyapunov topic; positive-definite integral and endpoint identity.\\\midrule
+2024&1(i)--(ii)&Realization worked example; equal-degree division and verification.\\
+&2(i)--(iii)&PID topic; poles $2,-3$, cubic conditions and proposed marginal choice.\\
+&2(iv)--(v)&Matrix exponential rotation; orthogonality and determinant.\\
+&3(i)&Integrator-only worked diagram.\\
+&3(ii)&Further worked answers; detailed first-principles transform.\\
+&3(iii)--(vi)&Frequency response and Nyquist; crossings, endpoints, one clockwise winding.\\
+&4(i)--(ii)&Coprime practice; exact certificate, all internal maps.\\
+&5(i)--(iii)&Lyapunov proof and explicit $3\times3$ certificate.\\\midrule
+2025&1&Realization practice; companion form and verification.\\
+&2(a)--(f)&Exponentials and forced-solution practice; rotation, integral, resonance.\\
+&3(a)&Further worked answers; unstable ODE transform.\\
+&3(b)--(f)&Stability and Nyquist practice; $R$ unstable, $T$ stable, $T(0)=-1$.\\
+&4(a)--(c)&PID practice; cubic and all four proper stable maps.\\
+&5&Coprime practice; explicit stable-ring B\'ezout certificate.\\\bottomrule
+\end{tabular}
+\end{concept}
+\begin{concept}{Lecture-frame coverage index}
+\begin{tabular}{p{.17\linewidth}p{.74\linewidth}}
+6--30&States, summing junctions, gains, taps, integrators, positive/negative feedback, higher-order reduction and companion matrices.\\
+31--51&Cofactors, adjugate, characteristic polynomials, rank, inner products, matrix norms, diagonalisation and Cayley--Hamilton.\\
+52--85&Matrix exponential, solution verification, SISO/MIMO, variation of constants, transfer functions, realization and determinant identity.\\
+86--115&Laplace definition, growth bounds, transform table, differentiation and integration identities, convolution, uniqueness, integral equations and transformed systems.\\
+116--134&Jordan blocks, spectral growth estimates, resolvent integral, partial fractions and stable exponential terms.\\
+135--161&Frequency response, Nyquist locus, gain/phase, Bode interpretation, damped oscillator, marginal stability, resonance and BIBO proof.\\
+162--206&Stable polynomials/rationals, necessary signs, Nyquist criterion, feedback, PID, Euclid/B\'ezout, stable coprime factors, well-posedness and internal stability.\\
+207--218&Hermitian positivity, leading minors, Lyapunov, Sylvester solvability and integral solutions.\\
+219--227&MATLAB usage and terminology; selected commands below.\\
+\end{tabular}
+\end{concept}
+\begin{concept}{MATLAB checks corresponding to the lecture appendix}
+These commands are useful for study and checking; they do not replace a required hand proof. Use symbolic variables when you need exact arithmetic.
+\begin{verbatim}
+A = [0 1; -4 -3];
+eig(A)                 % eigenvalues
+expm(A)                % matrix exponential at t=1
+rank(A)                % numerical rank
+poly(A)                % characteristic coefficients
+sys = ss(A,[1;-4],[1 0],0);
+tf(sys)                % transfer function
+s = tf('s');
+R = (s-7)/(s^2+5*s+4);
+pole(R)
+nyquist(R); grid on
+bode(R); grid on
+T = feedback(R,1);     % negative unity feedback
+pole(T)
+K = lyap(A',eye(2));   % A'*K + K*A + I = 0 (real A)
+norm(A'*K+K*A+eye(2))  % residual should be small
+\end{verbatim}
+For complex $A$, MATLAB's apostrophe is the conjugate transpose; use the conjugate-transpose Lyapunov convention deliberately. Numerical eigenvalues extremely close to the imaginary axis need care; exact factorisations are decisive in the exam examples with poles at $\pm\ii$.
+\end{concept}
+\begin{concept}{Final readiness test}
+Without a model answer, practise: ODE-to-state conversion; integrator diagrams; matrix exponentials; forced solutions; first-principles Laplace transforms; transfer realization; stability distinctions; gain and phase; Nyquist; PID and internal maps; stable B\'ezout certificates; triangular inverses; and Lyapunov/integral proofs.
+\end{concept}
+
+\begin{question}{Final diagnostic: four short decisions}
+Decide whether each statement is correct and justify your answer. (i) A real $2\times2$ matrix with trace $-3$ and determinant $2$ is stable. (ii) The rational function $(s-1)/(s+2)$ is unstable because its numerator has a positive zero. (iii) A realization of $T(s)=2+1/(s+1)$ must have zero feedthrough. (iv) If $A^*K+KA=-I$ and $K>0$, the homogeneous solutions are bounded but cannot be shown to decay.
+\end{question}
+\begin{answer}
+\textbf{(i) Correct.} The characteristic polynomial is $s^2-(\operatorname{tr}A)s+\det A=s^2+3s+2=(s+1)(s+2)$. Both eigenvalues are negative. This uses the characteristic polynomial of a $2\times2$ matrix, not a general claim that negative trace alone implies stability.
+
+\textbf{(ii) Incorrect.} The transfer is proper and its only pole is $-2$, so it is stable as defined in the module. The zero at $1$ would become an unstable pole in its reciprocal; it does not itself make the original transfer unstable. This distinction is essential in stable coprime factorisation.
+
+\textbf{(iii) Incorrect.} The high-frequency limit is $2$, so every standard finite-dimensional realization has feedthrough $D=2$. One choice is $A=-1$, $B=C=1$, $D=2$. The dynamic term tends to zero at infinity, leaving $D$.
+
+\textbf{(iv) Incorrect.} The notes' boundedness conclusion is valid, but the strict equation gives more. For $V=X^*KX$, $V'=-\|X\|^2\leq-V/\lambda_{\max}(K)$. Hence $V$ decays exponentially; the lower bound $V\geq\lambda_{\min}(K)\|X\|^2$ then proves exponential state decay. Both inequalities are needed to turn the energy estimate into a norm estimate.
+\end{answer}
+\begin{method}{How to use these notes in a revision session}
+Choose one topic, read its definitions, and close the document. Write the method from memory. Then attempt a purple question before opening the model answer. Record the first step you could not justify, return to the corresponding explanation, and retry with one changed coefficient. Finish by explaining why your stability conclusion follows from the exact definition, rather than only from a remembered example.
+\end{method}
+\end{document}
+

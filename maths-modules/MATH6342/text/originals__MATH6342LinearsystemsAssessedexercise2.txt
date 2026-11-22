@@ -1,0 +1,15 @@
+[Hand transcription of a scanned PDF; pdftotext found no text layer]
+Assessed Exercise 2
+A2.1 Let Σ be the linear system determined by
+  A = [[4, -3, 3], [8, -8, -1], [-4, 4, 1]],  B = [1; -1; 2],  C = [1 3 1],  D = 0.
+  (i) Find the eigenvalues of A, as algebraic surds.
+  (ii) Compute the transfer function T(s) = D + C(sI - A)^{-1} B.                [8]
+A2.2 Find a matrix A such that s^4 + 2s^3 + s^2 + 4s + 2 is the characteristic polynomial of A.
+  Then find the eigenvalues of A numerically.                                    [4]
+A2.3 Let A be an (n x n) complex matrix and C a (1 x n) complex matrix; let
+  Q = [C; CA; ...; CA^{n-1}],  R = [C^T  A^T C^T  ...  (A^T)^{n-1} C^T],
+  which are n x n complex matrices, and C^T is the transpose of C.
+  (i) Show that Q^T = R and rank(Q) = rank(R).
+  (ii) Suppose that C^T is an eigenvector of A^T. Find R, and compute rank(R).
+  (iii) Find the rank of Q when
+       A = [[1,3,5,0],[0,1,9,6],[1,1,4,-7],[2,2,1,8]],  C = [1  -5  -1/2  3].     [8]

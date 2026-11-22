@@ -21,3 +21,9 @@ into a collection of independent project folders rather than a single codebase.
   dependencies, and instructions.
 - When working on a specific project, scope changes to that project's
   subdirectory unless asked otherwise.
+
+## Projects
+
+- `maths-modules/`: Sai's university maths modules (MATH6310, MATH6321, MATH6342): lecture
+  notes, coursework and revision guides. **For any maths/module question, read
+  `maths-modules/CLAUDE.md` first**, then the module's `INDEX.md`, and search its `text/` folder.

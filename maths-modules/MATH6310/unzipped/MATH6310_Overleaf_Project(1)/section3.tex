@@ -1,0 +1,372 @@
+\clearpage
+\setcounter{section}{2}
+\section{Metric space fundamentals}
+
+\topic{Triangle estimates, distance functions and boundedness}
+\begin{note}{Two estimates to memorise}
+The triangle inequality gives $d(x,p)-d(y,p)\le d(x,y)$. Swap $x,y$ to get
+\[|d(x,p)-d(y,p)|\le d(x,y).\]
+More generally, taking a route from $a$ through $c,d$ to $b$ and then reversing the roles gives
+\[|d(a,b)-d(c,d)|\le d(a,c)+d(b,d).\]
+Consequently the metric itself is $1$-Lipschitz on $E\times E$ with the sum metric. In particular, if $x_n\to x$ and $y_n\to y$, then $d(x_n,y_n)\to d(x,y)$.
+\end{note}
+\begin{note}{Distance to a nonempty set}
+Define $\dist(x,A)=\inf_{a\in A}d(x,a)$. For every $a\in A$,
+\[\dist(x,A)\le d(x,a)\le d(x,y)+d(y,a).\]
+Taking the infimum over $a$ gives $\dist(x,A)\le d(x,y)+\dist(y,A)$. Swapping $x,y$ proves
+\[|\dist(x,A)-\dist(y,A)|\le d(x,y).\]
+Thus this function is $1$-Lipschitz. Also $\dist(x,A)=0$ iff a sequence in $A$ converges to $x$: choose $a_n$ with $d(x,a_n)<1/n$, or use $0\le\dist(x,A)\le d(x,a_n)$. Zero distance means membership of the \emph{closure}, not necessarily of $A$.
+\end{note}
+\begin{note}{Diameter and boundedness}
+$\diam A=\sup\{d(x,y):x,y\in A\}$; take $\diam\varnothing=0$. Bounded means finite diameter. For any fixed $p\in E$, boundedness is equivalent to containment in some closed ball $B_R[p]$. If $A\ne\varnothing$ choose $a\in A$ and use $d(p,x)\le d(p,a)+\diam A$. Conversely, containment in $B_R[p]$ gives $d(x,y)\le2R$.
+
+For nonempty bounded sets $A,B$,
+\[\max\{\diam A,\diam B\}\le\diam(A\cup B)\le\diam A+\dist(A,B)+\diam B,\]
+where $\dist(A,B)=\inf_{a\in A,b\in B}d(a,b)$. For the upper bound choose $a,b$ with $d(a,b)<\dist(A,B)+\varepsilon$; route any cross pair through $a,b$ and let $\varepsilon\downarrow0$.
+\end{note}
+\begin{exam}{2025 Q1: the four-point estimate}
+For $a_1,a_2,b_1,b_2\in E$, prove
+\[|d(a_1,b_1)-d(a_2,b_2)|\le d(a_1,a_2)+d(b_1,b_2).\]
+\end{exam}
+\begin{answer}
+Apply the triangle inequality twice:
+\[d(a_1,b_1)\le d(a_1,a_2)+d(a_2,b_2)+d(b_2,b_1).\]
+Subtracting $d(a_2,b_2)$ gives an upper bound for $d(a_1,b_1)-d(a_2,b_2)$. Interchanging indices $1$ and $2$ gives the same upper bound for its negative. Therefore the absolute value is at most $d(a_1,a_2)+d(b_1,b_2)$. Taking $a_1=x,a_2=y,b_1=b_2=p$ yields the reverse triangle inequality for distance to $p$.
+\end{answer}
+\begin{tip}
+To bound a difference of distances, create a triangle route and then swap the two pairs. To handle an infimum or supremum, first obtain a bound valid for every point; only then take the infimum or supremum. Do not assume the closest point exists unless compactness or another attainment result is available.
+\end{tip}
+
+
+\topic{Balls, isometries and Lipschitz maps}
+\begin{note}{Open balls, closed balls and spheres}
+For $r>0$,
+\[B_r(a)=\{x:d(x,a)<r\},\quad B_r[a]=\{x:d(x,a)\le r\},\quad S_r(a)=\{x:d(x,a)=r\}.\]
+In the usual real line, $B_r(a)=(a-r,a+r)$. In the discrete metric,
+\[B_r(a)=\begin{cases}\{a\},&0<r\le1,\\E,&r>1,\end{cases}\qquad B_r[a]=\begin{cases}\{a\},&0<r<1,\\E,&r\ge1.\end{cases}\]
+All balls have diameter at most $2r$, but not always equal to $2r$. Equality holds for positive-radius balls in nonzero normed spaces; a singleton discrete ball has diameter zero.
+\end{note}
+\begin{method}{Find a ball around a point inside another ball}
+If $p\in B_R(a)$, use the spare distance $r=R-d(p,a)>0$. For $d(x,p)<r$,
+\[d(x,a)\le d(x,p)+d(p,a)<r+d(p,a)=R.\]
+For $p\in B_R(a)\cap B_S(b)$, take
+\[r=\min\{R-d(p,a),S-d(p,b)\}>0.\]
+This proves open balls are open and is the standard local-radius construction.
+\end{method}
+\begin{note}{Isometries and Lipschitz maps}
+An isometry satisfies $d_F(f(x),f(y))=d_E(x,y)$ for every pair. It is injective: equal images force zero original distance. It need not be surjective. A bijective isometry has an isometric inverse. ``The spaces are isometric'' means there is a \emph{bijective} isometry.
+
+Lipschitz means $d_F(f(x),f(y))\le Ld_E(x,y)$ with a finite $L\ge0$. The optimal constant is the supremum of the distance ratios over distinct pairs. A constant map has constant zero. A strict contraction has an admissible constant $q<1$. A bi-Lipschitz map is a bijection for which both directions are Lipschitz.
+
+For $f(x)=x^2$ on $[0,1]$, $|x^2-y^2|\le2|x-y|$, and the optimal constant is $2$ by taking points near $1$. Its inverse $\sqrt{x}$ is not Lipschitz at zero, so this is not a bi-Lipschitz bijection.
+\end{note}
+\begin{exam}{2023 Q1(b) and 2022 Q1: equilateral embeddings}
+(a) Embed a three-point discrete space isometrically into $\R^2$. (b) Explain why a four-point discrete space has no isometry into $\R^2$.
+\end{exam}
+\begin{answer}
+(a) Map the three points to $(0,0)$, $(1,0)$ and $(1/2,\sqrt3/2)$. Each distinct pair has Euclidean distance $1$, matching the discrete metric; identical pairs have distance zero.
+
+(b) Suppose four points were embedded. By a rigid motion, two images can be placed at $(0,0)$ and $(1,0)$. A point $(u,v)$ at distance $1$ from both satisfies $u^2+v^2=1$ and $(u-1)^2+v^2=1$. Subtraction gives $u=1/2$, then $v=\pm\sqrt3/2$. Injectivity forces the other two images to be these two distinct points. Their mutual distance is $\sqrt3$, rather than $1$, a contradiction.
+\end{answer}
+\begin{exam}{2025 Q3(c)--(d): disjoint balls and a nontrivial open set}
+If $x\ne y$ and $0<R\le d(x,y)/2$, prove $B_R(x)\cap B_R(y)=\varnothing$. Deduce that a metric space with at least two points has a nonempty proper open set.
+\end{exam}
+\begin{answer}
+If $z$ belonged to both balls, then $d(x,y)\le d(x,z)+d(z,y)<2R\le d(x,y)$, a contradiction. Taking $R=d(x,y)/2$, the open ball $B_R(x)$ contains $x$ and excludes $y$. It is open by the spare-radius argument, so it is a nonempty proper open set.
+\end{answer}
+
+
+\topic{Sequences in general metric spaces}
+\begin{note}{Definitions and the basic hierarchy}
+Replace absolute value in the real definitions by the metric:
+\[x_n\to a\iff\forall\varepsilon>0\ \exists N\ \forall n\ge N:\ d(x_n,a)<\varepsilon,\]
+\[(x_n)\text{ Cauchy}\iff\forall\varepsilon>0\ \exists N\ \forall n,m\ge N:\ d(x_n,x_m)<\varepsilon.\]
+Convergent $\Rightarrow$ Cauchy $\Rightarrow$ bounded in every metric space. The first converse holds only in complete spaces; the second generally fails even in $\R$.
+
+If $x_n\to a$, choose $N$ so $d(x_n,a)<\varepsilon/2$ for $n\ge N$; then $d(x_n,x_m)<\varepsilon$. If $(x_n)$ is Cauchy, choose a tail with pairwise distances below $1$ and use a ball around its first point to contain that tail and the finitely many earlier terms.
+\end{note}
+\begin{note}{Uniqueness and the convergent-subsequence lemma}
+If $x_n\to a$ and $x_n\to b$, then
+\[d(a,b)\le d(a,x_n)+d(x_n,b)\to0,\]
+so $a=b$. Every subsequence of a convergent sequence has the same limit.
+
+If a Cauchy sequence has a subsequence $x_{n_k}\to a$, then the whole sequence converges to $a$. Given $\varepsilon>0$, choose $N$ with tail distances below $\varepsilon/2$, and fix $k$ such that $n_k\ge N$ and $d(x_{n_k},a)<\varepsilon/2$. Then for every $n\ge N$,
+\[d(x_n,a)\le d(x_n,x_{n_k})+d(x_{n_k},a)<\varepsilon.\]
+This lemma is the bridge from sequential compactness to completeness.
+\end{note}
+\begin{method}{Negate a quantified definition correctly}
+Not Cauchy means
+\[\exists\varepsilon_0>0\ \forall N\ \exists n,m\ge N:\ d(x_n,x_m)\ge\varepsilon_0.\]
+Not converging to $a$ means $\exists\varepsilon_0>0$ such that arbitrarily late terms satisfy $d(x_n,a)\ge\varepsilon_0$. Not complete means there exists a Cauchy sequence with no limit in the space. Not sequentially compact means there exists a sequence with no subsequence converging to a point of the set.
+\end{method}
+\begin{exam}{2024 Q1(c): convergence in the discrete metric}
+Prove that a sequence converges in a discrete metric space iff it is eventually constant.
+\end{exam}
+\begin{answer}
+Suppose $x_n\to p$. Use $\varepsilon=1/2$: for some $N$, $d(x_n,p)<1/2$ for every $n\ge N$. The only possible distance below $1/2$ is zero, hence $x_n=p$ for every $n\ge N$. Conversely, if $x_n=p$ for all $n\ge N$, then for any $\varepsilon>0$, $d(x_n,p)=0<\varepsilon$ for those $n$, so $x_n\to p$.
+
+The same $1/2$ argument for pairs proves that every discrete-metric Cauchy sequence is eventually constant. Thus every discrete metric space is complete.
+\end{answer}
+\begin{exam}{Section 3 Exercise 3.12: convergence of distance values}
+If $(x_n)$ is Cauchy and $p\in E$, show $d(x_n,p)$ converges in $\R$. If $x_n\to a$, identify its limit.
+\end{exam}
+\begin{answer}
+The reverse triangle inequality gives $|d(x_n,p)-d(x_m,p)|\le d(x_n,x_m)$. Hence $(d(x_n,p))$ is Cauchy in $\R$, so converges by completeness of $\R$. If $x_n\to a$, then $|d(x_n,p)-d(a,p)|\le d(x_n,a)\to0$, so its limit is $d(a,p)$. Without convergence of $x_n$ in $E$, there need not be a point $a\in E$ representing that limit as a limit point of the original sequence.
+\end{answer}
+\begin{tip}
+The limit is required to lie in the metric space. For example $1/n$ has no limit in $(0,1)$ even though it converges to zero in $\R$. Distinguish the sequence index $n$ from coordinate indices when working with products of spaces.
+\end{tip}
+
+
+\topic{Finite and countable product metrics}
+\begin{note}{Finite products}
+For $E=\prod_{i=1}^nE_i$, define
+\[D_p(x,y)=\left(\sum_{i=1}^nd_i(x_i,y_i)^p\right)^{1/p},\quad D_\infty(x,y)=\max_i d_i(x_i,y_i).\]
+The triangle inequalities follow from coordinate triangle inequalities and Minkowski. All these metrics are Lipschitz equivalent since $D_\infty\le D_p\le n^{1/p}D_\infty$.
+
+A sequence converges iff every coordinate converges; it is Cauchy iff every coordinate is Cauchy. With finitely many coordinates one may take the maximum of the finitely many cutoffs. This fails for infinitely many unweighted coordinates.
+\end{note}
+\begin{note}{Countable products: bounded weights make the sum finite}
+A standard metric on $\prod_{i\ge1}E_i$ is
+\[D(x,y)=\sum_{i=1}^{\infty}2^{-i}\frac{d_i(x_i,y_i)}{1+d_i(x_i,y_i)}.\]
+Each term is nonnegative and the sum is at most $1$. Definiteness follows because zero sum forces every coordinate distance to vanish. Symmetry is termwise; the triangle inequality is obtained termwise and summed. One may replace the fraction by $\min\{1,d_i\}$.
+
+Convergence and Cauchyness are coordinatewise. If all factors are complete, so is the product. Conversely, if the product is nonempty and complete, fix every coordinate but one to show that each factor is complete.
+\end{note}
+\begin{method}{The finite-head / small-tail argument}
+For coordinatewise convergence to imply $D$-convergence, fix $\varepsilon>0$. Choose $K$ so that the sum of weights for $i>K$ is less than $\varepsilon/2$. Control the first $K$ coordinate terms so their total is less than $\varepsilon/2$, taking the maximum of finitely many coordinate cutoffs. The uncontrolled tail is harmless because of its weight bound.
+
+For the reverse implication, a fixed coordinate term is bounded by the whole sum. For Cauchyness repeat the same argument with $d_i(x_i^{(n)},x_i^{(m)})$ instead of distance to a fixed limit.
+\end{method}
+\begin{exam}{2023 Q4(b): a weighted sup product metric}
+Assume $\diam E_i\le1$. Define $D(x,y)=\sup_{i\ge1}d_i(x_i,y_i)/i$. Prove this is a metric and that convergence is equivalent to coordinatewise convergence.
+\end{exam}
+\begin{answer}
+Every ratio is between $0$ and $1$, so $D$ is finite and nonnegative. If $D=0$, each $d_i(x_i,y_i)=0$, hence $x=y$; the converse and symmetry are immediate. For each $i$,
+\[\frac{d_i(x_i,z_i)}i\le\frac{d_i(x_i,y_i)}i+\frac{d_i(y_i,z_i)}i\le D(x,y)+D(y,z).\]
+Take the supremum to obtain the triangle inequality.
+
+If $D(x^{(n)},a)\to0$, then $d_i(x_i^{(n)},a_i)\le iD(x^{(n)},a)\to0$ for every fixed $i$.
+
+Conversely suppose every coordinate converges. Fix $\varepsilon>0$. Choose $K$ with $1/(K+1)<\varepsilon/2$. For each $i\le K$, choose $N_i$ such that $d_i(x_i^{(n)},a_i)/i<\varepsilon/2$ for $n\ge N_i$. Put $N=\max_{i\le K}N_i$. For $n\ge N$, the supremum over $i\le K$ is less than $\varepsilon/2$, and the supremum over $i>K$ is at most $1/(K+1)<\varepsilon/2$. Thus $D(x^{(n)},a)<\varepsilon$, as required.
+\end{answer}
+\begin{tip}
+A raw sum of infinitely many coordinate distances can be infinite and therefore fail to be a metric on the whole product. Always establish finiteness first. Coordinatewise convergence in the \emph{weighted product} metric should not be confused with convergence in an \emph{unweighted sup} metric.
+\end{tip}
+
+
+\topic{Worked lecture exercises}
+\exercise{3.1}{A metric from a norm}
+\begin{exam}{Lecture exercise}
+Prove $d(x,y)=\norm{y-x}$ is a metric on a normed vector space.
+\end{exam}
+\begin{answer}
+A norm has finite nonnegative values, so $d$ does too. Definiteness of the norm gives
+\[d(x,y)=0\iff y-x=0\iff x=y.\]
+Homogeneity with scalar $-1$ gives $\norm{x-y}=\norm{-(y-x)}=\norm{y-x}$, so $d$ is symmetric. For any $x,y,z$, the vector identity $z-x=(z-y)+(y-x)$ and the norm triangle inequality yield
+\[d(x,z)=\norm{z-x}\le\norm{z-y}+\norm{y-x}=d(y,z)+d(x,y).\]
+Thus all metric axioms hold.
+\end{answer}
+\begin{tip}
+The vector identity is the bridge between the norm triangle inequality and the metric triangle inequality. Writing it makes the proof transparent.
+\end{tip}
+\exercise{3.2}{A metric from an injection}
+\begin{exam}{Lecture exercise}
+Let $\phi:A\to(E,d_E)$ be injective. Show $d_A(x,y)=d_E(\phi(x),\phi(y))$ is a metric.
+\end{exam}
+\begin{answer}
+Finiteness, nonnegativity and symmetry follow immediately from those properties of $d_E$. For definiteness,
+\[d_A(x,y)=0\iff\phi(x)=\phi(y)\iff x=y,\]
+where the second equivalence uses injectivity. For triangle inequality,
+\begin{align*}
+d_A(x,z)&=d_E(\phi(x),\phi(z))\\
+&\le d_E(\phi(x),\phi(y))+d_E(\phi(y),\phi(z))\\
+&=d_A(x,y)+d_A(y,z).
+\end{align*}
+Therefore $d_A$ is a metric. If injectivity were omitted, the formula could give zero between different points. For example a constant $\phi$ gives $d_A\equiv0$, which fails definiteness if $A$ has more than one point.
+\end{answer}
+\exercise{3.3}{The associated bounded metric}
+\begin{exam}{Lecture exercise}
+Prove $d'(x,y)=d(x,y)/(1+d(x,y))$ is a metric.
+\end{exam}
+\begin{method}{Reduce the hard axiom to a scalar inequality}
+Use $\alpha(t)=t/(1+t)$. Show $\alpha$ increasing and subadditive, then apply it to the original triangle inequality.
+\end{method}
+\begin{answer}
+For $t\ge0$, $0\le\alpha(t)<1$ and $\alpha(t)=0$ iff $t=0$. If $0\le s\le t$, cross-multiplication by positive denominators shows $s/(1+s)\le t/(1+t)$, so $\alpha$ is increasing. Moreover
+\[\alpha(s+t)=\frac{s}{1+s+t}+\frac{t}{1+s+t}\le\frac{s}{1+s}+\frac{t}{1+t}=\alpha(s)+\alpha(t).\]
+Hence
+\begin{align*}
+d'(x,z)&=\alpha(d(x,z))\\
+&\le\alpha(d(x,y)+d(y,z))\\
+&\le\alpha(d(x,y))+\alpha(d(y,z))=d'(x,y)+d'(y,z).
+\end{align*}
+The other axioms follow from symmetry of $d$ and definiteness of $\alpha$. Thus $d'$ is a metric and is bounded by $1$.
+\end{answer}
+\begin{note}{An explicit small-distance comparison}
+If $0<\varepsilon<1$ and $d'(x,y)<\varepsilon$, then solving $d/(1+d)<\varepsilon$ gives $d(x,y)<\varepsilon/(1-\varepsilon)$. This explains why tiny transformed distances still imply tiny original distances, even though large distances are compressed.
+\end{note}
+\exercise{3.4}{Reverse triangle inequality and coordinate metrics}
+\begin{exam}{Lecture exercise}
+Prove the reverse triangle inequality, verify the $\ell^1$ and $\ell^\infty$ metrics on $\R^N$, and define metric convergence.
+\end{exam}
+\begin{answer}
+Triangle inequality gives $d(x,z)-d(y,z)\le d(x,y)$. Interchanging $x,y$ gives its negative bounded by $d(x,y)$. Thus $|d(x,z)-d(y,z)|\le d(x,y)$.
+
+For $d_1(x,y)=\sum_{i=1}^N|x_i-y_i|$, finiteness, nonnegativity and symmetry are inherited from absolute value. Zero sum of nonnegative terms means every coordinate difference is zero, hence $x=y$. For each $i$, $|x_i-z_i|\le|x_i-y_i|+|y_i-z_i|$. Summing proves triangle inequality for $d_1$.
+
+For $d_\infty(x,y)=\max_i|x_i-y_i|$, zero maximum means all coordinate differences vanish. Other easy axioms are immediate. For each coordinate,
+\[|x_i-z_i|\le|x_i-y_i|+|y_i-z_i|\le d_\infty(x,y)+d_\infty(y,z).\]
+Taking the maximum proves triangle inequality.
+
+The correct meaning of $x_n\to a$ is $d(x_n,a)\to0$, equivalently: for every $\varepsilon>0$, eventually all terms lie in $B_\varepsilon(a)$.
+\end{answer}
+\exercise{3.5}{A countable product metric}
+\begin{exam}{Lecture exercise}
+For metric spaces $(E_i,d_i)$, prove
+\[D(x,y)=\sum_{i=1}^\infty2^{-i}\frac{d_i(x_i,y_i)}{1+d_i(x_i,y_i)}\]
+is a metric on their Cartesian product.
+\end{exam}
+\begin{answer}
+Each term is nonnegative and at most $2^{-i}$. Therefore the series converges and $0\le D(x,y)\le\sum_i2^{-i}=1$. This is the finiteness check needed before any axioms.
+
+If $x=y$, every term is zero. Conversely, if $D(x,y)=0$, no nonnegative term can be positive, so $d_i(x_i,y_i)=0$ for every $i$, implying $x_i=y_i$ for every $i$ and hence $x=y$. Symmetry holds term by term.
+
+By Exercise 3.3, each scalar-transformed distance $d_i/(1+d_i)$ satisfies triangle inequality. Multiplying by the positive weight $2^{-i}$ preserves it. Thus for every $K$,
+\begin{align*}
+\sum_{i=1}^K2^{-i}\frac{d_i(x_i,z_i)}{1+d_i(x_i,z_i)}
+&\le\sum_{i=1}^K2^{-i}\frac{d_i(x_i,y_i)}{1+d_i(x_i,y_i)}\\
+&\quad+\sum_{i=1}^K2^{-i}\frac{d_i(y_i,z_i)}{1+d_i(y_i,z_i)}.
+\end{align*}
+Let $K\to\infty$. All three finite sums converge to their defining distances, so order preservation yields $D(x,z)\le D(x,y)+D(y,z)$. Therefore $D$ is a metric.
+\end{answer}
+\begin{tip}
+Do not replace the infinite series by an unweighted sum without checking convergence. The weights and bounded transform are what make all pairs in the entire product have finite distance.
+\end{tip}
+\exercise{3.6}{Inverse of a bijective isometry}
+\begin{exam}{Lecture exercise}
+Show isometries are injective and that a surjective isometry has an isometric inverse.
+\end{exam}
+\begin{answer}
+Let $f:E\to F$ satisfy $d_F(fx,fy)=d_E(x,y)$. If $f(x)=f(y)$, then $d_E(x,y)=d_F(fx,fy)=0$, so $x=y$. Thus $f$ is injective.
+
+If $f$ is also surjective it is bijective, so define $g=f^{-1}:F\to E$. For arbitrary $u,v\in F$, write $x=g(u)$ and $y=g(v)$. Then $f(x)=u$ and $f(y)=v$, giving
+\[d_E(g(u),g(v))=d_E(x,y)=d_F(f(x),f(y))=d_F(u,v).\]
+Therefore $g$ is an isometry.
+\end{answer}
+\exercise{3.7}{Distance from a set}
+\begin{exam}{Lecture exercise}
+For nonempty $A\subseteq E$, prove $\dist_A$ is $1$-Lipschitz, prove $\dist_A(x)=0$ iff some sequence from $A$ converges to $x$, and interpret $\dist_A\equiv0$.
+\end{exam}
+\begin{answer}
+For every $a\in A$, $\dist_A(x)\le d(x,a)\le d(x,y)+d(y,a)$. Taking the infimum over $a$ gives $\dist_A(x)\le d(x,y)+\dist_A(y)$. Swapping $x,y$ gives
+\[|\dist_A(x)-\dist_A(y)|\le d(x,y),\]
+so $\Lip(\dist_A)\le1$.
+
+If $\dist_A(x)=0$, the infimum approximation property supplies $a_n\in A$ with $d(x,a_n)<1/n$. Thus $a_n\to x$. Conversely, if $a_n\to x$ with $a_n\in A$, then $0\le\dist_A(x)\le d(x,a_n)\to0$, so $\dist_A(x)=0$.
+
+Applying the preceding equivalence at every $x\in E$, $\dist_A\equiv0$ iff every point of $E$ is a limit of a sequence from $A$. This says exactly that $A$ is dense in $E$.
+\end{answer}
+\begin{tip}
+$\dist(x,A)=0$ does not mean $x\in A$ unless $A$ is closed. For instance $\dist(0,(0,1))=0$, but $0\notin(0,1)$.
+\end{tip}
+\exercise{3.8}{Diameter of a union}
+\begin{exam}{Lecture exercise}
+For nonempty $A,B\subseteq E$, prove
+\[\max\{\diam A,\diam B\}\le\diam(A\cup B)\le\diam A+I+\diam B,\]
+where $I=\inf_{a\in A,b\in B}d(a,b)$.
+\end{exam}
+\begin{method}{Treat same-set and cross-set pairs separately}
+The diameter is a supremum over all pairs in the union. Pairs in one constituent are already controlled. For a cross pair, route through an approximately closest pair between $A$ and $B$.
+\end{method}
+\begin{answer}
+Since $A\subseteq A\cup B$, every distance used for $\diam A$ also appears among those used for $\diam(A\cup B)$. Thus $\diam A\le\diam(A\cup B)$, and similarly for $B$, giving the lower bound.
+
+If either constituent diameter is infinite, the asserted upper bound with extended values is immediate. Assume both are finite. Fix $\varepsilon>0$ and choose $a_0\in A$, $b_0\in B$ such that $d(a_0,b_0)<I+\varepsilon$. For $x\in A$ and $y\in B$,
+\begin{align*}
+d(x,y)&\le d(x,a_0)+d(a_0,b_0)+d(b_0,y)\\
+&\le\diam A+I+\varepsilon+\diam B.
+\end{align*}
+Pairs both in $A$ or both in $B$ satisfy the same upper bound because all its terms are nonnegative. Hence this is an upper bound for every pair in $A\cup B$. Taking the supremum gives $\diam(A\cup B)\le\diam A+I+\diam B+\varepsilon$. Since $\varepsilon>0$ was arbitrary, let it tend to zero.
+\end{answer}
+\exercise{3.9}{Drawing the unit spheres}
+\begin{exam}{Lecture exercise}
+Describe and sketch the unit spheres for $p=1,2,\infty$, and exponents on either side of $2$.
+\end{exam}
+\begin{answer}
+For finite $p$, the unit sphere is $|x|^p+|y|^p=1$. In the first quadrant solve for $y=(1-x^p)^{1/p}$ for $0\le x\le1$, then reflect in both axes.
+
+For $p=1$ this gives $y=1-x$, hence the diamond with vertices $(1,0),(0,1),(-1,0),(0,-1)$. For $p=2$ it is the unit circle. For $p=\infty$, $\max\{|x|,|y|\}=1$, which is the boundary of the square $[-1,1]^2$.
+
+For $1<p<2$, the sphere is rounded and lies between the diamond and circle. For $p>2$, it lies between the circle and square. All pass through the four axis vertices. On the diagonal $x=y\ge0$, the point is $x=y=2^{-1/p}$, which increases from $1/2$ toward $1$ as $p$ increases. This supplies an easy check on the shape and position of your drawing.
+\end{answer}
+\begin{note}{Sphere versus ball}
+Draw only the boundary for a sphere. The ball fills its interior (and includes the boundary only for a closed ball). The figures later in the proof clinic plot these shapes together.
+\end{note}
+\exercise{3.10}{A ball inside an intersection}
+\begin{exam}{Lecture exercise}
+Given $p\in B_r(a)\cap B_s(b)$, find $t>0$ with $B_t(p)\subseteq B_r(a)\cap B_s(b)$.
+\end{exam}
+\begin{answer}
+The assumptions give $d(p,a)<r$ and $d(p,b)<s$. Hence the spare radii $r-d(p,a)$ and $s-d(p,b)$ are strictly positive. Set
+\[t=\min\{r-d(p,a),\ s-d(p,b)\}>0.\]
+If $x\in B_t(p)$, then
+\[d(x,a)\le d(x,p)+d(p,a)<t+d(p,a)\le r.\]
+Similarly $d(x,b)<t+d(p,b)\le s$. Thus $x$ belongs to both original balls. Since $x$ was arbitrary in $B_t(p)$, the required containment follows.
+\end{answer}
+\exercise{3.11}{Convergent implies Cauchy implies bounded}
+\begin{exam}{Lecture exercise}
+Prove both implications in a general metric space.
+\end{exam}
+\begin{answer}
+Suppose $x_n\to a$. For any $\varepsilon>0$, choose $N$ so that $d(x_n,a)<\varepsilon/2$ for all $n\ge N$. For $n,m\ge N$,
+\[d(x_n,x_m)\le d(x_n,a)+d(a,x_m)<\varepsilon.\]
+Thus $(x_n)$ is Cauchy.
+
+Now assume $(x_n)$ Cauchy. Choose $N$ so that $d(x_n,x_m)<1$ for $n,m\ge N$. Then every tail term lies within distance $1$ of $x_N$. Define
+\[R=1+\max\bigl(\{d(x_i,x_N):1\le i<N\}\cup\{0\}\bigr).\]
+The maximum is finite, since it involves finitely many real numbers. Every early term lies within distance $R$ of $x_N$, and every tail term lies within $1\le R$. Thus the entire sequence is contained in a finite-radius ball. Its set of terms has diameter at most $2R$, proving boundedness.
+\end{answer}
+\begin{tip}
+It is not enough to bound the tail and stop: account for the finitely many early terms. They cannot destroy boundedness, but that fact needs the finite maximum argument.
+\end{tip}
+\exercise{3.12}{Limits of distance values}
+\begin{exam}{Lecture exercise}
+For Cauchy $(x_n)$ and fixed $p\in E$, prove $d(x_n,p)$ converges in $\R$. Identify the limit when $x_n\to a$.
+\end{exam}
+\begin{answer}
+The reverse triangle inequality gives
+\[|d(x_n,p)-d(x_m,p)|\le d(x_n,x_m).\]
+The right side is eventually below every prescribed $\varepsilon>0$ for all sufficiently large $n,m$, so $(d(x_n,p))$ is a real Cauchy sequence. Completeness of $\R$ makes it convergent.
+
+If additionally $x_n\to a$, then
+\[|d(x_n,p)-d(a,p)|\le d(x_n,a)\to0.\]
+Hence $d(x_n,p)\to d(a,p)$. The first conclusion does not require $E$ complete: only the scalar target $\R$ needs completeness.
+\end{answer}
+\exercise{3.13}{Convergence in a two-factor product}
+\begin{exam}{Lecture exercise}
+For $D((x_1,x_2),(y_1,y_2))=d_1(x_1,y_1)+d_2(x_2,y_2)$, show product convergence iff both coordinates converge.
+\end{exam}
+\begin{answer}
+Suppose $x^{(n)}\to a=(a_1,a_2)$ in $D$. Each nonnegative coordinate distance is at most their sum, so
+\[d_i(x_i^{(n)},a_i)\le D(x^{(n)},a)\to0\quad(i=1,2).\]
+Thus both coordinates converge to the corresponding coordinate of $a$.
+
+Conversely, assume $x_i^{(n)}\to a_i$ for $i=1,2$. Given $\varepsilon>0$, choose $N_i$ with $d_i(x_i^{(n)},a_i)<\varepsilon/2$ for $n\ge N_i$. For $n\ge\max\{N_1,N_2\}$ both bounds hold, giving $D(x^{(n)},a)<\varepsilon$. Thus the product sequence converges. The same proof with two indices $n,m$ establishes the analogous Cauchy criterion.
+\end{answer}
+\exercise{3.14}{Finiteness of a sup distance}
+\begin{exam}{Lecture exercise}
+If $f,g:S\to E$ have bounded images, prove $\sup_{s\in S}d(f(s),g(s))<\infty$.
+\end{exam}
+\begin{answer}
+Assume $S\ne\varnothing$ and choose a fixed $s_0\in S$. For every $s\in S$, route from $f(s)$ to $g(s)$ through $f(s_0)$ and $g(s_0)$:
+\begin{align*}
+d(f(s),g(s))&\le d(f(s),f(s_0))+d(f(s_0),g(s_0))\\
+&\quad+d(g(s_0),g(s))\\
+&\le\diam f(S)+d(f(s_0),g(s_0))+\diam g(S).
+\end{align*}
+Both diameters are finite by boundedness of the functions, and the middle term is one finite metric distance. The bound is independent of $s$, so the supremum is finite. If $S=\varnothing$, there is only one empty function and the sup metric is defined as zero on this singleton space.
+\end{answer}
+\begin{tip}
+Two bounded images need not be near the same centre. The single connecting distance $d(f(s_0),g(s_0))$ bridges that gap.
+\end{tip}

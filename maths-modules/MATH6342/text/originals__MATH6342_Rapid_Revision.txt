@@ -1,0 +1,375 @@
+MATH6342 | Linear Systems                                                                             Sai Vanam
+
+
+
+
+  MATH6342 | Rapid revision
+  Companion to the detailed guide | Sai Vanam
+
+  1. States, transfer and dimensions
+
+                      Ẋ = AX + Bu,       y = CX + Du,        T = D + C(sI − A)−1 B.
+  Dimensions: A : n × n, B : n × k, C : m × n, D : m × k. Transfer functions use zero initial state.
+  Solve (sI − A)v = B, then form D + Cv; no full inverse is needed. Check T (∞) = D.
+
+  Method | 2. Companion realization
+
+  For monic q = sn + an−1 sn−1 + · · · + a0 and proper T = p/q, divide p = Dq + r, deg r < n. Take
+  B = en , C = (r0 , . . . , rn−1 ), and companion A: ones above the diagonal, last row (−a0 , . . . , −an−1 ).
+  Verify using
+                                       (sI − A)−1 B = (1, s, . . . , sn−1 )⊤ /q(s).
+  For D ̸= 0, an inverse realization is
+
+                                  (A − BD−1 C, BD−1 , −D−1 C, D−1 ).
+
+  3. Integrator-only modelling
+
+  For y ′′ + ay ′ + by = cu′ + du, set x1 = y, x2 = y ′ − cu. Then
+
+                              x′1 = x2 + cu,    x′2 = −bx1 − ax2 + (d − ac)u.
+
+  Use one integrator per state. Initial x2 (0) = y ′ (0) − cu(0). For an ODE without input derivatives,
+  ordinary derivative states (y, y ′ , . . .) give the companion matrix directly.
+
+  Exam tips and common mistakes
+  Numerator coefficients enter C in ascending powers. A tap copies a signal; it does not divide it.
+  An integrator’s input is its output derivative. State variables need not literally be derivatives of y.
+
+
+
+
+                                                       1
+MATH6342 | Linear Systems                                                                            Sai Vanam
+
+
+  4. Matrix exponentials
+                                     ∞
+                                                           E ′ = AE = EA,
+                                     X
+                             etA =         tk Ak /k!,                                   E(0) = I.
+                                     k=0
+
+                                     e(t+r)A = etA erA ,                  (etA )−1 = e−tA .
+  If A = S∆S −1 , etA = Set∆ S −1 . If Av = λv, etA v = etλ v. If A2 = −I, etA = I cos t + A sin t. If
+  A = αI + N , N k = 0,
+                                                                    k−1
+                                                                    X
+                                                     tA        αt
+                                                 e        =e              tj N j /j!.
+                                                                    j=0
+
+  For two distinct eigenvalues in dimension two,
+
+                                                eλ1 t (A − λ2 I) − eλ2 t (A − λ1 I)
+                                     etA =                                          .
+                                                             λ1 − λ2
+
+  Method | 5. Solve and verify a forced system
+                                                                    Z t
+                                     X(t) = etA X0 +                      e(t−r)A Bu(r) dr.
+                                                                     0
+
+  Derive with integrating factor e−tA . Check the initial condition and differentiate: the upper
+  endpoint gives Bu(t); the kernel derivative gives A times the integral. Hence X ′ = AX + Bu.
+
+  6. Resonance
+  For x′′ + x = cos(ωt), initial values x0 , v0 ,
+
+                                                                    cos(ωt) − cos t
+                            x = x0 cos t + v0 sin t +                               ,     ω ̸= ±1.
+                                                                        1 − ω2
+  At ω = 1, replace the fraction by t sin t/2. Bounded input produces unbounded output: not BIBO
+  stable. Bounded free oscillations do not preclude resonance.
+
+  Try it first | Quick check
+                     "          #
+                   −1 1
+  Find etA for A =      and explain the long-time behaviour.
+                   0 −1
+
+
+  Model answer
+                                            "         #
+                                       1 t
+  A = −I + N , N 2 = 0, so etA = e−t         . It decays since te−t → 0. A nontrivial Jordan block at
+                                       0 1
+  a strictly negative eigenvalue does not prevent decay.
+
+
+
+
+                                                                    2
+MATH6342 | Linear Systems                                                                         Sai Vanam
+
+
+  7. Laplace essentials
+                                    Z ∞
+                          F (s) =         e−st f (t) dt,     |f (t)| ≤ M eβt ,   ℜs > β.
+                                    0
+
+                               |F (s)| ≤ M/(ℜs − β),            Lf ′ = sF − f (0),
+                                          Lf ′′ = s2 F − sf (0) − f ′ (0).
+
+                            f                F                 f               F
+                            1               1/s                tn          n!/sn+1
+                           eat           1/(s − a)          tk−1 eat   (k − 1)!/(s − a)k
+                          cos bt        s/(s2 + b2 )         sin bt       b/(s2 + b2 )
+                         H(t − a)         e−as /s              δa            e−as
+                                                                              Z t 
+                          at                                      ′
+                      L(e f ) = F (s − a),         L(tf ) = −F (s),       L          f   = F/s.
+                                                                                 0
+
+                                    L(H(t − a)f (t − a)) = e−as F (s).
+
+  Method | 8. First principles and inversion
+
+  Write the defining integral and integrate by parts:
+
+                                            Lf ′ = [e−st f (t)]∞
+                                                               0 + sF.
+
+  Explain why the upper endpoint vanishes for sufficiently large ℜs. Repeat for second derivatives;
+  insert initial values afterwards.
+  To invert: divide if improper; factor; include all repeated-pole fractions; complete squares to
+  match shifted sines and cosines. A pole (s − a)−k gives tk−1 eat /(k − 1)!. Lerch uniqueness justifies
+  identifying the inverse from the table.
+
+  9. Convolution and resolvent
+                                           Z t
+                            (f ∗ g)(t) =         f (t − r)g(r) dr,     L(f ∗ g) = F G.
+                                             0
+  Use the double-integral change v = t − r to prove the product rule. For matrices, retain the
+  multiplication order.
+
+                          L(etA ) = (sI − A)−1 ,           b = (sI − A)−1 (X0 + B u
+                                                           X                      b).
+
+  Prove the resolvent identity by integrating the derivative of e−st etA ; the endpoint difference is −I.
+
+  Exam tips and common mistakes
+
+  Nonzero initial data give extra terms beyond Y = T U . A time delay e−as differs from a frequency
+  shift F (s−a). First-principles answers require boundary terms, not just a transform-table quotation.
+
+
+
+
+                                                            3
+MATH6342 | Linear Systems                                                                       Sai Vanam
+
+
+  10. Stability distinctions
+
+  Stable matrix: all ℜλ < 0, hence ∥etA ∥ ≤ M e−δt .
+  Bounded free motion: all ℜλ ≤ 0, and imaginary-axis Jordan blocks have size one.
+  Stable rational: proper and all poles strictly left of the imaginary axis, after cancellation.
+  BIBO bound: if ∥u∥∞ ≤ U and A is stable,
+
+                                       ∥X(t)∥ ≤ M ∥X0 ∥ + M ∥B∥U/δ.
+
+  Stable T can conceal unstable hidden states in a nonminimal realization.
+
+  11. Polynomial tests
+  Real monic stable polynomials have positive coefficients; converse fails in degree ≥ 3. Example:
+  (s + 1)(s2 + 1) has poles on the imaginary axis. A quadratic s2 + as + b is Hurwitz iff a, b > 0.
+  Extension: a cubic d3 s3 + d2 s2 + d1 s + d0 , d3 > 0, is Hurwitz iff all coefficients are positive and
+  d2 d1 > d3 d0 . Handle leading-coefficient zero separately.
+
+  Method | 12. Gain, phase and crossings
+
+  For T (iω) = (a + ib)/(c + id),
+                            s
+                                a2 + b2
+                      Γ=                ,   ϕ = atan2(b, a) − atan2(d, c)   (mod 2π).
+                                c2 + d2
+
+                                          ac + bd           bc − ad
+                                       ℜT =2     2
+                                                   , ℑT = 2         .
+                                          c +d              c + d2
+  Solve ℑT = 0, then evaluate ℜT . A negative real crossing gives phase π modulo 2π. For real
+  coefficients, use conjugate symmetry. Strictly proper functions tend to zero at both high-frequency
+  endpoints.
+
+  13. Nyquist: the notes’ convention
+
+  For feedback G/(1 + GK) use loop L = GK. Traverse ω : −∞ → +∞ and count clockwise windings
+  N about −1. Then N = Z − P , with P the right-half-plane poles of L and Z the right-half-plane
+  zeros of 1 + L. Stability requires N = −P and no imaginary-axis closed-loop poles.
+  For stable L, zero winding and no passage through −1 imply stable feedback, assuming 1+L(∞) ̸= 0.
+  A strict gain bound |L(iω)| < 1 proves this. Passage through −1 is a boundary case requiring
+  separate analysis, not an ordinary winding count.
+
+
+
+
+                                                       4
+MATH6342 | Linear Systems                                                                       Sai Vanam
+
+
+  14. PID and all four internal maps
+
+  For G = n/d, K = k/ℓ, set h = dℓ + nk. The internal maps are
+
+                                     dℓ/h,   nℓ/h,       kd/h,   nk/h.
+
+  Each must be proper with strictly left-half-plane poles. Proving only the external map stable is
+  insufficient.
+  For G = (s + 1)/(s2 + s − 6) and K = as + b + c/s,
+
+                            h = (1 + a)s3 + (1 + a + b)s2 + (b + c − 6)s + c.
+
+  The choice a = 0, b = 3, c = 4 gives (s + 4)(s2 + 1): positive coefficients but no strict stability. A
+  nonzero ideal derivative term also makes KS improper for this plant in the cubic case.
+
+  Method | 15. Stable coprime factorisation
+
+  1. Cancel common factors in G = M/N ; put m = max(deg M, deg N ).
+  2. Set s = (1 − λ)/λ. Form P = λm M (s), Q = λm N (s).
+  3. Find polynomial X, Y with P X + QY = 1, by Euclid or coefficient matching.
+  4. Substitute λ = 1/(1 + s). Each is proper, with only possible pole −1.
+  5. Use K = X/Y ; the four maps are QY, P Y, QX, P X, proving internal stability.
+  For coprime quadratics, try linear X, Y and equate four coefficients. Verify the exact identity by
+  expansion.
+
+  Worked example | A compact certificate from 2023 Q4
+
+                                 P = 7 − 5λ − λ2 ,       Q = 9 + 4λ + λ2 ,
+                                X = (20 + λ)/329,        Y = (21 + λ)/329.
+  Expansion gives P X + QY = 1, so K = (20s + 21)/(21s + 22) internally stabilises (7s2 + 9s +
+  1)/(9s2 + 22s + 14).
+
+  Exam tips and common mistakes
+  The rational lecture framework calls a loop well posed when 1 + GK ̸≡ 0. Internal stability is
+  stronger. A stabilising controller need not itself be stable. Do not swap the Bézout labels without
+  adjusting the controller ratio.
+
+
+
+
+                                                     5
+MATH6342 | Linear Systems                                                                    Sai Vanam
+
+
+  16. Positive definiteness and Lyapunov
+  K > 0 means K = K ∗"and #z ∗ Kz > 0 for all z =
+                                                ̸ 0. For real symmetric matrices, test all leading
+                        a b
+  principal minors. For     , require a > 0, ac − b2 > 0.
+                        b c
+  If K, L > 0 and A∗ K + KA = −L, let V = X ∗ KX. Then
+
+                     V ′ = −X ∗ LX < 0        (X ̸= 0),       λmin (K)∥X∥2 ≤ V ≤ V (0).
+
+  This proves boundedness as in the notes. Strictness also gives exponential decay, using V ′ ≤
+  −λmin (L)V /λmax (K).
+  To compute a certificate: choose L = I, write a symmetric unknown K, multiply, equate entries
+  and test the leading minors.
+
+  17. Sylvester equations and integrals
+
+  AY + Y B = −C has a unique solution for every C iff λi (A) + λj (B) ̸= 0 for every pair. For stable
+  A, B,                                    Z          ∞
+                                          Y =             etA CetB dt.
+                                                  0
+  Use exponential bounds to prove convergence; differentiating and integrating gives the endpoint
+  difference −C.
+  For stable A and L > 0,
+                                 Z ∞
+                                          ∗
+                            K=         etA LetA dt > 0,         A∗ K + KA = −L.
+                                  0
+
+  For positive definite symmetric A, C,
+                                 Z ∞
+                            K=         e−tA Ce−tA dt > 0,         AK + KA = C.
+                                  0
+
+  Prove positivity by inserting a nonzero vector and writing the integrand as a congruence quadratic
+  form. Do not assume A commutes with C.
+
+  Method | 18. Final checking routine
+
+  Check dimensions, output and initial conditions; E(0) = I; transform boundary terms; pole
+  cancellations; properness; phase quadrants; the Nyquist loop and winding convention; necessary
+  versus sufficient tests; every internal map; the exact Bézout identity; and all leading minors.
+
+  Sources and use
+  Based on both supplied 2026/27 MATH6342 note versions Assessed Exercise 1, and the supplied
+  MATH319 papers from 2022, 2023 (MATH319.pdf), 2024 and 2025. The detailed guide contains the
+  derivations, diagrams, topic questions, model answers and exam index. These are independently
+  worked solutions, not official mark schemes.
+
+
+
+
+                                                          6
+MATH6342 | Linear Systems                                                                         Sai Vanam
+
+
+  19. Assessed Exercise 1: the extra question types
+
+  For y = 4u′′ + 3Ju + 6u, use three parallel branches 4D2 , 3J and gain 6, then sum. Series branches
+  would multiply operators rather than add their outputs.
+  For y + 4y ′′ = 2u′ + 7Ju, remove differentiators with
+
+               w = Ju,       z = y ′ − u/2,       w′ = u,    z ′ = 7w/4 − y/4,   y ′ = z + u/2.
+
+  Use three integrators and feed back −y/4 into the z summer. Retain appropriate initial values;
+  w(0) = 0 for integration from zero.
+
+  20. Coupled equations and physical oscillators
+
+  If x′ = ax + bu and y ′ = cx + du, then both x and y require integrators. With full state Z = (x, y)⊤ ,
+                                        "   #        " #
+                                   a 0      b      h   i
+                                A=     , B=   , C = 0 1 , D = 0.
+                                   c 0      d
+                                    "         #
+                               b b
+  For two inputs, replace B by 1 2 and D by a zero 1 × 2 matrix.
+                               d1 d2
+  For mx + kx = u, choose X = (x, x′ )⊤ :
+         ′′
+
+                                "             #      "       #
+                              0  1       0       h   i
+                         A=        , B=     , C = 1 0 , D = 0.
+                            −k/m 0      1/m
+
+                             k/m; zero-data transfer is 1/(ms2 + k).
+                         p
+  Natural frequency is
+
+  Method | 21. Triangular symbolic inverses
+
+  Solve (sI − A)vj = ej by back-substitution for each column. The inverse is upper triangular when
+  A is upper triangular. Diagonal entries are reciprocal diagonal entries; off-diagonal entries are not
+  simple reciprocals.
+                     
+            1 4 10
+  For A = 0 2 0 ,
+                     
+            0 0 3
+                                                                                         
+                             1/(s − 1) 4/((s − 1)(s − 2)) 10/((s − 1)(s − 3))
+                         −1
+                 (sI − A) =     0         1/(s − 2)               0         .
+                                                                            
+                                 0             0               1/(s − 3)
+
+  Exclude s = 1, 2, 3. If A23 becomes 5, the (1, 3) inverse entry gains an indirect contribution
+  20/((s − 1)(s − 2)(s − 3)). Always multiply back to check.
+
+  Exam tips and common mistakes
+
+  In A1.2 the output equation specifies y ′ , not y. Do not mistake it for the usual algebraic state-space
+  output equation. The detailed guide now includes the additional worksheet, all A1.1–A1.4 worked
+  answers, diagrams and an altered-coefficient practice problem.
+
+
+
+
+                                                         7
+

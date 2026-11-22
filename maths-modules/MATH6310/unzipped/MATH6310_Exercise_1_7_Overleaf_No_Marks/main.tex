@@ -1,0 +1,74 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{microtype}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\begin{document}
+\begin{center}
+{\Large\bfseries MATH6310 Metric Spaces and Topology}\\[3pt]
+{\large Exercise 1.7 --- Solution}
+\end{center}
+
+\textbf{(a) Define the inverse map.}
+
+For any $f\in F$, define
+\[
+\boxed{\sigma(f)=\{s\in S:f(s)=1\}.}
+\]
+In other words, $\sigma(f)$ is the set of all elements of $S$ at which $f$ takes the value $1$.
+
+This is a subset of $S$, so $\sigma(f)\in\mathcal P(S)=P$. Therefore $\sigma:F\to P$ is well-defined.
+
+\textbf{(b) Show the two compositions are identity maps.}
+
+\textbf{First identity: $\sigma\circ\chi=\operatorname{id}_P$.}
+
+Take any $A\in P$ (so $A\subseteq S$). Applying $\chi$ first gives $\chi(A)=\mathbf 1_A$. Applying $\sigma$ next gives
+\begin{align*}
+(\sigma\circ\chi)(A)
+  &=\sigma(\chi(A))\\
+  &=\sigma(\mathbf 1_A)\\
+  &=\{s\in S:\mathbf 1_A(s)=1\}\\
+  &=\{s\in S:s\in A\}\\
+  &=A.
+\end{align*}
+The fourth line follows because $\mathbf 1_A(s)=1$ exactly when $s\in A$.
+Since this holds for \emph{every} $A\in P$, we have
+\[
+\boxed{\sigma\circ\chi=\operatorname{id}_P.}
+\]
+
+\textbf{Second identity: $\chi\circ\sigma=\operatorname{id}_F$.}
+
+Take any $f\in F$. Put $A=\sigma(f)=\{s\in S:f(s)=1\}$.
+Then
+\[
+(\chi\circ\sigma)(f)=\chi(A)=\mathbf 1_A.
+\]
+We need to check that $\mathbf 1_A=f$. Two functions with the same domain and codomain are equal if they give the same value at every input.
+
+Let $s\in S$. There are only two cases, because $f(s)\in\{0,1\}$:
+\begin{enumerate}[label=\textbf{Case \arabic*:},leftmargin=*,itemsep=1pt]
+\item If $f(s)=1$, then $s\in A$ by the definition of $A$. Therefore $\mathbf 1_A(s)=1=f(s)$.
+\item If $f(s)=0$, then $s\notin A$. Therefore $\mathbf 1_A(s)=0=f(s)$.
+\end{enumerate}
+In both cases, $\mathbf 1_A(s)=f(s)$. As this is true for every $s\in S$, we have $\mathbf 1_A=f$. Hence
+\[
+(\chi\circ\sigma)(f)=f
+\quad\text{for every }f\in F,
+\]
+so
+\[
+\boxed{\chi\circ\sigma=\operatorname{id}_F.}
+\]
+
+\textbf{Conclusion.} We have shown that $\sigma$ reverses $\chi$ in both directions. Thus $\sigma$ is the inverse of $\chi$, and therefore $\chi$ is a bijection:
+\[
+\boxed{\mathcal P(S)\cong\mathcal F(S;\{0,1\}).}\qquad\square
+\]
+
+\end{document}

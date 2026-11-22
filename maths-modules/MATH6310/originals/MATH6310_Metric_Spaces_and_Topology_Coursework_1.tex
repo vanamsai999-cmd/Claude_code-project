@@ -1,0 +1,179 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+
+\title{\textbf{MATH6310 Metric Spaces and Topology Coursework 1}}
+\author{Sai Vanam}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercise 0.1: Discrete Metric}
+
+Let \(S\) be a set. Define the discrete metric \(d:S\times S\to \mathbb{R}\) by
+\[
+d(s,t)=
+\begin{cases}
+0, & s=t,\\
+1, & s\neq t.
+\end{cases}
+\]
+
+We verify that \(d\) satisfies the three metric axioms.
+
+\subsection*{MS1: Identity of Indiscernibles}
+
+By definition,
+\[
+d(s,t)=0 \iff s=t.
+\]
+
+Hence the first metric axiom is satisfied.
+
+\subsection*{MS2: Symmetry}
+
+We show that
+\[
+d(s,t)=d(t,s).
+\]
+
+If \(s=t\), then
+\[
+d(s,t)=0=d(t,s).
+\]
+
+If \(s\neq t\), then \(t\neq s\), and therefore
+\[
+d(s,t)=1=d(t,s).
+\]
+
+Thus,
+\[
+\boxed{d(s,t)=d(t,s)}
+\]
+for all \(s,t\in S\), so symmetry holds.
+
+\subsection*{MS3: Triangle Inequality}
+
+We must prove that
+\[
+d(s,t)\leq d(s,u)+d(u,t)
+\]
+for all \(s,t,u\in S\).
+
+There are two cases.
+
+\begin{enumerate}[label=\textbf{Case \arabic*:}]
+    \item Suppose \(s=t\). Then
+    \[
+    d(s,t)=0.
+    \]
+    Since distances are non-negative,
+    \[
+    0\leq d(s,u)+d(u,t).
+    \]
+    Hence the triangle inequality holds.
+
+    \item Suppose \(s\neq t\). Then
+    \[
+    d(s,t)=1.
+    \]
+    It is impossible for both \(s=u\) and \(u=t\) to hold, since that would imply \(s=t\). Therefore at least one of
+    \[
+    d(s,u), \qquad d(u,t)
+    \]
+    must equal \(1\). Hence
+    \[
+    d(s,u)+d(u,t)\geq 1=d(s,t).
+    \]
+\end{enumerate}
+
+Therefore,
+\[
+\boxed{d(s,t)\leq d(s,u)+d(u,t)}.
+\]
+
+Hence the discrete metric satisfies all three metric axioms and is therefore a metric on \(S\).
+
+\newpage
+
+\section*{Exercise 0.4: Counting Metric}
+
+Let the counting metric be defined by
+\[
+d(A,B)=|A\triangle B|,
+\]
+where \(A\triangle B\) denotes the symmetric difference
+\[
+A\triangle B=(A\setminus B)\cup(B\setminus A).
+\]
+
+We verify the triangle inequality:
+\[
+d(A,C)\leq d(A,B)+d(B,C).
+\]
+
+The key observation is
+\[
+A\triangle C\subseteq (A\triangle B)\cup(B\triangle C).
+\]
+
+To see why, take any \(x\in A\triangle C\). Then \(x\) belongs to exactly one of \(A\) and \(C\).
+
+If \(x\in A\) and \(x\notin C\), then:
+\begin{itemize}
+    \item if \(x\notin B\), then \(x\in A\triangle B\);
+    \item if \(x\in B\), then \(x\in B\triangle C\).
+\end{itemize}
+
+Similarly, if \(x\in C\) and \(x\notin A\), then \(x\) must belong to either \(A\triangle B\) or \(B\triangle C\).
+
+Therefore,
+\[
+A\triangle C\subseteq (A\triangle B)\cup(B\triangle C).
+\]
+
+Taking cardinalities gives
+\[
+|A\triangle C|
+\leq
+|(A\triangle B)\cup(B\triangle C)|.
+\]
+
+Using
+\[
+|X\cup Y|\leq |X|+|Y|,
+\]
+we obtain
+\[
+|(A\triangle B)\cup(B\triangle C)|
+\leq
+|A\triangle B|+|B\triangle C|.
+\]
+
+Hence,
+\[
+|A\triangle C|
+\leq
+|A\triangle B|+|B\triangle C|.
+\]
+
+Since
+\[
+d(A,B)=|A\triangle B|,
+\]
+it follows that
+\[
+\boxed{d(A,C)\leq d(A,B)+d(B,C)}.
+\]
+
+Thus the counting metric satisfies the triangle inequality.
+
+\end{document}

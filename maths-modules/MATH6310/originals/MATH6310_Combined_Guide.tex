@@ -1,0 +1,229 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,xcolor,tcolorbox,hyperref,fancyhdr,microtype,longtable}
+\tcbuselibrary{breakable,skins}
+\definecolor{navy}{HTML}{15304D}\definecolor{sky}{HTML}{EAF4FB}\definecolor{olive}{HTML}{17645F}
+\hypersetup{colorlinks=true,linkcolor=navy,urlcolor=olive}
+\pagestyle{fancy}\fancyhf{}\lhead{MATH6310 | Metric Spaces \& Topology}\rhead{Sections 0--1}\cfoot{\thepage}
+\setlength{\parskip}{5pt}\setlength{\parindent}{0pt}
+\newtcolorbox{keybox}[1]{enhanced,breakable,colback=sky,colframe=navy,title=\textbf{#1},fonttitle=\color{white},colbacktitle=navy}
+\newtcolorbox{tipbox}[1]{enhanced,breakable,colback=white,colframe=olive,title=\textbf{#1},fonttitle=\color{white},colbacktitle=olive}
+\newcommand{\R}{\mathbb R}\newcommand{\N}{\mathbb N}\newcommand{\Z}{\mathbb Z}\newcommand{\Q}{\mathbb Q}\newcommand{\Pow}{\mathcal P}\newcommand{\dd}{\mathrm d}\newcommand{\im}{\operatorname{Ran}}\newcommand{\id}{\operatorname{id}}
+\newcommand{\ex}[2]{\subsection*{Exercise #1: #2}\addcontentsline{toc}{subsection}{Exercise #1: #2}}
+\begin{document}
+\begin{titlepage}\centering\vspace*{25mm}{\Huge\bfseries Metric Spaces \& Topology\par}\vspace{5mm}{\LARGE MATH6310\par}\vspace{10mm}{\Large Combined master cheat sheet and fully worked exercise solutions\par}\vspace{7mm}{\large Sections 0 and 1: Metrics, sets, functions, equivalence relations, countability and orders\par}\vfill\begin{tcolorbox}[colback=sky,colframe=navy,width=.88\textwidth]\centering\large\textbf{Understand the idea $\to$ learn the definition $\to$ recognise the proof pattern $\to$ solve the question.}\end{tcolorbox}\vfill{\large Based on both MATH6310 lecture-note and exercise PDFs dated 7 September 2026.}\par\vspace{8mm}\textit{A student-friendly companion; proofs and worked answers are newly written, not transcriptions of the empty solution slides.}\end{titlepage}
+\tableofcontents\newpage
+\section{How to use this guide}
+This guide covers the mathematical definitions, examples and main theorems in the two supplied documents, then gives worked solutions to \textbf{all six numbered Section 0 exercises and all nineteen numbered Section 1 exercises}. Exercises repeated inside the lecture notes are answered in their numbered exercise counterparts; two extra image/difference identities appearing in the teaching slides are proved with Exercise 1.8. An optional-theory review is included for Schr\"oder--Bernstein and Zorn's lemma.
+\begin{tipbox}{A good proof-exam strategy}Write down the definition \emph{before} calculating. For a metric, check non-negativity/finiteness, identity of indiscernibles, symmetry, and the triangle inequality. For an equality of sets, take an arbitrary element and show membership in both directions. For a bijection, give an explicit inverse and verify both compositions.\end{tipbox}
+\section{Section 0: The metric-space cheat sheet}
+\subsection{What is the point of metric spaces?}
+In $\R$, distance usually means $|x-y|$. In $\R^n$, it might be straight-line distance. For functions, we may measure the biggest difference between two graphs, or the total area between them. A \emph{metric space} packages all these possibilities into one language. The same proofs of continuity and convergence can then be used in many settings.
+\begin{keybox}{Metric: learn this precisely}A metric on a set $S$ is $d:S\times S\to[0,\infty)$ with, for all $x,y,z\in S$,
+\begin{align*} \text{(MS1)}&\quad d(x,y)=0\iff x=y,\\ \text{(MS2)}&\quad d(x,y)=d(y,x),\\ \text{(MS3)}&\quad d(x,z)\le d(x,y)+d(y,z).\end{align*}
+The codomain $[0,\infty)$ supplies \textbf{non-negativity and finiteness}. The notes also split MS1 into \textbf{MS1a} $d(x,x)=0$ and \textbf{MS1b} $d(x,y)=0\Rightarrow x=y$. A metric space is the pair $(S,d)$, not merely the set $S$.\end{keybox}
+\subsection{The important metric examples}
+\begin{description}[leftmargin=18mm,style=nextline]
+\item[Standard metric on $\R$] $d(x,y)=|x-y|$. Its triangle inequality is $|a+b|\le|a|+|b|$.
+\item[Euclidean metric on $\R^n$] $d_2(x,y)=\|x-y\|_2=\sqrt{\sum_{i=1}^n(x_i-y_i)^2}$. The norm triangle inequality follows from Cauchy--Schwarz.
+\item[Discrete metric on any set] $d_{\rm disc}(x,y)=0$ if $x=y$, and $1$ otherwise. It ignores how \emph{far} distinct points look geometrically.
+\item[Counting metric on $\Pow(S)$, $S$ finite] $d(A,B)=|A\triangle B|$, where $A\triangle B=(A\setminus B)\cup(B\setminus A)$. It counts membership disagreements.
+\item[Hausdorff metric] On nonempty bounded closed sets $K,J\subset\R^n$, define $K^\delta=\{x:\exists k\in K,\ \|x-k\|_2\le\delta\}$ and $d_H(K,J)=\inf\{\delta\ge0:K^\delta\supseteq J,\ J^\delta\supseteq K\}$. Intuition: how much must each set be thickened to cover the other?
+\item[Integration metric on continuous functions] On $C([0,1];\R)$, $d_1(f,g)=\int_0^1|f(t)-g(t)|\,dt$. Measures total absolute discrepancy. Continuity is essential for positive definiteness.
+\item[Uniform/supremum metric] $d_\infty(f,g)=\sup_{t\in[0,1]}|f(t)-g(t)|$. Measures worst-case discrepancy. Continuity on the compact interval ensures finiteness.
+\item[Two unusual metrics on $\R^2$] $d_{\rm TGV}(u,v)=0$ if $u=v$ and $\|u\|+\|v\|$ otherwise. The variant $d'_{\rm TGV}(u,v)=\|u-v\|$ when $u,v$ are linearly dependent, and $\|u\|+\|v\|$ when independent.
+\end{description}
+\begin{tipbox}{Think before using the ordinary triangle inequality}If a distance is defined in cases, split your proof into cases. If it is defined by an integral, use $|f-h|\le|f-g|+|g-h|$ pointwise \emph{then integrate}. If it is defined by a supremum, use the same inequality \emph{then take suprema}. If it counts differing positions or set membership, show that every difference between the endpoints must appear in at least one intermediate difference.\end{tipbox}
+\subsection{Useful worked examples}
+\textbf{Example: counting metric.} For $S=\{1,2,3,4\}$, $A=\{1,3\}$ and $B=\{2,3\}$, the symmetric difference is $\{1,2\}$: the element $3$ is in both, so it is not counted. Hence $d(A,B)=2$.
+
+\textbf{Example: integration versus sup metric.} Let $f(t)=0$ and $g(t)=t$ on $[0,1]$. Then $d_1(f,g)=\int_0^1t\,dt=\tfrac12$, whereas $d_\infty(f,g)=\sup_{[0,1]}t=1$. Neither formula is a mistake: they measure different things.
+\section{Section 1: Sets and functions cheat sheet}
+\subsection{Sets and logic}
+\begin{keybox}{Set-notation essentials}
+$A\subseteq B$ means $\forall x\;(x\in A\Rightarrow x\in B)$; $A\subsetneq B$ means additionally $A\neq B$; $A\setminus B=\{x\in A:x\notin B\}$; $\Pow(S)=\{A:A\subseteq S\}$. The \textbf{symmetric difference} $A\triangle B=(A\setminus B)\cup(B\setminus A)$ contains the elements belonging to exactly one of $A,B$.\end{keybox}
+For a family $\mathcal C$ of subsets of a universe $S$,
+\[x\in\bigcup\mathcal C\iff(\exists C\in\mathcal C)\ x\in C,\qquad x\in\bigcap\mathcal C\iff(\forall C\in\mathcal C)\ x\in C.\]
+For an empty family, $\bigcup\varnothing=\varnothing$ and $\bigcap\varnothing=S$ (relative to the stated universe). Important identities:
+\begin{align*}A\cap\bigcup_{C\in\mathcal C}C&=\bigcup_{C\in\mathcal C}(A\cap C),\\ A\setminus\bigcup_{C\in\mathcal C}C&=\bigcap_{C\in\mathcal C}(A\setminus C),\\ A\setminus\bigcap_{C\in\mathcal C}C&=\bigcup_{C\in\mathcal C}(A\setminus C).\end{align*}
+\subsection{Products and the axiom of choice}
+$S\times T=\{(s,t):s\in S,t\in T\}$. An indexed Cartesian product $\prod_{\lambda\in\Lambda}S_\lambda$ consists of all families $(s_\lambda)$ such that $s_\lambda\in S_\lambda$ for every $\lambda$. It has one empty family if $\Lambda=\varnothing$; it is empty if some factor is empty. \textbf{Axiom of choice (AC):} any indexed family of nonempty sets admits a choice function $c(\lambda)\in S_\lambda$. In a substantial infinite family, choosing one element from each set may require AC.
+\subsection{Functions, domain, codomain, range}
+A function $f:S\to T$ specifies a value $f(s)\in T$ for every $s\in S$. Its \emph{range} is $\im f=\{f(s):s\in S\}\subseteq T$, which can be smaller than its codomain. The notes write the set of maps as $\mathcal F(S;T)$.
+
+Useful examples: $\id_S(s)=s$; inclusion $\iota:A\hookrightarrow S$ sends $a\mapsto a$; indicator $1_A(s)=1$ on $A$ and $0$ otherwise; a constant map sends everything to one fixed point. For finite $|S|=n, |T|=m$, the number of maps $S\to T$ is $m^n$. An empty domain has exactly one function into every $T$; a nonempty domain has no function into $\varnothing$.
+\begin{keybox}{Injective, surjective, bijective}
+\textbf{Injective:} $f(x)=f(y)\Rightarrow x=y$ (different inputs cannot collide). \textbf{Surjective:} every $t\in T$ has a preimage in $S$ (range $=T$). \textbf{Bijective:} both, so every output has exactly one input. \textbf{Composition:} $(g\circ f)(s)=g(f(s))$: apply the right-hand function first.\end{keybox}
+A restriction $f|_A:A\to T$ only changes the domain; a \emph{co-restriction} $f:S\to B$, $\im f\subseteq B\subseteq T$, changes the codomain. Inverses: a left inverse $g\circ f=\id_S$ implies injectivity; a right inverse $f\circ h=\id_T$ implies surjectivity. Conversely, for nonempty domain the left inverse can be constructed for an injection; a surjection has a right inverse using choice. A bijection has a unique two-sided inverse.
+\subsection{Direct and inverse images}
+For $A\subseteq S$, $f[A]=\{f(s):s\in A\}$ (direct image). For $C\subseteq T$, $f^{-1}[C]=\{s\in S:f(s)\in C\}$ (inverse image): \textbf{this inverse-image notation does not require an inverse function.}
+\begin{align*}f[\bigcup_i A_i]&=\bigcup_i f[A_i],& f[\bigcap_i A_i]&\subseteq\bigcap_i f[A_i],\\ f[A\setminus B]&\supseteq f[A]\setminus f[B],& f^{-1}[\bigcup_i C_i]&=\bigcup_i f^{-1}[C_i],\\ f^{-1}[\bigcap_i C_i]&=\bigcap_i f^{-1}[C_i],& f^{-1}[D\setminus C]&=f^{-1}[D]\setminus f^{-1}[C].\end{align*}
+The direct-image containments can be strict: if $f(0)=f(1)$ and $A=\{0\}$, $B=\{1\}$ then $f[A\cap B]=\varnothing$ while $f[A]\cap f[B]\ne\varnothing$.
+\subsection{Equivalence relations and partitions}
+An equivalence relation $\sim$ on $S$ is \textbf{reflexive} ($x\sim x$), \textbf{symmetric} ($x\sim y\Rightarrow y\sim x$), and \textbf{transitive} ($x\sim y\land y\sim z\Rightarrow x\sim z$). Its equivalence class is $[x]=\{y:y\sim x\}$; the quotient $S/{\sim}$ is the set of classes. Equivalence classes are either identical or disjoint and partition $S$. Conversely, every partition into nonempty disjoint blocks gives an equivalence relation: $x\sim y$ iff they lie in the same block. Example: $m\sim n$ when $p$ divides $m-n$.
+
+\textbf{Canonical factorisation of a function.} The relation $x\sim y$ iff $f(x)=f(y)$ yields a quotient $S/{\sim}$; the map $S\to S/{\sim}$ is surjective, the induced map $S/{\sim}\to\im f$ is bijective, and $\im f\hookrightarrow T$ is injective. Their composition is $f$. This separates the many-to-one, one-to-one, and codomain features of any map.
+\subsection{Countability and Cantor}
+In the notes, a set is \emph{countable} if it is finite or can be listed by natural numbers; equivalently, it is empty or is the image of a surjection $\N\to S$. Basic facts: subsets of countable sets are countable; finite products of countable sets are countable; countable unions of countable sets are countable (the general statement uses choice). $\Z$ and $\Q$ are countable; a countable infinite set is bijective to $\N$.
+\begin{keybox}{Cantor's theorem: a major result}For every set $S$, there is no surjection $S\to\Pow(S)$. The proof assumes a proposed list $f:S\to\Pow(S)$ and forms $D=\{s\in S:s\notin f(s)\}$. If $D=f(a)$, then $a\in D\iff a\notin D$, a contradiction. Consequently $\Pow(\N)$ and the set $\{0,1\}^{\N}$ are uncountable.\end{keybox}
+\subsection{Orders and optional material}
+A \emph{partial order} $\le$ is reflexive, antisymmetric and transitive. A \emph{total order} additionally compares any two elements. A strict total order $<$ is transitive and satisfies trichotomy: exactly one of $x<y$, $x=y$, $y<x$. A \emph{chain} is a totally ordered subset; a \emph{maximal} element has no strictly larger element in the poset.
+
+\textbf{Zorn's lemma (optional section):} If a nonempty partially ordered set has an upper bound for every chain, it has a maximal element. Under the usual set-theoretic framework, it is equivalent to AC; it can be used to prove that every vector space has a Hamel basis.
+
+\textbf{Schr\"oder--Bernstein:} If there are injections $S\to T$ and $T\to S$, there is a bijection $S\to T$. The notes explicitly require knowing the \emph{statement}, but say the proof is not examinable. Its key lesson is that two injections suffice to prove equality of cardinality.
+\newpage\section{Complete worked solutions: Section 0}
+\ex{0.1}{Discrete metric (10 marks)}
+Define $d(s,t)=0$ when $s=t$, and $1$ otherwise. \textbf{MS0:} values lie in $\{0,1\}\subset[0,\infty)$, so are finite and nonnegative. \textbf{MS1:} by its definition $d(s,t)=0$ precisely when $s=t$. \textbf{MS2:} $s=t$ iff $t=s$, so the same case applies to $d(s,t)$ and $d(t,s)$. \textbf{MS3:} let $s,t,u\in S$. If $s=u$, the left side is $0$ and the inequality follows. If $s\ne u$, $d(s,u)=1$. At least one of $s\ne t$ or $t\ne u$ must hold: otherwise $s=t=u$, contradiction. Thus at least one of $d(s,t),d(t,u)$ equals $1$, giving $1\le d(s,t)+d(t,u)$. All axioms hold. $\square$
+\ex{0.2}{Integration metric: definiteness (10 marks)}
+Let $h\in C([0,1];\R)$, and suppose $h\not\equiv0$. Choose $t_0\in[0,1]$ with $|h(t_0)|=a>0$. By continuity at $t_0$, there exists $\varepsilon>0$ such that $|h(t)-h(t_0)|<a/2$ whenever $t\in[0,1]$ and $|t-t_0|<\varepsilon$. The reverse triangle inequality yields $|h(t)|\ge |h(t_0)|-|h(t)-h(t_0)|>a/2$ throughout this neighbourhood. Its intersection with $[0,1]$ contains an interval of positive length $\ell>0$ (including if $t_0$ is an endpoint). Consequently
+\[\int_0^1|h(t)|\,dt\ge\int_{\text{that interval}}|h(t)|\,dt\ge\frac a2\ell>0.\]
+This proves the contrapositive: if $\int_0^1|h|=0$, then $h\equiv0$. Taking $h=f-g$ proves $d_1(f,g)=0\Rightarrow f=g$. \textbf{Why continuity matters:} a function equal to $1$ at one point and $0$ elsewhere would have zero integral without being identically zero. $\square$
+\ex{0.3}{Supremum metric: triangle and definiteness (10 marks)}
+Write $d_\infty(f,g)=\sup_{t\in I}|f(t)-g(t)|$ with $I=[0,1]$. \textbf{MS1b:} if $d_\infty(f,g)=0$, for every $t$ we have $0\le|f(t)-g(t)|\le0$, hence $f(t)=g(t)$ for every $t$, i.e. $f=g$. \textbf{MS3:} for each $t\in I$,
+\[|f(t)-h(t)|\le |f(t)-g(t)|+|g(t)-h(t)|\le d_\infty(f,g)+d_\infty(g,h).\]
+Taking the supremum on the left (right side is independent of $t$) yields $d_\infty(f,h)\le d_\infty(f,g)+d_\infty(g,h)$. $\square$
+\ex{0.4}{Counting metric: triangle inequality (10 marks)}
+For $A,B,C\subseteq S$, the crucial set inclusion is
+\[A\triangle C\subseteq(A\triangle B)\cup(B\triangle C).\]
+To justify it, take $x\in A\triangle C$: its membership in $A$ and $C$ differs. If membership in $A$ also differs from that in $B$, then $x\in A\triangle B$. Otherwise its membership in $A$ and $B$ agrees, so membership in $B$ and $C$ differs, giving $x\in B\triangle C$. Because $S$ is finite, cardinalities obey
+\begin{align*}d(A,C)&=|A\triangle C|\\&\le|(A\triangle B)\cup(B\triangle C)|\\&\le|A\triangle B|+|B\triangle C|\\&=d(A,B)+d(B,C).\end{align*}
+Hence the counting distance satisfies MS3. \textbf{Intuition:} each change from $A$ to $C$ must occur either on the $A$--$B$ leg or the $B$--$C$ leg. $\square$
+\ex{0.5}{Two unusual metrics on $\R^2$ (20 marks)}
+Set $r(u)=\|u\|_2$. For the first metric, if $u=w$, $d(u,w)=0\le d(u,v)+d(v,w)$. If $u\ne w$, there are three cases. If $v=u$, then $d(u,v)=0$ and $d(v,w)=d(u,w)$. If $v=w$, similarly equality holds. Otherwise both $u\ne v$ and $v\ne w$, and
+\[d(u,v)+d(v,w)=(r(u)+r(v))+(r(v)+r(w))\ge r(u)+r(w)=d(u,w).\]
+Thus $d_{\rm TGV}$ satisfies MS3.
+
+For $d'_{\rm TGV}$, observe first that
+\[d'(a,b)\ge\|a-b\|_2\quad\text{for all }a,b,\]
+because on dependent pairs it is equality, and on independent pairs this is the norm triangle inequality. If $u,w$ are dependent, then
+\[d'(u,w)=\|u-w\|_2\le\|u-v\|_2+\|v-w\|_2\le d'(u,v)+d'(v,w).\]
+If $u,w$ are independent, then $u,w\ne0$ and $d'(u,w)=r(u)+r(w)$. If $v=0$, the two legs have lengths $r(u)$ and $r(w)$, so equality holds. If $v\ne0$, it cannot be dependent on \emph{both} independent vectors $u,w$. If $u,v$ are independent, $d'(u,v)=r(u)+r(v)$, while $d'(v,w)\ge\|v-w\|\ge r(w)-r(v)$, so their sum is at least $r(u)+r(w)$. Otherwise $u,v$ are dependent, hence $v,w$ independent, and $d'(v,w)=r(v)+r(w)$ while $d'(u,v)\ge r(u)-r(v)$; again the total is at least $r(u)+r(w)$. All cases prove MS3. $\square$
+\ex{0.6}{Hausdorff metric: triangle inequality (10 marks)}
+\textbf{(a)(i)} If $A\subseteq B$ and $x\in A^\delta$, choose $a\in A$ with $\|x-a\|\le\delta$. Since $a\in B$, $x\in B^\delta$. Therefore $A^\delta\subseteq B^\delta$.
+
+\textbf{(a)(ii)} If $x\in(A^\gamma)^\delta$, choose $y\in A^\gamma$ with $\|x-y\|\le\delta$. Choose $a\in A$ with $\|y-a\|\le\gamma$. Euclidean MS3 gives $\|x-a\|\le\delta+\gamma$, hence $x\in A^{\gamma+\delta}$. Thus $(A^\gamma)^\delta\subseteq A^{\gamma+\delta}$.
+
+\textbf{(b)} Let $K,J,L$ be nonempty bounded closed sets and write $\alpha=d_H(K,J)$, $\beta=d_H(J,L)$. Given any $\varepsilon>0$, the definition of infimum permits admissible radii $\gamma<\alpha+\varepsilon/2$ and $\delta<\beta+\varepsilon/2$ so that $K^\gamma\supseteq J$, $J^\gamma\supseteq K$, $J^\delta\supseteq L$ and $L^\delta\supseteq J$. Applying (a),
+\[L\subseteq J^\delta\subseteq(K^\gamma)^\delta\subseteq K^{\gamma+\delta},\]
+and likewise $K\subseteq L^{\gamma+\delta}$. Thus $d_H(K,L)\le\gamma+\delta<\alpha+\beta+\varepsilon$. As $\varepsilon>0$ was arbitrary, $d_H(K,L)\le d_H(K,J)+d_H(J,L)$. Together with the other properties established in the notes, this proves the metric axioms. $\square$
+\newpage\section{Complete worked solutions: Section 1}
+\ex{1.1}{Subset equivalences and symmetric difference}
+\textbf{(a)} Assume $A\subseteq B$. Then every member of $A$ belongs to both $A$ and $B$, so $A\subseteq A\cap B$; conversely $A\cap B\subseteq A$, hence $A\cap B=A$. Conversely, if $A\cap B=A$, then each $x\in A$ also lies in $B$, giving $A\subseteq B$. Similarly $A\subseteq B\Rightarrow A\cup B=B$ because adjoining members of $A$ adds nothing to $B$. If $A\cup B=B$, every $a\in A$ lies in $B$, hence $A\subseteq B$. Thus all three assertions are equivalent.
+
+\textbf{(b)} For any $x$, membership in $(A\cup B)\setminus(A\cap B)$ means $x$ belongs to at least one set but not both, exactly equivalent to $(x\in A\land x\notin B)$ or $(x\in B\land x\notin A)$. This is membership in $(A\setminus B)\cup(B\setminus A)$. \textbf{(c)} Draw two overlapping circles: shade only the two outer crescent regions, leaving the overlap unshaded. $\square$
+\ex{1.2}{Distributivity and De Morgan}
+Let $x\in S$. \textbf{(a)}
+\begin{align*}x\in A\cap\bigcup\mathcal C&\iff x\in A\text{ and }(\exists C\in\mathcal C)\,x\in C\\&\iff(\exists C\in\mathcal C)\,x\in A\cap C\\&\iff x\in\bigcup_{C\in\mathcal C}(A\cap C).\end{align*}
+\textbf{(b)}
+\begin{align*}x\in A\setminus\bigcap\mathcal C&\iff x\in A\text{ and not }[(\forall C\in\mathcal C)\,x\in C]\\&\iff(\exists C\in\mathcal C)\,[x\in A\text{ and }x\notin C]\\&\iff x\in\bigcup_{C\in\mathcal C}(A\setminus C).\end{align*}
+Both equivalences hold for an empty family with the stated universe conventions. $\square$
+\ex{1.3}{Counting injections and surjections}
+For $S=\{1,2\}$, $T=\{1,2,3\}$: \textbf{(a)} choose $f(1)$ in $3$ ways; to avoid collision choose $f(2)$ among the remaining $2$. Answer $3\cdot2=\boxed6$. \textbf{(b)} A function from a two-element domain has at most two different outputs and cannot cover three targets: $\boxed0$. \textbf{(c)} There are $2^3=8$ total maps $T\to S$; exactly two are not onto (both constant maps). Hence $\boxed6$. Alternatively choose the nonempty preimage of $1$: any of $2^3-2=6$ proper, nonempty subsets. $\square$
+\ex{1.4}{Composition preserves injectivity and surjectivity}
+\textbf{(a)(i)} If $(g\circ f)(x)=(g\circ f)(y)$, then $g(f(x))=g(f(y))$. Injectivity of $g$ gives $f(x)=f(y)$; injectivity of $f$ then gives $x=y$. \textbf{(a)(ii)} If $f(x)=f(y)$ then $(g\circ f)(x)=(g\circ f)(y)$; injectivity of the composition yields $x=y$.
+
+\textbf{(b)(i)} For any $u\in U$, surjectivity of $g$ supplies $t\in T$ with $g(t)=u$. Surjectivity of $f$ supplies $s\in S$ with $f(s)=t$. Thus $(g\circ f)(s)=u$. \textbf{(b)(ii)} If $g\circ f$ is onto and $u\in U$, find $s$ with $g(f(s))=u$ and set $t=f(s)$, proving $g$ is onto.
+
+\textbf{(c)(i)} Parts (a)(i), (b)(i) say the composition is both injective and surjective. \textbf{(c)(ii)} Parts (a)(ii), (b)(ii) give the necessary conditions. \textbf{Warning:} $g\circ f$ bijective need not make both $f$ and $g$ bijective. $\square$
+\ex{1.5}{Injectivity of a rational function}
+Let $f:\R\setminus\{1\}\to\R$ be $f(x)=2x/(x-1)$. \textbf{(a)} If $2x/(x-1)=2y/(y-1)$, cross multiplication (denominators nonzero) gives $x(y-1)=y(x-1)$, hence $xy-x=xy-y$ and $x=y$. Thus $f$ injective.
+
+\textbf{(b)} Put $t=2x/(x-1)$. Rearrangement gives $t(x-1)=2x$, so $(t-2)x=t$. If $t=2$ this would read $0=2$, impossible. For any $t\ne2$, $x=t/(t-2)$ is well-defined and differs from $1$ (otherwise $t=t-2$). So $\im f=\boxed{\R\setminus\{2\}}$.
+
+\textbf{(c)} On $t\ne2$ the inverse formula is $t/(t-2)$. To make a left inverse with domain \emph{all} of $\R$, assign any permissible value at $2$, say $0$:
+\[g(t)=\begin{cases}\dfrac{t}{t-2},&t\ne2,\\0,&t=2.\end{cases}\]
+Then $g:\R\to\R\setminus\{1\}$, and $g(f(x))=(2x/(x-1))/(2x/(x-1)-2)=x$. Thus $g\circ f=\id_{\R\setminus\{1\}}$. $\square$
+\ex{1.6}{Functions as indexed products}
+Let $P=\prod_{s\in S}T_s$ with $T_s=T$, and $F=\mathcal F(S;T)$. Define $\phi:P\to F$ by $\phi((t_s)_{s\in S})(s)=t_s$. Define the proposed inverse $\psi:F\to P$ by $\psi(f)=(f(s))_{s\in S}$. This is well-defined since each $f(s)\in T=T_s$. For $p=(t_s)\in P$, $\psi(\phi(p))=(\phi(p)(s))_{s\in S}=(t_s)_{s\in S}=p$. For $f\in F$, $\phi(\psi(f))(s)=f(s)$ for all $s$, hence $\phi(\psi(f))=f$. Both compositions are identities, so $\phi$ is bijective. If $S=\varnothing$, both sets have one element; if $S\ne\varnothing,T=\varnothing$, both sets are empty. The argument remains valid in each case. $\square$
+\ex{1.7}{Power sets and indicator functions}
+Define $\chi:\Pow(S)\to\mathcal F(S;\{0,1\})$ by $\chi(A)=1_A$. Given $h:S\to\{0,1\}$ define $\sigma(h)=\{s\in S:h(s)=1\}\in\Pow(S)$. Then $\sigma(\chi(A))=\{s:1_A(s)=1\}=A$. Conversely, for every $h$ and $s$, $1_{\sigma(h)}(s)=1$ iff $h(s)=1$, and is $0$ iff $h(s)=0$. Because $h(s)$ has only these two possible values, $\chi(\sigma(h))=h$. Thus $\sigma=\chi^{-1}$ and the sets are bijective. $\square$
+\ex{1.8}{Images of unions and intersections}
+Let $\mathcal A$ be a family of subsets of $S$. \textbf{(a)} For $t\in T$,
+\begin{align*}t\in f[\bigcup\mathcal A]&\iff(\exists s\in\bigcup\mathcal A)\ f(s)=t\\&\iff(\exists A\in\mathcal A)(\exists s\in A)\ f(s)=t\\&\iff t\in\bigcup_{A\in\mathcal A}f[A].\end{align*}
+\textbf{(b)} If $t\in f[\bigcap\mathcal A]$, choose $s\in\bigcap\mathcal A$ with $f(s)=t$. The same $s$ is in every $A$, so $t\in f[A]$ for every $A$, hence $t\in\bigcap_A f[A]$. It need not be equality when $f$ is not injective.
+
+\textbf{Additional identity from the lecture slides:} If $t\in f[A]\setminus f[B]$, choose $a\in A$ with $f(a)=t$. If $a\in B$ then $t\in f[B]$, contradiction. Thus $a\in A\setminus B$ and $t\in f[A\setminus B]$, proving $f[A\setminus B]\supseteq f[A]\setminus f[B]$. Equality need not hold, e.g. a constant map on distinct $a,b$, with $A=\{a\},B=\{b\}$. $\square$
+\ex{1.9}{Inverse images of unions and differences}
+For any $s\in S$,
+\begin{align*}s\in f^{-1}[\bigcup\mathcal C]&\iff f(s)\in\bigcup\mathcal C\\&\iff(\exists C\in\mathcal C)\ f(s)\in C\\&\iff s\in\bigcup_{C\in\mathcal C}f^{-1}[C].\end{align*}
+Likewise
+\begin{align*}s\in f^{-1}[D\setminus C]&\iff f(s)\in D\text{ and }f(s)\notin C\\&\iff s\in f^{-1}[D]\text{ and }s\notin f^{-1}[C]\\&\iff s\in f^{-1}[D]\setminus f^{-1}[C].\end{align*}
+Since $f^{-1}[T]=S$, taking $D=T$ gives $f^{-1}[T\setminus C]=S\setminus f^{-1}[C]$. \textbf{Further lecture-slide identity:} $f^{-1}[\bigcap\mathcal C]=\bigcap_{C\in\mathcal C}f^{-1}[C]$, by replacing ``there exists'' by ``for every'' in the first proof. $\square$
+\ex{1.10}{Disjoint union of equivalence relations}
+Let $S=A_1\cup A_2$ with $A_1\cap A_2=\varnothing$. Define $x\sim y$ if they belong to the same $A_i$ and $x\sim_i y$. \textbf{Reflexivity:} any $x$ lies in exactly one $A_i$, so $x\sim_i x$ and therefore $x\sim x$. \textbf{Symmetry:} if $x\sim y$, then $x,y\in A_i$ and $x\sim_i y$ for some $i$. Symmetry of $\sim_i$ yields $y\sim_i x$, hence $y\sim x$. \textbf{Transitivity:} if $x\sim y$ and $y\sim z$, then the first pair is in some $A_i$ and the second in some $A_j$. Since the shared $y$ belongs to both and the sets are disjoint, $i=j$. Transitivity in $A_i$ gives $x\sim_i z$, hence $x\sim z$. All three properties hold. $\square$
+\ex{1.11}{Symmetry and transitivity do not imply reflexivity}
+\textbf{(a)} The argument silently assumes the existence of a $y$ with $x\sim y$ for each $x$. Symmetry can reverse a relation \emph{only if one already holds}; it cannot produce a pair relating a completely unrelated element. Therefore the step ``take $y$ such that $x\sim y$'' may have no witness.
+
+\textbf{(b)} Take nonempty $S=\{1\}$ with $\sim=\varnothing$ (the empty binary relation). Symmetry and transitivity are vacuously true because there are no pairs $(x,y)$ in the relation and no applicable chains. Reflexivity fails, since $1\not\sim1$. $\square$
+\ex{1.12}{Explicit bijection from $\N$ to $\Z$}
+Assume $\N=\{1,2,3,\ldots\}$. Enumerate $\Z$ as $0,1,-1,2,-2,3,-3,\ldots$ via
+\[f(1)=0,\qquad f(2k)=k,\qquad f(2k+1)=-k\quad(k\ge1).\]
+Every $z\in\Z$ is hit: $z=0$ by input $1$, positive $z=k$ by $2k$, and negative $z=-k$ by $2k+1$. Different positive even inputs give distinct positive outputs, distinct odd inputs beyond $1$ give distinct negative outputs, and $1$ uniquely gives $0$. So no outputs collide. Hence $f$ is a bijection, proving $\Z$ countably infinite. $\square$
+\ex{1.13}{Rational-coefficient polynomials are countable}
+For each $n\ge0$, a polynomial of degree at most $n$ is uniquely represented by its coefficient vector $(a_0,\ldots,a_n)\in\Q^{n+1}$ through $\sum_{k=0}^n a_kx^k$. Thus the set $S_n$ of such polynomials is in bijection with $\Q^{n+1}$. Since $\Q$ is countable and finite Cartesian products of countable sets are countable, each $S_n$ is countable. Every polynomial has some finite degree (the zero polynomial also lies in every $S_n$), so $S=\bigcup_{n=0}^{\infty}S_n$. A countable union of countable sets is countable; hence $S$ is countable. \textbf{Pitfall:} ``infinitely many possible coefficients'' does not mean uncountable: each individual polynomial uses only finitely many coefficients. $\square$
+\ex{1.14}{Finite subsets of $\N$ are countable}
+\textbf{First proof (binary encoding, especially elegant).} Define
+\[E:\Pow_{00}(\N)\to\N_0,\qquad E(A)=\sum_{n\in A}2^{n-1},\]
+where $\N_0=\{0,1,2,\ldots\}$ and the empty sum equals zero. Every $A$ is finite so the sum is defined. Unique binary expansion implies $E(A)=E(B)$ only if $A=B$. Thus $E$ is injective and $\Pow_{00}(\N)$ is countable. In fact every nonnegative integer has a unique finite binary expansion, so $E$ is bijective.
+
+\textbf{Proof following the lecture hint.} Decompose $\Pow_{00}(\N)=\bigcup_{k\ge0}\Pow^{(k)}(\N)$ by cardinality. Associate to each $k$-element subset its uniquely increasing $k$-tuple $(a_1<\cdots<a_k)$ in $\N^k$. This injects $\Pow^{(k)}(\N)$ into the countable set $\N^k$, so each layer is countable. Their countable union is countable. $\square$
+\ex{1.15}{Total versus strict total orders}
+\textbf{(a)} From a total order $\le$, define $s<t$ iff $s\le t$ and $s\ne t$. \emph{Trichotomy:} totality gives $s\le t$ or $t\le s$; if $s\ne t$, antisymmetry prevents both, so exactly one strict direction holds. If equal, neither strict direction holds. \emph{Transitivity:} $s<t$ and $t<u$ give $s\le t\le u$, hence $s\le u$; if $s=u$, antisymmetry applied along the chain forces $s=t$, contradiction. Therefore $s<u$.
+
+\textbf{(b)} Conversely define $s\le t$ iff $s<t$ or $s=t$. \emph{Reflexivity:} $s=s$, hence $s\le s$. \emph{Antisymmetry:} if $s\le t$ and $t\le s$ with $s\ne t$, then $s<t$ and $t<s$, contradicting trichotomy. \emph{Transitivity:} if $s\le t\le u$, cases involving equality are immediate; otherwise $s<t$ and $t<u$, hence $s<u$ by strict transitivity. \emph{Totality:} trichotomy gives one of $s<t$, $s=t$, $t<s$, ensuring $s\le t$ or $t\le s$. Thus $\le$ is a total order. $\square$
+\ex{1.16}{Bijections of two three-element sets}
+A bijection is specified by the ordered triple $(f(x),f(y),f(z))$, a permutation of $(a,b,c)$. Evaluate statements $A:f(x)=a$, $B:f(y)\ne a$, and $C:f(z)\ne b$:
+\begin{center}\begin{tabular}{c|ccc|c}$(f(x),f(y),f(z))$&A&B&C&true count\\\hline $(a,b,c)$&T&T&T&3\\$(a,c,b)$&T&T&F&2\\$(b,a,c)$&F&F&T&1\\$(b,c,a)$&F&T&T&2\\$(c,a,b)$&F&F&F&0\\$(c,b,a)$&F&T&T&2\end{tabular}\end{center}
+\textbf{(a)} Exactly two true: $\boxed{(a,c,b),\ (b,c,a),\ (c,b,a)}$. \textbf{(b)} Exactly one true: $\boxed{(b,a,c)}$. This exhaustive table works because there are $3!=6$ bijections. $\square$
+\ex{1.17}{A relation defined from a function and partition}
+The notes define $t_1\sim t_2$ iff there is a block $A\in\mathcal C$ such that $f^{-1}[\{t_1,t_2\}]\subseteq A$, where $\mathcal C$ partitions $S$.
+
+\textbf{(a) Reflexivity: not necessarily.} Let $S=\{p,q\}$, $T=\{t\}$, $f(p)=f(q)=t$, and partition $\mathcal C=\{\{p\},\{q\}\}$. The fibre $f^{-1}[\{t\}]=\{p,q\}$ lies in no single block, so $t\not\sim t$. \emph{If $f$ is injective, yes:} each fibre $f^{-1}[\{t\}]$ is empty or a singleton, and any singleton lies in some block. Provided the partition of nonempty $S$ has a block, the empty fibre is also a subset of a block. Hence $t\sim t$ for all $t$.
+
+\textbf{(b) Symmetry: always.} Since $\{t_1,t_2\}=\{t_2,t_1\}$, their inverse images coincide. Thus $t_1\sim t_2$ iff $t_2\sim t_1$, with or without bijectivity.
+
+\textbf{(c) Transitivity: not necessarily.} Let $S=\{p,q\}$, $T=\{a,b,c\}$, $f(p)=a, f(q)=c$, and $\mathcal C=\{\{p\},\{q\}\}$. Since $b\notin\im f$, its fibre is empty. We have $f^{-1}[\{a,b\}]=\{p\}$ and $f^{-1}[\{b,c\}]=\{q\}$, so $a\sim b$ and $b\sim c$. But $f^{-1}[\{a,c\}]=\{p,q\}$ is not contained in any block, so $a\not\sim c$.
+
+\emph{If $f$ is surjective, transitivity does hold.} Suppose $t_1\sim t_2$ and $t_2\sim t_3$. Choose blocks $A,B$ with $f^{-1}[\{t_1,t_2\}]\subseteq A$ and $f^{-1}[\{t_2,t_3\}]\subseteq B$. Surjectivity makes $f^{-1}[\{t_2\}]$ nonempty, so a point in that fibre belongs to both blocks. Since blocks in a partition are disjoint unless equal, $A=B$. Therefore $f^{-1}[\{t_1,t_3\}]\subseteq A$ and $t_1\sim t_3$. $\square$
+\ex{1.18}{Real numbers are uncountable}
+\textbf{(a)} Define $\psi:\{0,1\}^{\N}\to\R$ by $\psi(a)=\sum_{n=1}^{\infty}a_n10^{-n}$. It converges absolutely since $0\le\psi(a)\le\sum 10^{-n}=1/9$. Let $a\ne b$ and let $k$ be their first differing index. Without loss, $a_k=1$, $b_k=0$. Their difference is
+\[\psi(a)-\psi(b)=10^{-k}+\sum_{n>k}(a_n-b_n)10^{-n}\ge10^{-k}-\sum_{n>k}10^{-n}.\]
+The tail is $\sum_{n>k}10^{-n}=10^{-k}/9$, so $\psi(a)-\psi(b)\ge(8/9)10^{-k}>0$. Thus $\psi$ is injective. The use of digits \emph{0 and 1 only} avoids ambiguous decimal expansions.
+
+\textbf{(b)} The set $\{0,1\}^{\N}$ is bijective to $\mathcal F(\N;\{0,1\})$, which is bijective to $\Pow(\N)$ via indicator functions. By Cantor's theorem $\Pow(\N)$ is uncountable, hence so is $\{0,1\}^{\N}$. If $\R$ were countable, every subset of it, including the image of the injection $\psi$, would be countable, contradiction. So $\boxed{\R\text{ is uncountable}}$. $\square$
+\ex{1.19}{A set is infinite iff it contains a copy of $\N$}
+\textbf{($\Leftarrow$)} If $f:\N\to S$ is injective, its outputs $f(1),f(2),\ldots$ are all distinct. A finite $S$ cannot contain infinitely many different elements (pigeonhole principle), so $S$ is infinite.
+
+\textbf{($\Rightarrow$)} Suppose $S$ is infinite. Choose $s_1\in S$. After selecting distinct $s_1,\ldots,s_n$, the complement $S\setminus\{s_1,\ldots,s_n\}$ is nonempty: otherwise $S$ would be finite. Choose $s_{n+1}$ from this complement. Recursively obtain distinct elements and define $f(n)=s_n$. Then $f$ is injective. \textbf{Set-theoretic nuance:} the unrestricted infinite-set-to-injection direction uses a choice principle (typically dependent choice) in this recursive construction. In standard mathematics with AC, as in these lecture notes, the argument is valid; without choice, infinite sets need not contain a countably infinite subset. $\square$
+\newpage\section{Quick-reference formula sheet and proof templates}
+\begin{keybox}{Everything worth memorising at a glance}
+\begin{align*}
+&d(x,y)=0\iff x=y,\quad d(x,y)=d(y,x),\quad d(x,z)\le d(x,y)+d(y,z);\\
+&d_{\rm disc}(x,y)=\mathbf1_{x\ne y},\quad d_{\rm count}(A,B)=|A\triangle B|;\\
+&d_1(f,g)=\int_0^1|f-g|,\quad d_\infty(f,g)=\sup_{t\in[0,1]}|f(t)-g(t)|;\\
+&d_H(K,J)=\inf\{\delta\ge0:K^\delta\supseteq J,\ J^\delta\supseteq K\};\\
+&A\triangle B=(A\setminus B)\cup(B\setminus A);\\
+&f\text{ injective}\iff[f(x)=f(y)\Rightarrow x=y];\\
+&f\text{ surjective}\iff (\forall t\in T)(\exists s\in S)\ f(s)=t;\\
+&f^{-1}[C]=\{s:f(s)\in C\};\\
+&f[\bigcup A_i]=\bigcup f[A_i],\quad f[\bigcap A_i]\subseteq\bigcap f[A_i];\\
+&f^{-1}[\bigcup C_i]=\bigcup f^{-1}[C_i],\quad f^{-1}[\bigcap C_i]=\bigcap f^{-1}[C_i];\\
+&f^{-1}[T\setminus C]=S\setminus f^{-1}[C],\quad |\mathcal F(S;T)|=|T|^{|S|}\ \text{(finite)}.
+\end{align*}
+\end{keybox}
+\subsection{Which method should I use?}
+\textbf{``Show this is a metric.''} Verify MS0, MS1a, MS1b, MS2 and MS3 separately; use cases, absolute values, cardinality inclusion, a supremum or integral as appropriate.
+
+\textbf{``Show two sets are equal.''} Start ``Take $x$ in the left-hand side'' and show it belongs to the right; reverse direction. Or build a chain of equivalent membership statements.
+
+\textbf{``Find the range / inverse.''} Set $y=f(x)$, solve for $x$ and identify forbidden outputs. If a left inverse must be defined outside the range, supply arbitrary legal values there.
+
+\textbf{``Prove countability.''} Exhibit a list/bijection, inject into a known countable set, or express the set as a countable union of countable sets.
+
+\textbf{``Show uncountability.''} Use Cantor's theorem and an injection from a known uncountable set; alternatively construct a diagonal contradiction.
+
+\textbf{``Prove equivalence relation.''} Check reflexive, symmetric and transitive \emph{one by one}; if asked whether a condition always holds, one valid counterexample is enough to disprove it.
+\section*{Source and scope note}
+Both supplied lecture PDFs are by MATH6310, Part I, Sections 0 and 1, marked ``Last edited: 07.ix.2026''. This study aid retains the notes' conventions and sequence of topics. It expands explanations and supplies original full arguments for the numbered exercises. Optional results are marked as such; the statement of Schr\"oder--Bernstein is specifically required by the lecture notes, while its proof is labelled non-examinable there. The source PDFs themselves remain the authority for course-specific assessment guidance.
+\end{document}

@@ -1,0 +1,53 @@
+                                   Assessed Exercise 1
+A1.1 Express the following differential and integral equations as block diagrams
+                                       d2 u
+                                               Z
+(i)                              y = 4 2 + 3 u + 6u;
+                                       dt
+
+                                     d2 y
+                                                        Z
+                                           du
+(ii)                              y+4 2 =2    +7            u.
+                                     dt    dt
+where the solution to (ii) should have no differentiators.
+                                                                                             [5]
+A1.2 (i) Express the following coupled differential equations as a block diagram with no
+differentiators, where u is the input, y is the output, x is a state variable, and a, b, c and
+d are constants:
+                                       dx
+                                           = ax + bu,
+                                        dt
+                                        dy
+                                           = cx + du.
+                                        dt
+    (ii) Express the following coupled differential and integral equations as a block diagram
+with no differentiators, where u1 and u2 are the inputs, y is the output, x is a state variable,
+and a, c, b1 , b2 , d1 and d2 are constants:
+
+                                   dx
+                                      = ax + b1 u1 + b2 u2 ,
+                                   dt
+                                   dy
+                                      = cx + d1 u1 + d2 u2 .
+                                   dt
+                                                                                             [5]
+A1.3 A simple harmonic oscillator satisfies
+                                       d2 x
+                                       m    + kx = u,
+                                        dt2
+where t is time, x is the output, u is the input, and k and m are positive constants.
+By introducing an extra state variable v = dx/dt, write this as a first order system of
+differential equations in matrix form (A, B, C, D).
+                                                                                    [5]
+A1.4 Let                                               
+                                         1         4 10
+                                     A= 0
+                                                  2 0 .
+                                         0         0 3
+Find (sI − A)−1 , where s is an algebraic variable.
+                                                                                             [5]
+
+
+                                               3
+

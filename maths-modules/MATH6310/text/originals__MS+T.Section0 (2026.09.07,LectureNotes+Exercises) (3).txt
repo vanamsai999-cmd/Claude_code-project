@@ -1,0 +1,369 @@
+                 ·
+Metric Spaces & Topology
+            (MATH6310)
+
+                 ·
+            Part I
+                 ·
+        Section 0.
+ What is a metric space?
+
+     Lecture Notes & Exercises
+      Last edited: 07.ix.2026
+
+
+
+
+                                 Video Clips
+                                  (1) Definition, overview & basic example
+                                      [16 minutes, covering pp. 1–5]
+                                  (2) Further motivating examples
+                                      [19 minutes, covering pp. 6–19]
+Introduction                                                            ∗ the distance between two points x & y in RN (many
+                                                                    versions, starting with the Euclidean metric, and including
+The big idea in linear algebra is that of vector space with
+                                                                    the Manhattan metric and the Chebyshev metric);
+associated linear maps and linear isomorphisms. This uni-
+                                                                        ∗ the Hausdorff distance between two suitable subsets
+fies ideas from geometry, on the one hand, and (for example)
+                                                                    A & B of the Euclidean plane;
+parts of the theory of differential equations, on the other.
+                                                                        ∗ the distance between two functions f & g (again, many
+A key ingredient is the facility of taking linear combina-
+                                                                    versions);
+tions, that is both adding ‘vectors’, and multiplying them
+                                                                        ∗ the p-adic distance between two rational numbers q &
+by ‘scalars’. The abstraction involved allows one to
+                                                                    r (for each prime number p);
+    (a) depart from specific coordinate systems,
+                                                                        ∗ the distance between two normed vector spaces X & Y ;
+    (b) move between different coordinate systems,
+                                                                        ∗ the distance between two real sequences (un) & (vn)
+    (c) treat functions and sequences, for example, as ‘vec-
+                                                                    (again, many versions);
+tors’.
+                                                                        ∗ the Hamming distance between two strings of symbols
+    The big idea in distance geometry is that of metric space       of equal length from a given alphabet (important in informa-
+with associated Lipschitz maps and isometries. The notion           tion theory);
+of ‘distance between points’ is abstracted into three simple            ∗ the distance between vertices of a (connected, undi-
+axioms. The whole theory ultimately reduces to these (just          rected) graph;
+as that of linear algebra reduces to the axioms for a vector            ∗ the distance between m × n real/complex matrices
+space).                                                             (again, several types: rank distance, Frobenius/Hilbert–
+    The scope of the theory is vast, as with linear algebra.        Schmidt distance; operator norm distance);
+Below we shall get a glimpse of this. The abstraction allows            ∗ the geodesic distance between points of a (connected,
+discussion, at a higher level than that of real analysis as you     Riemannian) manifold, such as a sphere;
+have already met it, of convergence of sequences, continuity            ∗ the ‘discrete’ distance between two points s & t in an
+of functions, and further more sophisticated topological no-        arbitrary set S.
+tions. It also affords application of these to an extraordinarily
+large variety of situations. Some examples are listed next.
+
+                               1                                                                 2
+
+
+
+
+                                                                    The definition
+                                                                    Definition.
+                                                                    A metric on a set S is a function
+                                                                                        d : S × S → [0, ∞[
+                                                                    satisfying
+                                                                    (MS1) ∀x,y∈S d(x, y) = 0 ⇔ x = y                            .
+                                                                    (MS2) ∀x,y∈S d(y, x) = d(x, y)                  (Symmetry)
+                          E = (S, d)                                (MS3) ∀x,y,z∈S d(x, z) ≤ d(x, y) + d(y, z)      (Triangle ≤)
+                                                                    A metric space E is a set S together with a specified metric
+                                                                    d on it; we write E = (S, d).
+                                                                    Remark.
+                                                                    Sometimes we break these down further, as follows:
+                                                                       A metric on a set S is a function
+                                                                                          d:S×S →R
+                                                                    satisfying
+                                                                    (MS0) ∀x,y∈S 0 ≤ d(x, y) < ∞        (Positivity & Finiteness)
+                                                                    (MS1a) ∀x∈S d(x, x) = 0
+                                                                    (MS1b) ∀x,y∈S d(x, y) = 0 =⇒ y = x             (Definiteness)
+                                                                    (MS2) & (MS3)
+
+                               3                                                                 4
+Some motivating examples                                    In turn (1), (2) and (3) follow from the definition
+Example. (Standard metric on R)                                                  |a| := max{a, −a},
+The prescription
+                                                            and the interaction between the linear structure of R and its
+                      d(x, y) := |y − x|.                   order structure.
+                                                               In short, these hold because R is an ordered field.
+defines what is called the standard metric on R.
+                                                            Remark. In fact, R is the unique complete ordered field, up
+(MS1) holds since, for all a ∈ R,
+                                                            to isomorphism of such fields. This lies rather deeper!
+                  |a| = 0 if and only if a = 0,       (1)
+
+     and for all x, y ∈ R,
+
+                 y − x = 0 if and only if x = y,
+
+(MS2) holds since, for all a ∈ R,
+
+                             | − a| = |a|,            (2)
+
+(MS3) holds since, for all a, b ∈ R,
+
+                        |a + b| ≤ |a| + |b|.          (3)
+
+
+
+
+                               5                                                          6
+
+
+
+
+Example. (Euclidean metrics)
+For N ∈ N, the prescription
+                  p
+       d2(x, y) := (y1 − x1)2 + · · · + (yN − xN )2
+
+defines what is called the Euclidean metric on RN .
+    (MS1) and (MS2) are easily verified.
+(MS3) follows from the Cauchy–Schwarz Inequality:
+                             v       v
+                XN           u N
+                             uX uX
+                                     u N
+                    xi y i ≤ t     2
+                                  xi t    yi2.
+                i=1             i=1          i=1
+
+We sometimes denote the Euclidean metrics by d2. The Eu-
+clidean norm on RN is given by
+                           v
+                           u N
+                           uX
+                  ∥x∥2 := t      x2i .
+                                   i=1
+
+The resulting metric space (RN , d2) is sometimes denoted
+EN .
+
+
+
+
+                               7
+Exercise. (Discrete metric)                                       Solution.
+Show that a metric is defined on an arbitrary set S by the
+prescription                  (
+                               1 if s ̸= t
+                   d(s, t) :=              .
+                               0 if s = t
+We sometimes denote this by ddiscrete.
+
+Remark. This means, in particular, that we already have two
+quite different metrics on the set R, and thus two metric
+spaces having the same underlying set, namely,
+
+        E1 := (R, dstandard) and E2 := (R, ddiscrete).
+
+
+
+
+                              9                                               10
+
+
+
+
+Example. (Counting metric on P(S), for a finite set S)            Solution.
+Here P(S) denotes the power set of S (= collection of all
+subsets of S). For a finite set S, the counting metric is given
+by
+                      d(A, B) := #A∆B
+where A∆B is the symmetric difference of A and B, de-
+fined by either of two formulae
+
+         (A \ B) ∪ (B \ A) = (A ∪ B) \ (A ∩ B),
+
+Axiom (MS1) holds since
+
+    #(A∆B) = 0 ⇐⇒ A∆B = ∅
+               ⇐⇒ A ∪ B = A ∩ B ⇐⇒ A = B.
+
+Axiom (MS2) follows from the symmetry of ∆:
+
+                       B∆A = A∆B.
+
+Exercise. (Counting metric)
+Verify the Triangle Inequality for the counting metric.
+
+Remark. If S is infinite
+                        then the same formula defines a met-
+ric on P00(S) := A ⊂ S | #A < ∞ , the finite power set
+of S.
+
+
+
+                              11                                              12
+Example. (Hausdorff metric)                                    (MS0) By Assumption 2, there is δ > 0 such that
+Let K(R2) denote the collection of subsets K of R2 which are
+                                                                                    K δ ⊃ J and J δ ⊃ K,
+   1. nonempty (K has at least one element),
+                                                                   and so, since the infimum of a set of positive numbers
+   2. bounded (that is, sup d2(x, y) | x, y ∈ K < ∞),
+                                                                    in nonnegative,
+   3. ‘closed’ (K includes its “boundary”).
+                                                                                     0 ≤ d(K, J) < ∞.
+For δ ≥ 0, the δ-fattening of K is the set
+                   n                         o
+           K δ := x ∈ R2 : ∃a∈K d2(x, a) ≤ δ                   (MS1a) Since K δ ⊃ K for all δ > 0, d(K, K) = 0.
+e.g.                                                           (MS2) Symmetry is obvious from the definition.
+                                                               (MS1b) d(J, K) > 0 for J ̸= K.
+                                                                    This needs Assumption 3 because
+The Hausdorff metric on K(R2) is given by                             x ∈ K \ J =⇒ dist(x, J) > 0 (we’ll prove this)
+  dHausdorff (K, J) := inf δ ≥ 0 : K δ ⊃ J and J δ ⊃ K .                        =⇒ ∃δ>0 J δ ̸⊃ K e.g. δ = dist(x, J)/2
+                          
+
+
+                                                               Remark. This works equally if the underlying metric space
+                                                               E2 is replaced by EN := (EN , d2) for N ∈ N .
+
+
+
+
+                              13                                                           14
+
+
+
+
+Exercise. (Axiom (MS3) for the Hausdorff metric)               Solution.
+
+
+ (a) Let A, B ⊂ RN and γ, δ > 0. Prove that
+       (i) A ⊂ B =⇒ Aδ ⊂ B δ .
+       (ii) (Aγ )δ ⊂ Aγ+δ .
+ (b) Deduce that the Hausdorff metric satisfies (MS3) (and
+     so is a metric).
+
+
+
+
+                              15                                                           16
+Example. (Integration metric on C(I; R))                    Solution.
+For I = [0, 1], this is given by
+                     Z 1                    Z
+       d1(f, g) :=        |g(s) − f (s)|ds = |g − f |.
+                     0
+
+(MS0) |g − f | ∈ C(I; R) ⊂ R(I; R)
+       R
+    so |g − f | is defined, nonnegative and finite.
+                        R
+(MS1a) This holds since 0 = 0.
+                       R         R
+(MS2) This holds since | − h| = |h| for h ∈ C(I; R)
+(MS3) This holds since
+                |k + l| ≤ |k| + |l| (pointwise), so
+                    Z            Z        Z
+                       |k + l| ≤ |k| + |l|
+
+Exercise. (Axiom (MS1b) for the integration metric)
+Prove (MS1b) for d1 equivalently
+                         Z
+            h ∈ C(I; R),   |h| = 0 =⇒ h = 0.
+
+
+[Hint: You must use the continuity of h. Try proving the
+contrapositive:
+                           Z
+                h ̸= 0 =⇒     |h| > 0.]
+
+                               17                                       18
+
+
+
+
+Example. (Uniform metric, or sup-metric, on C(I; R))        Solution.
+For I = [0, 1], this is given by
+                              
+          dsup(f, g) := sup |g(s) − f (s)| : s ∈ I
+
+(MS0) Continuous R-valued functions defined on the closed
+unit interval are bounded (Year 2 Analysis revision!), so
+
+                         dsup(f, g) < ∞.
+
+(MS1a) dsup(f, f ) = sup{0 : s ∈ I} = 0
+(MS2) Again use | − h| = |h| for h ∈ C(I; R).
+
+Exercise. (Axioms (MS3) and (MS1b) for the sup-metric)
+Verify axioms (MS3) and (MS1b) for the supremum metric
+on C(I; R), where I = [0, 1].
+
+
+
+
+                               19                                       20
+Example. (Two nonstandard metrics on R2)                        Solution.
+On R2, two metrics are defined by
+               (
+                ∥u∥2 + ∥v∥2 if u ̸= v
+dTGV (u, v) :=                         .
+                0             if u = v
+d′TGV (u, v)
+          (
+            ∥u∥2 + ∥v∥2 if u and v are linearly independent
+      :=                                                    ,
+            ∥v − u∥2      otherwise
+                                      p
+where, for x = (x1, x2) ∈ R2, ∥x∥2 := x21 + x22.
+    (MS1) holds in both cases since
+
+    ∥u∥2 + ∥v∥2 = 0 =⇒ u = 0 and v = 0, so u = v.
+
+(MS2) holds since ∥ − x∥2 = ∥x∥2 for all x ∈ R2.
+
+Exercise. (Metrics dTGV and d′TGV )
+Show that dTGV and d′TGV both satisfy the Triangle Inequal-
+ity. [Hint: You will need to use the Triangle Inequality for
+the Euclidean norm ∥ · ∥2, that is
+
+         ∥x + y∥2 ≤ ∥x∥2 + ∥y∥2       (x, y ∈ R2).]
+
+
+
+
+                            21                                              22
+                                                                  Exercises for Section 0.
+
+
+
+
+                              25                                                              26
+
+
+
+
+Exercise. 0.1 (Discrete metric)                                   Exercise. 0.6 (Axiom (MS3) for the Hausdorff metric)
+Prove that the discrete metric on a set S is a metric.
+·                                               [10 marks]
+                                                                   (a) Let A, B ⊂ RN and γ, δ > 0. Prove that
+Exercise. 0.2 (Axiom (MS1b) for the integration metric)                (i) A ⊂ B =⇒ Aδ ⊂ B δ .
+Prove (MS1b) for d1 equivalently                                       (ii) (Aγ )δ ⊂ Aγ+δ .
+                         Z
+            h ∈ C(I; R),   |h| = 0 =⇒ h = 0.                       (b) Deduce that the Hausdorff metric satisfies (MS3) (and
+                                                                       so is a metric).
+[Hint: You must use the continuity
+                         R         of h. Try proving the
+contrapositive: h ̸= 0 =⇒ |h| > 0.]          [10 marks]                                                         [10 marks]
+
+Exercise. 0.3 (Axioms (MS3) and (MS1b) for the sup-metric)
+Verify axioms (MS3) and (MS1b) for the supremum metric
+on C(I; R), where I = [0, 1].                [10 marks]
+
+Exercise. 0.4 (Counting metric)
+Verify the Triangle Inequality for the counting metric.
+·                                                [10 marks]
+
+Exercise. 0.5 (Metrics dTGV and d′TGV )
+Verify the Triangle Inequality for the metrics dTGV and d′TGV .
+[Hint: You will need to use the Triangle Inequality for the
+Euclidean norm ∥ · ∥2, that is
+         ∥x + y∥2 ≤ ∥x∥2 + ∥y∥2         (x, y ∈ R2).
+                                                  [20 marks]
+
+                              27                                                              28
+

@@ -1,0 +1,831 @@
+MATH6321 | Coursework 1: detailed solutions                                                     Sai Vanam
+
+
+  MATH6321 Mathematical Cryptography
+
+  Coursework 1
+  Detailed, step-by-step worked solutions
+  Sai Vanam
+  This document solves all three ciphers in the supplied Coursework 1: Caesar, monoalphabetic
+  substitution and Vigenere. It explains a reproducible route to the keys, the full decrypted messages,
+  and how to check every answer. The book identities are supporting observations; the decryption
+  does not depend on looking up the quotations.
+
+  How the supplied documents inform the solutions
+  The coursework asks for rigorous cryptanalysis, rather than plaintext alone. Chapter 1 of the
+  lecture notes supplies the encryption/decryption maps, frequency analysis, partial ciphertexts,
+  Index of Coincidence and Mutual Index of Coincidence. The supplied exam information reinforces
+  the need for clear calculations. The 2025 paper uses the same classical-cipher and shifted-MutIoC
+  methods, including key recovery from relative shifts.
+  Accordingly, each solution follows the same structure: identify the rule; find evidence for a
+  key; calculate the decryption; verify by re-encryption. All calculations below use the actual
+  coursework ciphertexts, rather than the different strings in the exam paper.
+
+  Alphabet convention: the first thing to fix
+  Use A = 0, B = 1, . . . , Z = 25. Work modulo 26, so a number outside 0, . . . , 25 is replaced by its
+  remainder. For example −7 ≡ 19 (mod 26), and 19 represents T.
+                  Letter   A    B    C    D    E    F    G    H    I    J    K     L   M
+                  Value    0    1    2    3    4    5    6    7    8    9    10   11   12
+                  Letter   N    O     P   Q     R    S    T    U    V   W    X    Y     Z
+                  Value    13   14   15   16   17   18   19   20   21   22   23   24   25
+
+  Spaces and punctuation are preserved for reading, but they are not letters. In the Vigenere cipher
+  they do not advance the key. The supplied Vigenere ciphertext already contains only letters once
+  line breaks are removed.
+
+  What counts as evidence?
+  A plausible English word is a useful hypothesis, not a proof. The same key must decrypt the whole
+  ciphertext consistently. Re-encrypting the recovered plaintext must reproduce every original letter.
+  That final test is performed for all three solutions.
+
+
+
+
+                                                    1
+MATH6321 | Coursework 1: detailed solutions                                                     Sai Vanam
+
+
+1     Question 1: Caesar cipher
+
+    The ciphertext and the rule
+    QB EIA I JZQOPB KWTL LIG QV IXZQT, IVL BPM KTWKSA EMZM ABZQSQVO BPQZBMMV.
+    A Caesar key k shifts every letter forwards by the same amount:
+
+                                          c≡m+k            (mod 26).
+
+    To reverse encryption, subtract the key:
+
+                                          m≡c−k            (mod 26).
+
+    There are only 26 possible keys, so testing all of them is feasible. Here we can first obtain a
+    promising key from the word structure, then check it against the entire sentence.
+
+    Step 1: use the one-letter word to generate a candidate
+    The ciphertext contains the single-letter word I. In a normal English sentence, a single-letter word
+    is usually A or I.
+    If this ciphertext I is plaintext A, then its numerical values satisfy
+
+                                          8≡0+k            (mod 26),
+
+    so k = 8 is a candidate.
+    If it were plaintext I instead, then 8 ≡ 8 + k, giving k = 0. But key 0 leaves the string unchanged,
+    beginning QB EIA; it does not explain a normal English sentence. The candidate k = 8 is therefore
+    worth testing. This is a hypothesis based on language, which the next steps confirm.
+
+    Step 2: test the opening words numerically
+    For QB, subtract 8 from each letter value:
+
+                                           Q : 16 − 8 = 8 −→ I,
+
+                                  B : 1 − 8 = −7 ≡ 19       (mod 26) −→ T.
+    Thus QB becomes IT. For EIA:
+
+                            E : 4 − 8 = −4 ≡ 22 −→ W,           I : 8 − 8 = 0 −→ A,
+
+                                        A : 0 − 8 = −8 ≡ 18 −→ S.
+    So EIA becomes WAS. The opening QB EIA I therefore decrypts as IT WAS A, a coherent start
+    under the same key.
+
+    Step 3: show one longer word in full
+
+                                Ciphertext         J        Z   Q      O     P    B
+                               Cipher value        9       25   16     14   15    1
+                                Subtract 8         1       17    8      6    7   −7
+                             Reduce modulo 26      1       17    8      6    7   19
+                                 Plaintext         B        R    I     G    H     T
+
+    Thus JZQOPB decrypts to BRIGHT. Every letter uses the same subtraction, including the wraparound
+    in the last column.
+
+
+
+
+                                                       2
+MATH6321 | Coursework 1: detailed solutions                                                        Sai Vanam
+
+
+  Step 4: decrypt all the remaining words
+
+                                   Ciphertext word       Decrypted word
+                                   QB                    IT
+                                   EIA                   WAS
+                                   I                     A
+                                   JZQOPB                BRIGHT
+                                   KWTL                  COLD
+                                   LIG                   DAY
+                                   QV                    IN
+                                   IXZQT,                APRIL,
+                                   IVL                   AND
+                                   BPM                   THE
+                                   KTWKSA                CLOCKS
+                                   EMZM                  WERE
+                                   ABZQSQVO              STRIKING
+                                   BPQZBMMV.             THIRTEEN.
+
+  No key changes are needed. In particular, BPM becomes THE, and BPQZBMMV becomes THIRTEEN.
+
+  Question 1: final answer
+
+                                                   k = 8.
+  It was a bright cold day in April, and the clocks were striking thirteen.
+  The quotation is the opening of George Orwell’s Nineteen Eighty-Four.
+
+  Step 5: verify the recovered key by re-encryption
+  Encryption must add 8. For the first word:
+
+                           I : 8 + 8 = 16 → Q,        T : 19 + 8 = 27 ≡ 1 → B.
+
+  Thus IT→QB. Similarly, THE has values (19, 7, 4), and adding 8 gives (1, 15, 12), or BPM.
+  The complete check applies ci ≡ mi + 8 (mod 26) to all 58 letters. It reproduces the complete
+  supplied ciphertext, including all of its words. This verifies the result, rather than merely recognising
+  a quotation.
+
+  Why this is a complete cryptanalysis answer
+  It explains how a candidate key was found, shows numerical calculations, obtains meaningful text
+  with one fixed key, and verifies that text by encryption. Recognising the book alone would not
+  provide those mathematical steps.
+
+
+
+
+                                                     3
+MATH6321 | Coursework 1: detailed solutions                                                       Sai Vanam
+
+
+2     Question 2: monoalphabetic substitution cipher
+
+    The ciphertext
+    A SG OSAPFY OSGAFASP WATK SFF OJPGQ JO QLEPLT WPATAICQ, SIR SG GYQLFO TKL SUTKJP JO S
+    TPAOFAIC GJIJCPSMK UMJI TKL QUHBLET, AI WKAEK A SISFYZL JIL KUIRPLR SIR QAXTY QLMSPSTL
+    EAMKLPQ, HUT A EJIOLQQ TKST TKAQ AQ LITAPLFY ILW TJ GL. TKL JHBLET JO TKJQL WKJ AIVLITLR
+    TKL QYQTLG KSQ SMMSPLITFY HLLI TJ EJIELSF TKST TKLQL EKSPSETLPQ EJIVLY S GLQQSCL, SIR TJ
+    CAVL TKL ARLS TKST TKLY SPL TKL GLPL PSIRJG QDLTEKLQ JO EKAFRPLI.
+
+    What changes from Question 1?
+    A general substitution does not use one numerical shift. Instead, a permutation σ replaces each
+    plaintext letter by one ciphertext letter:
+
+                                         c = σ(m),         m = σ −1 (c).
+
+    The same substitution is used at every occurrence. For instance, if ciphertext L means plaintext E,
+    then every L must mean E. Different ciphertext letters must not be assigned the same plaintext
+    letter, because the key is a bijection.
+    The cipher preserves repeated-letter patterns, word lengths, repeated words and the frequency
+    counts up to a relabelling of the alphabet. These are the clues to exploit. A full list of all 26! keys
+    is unnecessary.
+
+    Step 1: count frequencies, then use word patterns
+    There are 336 letters. The most frequent ciphertext symbols are:
+                            Symbol      L    T     S   K     A     Q     I    J    P
+                             Count     45   35    30   25    22    22   22   20   19
+
+    The count for L is 45/336 ≈ 13.39%, making plaintext E a plausible hypothesis. The repeated
+    word TKL could then be THE. This gives the candidate decryption assignments
+
+                                        T 7→ T,    K 7→ H,        L 7→ E.
+
+    These arrows are ciphertext to plaintext. A likely assignment must be tested in other words.
+    Frequency alone does not prove it: the most frequent plaintext letter can vary between passages.
+
+    Step 2: combine several small clues
+    Here is one consistent route through the guesses; it is not the only possible order of discovery.
+    1. The single-letter word A plausibly represents I, so set A 7→ I.
+
+    2. The repeated SIR plausibly represents AND, giving S 7→ A, I 7→ N, R 7→ D.
+
+    3. The opening A SG now reads I A?. Taking SG=AM gives G 7→ M .
+
+    4. The word SFF becomes A??; the repeated final letter and context suggest ALL, giving F 7→ L.
+    Together these clues begin the sentence “I AM ... WITH ALL ...” rather than relying on a single
+    guessed word.
+
+
+
+
+                                                       4
+MATH6321 | Coursework 1: detailed solutions                                                       Sai Vanam
+
+
+  Step 3: extend the partial key and keep it consistent
+  The candidate word TKL=THE already fixes three useful letters. The opening word WATK then has
+  pattern ?ITH, strongly suggesting WITH, so W 7→ W .
+  The word OSAPFY has pattern ?AIRL?. FAIRLY fits, giving O 7→ F, P 7→ R, Y 7→ Y . Apply those
+  assignments everywhere: OSGAFASP now becomes FAMILIAR, using the same letters consistently.
+  Next, OJPGQ has pattern F?RM?; FORMS gives J 7→ O, Q 7→ S. The word QLEPLT becomes SE?RET;
+  SECRET gives E 7→ C. Later words provide remaining assignments, for example HUT=BUT gives
+  H 7→ B, U 7→ U , and CAVL=GIVE gives C 7→ G, V 7→ V .
+  A useful consistency table is:
+
+                       Ciphertext                 Plaintext under the growing key
+                       A SG                       I AM
+                       OSAPFY OSGAFASP            FAIRLY FAMILIAR
+                       WATK SFF OJPGQ             WITH ALL FORMS
+                       QLEPLT WPATAICQ            SECRET WRITINGS
+                       SIR SG GYQLFO              AND AM MYSELF
+                       TKL SUTKJP                 THE AUTHOR
+                       QLMSPSTL EAMKLPQ           SEPARATE CIPHERS
+                       LITAPLFY ILW TJ GL         ENTIRELY NEW TO ME
+
+  These are not separate word-specific substitutions: all use one common alphabet map. That is
+  what makes the language evidence compelling.
+
+  Step 4: record the complete decryption alphabet
+
+                     Cipher    A    B     C   D   E   F   G   H   I    J    K   L   M
+                     Plain     I    J     G   K   C   L   M   B   N    O    H   E   P
+                     Cipher    N   O      P   Q   R   S   T   U   V    W    X   Y    Z
+                     Plain     Q   F      R   S   D   A   T   U   V    W    X   Y    Z
+
+  All 25 ciphertext letters that occur have consistent assignments. Ciphertext N never occurs, so the
+  passage alone does not directly test N 7→ Q. However, after the other 25 distinct assignments are
+  fixed, Q is the only unused plaintext letter; the bijection condition therefore supplies this final pair.
+  The table is for decryption. To obtain the encryption key, reverse its arrows.
+
+  The encryption key in standard alphabet order
+
+                     Plain     A   B      C   D   E   F   G   H   I    J    K   L   M
+                     Cipher    S   H      E   R   L   O   C   K   A    B    D   F   G
+                     Plain     N   O      P   Q   R   S   T   U   V    W    X   Y    Z
+                     Cipher    I   J      M   N   P   Q   T   U   V    W    X   Y    Z
+
+  Reading the ciphertext row in plaintext A–Z order gives
+
+                                        SHERLOCKABDFGIJMNPQTUVWXYZ.
+
+  This is a keyword alphabet: write the distinct letters of SHERLOCK, then append unused letters in
+  alphabetical order. The keyword matches the book connection, but the recovered map has already
+  been justified by the ciphertext.
+
+
+
+
+                                                      5
+MATH6321 | Coursework 1: detailed solutions                                                      Sai Vanam
+
+
+  Question 2: full recovered plaintext
+  I am fairly familiar with all forms of secret writings, and am myself the author of
+  a trifling monograph upon the subject, in which I analyze one hundred and sixty
+  separate ciphers, but I confess that this is entirely new to me. The object of those
+  who invented the system has apparently been to conceal that these characters convey
+  a message, and to give the idea that they are the mere random sketches of children.
+  The passage is from Arthur Conan Doyle’s Sherlock Holmes story The Adventure of the Dancing
+  Men. The spelling “analyze” is retained because it is the plaintext produced by the supplied
+  ciphertext.
+
+  Step 5: verify by reversing the table
+  Use the encryption table, not the decryption table, to check the opening:
+                  Plaintext     I   A    M    F   A       I   R   L   Y   F   A   M   I
+                  Ciphertext    A   S    G    O   S       A   P   F   Y   O   S   G   A
+  In word form,
+                         I AM FAIRLY FAMILIAR −→ A SG OSAPFY OSGAFASP.
+  For another check, THE encrypts as T 7→ T, H 7→ K, E 7→ L, giving TKL, while AND gives SIR. The
+  full calculation encrypts all 336 letters and reproduces the supplied ciphertext exactly.
+
+  Why a huge key space did not protect this passage
+  A substitution key can be any of 26! permutations, but this cipher does not destroy the language’s
+  structure. Repeated plaintext letters remain repeated ciphertext letters; THE is always encrypted
+  the same way; and the frequency distribution survives with new labels. This allows the key to be
+  built incrementally from constraints, instead of checking all permutations.
+  Each new assignment reduces uncertainty in many other words at once. If a guess causes one
+  ciphertext letter to mean two different plaintext letters, or makes the passage inconsistent, reject it
+  and try another. The successful key passes all those global checks.
+
+  Common mistakes to avoid in Question 2
+  • Do not treat it as a Caesar cipher: the displacements of different letters need not agree.
+
+  • Do not silently swap the encryption and decryption alphabets.
+
+  • Do not say that ciphertext N was decoded from a word: it does not occur. Its assignment follows
+    from completing the permutation.
+
+  • A recognised quotation is supporting evidence; the full alphabet and re-encryption check provide
+    the mathematical verification.
+
+
+
+
+                                                      6
+MATH6321 | Coursework 1: detailed solutions                                                                Sai Vanam
+
+
+3      Question 3: Vigenere cipher
+
+    The ciphertext, carefully normalised
+    XTNIKIHVJWHTFNLXMVAAIWRALWENWJHTFNLXMVAAIWRALWEROWDFNQKSODQLLAJBZTAXMGUFF
+    WDXSYVWHSZBOPSKPWTPFKZDFSMDXEWQLLAJBZTEGWUWOWQFRRVLMAIKGAIWRALWEJMSHOEWXA
+    IXPLXTNIKIHVAWPSFVGUDRZCCEJA
+    There are 174 letters. Line breaks only format the ciphertext; they do not restart the keyword.
+    The supplied hint restricts the keyword length to 3, 4, 5 or 6.
+
+    Why splitting into columns helps
+
+    For a key (k1 , . . . , kn ), Vigenere repeats the key along the plaintext:
+
+                                      ci ≡ mi + k1+((i−1) mod n)          (mod 26).
+
+    If the key length is n, positions 1, 1 + n, 1 + 2n, . . . all use k1 ; positions 2, 2 + n, 2 + 2n, . . . all use
+    k2 , and so on. Thus each column is a Caesar-encrypted piece of the plaintext.
+    We must first estimate n, then recover the relative shifts between the columns, and finally determine
+    the overall shift of the keyword. The next steps implement exactly that strategy from the lecture
+    notes.
+
+    Step 1: test each permitted length using IoC
+
+    For a string s with length t, let Na (s) count letter a. Then
+
+                                                      a=A Na (s)(Na (s) − 1)
+                                                   PZ
+                                        IoC(s) =                                 .
+                                                               t(t − 1)
+
+    It measures how often two distinct positions contain the same letter. A Caesar shift only relabels
+    the counts, so it leaves IoC unchanged. Long English-like text typically has IoC near 0.0656,
+    whereas independent uniform letters give expected IoC 1/26 ≈ 0.0385.
+    For each trial length, split the ciphertext into columns and calculate the IoC of every column:
+
+                          Length    Column IoCs                                        Mean
+                             3      0.0478, 0.0454, 0.0436                            0.0456
+                             4      0.0476, 0.0751, 0.0365, 0.0509                    0.0525
+                             5      0.0756, 0.0706, 0.0756, 0.0723, 0.0873            0.0763
+                             6      0.0468, 0.0813, 0.0394, 0.0616, 0.0320, 0.0517    0.0521
+
+    Length n = 5 stands out because all five columns have relatively large, language-like IoCs. The
+    other lengths have mixed or substantially lower values. This is statistical evidence, not certainty;
+    the recovered key and full-text check below will confirm it.
+
+    Why the values need not equal 0.0656
+    These columns contain only about 35 letters, and the passage repeatedly uses phrases such as
+    “IT WAS THE”. Finite samples and repeated wording can produce values above the long-text
+    benchmark. We compare the whole pattern of results instead of demanding an exact target value.
+
+
+
+
+                                                           7
+MATH6321 | Coursework 1: detailed solutions                                                        Sai Vanam
+
+
+  Step 2: write out the five partial ciphertexts
+  Let si = ci ci+5 ci+10 · · ·. Reading alternate columns here means taking every fifth letter, not cutting
+  the ciphertext into five consecutive chunks.
+
+                       Column       Length    Partial ciphertext
+                           1            35    XIHXIWHXIWDSLTUXHPTDXLTWRAIWHAXIPUC
+                           2            35    THTMWETMWEFOAAFSSSPFEAEORIWEOITHSDE
+                           3            35    NVFVRNFVRRNDJXFYZKFSWJGWVKRJEXNVFRJ
+                           4            35    IJNAAWNAAOQQBMWVBPKMQBWQLGAMWPIAVZA
+                           5            34    KWLALJLALWKLZGDWOWZDLZUFMALSXLKWGC
+
+  For a quick check, the first ten ciphertext letters are XTNIKIHVJW. Arrange them as two rows of
+  five:
+                                          X T N I K
+                                                              .
+                                          I H V J W
+  The first column therefore begins XI, the second TH, the third NV, the fourth IJ and the fifth
+  KW, agreeing with the table.
+
+  Step 3: understand one IoC calculation in full
+  In column 1 the nonzero counts are
+
+        A : 2, C : 1, D : 2, H : 4, I : 5, L : 2, P : 2, R : 1, S : 1, T : 3, U : 2, W : 4, X : 6.
+
+  Their total is 35. For each count q, add q(q − 1):
+
+                         2 + 0 + 2 + 12 + 20 + 2 + 2 + 0 + 0 + 6 + 2 + 12 + 30
+                                                   = 90.
+
+  The denominator is 35 · 34 = 1190, hence
+
+                                       IoC(s1 ) = 90/1190 ≈ 0.07563.
+
+  The same computation for the five columns gives:
+
+                        Column       Length     Numerator        Denominator     IoC
+                                1        35                 90          1190   0.0756
+                                2        35                 84          1190   0.0706
+                                3        35                 90          1190   0.0756
+                                4        35                 86          1190   0.0723
+                                5        34                 98          1122   0.0873
+
+  This shows where the statistics come from and how to reproduce them with a frequency table.
+
+  Why IoC alone does not tell us the keyword
+  Each Caesar shift preserves the counts up to a relabelling, so shifting a column does not change
+  its IoC. IoC helps identify a plausible length; to find the actual shifts, compare different columns
+  using Mutual IoC.
+
+
+
+
+                                                        8
+MATH6321 | Coursework 1: detailed solutions                                                       Sai Vanam
+
+
+  Step 4: compare columns using Mutual IoC
+  For strings s, r of lengths t1 , t2 ,
+
+                                                               a=A Na (s)Na (r)
+                                                          PZ
+                                      MutIoC(s, r) =                              .
+                                                                    t1 t2
+  Now shift column sj forwards by β, writing the result as eβ (sj ). If si has encryption shift ki and
+  sj has shift kj , the shifted second column has effective encryption shift kj + β.
+  To align the two shifts, require kj + β ≡ ki , so
+
+                                               βij ≡ ki − kj    (mod 26).
+
+  For each pair, calculate MutIoC(si , eβ (sj )) for all β = 0, . . . , 25. Good alignments tend to give
+  language-like coincidence scores. They suggest differences between key letters, not absolute key
+  letters.
+
+  Step 5: use the scores as a consistent system
+  The table records the largest score for each pair and the shift used in the globally consistent
+  solution:
+
+                          Pair   Best local shift     Score     Chosen shift   Chosen score
+                          1,2             15         0.0808          15                  0.0808
+                          1,3              2         0.0735          24                  0.0686
+                          1,4              7         0.0849          7                   0.0849
+                          1,5             23         0.0950          23                  0.0950
+                          2,3              9         0.0890          9                   0.0890
+                          2,4             18         0.0784          18                  0.0784
+                          2,5              8         0.0857          8                   0.0857
+                          3,4              9         0.0767          9                   0.0767
+                          3,5             25         0.0681          25                  0.0681
+                          4,5             16         0.0790          16                  0.0790
+
+  For example, shifting column 2 forwards by 15 gives
+
+                          MutIoC(s1 , e15 (s2 )) = 99/(35 · 35) = 99/1225 ≈ 0.0808.
+
+  The numerator is obtained by multiplying the counts of each matching letter after the shift, then
+  adding all 26 products. The complete column count table in the appendix makes this calculation
+  reproducible.
+
+  The important ambiguity: pair (1,3)
+
+  Pair (1, 3) has its highest local score at β = 2, but that is not the shift in the successful key. Its
+  score at β = 24 is about 0.0686, also plausible for aligned English text.
+  Other pairs give β12 = 15 and β23 = 9. Their congruences imply
+
+                         k1 − k3 = (k1 − k2 ) + (k2 − k3 ) ≡ 15 + 9 ≡ 24              (mod 26).
+
+  Thus 24 is the consistent choice for β13 . Choosing every local maximum blindly would give
+  incompatible equations. This is why the notes emphasise flexibility and checking the full system.
+
+
+
+
+                                                           9
+MATH6321 | Coursework 1: detailed solutions                                                            Sai Vanam
+
+
+  Step 6: solve the relative-shift equations
+  Use the mutually consistent relations
+
+                  k1 − k2 ≡ 15,      k2 − k3 ≡ 9,       k1 − k4 ≡ 7,      k1 − k5 ≡ 23     (mod 26).
+
+  Put k1 = t. Rearranging one equation at a time gives
+
+                                                      k2 ≡ t − 15,
+
+                                                k3 ≡ k2 − 9 ≡ t − 24,
+                                            k4 ≡ t − 7,          k5 ≡ t − 23.
+  Therefore the 26 possible keys have the form
+
+                       (k1 , k2 , k3 , k4 , k5 ) ≡ (t, t − 15, t − 24, t − 7, t − 23)   (mod 26).
+
+  This is a major reduction from 265 = 11881376 arbitrary length-five keys to only 26 common-shift
+  candidates.
+
+  Step 7: test the remaining 26 possibilities
+  For each t = 0, . . . , 25, convert the candidate key to letters and decrypt. The full candidate table
+  is in the appendix. Near the successful value the results are:
+
+                                       t   Keyword       First 20 plaintext letters
+                                      13     NYPGQ       KVYCUVJGDGUVQHVKOGUK
+                                      14     OZQHR       JUXBTUIFCFTUPGUJNFTJ
+                                      15     PARIS       ITWASTHEBESTOFTIMESI
+                                      16     QBSJT       HSVZRSGDADRSNESHLDRH
+
+  At t = 15, the key values are
+                                                   (15, 0, 17, 8, 18),
+  because 15 − 15 = 0, 15 − 24 = −9 ≡ 17, 15 − 7 = 8, and 15 − 23 = −8 ≡ 18. These represent
+
+                                                      P A R I S.
+
+  The full decryption gives coherent text throughout. Neither the opening few letters nor the
+  plausibility of a keyword alone would be enough; both must extend to the complete passage.
+
+  Step 8: check every unused pairwise relation
+
+  For (k1 , k2 , k3 , k4 , k5 ) = (15, 0, 17, 8, 18), all ten differences are
+
+                                (i, j)      12 13 14 15 23 24 25 34 35 45
+                      ki − kj      (mod 26) 15 24 7 23 9 18 8 9 25 16.
+
+  These match the chosen shifts in the Mutual IoC table. For instance 17 − 18 = −1 ≡ 25 for pair
+  (3, 5). This is an additional global consistency test, not a separate guess at each key letter.
+
+
+
+
+                                                            10
+MATH6321 | Coursework 1: detailed solutions                                                        Sai Vanam
+
+
+  Step 9: decrypt the opening numerically
+  Decryption subtracts the repeated key:
+
+                                   mi ≡ ci − k1+((i−1) mod 5)        (mod 26).
+
+  For the first five positions:
+                                    Ciphertext        X       T     N      I    K
+                                   Cipher values      23     19    13     8    10
+                                    Key letters        P      A     R      I    S
+                                    Key values        15      0    17     8    18
+                                     Subtract          8     19    −4     0    −8
+                                    Modulo 26          8     19    22     0    18
+                                     Plaintext         I      T    W      A     S
+  Thus XTNIK→ITWAS. The next five ciphertext letters are IHVJW; restart the keyword cycle, not the
+  message:
+                             Cipher values         8 7 21 9 22
+                              Subtract key        15 0 17 8 18
+                          Plain values mod 26 19 7 4 1 4
+                              Plain letters       T H E B E.
+  Combining the first ten positions gives ITWASTHEBE, or “IT WAS THE BE...”. The last ciphertext
+  block has four letters, so it uses only the first four letters of PARIS. No padding is introduced.
+
+  Question 3: full recovered plaintext
+
+                        Keyword PARIS,           (k1 , k2 , k3 , k4 , k5 ) = (15, 0, 17, 8, 18).
+  It was the best of times, it was the worst of times, it was the age of wisdom, it was
+  the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it
+  was the season of Light, it was the season of Darkness.
+  The passage is from Charles Dickens’s A Tale of Two Cities. Paris is one of its two cities, consistent
+  with the book-related keyword clue. Spaces and punctuation above restore readable wording; the
+  cipher itself determines the 174-letter string.
+
+  Step 10: verify by re-encrypting every letter
+  For the opening ITWAS, add PARIS:
+
+                    (8, 19, 22, 0, 18) + (15, 0, 17, 8, 18) ≡ (23, 19, 13, 8, 10)      (mod 26),
+
+  which spells XTNIK. Applying the same repeated key to all 174 plaintext letters reproduces every
+  letter of the supplied ciphertext. The complete aligned block table in the appendix lets you inspect
+  the calculation throughout the message.
+
+  What makes this a stronger solution than a guessed keyword
+  The reasoning identifies the length with IoC, recovers relative shifts with Mutual IoC, resolves an
+  actual statistical ambiguity, tests the remaining common shift, and verifies the complete result.
+  The book clue confirms an answer already supported by the mathematics.
+
+
+
+
+                                                        11
+MATH6321 | Coursework 1: detailed solutions                                                      Sai Vanam
+
+
+4     Appendix: numerical evidence and reproducibility
+
+    A. Full substitution-cipher frequencies
+    The counts below use letters only. This table supports the initial frequency analysis; the actual key
+    is then determined with word-pattern and whole-passage constraints.
+
+                                 Cipher symbol    Count   Percentage of 336
+                                       A             22                6.55
+                                       B              2                0.60
+                                       C              5                1.49
+                                       D              1                0.30
+                                       E             13                3.87
+                                       F             11                3.27
+                                       G             11                3.27
+                                       H              4                1.19
+                                       I             22                6.55
+                                       J             20                5.95
+                                       K             25                7.44
+                                       L             45               13.39
+                                       M              6                1.79
+                                       N              0                0.00
+                                       O             10                2.98
+                                       P             19                5.65
+                                       Q             22                6.55
+                                       R              9                2.68
+                                       S             30                8.93
+                                       T             35               10.42
+                                       U              5                1.49
+                                       V              3                0.89
+                                       W              5                1.49
+                                       X              1                0.30
+                                       Y              9                2.68
+                                       Z              1                0.30
+
+    The counts total 336. A zero count for N explains why its mapping must be supplied by completing
+    the permutation rather than observing a decoded occurrence.
+
+
+
+
+                                                     12
+MATH6321 | Coursework 1: detailed solutions                                                       Sai Vanam
+
+
+  B. Full letter counts in the five Vigenere columns
+  Use these counts to reproduce IoC and any shifted-MutIoC calculation. Columns 1–4 contain 35
+  letters each, and column 5 contains 34.
+
+                                     Letter    s1    s2   s3   s4      s5
+                                       A        2     3    0     7      3
+                                       B        0     0    0     3      0
+                                       C        1     0    0     0      1
+                                       D        2     1    1     0      2
+                                       E        0     6    1     0      0
+                                       F        0     3    5     0      1
+                                       G        0     0    1     1      2
+                                       H        4     2    0     0      0
+                                       I        5     2    0     2      0
+                                       J        0     0    4     1      1
+                                       K        0     0    2     1      3
+                                       L        2     0    0     1      8
+                                       M        0     2    0     3      1
+                                       N        0     0    4     2      0
+                                       O        0     3    0     1      1
+                                       P        2     1    0     2      0
+                                       Q        0     0    0     4      0
+                                       R        1     1    5     0      0
+                                       S        1     4    1     0      1
+                                       T        3     4    0     0      0
+                                       U        2     0    0     0      1
+                                       V        0     0    5     2      0
+                                       W        4     3    2     4      5
+                                       X        6     0    2     0      1
+                                       Y        0     0    1     0      0
+                                       Z        0     0    1     1      3
+                                      Total   35     35   35   35     34
+
+  If indices a are represented by 0, . . . , 25, shifting the second column forwards by β means
+
+                                     Na (eβ (sj )) = Na−β mod 26 (sj ).
+
+  Hence a calculation-ready formula is
+
+                                                     a=0 Na (si )Na−β mod 26 (sj )
+                                                    P25
+                          MutIoC(si , eβ (sj )) =                                    .
+                                                               |si ||sj |
+
+  Using a + β here without changing the shift convention would reverse the sign of every key-difference
+  equation.
+
+
+
+
+                                                     13
+MATH6321 | Coursework 1: detailed solutions                                                   Sai Vanam
+
+
+  C. All 26 common-shift candidates for Question 3
+  The following table uses the relative-shift family obtained from Mutual IoC. The final column
+  shows only the first 20 plaintext letters; the successful candidate is then checked against all 174.
+
+                               t   Candidate key   First 20 decrypted letters
+                              0       ALCTD        XILPHIWTQTHIDUIXBTHX
+                              1       BMDUE        WHKOGHVSPSGHCTHWASGW
+                              2       CNEVF        VGJNFGURORFGBSGVZRFV
+                              3       DOFWG        UFIMEFTQNQEFARFUYQEU
+                              4       EPGXH        TEHLDESPMPDEZQETXPDT
+                              5       FQHYI        SDGKCDROLOCDYPDSWOCS
+                              6       GRIZJ        RCFJBCQNKNBCXOCRVNBR
+                              7       HSJAK        QBEIABPMJMABWNBQUMAQ
+                              8       ITKBL        PADHZAOLILZAVMAPTLZP
+                              9       JULCM        OZCGYZNKHKYZULZOSKYO
+                             10       KVMDN        NYBFXYMJGJXYTKYNRJXN
+                             11       LWNEO        MXAEWXLIFIWXSJXMQIWM
+                             12       MXOFP        LWZDVWKHEHVWRIWLPHVL
+                             13       NYPGQ        KVYCUVJGDGUVQHVKOGUK
+                             14       OZQHR        JUXBTUIFCFTUPGUJNFTJ
+                             15       PARIS        ITWASTHEBESTOFTIMESI
+                             16       QBSJT        HSVZRSGDADRSNESHLDRH
+                             17       RCTKU        GRUYQRFCZCQRMDRGKCQG
+                             18       SDULV        FQTXPQEBYBPQLCQFJBPF
+                             19       TEVMW        EPSWOPDAXAOPKBPEIAOE
+                             20       UFWNX        DORVNOCZWZNOJAODHZND
+                             21       VGXOY        CNQUMNBYVYMNIZNCGYMC
+                             22       WHYPZ        BMPTLMAXUXLMHYMBFXLB
+                             23       XIZQA        ALOSKLZWTWKLGXLAEWKA
+                             24       YJARB        ZKNRJKYVSVJKFWKZDVJZ
+                             25       ZKBSC        YJMQIJXURUIJEVJYCUIY
+
+  Only t = 15 gives the coherent opening ITWASTHEBESTOFTIMESI, and the same key continues
+  correctly through the entire passage. This table explains how the otherwise undetermined common
+  shift was resolved.
+
+
+
+
+                                                   14
+MATH6321 | Coursework 1: detailed solutions                                                Sai Vanam
+
+
+  D. Full Vigenere decryption in aligned blocks
+  Blocks of five make the key alignment visible. Plaintext spaces are omitted in this table because
+  the cipher works on letters alone. The final block has length four.
+
+                            Positions   Ciphertext    Key segment   Plaintext
+                                 1–5    XTNIK         PARIS         ITWAS
+                                6–10    IHVJW         PARIS         THEBE
+                               11–15    HTFNL         PARIS         STOFT
+                               16–20    XMVAA         PARIS         IMESI
+                               21–25    IWRAL         PARIS         TWAST
+                               26–30    WENWJ         PARIS         HEWOR
+                               31–35    HTFNL         PARIS         STOFT
+                               36–40    XMVAA         PARIS         IMESI
+                               41–45    IWRAL         PARIS         TWAST
+                               46–50    WEROW         PARIS         HEAGE
+                               51–55    DFNQK         PARIS         OFWIS
+                               56–60    SODQL         PARIS         DOMIT
+                               61–65    LAJBZ         PARIS         WASTH
+                               66–70    TAXMG         PARIS         EAGEO
+                               71–75    UFFWD         PARIS         FFOOL
+                               76–80    XSYVW         PARIS         ISHNE
+                               81–85    HSZBO         PARIS         SSITW
+                               86–90    PSKPW         PARIS         ASTHE
+                               91–95    TPFKZ         PARIS         EPOCH
+                              96–100    DFSMD         PARIS         OFBEL
+                             101–105    XEWQL         PARIS         IEFIT
+                             106–110    LAJBZ         PARIS         WASTH
+                             111–115    TEGWU         PARIS         EEPOC
+                             116–120    WOWQF         PARIS         HOFIN
+                             121–125    RRVLM         PARIS         CREDU
+                             126–130    AIKGA         PARIS         LITYI
+                             131–135    IWRAL         PARIS         TWAST
+                             136–140    WEJMS         PARIS         HESEA
+                             141–145    HOEWX         PARIS         SONOF
+                             146–150    AIXPL         PARIS         LIGHT
+                             151–155    XTNIK         PARIS         ITWAS
+                             156–160    IHVAW         PARIS         THESE
+                             161–165    PSFVG         PARIS         ASONO
+                             166–170    UDRZC         PARIS         FDARK
+                             171–174    CEJA          PARI          NESS
+
+  At every position, ciphertext minus key modulo 26 gives the displayed plaintext. Reading the
+  plaintext blocks consecutively gives the quotation in the main solution.
+
+
+
+
+                                                     15
+MATH6321 | Coursework 1: detailed solutions                                                    Sai Vanam
+
+
+  E. How the numerical checks can be reproduced
+  The calculations used simple counting and modular arithmetic, not an unexplained automatic
+  cipher solver. The following procedures describe the computation completely.
+  1. Normalise: keep uppercase A–Z letters; remove whitespace and punctuation for counting. The
+     lengths must be 58, 336 and 174 for Questions 1, 2 and 3.
+
+  2. Caesar check: for each plaintext letter value mi , calculate (mi + 8) mod 26. Compare the
+     resulting 58 letters to the supplied ciphertext.
+
+  3. Substitution check: index the encryption alphabet SHERLOCKABDFGIJMNPQTUVWXYZ by plain-
+     text letter value. Compare its 336 output letters to the supplied ciphertext. Confirm that all 26
+     entries in the alphabet are distinct.
+
+  4. IoC: for trial length n ∈ {3, 4, 5, 6}, place ciphertext position i in column 1 + ((i − 1) mod n).
+     Count letters and use the displayed IoC formula.
+
+  5. Mutual IoC: for each of the ten pairs of five-column strings and every β = 0, . . . , 25, use the
+     shifted-count formula in Appendix B. Keep plausible alternatives and solve a consistent system
+     of key-difference congruences.
+
+  6. Vigenere check: use repeated key values (15, 0, 17, 8, 18), add them to the recovered plaintext
+     modulo 26, and compare all 174 letters to the supplied ciphertext.
+  All three full-ciphertext comparisons pass. These checks validate the arithmetic, while the explana-
+  tions in the main sections show why the keys were reasonable candidates in the first place.
+
+  Final answers at a glance
+
+   Question           Recovered key and opening
+   1                  Caesar encryption key 8: “It was a bright cold day in April...”
+   2                  Encryption alphabet SHERLOCKABDFGIJMNPQTUVWXYZ: “I am fairly familiar
+                      with all forms of secret writings...”
+   3                  Keyword PARIS, values (15, 0, 17, 8, 18): “It was the best of times, it was
+                      the worst of times...”
+
+
+  Source notes
+  MATH6321 Coursework 1(1).pdf supplies the three ciphertexts and its emphasis on explaining
+  cryptanalysis. MATH6321 Notes(1).pdf, Chapter 1, especially Sections 1.1–1.3 and 1.5–1.6,
+  supplies the methods and conventions. MATH6321 Exam Information.pdf confirms the
+  emphasis on accurate computational working and classical-cipher/MutIoC skills. MATH320
+  Mathematical Cryptography Main Exam 24–25 (1).pdf, Question 1, provides the related
+  classical-cipher and pairwise-MutIoC question format. These solutions are independently worked
+  explanations for the coursework, not an official marking scheme.
+
+
+
+
+                                                   16
+

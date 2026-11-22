@@ -1,0 +1,916 @@
+            Mathematical Cryptography
+                  MATH6321 | Comprehensive Lecture Notes
+
+                           Chapter 1: Classical Cryptography
+
+                             Introduction to the end of Section 1.4
+
+
+
+
+                   An exceptionally detailed, beginner-friendly study guide
+             Step-by-step encryption and decryption, notation, proofs, frequency
+            analysis, the Kasiski test, perfect secrecy and solved course exercises.
+
+
+
+
+Based on Dr Dan Fretwell’s MATH6321 Mathematical Cryptography, Lancaster University
+                                   (2026/27).
+
+Expanded teaching explanations and additional worked examples are clearly included alongside the course
+                                              material.
+MATH6321 | Mathematical Cryptography                                                        Chapter 1.1–1.4
+
+
+
+Contents
+
+1 How to use these notes                                                                                 2
+
+2 Preliminaries: what the mathematical language means                                                     2
+   2.1   The basic problem and the three sets . . . . . . . . . . . . . . . . . . . . . . . . . . .       2
+   2.2   Kerckhoffs’ principle and the threat model . . . . . . . . . . . . . . . . . . . . . . . .       2
+   2.3   Numbers instead of letters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     3
+   2.4   Modular arithmetic from the beginning . . . . . . . . . . . . . . . . . . . . . . . . .          3
+
+3 1.1 The Caesar cipher: What would Julius Caesar do?                                                    3
+   3.1   Intuition and Definition 1.1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     3
+   3.2   Encrypting and decrypting systematically . . . . . . . . . . . . . . . . . . . . . . . .         4
+   3.3   Exercise 1.3 — a complete correctness proof . . . . . . . . . . . . . . . . . . . . . . .        4
+   3.4   Why the Caesar cipher is easy to break . . . . . . . . . . . . . . . . . . . . . . . . .         4
+   3.5   Extra practice (fully solved) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    5
+
+4 1.2 Substitution ciphers: What would Mary Queen of Scots do?                                           5
+   4.1   From a shift to an arbitrary bijection . . . . . . . . . . . . . . . . . . . . . . . . . . .     5
+   4.2   Definition 1.4, interpreted carefully . . . . . . . . . . . . . . . . . . . . . . . . . . . .    5
+   4.3   Cycle notation: unpacking Example 1.5 . . . . . . . . . . . . . . . . . . . . . . . . .          5
+   4.4   Example 1.6: why there are 26! keys . . . . . . . . . . . . . . . . . . . . . . . . . . .        6
+   4.5   Why statistics defeat a huge key space . . . . . . . . . . . . . . . . . . . . . . . . . .       6
+   4.6   How to perform a frequency attack, step by step . . . . . . . . . . . . . . . . . . . .          6
+   4.7   Exercise 1.8 — complete solution . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       6
+
+5 1.3 The Vigenère cipher: What would secret Victorian lovers do?                                        7
+   5.1   Motivation: change the shift with position . . . . . . . . . . . . . . . . . . . . . . . .       7
+   5.2   Definition 1.9 and the indexing rule . . . . . . . . . . . . . . . . . . . . . . . . . . . .     7
+   5.3   Worked example: HELLO with key (1, 2) . . . . . . . . . . . . . . . . . . . . . . . . .          7
+   5.4   Using a keyword: Example 1.13 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        8
+   5.5   Exercise 1.10 — prove Caesar is a special case . . . . . . . . . . . . . . . . . . . . . .       8
+   5.6   Why simple overall frequency analysis becomes unreliable . . . . . . . . . . . . . . .           8
+   5.7   The Kasiski test: where repeating keys leak information . . . . . . . . . . . . . . . .          9
+   5.8   Kasiski test: a calculation you can reproduce . . . . . . . . . . . . . . . . . . . . . .        9
+   5.9   Example 1.15: analysing the actual lecture table . . . . . . . . . . . . . . . . . . . .         9
+   5.10 Extra practice: a Kasiski-style question . . . . . . . . . . . . . . . . . . . . . . . . .       10
+
+6 1.4 The One Time Pad: What would the president do?                                                     10
+   6.1   Motivation: remove the periodic key . . . . . . . . . . . . . . . . . . . . . . . . . . .       10
+   6.2   Definition 1.16 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   10
+
+
+                                                    1
+MATH6321 | Mathematical Cryptography                                                      Chapter 1.1–1.4
+
+
+
+   6.3   Complete worked encryption example . . . . . . . . . . . . . . . . . . . . . . . . . .        10
+   6.4   What does uniformly random mean? . . . . . . . . . . . . . . . . . . . . . . . . . . .        11
+   6.5   Example 1.17: why the same ciphertext can mean anything . . . . . . . . . . . . . .           11
+   6.6   A full mathematical proof of perfect secrecy . . . . . . . . . . . . . . . . . . . . . . .    11
+   6.7   Why you must never reuse the One Time Pad . . . . . . . . . . . . . . . . . . . . . .         11
+   6.8   Binary version and the illustration in the original notes . . . . . . . . . . . . . . . .     12
+   6.9   The three practical disadvantages in the lecture notes . . . . . . . . . . . . . . . . .      12
+   6.10 A proof question: why does OTP decryption work? . . . . . . . . . . . . . . . . . . .          12
+
+7 Comparing the four ciphers                                                                           13
+
+8 Exam-style questions and fully worked solutions                                                      13
+   8.1   Question A: modular arithmetic and Caesar (8 marks, illustrative) . . . . . . . . . .         13
+   8.2   Question B: permutations (8 marks, illustrative) . . . . . . . . . . . . . . . . . . . .      13
+   8.3   Question C: Vigenère (10 marks, illustrative) . . . . . . . . . . . . . . . . . . . . . .     13
+   8.4   Question D: Kasiski (8 marks, illustrative) . . . . . . . . . . . . . . . . . . . . . . . .   14
+   8.5   Question E: One Time Pad (12 marks, illustrative) . . . . . . . . . . . . . . . . . . .       14
+
+9 Final revision checklist and formula sheet                                                           14
+
+
+
+
+                                                   2
+MATH6321 | Mathematical Cryptography                                                     Chapter 1.1–1.4
+
+
+
+1     How to use these notes
+
+These notes follow the order and terminology of the supplied university lecture notes, from the intro-
+duction to Chapter 1 through Section 1.4 (printed pages 1–8; PDF pages 4–11). They deliberately
+stop before Section 1.5, The Index of Coincidence. All definitions and named exercises retain their
+original course numbering. Additional explanations, examples, and exercises have been written to
+make the material easier to learn; they are not quotations from the original handout.
+
+    Learning objectives
+
+    By the end you should be able to: (i) explain plaintext, ciphertext, key, encryption, decryption
+    and the identity-map condition; (ii) compute arithmetic modulo 26; (iii) implement and break
+    a Caesar cipher; (iv) describe a substitution cipher using a permutation and inverse; (v)
+    explain why frequency analysis works; (vi) encrypt and decrypt using repeating Vigenère
+    keys; (vii) explain and apply the Kasiski idea to candidate key lengths; and (viii) explain and
+    prove the central security properties of the One Time Pad.
+
+
+
+2     Preliminaries: what the mathematical language means
+
+2.1    The basic problem and the three sets
+
+The objective of cryptography is to protect information. Suppose Alice wants to send Bob the
+message MEET AT NOON, while an observer Eve can see communications but must not be able to
+read the intended content. The message before encryption is plaintext; its encrypted representation
+is ciphertext. The key determines which specific encoding rule is used.
+The lecture notes use sets M (possible plaintexts), C (possible ciphertexts), and K (allowed keys).
+For a fixed key k ∈ K, encryption is a map ek : M → C and decryption is a map dk : Im(ek ) → M .
+The image Im(ek ) contains the ciphertexts that can actually be produced. In the classical alphabetic
+ciphers below, all letters are possible ciphertext letters and the image is the whole alphabet.
+
+                                     ek                          dk
+                  Plaintext m                 Ciphertext c                Recovered m
+
+
+
+Correctness requires that decrypting an encrypted message recovers precisely the original message:
+
+                                dk (ek (m)) = m        for every m ∈ M.
+
+This is abbreviated dk ◦ ek = idM . The symbol ◦ means composition: evaluate the function on the
+right first. The identity function idM takes every element to itself. Notice that correctness and
+security are different: even a trivially breakable cipher can decrypt correctly.
+
+
+2.2    Kerckhoffs’ principle and the threat model
+
+The course introduces Kerckhoffs’ principle: a cipher should remain secure even when an attacker
+knows the encryption procedure; the key is the secret. In practical terms, we should not rely on
+Eve being unaware of our algorithm. Later cryptographic systems may use different models and
+assumptions; the key point here is to distinguish a secret key from the public method that uses it.
+
+
+
+
+                                                   3
+MATH6321 | Mathematical Cryptography                                                         Chapter 1.1–1.4
+
+
+
+2.3    Numbers instead of letters
+
+For the alphabetic schemes, identify A = 0, B = 1, . . . , Z = 25. These are integers in {0, 1, . . . , 25},
+which we can think of as residues modulo 26.
+
+                       A    B    C    D    E    F    G    H    I    J    K    L    M
+                       0    1    2    3    4    5    6    7    8    9    10   11   12
+                      N    O    P    Q    R    S    T    U    V    W     X    Y    Z
+                      13   14   15   16   17   18   19   20   21   22    23   24   25
+
+For example, CAT becomes (2, 0, 19), BOB becomes (1, 14, 1), and ZOO becomes (25, 14, 14). We
+normally leave spaces and punctuation unchanged or omit them; be consistent about whether
+they count as positions when repeating a key. The examples in these notes advance the key only
+for letters.
+
+
+2.4    Modular arithmetic from the beginning
+
+The notation a ≡ b (mod n) means that n divides a − b. Equivalently, a and b have the same
+remainder upon division by n. It is not merely an ordinary equality: e.g. 29 ̸= 3, but 29 ≡ 3
+(mod 26) because 29 − 3 = 26.
+
+    Working modulo 26: five complete examples
+
+       1. 29 ≡ 3 (mod 26) since 29 = 1(26) + 3. Thus a numerical letter value of 29 corresponds
+          to D.
+
+       2. 54 ≡ 2 (mod 26) since 54 = 2(26) + 2. Thus 54 corresponds to C.
+
+       3. −5 ≡ 21 (mod 26) because −5 + 26 = 21. Thus negative results can be brought into
+          0, . . . , 25 by adding 26.
+
+       4. −29 ≡ 23 (mod 26) because −29 + 2(26) = 23. One addition was insufficient; add 26
+          repeatedly as needed.
+
+       5. 77 ≡ 25 (mod 26) since 77 = 2(26) + 25. Thus 77 corresponds to Z.
+
+You may freely add, subtract, or multiply congruences modulo 26. For example if c ≡ m + k
+(mod 26) then subtracting k gives c − k ≡ m (mod 26). That is the mathematical basis for decryp-
+tion.
+
+    Common mistakes before you begin
+
+    The alphabet starts at zero, not one. Do not translate A as 1. Negative numbers are allowed
+    during the calculation, but the final letter-value representative should lie in 0, . . . , 25. A key
+    used for encryption must be applied with the opposite sign during decryption for the additive
+    ciphers.
+
+
+
+3     1.1 The Caesar cipher: What would Julius Caesar do?
+
+3.1    Intuition and Definition 1.1
+
+The Caesar cipher shifts every plaintext letter forward by a fixed amount k. Thus with k = 3,
+A 7→ D, B 7→ E, C 7→ F , X 7→ A, Y 7→ B, and Z 7→ C. The last three cases demonstrate
+wrap-around: after Z, start again at A.
+
+                                                     4
+MATH6321 | Mathematical Cryptography                                                  Chapter 1.1–1.4
+
+
+
+Formally the key is k ∈ {0, . . . , 25}. For an input letter represented by m,
+
+                     ek (m) = m + k     (mod 26),       dk (c) = c − k   (mod 26).
+
+The output is always interpreted using the representative from 0 to 25. In these formulas, m is a
+plaintext number, c is a ciphertext number, and k is the fixed shift.
+
+
+3.2   Encrypting and decrypting systematically
+
+   Example: encrypt HELLO with key k = 3
+
+   Step 1. Convert HELLO to (7, 4, 11, 11, 14).
+   Step 2. Add the key 3 to every number: (10, 7, 14, 14, 17).
+   Step 3. Reduce modulo 26 if necessary (not necessary here).
+   Step 4. Convert numbers back to letters: (10, 7, 14, 14, 17) = KHOOR.
+
+                                                 k=3
+                                          HELLO 7−→ KHOOR.
+
+   Example: decrypt KHOOR with key k = 3
+
+   KHOOR corresponds to (10, 7, 14, 14, 17). Subtract 3 from each entry to get (7, 4, 11, 11, 14)
+   and convert to HELLO. Thus d3 (KHOOR) = HELLO.
+
+   Example with wrap-around: encrypt ZEBRA with k = 4
+
+   Start with (25, 4, 1, 17, 0). Adding 4 gives (29, 8, 5, 21, 4). Reduce 29 ≡ 3 (mod 26). The
+   output is (3, 8, 5, 21, 4), hence DIFVE. Why Z becomes D: 25 + 4 = 29, then 29 − 26 = 3.
+
+
+3.3   Exercise 1.3 — a complete correctness proof
+
+Question from the course: Check that the encryption and decryption maps satisfy dk ◦ ek = id.
+
+   Model proof, with every justification
+
+   Step 1. Fix any plaintext m ∈ {0, . . . , 25} and any permitted key k.
+   Step 2. By Definition 1.1, ek (m) ≡ m + k (mod 26).
+   Step 3. Apply the decryption function to this ciphertext:
+
+                                 dk (ek (m)) ≡ ek (m) − k   (mod 26).
+
+   Step 4. Substitute the expression for ek (m):
+
+                             dk (ek (m)) ≡ (m + k) − k ≡ m (mod 26).
+
+   Step 5. Since m is the specified representative in {0, . . . , 25}, the decrypted output is
+   precisely m.
+   Conclusion. dk (ek (m)) = m for every m, so dk ◦ ek = idM . □
+
+
+3.4   Why the Caesar cipher is easy to break
+
+Because there are only 26 shifts, an adversary can try every possible key. This is brute force. For
+example, decrypting KHOOR with candidate keys 1, 2, 3, and 4 gives JGNNQ, IFMMP, HELLO, and GDKKN.
+
+                                                    5
+MATH6321 | Mathematical Cryptography                                                    Chapter 1.1–1.4
+
+
+
+The third option is recognisable English. Key 0 gives no change at all. The cipher is mathematically
+correct but not secure in modern settings.
+
+
+3.5    Extra practice (fully solved)
+
+Q1. Encrypt CAT with k = 5. Solution: (2, 0, 19) + (5, 5, 5) = (7, 5, 24) giving HFY.
+Q2. Decrypt ABC with k = 3. Solution: (0, 1, 2) − (3, 3, 3) = (−3, −2, −1) ≡ (23, 24, 25) giving
+XYZ.
+Q3. Which key sends A to Z? Solution: 0 + k ≡ 25 (mod 26) so k = 25.
+
+
+4     1.2 Substitution ciphers: What would Mary Queen of Scots do?
+
+4.1    From a shift to an arbitrary bijection
+
+A Caesar cipher is the special permutation x 7→ x + k (mod 26). But there are many other ways
+to rearrange 26 letters. We call a function injective if two different inputs cannot produce the same
+output; surjective if every output is attained; and bijective if both properties hold. A bijection has
+an inverse, which is essential for unique decryption.
+A permutation of a set is a bijection from the set to itself. The group S26 comprises all permutations
+of 26 symbols; its operation is function composition. A monoalphabetic substitution key is a single
+permutation σ ∈ S26 used unchanged throughout the message.
+
+
+4.2    Definition 1.4, interpreted carefully
+
+                                   ci = σ(mi ),        mi = σ −1 (ci ).
+
+The subscript i indicates the position in a message. Because σ is a bijection, σ −1 exists. Crucially,
+the same plaintext letter always maps to the same ciphertext letter; this is why the scheme is
+monoalphabetic.
+
+    A short substitution example
+
+    Consider an illustrative alphabet {A, B, C, D} with A 7→ C, B 7→ D, C 7→ A, D 7→ B.
+    Encrypt BAD: B 7→ D, A 7→ C, D 7→ B, so the answer is DCB. Decrypt by reversing the table:
+    D 7→ B, C 7→ A, B 7→ D. We recover BAD.
+
+
+4.3    Cycle notation: unpacking Example 1.5
+
+The lecture notes choose
+                                   σ = (0 1)(2 3)(4 5) · · · (24 25).
+A 2-cycle (0 1) means 0 7→ 1 and 1 7→ 0. Thus this particular key swaps A with B, C with D, E
+with F, and so on. For instance, CAT maps to DBS: C goes to D, A to B, and T to S. Each swap
+reverses itself, so for this example σ −1 = σ. This last property does not hold for every substitution
+key.
+More generally, a cycle (0 2 4) means 0 7→ 2, 2 7→ 4, 4 7→ 0. Its inverse is (0 4 2). This is an
+additional explanatory example, not a separate course definition.
+
+
+
+
+                                                   6
+MATH6321 | Mathematical Cryptography                                                     Chapter 1.1–1.4
+
+
+
+4.4   Example 1.6: why there are 26! keys
+
+To form a permutation, choose a distinct output for each letter. There are 26 possibilities for the
+image of A; once chosen, 25 remain for B; then 24 for C; and so forth. By the multiplication
+principle, the number is
+                |S26 | = 26 · 25 · 24 · · · 2 · 1 = 26! = 403291461126605635584000000.
+The exclamation mark here means factorial, not emphasis. For comparison, 4! = 4 · 3 · 2 · 1 = 24.
+A very large key space stops simple exhaustive search from being feasible by hand, but does not by
+itself establish security.
+
+
+4.5   Why statistics defeat a huge key space
+
+English is not uniform: E appears more often than Z, and common letter patterns (such as TH,
+HE, ING) recur. A fixed permutation relabels letters but does not change how many times each
+underlying letter occurs. If a plaintext contains 18 E’s and σ(E) = Q, the ciphertext contains 18
+Q’s originating from those E’s. Thus the overall multiset of 26 letter counts is preserved, just in a
+different order.
+The lecture notes give the often-used ordering ETAOINSHRDLU for frequent English letters and ap-
+proximately 12.7% for E. These values are typical references, not guaranteed percentages in every
+message. We can infer likely substitutions by comparing ciphertext frequencies to ordinary English,
+then checking whether common words make sense.
+
+
+4.6   How to perform a frequency attack, step by step
+
+  1. Count the occurrence of each ciphertext letter. Divide by the message’s number of letters to
+     obtain its relative frequency.
+  2. Identify the most common ciphertext symbols. Hypothesise that one might correspond to E
+     or T.
+  3. Examine short recurrent ciphertext words and common patterns (e.g. a three-letter word
+     might be THE).
+  4. Substitute guessed plaintext letters and see if fragments of grammatical English appear.
+  5. Refine the guesses, never assigning two different plaintext letters to a single ciphertext letter.
+  6. Once a consistent full or partial mapping is found, decrypt and check the result.
+
+   Example 1.7 in the lecture notes: the key clues
+
+   The lecture ciphertext has F appearing 28 times and S appearing 25 times. Hypothesise that F
+   encrypts E and S encrypts T. The recurring ciphertext word SGF then partially decodes as TGE.
+   A plausible English word is THE, suggesting G encrypts H. Therefore S 7→ T , G 7→ H, F 7→ E
+   in the ciphertext-to-plaintext direction. Continue checking other words until meaningful text
+   emerges. The decrypted passage explains that, in monoalphabetic substitution, like plaintext
+   letters always become like ciphertext letters and letter frequencies are preserved.
+
+
+4.7   Exercise 1.8 — complete solution
+
+Question: Why should Alice stop using the word LIKE so often if she wants to use a monoalpha-
+betic substitution cipher to communicate with Bob?
+
+
+                                                  7
+MATH6321 | Mathematical Cryptography                                                           Chapter 1.1–1.4
+
+
+
+    Model answer
+    1. In monoalphabetic substitution, one fixed permutation is applied to every occurrence of
+    a plaintext letter.
+    2. Therefore every occurrence of a whole plaintext word such as LIKE becomes exactly the
+    same ciphertext pattern.
+    3. A conspicuously repeated four-letter ciphertext word provides an attacker with strong
+    clues about the original word, its repeated positions, and ultimately the letter mapping.
+    4. If the attacker guesses the repeated word correctly, they can infer four substitution corre-
+    spondences and use them to decode other words.
+    Conclusion: Repeatedly saying LIKE exposes a recognisable repetition and makes frequency
+    and pattern analysis easier. It weakens the secrecy of Alice’s substitution cipher.
+
+    A key distinction
+
+    Monoalphabetic means one fixed replacement rule throughout the message. It does not
+    mean one-character keys, and it does not mean simply shifting letters as in Caesar. Arbi-
+    trary substitutions and Caesar shifts are both monoalphabetic because each plaintext symbol
+    consistently becomes one particular ciphertext symbol.
+
+
+
+5     1.3 The Vigenère cipher: What would secret Victorian lovers
+      do?
+
+5.1    Motivation: change the shift with position
+
+To reduce the obvious statistical weakness of a fixed substitution, Vigenère applies different Caesar
+shifts at different positions. It is a polyalphabetic substitution cipher. Unlike monoalphabetic sub-
+stitution, the same plaintext letter may encrypt to different ciphertext letters because its position
+determines the shift.
+
+
+5.2    Definition 1.9 and the indexing rule
+
+Choose a key vector k = (k1 , . . . , kn ) ∈ {0, . . . , 25}n . The positive integer n is the key length. Apply
+k1 to the first letter, k2 to the second, up to kn to the nth, and then repeat k1 , k2 , . . ..
+The lecture notes write the encryption/decryption using the key index modulo n. To avoid the
+possible indexing ambiguity when positions begin at 1, an explicit form is
+
+           ci ≡ mi + k1+((i−1) mod n)    (mod 26),        mi ≡ ci − k1+((i−1) mod n)    (mod 26).
+
+For example with n = 3, the sequence of key indices is 1, 2, 3, 1, 2, 3, . . .. Both the message arithmetic
+and the index cycling use modular arithmetic, but with different moduli: 26 for alphabet letters
+and n for the key position.
+
+
+5.3    Worked example: HELLO with key (1, 2)
+
+                                   Position          1    2    3    4    5
+                                   Plaintext         H    E   L     L    O
+                                   Number mi         7    4   11    11   14
+                                   Repeated key      1    2    1     2    1
+                                   Cipher number     8    6   12    13   15
+                                   Cipher letter     I    G   M     N    P
+
+
+                                                      8
+MATH6321 | Mathematical Cryptography                                                         Chapter 1.1–1.4
+
+
+
+Thus HELLO 7→ IGMNP . Notice that the two occurrences of L become M and N. This cannot happen
+under a fixed one-to-one substitution, and is the distinctive benefit of rotating shifts.
+
+
+5.4   Using a keyword: Example 1.13
+
+To make a long tuple of numbers easier to remember, convert a keyword to numerical values.
+The course’s keyword BOB corresponds to k = (1, 14, 1), of key length 3. The shifts are then
+1, 14, 1, 1, 14, 1, . . ., repeated for the complete message.
+
+   Encrypt CAT with keyword BOB
+
+   Convert the plaintext: (2, 0, 19). Convert the keyword: (1, 14, 1). Add component-wise mod
+   26: (2+1, 0+14, 19+1) = (3, 14, 20). Translate to letters: 3 = D, 14 = O, 20 = U . Therefore
+
+                                              CAT 7−→ DOU.
+
+   To decrypt, subtract the same numerical key: (3, 14, 20) − (1, 14, 1) = (2, 0, 19), returning
+   CAT.
+
+   A longer example with wrap-around: ATTACKATDAWN using LEMON
+
+   Convert keyword LEMON to (11, 4, 12, 14, 13), then repeat until every message letter has a shift.
+
+                      Plain     A   T    T    A   C       K   A   T   D   A   W    N
+                      Key       L   E    M    O   N       L   E   M   O   N   L    E
+                      Cipher    L   X    F    O   P       V   E   F   R   N   H    R
+
+   The ciphertext is LXFOPVEFRNHR . For instance, position 4 gives A = 0, key O = 14, hence
+   0+14 = 14 = O. At position 11, W = 22 with key L = 11, so 22+11 = 33 ≡ 7 (mod 26) = H.
+   This demonstrates wrap-around in a repeating-key cipher.
+
+
+5.5   Exercise 1.10 — prove Caesar is a special case
+
+   Complete proof
+
+   Set the Vigenère key length to n = 1. The key contains only k1 , and the repeated key
+   sequence is k1 , k1 , k1 , . . .. Every plaintext position therefore uses the same shift. The Vigenère
+   encryption rule becomes ci ≡ mi + k1 (mod 26). Put k = k1 . This is exactly the Caesar rule
+   ci ≡ mi + k (mod 26), and its decryption rule likewise becomes mi ≡ ci − k (mod 26). Hence
+   Caesar is Vigenère with key length 1. □
+
+
+5.6   Why simple overall frequency analysis becomes unreliable
+
+Because multiple shifts are interleaved, one plaintext E can appear as several ciphertext symbols,
+and one ciphertext symbol can come from different plaintext letters. Thus the overall ciphertext
+frequency profile may look much flatter than that of ordinary English. However, one should not
+conclude that Vigenère is secure: if the keyword repeats, the resulting positional structure can be
+detected.
+For instance, with key (1, 2), E at an odd position becomes F, while E at an even position becomes
+G. The same original letter no longer corresponds to one ciphertext letter globally, but it does con-
+sistently correspond to one ciphertext letter within each fixed key position. This gives cryptanalysts
+
+
+                                                      9
+MATH6321 | Mathematical Cryptography                                                     Chapter 1.1–1.4
+
+
+
+a route forward after learning the key length.
+
+
+5.7   The Kasiski test: where repeating keys leak information
+
+Friedrich Kasiski’s observation, as described in the course, is that if the same plaintext sequence
+occurs twice and happens to line up with the same portion of the repeated key, its ciphertext also
+repeats. This typically happens when the distance between occurrences is a multiple of the key
+length n. We can therefore search ciphertext for repeated groups (often three consecutive letters,
+called trigrams), measure the distance between their occurrences, and factor those distances to
+identify likely divisors.
+
+   Conceptual example: repeated THE with key (1, 2)
+
+   The course gives the input THE THE THE THE, encrypted by the alternating key (1, 2). Ignore
+   the spaces when advancing key positions. The output is UJF VIG UJF VIG. The first and third
+   occurrences of THE share the key phase (1, 2, 1), producing UJF; the second and fourth share
+   the phase (2, 1, 2), producing VIG. Therefore repeated ciphertext groups suggest a periodic
+   key.
+
+
+5.8   Kasiski test: a calculation you can reproduce
+
+  1. Remove or ignore spaces when numbering ciphertext letters, and keep one consistent conven-
+     tion (e.g. count first letter as position 1).
+
+  2. Scan for repeated trigrams or longer chunks such as ABC at positions p and q.
+
+  3. Compute the distance d = q − p.
+
+  4. Factor d into divisors or prime factors.
+
+  5. Repeat for numerous trigrams and look for recurring factors across the distances. A common
+     factor n is a plausible key length.
+
+  6. Test the proposed key length rather than treating it as a proof: repetitions can happen by
+     chance, and repeated plaintext portions may align with differing phases.
+
+   An illustrative distance-factorisation example
+
+   Suppose ciphertext repeats occur 21, 84 and 98 letters apart. Factor them: 21 = 3 · 7,
+   84 = 22 · 3 · 7, and 98 = 2 · 72 . The number 7 divides all three; it is therefore a strong
+   candidate for the key length. It is not automatically the actual length: one must compare
+   other repeated strings and, ultimately, see whether the resulting key hypothesis decrypts
+   sensibly.
+
+
+5.9   Example 1.15: analysing the actual lecture table
+
+The lecture’s long ciphertext has repeated trigrams with these distances (among others): DLR: 21,
+GDL: 21, MSW: 98, PCD: 84, VMS: 98, VWP: 84, WPC: 84, and ZHZ: 21. The important factorisations are
+21 = 3 · 7, 98 = 2 · 72 , and 84 = 22 · 3 · 7. Hence the common factor 7 repeatedly appears and n = 7 is
+plausible. Other apparent repeats have distances 141, 35, 16 and 13; they need not all fit the same
+pattern because repeated ciphertext fragments can arise accidentally. The original lecture selects
+ n = 7 as a likely length and moves to more refined attacks in later sections.
+
+
+
+                                                  10
+MATH6321 | Mathematical Cryptography                                                               Chapter 1.1–1.4
+
+
+
+    Do not overclaim what the Kasiski test proves
+
+    Repeated trigrams do not guarantee that the distance is divisible by the true key length. Two
+    different plaintext trigrams can coincidentally encrypt to the same three ciphertext letters.
+    Conversely, repeated plaintext might be encrypted differently if it starts in a different key
+    phase. Kasiski offers evidence and candidate lengths, not a deterministic proof.
+
+
+5.10     Extra practice: a Kasiski-style question
+
+Question. A ciphertext contains repeated chunks separated by 30, 45 and 75 letters. Suggest
+candidate key lengths.
+Solution. 30 = 2 · 3 · 5, 45 = 32 · 5, 75 = 3 · 52 . Common positive divisors are 1, 3, 5 and 15.
+Candidate lengths include 3, 5 and 15; no single value is forced. Other evidence is needed to choose
+among them.
+
+
+6      1.4 The One Time Pad: What would the president do?
+
+6.1    Motivation: remove the periodic key
+
+The Vigenère cipher repeats a shorter key. That repetition allows attacks such as Kasiski’s. One
+Time Pad (OTP) keeps the underlying addition modulo 26 but chooses a fresh independent key
+value for every plaintext position, so the key has exactly the same length as the message and does
+not repeat. For perfect secrecy, the whole key must be selected uniformly at random and kept
+secret.
+
+
+6.2    Definition 1.16
+
+For a message of length t, write m = (m1 , . . . , mt ) and key k = (k1 , . . . , kt ) ∈ {0, . . . , 25}t . Encrypt
+and decrypt position-wise:
+
+                  ci ≡ mi + ki     (mod 26),        mi ≡ ci − ki     (mod 26)      (1 ≤ i ≤ t).
+
+Mathematically, the operation is almost identical to Vigenère. The crucial distinctions are key
+length, fresh random generation, and single use. Merely choosing a long memorable phrase is not
+equivalent to choosing a uniform random pad.
+
+
+6.3    Complete worked encryption example
+
+    Encrypt CAT using a three-letter pad DOG
+
+    Plaintext CAT becomes (2, 0, 19). The pad DOG becomes (3, 14, 6). Add the coordinates modulo
+    26:
+                                 c1 ≡ 2 + 3 = 5 (mod 26)       ⇒ F,
+                                    c2 ≡ 0 + 14 = 14      (mod 26)      ⇒ O,
+                                    c3 ≡ 19 + 6 = 25      (mod 26)      ⇒ Z.
+    Thus the ciphertext is FOZ . To decrypt, subtract (3, 14, 6) from (5, 14, 25), obtaining
+    (2, 0, 19), i.e. CAT. Important: DOG here is an illustrative chosen key, not evidence of secure
+    random-key generation.
+
+
+
+
+                                                        11
+MATH6321 | Mathematical Cryptography                                                          Chapter 1.1–1.4
+
+
+
+6.4   What does uniformly random mean?
+
+For each position, every key letter value 0, 1, . . . , 25 must be equally likely (probability 1/26), and
+positions must have the appropriate independent joint distribution. Equivalently, for a length-t pad,
+each of the 26t possible key strings must have probability 26−t . There must be no bias such as “E
+is more likely than Z” and no predictable patterns. Uniformity is central to the security argument.
+
+
+6.5   Example 1.17: why the same ciphertext can mean anything
+
+The lecture considers the ciphertext AAA. Could its plaintext have been CAT? Yes. The required key
+is obtained from ki ≡ ci − mi (mod 26). Since AAA is (0, 0, 0) and CAT is (2, 0, 19), the corresponding
+key is (−2, 0, −19) ≡ (24, 0, 7), i.e. YAH.
+Could the plaintext instead have been DOG? Yes. DOG is (3, 14, 6), so the required key is (−3, −14, −6) ≡
+(23, 12, 20), i.e. XMU. Both three-letter keys are equally likely under a uniformly chosen pad. In fact,
+every possible three-letter plaintext gives a unique compatible three-letter key. The ciphertext alone
+cannot favour one message over another when proper OTP assumptions hold.
+
+
+6.6   A full mathematical proof of perfect secrecy
+
+The lecture gives the core intuitive argument. The following formalisation is an additional expansion
+to make that reasoning precise.
+Fix any message length t. Let M be the random plaintext, K the independent uniformly distributed
+pad, and C = M + K (mod 26) (component-wise). Fix any possible plaintext m and ciphertext c
+of length t. There is exactly one key that transforms m into c:
+
+                                         k ≡ c − m (mod 26).
+
+Because the key is uniform, the conditional probability of this key is 1/26t , irrespective of which m
+or c we choose. Therefore
+                                   Pr(C = c | M = m) = 26−t .
+Now average across possible plaintexts, using their prior probabilities:
+
+                            Pr(C = c | M = m′ ) Pr(M = m′ ) = 26−t             Pr(M = m′ ) = 26−t .
+                       X                                                  X
+         Pr(C = c) =
+                       m′                                                 m′
+
+Assuming Pr(M = m) > 0, Bayes’ rule gives
+                            Pr(C = c | M = m) Pr(M = m)   26−t Pr(M = m)
+   Pr(M = m | C = c) =                                  =                = Pr(M = m) .
+                                       Pr(C = c)                26−t
+Interpretation: seeing the ciphertext does not change the probability assigned to any plaintext.
+This is the definition of perfect secrecy. Importantly, the result does not claim all plaintexts were
+equally likely beforehand; it says the ciphertext does not change their existing probabilities. The
+conditions on random, independent, secret, never-reused keys are essential.
+
+
+6.7   Why you must never reuse the One Time Pad
+
+Suppose the same pad k encrypts two plaintexts m and m′ . At any fixed position i,
+
+                        ci ≡ mi + ki    (mod 26),        c′i ≡ m′i + ki   (mod 26).
+
+Subtract the equations:
+                              ci − c′i ≡ (mi + ki ) − (m′i + ki )   (mod 26)
+                                       ≡ mi − m′i   (mod 26).
+
+                                                    12
+MATH6321 | Mathematical Cryptography                                                    Chapter 1.1–1.4
+
+
+
+The pad cancels completely:
+                                   ci − c′i ≡ mi − m′i   (mod 26).
+An observer can compute the difference between the two secret messages using only the two visi-
+ble ciphertexts. This leaks information and destroys the perfect-secrecy guarantee for the pair of
+messages.
+
+   Numerical example of key reuse
+
+   Consider two one-letter plaintexts m = 2 (C) and m′ = 5 (F), both encrypted with key k = 7
+   (H). Then c = 2+7 = 9 (J) and c′ = 5+7 = 12 (M). An eavesdropper subtracts the ciphertext
+   values: 9 − 12 = −3 ≡ 23 (mod 26). The same difference appears for the hidden plaintexts:
+   2 − 5 = −3 ≡ 23 (mod 26). The attacker has learned a relation between plaintexts, even
+   though neither individual plaintext was directly given.
+
+
+6.8    Binary version and the illustration in the original notes
+
+The lecture shows pictures encrypted using a common random bitstring. In the binary case, we
+work modulo 2. Addition modulo 2 is XOR: 0 ⊕ 0 = 0, 0 ⊕ 1 = 1, 1 ⊕ 0 = 1, and 1 ⊕ 1 = 0. Encrypt
+C = M ⊕ K and C ′ = M ′ ⊕ K. Then
+
+                            C ⊕ C ′ = (M ⊕ K) ⊕ (M ′ ⊕ K) = M ⊕ M ′ ,
+
+since K ⊕ K = 0. In the figure on PDF page 11 / printed page 8, the two ciphertext pictures
+combine to reveal a visual mixture of their original underlying pictures. The calculation above is
+the algebraic reason for that demonstration.
+
+
+6.9    The three practical disadvantages in the lecture notes
+
+  1. Key length: To encrypt t alphabet letters, the pad must itself contain t independent random
+     alphabet values. Distributing as much secret key material as message data is expensive and
+     cumbersome.
+
+  2. True randomness: Perfect secrecy relies on uniformly random keys. Human-chosen phrases,
+     memorable patterns and biased selection do not meet this requirement. Good random gener-
+     ation matters.
+
+  3. One-time use: The pad can never be reused across messages; otherwise subtraction cancels
+     the pad and reveals plaintext relationships.
+
+The lecture also recounts historical One Time Pad use in high-level United States–USSR communi-
+cations, with physically distributed key material designed to be destroyed after use. This illustrates
+the real-world difficulty of distributing and handling extremely long secret keys.
+
+
+6.10    A proof question: why does OTP decryption work?
+
+   Correctness proof
+
+   Let m = (m1 , . . . , mt ) be any message and k its pad. At each position, encryption gives
+   ci ≡ mi + ki (mod 26). Apply decryption: dk (c)i ≡ ci − ki ≡ (mi + ki ) − ki ≡ mi (mod 26).
+   This holds independently for every i = 1, . . . , t, so the entire recovered vector equals m.
+   Therefore dk ◦ ek = id for messages of the specified length. □
+
+
+
+                                                 13
+MATH6321 | Mathematical Cryptography                                                             Chapter 1.1–1.4
+
+
+
+    Perfect secrecy is not the same as message authentication
+
+    The secrecy statement says the ciphertext does not reveal the plaintext under ideal assump-
+    tions. It does not say ciphertext cannot be changed in transit or that the receiver can verify
+    who sent it. Authentication/integrity are separate security goals. This distinction is addi-
+    tional context beyond the immediate course exposition.
+
+
+
+7     Comparing the four ciphers
+
+ Cipher                 Key                           Encryption                 Main security problem
+
+ Caesar                 A single shift k              ci = mi + k (mod 26)       Only 26 possible shifts: brute
+                                                                                 force.
+ Monoalphabetic         A fixed permutation           ci = σ(mi )                English frequencies/patterns
+ substitution           σ ∈ S26                                                  persist.
+ Vigenère               A repeating          vector   ci      =        mi    +   Repeating key creates peri-
+                        (k1 , . . . , kn )            k1+((i−1) mod n)           odic structure; Kasiski test.
+                                                      (mod 26)
+ One Time Pad           A fresh uniform ran-          ci = mi + ki (mod 26)      Ideal secrecy but onerous key
+                        dom key of message                                       distribution; reuse destroys
+                        length                                                   guarantee.
+
+
+
+8     Exam-style questions and fully worked solutions
+
+8.1    Question A: modular arithmetic and Caesar (8 marks, illustrative)
+
+Question. (a) Compute −17 mod 26 (2). (b) Encrypt QUIZ using Caesar key 7 (4). (c) Explain
+how to decrypt the output (2).
+Solution. (a) −17 + 26 = 9, so the remainder is 9. (b) QUIZ is (16, 20, 8, 25). Add (7, 7, 7, 7) to
+get (23, 27, 15, 32), reduce to (23, 1, 15, 6), then translate to XBPG. (c) Apply m ≡ c − 7 (mod 26) to
+each ciphertext letter, reversing the shift. This returns QUIZ.
+
+
+8.2    Question B: permutations (8 marks, illustrative)
+
+Question. Suppose σ = (0 2 4)(1 3) and all other numbers from 5 to 25 are fixed. Encrypt the
+three-letter plaintext ABC; describe decryption.
+Solution. Here 0 7→ 2, 1 7→ 3, 2 7→ 4; hence (0, 1, 2) 7→ (2, 3, 4) and ABC becomes CDE. Decryption
+uses σ −1 = (0 4 2)(1 3) (other points still fixed). Then 2 7→ 0, 3 7→ 1, 4 7→ 2, recovering ABC.
+
+
+8.3    Question C: Vigenère (10 marks, illustrative)
+
+Question. Encrypt MATH with keyword KEY, and decrypt to check.
+Solution. Plaintext (12, 0, 19, 7). Keyword KEY gives (10, 4, 24), repeating to (10, 4, 24, 10). Add:
+(22, 4, 43, 17) ≡ (22, 4, 17, 17), giving WERR. Subtract the repeated key: (22 − 10, 4 − 4, 17 − 24, 17 −
+10) = (12, 0, −7, 7) ≡ (12, 0, 19, 7), returning MATH.
+
+
+
+
+                                                        14
+MATH6321 | Mathematical Cryptography                                                  Chapter 1.1–1.4
+
+
+
+8.4    Question D: Kasiski (8 marks, illustrative)
+
+Question. Several repeated ciphertext trigrams have spacings 42, 70 and 98. What would you
+investigate?
+Solution. 42 = 2·3·7, 70 = 2·5·7, and 98 = 2·72 . Both 2 and 7 divide all three, and so do 1 and 14.
+Candidate key lengths include 2, 7 and 14. Repetitions may be coincidental, and the observed gcd
+14 is not necessarily the true period. Check other distances and whether candidate-length groupings
+produce coherent results.
+
+
+8.5    Question E: One Time Pad (12 marks, illustrative)
+
+Question. (a) State how OTP differs from Vigenère (3). (b) Prove that any specified plaintext m
+and ciphertext c of fixed length determine a unique key (4). (c) Explain why key reuse is dangerous
+(5).
+Solution. (a) Vigenère repeats a shorter key; OTP uses a message-length pad chosen uniformly at
+random and used exactly once. (b) For each position ci ≡ mi + ki (mod 26). Rearranging yields
+ki ≡ ci − mi (mod 26), which has one residue in {0, . . . , 25}. This determines every pad entry
+uniquely. (c) Encrypt m and m′ under the same key to get ci = mi + ki and c′i = m′i + ki modulo 26.
+Subtract to obtain ci − c′i ≡ mi − m′i (mod 26), eliminating the key and leaking relations between
+secret messages.
+
+
+9     Final revision checklist and formula sheet
+
+    Essential formulas to know from memory
+
+    Correctness: dk ◦ ek = idM .
+    Letter mapping: A = 0, . . . , Z = 25.
+    Caesar: ci ≡ mi + k (mod 26); mi ≡ ci − k (mod 26).
+    Substitution: ci = σ(mi ); mi = σ −1 (ci ); |S26 | = 26!.
+    Vigenère: ci ≡ mi + k1+((i−1) mod n) (mod 26), inverse by subtraction.
+    One Time Pad: ci ≡ mi + ki (mod 26) with uniformly random, independent, secret,
+    message-length and never-reused pad.
+    Key-reuse leakage: ci − c′i ≡ mi − m′i (mod 26).
+    Perfect secrecy: Pr(M = m | C = c) = Pr(M = m) under the OTP assumptions.
+
+
+    1. Can you explain each of M, C, K, ek , dk , Im(ek ), idM without looking?
+
+    2. Can you convert letters to numerical residues and back with no off-by-one errors?
+
+    3. Can you show each encryption step and correctly wrap around negative and large values?
+
+    4. Can you reproduce the correctness proof for Caesar and OTP?
+
+    5. Can you explain why a permutation must be bijective to support unique decryption?
+
+    6. Can you calculate 26! conceptually and explain why it does not imply security?
+
+    7. Can you describe letter-frequency analysis and the logic of Example 1.7?
+
+    8. Can you use a keyword as a repeating numerical Vigenère key?
+
+    9. Can you explain why repeated trigrams and their spacings suggest candidate key lengths?
+
+ 10. Can you distinguish a repeating Vigenère key from a truly random one-time pad?
+
+
+                                                   15
+MATH6321 | Mathematical Cryptography                                                Chapter 1.1–1.4
+
+
+
+ 11. Can you explain why every possible plaintext is compatible with a given OTP ciphertext?
+
+ 12. Can you prove why using the same pad twice leaks the difference between messages?
+
+
+Source and scope. Course basis: MATH6321 Mathematical Cryptography (2026/27), Dr Dan
+Fretwell, Chapter 1 introduction and Sections 1.1–1.4 (through Definition 1.16 and Example 1.17,
+original PDF pages 4–11). The expanded proofs, clarifying comments, extra examples and exam-
+style practice are teaching supplements developed for this guide; they do not imply that the extra
+questions were set by the lecturer.
+
+
+
+
+                                               16
+

@@ -1,0 +1,478 @@
+6 Chapter 1: Linear systems and their description
+
+In linear systems, we consider a machine made up of several components,
+which are connected together. We take t > 0 to be time and consider
+the evolution of the system through time. The machine has an input
+u = u(t), and output y = y(t) and the internal state of the machine is
+described by a state x = x(t), and we take u, x, y to be vector-valued
+functions of t. The state of a system is a set of variables whose values,
+together with the input and the equations describing the dynamics, will
+describe the future state and output of the system. Usually, we want to
+know how y(t) depends upon u(t). The component parts of the machine
+are represented by various linear operators. We consider a special class of
+linear systems that we can analyze by means of linear algebra. We obtain:
+• general results which enable us to classify and describe a significant
+class of linear systems, called (A, B, C, D);
+• specific methods for solving these linear systems;
+• results that are in a form that allows effective and explicit computation
+of solutions, usually using computers.
+7 Linear systems and their description
+
+Let C be the field of complex numbers, let V and W be vector spaces
+over C, so λf + µg ∈ V for all f , g ∈ V and λ, µ ∈ C. (We use C since
+the results from MATH220 about square matrices work best for C, and
+we also use some results from MATH215 complex analysis.) Time is
+t > 0. A map L : V → W is called linear if
+
+                        L(λf + µg) = λLf + µLg.
+
+The following give the basic examples with
+
+   V = W = {continuously differentiable functions f : [0, ∞) → C}.
+
+i) Differentiation Lf = df∫︁dtx; symbolised by [d/dt]; ∫︁
+ii) Integration Lf (x) = 0 f (t) dt, symbolised as [ ];
+iii) an amplifier is multiplication by a ∈ C, symbolised as [a];
+iv) Multiplication by h ∈ V , Lf (t) = h(t)f (t) symbolised as [h];
+v) Evaluation at t0 , f ↦→ f (t0 ) symbolised as [δt0 ].
+8 Summing junctions and taps
+
+  u1                u1 + u2
+            +
+
+       u2
+
+Diagram of a summing junction, to add signals
+
+   u        .         u
+
+                u
+
+
+Diagram of tap. Think of a tap as a point on an electrical circuit where
+wires are connected, so that the voltage is the same at all wires making
+the connection. Unlike a water tap or junction in a plumbing system, the
+tap does not divide the input into different outputs.
+Kirchhoff’s laws
+
+
+
+
+Kirchhoff’s law on currents: the algebraic sum of currents leaving a
+junction or node equals the algebraic sum of currents entering that node.
+(This is like a summing junction in a block diagram.)
+Kirchhoff’s law on voltages: the algebraic sum of all voltages around a
+closed path in a circuit is zero.
+(This is like the taps in a block diagram satisfy.)
+9 Amplifiers, integrators and differentiators
+
+
+
+                         u                   au
+                                  a
+ Diagram of amplifier                           The effect of the amplifier
+ is to multiply by some a ∈ C. The term amplifier is used here even when
+ 0 < a < 1, so the amplitude of the signal is decreased.
+
+                           u                  u
+                                           ∫︁
+                                  ∫︁
+
+ Diagram of integrator
+
+                              u               du/dt
+                                      d/dt
+ Diagram of differentiator
+10 Producing block diagrams
+
+
+
+
+You can produce block diagrams either by:
+(i) drawing with pen on paper, and photographing with mobile telephone;
+(ii) drawing on whiteboard, and photographing with mobile telephone;
+(iii) using tikz pictures in Latex (this is hard work);
+(iv) drawing on tablets.
+11 Block Diagrams
+
+Let V be the space of infinitely differentiable functions f : (0, ∞) → C.
+Let u ∈ V be the input, y ∈ V be the output. A diagram is a graph built
+up from vertices u, y and others chosen from
+                                               ∫︂
+                         u, y, δ0 , ⊕, ·, d/dt, , a, h
+                       {︂                              }︂
+
+
+which are connected by directed edges, drawn as arrows.
+(1) u is the input and y is the output. The vertices u and y have degree
+one; whereas all other vertices have degree two or three with one or two
+arrows pointing into the vertex, and one or two pointing out.
+(2) The graph is simple, so there are no loops based at vertices or
+multiple edges between vertices. All vertices lie on some directed path of
+consecutive arrows from u to y.
+(3) If the diagram contains a circuit, then we say that there is feedback.
+(4) If the diagram does not contain a circuit, then the system is ‘open
+loop’ or ‘straight through’.
+12 Open loop system
+
+We can build up more complicated systems as in
+                             ∫︂
+                       y = 3 u + 2u ′ + 6u.
+
+
+                 u               3u                3 u
+                                                    ∫︁
+                         3
+                                        ∫︁
+
+
+         u
+
+                 u               2u               2du/dt
+             .           2            d/dt                 +
+
+         u
+
+    u                u                       6u                y
+             .               6                             +
+13 Feedback
+
+
+[See video: V1 feedback block diagram]
+Open loop Here the input u is subject to linear operations and produces
+an output y. For example
+
+                         y(t) = atu(t) + u ′′ (t).
+
+Some machines are open loop, for instance rockets, or primitive turbines.
+Closed loop or feedback systems Here we take the input, subject it to
+linear operations, and also take the output, feed it back into the system,
+apply linear operations to the output and then add the modified input
+and the modified output. Most modern appliances involve some feedback
+or control systems. For instance, car engines, wind turbines involve
+feedback systems to control their rate of rotation.
+13 Positive feedback
+
+
+Example 1. (Bird populations) Let x be the number of birds on an
+isolated island, say puffins on Ailsa Craig. The birth rate of birds is
+proportional to the number of birds, and birds can come and go by flying
+to other nesting sites at rate u, so, for some k > 0,
+                             dx
+                                = kx + u.
+                             dt
+Example 2. (Turbocharger) A car engine has a turbocharger. The faster
+the engine revolves, the more exhaust it produces, so the turbine forces
+more air into the engine, so the engine goes faster and so on.
+Most practical devices incorporate some negative feedback so that they
+do not damage themselves or their users.
+15 Black’s amplifier
+
+
+
+                                           θ
+                            θy
+                                                      y
+
+       u                          u + θy                       y
+                 +                                        .
+
+Example 3. (Black’s amplifier) Let 0 < θ < 1. The output y is fed back
+into the input u, after multiplication by θ, so y = θy + u, hence
+y = u/(1 − θ) is an amplified version of the input. This will also amplify
+any noise, so is not practical by itself as an amplifier.
+In this feedback system, the summing junction is beside the input,
+whereas the tap is beside the output.
+16 Negative Feedback via air resistance
+
+
+Example. Feedback can also occur by force of nature. A cyclist pedals
+harder, hence goes faster, but the faster the cyclist goes, the greater the
+air resistance. Let m be the mass of the cyclist, v the velocity, k a
+constant of proportionality, and u the force imparted on the pedals. Then
+by Newton’s second law of motion,
+                                dv
+                            m      = −kv + u
+                                dt
+which we can express as a feedback system
+                             −k         1
+                                ∫︂        ∫︂
+                        v=         v+        u,
+                              m         m
+
+and the sign of −k/m indicates negative feedback.
+17 Negative feedback diagram
+
+
+
+
+                               −k
+                    −kv
+                                     v
+
+      u                                  .   v
+             +                 1/m
+                      ∫︁
+18 Matrix amplifier
+
+
+
+
+                              U                BU
+                                       B
+Diagram of matrix amplifier
+The number of columns of the matrix B equals the number of rows of U,
+so that BU is well defined. We can use summing junctions, taps,
+differentiators and integrators with vector inputs. So we can form block
+diagrams with vector inputs. In this way, we can deal with multiple
+inputs and multiple outputs.
+19 Linear differential operators
+
+
+ Let t be the independent variable. By combining amplifiers, summing
+ junctions and differentiators, we can construct linear differential operators
+
+                              d nf            d n−1 f
+            Lf (t) = an (t)        + an−1 (t)         + · · · + a0 (t)f (t);
+                              dt n            dt n−1
+ the number of derivatives n is the order of L; the aj (t) are the coefficient
+ (functions). When the aj are constants, we talk about a linear differential
+ operator with constant coefficients. A linear equation of order n is
+
+                     d nf            d n−1 f
+            an (t)        + an−1 (t)         + · · · + a0 (t)f (t) = u(t),
+                     dt n            dt n−1
+ where an (t), . . . , a0 (t), u(t) are given and f (t) is to be found.
+20 Differential equations as feedback systems
+
+Proposition
+The differential equation
+
+    an y (n) (t) + · · · + a0 y = bm u (m) + bm−1 u (m−1) (t) + · · · + b0 u(t)
+
+with constant coefficients can be realized as a feedback system with
+input u and output y involving taps, amplifiers, summing junction,
+integrators and differentiations.
+
+Proof. When an ̸= 0, we integrate n times and divide by an to get
+
+       an−1                  a0               bm                              b0
+              ∫︂                  ∫︂ (n)           ∫︂ (n)                          ∫︂ (n)
+  y =−             y − ··· −               y+               u   (m)
+                                                                      + ··· +               u.
+        an                   an               an                              an
+Then it is straightforward to realize the system by introducing an
+intermediate state x via x = Bu, where
+Input operator and feedback loop
+
+
+
+
+                                    A
+
+
+
+       u                x                       y
+                  B         +
+                                   ∫︁ (n)   .
+21 Input operator B
+
+
+                                     bm d m u        b0
+                          x = Bu =            + ··· + u
+                                     an dt m         an
+
+               bm             d           ...        d
+               an             dt                     dt
+      ..                                                  ..
+       .                                                   .
+           .             b2          d          d
+                                                          +
+                         an          dt         dt
+
+
+
+           .   b1                         d
+                                                          +
+               an                         dt
+
+
+  u        .        b0                                         x
+                    an                                    +
+22 Feedback loop with integrations
+
+
+                  an−1                     a0
+                            ∫︂                   ∫︂ (n)        ∫︂ (n)
+             y =−                y − ··· −                y+            x.
+                   an                      an
+
+                    −an−1           d                     d
+                     an             dt         ...        dt
+        ..                                                              ..
+         .                                                               .
+       +            −a1                   d                                  .
+                    an                    dt
+
+
+
+       +                  −a0                                                .
+                          an
+
+
+
+   x                                                                             y
+       +
+                                    ...                                      .
+               ∫︁                                         ∫︁
+23 Damped harmonic oscillator
+
+Damped harmonic oscillators are important, because they (i) arise in
+various physical and electrical systems; (ii) exhibit the effects that
+describe more general linear systems. So this example will reappear.
+Let t be time and y displacement from rest of a mass on a spring. The
+velocity is y ′ and acceleration y ′′ , the mass is driven by an external
+driving force u(t). The equation is
+
+                           y ′′ + βy ′ + γy = u
+
+where β and γ are constants; usually γ > 0 and β ≥ 0. This models the
+suspension of a car moving along a road. Here u(t) represents the force
+imparted on the car by the road; the suspension involves a spring which
+gives a restoring force −γy, while the shock absorbers give a damping
+force −βy ′ . We can write this as a feedback system, using the formula
+                             ∫︂        ∫︂ ∫︂    ∫︂ ∫︂
+                      y = −β y − γ           y+       u.
+24 Harmonic oscillator as a feedback system
+
+
+
+                            ∫︁
+                                      −γ
+
+
+
+
+                   +             −β           ·
+
+
+
+   u     ∫︁                      ∫︁               y
+                   +                          ·
+25 Matrix form of the damped harmonic oscillator
+
+We often choose input u(t) = e iωt = cos(ωt) + i sin(ωt), with angular
+frequency ω.
+We introduce a new state variable v, the velocity, so y ′ = v. Then we
+have a pair of equations y ′ = v and v ′ = −βv − γy + u. We put these
+together in a matrix equation
+
+                                   y          0
+                                 [︃ ]︃      [︃ ]︃
+                             X=        ,B =
+                                   v          1
+
+                                 0  1
+                                  [︃        ]︃
+                             A=
+                                −γ −β
+so the matrix form of the differential equation is
+                             dX
+                                = AX + Bu.
+                             dt
+26 Reduction of order
+
+[see video: V3 reduction of order]
+Lemma
+The linear differential equation
+
+             d ny            d n−1 y
+                  + an−1 (t)         + · · · + a0 (t)y(t) = u(t),
+             dt n            dt n−1
+may be expressed as the matrix system
+                              dX
+                                 = AX + Bu
+                              dt
+where X is (n × 1), A is (n × n) and B is (n × 1).
+
+Thus we replace a nth order differential equation with one independent
+variable with a first order differential equation with a (n × 1) vector
+independent variable. Let
+27 Proof of reduction of order
+
+
+                                      y       0
+                                  ⎡        ⎤ ⎡ ⎤
+                           ⎢         ⎥y′     ⎢0⎥
+                      X =⎢           ⎥ , B = ⎢ .. ⎥
+                                      ..
+                           ⎢         ⎥       ⎢ ⎥
+                           ⎣         ⎦ .     ⎣.⎦
+                            y (n−1)           1
+                         0       1       0
+                       ⎡                             ⎤
+                                              ...
+                                               .. ⎥
+                       ⎢ 0       0       1         . ⎥
+                       ⎢
+                     A=⎢
+                       ⎢ ..     ..      ..     .. ⎥
+                                                     ⎥
+                       ⎣ .         .       .       . ⎦
+                        −a0 −a1 . . . −an−1
+so the differential equation is
+                              dX
+                                 = AX + Bu.
+                              dt
+28 Constant coefficient case
+
+
+
+
+The advantages are that first order differential equations are easier to
+solve than nth order equation, and in this case, we can use linear algebra
+on the matrix A; see the discussion on frame 52 below. If the aj are
+constant, or equivalently A is constant, then the system is said to have
+constant coefficients, and the differential equation can be expressed as
+the feedback system               ∫︂         ∫︂
+                          X =A      X +B     U.
+29 Matrix form of ODE
+
+
+
+                                 ∫︂          ∫︂
+                          X =A        X +B        U
+
+which may be represented as a feedback system.
+
+                                             A
+                             AX
+                                                                   X
+  U              BU        AX + BU                         (AX + BU)       X
+                                                      ∫︁
+           B          +                                                .
+                                             ∫︁
+30 Companion matrix
+
+
+
+Definition (Companion matrix)
+Let aj ∈ C for j = 0, . . . , n − 1. Then the (n × n) matrix
+
+                                 0     1     0
+                              ⎡                         ⎤
+                                                  ...
+                                                  .. ⎥
+                              ⎢ 0      0     1        . ⎥
+                              ⎢
+                    Ac = ⎢ .           .    .     .
+                                 .     .      .     .
+                              ⎢                         ⎥
+                              ⎣ .      .        .     . ⎦
+                                                        ⎥
+
+                                −a0 −a1 . . . −an−1
+
+is called a companion matrix (as in frame 27; note the order and signs of
+the aj .)
+

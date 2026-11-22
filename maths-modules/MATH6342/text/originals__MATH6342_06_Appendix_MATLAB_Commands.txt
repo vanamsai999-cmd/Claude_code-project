@@ -1,0 +1,103 @@
+219 Appendix: MATLAB commands for arithmetic
+
+
+>> x=3, t=2 [this assigns values x = 3 and t = 2
+>>x*t [multiply x and t]
+>>x+t [add x and t]
+>>x/t [divide x by t]
+>> xˆ(-1.5) [raises x to the power −1.5]
+>>2*((x+t)ˆ 3) [computes 2(x + t)3 ]
+>> pi [π area of disc of unit radius]
+>>j [i complex number]
+>> format rational [gives fractions instead of decimals.]
+>> format long [gives many decimal places]
+>> abs (z) [computes the modulus (absolute value) of complex z]
+>> angle (z) [computes the argument of the complex number z]
+>>exp (3); [creates e 3 ]
+>>syms x [introduces algebraic variable x]
+220 Appendix: MATLAB commands for matrices
+
+>>A=[5,7; 9,-2], B=[1,2,3;4,5,6] builds the matrices
+
+                        5 7                 1 2 3
+                      [︃       ]︃         [︃      ]︃
+                  A=              , B=
+                        9 −2                4 5 6
+
+>>inv(A) [computes the inverse matrix of A]
+>>det(A) [computes the determinant of A]
+>> trace(A) [computes the trace of A]
+>>B’ [computes the adjoint (conjugate transpose) B ′ of B]
+>> rref(A) [finds the reduced echelon form of A]
+>> rank(A) [finds the rank of A]
+>>poly(A) [finds the coefficients of the characteristic polynomial of A]
+>>eig(A) [finds the eigenvalues of square matrix A, in a list]
+>> jordan(A) [finds the Jordan canonical form of A]
+>>[W,D]=eig(A) [gives a matrix W with columns that are eigenvectors
+of A and diagonal matrix D with eigenvalues as entries]
+>> Aˆ︁2 [computes the matrix product A2 ]
+221 Appendix: MATLAB commands for matrices,
+continued
+
+>>A.ˆ︁2 [creates matrix by squaring each entry of A; note dot]
+>>A*B [calculates the matrix product AB]
+>>expm(A) [calculates the matrix exponential of A]
+>>exp(A) [calculates the matrix formed by taking the exponential of
+each entry of A]
+>> sym([1,2;3,4]) [introduces the matrix
+
+                                     5 7
+                                  [︃      ]︃
+                             A=
+                                     9 −2
+
+so that eig(A) gives the eigenvalues as surds (roots)]
+>>Q=lyap(A,P) [for positive definite P, and A, solves AQ + QA′ = −P]
+>> X=lyap(A,B,C) [solves AX + X B = −C]
+222 Appendix: MATLAB commands for algebra
+
+
+>> t=-100:0.1:100 [introduces the vector [-100, -100+0.1,. . . ,100]]
+>> y=(i*t+1).ˆ︁(-1) [creates a vector with entries y=1/(it+1); the dot
+indicates that the operations are applies to each entry at a time]
+>> plot(y) [plots the imaginary part of y versus the real part of y]
+>> [r,q]=polynomialReduce(P,Q) [polynomial long division to find
+remainder and quotient in P = Qq + r ]
+>> partfrac(1/((s + 1) ∗ (s 2 + 1)) [computes partial fractions]
+>> laplace((t2 )*exp(2*t)) [computes the Laplace transform of t 2 e 2t ]
+>> ilaplace(1/(1+s)) [computes the inverse Laplace transform]
+>> subs(G,t,s) [substitutes expression s for t in the expression G]
+>> [g,c,d]=gcd(a,b) [computes the greatest common divisor of a and b
+and expresses the gcd as ac + bd]
+223 Appendix: MATLAB commands for systems
+
+>> T=tf([1,2,3,4],[5,6,7,8]) [introduces the transfer function
+
+                               s 3 + 2s 2 + 3s + 4
+                        T =
+                              5s 3 + 6s 2 + 7s + 8
+>> pole(T) [finds the poles of rational transfer function T]
+>> zero(T) [finds the zeros of rational transfer function T]
+>> pzplot(sys) [plots poles x and zeros o of the transfer function of a
+given system]
+>> nyquist(T) [plots the Nyquist locus of a given real rational transfer
+function]
+>> bode(T) [creates the Bode pole of a real rational transfer function]
+>> sys=ss(A,B,C,B) [for specified matrices A,B,C,D, introduces the
+corresponding MIMO]
+>> tf(sys) [computes the transfer function of the specified MIMO
+system]
+224 Appendix: MATLAB commands for systems,
+concluded
+
+
+
+
+>> tf2ssm([1,2,3,4],[5,6,7,8]) [Finds (A,B,C,D) that has the
+corresponding transfer function]
+>> s=tf(’s’) [reconciles the MATLAB Laplace transform indeterminate s
+with the algebraic variable s]
+>> sys =tf(T) [converts an algebraic rational expression in s into a
+transfer function] >> S=minreal(R) [cancels zeros with poles in transfer
+function]
+

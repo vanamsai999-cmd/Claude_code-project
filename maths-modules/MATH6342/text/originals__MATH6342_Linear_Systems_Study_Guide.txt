@@ -1,0 +1,874 @@
+       MATH6342 Linear Systems
+               Engaging Summary & Revision Guide
+
+  Based on the Lancaster University 2026/27 lecture slides by Gordon Blower
+
+
+
+
+                              What this guide does
+Turns the 229-slide deck into a structured study resource: the main ideas, definitions,
+formulas, examples, stability tests, feedback-control logic, and MATLAB commands
+                are grouped by topic and explained in plain language.
+
+
+
+
+Prepared as a study summary, not a replacement for the original lecture notes.
+MATH6342 Linear Systems                                                                           Study Guide
+
+
+Contents
+Course map                                                                                                    2
+
+1 Chapter 1: Linear systems and their description                                                             2
+  1.1 What is a linear system? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      2
+  1.2 Block-diagram building blocks . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       2
+  1.3 Open loop versus feedback . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       3
+  1.4 Differential equations as feedback systems . . . . . . . . . . . . . . . . . . . . . . . . . . .        3
+  1.5 Damped harmonic oscillator: the running example . . . . . . . . . . . . . . . . . . . . . .             3
+  1.6 Reduction of order . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      3
+  1.7 Companion matrices . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        4
+
+2 Chapter 2: Solving linear systems by matrix theory                                                          4
+  2.1 Matrix foundations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      4
+  2.2 Norms and matrix estimates . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        4
+  2.3 Polynomial and analytic functions of matrices . . . . . . . . . . . . . . . . . . . . . . . . .         5
+  2.4 The standard (A, B, C, D) model . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         5
+  2.5 Solving the state equation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      5
+  2.6 Rational functions and transfer functions . . . . . . . . . . . . . . . . . . . . . . . . . . .         5
+  2.7 Realisation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     6
+
+3 Chapter 3: Laplace transforms                                                                               6
+  3.1 Definition and growth condition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       6
+  3.2 Core transform table . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      6
+  3.3 Operational rules . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     7
+  3.4 Convolution . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     7
+  3.5 Uniqueness . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      7
+  3.6 Solving differential equations with Laplace transforms . . . . . . . . . . . . . . . . . . . .          7
+  3.7 Laplace transform of the state-space model . . . . . . . . . . . . . . . . . . . . . . . . . .          7
+  3.8 Jordan form and matrix exponentials . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         8
+  3.9 Partial fractions and inverse transforms . . . . . . . . . . . . . . . . . . . . . . . . . . . .        8
+
+4 Chapter 4: Transfer functions, frequency response and stability                                             8
+  4.1 Transfer functions as input-output descriptions . . . . . . . . . . . . . . . . . . . . . . . .         8
+  4.2 Frequency response . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      8
+  4.3 Nyquist and Bode plots . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        8
+  4.4 The damped oscillator revisited . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       9
+  4.5 BIBO stability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      9
+  4.6 Eigenvalue test for stability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     9
+
+5 Chapter 5: Feedback control                                                                                 9
+  5.1 Stable polynomials and stable rational functions . . . . . . . . . . . . . . . . . . . . . . .          9
+  5.2 Simple feedback loops . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       9
+  5.3 PID controllers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    10
+  5.4 Nyquist stability criterion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    10
+  5.5 Euclidean algorithm, Bézout identity and coprime factorisation . . . . . . . . . . . . . . .          10
+  5.6 Constructing a stabilising controller . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      11
+  5.7 Well-posedness and internal stability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      11
+  5.8 Youla-style stabilisation result . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   11
+  5.9 Self-adjoint and positive definite matrices . . . . . . . . . . . . . . . . . . . . . . . . . . .      11
+  5.10 Lyapunov’s criterion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    11
+  5.11 Sylvester and Lyapunov equations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        12
+
+6 High-yield connections across the course                                                                   12
+
+
+
+                                                       1
+MATH6342 Linear Systems                        Study Guide
+
+
+7 Formula sheet                                        12
+
+8 MATLAB essentials from the appendix                  13
+
+9 Compact glossary                                     13
+
+10 How to revise this module efficiently               14
+
+
+
+
+                                           2
+MATH6342 Linear Systems                                                                          Study Guide
+
+
+Course map
+The lecture deck is organised around five linked themes:
+                       1. Describe              2. Solve using           3. Transform to
+                     linear systems             matrix theory             the s-domain
+
+
+                                                5. Feedback            4. Transfer functions
+                                                   control                 and stability
+
+   Key idea
+
+   The central theme is to move between three descriptions of the same system:
+
+        differential equation    ←→      state-space (A, B, C, D)     ←→      transfer function T (s) .
+
+   Each form is useful for a different purpose: modelling, solving, frequency analysis, or control design.
+
+
+Chapter 1: Linear systems and their description
+What is a linear system?
+A linear system is a machine or process evolving in time. It has:
+
+• an input u(t): what we apply to the system;
+
+• a state x(t): internal variables needed to predict future behaviour;
+
+• an output y(t): what we observe or measure.
+
+The slides motivate the subject using examples including wind turbines, heating systems, electrical
+networks, ECGs, vehicle suspension, epidemics, predator–prey systems, and audio filters.
+A map L : V → W is linear when
+                                         L(λf + µg) = λLf + µLg.
+Basic linear operators in the course include differentiation, integration, scalar amplification, multiplication
+by a function, and evaluation.
+
+Block-diagram building blocks
+
+ Element                Meaning
+ Summing junc-          Adds signals, e.g. u1 + u2 .
+ tion
+ Tap                    Copies the same signal into two paths; it does not split its value.
+ Amplifier              Multiplies aR signal by a scalar a, producing au.
+ Integrator             Maps u to u.
+ Differentiator         Maps u to du/dt.
+ Matrix amplifier       Maps a vector U to BU , allowing multiple inputs/outputs.
+
+   Intuition
+   A block diagram is a visual version of an equation. Following arrows tells you the order of operations.
+   A loop in the diagram means feedback; no loop means open loop.
+
+
+
+
+                                                       3
+MATH6342 Linear Systems                                                                         Study Guide
+
+
+Open loop versus feedback
+An open-loop system sends the input through linear operations to create the output. A feedback system
+sends part of the output back into the input path.
+Positive feedback reinforces changes. The notes use bird populations
+                                               dx
+                                                  = kx + u,         k > 0,
+                                               dt
+and a turbocharger as examples.
+Negative feedback opposes changes. For a cyclist with air resistance,
+                                                       dv
+                                                   m      = −kv + u,
+                                                       dt
+where −kv is the feedback term resisting motion.
+
+      Watch out
+      Feedback is not automatically “good” or “bad”. Positive feedback can cause growth; negative feedback
+      is commonly used for regulation and stability, but stability still has to be checked mathematically.
+
+
+Differential equations as feedback systems
+A linear differential operator of order n has the form
+                                               dn f            dn−1 f
+                             Lf (t) = an (t)        + an−1 (t)        + · · · + a0 (t)f (t).
+                                               dtn             dtn−1
+When the coefficients are constant, an equation such as
+                                   an y (n) + · · · + a0 y = bm u(m) + · · · + b0 u
+can be realised using taps, gains, summing junctions, integrators and differentiators.
+
+Damped harmonic oscillator: the running example
+The oscillator appears repeatedly because it shows many important phenomena in one model:
+
+                                                  y ′′ + βy ′ + γy = u.
+
+Here y is displacement, y ′ velocity, y ′′ acceleration, u(t) an external force, −γy the restoring force, and
+−βy ′ the damping force.
+Introduce v = y ′ and                                                        
+                                    y                  0  1                      0
+                                X=     ,           A=         ,              B=     .
+                                    v                 −γ −β                      1
+Then
+                                                   dX
+                                                       = AX + Bu.
+                                                    dt
+
+Reduction of order
+Any nth-order scalar linear ODE can be converted to a first-order vector system. For
+                                  y (n) + an−1 (t)y (n−1) + · · · + a0 (t)y = u(t),
+set                                                              T
+                                          X = y y ′ · · · y (n−1) .
+                                             
+
+Then X ′ = AX + Bu, where A has the familiar companion-matrix structure and B has a 1 in its final
+entry.
+
+
+                                                             4
+MATH6342 Linear Systems                                                                      Study Guide
+
+
+   Key idea
+
+   Reduction of order is a major bridge in the course: a high-order ODE becomes a first-order matrix
+   equation, allowing linear algebra to take over.
+
+
+Companion matrices
+For coefficients a0 , . . . , an−1 , the companion matrix is
+                                                                      
+                                               0     1    0   ···  0
+                                                             ..   .. 
+                                             0      0    1      .  . 
+                                       Ac =  ..
+                                                                      
+                                                   ..   ..   ..       .
+                                               .       .    .    . 0   
+                                                                      
+                                             0    ···    0    0   1 
+                                             −a0 −a1 · · · −an−2 −an−1
+
+Its characteristic polynomial is
+
+                             det(λI − Ac ) = λn + an−1 λn−1 + · · · + a1 λ + a0 .
+
+So every monic polynomial can occur as the characteristic polynomial of a matrix.
+
+   Revision / problem-solving cue
+
+   When a scalar ODE is given, practise writing the state vector X, companion matrix A, and input
+   vector B immediately. This is one of the cleanest ways to move from differential equations to linear
+   algebra.
+
+
+Chapter 2: Solving linear systems by matrix theory
+Matrix foundations
+The chapter reviews determinants, cofactors, adjugates and the characteristic polynomial
+
+                                             χA (λ) = det(λI − A).
+
+The convention is important: the course uses det(λI − A), a monic polynomial, rather than det(A − λI).
+If det(sI − A) ̸= 0, then
+                                                             adj(sI − A)
+                                        (sI − A)−1 =                     .
+                                                             det(sI − A)
+This inverse is called the resolvent of A.
+
+Norms and matrix estimates
+For z, w ∈ Cn , the standard inner product is
+                                                         n
+                                                         X
+                                              ⟨z, w⟩ =         z j wj ,
+                                                         j=1
+                                    p
+and the Euclidean norm is ∥z∥ = ⟨z, z⟩. The Cauchy–Schwarz and triangle inequalities are used to
+control the sizes of vectors and matrix solutions.
+
+
+
+
+                                                         5
+MATH6342 Linear Systems                                                                             Study Guide
+
+
+Polynomial and analytic functions of matrices
+If p is a polynomial, then p(A) is defined by substituting A for the variable. Cayley–Hamilton gives
+
+                                                   χA (A) = 0.
+
+The matrix exponential is
+                                                          t2 A2 t3 A3
+                                       etA = I + tA +          +      + ··· .
+                                                            2!    3!
+It satisfies the expected properties
+                     d tA
+                        e = AetA = etA A,           e(s+t)A = esA etA ,         (etA )−1 = e−tA .
+                     dt
+
+If A = W ∆W −1 is diagonalizable, then
+
+                                               etA = W et∆ W −1 ,
+
+so exponentiating a diagonal matrix reduces to exponentiating its eigenvalues.
+
+The standard (A, B, C, D) model
+For a SISO system,
+                               A ∈ Cn×n ,     B ∈ Cn×1 ,         C ∈ C1×n ,    D ∈ C,
+and
+                                    X ′ = AX + Bu,               y = CX + Du.
+For a MIMO system, B has k columns, C has m rows, and D ∈ Cm×k , giving k inputs and m outputs.
+
+Solving the state equation
+For constant A, continuous input U , and initial state X(0) = X0 ,
+
+   Core formula
+                                                          Z t
+                                              tA
+                                    X(t) = e X0 +               e(t−v)A BU (v) dv.
+                                                           0
+
+   Hence
+                                                   Z t
+                              Y (t) = CetA X0 +          Ce(t−v)A BU (v) dv + DU (t).
+                                                    0
+
+
+The first term is the complementary function; the integral term is a particular integral.
+
+   Intuition
+   The matrix exponential propagates the current state forward in time. The convolution-like integral
+   accumulates the effect of the input at every previous time, with e(t−v)A describing how each past
+   input contribution evolves to time t.
+
+
+Rational functions and transfer functions
+A rational function is f (s) = g(s)/h(s). It is:
+
+• proper if deg g ≤ deg h;
+
+• strictly proper if deg g < deg h.
+
+For the state-space system,
+
+
+                                                           6
+MATH6342 Linear Systems                                                                   Study Guide
+
+
+   Core formula
+
+                                      T (s) = D + C(sI − A)−1 B.
+
+For a SISO system, T (s) is proper rational and its poles can only occur at eigenvalues of A. The MIMO
+transfer function is a matrix of proper rational functions.
+
+Realisation
+Realisation means constructing an (A, B, C, D) model that has a prescribed transfer function. For a
+strictly proper rational function
+                                             γ0 + γ1 s + · · · + γn−1 sn−1
+                                T (s) =                                      ,
+                                          sn + αn−1 sn−1 + · · · + α1 s + α0
+a companion matrix provides a systematic state-space realisation with
+                                     T                             
+                    B = 0 · · · 0 1 , C = γ0 γ1 · · · γn−1 ,                     D = 0.
+A proper rational function can be handled by separating off its constant part.
+
+   Revision / problem-solving cue
+
+   A common chain of reasoning is:
+
+                                      ODE → (A, B, C, D) → T (s),
+
+   or the reverse,
+                             T (s) → companion realisation → (A, B, C, D).
+   Be comfortable moving in both directions.
+
+
+Chapter 3: Laplace transforms
+Definition and growth condition
+A function f : (0, ∞) → C is of exponential type if
+                                          |f (x)| ≤ M eβx    (x > 0)
+for some M > 0 and β ∈ R. Its Laplace transform is
+
+   Core formula
+                                                Z ∞
+                           L{f }(s) = fˆ(s) =         f (x)e−sx dx,     Re(s) > β.
+                                                 0
+
+
+
+Core transform table
+
+                              f (t)        L{f }(s)           condition / note
+                              1            1/s                Re(s) > 0
+                              tn           n!/sn+1            n∈N
+                              eat          1/(s − a)          Re(s) > a
+                              tα           Γ(α + 1)/sα+1      α > −1
+                              sin at       a/(s2 + a2 )
+                              cos at       s/(s2 + a2 )
+                              δb           e−bs               impulse at t = b
+                              H(t − b)     e−bs /s            step at t = b
+
+
+                                                       7
+MATH6342 Linear Systems                                                                       Study Guide
+
+
+Operational rules
+
+     Core formula
+
+
+                                        L{λf + µg} = λfˆ + µĝ,
+                                       L{eat f (t)}(s) = fˆ(s − a),
+                                                             d ˆ
+                                         L{tf (t)}(s) = −       f (s),
+                                                             ds
+                                          L{f ′ (t)}(s) = sfˆ(s) − f (0).
+
+Repeated differentiation gives the usual initial-condition terms for higher derivatives.
+
+Convolution
+For suitable f and g, define                          Z t
+                                       (f ∗ g)(t) =         f (t − v)g(v) dv.
+                                                       0
+Then
+                                           L{f ∗ g}(s) = fˆ(s)ĝ(s).
+This is why the integral in the state-space solution becomes a product after taking Laplace transforms.
+
+Uniqueness
+Lerch’s uniqueness theorem tells us, under the lecture assumptions, that the Laplace transform determines
+the original function. This justifies solving an equation in the s-domain and transforming back.
+
+Solving differential equations with Laplace transforms
+For a differential equation, the workflow is:
+
+1. take Laplace transforms of both sides;
+
+2. insert the initial conditions using L{f ′ } = sfˆ − f (0) and its higher-order versions;
+
+3. solve the resulting algebraic equation for ŷ(s);
+
+4. use partial fractions / transform tables to invert.
+
+Laplace transform of the state-space model
+With zero initial conditions,
+                                                sX̂ = AX̂ + B Û ,
+so
+                                            X̂ = (sI − A)−1 B Û .
+Then
+                                        Ŷ = D + C(sI − A)−1 B Û .
+                                                             
+
+Thus the state-space transfer function reappears naturally from the Laplace transform.
+
+     Key idea
+
+     This is the key conceptual payoff of Chapter 3: differentiation in time becomes multiplication by s
+     (plus initial-condition terms), so differential equations become algebraic equations.
+
+
+
+
+                                                           8
+MATH6342 Linear Systems                                                                         Study Guide
+
+
+Jordan form and matrix exponentials
+Not every matrix is diagonalizable, so the chapter introduces Jordan canonical form. A Jordan block with
+eigenvalue λ has the form
+                                               J = λI + N,
+where N is nilpotent. Then
+                                                       t2 N 2
+                                                                  
+                                     tJ     λt
+                                    e     =e  I + tN +        + ··· ,
+                                                         2!
+with a finite sum because N r = 0 for a sufficiently large r. This explains why repeated eigenvalues can
+produce polynomial factors such as teλt .
+
+Partial fractions and inverse transforms
+Strictly proper rational functions can be decomposed into simple fractions. Terms of the form
+                                                          1
+                                                      (s − λ)k
+
+correspond to
+                                                      tk−1 λt
+                                                             e .
+                                                    (k − 1)!
+This links pole locations and multiplicities directly to time-domain behaviour.
+
+
+Chapter 4: Transfer functions, frequency response and stability
+Transfer functions as input-output descriptions
+A SISO transfer function T (s) is defined by
+
+                                                 Ŷ (s) = T (s)Û (s)
+
+for zero initial conditions. The notes prove that every rational transfer function can be realised by a linear
+system assembled from the course’s block-diagram components.
+
+Frequency response
+To study sinusoidal inputs, substitute
+                                                      s = iω.
+The complex number T (iω) gives the system’s frequency response. Write
+
+                                             T (iω) = Γ(ω)eiϕ(ω) ,
+
+where
+                              Γ(ω) = |T (iω)|          and       ϕ(ω) = arg T (iω) .
+Γ is the gain (amplitude ratio) and ϕ is the phase shift.
+
+Nyquist and Bode plots
+• A Nyquist plot traces T (iω) in the complex plane as frequency varies.
+
+• A Bode plot displays gain (usually logarithmically) and phase against frequency.
+
+These plots compress dynamic behaviour into a visual frequency-domain summary.
+
+
+
+
+                                                          9
+MATH6342 Linear Systems                                                                           Study Guide
+
+
+The damped oscillator revisited
+For
+                                              y ′′ + βy ′ + γy = u,
+the denominator polynomial controls the natural response. Different values of β and γ produce different
+damping regimes. The same example is then used to discuss boundedness, marginal stability and resonance.
+
+BIBO stability
+A system is BIBO stable if every bounded input produces a bounded output. The lecture notes distinguish
+this from weaker notions where the homogeneous response might remain bounded but a resonant bounded
+input produces unbounded growth.
+
+   Watch out
+   Marginal stability is not BIBO stability. An undamped oscillator can have bounded free
+   oscillations but exhibit resonance under a bounded sinusoidal input at its natural frequency, producing
+   an unbounded output.
+
+
+Eigenvalue test for stability
+A central theorem states that if all eigenvalues of A satisfy
+
+                                                 Re(λj ) < 0,
+
+then there exist M, δ > 0 such that
+
+                                          ∥etA ∥ ≤ M e−δt ,     t ≥ 0.
+
+For bounded U , the state-space solution then remains bounded, and therefore the output is bounded.
+Hence (A, B, C, D) is BIBO stable.
+
+   Intuition
+   Eigenvalues in the open left half-plane correspond to decaying exponential factors. The strict
+   inequality matters: repeated eigenvalues on the imaginary axis can create polynomial factors such
+   as teiωt , which are unbounded.
+
+
+Chapter 5: Feedback control
+Stable polynomials and stable rational functions
+A polynomial is called stable if all its zeros lie in the open left half-plane
+
+                                         LHP = {s ∈ C : Re(s) < 0}.
+
+A necessary condition shown in the notes is that a monic real stable polynomial has all positive coefficients.
+This condition is not sufficient in general.
+A rational function is called stable if it is proper and all of its poles are in the open left half-plane.
+
+Simple feedback loops
+Let G represent the plant and −K the controller. For the simple negative-feedback loop, the closed-loop
+transfer function is
+
+
+
+
+                                                       10
+MATH6342 Linear Systems                                                                      Study Guide
+
+
+   Core formula
+
+                                           T = (I + GK)−1 G.
+
+For SISO systems this becomes
+                                                        G(s)
+                                          T (s) =                .
+                                                    1 + G(s)K(s)
+The poles of G are the open-loop poles; poles of the closed-loop T are the closed-loop poles.
+
+PID controllers
+A proportional-integral-derivative controller has
+
+                                                           b
+                                           K(s) = a +        + cs.
+                                                           s
+
+The three terms provide proportional, accumulated (integral), and rate-of-change (derivative) action. The
+lecture emphasis is that controller choice is a balance between stability and responsiveness.
+
+Nyquist stability criterion
+The chapter develops Nyquist’s criterion using the argument principle. The practical purpose is to infer
+closed-loop stability from the complex-plane behaviour of the open-loop transfer function rather than
+solving the differential equation explicitly.
+
+   Revision / problem-solving cue
+
+   When studying a feedback system, keep the hierarchy clear:
+   1. identify G and K;
+   2. form 1 + GK;
+   3. determine closed-loop poles / stability;
+   4. then examine gain, phase and responsiveness.
+
+
+Euclidean algorithm, Bézout identity and coprime factorisation
+For polynomials, the Euclidean algorithm leads to Bézout identities. The notes extend this idea to stable
+rational functions. A rational transfer function is represented as
+                                               P
+                                          G=     ,         P, Q ∈ S,
+                                               Q
+with a coprime factorisation satisfying
+
+                                   P X + QY = 1,           P, Q, X, Y ∈ S.
+
+The lecture algorithm uses the change of variable
+                                                       1
+                                                λ=
+                                                      1+s
+to convert the stable-rational problem into a polynomial problem, applies the Euclidean algorithm, and
+then converts back.
+
+
+
+
+                                                      11
+MATH6342 Linear Systems                                                                        Study Guide
+
+
+Constructing a stabilising controller
+Given G = P/Q and P X + QY = 1, choose
+
+                                                              X
+                                                    K=          .
+                                                              Y
+
+Then the four key closed-loop functions
+                                 G               K                1             GK
+                                     ,               ,                ,
+                              1 + GK          1 + GK           1 + GK         1 + GK
+are all stable. This gives an algorithmic stabilisation result for rational SISO systems.
+
+Well-posedness and internal stability
+In the standard feedback loop with reference r, disturbance d, and noise n, the internal variables are
+uniquely determined precisely when
+                                            1 + GK ̸= 0.
+The system is internally stable when every transfer function linking external inputs to internal signals is
+stable. In the SISO notation used in the slides, this means
+                                    1             G             GK           K
+                                        ,             ,              ,
+                                 1 + GK        1 + GK         1 + GK      1 + GK
+all belong to the stable rational class S.
+
+Youla-style stabilisation result
+If
+                                         G = P/Q,         P X + QY = 1,
+with all four functions in S, then
+                                                   K = X/Y
+internally stabilises the simple feedback loop. The slides note that this is the simplest case of the broader
+Youla theory.
+
+Self-adjoint and positive definite matrices
+                                         T
+For a matrix A, its adjoint is A′ = A . A self-adjoint matrix satisfies A = A′ and has real eigenvalues; it
+can be unitarily diagonalised.
+A matrix K is positive definite if K = K ′ and
+
+                                         ⟨Kz, z⟩ > 0      for every z ̸= 0.
+
+For self-adjoint K, this is equivalent to all eigenvalues being positive, and also equivalent to all leading
+principal minors being positive.
+
+Lyapunov’s criterion
+If there is a positive definite K such that
+
+                                               Q = −(A′ K + KA)
+
+is also positive definite, then all solutions of
+
+                                                    X ′ = AX
+
+
+
+                                                         12
+MATH6342 Linear Systems                                                                      Study Guide
+
+
+are bounded. The proof introduces the Lyapunov function
+
+                                           V (t) = ⟨KX(t), X(t)⟩,
+
+and shows
+                                        dV
+                                           = −⟨QX, X⟩ ≤ 0.
+                                        dt
+So V decreases and controls the norm of X.
+
+   Intuition
+   A Lyapunov function is an “energy-like” quantity. If it is positive and cannot increase with time,
+   the state cannot blow up.
+
+
+Sylvester and Lyapunov equations
+Sylvester’s equation is
+                                              AY + Y B = −C.
+It has a unique solution for every C if and only if A and −B have no common eigenvalues.
+If all eigenvalues of A and B lie in the open left half-plane, then
+                                                  Z ∞
+                                            Y =         etA CetB dt
+                                                   0
+
+is the unique solution.
+A Lyapunov equation is the special case
+
+                                              AL + LA′ = −P.
+
+If A is stable and P is positive definite, the notes give the integral solution
+                                                 Z ∞
+                                                               ′
+                                             L=       etA P etA dt,
+                                                  0
+
+which is positive definite.
+
+
+High-yield connections across the course
+
+ Idea                         Connection
+ High-order ODE               Reduce order to X ′ = AX + Bu.
+ State-space solution         Uses etA and a convolution integral.
+ Laplace transform            Converts convolution to multiplication.
+ Transfer function            T (s) = D + C(sI − A)−1 B.
+ Poles                        Related to eigenvalues of A and time-domain exponentials.
+ Left-half-plane poles        Decay in time and support stability.
+ Imaginary-axis poles         Can lead to persistent oscillation; repeated / resonant effects can create
+                              unbounded growth.
+ Feedback                     Replaces G by a closed-loop function involving 1 + GK.
+ Controller design            Move closed-loop behaviour toward stability while retaining responsiveness.
+ Lyapunov theory              Establishes boundedness / stability without explicitly solving the ODE.
+
+
+Formula sheet
+
+
+
+                                                       13
+MATH6342 Linear Systems                                                                            Study Guide
+
+
+State space                                                                L{tf } = −fˆ′ (s).
+     X ′ = AX + BU,               Y = CX + DU.                             L{f ∗ g} = fˆĝ.
+                          Z t
+      X(t) = etA X0 +            e(t−v)A BU (v) dv.         Frequency response
+                            0
+
+           T (s) = D + C(sI − A)−1 B.                                    T (iω) = Γ(ω)eiϕ(ω) .
+                                                                   Γ = |T (iω)|,     ϕ = arg T (iω).
+Matrix exponential
+                            ∞ k k
+                            X t A                           Feedback
+                  etA =                 .
+                                   k!                                             G
+                            k=0
+                                                                       Tcl =             (SISO).
+                  d tA                                                         1 + GK
+                     e = AetA .
+                  dt                                                                    b
+                                                                         KP ID = a +      + cs.
+                                                                                        s
+Laplace
+                        Z ∞                                 Lyapunov / Sylvester
+              fˆ(s) =           f (t)e−st dt.
+                        0                                                Q = −(A′ K + KA).
+               L{f ′ } = sfˆ − f (0).                                     AY + Y B = −C.
+
+
+MATLAB essentials from the appendix
+
+ Command                          Purpose
+ inv(A), det(A),                  inverse, determinant, trace
+ trace(A)
+ eig(A)                           eigenvalues
+ [W,D]=eig(A)                     eigenvectors and diagonal eigenvalue matrix
+ jordan(A)                        Jordan canonical form
+ expm(A)                          matrix exponential
+ rref(A), rank(A)                 row reduction and rank
+ poly(A)                          characteristic-polynomial coefficients
+ tf(num,den)                      create a transfer function
+ pole(T), zero(T)                 poles and zeros
+ pzplot(sys)                      pole-zero plot
+ nyquist(T)                       Nyquist plot
+ bode(T)                          Bode plot
+ ss(A,B,C,D)                      create a state-space model
+ tf(sys)                          state-space to transfer function
+ minreal(R)                       cancel pole-zero factors where appropriate
+ lyap(A,P)                        solve a Lyapunov equation in MATLAB’s convention
+ lyap(A,B,C)                      solve AX + XB = −C
+
+  Watch out
+  The appendix stresses the distinction between expm(A) (matrix exponential) and exp(A) (entrywise
+  exponential), and similarly between A^2 (matrix product A2 ) and A.^2 (square each entry).
+
+
+Compact glossary
+
+   Term                           Meaning
+   (A, B, C, D)                   Standard state-space model X ′ = AX + BU , Y = CX + DU .
+
+
+                                                         14
+MATH6342 Linear Systems                                                                            Study Guide
+
+
+   Term                     Meaning
+   BIBO                     Bounded input, bounded output stability.
+   Closed loop              System containing feedback.
+   Frequency      do-       Description in terms of ω, often with s = iω.
+   main
+   Frequency      re-       Transfer function evaluated on the imaginary axis.
+   sponse
+   Gain                     |T (iω)|.
+   JCF                      Jordan canonical form.
+   LHP                      Open left half-plane Re(s) < 0.
+   MIMO                     Multiple-input multiple-output system.
+   Nyquist plot             Complex-plane curve traced by T (iω).
+   Open loop                System without feedback.
+   Phase                    arg T (iω).
+   Resolvent                (sI − A)−1 .
+   RHP                      Open right half-plane Re(s) > 0.
+   SISO                     Single-input single-output system.
+   State-space model        Time-domain representation using state variables.
+   Transfer function        Multiplier taking Û to Ŷ under zero initial conditions.
+   Unit impulse             Dirac delta δ0 .
+
+
+How to revise this module efficiently
+1. Master the three representations: ODE, state space and transfer function.
+
+2. Memorise the core Laplace rules, especially derivatives, exponentials and convolution.
+
+3. Practise matrix exponentials: diagonalizable matrices first, then Jordan blocks.
+
+4. Link poles to behaviour: left half-plane ⇒ decay; imaginary-axis structure ⇒ oscillation / possible
+   resonance.
+
+5. Practise closed-loop algebra: simplify G/(1 + GK) and identify closed-loop poles.
+
+6. Know the stability vocabulary: BIBO, stable rational function, internal stability, Lyapunov
+   criterion.
+
+7. Use MATLAB to check, not replace, reasoning: eigenvalues, poles, Bode/Nyquist plots and
+   Lyapunov equations are excellent for verification.
+
+  One-page mental checklist
+
+  When you see a new linear-systems question, ask:
+   1. What are the input, state and output?
+   2. Can I write X ′ = AX + BU , Y = CX + DU ?
+   3. Do I need the time-domain solution, or would a Laplace transform be faster?
+   4. What is the transfer function?
+   5. Where are the poles / eigenvalues?
+   6. Is the system stable, marginal, or unstable?
+   7. If feedback is present, what is 1 + GK and where are the closed-loop poles?
+   8. If direct solving is awkward, can a Lyapunov / frequency-domain argument answer the question
+      instead?
+
+               Summary prepared from the supplied MATH6342 Linear Systems lecture slides.
+     The original deck should be consulted for full proofs, diagrams, video references, and worked details.
+
+
+                                                      15
+

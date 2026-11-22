@@ -1,0 +1,45 @@
+                                                 MATH6342 Linear Systems — A1.1(ii)
+                                                                  d2 y
+                                                                                    Z
+                                                                            du
+                                                              y+4      =  2    +  7   u dt
+                                                                  dt2       dt
+                                                           Z           Z Z Z             Z Z
+                                                         1          7                  1
+                                                      y=     u dt +            u dt3 −       y dt2
+                                                         2          4                  4
+
+
+
+
+                                                                                                             − 14
+                                                                                                 R       R
+
+                                                                                   R2
+                                                                            − 14        y
+
+                                                                    1
+                                                                        R
+                             u                                      2
+                                                                            u
+                                             1
+                                                          R
+                                             2
+                                                                                        +                                y
+
+
+                                                                                            7
+                                                                                                R3
+                                                                                            4
+                                                                                                     u
+
+                                         7
+                                                     R        R              R
+                                         4
+
+
+
+
+Lecture-note notation: Rectangles denote amplifiers and integrators; small circles are taps; the + circle is a summing junction. The upper branch feeds
+the output back into the sum. No differentiators appear. Integral formulas are understood with zero initial conditions.
+

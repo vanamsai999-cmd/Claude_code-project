@@ -1,0 +1,206 @@
+MATH6342 Linear Systems                                                                                   Sai Vanam
+
+
+                                   MATH6342 Linear Systems
+                                                Assessed Exercise 3
+                                                     Sai Vanam
+
+
+
+A3.1
+                                                                                  R ∞ −st
+(i) For s > 0, the Laplace transform is defined by L(f )(s) =                      0 e    f (t) dt. Put
+                             Z ∞                                              Z ∞
+                    I(s) =          e−st cos(2ωt) dt,                J(s) =         e−st sin(2ωt) dt.
+                               0                                              0
+
+Both integrals converge absolutely. Integrating by parts, with the boundary terms at infinity
+vanishing, gives
+                        "                       #∞
+                         e−st cos(2ωt)
+                                                            Z ∞
+                                           2ω                                               1 2ω
+                I(s) = −                 −                           e−st sin(2ωt) dt =       −   J(s),
+                               s       0
+                                            s                0                              s   s
+                        "                       #∞
+                            e−st sin(2ωt)
+                                                            Z ∞
+                                              2ω                                            2ω
+                J(s) = −                    +                        e−st cos(2ωt) dt =        I(s).
+                                   s      0
+                                               s            0                                s
+
+Consequently, I(s) = s−1 − 4ω 2 s−2 I(s), so
+                                                             s
+                                    L(cos(2ωt))(s) =               ,               s > 0.
+                                                         s2 + 4ω 2
+(ii) Using sin2 (ωt) = 12 (1 − cos(2ωt)) and linearity,
+
+                                             1       s              2ω 2
+                   L(sin2 (ωt))(s) =           −              =               ,                s > 0.
+                                             2s 2(s2 + 4ω 2 )   s(s2 + 4ω 2 )
+
+
+A3.2
+
+Write yb(s) = L(y)(s). Using the lecture identity L(y′)(s) = syb(s) − y(0), taking Laplace transforms
+of y ′ − 7y = sin(2t) and using y(0) = 0 gives
+                                                        2                                  2
+                    (syb(s) − y(0)) − 7yb(s) =                   ,       yb(s) =                    .
+                                                     s2 + 4                         (s − 7)(s2 + 4)
+For partial fractions, write
+                                             2            a    bs + c
+                                                      =      +        .
+                                      (s − 7)(s2 + 4)   s − 7 s2 + 4
+Multiplication by (s − 7)(s2 + 4) yields
+                  2 = a(s2 + 4) + (bs + c)(s − 7) = (a + b)s2 + (c − 7b)s + 4a − 7c.
+Equating coefficients gives a + b = 0, c − 7b = 0 and 4a − 7c = 2. Hence
+                                             2                  2                   14
+                                     a=         ,    b=−           ,      c=−          .
+                                             53                 53                  53
+Therefore
+                                    2 1       2   s   7    2
+                                   yb(s) =  −   2
+                                                    −    2
+                                                              ,
+                                   53 s − 7 53 s + 4 53 s + 4
+and taking inverse Laplace transforms gives
+                                        2e7t − 2 cos(2t) − 7 sin(2t)
+                             y(t) =                                  ,                t ≥ 0.
+                                                     53
+
+                                                            1
+MATH6342 Linear Systems                                                                                     Sai Vanam
+
+
+A3.3
+
+Let                                                                      
+                                                      2 1 0
+                                                A = 1 2 1  .
+                                                           
+                                                      0 1 2
+(i) The characteristic polynomial is
+                                                                                         
+                                              λ − 2 −1   0
+                               χA (λ) = det  −1 λ − 2 −1 
+                                                           
+                                                0   −1 λ − 2
+                                            = (λ − 2) (λ − 2)2 − 1 − (λ − 2)
+                                                                              
+
+                                            = (λ − 2) (λ − 2)2 − 2 .
+                                                                              
+
+                               √                        √
+Thus the eigenvalues are 2 +       2, 2 and 2 −              2.
+For an eigenvector v = (x, y, z)⊤ , the equation (A − λI)v = 0 gives
+
+                (2 − λ)x + y = 0,             x + (2 − λ)y + z = 0,
+                                                           y + (2 − λ)z = 0.
+                                                              √                 √
+For λ = 2, these equations give y = 0 and z = −x. For λ = 2 ± 2, they give y = ± 2 x and
+z = x. Hence corresponding eigenvectors are
+                                                                                             
+                              1                            1                             1
+                             √                                                        √ 
+                        v1 =  2 ,                 v2 =  0  ,                  v3 = − 2 ,
+                                                          
+                              1                           −1                             1
+
+respectively. The eigenspace for each eigenvalue is the span of its displayed vector.
+(ii) These vectors are mutually orthogonal, since
+
+                       v1⊤ v2 = 0,            v1⊤ v3 = 1 − 2 + 1 = 0,                     v2⊤ v3 = 0.
+                                        √
+Also ∥v1 ∥ = ∥v3 ∥ = 2 and ∥v2 ∥ =           2. Normalising the eigenvectors and using them as columns
+gives the real matrix                                                                        
+                                                                      1        √1          1
+                                       v1     v         v3          21          2         2
+                                                            
+                                              √2                                          − √12 
+                                                                                                
+                          U=                                      = √         0                .
+                                       2        2       2           2
+                                                                     1
+                                                                      2       − √12        1
+                                                                                           2
+
+Its columns form an orthonormal basis, so U ⊤ U = I. Since AU = U ∆, it follows that
+                                                √             
+                                             2+ 2 0         0
+                            ∆ = U ⊤ AU =  0          2     0√  .
+                                                              
+                                                0     0 2− 2
+
+(iii) As U −1 = U ⊤ , we have A = U ∆U ⊤ and Ak = U ∆k U ⊤ . Substitution into the defining
+exponential series therefore gives
+                                                                                     √                 
+                                                                     e(2+ 2)t 0      0
+               exp(tA) = U exp(t∆)U ⊤ ,                  exp(t∆) =  0        e 2t   0√  .
+                                                                                         
+
+                                                                         0     0 e(2− 2)t
+
+
+
+
+                                                                  2
+MATH6342 Linear Systems                                                                        Sai Vanam
+
+
+A3.4
+
+We use the lecture notation M ′ for the adjoint; since the matrices are real, M ′ = M ⊤ . Recall that
+K is positive definite if K ′ = K and
+
+                                     ⟨Kz, z⟩ > 0          (z ∈ Cn , z ̸= 0).
+
+(i) Since K is real symmetric, its eigenvalues are real. Suppose Kv = κv, where v ̸= 0. Then
+
+                               0 < ⟨Kv, v⟩ = ⟨κv, v⟩ = κ⟨v, v⟩ = κ∥v∥2 .
+
+As ∥v∥2 > 0, it follows that κ > 0.
+(ii) Let κ1 , . . . , κn be the eigenvalues of K, counted with multiplicity. Since each κj > 0 by part (i),
+                                      n
+                                      Y                                    n
+                                                                           X
+                            det K =         κj > 0,           trace(K) =         κj > 0.
+                                      j=1                                  j=1
+
+(iii) Since K ′ = K,
+                                       (S ′ KS)′ = S ′ K ′ S = S ′ KS.
+If z ̸= 0, then Sz ̸= 0 because S is invertible. Hence
+
+                                      ⟨S ′ KSz, z⟩ = ⟨KSz, Sz⟩ > 0.
+
+Thus S ′ KS is positive definite.
+(iv) Put S = exp(A). By the properties of the matrix exponential, S is invertible, with inverse
+exp(−A). Also, from the defining series,
+                                        ∞
+                                             !′           ∞
+                                 ′        Ak                (A′ )k
+                                                                      = exp(A′ ).
+                                        X                 X
+                               S =                    =
+                                        k=0
+                                            k!            k=0
+                                                                 k!
+
+It follows that
+                                       exp(A′ )K exp(A) = S ′ KS,
+which is positive definite by part (iii).
+(v) Since K and L are positive definite, they are self-adjoint, so
+
+                                      (K + L)′ = K ′ + L′ = K + L.
+
+For every z ̸= 0,
+                                ⟨(K + L)z, z⟩ = ⟨Kz, z⟩ + ⟨Lz, z⟩ > 0.
+Therefore K + L is positive definite.
+
+
+
+
+                                                          3
+

@@ -1,0 +1,555 @@
+                Metric Spaces & Topology
+                                       MATH6310 - Sections 0 & 1
+
+
+
+   What this guide does
+
+   Turns the lecture notes into a compact, readable revision resource. It keeps the course notation
+   and theorem statements, but explains the ideas in plainer language, highlights exam priorities,
+   and adds quick intuition and memory hooks.
+
+
+
+ Covered: Section 0 - What is a metric space? | Section 1 - Sets, functions & countability
+ Best use: Read once for understanding, then use the green Exam Focus boxes and the final
+ checklist for revision.
+
+
+
+
+   EXAM FOCUS - Priority map
+
+   Core: metric axioms, examples of metrics, sets, functions, injective/surjective/bijective maps,
+   direct/inverse images, equivalence relations & partitions, countability, Cantor's theorem.
+   Know statement: Schröder-Bernstein theorem; proof is marked non-examinable.
+   Self-study/non-examinable in these notes: partial orders and Zorn's Lemma.
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                                 Page 1
+ Contents
+   1. Section 0: The idea of a metric space
+   2. The metric axioms
+   3. Key metric examples
+   4. Section 0 proof patterns
+   5. Sets and set operations
+   6. Cartesian products & Axiom of Choice
+   7. Functions: the essential language
+   8. Injective, surjective, bijective & inverses
+   9. Direct and inverse images
+   10. Schröder-Bernstein theorem
+   11. Equivalence relations & partitions
+   12. Canonical decomposition of a function
+   13. Countability
+   14. Cantor's theorem & uncountability
+   15. Optional: partial orders & Zorn's Lemma
+   16. Final exam checklist + mini practice
+
+
+
+
+MATH6310 - Simplified Revision Guide                Page 2
+ 1. Section 0: The idea of a metric space
+   KEY IDEA - Abstracting distance
+
+   A metric space is a set together with a rule that tells us the distance between any two points. The
+   point is to keep only the properties of distance that really matter, so the same theory works for
+   numbers, vectors, functions, strings, graphs, sets and many other objects.
+
+
+ Why this matters
+  • In real analysis, distance is usually |x-y|. Metric spaces generalise that idea.
+  • Once a distance is available, we can later define convergence, continuity, open sets and topology.
+  • Different metrics can live on the same underlying set and create different geometric behaviour.
+
+   MEMORY HOOK - Think “SET + DISTANCE RULE”
+
+   A metric space is written E=(S,d). S tells you what the points are; d tells you how far apart they
+   are.
+
+
+ Examples of things that can be “points”
+  • real numbers or vectors
+  • continuous functions
+  • finite subsets of a set
+  • strings of symbols
+  • vertices in a graph
+  • matrices or even other spaces
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                               Page 3
+ 2. The metric axioms
+   Definition
+
+   A metric on a set S is a function d : S × S → [0,∞) satisfying, for all x,y,z in S:
+   (MS1) d(x,y)=0 iff x=y.
+   (MS2) d(x,y)=d(y,x).
+   (MS3) d(x,z) ≤ d(x,y)+d(y,z).
+
+
+ What each axiom is saying
+  • MS1 - identity of indiscernibles: zero distance happens exactly when the two points are the same.
+  • MS2 - symmetry: travelling from x to y has the same distance as travelling from y to x.
+  • MS3 - triangle inequality: going directly from x to z cannot be longer than going via y.
+
+   Equivalent expanded version
+
+   Some proofs split MS1 into positivity/finiteness, d(x,x)=0, and definiteness. The notes label these
+   MS0, MS1a and MS1b.
+
+   EXAM FOCUS - How to prove something is a metric
+
+   Check the axioms one at a time. The triangle inequality is usually the only difficult part. State
+   clearly which known inequality or set inclusion you are using.
+
+   COMMON TRAP - Do not prove only d(x,x)=0
+
+   MS1 needs the converse too: if d(x,y)=0, you must conclude x=y.
+
+
+ 3. Key metric examples
+ A. Standard metric on R
+ d(x,y)=|y-x|. MS3 follows from |a+b|≤|a|+|b|.
+
+ B. Euclidean metric on R^N
+ d₂(x,y)=sqrt(Σᵢ(yᵢ-xᵢ)²). The triangle inequality comes from the Euclidean norm / Cauchy-Schwarz.
+
+ C. Discrete metric
+ d(s,t)=0 if s=t, and 1 otherwise. Every distinct pair of points is exactly distance 1 apart.
+
+   MEMORY HOOK - Discrete metric triangle inequality
+
+   If x=z, left side is 0. If x≠z, left side is 1. At least one of x≠y or y≠z must hold, so the right side is
+   at least 1.
+
+
+ D. Counting metric on finite subsets
+ For subsets A,B of a finite set S: d(A,B)=#(A Δ B), where A Δ B contains the elements belonging to
+ exactly one of A or B.
+
+   KEY IDEA - Why symmetric difference behaves like distance
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                                    Page 4
+   A Δ B counts the “membership changes” needed to turn A into B. The key triangle-type inclusion
+   is A Δ C ⊆ (A Δ B) ∪ (B Δ C).
+
+
+ E. Hausdorff metric
+ This measures how far two suitable subsets are from each other. Roughly: enlarge each set by δ
+ until each enlarged set contains the other. The smallest possible δ is the Hausdorff distance.
+
+ F. Metrics on continuous functions
+  • Integration metric: d₁(f,g)=∫₀¹ |g-f|. This measures total accumulated difference.
+  • Sup metric: d_sup(f,g)=sup{|g(s)-f(s)| : s∈[0,1]}. This measures the single worst-case difference.
+
+   EXAM FOCUS - Integration metric MS1b
+
+   To show ∫|h|=0 implies h=0, the useful proof is by contrapositive: if h is continuous and nonzero
+   somewhere, continuity gives an interval where |h| stays bounded away from 0, so the integral is
+   strictly positive.
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                               Page 5
+ 4. Section 0 proof patterns
+   Task                            Typical idea
+
+   Discrete metric                 Case split: equal vs distinct points.
+
+   Counting metric MS3             Prove A Δ C ⊆ (A Δ B) ∪ (B Δ C), then count.
+
+   Integration metric MS1b         Use continuity + contrapositive.
+
+   Sup metric MS3                  Pointwise triangle inequality, then take suprema.
+
+   Hausdorff metric MS3            Use “fattening” inclusions and add the radii.
+
+   Nonstandard metrics             Reduce cases to the Euclidean triangle inequality whenever possible.
+
+
+
+   EXAM FOCUS - Section 0 exercises worth being able to reproduce
+
+   Discrete metric proof; integration metric definiteness; sup metric definiteness + triangle
+   inequality; counting metric triangle inequality; Hausdorff triangle inequality; nonstandard metric
+   triangle inequalities.
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                                      Page 6
+ 5. Sets and set operations
+   Core notation
+
+   A⊂S: A is a subset of S.
+   A⊊S: A is a proper subset of S.
+   A\B: elements in A but not in B.
+   P(S): power set = all subsets of S.
+   A Δ B: symmetric difference = (A\B) ∪ (B\A).
+
+
+ Unions and intersections
+  • Union means “belongs to at least one set” - an ∃ statement.
+  • Intersection means “belongs to every set” - a ∀ statement.
+  • For an empty family: union = ∅, while intersection = the whole universe S.
+
+   MEMORY HOOK - Quantifiers
+
+   Union ↔ ∃. Intersection ↔ ∀. This is the quickest way to prove identities.
+
+
+ Two laws to know
+ Distributive laws let ∩ and ∪ distribute over families of sets.
+ De Morgan laws turn complements of unions into intersections of complements, and vice versa.
+
+   EXAM FOCUS - Best proof style for set equalities
+
+   Take an arbitrary element x and prove “x∈LHS iff x∈RHS”. For inclusions, prove only the required
+   implication.
+
+
+ 6. Cartesian products & the Axiom of Choice
+ Cartesian product
+ S×T is the set of ordered pairs (s,t) with s∈S and t∈T. More generally, a product over an index set Λ
+ consists of families (s_λ) with s_λ∈S_λ for every λ.
+
+   Two unusual cases
+
+   If the index set Λ is empty, the empty product contains one “empty family”. If one factor S_μ is
+   empty (and Λ is nonempty), the whole product is empty.
+
+
+ Axiom of Choice (AC)
+ If (S_λ) is a family of nonempty sets, then the product ∏S_λ is nonempty. In plain language: it is
+ possible to choose one element from each nonempty set, even for an arbitrary indexed family.
+
+   MEMORY HOOK - Choice function
+
+   Equivalent viewpoint: for a family of nonempty sets C_λ, there is a function f with f(λ)∈C_λ for
+   every λ.
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                              Page 7
+ 7. Functions: the essential language
+   A function has 3 ingredients
+
+   1. a domain S
+   2. a codomain T
+   3. a rule assigning exactly one f(s)∈T to each s∈S
+
+
+ Important examples
+  • identity map id_S(s)=s
+  • inclusion map A→S, a↦a
+  • indicator function 1_A, which records membership using 0 and 1
+  • constant functions
+  • coordinate projections from a Cartesian product
+
+ Range
+ Ran f={f(s):s∈S}. The range is a subset of the codomain and need not equal it.
+
+ Composition
+ If f:S→T and g:T→U, then (g∘f)(s)=g(f(s)). Composition is associative, but generally not
+ commutative.
+
+   COMMON TRAP - Order matters
+
+   g∘f means “do f first, then g”.
+
+
+ Restriction / extension / co-restriction
+  • Restriction: shrink the domain.
+  • Extension: enlarge the domain while agreeing on the original set.
+  • Co-restriction: shrink the codomain to a set that still contains the range.
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                        Page 8
+ 8. Injective, surjective, bijective & inverses
+   Property               Meaning                                       Mental picture
+
+   Injective              f(s₁)=f(s₂) ⇒ s₁=s₂                           No two inputs collide.
+
+   Surjective             Ran f = codomain                              Every target gets hit.
+
+   Bijective              Injective + surjective                        Perfect one-to-one pairing.
+
+
+
+ Composition facts
+  • If f and g are injective, then g∘f is injective.
+  • If f and g are surjective, then g∘f is surjective.
+  • If g∘f is injective, then f must be injective.
+  • If g∘f is surjective, then g must be surjective.
+
+   MEMORY HOOK - Which map inherits what?
+
+   For injectivity, information travels backward to f. For surjectivity, coverage travels forward to g.
+
+
+ Left and right inverses
+  • f injective ⇔ there is a left inverse g with g∘f=id_S (with the empty-set caveat stated in the notes).
+  • f surjective ⇔ there is a right inverse h with f∘h=id_T.
+  • f bijective ⇔ it has a two-sided inverse.
+
+   EXAM FOCUS - Proof habit
+
+   For injectivity: assume f(x)=f(y) and aim for x=y. For surjectivity: start with an arbitrary target t
+   and construct an input s with f(s)=t.
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                                  Page 9
+ 9. Direct and inverse images
+ Direct image
+ For A⊂S, f(A)={f(s):s∈A}. This pushes subsets of the domain forward into the codomain.
+
+ Inverse image
+ For C⊂T, f⁻¹(C)={s∈S:f(s)∈C}. This pulls subsets of the codomain back to the domain. It does not
+ require f to be invertible.
+
+   COMMON TRAP - f⁻¹(C) is not necessarily the inverse function
+
+   Inverse-image notation is used for every function. If f happens to be bijective, then inverse
+   images agree with direct images under the inverse map.
+
+
+ What happens to unions/intersections?
+  • Direct images preserve arbitrary unions exactly.
+  • For intersections, only f(∩A) ⊆ ∩f(A) in general; equality can fail when different points share the
+   same image.
+  • Inverse images preserve unions, intersections and set differences exactly.
+
+   MEMORY HOOK - Inverse images are algebraically nicer
+
+   Preimages commute perfectly with ∪, ∩ and complements. Direct images are weaker for ∩ and
+   differences.
+
+
+ 10. Schröder-Bernstein theorem
+   The theorem
+
+   If there is an injection S→T and an injection T→S, then there is a bijection S→T.
+
+
+ Interpretation
+ If each set can be embedded inside the other, then they actually have the same cardinality.
+
+   EXAM FOCUS - What the notes say to know
+
+   Know the theorem statement. The proof is explicitly marked as non-examinable.
+
+   MEMORY HOOK - Size comparison
+
+   Injection S→T means “S is no larger than T”. If that works both ways, Schröder-Bernstein
+   upgrades the comparison to equal size.
+
+
+ 11. Equivalence relations & partitions
+   Equivalence relation
+
+   A relation ~ on a nonempty set S is an equivalence relation if it is:
+   Reflexive: s~s.
+   Symmetric: s~t ⇒ t~s.
+   Transitive: r~s and s~t ⇒ r~t.
+
+
+MATH6310 - Simplified Revision Guide                                                                Page 10
+ Equivalence class
+ [a]={s∈S:s~a}. The quotient set S/~ is the set of all equivalence classes.
+
+ Partition
+ A partition is a collection of nonempty, pairwise disjoint subsets whose union is all of S.
+
+   KEY IDEA - The big theorem
+
+   Equivalence relations and partitions are two descriptions of the same structure. Equivalence
+   classes form a partition, and a partition defines an equivalence relation by saying two points are
+   related exactly when they lie in the same block.
+
+   MEMORY HOOK - Equivalence relation = “same group” rule
+
+   Reflexive: you are in the same group as yourself. Symmetric: if you are grouped with me, I am
+   grouped with you. Transitive: if A is grouped with B and B with C, they are all in one group.
+
+
+ Classic example: congruence mod p
+ n≡m (mod p) iff p divides m-n. The equivalence classes are the residue classes [0],...,[p-1], which
+ partition Z.
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                             Page 11
+ 12. Canonical decomposition of a function
+   Statement in simple language
+
+   Every function can be naturally factored into:
+   surjection → bijection → injection.
+
+   Define s₁~_f s₂ iff f(s₁)=f(s₂). Collapse together all inputs that f cannot distinguish; the resulting
+   quotient is in bijection with Ran f; then include Ran f into the codomain.
+
+
+ Why this is useful
+  • The quotient removes exactly the “non-injective” duplication.
+  • The range removes exactly the “non-surjective” unused part of the codomain.
+  • What remains in the middle is bijective.
+
+   MEMORY HOOK - Fixing a function
+
+   Collapse repeated inputs → perfect pairing with the range → include range in the target.
+
+
+ 13. Countability
+   Definition
+
+   A set S is countable if there is an injection S→N. Equivalently, a nonempty countable set can be
+   listed by a surjection N→S. A countably infinite set is in bijection with N.
+
+
+ Important closure facts
+  • Every subset of a countable set is countable.
+  • Finite Cartesian products of countable sets are countable.
+  • A countable union of countable sets is countable.
+  • Z is countable.
+  • Q is countable because Z×N maps surjectively onto Q by (n,m)↦n/m.
+  • Finite-dimensional products N^k are countable.
+
+   MEMORY HOOK - How to prove countable
+
+   Your usual goal is to build either an injection into N or a surjection from N. Use known countable
+   sets as stepping stones.
+
+
+ Typical examples in the notes
+  • polynomials with rational coefficients are countable
+  • the set of finite subsets of N is countable
+
+   EXAM FOCUS - Countable union proof pattern
+
+   Enumerate the sets as C₁,C₂,... and enumerate each Cₙ. Then N×N indexes all elements. Since
+   N×N is countable, the union is countable.
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                                  Page 12
+ 14. Cantor's theorem & uncountability
+   Cantor's theorem
+
+   For every set S, there is no surjection S→P(S). Therefore P(S) is strictly “larger” than S.
+
+
+ The diagonal idea
+ Assume φ:S→P(S) is surjective. Construct D={s∈S:s∉φ(s)}. Since φ is supposedly onto, D=φ(x) for
+ some x. Then asking whether x∈D gives a contradiction either way. So φ cannot be surjective.
+
+   MEMORY HOOK - The diagonal set disagrees with every candidate
+
+   D is designed to differ from φ(s) at the element s itself. That guarantees D is missing from the list.
+
+
+ Function version
+ There is no surjection S→F(S;{0,1}). This is the same diagonal phenomenon: define a new 0-1
+ function that flips the s-th function at its own input s.
+
+ Consequences
+  • P(N), F(N;{0,1}) and {0,1}^N are uncountable.
+  • The notes include a guided exercise proving R is uncountable by injecting {0,1}^N into R.
+
+   EXAM FOCUS - Cantor proof is a must-understand pattern
+
+   Be able to explain why D is a subset of S, why surjectivity would force D=φ(x), and why both x∈D
+   and x∉D contradict the definition.
+
+
+ 15. Optional: partial orders & Zorn's Lemma
+   Status in these notes
+
+   This subsection is labelled self-study / non-examinable. It is still useful background for later
+   mathematics.
+
+
+ Partial order
+ A relation ≤ is a partial order if it is reflexive, antisymmetric and transitive.
+  • Upper bound: an element above every point of a subset.
+  • Maximal element: nothing strictly above it.
+  • Chain: a subset in which every pair is comparable.
+  • Least upper bound: the smallest of all upper bounds.
+
+   COMMON TRAP - Maximal ≠ greatest
+
+   A maximal element only means there is nothing strictly larger than it. There may be several
+   maximal elements. A greatest element is above every element and is unique if it exists.
+
+
+ Zorn's Lemma - intuitive version
+ If every chain in a partially ordered set has an upper bound, then the set has a maximal element.
+ Zorn's Lemma is logically equivalent to the Axiom of Choice.
+
+
+
+MATH6310 - Simplified Revision Guide                                                                  Page 13
+ 16. Final exam checklist
+  • □ Write the three metric axioms from memory.
+  • □ Prove the discrete metric is a metric.
+  • □ Explain why the integration metric needs continuity for definiteness.
+  • □ Use symmetric difference in the counting metric.
+  • □ Handle union/intersection/set-difference proofs using element-chasing.
+  • □ Define a function with domain, codomain and rule.
+  • □ Distinguish range from codomain.
+  • □ Test injective / surjective / bijective correctly.
+  • □ Know composition facts and left/right inverse relationships.
+  • □ Distinguish direct image f(A) from inverse image f⁻¹(C).
+  • □ Know which set operations direct and inverse images preserve.
+  • □ State Schröder-Bernstein.
+  • □ Define equivalence relation, class, quotient set and partition.
+  • □ Explain why equivalence relations correspond to partitions.
+  • □ Understand the surjection-bijection-injection decomposition of a function.
+  • □ Define countability and use injections/surjections to prove it.
+  • □ Know: Z, Q, finite products and countable unions are countable.
+  • □ State and explain Cantor’s theorem using the diagonal set.
+
+
+   EXAM FOCUS - Suggested revision order
+
+   1) Definitions first. 2) Theorem statements. 3) Standard proof templates. 4) Exercises that require
+   constructing maps. 5) Cantor diagonal argument last, until you can explain it without notes.
+
+
+ Mini practice - test yourself
+ 1. Give a metric on any nonempty set and prove the triangle inequality.
+ 2. Explain in one sentence why f⁻¹(C) makes sense even if f is not bijective.
+ 3. If g∘f is injective, what can you conclude about f? Prove it.
+ 4. Give an equivalence relation on Z and describe its classes.
+ 5. Show that Q×Q is countable using results from the notes.
+ 6. State Cantor’s theorem and describe the diagonal set used in the proof.
+ 7. What is the difference between an equivalence relation and a partial order?
+ 8. Explain the canonical decomposition of a function in plain English.
+
+
+
+   One-line master summary
+
+   Metric spaces abstract distance. Sets and functions provide the language. Equivalence relations
+   organise points into classes. Countability compares infinite sizes using N. Cantor’s theorem
+   proves that power sets are always strictly larger.
+
+
+
+
+MATH6310 - Simplified Revision Guide                                                            Page 14
+

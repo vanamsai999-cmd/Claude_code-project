@@ -1,0 +1,53 @@
+                  MATH6310 Metric Spaces and Topology
+                                   Exercise 1.7 — Solution
+                                        Poornasai Vanam
+
+(a) Define the inverse map.
+For any f ∈ F , define
+                                   σ(f ) = {s ∈ S : f (s) = 1}.
+In other words, σ(f ) is the set of all elements of S at which f takes the value 1.
+This is a subset of S, so σ(f ) ∈ P(S) = P . Therefore σ : F → P is well-defined.
+(b) Show the two compositions are identity maps.
+First identity: σ ◦ χ = idP .
+Take any A ∈ P (so A ⊆ S). Applying χ first gives χ(A) = 1A . Applying σ next gives
+
+                                (σ ◦ χ)(A) = σ(χ(A))
+                                           = σ(1A )
+                                           = {s ∈ S : 1A (s) = 1}
+                                           = {s ∈ S : s ∈ A}
+                                           = A.
+
+The fourth line follows because 1A (s) = 1 exactly when s ∈ A. Since this holds for every A ∈ P ,
+we have
+                                          σ ◦ χ = idP .
+
+Second identity: χ ◦ σ = idF .
+Take any f ∈ F . Put A = σ(f ) = {s ∈ S : f (s) = 1}. Then
+
+                                    (χ ◦ σ)(f ) = χ(A) = 1A .
+
+We need to check that 1A = f . Two functions with the same domain and codomain are equal if
+they give the same value at every input.
+Let s ∈ S. There are only two cases, because f (s) ∈ {0, 1}:
+
+Case 1: If f (s) = 1, then s ∈ A by the definition of A. Therefore 1A (s) = 1 = f (s).
+Case 2: If f (s) = 0, then s ∈
+                             / A. Therefore 1A (s) = 0 = f (s).
+
+In both cases, 1A (s) = f (s). As this is true for every s ∈ S, we have 1A = f . Hence
+
+                                (χ ◦ σ)(f ) = f   for every f ∈ F,
+
+so
+                                          χ ◦ σ = idF .
+
+Conclusion. We have shown that σ reverses χ in both directions. Thus σ is the inverse of χ,
+and therefore χ is a bijection:
+
+                                        = F(S; {0, 1}).
+                                   P(S) ∼                       □
+
+
+
+                                                  1
+

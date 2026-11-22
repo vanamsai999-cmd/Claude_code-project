@@ -1,0 +1,308 @@
+MATH6342 Linear Systems                                                                   Week 1 Guide
+
+
+
+                 MATH6342 Linear Systems
+                       Week 1: What You Are Likely to Cover
+                               Simplified preparation and revision guide
+
+   Important
+
+   The uploaded MATH6342 files are organised by frames/chapters, not by teaching week. Therefore
+   this guide treats the opening part of Chapter 1 (“Linear systems and their description”, frames
+   6–30) as the likely Week 1 material. The exact stopping point may differ slightly depending on
+   lecture pace.
+
+
+
+1. The big idea of Week 1
+
+The course starts by thinking of a system as a “machine” that evolves in time. The system receives an
+input, has an internal state, and produces an output.
+
+
+                     u(t)                     linear system                       y(t)
+                    input                       state x(t)                       output
+
+
+The central question is:
+
+                            How does the input u(t) determine the output y(t)?
+
+Examples mentioned in the notes include wind turbines, heating systems, electrical networks, vehicle
+suspension, epidemics, predator–prey systems and musical filters.
+
+   Core language
+
+   Input u(t): the signal or forcing applied to the system.
+   State x(t): variables that describe the internal condition of the system.
+   Output y(t): what the system produces or what we observe.
+
+
+
+2. Linear operators
+
+A map L : V → W is linear if
+                                        L(λf + µg) = λLf + µLg.
+
+You will see familiar calculus operations viewed as linear operators:
+
+
+                 Operation                  What it does
+                                                    df
+                 Differentiation            f 7→
+                                                   Zdtx
+                 Integration                f 7→          f (t) dt
+                                                    0
+                 Amplification              f 7→ af , for constant a
+                 Multiplication             f 7→ h(t)f (t)
+                 Evaluation                 f 7→ f (t0 )
+
+
+
+
+                                                          1
+MATH6342 Linear Systems                                                                      Week 1 Guide
+
+
+   Why this matters
+   Block diagrams are built by connecting simple linear operations. Instead of seeing a long differential
+   equation as one intimidating object, you break it into small pieces: multiply, add, differentiate and
+   integrate.
+
+
+
+3. Block diagrams
+
+A major new skill is learning to read and draw block diagrams.
+The basic building blocks are:
+
+    • Amplifier: u 7→ au.
+
+    • Integrator: u 7→
+                          R
+                              u.
+                                   du
+    • Differentiator: u 7→            .
+                                   dt
+    • Summing junction: combines signals, e.g. u1 + u2 .
+
+    • Tap: copies a signal into another branch without dividing its value.
+
+For example, the notes represent                 Z
+                                           y=3       u + 2u′ + 6u
+
+by splitting the input into several branches, applying the required operation to each branch, and adding
+the results.
+
+   Week 1 skill to practise
+   Given an equation, try to identify the separate operations needed to construct its block diagram.
+   Conversely, when shown a block diagram, follow each branch and reconstruct the equation for the
+   output.
+
+
+
+
+                                                      2
+MATH6342 Linear Systems                                                                     Week 1 Guide
+
+
+4. Open-loop and feedback systems
+
+Open-loop
+
+An open-loop system processes the input and produces an output, but the output is not fed back into
+the system.
+Conceptually:
+                                             u −→ system −→ y.
+
+
+Closed-loop / feedback
+
+In a feedback system, part of the output is returned to the input side and influences future behaviour.
+
+
+                              u         +                    system                  y
+
+
+
+
+                                                          feedback
+
+   Positive feedback
+   The returned output reinforces the behaviour of the system. Example from the notes:
+                                            dx
+                                               = kx + u,         k > 0.
+                                            dt
+   A larger state x creates further growth.
+
+   Negative feedback
+   The returned signal opposes change and can stabilise behaviour. For the cyclist example,
+                                                   dv
+                                               m      = −kv + u.
+                                                   dt
+   The faster the cyclist moves, the larger the opposing air-resistance term −kv.
+
+
+
+5. Linear differential equations as systems
+
+The course next connects block diagrams with differential equations. A general linear differential operator
+has the form
+                                         dn f         dn−1 f
+                          Lf (t) = an (t) n + an−1 (t) n−1 + · · · + a0 (t)f (t).
+                                         dt           dt
+For constant coefficients, equations of the form
+
+                                  an y (n) + · · · + a0 y = bm u(m) + · · · + b0 u
+
+can be realised using amplifiers, summing junctions, integrators and differentiators.
+
+   What the lecturer is trying to show
+   A differential equation is not just an equation to solve. It can also be interpreted as a network of
+   connected linear operations. This point of view becomes important later for control systems.
+
+
+
+                                                         3
+MATH6342 Linear Systems                                           Week 1 Guide
+
+
+6. The damped harmonic oscillator
+
+A key example that appears early and returns later is
+
+                                          y ′′ + βy ′ + γy = u.
+
+Interpretation:
+
+    • y = displacement,
+
+    • y ′ = velocity,
+
+    • y ′′ = acceleration,
+
+    • u(t) = external driving force,
+
+    • −γy = restoring force from a spring,
+
+    • −βy ′ = damping from a shock absorber.
+
+The notes use vehicle suspension as a physical example.
+
+
+
+
+                                                   4
+MATH6342 Linear Systems                                                                  Week 1 Guide
+
+
+7. From a second-order ODE to a matrix system
+
+This is one of the most important ideas to understand early.
+Start with
+                                            y ′′ + βy ′ + γy = u.
+Introduce a new variable
+                                                    v = y′.
+Then
+                                            y ′ = v,
+                                            v ′ = −βv − γy + u.
+
+Now define                           !                        !               !
+                                   y                    0  1                  0
+                            X=       ,       A=              ,      B=          .
+                                   v                   −γ −β                  1
+Then the entire second-order equation becomes
+
+                                             dX
+                                                 = AX + Bu.
+                                              dt
+
+   This is worth learning carefully
+   The general idea is called reduction of order: an nth-order scalar differential equation can be
+   rewritten as a first-order vector equation
+                                             dX
+                                                 = AX + Bu.
+                                              dt
+   This lets the course use linear algebra to study differential equations.
+
+
+
+8. What you should know by the end of Week 1
+
+You should aim to be able to:
+
+    1. explain the meaning of input, state and output;
+
+    2. recognise examples of linear systems;
+
+    3. state what it means for an operator to be linear;
+
+    4. recognise amplifiers, integrators, differentiators, taps and summing junctions;
+
+    5. translate simple equations into block diagrams and back;
+
+    6. distinguish open-loop and closed-loop/feedback systems;
+
+    7. explain positive versus negative feedback;
+
+    8. understand how a differential equation can be viewed as a feedback system;
+
+    9. rewrite a second-order ODE as a first-order matrix system;
+
+   10. recognise the state-space form X ′ = AX + Bu.
+
+
+
+
+                                                        5
+MATH6342 Linear Systems                                                                          Week 1 Guide
+
+
+9. What to revise before the lecture
+
+               Topic                             What you need
+               Linear algebra                    matrix multiplication, matrix-vector mul-
+                                                 tiplication, 2 × 2 matrices
+               Calculus                          derivatives and integrals
+               ODEs                              notation such as y ′ , y ′′ , y (n) and basic
+                                                 first/second-order ODEs
+               Linear maps                       understanding L(λf + µg) = λLf + µLg
+               Complex numbers                   only basic familiarity at this stage
+
+
+   The Week 1 picture in one line
+
+                          ODEs    ←→     block diagrams     ←→      matrix systems
+   That connection is the foundation for the rest of MATH6342.
+
+
+
+10. Quick self-test
+
+Try these without looking back:
+
+    1. What are the input, state and output of a system?
+
+    2. What does an amplifier block labelled a do to a signal u?
+
+    3. What is the difference between a tap and a summing junction?
+
+    4. What makes a system a feedback system?
+
+    5. Is mv ′ = −kv + u an example of positive or negative feedback?
+
+    6. Rewrite y ′′ + 3y ′ + 2y = u as a system of two first-order equations.
+
+    7. Write that system in the form X ′ = AX + Bu.
+
+   Source
+   Prepared from the uploaded Lancaster University MATH6342 Linear systems lecture notes and
+   beamer slides (2026/27), especially Chapter 1: frames 6–30. The files do not explicitly label a
+   “Week 1”, so the week boundary in this guide is inferred from the opening sequence of the module.
+
+
+
+
+                                                     6
+

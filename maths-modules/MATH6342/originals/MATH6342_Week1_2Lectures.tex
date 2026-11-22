@@ -1,0 +1,292 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1.7cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{MATH6342 Linear Systems}
+\rhead{Week 1}
+\cfoot{\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\definecolor{navy}{HTML}{243B6B}
+\definecolor{lightblue}{HTML}{EEF4FF}
+\definecolor{lightgreen}{HTML}{EEF9F0}
+\definecolor{lightyellow}{HTML}{FFF8E6}
+\definecolor{lightred}{HTML}{FFF0F0}
+\newtcolorbox{keybox}[1][]{colback=lightblue,colframe=navy,title=#1,boxrule=0.8pt,arc=2mm}
+\newtcolorbox{goalbox}[1][]{colback=lightgreen,colframe=green!45!black,title=#1,boxrule=0.8pt,arc=2mm}
+\newtcolorbox{warnbox}[1][]{colback=lightyellow,colframe=orange!70!black,title=#1,boxrule=0.8pt,arc=2mm}
+\newtcolorbox{examplebox}[1][]{colback=lightred,colframe=red!55!black,title=#1,boxrule=0.8pt,arc=2mm}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\begin{document}
+
+\begin{center}
+{\Huge\bfseries MATH6342 Linear Systems}\\[4pt]
+{\LARGE Week 1: Two 1-Hour Lectures}\\[8pt]
+{\large Simplified preview based on the opening Chapter 1 material in the supplied lecture notes}\\[10pt]
+\end{center}
+
+\begin{keybox}[How this guide was estimated]
+The source notes are organised by \textbf{frames/topics}, not by teaching week. Since you said there are \textbf{two one-hour lectures per week}, this guide treats the opening chapter, \emph{Linear systems and their description} (frames 6--30), as the most likely Week 1 block. The exact stopping point may vary slightly in class.
+\end{keybox}
+
+\section*{The big picture for Week 1}
+The first week is likely about learning how a physical or mathematical process can be represented as a \textbf{linear system}. The basic language is
+\[
+\boxed{\text{input }u(t)}\;\longrightarrow\;\boxed{\text{system}}\;\longrightarrow\;\boxed{\text{output }y(t)}.
+\]
+A system may also have an internal \textbf{state} $x(t)$, which stores enough information about the system at time $t$ to determine how it evolves in the future.
+
+The most important progression is likely to be
+\[
+\text{physical system}
+\longrightarrow \text{block diagram}
+\longrightarrow \text{differential equation}
+\longrightarrow \boxed{X'=AX+Bu}.
+\]
+
+\section*{Lecture 1 (about 1 hour): What is a linear system?}
+
+\begin{goalbox}[Likely learning goals]
+By the end of Lecture 1 you should be able to identify the input, output and state of a system, recognise basic linear operators, read simple block diagrams, and distinguish open-loop from feedback systems.
+\end{goalbox}
+
+\subsection*{1. Input, output and state}
+The notes describe a system evolving in time $t>0$ using:
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Input} $u(t)$: what is supplied to or drives the system.
+\item \textbf{Output} $y(t)$: what we observe or measure.
+\item \textbf{State} $x(t)$: the internal variables needed to determine future behaviour.
+\end{itemize}
+
+A key question throughout the module is:
+\[
+\boxed{\text{How does }y(t)\text{ depend on }u(t)?}
+\]
+
+\subsection*{2. Linear operators}
+You will revisit the definition of a linear map:
+\[
+L(\lambda f+\mu g)=\lambda Lf+\mu Lg.
+\]
+The opening examples include:
+\begin{center}
+\begin{tabular}{>{\bfseries}p{4cm}p{8.5cm}}
+\toprule
+Operator & Effect \\
+\midrule
+Differentiator & $f\mapsto \dfrac{df}{dt}$ \\
+Integrator & $f\mapsto \displaystyle\int_0^x f(t)\,dt$ \\
+Amplifier & $f\mapsto af$ \\
+Multiplication & $f(t)\mapsto h(t)f(t)$ \\
+Evaluation & $f\mapsto f(t_0)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{3. Block-diagram building blocks}
+You will likely learn how to represent systems visually using:
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Summing junction}: combines signals, e.g. $u_1+u_2$.
+\item \textbf{Tap}: copies the same signal into more than one branch.
+\item \textbf{Amplifier}: $u\mapsto au$.
+\item \textbf{Integrator}: $u\mapsto \int u$.
+\item \textbf{Differentiator}: $u\mapsto \dfrac{du}{dt}$.
+\end{itemize}
+
+\begin{examplebox}[Typical block-diagram equation]
+The notes give the example
+\[
+y=3\int u+2u'+6u.
+\]
+You should be able to read this as three parallel branches acting on the same input $u$, followed by a summing junction.
+\end{examplebox}
+
+\subsection*{4. Open-loop and feedback systems}
+An \textbf{open-loop} system processes the input and produces the output without sending the output back into the system.
+
+A \textbf{feedback} (closed-loop) system sends some of the output back through the system. This is central to control theory.
+
+\begin{center}
+\begin{tabular}{p{6cm}p{6cm}}
+\toprule
+\textbf{Positive feedback} & \textbf{Negative feedback} \\
+\midrule
+Reinforces changes and can amplify growth. & Opposes changes and can stabilise behaviour. \\
+Bird population: $\dfrac{dx}{dt}=kx+u$. & Cyclist with air resistance: $m\dfrac{dv}{dt}=-kv+u$. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{warnbox}[What matters most in Lecture 1]
+Do not just memorise the symbols. Practise translating in both directions:
+\[
+\text{equation} \leftrightarrow \text{block diagram}.
+\]
+That skill is likely to make the later state-space material much easier.
+\end{warnbox}
+
+\newpage
+\section*{Lecture 2 (about 1 hour): From differential equations to state-space form}
+
+\begin{goalbox}[Likely learning goals]
+By the end of Lecture 2 you should understand how linear differential equations can be represented as systems, why matrix notation is useful, and how a higher-order scalar ODE can be rewritten as a first-order vector equation.
+\end{goalbox}
+
+\subsection*{1. Matrix amplifiers and vector signals}
+The course extends scalar block diagrams to vector inputs. A matrix block acts as
+\[
+U\mapsto BU.
+\]
+This allows the same diagram language to handle \textbf{multiple inputs and multiple outputs}.
+
+\subsection*{2. Linear differential operators}
+The notes introduce operators of the form
+\[
+Lf(t)=a_n(t)\frac{d^nf}{dt^n}+a_{n-1}(t)\frac{d^{n-1}f}{dt^{n-1}}+\cdots+a_0(t)f(t).
+\]
+If the coefficients $a_j$ are constants, this is a \textbf{constant-coefficient linear differential operator}.
+
+A typical equation is
+\[
+a_n y^{(n)}+a_{n-1}y^{(n-1)}+\cdots+a_0y
+=
+ b_m u^{(m)}+\cdots+b_0u.
+\]
+The notes show that such an equation can be realised as a feedback system using integrators, differentiators, amplifiers, taps and summing junctions.
+
+\subsection*{3. The damped harmonic oscillator}
+This is one of the key examples and is likely to reappear throughout the module:
+\[
+\boxed{y''+\beta y'+\gamma y=u.}
+\]
+Interpretation:
+\begin{itemize}[leftmargin=1.5em]
+\item $y$ = displacement,
+\item $y'$ = velocity,
+\item $y''$ = acceleration,
+\item $u(t)$ = external driving force,
+\item $-\beta y'$ = damping,
+\item $-\gamma y$ = restoring force.
+\end{itemize}
+The notes use car suspension as the motivating physical example.
+
+\subsection*{4. The key conversion: second-order ODE to first-order system}
+Set
+\[
+v=y'.
+\]
+Then
+\[
+\begin{aligned}
+y'&=v,\\
+v'&=-\gamma y-\beta v+u.
+\end{aligned}
+\]
+Now define the state vector
+\[
+X=\begin{pmatrix}y\\v\end{pmatrix}.
+\]
+Then the two equations combine into
+\[
+\boxed{\frac{dX}{dt}=AX+Bu},
+\]
+with
+\[
+A=\begin{pmatrix}
+0&1\\
+-\gamma&-\beta
+\end{pmatrix},
+\qquad
+B=\begin{pmatrix}0\\1\end{pmatrix}.
+\]
+
+\begin{keybox}[Why this is such a big deal]
+A second-order scalar equation has been converted into a \textbf{first-order matrix system}. This means the tools of linear algebra can now be used to study differential equations and dynamical systems.
+\end{keybox}
+
+\subsection*{5. General reduction of order}
+The same idea works for an $n$th-order equation. Define
+\[
+X=\begin{pmatrix}
+y\\y'\\\vdots\\y^{(n-1)}
+\end{pmatrix}.
+\]
+Then the $n$th-order scalar ODE can be written as
+\[
+\boxed{X'=AX+Bu}.
+\]
+The matrix $A$ has the familiar shift structure with 1s just above the diagonal and the differential-equation coefficients in the last row. This leads naturally to the \textbf{companion matrix}, which appears at the end of the opening chapter.
+
+\section*{What you should know by the end of Week 1}
+You should be comfortable with the following checklist:
+
+\begin{enumerate}[leftmargin=1.8em]
+\item Explain what \textbf{input}, \textbf{output} and \textbf{state} mean.
+\item State the definition of a \textbf{linear map}.
+\item Recognise an amplifier, integrator, differentiator, tap and summing junction.
+\item Translate a simple equation into a block diagram and back again.
+\item Explain the difference between \textbf{open-loop} and \textbf{feedback} systems.
+\item Distinguish positive from negative feedback in simple examples.
+\item Recognise a linear differential operator.
+\item Rewrite a second-order ODE as two first-order equations.
+\item Form the state vector $X$ and identify the matrices $A$ and $B$.
+\item Understand the central state-space form
+\[
+\boxed{X'=AX+Bu}.
+\]
+\end{enumerate}
+
+\section*{Best things to revise before Week 1}
+You do not need to pre-learn control theory. The most useful background is:
+\begin{itemize}[leftmargin=1.5em]
+\item matrix multiplication and matrix-vector multiplication;
+\item $2\times2$ matrices;
+\item basic differentiation and integration;
+\item first- and second-order ODE notation;
+\item the definition of a linear map;
+\item changing a second-order ODE into a pair of first-order equations.
+\end{itemize}
+
+\section*{Quick self-test}
+Try these without looking back:
+\begin{enumerate}[leftmargin=1.8em]
+\item What is the difference between an input $u(t)$ and a state $x(t)$?
+\item What does an amplifier labelled $a$ do to a signal $u$?
+\item What is the difference between a tap and a summing junction?
+\item Why is $m v'=-kv+u$ an example of negative feedback?
+\item For $y''+4y'+3y=u$, let $v=y'$. Write down the two first-order equations.
+\item For the same equation, write down $A$ and $B$ in $X'=AX+Bu$.
+\end{enumerate}
+
+\begin{warnbox}[Answer to Questions 5--6]
+For $y''+4y'+3y=u$,
+\[
+y'=v,\qquad v'=-3y-4v+u,
+\]
+so
+\[
+X=\begin{pmatrix}y\\v\end{pmatrix},\qquad
+A=\begin{pmatrix}0&1\\-3&-4\end{pmatrix},\qquad
+B=\begin{pmatrix}0\\1\end{pmatrix}.
+\]
+\end{warnbox}
+
+\vfill
+\begin{center}
+\small Prepared as a Week 1 preview from the supplied MATH6342 lecture notes and beamer slides.\\
+The source materials are organised by frame rather than by teaching week, so the two-lecture split is an informed estimate.
+\end{center}
+
+\end{document}

@@ -1,0 +1,43 @@
+                            MATH6321 Coursework 2
+
+
+This coursework is worth 5% of your mark for this module and should be handed in by 4pm on
+Wednesday 4th November. Remember to show your working!
+  1. Habitants of Planet Squanch communicate secretly using a cipher machine that works identi-
+     cally to the Enigma machine, except:
+
+       • Their alphabet consists of only seven symbols.
+       • They choose four rotors from six standard rotors with fixed wirings.
+       • They use exactly two plugs in their plugboard.
+       • They have a choice of three reflectors with fixed wirings.
+
+     (a) (3 marks) How many ways are there to set up their machine in total?
+     (b) (0 marks) Should we tell them that we have very good attacks against their encryption?
+
+  2. A secret party is happening at one of the colleges on campus. Over the last few days a strange
+     picture has been appearing everywhere:
+
+
+
+
+     Luckily, you’ve been invited to the party and so have been told that:
+
+       • The picture was encrypted using the first 56 bits of the output string s of an LFSR (using
+         XOR on the pixels from left to right, top to bottom and the convention that white pixels
+         are represented as 0’s and black pixels are represented as 1’s).
+       • The LFSR has update rule an+6 = an+5 ⊕ an .
+       • The initial fill used was a0 = (0, 1, 1, 0, 0, 1) ∈ F62 .
+
+     (3 marks) Decrypt the picture and figure out where the party will be (you might find the
+     following website useful: https://www.lancaster.ac.uk/about-us/colleges/).
+  3. Consider the LFSR of length n = 5 with update rule an+5 = an+2 ⊕ an .
+
+     (a) (3 marks) Write down the characteristic polynomial cb (x) ∈ F2 [x] of this LFSR and
+         show that it is irreducible (You may assume the fact that the only irreducible quadratic
+         polynomial over F2 is x2 + x + 1).
+     (b) (1 mark) Hence deduce the period of the LFSR is Per(a0 ) = 31 for every initial fill
+         a0 ∈ F52 \{0} (you may assume any result from the course).
+
+
+                                                1
+

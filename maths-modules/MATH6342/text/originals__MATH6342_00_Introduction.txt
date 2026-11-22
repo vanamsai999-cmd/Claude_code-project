@@ -1,0 +1,62 @@
+Lancaster University 2026/7
+
+
+
+
+               MATH6342 Linear systems
+
+                       Gordon Blower
+
+                      Lancaster University
+
+
+                     November 12, 2026
+2 Abstract
+
+
+
+
+Useful software and books, frame 3
+1 Linear systems and their description, frames 6-30
+2 Solving linear systems by matrix theory, frames 31-85
+3 Laplace transforms, frames 86-134
+4 Transfer functions, realization and stability, frames 135-161
+5 Feedback control, frames 162-218
+Appendix: MATLAB commands, frames 219-224
+Glossary of linear system terminology, frame 225-227
+3 Useful software
+
+
+
+• AppsAnywhere is installed in the student computer labs on campus;
+• See AppsAnywhere lancaster.ac.uk so that you can link to
+AppsAnywhere on your laptop on campus or via GlobalConnect; in case
+of difficulty ask ISS Helpdesk in the Learning Zone;
+• MATLAB Online is available on the internet and has all the packages
+needed;
+• MATLAB is available on AppsAnywhere on campus or by
+GlobalConnect;
+• R − Studio is available on AppsAnywhere on campus
+4 Useful books
+
+
+
+• Gordon Blower, Linear Systems, (Springer-Nature Mathematical
+Engineering, 2023).
+• C.-T. Chen, Linear System Theory and Design, Fourth Edition, (Oxford
+University Press, 2012).
+• R.C. Dorf and R.H. Bishop, Modern Control Systems, twelfth Edition,
+(Pearson 2011).
+• J.P. Hespanha, Linear Systems Theory, (Princeton and Oxford, 2009).
+For the MATH6342 Projects, there are specific references and readings
+linked to the Moodle page.
+5 Examples of linear systems
+
+
+
+
+Wind turbines, domestic central heating systems, electrical wiring
+networks, electrocardiograms (heart rate), photographic lenses, vehicle
+suspension systems, epidemics, predator-prey systems, musical filters,
+musical amplifiers, musical pitch correctors.
+

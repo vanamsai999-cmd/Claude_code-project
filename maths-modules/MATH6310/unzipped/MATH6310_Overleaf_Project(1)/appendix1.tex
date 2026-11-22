@@ -1,0 +1,19 @@
+\clearpage
+\section{Minkowski Inequality}
+\begin{note}{Appendix I: convexity and Minkowski, following the supplied proof}
+A function $f$ on an interval is convex if
+\[f((1-t)a+tb)\le(1-t)f(a)+tf(b)\quad(0<t<1).\]
+For differentiable $f$, a nondecreasing derivative implies convexity: use the mean value theorem on the two subintervals about an intermediate point to compare secant slopes. Continuity extends the inequality to included endpoints. In particular $u\mapsto|u|^p$ is convex for $p\ge1$.
+
+A subset of a vector space is convex if it contains the line segment between every two of its points. Linear images, translates, and closures of convex sets are convex; norm balls are convex. Coordinatewise convexity gives, when $\norm{x}_p,\norm{y}_p\le1$,
+\[\sum_i|(1-t)x_i+ty_i|^p\le(1-t)\sum_i|x_i|^p+t\sum_i|y_i|^p\le1.\]
+Thus the $\ell^p$ unit ball is convex. For nonzero $x,y$, set $a=\norm{x}_p$, $b=\norm{y}_p$, $\widehat x=x/a$, $\widehat y=y/b$. Then
+\[\frac{x+y}{a+b}=\frac a{a+b}\widehat x+\frac b{a+b}\widehat y\]
+is in that unit ball. Homogeneity gives $\norm{x+y}_p\le a+b$, which is Minkowski. Zero-vector cases are immediate; $p=\infty$ follows coordinatewise. For complex vectors, use $|x_i+y_i|\le|x_i|+|y_i|$ then real Minkowski on the nonnegative modulus vectors.
+\end{note}
+\begin{exam}{Appendix I practice, not an exam prediction}
+Use convexity of the unit ball to prove the triangle inequality for $\ell^p$.
+\end{exam}
+\begin{answer}
+If either vector is zero, the inequality is equality. Otherwise write $a=\norm{x}_p>0$, $b=\norm{y}_p>0$. The normalised vectors $x/a,y/b$ lie in the unit ball. Their convex combination with weights $a/(a+b)$ and $b/(a+b)$ is $(x+y)/(a+b)$, so its norm is at most $1$. Multiply by $a+b$ to obtain $\norm{x+y}_p\le\norm{x}_p+\norm{y}_p$. Convexity of the ball was proved using convexity of $|\cdot|^p$, without assuming the triangle inequality under proof.
+\end{answer}

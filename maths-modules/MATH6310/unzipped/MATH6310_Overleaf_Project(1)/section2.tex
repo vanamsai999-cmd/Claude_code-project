@@ -1,0 +1,280 @@
+\clearpage
+\setcounter{section}{1}
+\section{Real Analysis and Linear Algebra: revision}
+
+\topic{Real analysis tools}
+\begin{note}{Supremum, maximum, infimum and minimum}
+An upper bound $u$ satisfies $a\le u$ for every $a\in A$. The supremum $s=\sup A$ is the least upper bound. It need not belong to $A$. A maximum is an element of $A$ which is an upper bound. Similarly, an infimum is a greatest lower bound, while a minimum must lie in $A$.
+
+For $A=(0,1)$, $\sup A=1$, $\inf A=0$, and there is neither a maximum nor a minimum. For $[0,1)$, only the minimum is attained. The least upper bound principle says that every nonempty subset of $\R$ bounded above has a real supremum. For lower bounds use
+\[\inf A=-\sup(-A).\]
+\end{note}
+\begin{method}{Prove a proposed value is a supremum}
+First prove $a\le s$ for every $a\in A$. Then prove that for every $\varepsilon>0$ there is $a\in A$ with $s-\varepsilon<a$. Otherwise $s-\varepsilon$ would be a smaller upper bound. To approximate a supremum by a sequence, choose $a_n\in A$ with $s-1/n<a_n\le s$; if monotonicity is required replace $a_n$ by $\max\{a_1,\ldots,a_n\}$.
+
+For an infimum $t$, choose $a_n$ with $t\le a_n<t+1/n$. The infimum need not be attained, so never simply write ``choose $a\in A$ attaining $\inf A$'' without justification.
+\end{method}
+\begin{note}{Archimedean property and order density}
+$\N$ is unbounded above in $\R$; equivalently, for every $\varepsilon>0$ there exists $n$ with $1/n<\varepsilon$. Both rationals and irrationals occur between any two distinct reals.
+
+A short proof of irrational density: choose rational $q$ with $a-\sqrt2<q<b-\sqrt2$. Then $q+\sqrt2$ is irrational and lies in $(a,b)$.
+
+To obtain a minimum in a nonempty integer set $A$ bounded below by $p\in\Z$, apply well-ordering to $\{a-p+1:a\in A\}\subseteq\N$. Apply this to $-A$ for maxima of integer sets bounded above.
+\end{note}
+\begin{exam}{Section 2 practice: Exercise 2.6}
+Show that $\sup(\Q\cap[0,2\pi])=2\pi$. Is the supremum a maximum?
+\end{exam}
+\begin{answer}
+Let $A=\Q\cap[0,2\pi]$. It is nonempty because $0\in A$, and $2\pi$ is an upper bound. Let $\varepsilon>0$. Rational density gives a rational $q$ between $\max\{0,2\pi-\varepsilon\}$ and $2\pi$. Thus $q\in A$ and $q>2\pi-\varepsilon$. Consequently no smaller number is an upper bound, and $\sup A=2\pi$. Since $2\pi$ is irrational it does not lie in $A$; therefore $A$ has no maximum.
+\end{answer}
+\begin{note}{Sequence definitions and limit rules}
+A real sequence is a function $\N\to\R$. A subsequence has the form $(x_{n_k})$ with strictly increasing indices $n_1<n_2<\cdots$. The set of terms forgets order and repetitions.
+\[
+ x_n\to a \iff \forall\varepsilon>0\ \exists N\ \forall n\ge N:\ |x_n-a|<\varepsilon.
+\]
+\[
+ (x_n)\text{ Cauchy}\iff\forall\varepsilon>0\ \exists N\ \forall n,m\ge N:\ |x_n-x_m|<\varepsilon.
+\]
+Bounded means $|x_n|\le M$ for a single finite $M$ and every $n$. A convergent sequence is Cauchy and bounded. In $\R$, every Cauchy sequence converges. A bounded sequence need not converge: $(-1)^n$ is a counterexample.
+
+Limits respect finite linear combinations, products, modulus and reciprocals when the limiting denominator is nonzero. If $x_n\le y_n$ and both converge, then $\lim x_n\le\lim y_n$. Strict inequalities may become equality at the limit. The sandwich principle says that $a_n\le x_n\le b_n$ and $a_n,b_n\to L$ imply $x_n\to L$.
+\end{note}
+\begin{note}{Monotonicity, subsequences and Bolzano--Weierstrass}
+A bounded increasing sequence converges to the supremum of its terms. Indeed, choose $N$ with $x_N>s-\varepsilon$, where $s=\sup_nx_n$. For all $n\ge N$, $s-\varepsilon<x_N\le x_n\le s$. The decreasing version uses the infimum.
+
+Every real sequence has a monotone subsequence: call $n$ a peak if $x_n\ge x_m$ for all $m>n$. Infinitely many peaks produce a decreasing subsequence. If there are finitely many, each sufficiently late term has a larger later term, giving a recursively chosen increasing subsequence.
+
+\textbf{Bolzano--Weierstrass:} every bounded real sequence has a convergent subsequence. Apply the preceding fact and monotone convergence. If all terms are in a closed interval, the subsequential limit stays in that interval.
+\end{note}
+\begin{note}{Limsup and liminf: the eventual upper and lower levels}
+For a bounded real sequence define
+\[u_n=\sup_{k\ge n}x_k,\qquad l_n=\inf_{k\ge n}x_k.\]
+Then $(u_n)$ decreases, $(l_n)$ increases, and
+\[\limsup x_n=\lim_nu_n,\qquad\liminf x_n=\lim_nl_n.\]
+These are respectively the largest and smallest subsequential limits. Each is a subsequential limit, obtained by choosing increasingly late terms close to the corresponding tail supremum or infimum. Since $l_n\le x_n\le u_n$, a bounded sequence converges iff liminf equals limsup.
+
+A Cauchy sequence is bounded. Also $u_N-l_N\le\varepsilon$ once all distances between terms in the $N$th tail are below $\varepsilon$. Thus limsup equals liminf, proving completeness of $\R$.
+\end{note}
+\begin{exam}{Additional practice: oscillation and a geometric limit}
+(a) Find liminf and limsup of $x_n=(-1)^n+1/n$. (b) Find the supremum of the areas of regular $n$-gons inscribed in the unit circle, $n\ge3$ (Section 2, Exercise 2.8).
+\end{exam}
+\begin{answer}
+(a) The even subsequence tends to $1$; the odd subsequence tends to $-1$. Every tail has terms arbitrarily close to both, and all sufficiently late terms lie between $-1-\varepsilon$ and $1+\varepsilon$. Thus $\liminf x_n=-1$ and $\limsup x_n=1$. The sequence does not converge.
+
+(b) Split the polygon into $n$ triangles with two unit sides and angle $2\pi/n$. Its area is
+\[a_n=\frac n2\sin\frac{2\pi}{n}=\pi\frac{\sin(2\pi/n)}{2\pi/n}.\]
+Since $\sin t<t$ for $0<t\le2\pi/3$, $a_n<\pi$. Since $\sin t/t\to1$ as $t\to0$, $a_n\to\pi$. Hence $\pi$ is an upper bound approached arbitrarily closely, so $\sup_{n\ge3}a_n=\pi$, which is not attained.
+\end{answer}
+\begin{tip}
+Use $\varepsilon/2$ or $\varepsilon/3$ at the start when combining two or three error terms. When proving a sequence is Cauchy, your bound must hold for \emph{all} sufficiently large $m,n$, not just for consecutive terms. The sequence $\sum_{k=1}^n1/k$ has consecutive differences tending to zero but is not Cauchy.
+\end{tip}
+
+
+\topic{Linear algebra, continuity and integration}
+\begin{note}{Vector spaces and their maps}
+A vector space over $\R$ or $\C$ allows addition and scalar multiplication: addition is associative and commutative with zero and additive inverses; scalar multiplication has identity $1$, is associative with scalar multiplication, and distributes over vector and scalar addition.
+
+A linear subspace $U\subseteq V$ satisfies $0\in U$ and $u+\lambda v\in U$ for $u,v\in U$. A linear map satisfies $T(u+\lambda v)=Tu+\lambda Tv$. Its kernel and range are subspaces. A bijective linear map has a linear inverse. A linear functional is a linear map to the scalar field; on $\R^n$ it has the form $x\mapsto\sum a_ix_i$, with $a_i=T(e_i)$.
+
+Examples: vectors and matrices use componentwise operations; functions use pointwise operations; evaluation $f\mapsto f(s)$ is linear. Differentiation on real polynomials has kernel the constant polynomials and range all real polynomials. A translation $v\mapsto v+a$ is linear iff $a=0$. Every dilation $v\mapsto\lambda v$ is linear. Only the zero constant map is linear.
+\end{note}
+\begin{note}{Norms and inner products}
+A norm is finite and nonnegative, and satisfies
+\[\norm{x}=0\iff x=0,\quad\norm{\lambda x}=|\lambda|\norm{x},\quad\norm{x+y}\le\norm{x}+\norm{y}.\]
+An inner product is positive definite, conjugate symmetric and linear in one argument. Using the notes' convention (linear in the second argument),
+\[\langle u,v\rangle=\sum_i\overline{u_i}v_i,\quad |\langle u,v\rangle|\le\sqrt{\langle u,u\rangle\langle v,v\rangle}.\]
+It induces the norm $\norm{v}=\sqrt{\langle v,v\rangle}$. In the real case conjugation disappears. To derive its triangle inequality, expand $\norm{x+y}^2$, bound the cross term with Cauchy--Schwarz, and obtain $\norm{x+y}^2\le(\norm{x}+\norm{y})^2$.
+
+Inner product norms satisfy the parallelogram identity. The sup norm need not: in $\R^2$ with $u=(1,0)$, $v=(0,1)$, its two sides are $2$ and $4$. For $C([0,1])$ use $f(t)=1-t$, $g(t)=t$: the two sides are again $2$ and $4$.
+\end{note}
+\begin{note}{Continuity, uniform continuity and Lipschitz continuity}
+Continuity at $p$ means that given a tolerance $\varepsilon$, one can choose $\delta$ so that $|x-p|<\delta$ forces $|f(x)-f(p)|<\varepsilon$. The choice may depend on $p$.
+
+Uniform continuity requires a single $\delta$ for \emph{all} pairs of points, for each $\varepsilon$. Lipschitz continuity requires $|f(x)-f(y)|\le L|x-y|$ with one finite $L$. Thus Lipschitz implies uniform continuity, which implies continuity. If $|f'|\le L$ on an interval, the mean value theorem gives the Lipschitz bound.
+
+Examples: $x^2$ on $\R$ is continuous but not uniformly continuous (take $x_n=n$, $y_n=n+1/n$). $\sqrt x$ on $[0,1]$ is uniformly continuous but not Lipschitz, since $\sqrt t/t\to\infty$. On $[1,\infty)$, $1/x$ is $1$-Lipschitz because $|1/x-1/y|=|x-y|/(xy)\le|x-y|$.
+\end{note}
+\begin{note}{Compact interval theorems and integration estimates}
+For continuous $f:[a,b]\to\R$, $f$ is bounded, uniformly continuous, and attains a maximum and minimum. The intermediate value theorem says that it attains every value between $f(a)$ and $f(b)$. Together these imply that its image is a closed bounded interval.
+
+Continuous functions on $[a,b]$ are Riemann integrable; Riemann integrable functions are bounded. Integration is linear and order preserving, and
+\[\left|\int_a^bf\right|\le\int_a^b|f|\le(b-a)\norm{f}_\infty.\]
+If $F'=f$ and $f$ is continuous, $\int_s^tf=F(t)-F(s)$. Conversely, $F(t)=\int_a^tf(s)\,ds$ satisfies $F'(t)=f(t)$ (with the appropriate one-sided endpoint interpretation).
+
+On a nondegenerate interval, $\int|f|=0$ forces a \emph{continuous} $f$ to vanish. It does not force an arbitrary Riemann-integrable function to vanish pointwise.
+\end{note}
+\begin{exam}{Section 0 Exercise 0.2 / Section 2 Exercise 2.10}
+Explain why $\int_0^1|f|=0$ implies $f=0$ when $f$ is continuous. Give a counterexample without continuity.
+\end{exam}
+\begin{answer}
+Suppose $f(p)\ne0$ for some $p\in[0,1]$. Put $c=|f(p)|>0$. By continuity there is $\delta>0$ such that $|f(t)-f(p)|<c/2$ whenever $t\in[0,1]$ and $|t-p|<\delta$. The reverse triangle inequality gives $|f(t)|>c/2$ there. Choose a closed subinterval $J$ of positive length inside this neighbourhood, using a one-sided interval if $p$ is an endpoint. Then
+\[\int_0^1|f|\ge\int_J|f|\ge\frac c2|J|>0,\]
+a contradiction. Therefore $f(p)=0$ for every $p$.
+
+For a counterexample let $f(1/2)=1$ and $f(t)=0$ otherwise. This bounded function is Riemann integrable with integral of $|f|$ equal to zero, but it is not the zero function.
+\end{answer}
+\begin{exam}{Section 5 Exercise 5.8: integration as a Lipschitz map}
+For $R:C([0,1];\R)\to\R$, $R(f)=\int_0^1f$, find its optimal Lipschitz constant in the sup metric.
+\end{exam}
+\begin{answer}
+For $f,g\in C([0,1])$,
+\[|R(f)-R(g)|=\left|\int_0^1(f-g)\right|\le\int_0^1|f-g|\le\norm{f-g}_\infty.\]
+Thus $\Lip R\le1$. Taking $f\equiv1$ and $g\equiv0$ gives equality in the ratio, so $\Lip R=1$. An upper bound alone would not establish optimality.
+\end{answer}
+
+
+\topic{Detailed proof: The intermediate value theorem through an infimum}
+\begin{exam}{Additional practice based on Section 2}
+Let $f:[a,b]\to\R$ be continuous and $f(a)<c<f(b)$. Prove $f(t)=c$ for some $t\in(a,b)$ using an infimum.
+\end{exam}
+\begin{answer}
+Set $A=\{x\in[a,b]:f(x)\ge c\}$. Since $b\in A$, this set is nonempty; it is bounded below by $a$. Let $t=\inf A$. By infimum approximation choose $x_n\in A$ with $t\le x_n<t+1/n$. Thus $x_n\to t$, and since all $x_n\in[a,b]$, the weak inequalities pass to the limit to give $t\in[a,b]$. Continuity gives $f(x_n)\to f(t)$. Since every $f(x_n)\ge c$, we obtain $f(t)\ge c$. In particular $t\ne a$, because $f(a)<c$.
+
+Suppose $f(t)>c$. Continuity then gives $\delta>0$ with $f(x)>c$ whenever $x\in[a,b]$ and $|x-t|<\delta$. Because $t>a$, choose $h>0$ with $h<\min\{\delta,t-a\}$. Then $x=t-h\in[a,b]$ and $f(x)>c$, so $x\in A$. But $x<t=\inf A$, contradicting that $t$ is a lower bound. Therefore $f(t)=c$. Since $f(b)>c$, also $t\ne b$, so $t\in(a,b)$.
+
+For the decreasing endpoint case apply this result to $-f$ and $-c$. If $c$ equals an endpoint value, that endpoint already supplies the required point.
+\end{answer}
+\begin{note}{What each assumption does}
+The ordered real target lets us define the set where values are above $c$. Completeness of the real order supplies its infimum. The interval domain allows moving a little to the left of $t$. Continuity prevents a jump over the target value. This is a different use of completeness from Cauchy completeness of a general metric space, although the properties of $\R$ are related.
+\end{note}
+
+
+\topic{Proof clinic: Discovering an epsilon--delta proof}
+\begin{method}{Work backwards, then write forwards}
+Suppose you need $|f(x)-f(p)|<\varepsilon$. First manipulate the expression until you can bound it by something involving $|x-p|$. If another factor depends on $x$, impose a rough local restriction such as $|x-p|<1$ to bound that factor. Then choose the smaller of the rough restriction and the accuracy restriction.
+\end{method}
+\begin{exam}{Additional practice: continuity of $x^2$ at an arbitrary point}
+Prove $f(x)=x^2$ is continuous on $\R$ directly, explaining how you find $\delta$.
+\end{exam}
+\begin{answer}
+Fix $p\in\R$. The target difference factors as
+\[|x^2-p^2|=|x-p|\,|x+p|.\]
+The first factor is controlled by $\delta$, but the second initially is not. Require $|x-p|<1$. Then
+\[|x+p|\le|x-p|+2|p|<1+2|p|.\]
+Now it will suffice to have $|x-p|<\varepsilon/(1+2|p|)$. Combine both requirements by choosing
+\[\delta=\min\{1,\varepsilon/(1+2|p|)\}>0.\]
+If $|x-p|<\delta$, then both restrictions hold and
+\[|x^2-p^2|<\delta(1+2|p|)\le\varepsilon.\]
+This proves continuity at arbitrary $p$. Dependence of $\delta$ on $p$ is permitted for continuity.
+\end{answer}
+\begin{note}{Why the same proof does not show uniform continuity on $\R$}
+Uniform continuity would require a single $\delta$ for all $p$. The chosen denominator grows with $|p|$, so the proof does not provide that. To show actual failure, take $x_n=n$, $y_n=n+1/n$. Their separation is $1/n\to0$ while
+\[y_n^2-x_n^2=2+1/n^2\ge2.\]
+For target tolerance $1$, arbitrarily close inputs have image separation above $1$, contradicting uniform continuity.
+\end{note}
+
+
+\topic{Worked lecture exercises}
+\exercise{2.1}{Extrema of integer sets}
+\begin{exam}{Lecture exercise}
+A nonempty subset of $\Z$ is bounded below. Show it has a minimum. Deduce the corresponding maximum result for upper-bounded integer sets.
+\end{exam}
+\begin{answer}
+Suppose $a\ge p$ for every $a\in A$, with $p\in\Z$. Define $B=\{a-p+1:a\in A\}$. This is a nonempty subset of $\N$, since every transformed element is an integer at least $1$. By well-ordering, $B$ has a least element $b_0$. Since $b_0\in B$, there is $a_0\in A$ with $b_0=a_0-p+1$. For every $a\in A$, $a-p+1\ge b_0=a_0-p+1$, so $a\ge a_0$. Therefore $a_0=\min A$.
+
+If $A$ is bounded above, $-A=\{-a:a\in A\}$ is bounded below and nonempty. By the preceding result it has minimum $b_0$. Then $-b_0\in A$, and $-a\ge b_0$ for every $a\in A$, so $a\le-b_0$. Thus $\max A=-\min(-A)$.
+\end{answer}
+\begin{method}{Move to a setting where a theorem applies}
+An integer set may contain negative numbers, so well-ordering of $\N$ cannot be applied to it directly. Translating it into $\N$ is the missing bridge.
+\end{method}
+\exercise{2.2}{Three descriptions of bounded real sets}
+\begin{exam}{Lecture exercise}
+Prove equivalence of: (i) bounded above and below; (ii) $|a|\le M$ for all $a\in A$ and one $M$; (iii) all pairwise distances in $A$ have a common finite bound.
+\end{exam}
+\begin{answer}
+If $A=\varnothing$, all three statements hold vacuously. Assume $A\ne\varnothing$.
+
+(i)$\Rightarrow$(ii): choose $l,u\in\R$ with $l\le a\le u$ for all $a\in A$. Set $M=\max\{|l|,|u|\}$. Then $-M\le l\le a\le u\le M$, giving $|a|\le M$.
+
+(ii)$\Rightarrow$(iii): for $a,b\in A$, $|a-b|\le|a|+|b|\le2M$. Thus $2M$ is a finite diameter bound.
+
+(iii)$\Rightarrow$(i): choose $a_0\in A$ and a finite $D\ge0$ with $|a-b|\le D$ for all $a,b\in A$. Taking $b=a_0$ gives $a_0-D\le a\le a_0+D$. These are lower and upper bounds. This closes the cycle and proves equivalence.
+\end{answer}
+\begin{tip}
+For three equivalent statements, a cycle of implications is sufficient. You do not need six separate proofs.
+\end{tip}
+\exercise{2.3}{Approximating a supremum}
+\begin{exam}{Lecture exercise}
+For nonempty upper-bounded $A\subseteq\R$ and $s=\sup A$, prove that every $\varepsilon>0$ admits $a\in A$ with $s-\varepsilon<a\le s$.
+\end{exam}
+\begin{answer}
+The inequality $a\le s$ holds for every $a\in A$ because $s$ is an upper bound. Suppose, for a fixed $\varepsilon>0$, there were no $a\in A$ with $a>s-\varepsilon$. Then every $a\in A$ would satisfy $a\le s-\varepsilon$, so $s-\varepsilon$ would be an upper bound smaller than $s$. This contradicts leastness of the upper bound $s$. Therefore the required $a$ exists.
+
+Choosing such an $a_n$ for $\varepsilon=1/n$ gives $0\le s-a_n<1/n$, hence $a_n\to s$. Membership of $s$ in $A$ is not required.
+\end{answer}
+\begin{note}{When this construction appears again}
+Use it to produce points nearly maximising a continuous function, pairs nearly realising a diameter, and points nearly realising an infimum. Compactness can then turn approximate attainment into actual attainment.
+\end{note}
+\exercise{2.4}{Infima from suprema}
+\begin{exam}{Lecture exercise}
+Show that $x$ is a lower bound for $A$ iff $-x$ is an upper bound for $-A$, and deduce existence of $\inf A$ for nonempty lower-bounded $A$.
+\end{exam}
+\begin{answer}
+$x$ is a lower bound precisely when $x\le a$ for every $a\in A$. Multiplying by $-1$ reverses the inequality, giving $-a\le-x$ for every $a\in A$, which says $-x$ is an upper bound for $-A$. The argument reverses, proving equivalence.
+
+If $A$ is nonempty and lower bounded, then $-A$ is nonempty and upper bounded. By the least upper bound principle let $s=\sup(-A)$. For each $a\in A$, $-a\le s$, so $-s\le a$: thus $-s$ is a lower bound. If $l$ is any lower bound for $A$, then $-l$ is an upper bound for $-A$, hence $s\le-l$ and $l\le-s$. Therefore $-s$ is the greatest lower bound, so $\inf A=-\sup(-A)$.
+\end{answer}
+\exercise{2.5}{Irrational order density}
+\begin{exam}{Lecture exercise}
+For any real $a<b$, find an irrational $z$ with $a<z<b$.
+\end{exam}
+\begin{answer}
+Since $a-\sqrt2<b-\sqrt2$, rational order density gives $q\in\Q$ with $a-\sqrt2<q<b-\sqrt2$. Set $z=q+\sqrt2$. Adding $\sqrt2$ gives $a<z<b$. If $z$ were rational, then $\sqrt2=z-q$ would be the difference of rationals and hence rational, a contradiction. Thus $z$ is irrational and has the required location.
+\end{answer}
+\begin{method}{Shift a known dense set}
+A rational shift of an irrational is irrational. Shifting the target interval by one known irrational lets rational density do the difficult existence step. This proof assumes the rational-density result already established in Section 2.
+\end{method}
+\exercise{2.6}{A supremum not belonging to the set}
+\begin{exam}{Lecture exercise}
+Show $\sup(\Q\cap[0,2\pi])=2\pi$.
+\end{exam}
+\begin{answer}
+Let $A=\Q\cap[0,2\pi]$. It is nonempty because $0\in A$, and all its elements are at most $2\pi$. Fix $\varepsilon>0$. Since $\max\{0,2\pi-\varepsilon\}<2\pi$, rational density supplies $q$ strictly between these two numbers. Then $q\in A$ and $q>2\pi-\varepsilon$. Thus values in $A$ approach $2\pi$ arbitrarily closely from below. Together with the upper-bound property, this proves the asserted supremum. Since $2\pi\notin\Q$, it is not a maximum.
+\end{answer}
+\exercise{2.7}{Uniqueness of a real limit}
+\begin{exam}{Lecture exercise}
+If $x_n\to a$ and $x_n\to b$ in $\R$, prove $a=b$.
+\end{exam}
+\begin{answer}
+Assume $a\ne b$ and put $\varepsilon=|a-b|/3>0$. Convergence to $a$ gives $N_1$ with $|x_n-a|<\varepsilon$ for $n\ge N_1$. Convergence to $b$ gives $N_2$ with $|x_n-b|<\varepsilon$ for $n\ge N_2$. For $n\ge\max\{N_1,N_2\}$,
+\[|a-b|\le|a-x_n|+|x_n-b|<2\varepsilon=\tfrac23|a-b|,\]
+a contradiction. Hence $a=b$.
+\end{answer}
+\begin{tip}
+Each limit initially supplies a different cutoff. Taking the maximum makes both estimates available at the same index. The identical argument works in any metric space.
+\end{tip}
+\exercise{2.8}{Areas of inscribed regular polygons}
+\begin{exam}{Lecture exercise}
+For a regular inscribed $n$-gon in the unit circle, $n\ge3$, find the supremum of its areas.
+\end{exam}
+\begin{answer}
+Join the centre to each vertex. This gives $n$ triangles with two unit sides and angle $2\pi/n$ between them. A triangle has area $\frac12\sin(2\pi/n)$, so
+\[a_n=\frac n2\sin(2\pi/n)=\pi\frac{\sin(2\pi/n)}{2\pi/n}.\]
+For $t>0$, $\sin t<t$, hence $a_n<\pi$ for every $n\ge3$. Therefore $\pi$ is an upper bound. As $n\to\infty$, $2\pi/n\to0$ and $\sin t/t\to1$, so $a_n\to\pi$.
+
+To finish the supremum argument explicitly, let $u<\pi$. Choose $n$ with $|a_n-\pi|<\pi-u$. Then $a_n>u$, so $u$ is not an upper bound. Thus $\pi$ is the least upper bound and $\sup_{n\ge3}a_n=\pi$. No finite $n$ attains it.
+\end{answer}
+\begin{note}{Separate a guess from a proof}
+The diagram suggests the areas approach the circle's area, but the formula and limit establish the value without assuming the limit is the desired supremum. An upper bound plus a sequence approaching it is the general method.
+\end{note}
+\exercise{2.9}{Continuity is equivalent to sequential continuity}
+\begin{exam}{Lecture exercise}
+For $f:A\to\R$, $A\subseteq\R$, and $p\in A$, prove continuity at $p$ iff $x_n\to p$ in $A$ implies $f(x_n)\to f(p)$.
+\end{exam}
+\begin{answer}
+First assume $f$ continuous at $p$. Let $x_n\to p$ and fix $\varepsilon>0$. Continuity provides $\delta>0$ such that $x\in A$ and $|x-p|<\delta$ imply $|f(x)-f(p)|<\varepsilon$. Convergence provides $N$ such that $|x_n-p|<\delta$ for $n\ge N$. Therefore $|f(x_n)-f(p)|<\varepsilon$ for all $n\ge N$, proving image convergence.
+
+For the reverse direction, use the contrapositive. If $f$ is not continuous at $p$, then there is one $\varepsilon_0>0$ such that for every $\delta>0$ there is $x\in A$ with $|x-p|<\delta$ but $|f(x)-f(p)|\ge\varepsilon_0$. Set $\delta=1/n$ and choose such a point $x_n$. Then $|x_n-p|<1/n\to0$, so $x_n\to p$, but the image distances are all at least $\varepsilon_0$, preventing $f(x_n)\to f(p)$. Thus sequential continuity would fail. The contrapositive proves the converse.
+\end{answer}
+\begin{tip}
+In the negation, $\varepsilon_0$ is fixed before choosing $x_n$. If the lower bound shrank with $n$, it would not necessarily prevent image convergence.
+\end{tip}
+\exercise{2.10}{Zero integral and the role of continuity}
+\begin{exam}{Lecture exercise}
+Give an integrable nonzero $f$ with $\int_a^b|f|=0$, then show this is impossible for continuous $f$ when $a<b$.
+\end{exam}
+\begin{answer}
+Choose $p\in[a,b]$ and define $f(p)=1$, $f(t)=0$ for $t\ne p$. It is Riemann integrable with integral zero. Indeed, choose partition intervals around $p$ of total length below any prescribed $\varepsilon$; all other upper-sum contributions vanish. Lower sums vanish, so the integral of $|f|$ is zero, yet $f\ne0$.
+
+If $f$ is continuous and nonzero at $p$, let $c=|f(p)|$. Continuity gives a neighbourhood in $[a,b]$ on which $|f|>c/2$. Since $a<b$, this neighbourhood contains an interval $J$ of positive length, including for an endpoint $p$. Order preservation gives $\int_a^b|f|\ge(c/2)|J|>0$, a contradiction. Thus a continuous $f$ satisfying the zero-integral condition must vanish everywhere.
+\end{answer}

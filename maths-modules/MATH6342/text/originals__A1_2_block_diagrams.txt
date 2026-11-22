@@ -1,0 +1,66 @@
+                                              MATH6342 Linear Systems — A1.2(i)
+                                                          dx               dy
+                                                             = ax + bu,       = cx + du
+                                                          dt               dt
+                                                         Z                    Z
+                                                      x = (ax + bu) dt,    y = (cx + du) dt
+
+
+
+
+                                                              a
+
+                                                 ax
+
+
+                       u                    bu                R      x                      cx                R
+                                                                                                                          y
+                                     b            +                                  c            +
+
+
+                                                                                                    du
+
+                                                                                     d
+
+
+
+
+Lecture-note notation: The upper path feeds the state x through amplifier a back into the first summing junction. The lower path sends du into the
+second summing junction. Both differential equations are realised by integrators, with no differentiators. (Zero initial conditions are implicit.)
+                                               MATH6342 Linear Systems — A1.2(ii)
+                                                 dx                                   dy
+                                                    = ax + b1 u1 + b2 u2 ,               = cx + d1 u1 + d2 u2
+                                                 dt                                   dt
+                                                Z                                        Z
+                                             x = (ax + b1 u1 + b2 u2 ) dt,            y = (cx + d1 u1 + d2 u2 ) dt
+
+
+
+
+                                                                      a
+
+
+
+                    u1                                    ax
+                                      b1            +
+
+
+                         u2
+                                                                      R           x                                      R
+                                                                                                                                y
+                                                            +                                     c          +       +
+                                      b2
+
+
+
+                                                                             d1
+
+
+
+                                                                             d2
+
+
+
+Lecture-note notation: The two inputs are tapped and amplified independently. The state x is fed back by a; the two output contributions d1 u1 , d2 u2
+are added before the final integrator. No differentiators are used. (Zero initial conditions are implicit.)
+

@@ -1,0 +1,377 @@
+MATH6310 | Metric Spaces & Topology                                                                       Sai Vanam
+
+
+
+                           MATH6310 Exam Cheat Sheet
+                                   Metric Spaces & Topology | Sai Vanam
+
+    Scope
+
+    Companion to the detailed guide: supplied Sections 0 and 2–6, appendices and 2022–2025 MATH316 papers.
+    Section 1 was not supplied. Independently written model answers, not official mark schemes. Historical
+    papers do not confirm the current exam format.
+
+
+
+1     Metrics, balls and sequences
+
+    Definitions
+
+    Metric: finite d : E 2 → [0, ∞), d(x, y) = 0 ⇐⇒ x = y, symmetry, and d(x, z) ≤ d(x, y) + d(y, z).
+    Norm: definite, homogeneous ∥λx∥ = |λ| ∥x∥, and ∥x + y∥ ≤ ∥x∥ + ∥y∥. Induced metric d(x, y) = ∥x − y∥.
+
+                               Br (a) = {x : d(x, a) < r},       Br [a] = {x : d(x, a) ≤ r}.
+
+                                 diam A = sup d(x, y),           dist(x, A) = inf d(x, a).
+                                            x,y∈A                             a∈A
+
+    The distance-to-set formula assumes A ̸= ∅. Bounded means finite diameter, equivalently containment in a
+    finite-radius ball.
+                                   xn → a : ∀ε > 0 ∃N ∀n ≥ N : d(xn , a) < ε.
+                                 Cauchy : ∀ε > 0 ∃N ∀n, m ≥ N : d(xn , xm ) < ε.
+    Convergent implies Cauchy implies bounded. Limits are unique. Cauchy plus a convergent subsequence
+    implies convergence of the full sequence to the same limit.
+
+
+    Method: Distance estimates and local radii
+
+                         |d(x, p) − d(y, p)| ≤ d(x, y),   |d(a, b) − d(c, e)| ≤ d(a, c) + d(b, e).
+    Derive one side using triangle inequality, then swap roles. The distance-to-set function is 1-Lipschitz. For
+    p ∈ BR (a), the radius r = R − d(p, a) > 0 satisfies Br (p) ⊆ BR (a). For an intersection of two balls use the
+    minimum of their two spare radii.
+
+
+    Exam question: 2024 Q1: discrete convergence
+
+    Why does convergence in a discrete metric space mean eventual constancy?
+
+
+    Worked model answer
+    If xn → p, use ε = 1/2. Eventually d(xn , p) < 1/2, so the discrete distance is zero and xn = p. Conversely
+    an eventually constant sequence has eventually zero distance from its eventual value, hence converges. The
+    same argument for pairs shows discrete Cauchy sequences are eventually constant, so every discrete space is
+    complete.
+
+
+    Exam tips and common mistakes
+
+    Discrete open balls: singleton for 0 < r ≤ 1, whole space for r > 1. Closed balls: singleton for r < 1,
+    whole space for r ≥ 1. A metric-verification proof must check finiteness and every axiom, not just triangle
+    inequality.
+
+
+
+
+                                                             1
+MATH6310 | Metric Spaces & Topology                                                                        Sai Vanam
+
+
+
+2     Topology, subspaces and continuity
+
+    Definitions and identities
+    Open: ∀p ∈ U ∃r > 0 : Br (p) ⊆ U . Closed: limits in the ambient space of sequences from F stay in F .
+    Closed iff complement open.
+
+                            p ∈ A ⇐⇒ ∀r > 0 : Br (p) ∩ A ̸= ∅ ⇐⇒ ∃an ∈ A : an → p.
+
+    For nonempty A this also means dist(p, A) = 0.
+
+                                Int A = {p : ∃r > 0 : Br (p) ⊆ A},   ∂A = A \ Int A.
+
+                                       ∂A = A ∩ E \ A,     E \ A = Int(E \ A).
+    Open sets: arbitrary unions, finite intersections. Closed sets: arbitrary intersections, finite unions. A ∪ B =
+    A ∪ B, but only A ∩ B ⊆ A ∩ B in general.
+
+
+    Relative topology
+
+    dA = dE |A×A and BrA (a) = A ∩ BrE (a).
+    V open in A iff V = A ∩ U for an ambient open U ; F closed in A iff F = A ∩ C for ambient closed C. The
+    set [0, 1) is both open and closed in itself, neither in usual R. Always state the ambient space.
+
+
+    Continuity tests
+
+    At p: given ε > 0, find δ > 0 such that d(x, p) < δ implies d(f (x), f (p)) < ε. Equivalent to preserving
+    sequence limits at p.
+    Globally continuous iff every open preimage is open, iff every closed preimage is closed. Lipschitz implies
+    uniformly continuous implies continuous. Uniform continuity uses one δ for all pairs at each tolerance.
+    Isometry preserves distances exactly and is injective. A homeomorphism is a continuous bijection with
+    continuous inverse. A continuous bijection from a sequentially compact space into a metric space is a
+    homeomorphism onto its image.
+
+
+    Exam question: 2025 Q3(f): open preimages imply continuity
+
+    Prove this direction of the open-preimage theorem.
+
+
+    Worked model answer
+
+    Fix p and ε > 0. The set W = f −1 [Bε (f (p))] is open and contains p. Therefore some δ > 0 satisfies
+    Bδ (p) ⊆ W . For d(x, p) < δ, membership in this preimage gives d(f (x), f (p)) < ε. This proves continuity at
+    arbitrary p.
+
+
+    Exam tips and common mistakes
+
+    To disprove openness, one bad point suffices. To disprove closedness, use a sequence with a missing limit.
+    To disprove continuity, use a convergent sequence whose images have the wrong limit. Images of open sets
+    need not be open under continuous maps: a constant function is a counterexample.
+
+
+
+
+                                                          2
+MATH6310 | Metric Spaces & Topology                                                                         Sai Vanam
+
+
+
+3      Density, countability and metric equivalence
+
+    Density and separability
+
+    D dense in E iff D = E iff every nonempty open ball meets D. Separable means admitting a countable
+    dense subset. Use Qn in Rn . In sup-metric C([0, 1]), use dyadic piecewise-linear functions with rational
+    vertex values: countable by finite rational tuples, dense by uniform continuity and interpolation.
+    Countable means admitting an injection into N, including finite sets. Countable unions and finite products
+    of countable sets are countable. To prove binary sequence space uncountable, suppose rows s(n) enumerate
+                           (n)
+    it and form bn = 1 − sn . The new sequence differs from every row, contradiction.
+
+
+    Exam question: 2023 Q3(a): dense intersect open dense
+
+    Prove D ∩ U dense if D dense and U open dense.
+
+
+    Worked model answer
+    Fix any Br (p). Density of U gives u ∈ Br (p) ∩ U . This intersection is open, so contains a ball Bs (u). Density
+    of D provides a point of D in that smaller ball, hence in Br (p) ∩ U ∩ D. Thus every ball meets D ∩ U .
+    Without openness the claim fails: rationals and irrationals are disjoint dense sets.
+
+
+    Three comparisons
+
+    Topological equivalence: same open sets, or same convergent sequences with the same limits. Cauchy
+    equivalence: same Cauchy sequences; also implies topological equivalence by interleaving a convergent
+    sequence with its limit.
+    Lipschitz equivalence: c d ≤ d′ ≤ C d for constants c, C > 0. This preserves boundedness, Cauchyness and
+    completeness. Topological equivalence preserves sequential compactness but need not preserve completeness
+    or boundedness.
+    Finite-dimensional norms satisfy ∥x∥∞ ≤ ∥x∥p ≤ n1/p ∥x∥∞ , hence all ℓp metrics there are Lipschitz
+    equivalent.
+
+
+    Method: Transformed metrics
+    If α is definite, nondecreasing and subadditive, α ◦ d is a metric. If also continuous at zero, the standard
+    examples preserve topology and Cauchy sequences: min(1, t), t/(1 + t), arctan t, t1/p for p ≥ 1.
+    To disprove Lipschitz equivalence, make a distance ratio tend to zero or infinity. To disprove Cauchy
+    equivalence, exhibit one Cauchy mismatch. For dN S (x, y) = | arctan x − arctan y|, (n) is Cauchy because
+    arctangents converge; it is not usual-metric Cauchy. Thus this topologically equivalent metric changes
+    completeness.
+
+
+    Exam tips and common mistakes
+
+    min(1, d) preserves Cauchy sequences but cannot be Lipschitz equivalent to an unbounded d. Do not confuse
+    arctan(d(x, y)) with the pullback | arctan x − arctan y|.
+
+
+
+
+                                                           3
+MATH6310 | Metric Spaces & Topology                                                                          Sai Vanam
+
+
+
+4      Completeness and contraction methods
+
+    Completeness shortcuts
+
+    Complete means every Cauchy sequence converges inside the space. A complete subset is closed in any
+    metric ambient space. A closed subset of a complete space is complete.
+    For complete E, ℓ∞ (S; E) is complete in the sup metric. Proof structure: pointwise Cauchy sequences give
+    pointwise limits; pass to the limit in the uniform Cauchy bound; prove the limit bounded by comparison
+    with one fixed bounded term.
+    Uniform limits of continuous maps are continuous. Choose fN uniformly within ε/3 of f , then use continuity
+    of the fixed fN to bound the middle term in
+
+                            d(f (x), f (p)) ≤ d(f (x), fN (x)) + d(fN (x), fN (p)) + d(fN (p), f (p)).
+
+    Thus Cb (X; E) is complete when E is. On sequentially compact K, continuous maps are bounded, so
+    C(K; E) = Cb (K; E).
+
+
+    Banach’s theorem and estimates
+    On a nonempty complete space, a self-map T satisfying d(T x, T y) ≤ qd(x, y) for one 0 ≤ q < 1 has exactly
+    one fixed point p. From any start, xn+1 = T xn converges to p and
+
+                                                   qn                                      d(xn , xn+1 )
+                                    d(xn , p) ≤       d(x0 , x1 ),           d(xn , p) ≤                 .
+                                                  1−q                                         1−q
+
+    Geometric sums make the iterates Cauchy; completeness gives a limit; continuity makes it fixed; d(p, r) ≤
+    qd(p, r) proves uniqueness.
+    If T K is a contraction, its fixed point p also satisfies T p = p because T K (T p) = T (T K p) = T p. Each
+    sequence T mK+r x tends to p; finitely many remainders give convergence of the full iteration.
+
+
+    Exam question: Additional practice: integral fixed point
+                            Rt
+    Show T f (t) = 1 + 12    0
+                                 f (s) ds has one fixed point in C([0, 1]).
+
+
+    Worked model answer
+    The sup space C([0, 1]) is nonempty and complete. Integration preserves continuity here, so T is a self-map.
+    For all t,                                       Z                t
+                                        |T f (t) − T g(t)| ≤ 12           |f − g| ≤ 21 ∥f − g∥∞ .
+                                                                  0
+
+    Take the supremum to get contraction constant 1/2. Banach gives a unique fixed point. Its equation implies
+    y ′ = y/2, y(0) = 1, so y(t) = et/2 ; substitution verifies the formula.
+
+
+    Method: Longer-interval integral equations
+                  Rt
+    For T f = α + a β(f (s), s) ds, with continuous data and uniform constant M in the first argument of β,
+    Lip T ≤ M (b − a). If this is not < 1, repeated integration gives Lip(T n ) ≤ [M (b − a)]n /n!, eventually below
+    1. Apply the contraction-iterate result.
+
+
+
+
+                                                                     4
+MATH6310 | Metric Spaces & Topology                                                                     Sai Vanam
+
+
+
+5     Sequential compactness and products
+
+    The main results
+    Sequentially compact means every sequence has a subsequence converging to a point of the set. This implies
+    closed, bounded and complete. Closed subsets of sequentially compact spaces are sequentially compact.
+    Finite unions and intersections of such subsets remain sequentially compact.
+    Continuous images preserve sequential compactness: lift an image sequence to the domain, extract a
+    subsequence, apply continuity. Real-valued continuous functions on nonempty compact sets attain extrema.
+    Distance to a point and diameter are attained on nonempty compact sets.
+    Heine–Borel: in finite-dimensional Rn under any ℓp metric, sequentially compact iff closed and bounded. To
+    prove the reverse direction, enclose the set in a compact box and use closedness.
+
+
+    Products and the diagonal method
+
+    A countable product metric is                   X
+                                        D(x, y) =         2−i min{1, di (xi , yi )}.
+                                                    i≥1
+
+    Convergence and Cauchyness are coordinatewise. Products of complete factors are complete. Products of
+    sequentially compact factors are sequentially compact: take successive subsequences making coordinate 1,
+    then 2, then 3, etc. converge, then select the diagonal.
+    To turn coordinatewise convergence into product convergence, make the weighted tail < ε/2 and control the
+    finitely many initial coordinates to contribute < ε/2. Never take a maximum over infinitely many coordinate
+    cutoffs.
+
+    Total boundedness
+    For every r > 0, finitely many radius-r balls cover the set. It implies boundedness: a finite radius-1 cover
+    bounds every pairwise distance by 2 plus the maximum distance between covering centres.
+
+                        sequential compactness ⇐⇒ completeness and total boundedness.
+
+    An infinite discrete space is complete and bounded but not totally bounded or sequentially compact.
+
+
+    Exam question: 2025 Q5(c): complete and totally bounded
+
+    Prove these hypotheses imply sequential compactness.
+
+
+    Worked model answer
+    Given any sequence, a finite radius-1 cover has a ball containing terms at infinitely many indices. Select
+    those terms. Repeat with a finite radius-1/2 cover inside that subsequence, then 1/3, and so on. Take the
+    jth term of row j. For every fixed J, the diagonal tail lies in one radius-1/J ball, so mutual distances are
+    < 2/J. Thus the diagonal subsequence is Cauchy. Completeness yields a limit in the set. Every sequence
+    therefore has a subsequence converging in the set.
+
+
+    Exam tips and common mistakes
+
+    For a continuous bijection from compact, prove inverse continuity via closed sets: a closed domain subset
+    is compact, its image is compact and hence closed. Complete and bounded alone is insufficient in general
+    metric spaces.
+
+
+
+
+                                                             5
+MATH6310 | Metric Spaces & Topology                                                                       Sai Vanam
+
+
+
+6     Cantor constructions and final counterexample bank
+
+    Two Cantor results
+    Intersection theorem: in complete E, nested nonempty closed Fn with diam Fn → 0 have singleton intersection.
+    Select xn ∈ Fn ; diameters make it Cauchy; closedness puts the limit in every Fn ; shrinking diameters give
+    uniqueness.
+    Middle-thirds set: Z = n Zn , where Zn consists of 2n closed intervals of length 3−n . It is closed bounded,
+                            T
+    hence compact. The map                       X
+                                          ϕ(c) =    2cn /3n (c ∈ {0, 1}N )
+                                                 n≥1
+
+    is a continuous bijection from compact binary sequence space, hence a homeomorphism. First differing digit
+    dominates the remaining tail, giving injectivity. Thus Z is uncountable; it has empty interior and is closed,
+    so is nowhere dense. Its stage covers have total length (2/3)n → 0, proving length zero.
+
+
+    Counterexamples to memorise
+
+     False claim                                         Example
+     Bounded implies Cauchy                              (−1)n in R.
+     Cauchy implies convergence in any space             1/n in (0, 1).
+     Complete and bounded implies compact                Infinite discrete space.
+     Continuous bijection implies homeomorphism          Identity: discrete R to usual R.
+     Continuous image of bounded is bounded              1/x on (0, 1].
+     Continuous image of closed is closed                1/(1 + x) on [0, ∞).
+     Dense sets always have dense intersection           Rationals and irrationals.
+                                                         T
+     Infinite intersection of open is open                 n (−1/n, 1/n) = {0}.
+     Closure distributes over intersection               (0, 1) and (1, 2).
+     Pointwise limit of continuous is continuous         tn on [0, 1].
+     Zero integral discrepancy means equality            Functions differing at one point.
+
+
+    Non-examinable material in the supplied notes
+
+    Appendix I proves Minkowski through convexity of the unit ball. Appendix II extends real-valued Lipschitz
+    functions from arbitrary subsets. Baire category: countable intersections of open dense subsets of a complete
+    metric space are dense. Nowhere dense means Int(A) = ∅; meagre means countable union of nowhere dense
+    sets. The completion existence/uniqueness proof is also marked non-examinable. Full explanations and
+    additional practice appear in the detailed guide.
+
+
+    Exam question: Additional practice: dropping closedness in Cantor intersection
+
+    Give a counterexample even in a complete ambient space.
+
+
+    Worked model answer
+    In complete R, let Fn = (0, 1/n). The sets are nonempty and nested with diameter 1/n → 0. But their
+    intersection is empty: any x > 0 exceeds 1/n for some n, and zero is excluded. Thus closedness cannot be
+    omitted.
+
+    Exam tips and common mistakes
+
+    Final proof check: ambient space named; quantifiers correct; both implications proved; limit stays in the set;
+    theorem hypotheses checked; strict inequalities handled after limits; counterexample verifies hypotheses as
+    well as failure. Use the detailed guide’s past-paper map for every question in 2022–2025. No sheet guarantees
+    every possible examination question.
+
+
+
+
+                                                          6
+

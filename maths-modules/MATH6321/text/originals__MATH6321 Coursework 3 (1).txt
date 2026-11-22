@@ -1,0 +1,39 @@
+                             MATH6321 Coursework 3
+
+
+This coursework is worth 5% of your mark for this module and should be handed in by 4pm on
+Wednesday 18th November. Remember to show your working!
+
+
+  1. (4 marks) Alice and Bob decide to use the RSA encryption scheme to communicate securely.
+     Alice has public key (N, e) = (299, 5) and Bob wishes to send the message m = 10 ∈ (Z/N Z)×
+     to Alice.
+     Compute the ciphertext that Bob sends to Alice and demonstrate that Alice can decrypt this.
+
+
+  2. (4 marks) Alice is worried that a hacker might be pretending to be Bob. She decides to
+     ask Bob to sign the next message using the El-Gamal signature scheme. His public key is
+     (G, q, g, h) = (G, 88, 3, 66) and his private key is k = 13 (with G = (Z/89Z)× ). He chooses
+     auxiliary message m0 = 23 and secret value s = 5.
+     Compute the signature that Bob sends to Alice and demonstrate that Alice can verify this.
+
+
+  3. (2 marks) Crappy Crypt Ltd. are a budget crypt company that cater for all of your insecurity
+     needs. Recently, a healthcare company (which may or may not be the NHS) has paid them to
+     upgrade their security so that they can securely distribute patient data between staff. Each
+     piece of patient data is a positive integer m ∈ N which has 30 digits or less.
+     Each member of staff has been allocated an RSA public/private key pair by Crappy Crypt Ltd.,
+     and the public key pairs are (Ni , ei ). In each case, the public modulus Ni is cryptographically
+     sound (i.e. very large and considered infeasible to factorize) and each public exponent ei has
+                                         1
+     been chosen to satisfy 0 < ei ≤ 30     ⌊log10 (Ni )⌋. The system encrypts the data as usual, i.e.
+           ei
+     c ≡ m mod Ni .
+     Within a matter of minutes of using this scheme, the entire database of patient data was leaked
+     online. Explain why this was possible.
+
+
+
+
+                                                 1
+

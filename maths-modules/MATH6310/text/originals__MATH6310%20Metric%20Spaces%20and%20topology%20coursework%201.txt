@@ -1,0 +1,114 @@
+MATH6310 Metric Spaces and Topology                                             Coursework 1
+
+
+             MATH6310 Metric Spaces and Topology
+                       Coursework 1
+                                                Sai Vanam
+
+
+Exercise 0.1: The Discrete Metric
+
+Let S be a set. The discrete metric on S is defined by
+                                                         (
+                                                          0, s = t,
+                                        ddisc (s, t) =
+                                                          1, s ̸= t.
+
+We verify that ddisc is a metric by checking the three metric axioms.
+
+(MS1) Identity of indiscernibles
+By definition,
+                                       ddisc (s, t) = 0 ⇐⇒ s = t.
+Hence the first metric axiom is satisfied.
+
+(MS2) Symmetry
+We must show that
+                                          ddisc (s, t) = ddisc (t, s)
+for all s, t ∈ S.
+If s = t, then
+                                       ddisc (s, t) = 0 = ddisc (t, s).
+If s ̸= t, then also t ̸= s, so
+                                       ddisc (s, t) = 1 = ddisc (t, s).
+Therefore,
+                                         ddisc (s, t) = ddisc (t, s) .
+Thus symmetry holds.
+
+(MS3) Triangle inequality
+We must prove that for all s, t, u ∈ S,
+
+                                  ddisc (s, t) ≤ ddisc (s, u) + ddisc (u, t).
+
+There are two cases.
+Case 1: s = t. Then
+                                              ddisc (s, t) = 0.
+Since distances are non-negative,
+
+                                      0 ≤ ddisc (s, u) + ddisc (u, t),
+
+so the triangle inequality holds.
+
+
+                                                      1
+MATH6310 Metric Spaces and Topology                                              Coursework 1
+
+
+Case 2: s ̸= t. Then
+                                            ddisc (s, t) = 1.
+It is impossible to have both s = u and u = t, since that would imply s = t. Therefore at least
+one of
+                                   ddisc (s, u),   ddisc (u, t)
+is equal to 1. Hence
+                             ddisc (s, u) + ddisc (u, t) ≥ 1 = ddisc (s, t).
+Thus
+                               ddisc (s, t) ≤ ddisc (s, u) + ddisc (u, t) .
+Therefore the triangle inequality holds, and ddisc is a metric on S.
+
+
+
+
+                                                   2
+MATH6310 Metric Spaces and Topology                                          Coursework 1
+
+
+Exercise 0.4: The Counting Metric
+
+For sets A and B, define the counting metric by
+
+                                        d(A, B) = |A△B|,
+
+where A△B denotes the symmetric difference
+
+                                     A△B = (A \ B) ∪ (B \ A).
+
+We verify the triangle inequality.
+We need to show that for all sets A, B, C,
+
+                                 d(A, C) ≤ d(A, B) + d(B, C).
+
+The key observation is
+                                     A△C ⊆ (A△B) ∪ (B△C).
+To see this, let x ∈ A△C. Then x belongs to exactly one of A and C.
+Suppose first that x ∈ A and x ∈
+                               / C. If x ∈
+                                         / B, then x ∈ A△B. If instead x ∈ B, then x ∈ B△C.
+Similarly, if x ∈ C and x ∈
+                          / A, then either x ∈ A△B or x ∈ B△C.
+Therefore every element of A△C lies in (A△B) ∪ (B△C), and hence
+
+                                 |A△C| ≤ |(A△B) ∪ (B△C)|.
+
+Using the elementary inequality |X ∪ Y | ≤ |X| + |Y |, we obtain
+
+                                     |A△C| ≤ |A△B| + |B△C|.
+
+Since d(X, Y ) = |X△Y |, this becomes
+
+                                 d(A, C) ≤ d(A, B) + d(B, C) .
+
+Thus the counting metric satisfies the triangle inequality.
+
+
+
+
+                                                3
+

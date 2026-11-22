@@ -1,0 +1,210 @@
+MATH6342 Linear Systems                                                                       Sai Vanam
+
+
+                               MATH6342 Linear Systems
+                                          Assessed Exercise 2
+                                              Sai Vanam
+
+
+
+A2.1
+
+Let                                                  
+                  4 −3 3                        1                           
+            A =  8 −8 −1 ,               B = −1 ,          C= 1 3 1 ,            D = 0.
+                                              
+                 −4 4  1                        2
+(i) The characteristic polynomial of A is
+                                                                
+                                        s−4  3   −3
+           χA (s) = det(sI − A) = det  −8 s + 8  1 
+                                                   
+                                         4  −4 s − 1
+                                                                                        
+                  = (s − 4) (s + 8)(s − 1) + 4 − 3 − 8(s − 1) − 4 − 3 32 − 4(s + 8)
+                  = (s − 4)(s2 + 7s − 4) + 36s − 12
+                  = s3 + 3s2 + 4s + 4
+                  = (s + 2)(s2 + s + 2).
+
+Hence the eigenvalues of A, expressed as algebraic surds, are
+                                              √               √
+                                       −1 + i 7        −1 − i 7
+                               −2,                ,             .
+                                            2               2
+(ii) Put q(s) = det(sI − A) = (s + 2)(s2 + s + 2). By the adjugate formula,
+
+                                                        adj(sI − A)B
+                                   (sI − A)−1 B =                    .
+                                                             q(s)
+
+The adjugate is
+                                                                                
+                                     s2 + 7s − 4    15 − 3s     3s + 27
+                      adj(sI − A) =  8s − 4     s2 − 5s + 16    28 − s  .
+                                                                         
+                                         −4s        4s − 4    s2 + 4s − 8
+
+Consequently,                                                           
+                                                   s2 + 16s + 35
+                                       −1    1  2
+                               (sI − A) B =      −s + 11s + 36 .
+                                                                 
+                                            q(s)
+                                                      2s2 − 12
+Since D = 0, the transfer function is therefore
+
+                      T (s) = C(sI − A)−1 B
+                             (s2 + 16s + 35) + 3(−s2 + 11s + 36) + (2s2 − 12)
+                           =
+                                                   q(s)
+                                  49s + 131
+                           =                     .
+                             (s + 2)(s2 + s + 2)
+
+
+
+
+                                                    1
+MATH6342 Linear Systems                                                                      Sai Vanam
+
+
+A2.2
+
+For the monic polynomial p(s) = s4 + 2s3 + s2 + 4s + 2, take the companion matrix
+                                                                   
+                                           0 1  0  0
+                                         0  0  1  0
+                                      A=            .
+                                                    
+                                         0  0  0  1
+                                          −2 −4 −1 −2
+
+Indeed,                                                    
+                                      s −1 0   0
+                                    0 s −1    0 
+                  det(sI − A) = det              = s4 + 2s3 + s2 + 4s + 2.
+                                                
+                                    0 0   s  −1 
+                                     2 4   1 s+2
+Thus p is the characteristic polynomial of A. Numerically solving p(s) = 0 gives the eigenvalues
+
+            λ1 ≈ −2.18766119,                               λ2 ≈ −0.51559462,
+            λ3 ≈ 0.35162790 + 1.28432544i,                  λ4 ≈ 0.35162790 − 1.28432544i.
+
+These values may be obtained in MATLAB using roots([1 2 1 4 2]).
+
+
+A2.3
+
+(i) For each integer k ≥ 0, the transpose rule gives
+
+                                 (CAk )⊤ = (Ak )⊤ C ⊤ = (A⊤ )k C ⊤ .
+
+Transposing the rows of Q therefore gives
+                                                                       
+                             Q⊤ = C ⊤ (CA)⊤ · · ·          (CAn−1 )⊤
+                                                                       
+                                = C ⊤ A⊤ C ⊤ · · ·         (A⊤ )n−1 C ⊤ = R.
+
+Since a matrix and its transpose have equal rank,
+
+                                  rank(Q) = rank(Q⊤ ) = rank(R).
+
+(ii) Suppose C ⊤ is an eigenvector of A⊤ , with corresponding eigenvalue λ. Then A⊤ C ⊤ = λC ⊤ ,
+and induction gives
+                                 (A⊤ )k C ⊤ = λk C ⊤    (k ≥ 0).
+It follows that                                                                 
+                    R = C ⊤ λC ⊤ · · ·        λn−1 C ⊤ = C ⊤ 1 λ · · ·         λn−1 .
+
+All columns of R are scalar multiples of C ⊤ . Moreover, C ⊤ ̸= 0 because it is an eigenvector, so the
+first column of R is nonzero. Therefore
+
+                                              rank(R) = 1.
+
+
+
+
+                                                   2
+MATH6342 Linear Systems                                                                                    Sai Vanam
+
+
+A2.3 (iii) For                                        
+                             1     3       5 0
+                            0     1       9 6                                                       
+                          A=                  ,                  C = 1 −5 − 12                   3 ,
+                                              
+                            1     1       4 −7
+                             2     2       1 8
+we compute the successive row vectors
+                                                                   
+                                          13       7
+                            CA =          2        2   −39 − 25 ,
+                                                                                              
+                           CA2 = (CA)A = − 75
+                                           2                       −21 − 189
+                                                                          2            274 ,
+                                                                                              
+                           CA3 = (CA2 )A = 416 320 − 961
+                                                      2
+                                                                                       5455
+                                                                                         2         .
+
+Thus
+                                                               − 12
+                                                                                  
+                                                   1        −5               3
+                                            13             7
+                                                               −39          − 25 
+                                  Q =  275                 2                    .
+                                                                                
+                                      − 2                 −21 − 189
+                                                                  2         274 
+                                       416                 320 − 961
+                                                                  2
+                                                                            5455
+                                                                              2
+Multiplication by the nonzero scalar 2 preserves rank, so it suffices to determine the rank of
+                                                                                  
+                                         2  −10 −1    6
+                                       13   7  −78   −5 
+                                 2Q =                    .
+                                                         
+                                      −75 −42 −189 548 
+                                        832 640 −961 5455
+
+Perform the invertible row operations
+
+                 R2 ← 2R2 − 13R1 ,             R3 ← 2R3 + 75R1 ,                   R4 ← R4 − 416R1 .
+
+The resulting matrix is                                                           
+                                      2 −10   −1    6
+                                     0 144 −143 −88 
+                                  M =                 .
+                                                      
+                                     0 −834 −453 1546
+                                      0 4800 −545 2959
+Its lower-right 3 × 3 block has determinant
+                                                                   
+                                  144 −143 −88
+                            det −834 −453 1546
+                                                
+                                  4800 −545 2959
+                                                                                       
+                                 = 144 (−453)(2959) − 1546(−545)
+                                                                                           
+                                   + 143 (−834)(2959) − 1546(4800)
+                                                                                               
+                                   − 88 (−834)(−545) − (−453)(4800)
+                                 = −1 717 107 906 ̸= 0.
+
+                                                                  ̸ 0. Hence M has rank 4. As
+Expanding det M along its first column therefore shows that det M =
+all the preceding operations preserve rank, we conclude that
+
+                                                       rank(Q) = 4.
+
+
+
+
+                                                               3
+

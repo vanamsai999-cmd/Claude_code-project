@@ -1,0 +1,92 @@
+                          MATH6310 Coursework 1
+
+                                            Sai Vanam
+
+
+
+Exercise 0.1 — Discrete metric                                                        (10 marks)
+
+Question. Prove that the discrete metric on a set S is a metric.
+Solution. The discrete metric states that, for any set S, we define
+                                                       (
+                                                           0,   if s = t,
+                                  ddiscrete (s, t) =
+                                                           1,   if s ̸= t.
+
+To prove that this is a metric, it has to satisfy three conditions for every x, y, z ∈ S:
+
+                  (MS1)       d(x, y) = 0 ⇐⇒ x = y,
+                  (MS2)       d(x, y) = d(y, x) (symmetry),
+                  (MS3)       d(x, z) ≤ d(x, y) + d(y, z) (triangle inequality).
+
+Also, d only takes the values 0 and 1, so its values are always non-negative and finite.
+(MS1). This is satisfied because, by the definition of the discrete metric, d(x, y) = 0 exactly
+when x = y. If x ̸= y, the distance is 1, not 0.
+(MS2). To prove symmetry, consider any x, y ∈ S. If x = y, then d(x, y) = 0 = d(y, x). If
+x ̸= y, then y ̸= x as well, so d(x, y) = 1 = d(y, x). Therefore, in both cases,
+
+                                         d(x, y) = d(y, x).
+
+(MS3). To prove the triangle inequality, consider any x, y, z ∈ S.
+If x = z, then d(x, z) = 0, and since distances are non-negative,
+
+                                 0 = d(x, z) ≤ d(x, y) + d(y, z).
+
+If x ̸= z, then d(x, z) = 1. In this case, x ̸= y or y =
+                                                       ̸ z (or both): otherwise x = y and y = z
+would imply x = z, which is a contradiction. Therefore, at least one of d(x, y) and d(y, z) equals
+1, so
+                                  d(x, y) + d(y, z) ≥ 1 = d(x, z).
+Thus the triangle inequality holds in both cases.
+Since (MS1), (MS2) and (MS3) are satisfied, the discrete metric is a metric on any set S. □
+
+
+Exercise 0.4 — Counting metric                                                        (10 marks)
+
+Question. Verify the Triangle Inequality for the counting metric.
+
+                                                   1
+Solution. Let S be a finite set. For any subsets A, B ⊆ S, the counting metric is defined by
+
+                                    d(A, B) = #(A△B),
+
+where #(A△B) means the number of elements in the symmetric difference
+
+                                 A△B = (A \ B) ∪ (B \ A).
+
+In other words, A△B contains all elements that belong to exactly one of A and B.
+We need to show that, for any A, B, C ⊆ S,
+
+                                d(A, C) ≤ d(A, B) + d(B, C).
+
+First, we claim that
+                                 A△C ⊆ (A△B) ∪ (B△C).
+To see this, let x ∈ A△C. Then x belongs to exactly one of A and C.
+If x ∈ A and x ∈
+               / C, there are two possibilities. If x ∈
+                                                      / B, then x ∈ A△B. If x ∈ B, then
+x ∈ B△C.
+Similarly, if x ∈ C and x ∈
+                          / A, then either x ∈ B, in which case x ∈ A△B, or x ∈
+                                                                              / B, in which
+case x ∈ B△C.
+Hence every element of A△C lies in at least one of A△B and B△C, proving the claimed
+inclusion.
+Because S is finite, taking the number of elements of both sides gives
+                                                               
+                              #(A△C) ≤ # (A△B) ∪ (B△C)
+                                       ≤ #(A△B) + #(B△C).
+
+The second inequality holds because the number of elements in a union is at most the sum of
+the numbers of elements in the two sets (elements in both are not counted twice in the union).
+Using the definition of the counting metric, this becomes
+
+                                d(A, C) ≤ d(A, B) + d(B, C).
+
+Therefore the counting metric satisfies the Triangle Inequality (MS3). □
+
+
+
+
+                                              2
+

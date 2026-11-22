@@ -1,0 +1,112 @@
+MATH6342/Original_Files/A1_1_ii_block_diagram.pdf
+MATH6342/Original_Files/A1_1_ii_block_diagram.tex
+MATH6342/Original_Files/A1_1_ii_preview.png
+MATH6342/Original_Files/A1_2_block_diagrams.pdf
+MATH6342/Original_Files/A1_2_block_diagrams.tex
+MATH6342/Original_Files/A1_2_preview-1.png
+MATH6342/Original_Files/A1_2_preview-2.png
+MATH6310/Original_Files/MATH6310%20Coursework%201.docx
+MATH6310/Original_Files/MATH6310%20Coursework%201.pdf
+MATH6310/Original_Files/MATH6310%20Coursework%201.tex
+MATH6310/Original_Files/MATH6310%20Metric%20Spaces%20and%20topology%20coursework%201.pdf
+MATH6310/Original_Files/MATH6310_Combined_Guide.pdf
+MATH6310/Original_Files/MATH6310_Combined_Guide.tex
+MATH6310/Original_Files/MATH6310_Coursework_3.pdf
+MATH6310/Original_Files/MATH6310_Coursework_4.pdf
+MATH6310/Original_Files/MATH6310_Detailed_Revision_Guide.pdf
+MATH6310/Original_Files/MATH6310_Exam_Cheat_Sheet.pdf
+MATH6310/Original_Files/MATH6310_Exercise_1_7_Overleaf.zip
+MATH6310/Original_Files/MATH6310_Exercise_1_7_Overleaf_No_Marks.zip
+MATH6310/Original_Files/MATH6310_Exercise_1_7_Poornasai_Vanam.zip
+MATH6310/Original_Files/MATH6310_Expanded_Mark_Scheme(1).tex
+MATH6310/Original_Files/MATH6310_Expanded_Mark_Scheme.pdf
+MATH6310/Original_Files/MATH6310_Expanded_Mark_Scheme.tex
+MATH6310/Original_Files/MATH6310_Metric_Spaces_Topology_Simplified_Revision_Guide.pdf
+MATH6310/Original_Files/MATH6310_Metric_Spaces_and_Topology_Coursework_1.tex
+MATH6310/Original_Files/MATH6310_Overleaf_Project(1).zip
+MATH6310/Original_Files/MATH6310_Overleaf_Project.zip
+MATH6310/Original_Files/MATH6310_Revision_Guide_LaTeX.pdf
+MATH6310/Original_Files/MATH6310_Revision_Guide_LaTeX.tex
+MATH6310/Original_Files/MATH6310_Sections_0_to_4_150_Minute_Study_Session.pdf
+MATH6321/Original_Files/MATH6321 Coursework 1(1).pdf
+MATH6321/Original_Files/MATH6321 Coursework 1.pdf
+MATH6321/Original_Files/MATH6321 Coursework 2.pdf
+MATH6321/Original_Files/MATH6321 Coursework 3 (1).pdf
+MATH6321/Original_Files/MATH6321 Exam Information.pdf
+MATH6321/Original_Files/MATH6321 Lecture Notes.pdf
+MATH6321/Original_Files/MATH6321 Notes(1).pdf
+MATH6321/Original_Files/MATH6321 Notes(2).pdf
+MATH6321/Original_Files/MATH6321 Notes.pdf
+MATH6321/Original_Files/MATH6321_Complete_Sections_2_1_to_4_3.pdf
+MATH6321/Original_Files/MATH6321_Coursework_1_Detailed_Solutions.pdf
+MATH6321/Original_Files/MATH6321_Coursework_2_Worked_Solutions.pdf
+MATH6321/Original_Files/MATH6321_Coursework_3(1).pdf
+MATH6321/Original_Files/MATH6321_Coursework_3.pdf
+MATH6321/Original_Files/MATH6321_Cryptography_Detailed_Notes_Ch1_1_to_1_4.pdf
+MATH6321/Original_Files/MATH6321_Detailed_Notes_and_Worked_Answers.pdf
+MATH6321/Original_Files/MATH6321_Lecture_Notes.pdf
+MATH6321/Original_Files/MATH6321_Overleaf_Project.zip
+MATH6321/Original_Files/MATH6321_Pages_1_to_28_Explained.pdf
+MATH6321/Original_Files/MATH6321_Revision_Cheat_Sheet.pdf
+MATH6321/Original_Files/MATH6321_Section_2_1_Chapters_3_and_4.pdf
+MATH6342/Original_Files/MATH6342 Linear systems beamer (1)(1).pdf
+MATH6342/Original_Files/MATH6342 Linear systems beamer (1)(2).pdf
+MATH6342/Original_Files/MATH6342 Linear systems beamer (1).pdf
+MATH6342/Original_Files/MATH6342 Linear systems beamer (2).pdf
+MATH6342/Original_Files/MATH6342 Linear systems beamer (3).pdf
+MATH6342/Original_Files/MATH6342 Linear systems beamer (4).pdf
+MATH6342/Original_Files/MATH6342 Linear systems beamer.pdf
+MATH6342/Original_Files/MATH6342 lecture notes (2).pdf
+MATH6342/Original_Files/MATH6342 lecture notes.pdf
+MATH6342/Original_Files/MATH6342LinearsystemsAssessedexercise1(1).pdf
+MATH6342/Original_Files/MATH6342LinearsystemsAssessedexercise1(2).pdf
+MATH6342/Original_Files/MATH6342LinearsystemsAssessedexercise1.pdf
+MATH6342/Original_Files/MATH6342LinearsystemsAssessedexercise2.pdf
+MATH6342/Original_Files/MATH6342LinearsystemsAssessedexercise3.pdf
+MATH6342/Original_Files/MATH6342_00_Introduction.pdf
+MATH6342/Original_Files/MATH6342_01_Linear_Systems_and_Their_Description.pdf
+MATH6342/Original_Files/MATH6342_02_Solving_Linear_Systems_by_Matrix_Theory.pdf
+MATH6342/Original_Files/MATH6342_03_Laplace_Transforms.pdf
+MATH6342/Original_Files/MATH6342_04_Transfer_Functions_Realization_and_Stability.pdf
+MATH6342/Original_Files/MATH6342_05_Feedback_Control.pdf
+MATH6342/Original_Files/MATH6342_06_Appendix_MATLAB_Commands.pdf
+MATH6342/Original_Files/MATH6342_07_Glossary.pdf
+MATH6342/Original_Files/MATH6342_Assessed_Exercise_2_Sai_Vanam.pdf
+MATH6342/Original_Files/MATH6342_Assessed_Exercise_3_Sai_Vanam.pdf
+MATH6342/Original_Files/MATH6342_Complete_Exam_Revision_Guide.pdf
+MATH6342/Original_Files/MATH6342_Detailed_Study_Guide.pdf
+MATH6342/Original_Files/MATH6342_Exam_Cheatsheet.pdf
+MATH6342/Original_Files/MATH6342_Exam_Cheatsheet.tex
+MATH6342/Original_Files/MATH6342_Exam_Cheatsheet_Overleaf.zip
+MATH6342/Original_Files/MATH6342_LaTeX_Overleaf_Project.zip
+MATH6342/Original_Files/MATH6342_Linear_Systems_Complete_Study_Guide.html
+MATH6342/Original_Files/MATH6342_Linear_Systems_Study_Guide.pdf
+MATH6342/Original_Files/MATH6342_Overleaf_Project.zip
+MATH6342/Original_Files/MATH6342_Rapid_Revision.pdf
+MATH6342/Original_Files/MATH6342_Sections.zip
+MATH6342/Original_Files/MATH6342_Slides_41-59_Explained.pdf
+MATH6342/Original_Files/MATH6342_Visual_LaTeX_Revision_Guide.pdf
+MATH6342/Original_Files/MATH6342_Visual_LaTeX_Revision_Guide.tex
+MATH6342/Original_Files/MATH6342_Week1_2Lectures.pdf
+MATH6342/Original_Files/MATH6342_Week1_2Lectures.tex
+MATH6342/Original_Files/MATH6342_Week1_Linear_Systems.pdf
+MATH6342/Original_Files/MATH6342_Week1_Linear_Systems.tex
+MATH6310/Original_Files/MS+T.Section0 (2026.09.07,LectureNotes+Exercises) (1).pdf
+MATH6310/Original_Files/MS+T.Section0 (2026.09.07,LectureNotes+Exercises) (2).pdf
+MATH6310/Original_Files/MS+T.Section0 (2026.09.07,LectureNotes+Exercises) (3).pdf
+MATH6310/Original_Files/MS+T.Section0 (2026.09.07,LectureNotes+Exercises).pdf
+MATH6310/Original_Files/MS+T.Section1.singleSB (2026.09.07,LectureNotes+Exercises) (1).pdf
+MATH6310/Original_Files/MS+T.Section1.singleSB (2026.09.07,LectureNotes+Exercises) (2).pdf
+MATH6310/Original_Files/MS+T.Section1.singleSB (2026.09.07,LectureNotes+Exercises).pdf
+MATH6310/Original_Files/MS+T.Section2 (2026.09.07,LectureNotes+Exercises).pdf
+MATH6310/Original_Files/MS+T.Section3 (2026.09.07,LectureNotes+Exercises) (1).pdf
+MATH6310/Original_Files/MS+T.Section3 (2026.09.07,LectureNotes+Exercises).pdf
+MATH6310/Original_Files/MS+T.Section4 (2026.09.07,LectureNotes+Exercises) (5).pdf
+MATH6310/Original_Files/MS+T.Section4 (2026.09.07,LectureNotes+Exercises).pdf
+MATH6310/Original_Files/MS+T.Section5 (2026.09.07,LectureNotes+Exercises) (2).pdf
+MATH6310/Original_Files/MS+T.Section5 (2026.09.07,LectureNotes+Exercises).pdf
+MATH6310/Original_Files/MS+T.Section6 (2026.09.07,LectureNotes+Exercises).pdf
+MATH6310/Original_Files/Vanam Poornasai 12872604 6310cw2.m=10.pdf
+MATH6321/Original_Files/ch1_guide.pdf
+MATH6310/Original_Files/main(1).tex
+MATH6310/Original_Files/main.tex

@@ -1,0 +1,106 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\title{\textbf{MATH6310 Coursework 1}}
+\author{Sai Vanam}
+\date{}
+\begin{document}
+\maketitle
+\vspace{-1.5em}
+
+\section*{Exercise 0.1 --- Discrete metric \hfill \normalsize (10 marks)}
+\textbf{Question.} Prove that the discrete metric on a set $S$ is a metric.
+
+\textbf{Solution.}
+The discrete metric states that, for any set $S$, we define
+\[
+ d_{\mathrm{discrete}}(s,t)=
+ \begin{cases}
+ 0, & \text{if }s=t,\\
+ 1, & \text{if }s\ne t.
+ \end{cases}
+\]
+To prove that this is a metric, it has to satisfy three conditions for every $x,y,z\in S$:
+\begin{align*}
+\text{(MS1)}\qquad &d(x,y)=0\iff x=y,\\
+\text{(MS2)}\qquad &d(x,y)=d(y,x)\quad\text{(symmetry)},\\
+\text{(MS3)}\qquad &d(x,z)\le d(x,y)+d(y,z)\quad\text{(triangle inequality)}.
+\end{align*}
+Also, $d$ only takes the values $0$ and $1$, so its values are always non-negative and finite.
+
+\textbf{(MS1).} This is satisfied because, by the definition of the discrete metric, $d(x,y)=0$ exactly when $x=y$. If $x\ne y$, the distance is $1$, not $0$.
+
+\textbf{(MS2).} To prove symmetry, consider any $x,y\in S$.
+If $x=y$, then $d(x,y)=0=d(y,x)$.
+If $x\ne y$, then $y\ne x$ as well, so $d(x,y)=1=d(y,x)$.
+Therefore, in both cases,
+\[
+ d(x,y)=d(y,x).
+\]
+
+\textbf{(MS3).} To prove the triangle inequality, consider any $x,y,z\in S$.
+
+If $x=z$, then $d(x,z)=0$, and since distances are non-negative,
+\[
+ 0=d(x,z)\le d(x,y)+d(y,z).
+\]
+
+If $x\ne z$, then $d(x,z)=1$. In this case, $x\ne y$ or $y\ne z$ (or both): otherwise $x=y$ and $y=z$ would imply $x=z$, which is a contradiction. Therefore, at least one of $d(x,y)$ and $d(y,z)$ equals $1$, so
+\[
+ d(x,y)+d(y,z)\ge 1=d(x,z).
+\]
+Thus the triangle inequality holds in both cases.
+
+Since (MS1), (MS2) and (MS3) are satisfied, the discrete metric is a metric on any set $S$. \(\square\)
+
+\section*{Exercise 0.4 --- Counting metric \hfill \normalsize (10 marks)}
+\textbf{Question.} Verify the Triangle Inequality for the counting metric.
+
+\textbf{Solution.}
+Let $S$ be a finite set. For any subsets $A,B\subseteq S$, the counting metric is defined by
+\[
+ d(A,B)=\#(A\triangle B),
+\]
+where $\#(A\triangle B)$ means the number of elements in the \emph{symmetric difference}
+\[
+ A\triangle B=(A\setminus B)\cup(B\setminus A).
+\]
+In other words, $A\triangle B$ contains all elements that belong to exactly one of $A$ and $B$.
+
+We need to show that, for any $A,B,C\subseteq S$,
+\[
+ d(A,C)\le d(A,B)+d(B,C).
+\]
+First, we claim that
+\[
+ A\triangle C\subseteq (A\triangle B)\cup(B\triangle C).
+\]
+To see this, let $x\in A\triangle C$. Then $x$ belongs to exactly one of $A$ and $C$.
+
+If $x\in A$ and $x\notin C$, there are two possibilities. If $x\notin B$, then $x\in A\triangle B$. If $x\in B$, then $x\in B\triangle C$.
+
+Similarly, if $x\in C$ and $x\notin A$, then either $x\in B$, in which case $x\in A\triangle B$, or $x\notin B$, in which case $x\in B\triangle C$.
+
+Hence every element of $A\triangle C$ lies in at least one of $A\triangle B$ and $B\triangle C$, proving the claimed inclusion.
+
+Because $S$ is finite, taking the number of elements of both sides gives
+\begin{align*}
+\#(A\triangle C)
+&\le \#\bigl((A\triangle B)\cup(B\triangle C)\bigr)\\
+&\le \#(A\triangle B)+\#(B\triangle C).
+\end{align*}
+The second inequality holds because the number of elements in a union is at most the sum of the numbers of elements in the two sets (elements in both are not counted twice in the union).
+
+Using the definition of the counting metric, this becomes
+\[
+ \boxed{d(A,C)\le d(A,B)+d(B,C).}
+\]
+Therefore the counting metric satisfies the Triangle Inequality (MS3). \(\square\)
+
+\end{document}

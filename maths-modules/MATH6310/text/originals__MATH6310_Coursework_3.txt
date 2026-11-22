@@ -1,0 +1,154 @@
+                   MATH6310 Metric Spaces and Topology
+                        MATH6310 Coursework 3 — Exercises 3.3 and 3.9
+                                               Sai Vanam
+
+
+Exercise 3.3: Associated bounded metric
+
+Let E = (S, d) be a metric space. The function in Example 2 of the lecture notes is
+                                                                          t
+                               α : [0, ∞[−→ [0, ∞[,        α(t) =            .
+                                                                         1+t
+We use the lecture proposition New metric via an increasing subadditive function. It is enough to
+show that α vanishes exactly at zero, is increasing, and is subadditive.
+
+Proof
+(a) Show that α(t) = 0 exactly when t = 0. For every t ≥ 0, the denominator 1 + t is positive,
+so
+                          0 ≤ α(t) < 1,   α(t) = 0 ⇐⇒ t = 0.
+Hence α takes finite, non-negative values and vanishes exactly at zero.
+(b) Show that α is increasing. We show that s ≤ t implies α(s) ≤ α(t). Indeed, if 0 ≤ s ≤ t,
+then
+                                t(1 + s) − s(1 + t)       t−s
+                  α(t) − α(s) =                     =                ≥ 0.
+                                   (1 + t)(1 + s)     (1 + t)(1 + s)
+(c) Show that α is subadditive. For any s, t ≥ 0,
+                         s+t      s     t      s   t
+           α(s + t) =         =      +      ≤    +    = α(s) + α(t).
+                        1+s+t   1+s+t 1+s+t   1+s 1+t
+(d) Apply the proposition and conclude.
+Thus the proposition applies and d′ = α ◦ d is a metric on E. Explicitly, this agrees with the metric
+axioms (MS1)–(MS3) in the notes: for all x, y, z ∈ S,
+
+                                                       d(x, y)
+                                   0 ≤ d′ (x, y) =               < 1,
+                                                     1 + d(x, y)
+
+so d′ is finite and non-negative. For (MS1),
+
+                             d′ (x, y) = 0 ⇐⇒ d(x, y) = 0 ⇐⇒ x = y,
+
+For (MS2), symmetry of d gives d′ (x, y) = d′ (y, x). For (MS3), the triangle inequality for d, followed
+by monotonicity and subadditivity of α, gives
+
+                                  d′ (x, z) = α(d(x, z))
+                                                                     
+                                          ≤ α d(x, y) + d(y, z)
+                                          ≤ α(d(x, y)) + α(d(y, z))
+                                          = d′ (x, y) + d′ (y, z).
+
+Conclusion. Therefore d′ is a metric on S. It is bounded, since every distance is less than 1. □
+
+
+
+
+                                                     1
+Exercise 3.9: Unit spheres in ℓ(2)
+                               p
+
+
+In the lecture notes, SrE (a) = {x ∈ E : d(x, a) = r}. Set Ep = (R2 , dp ), take centre a = 0 and
+                               E
+radius r = 1, and write Sp = S1 p (0). For 1 ≤ p < ∞, the notes define
+                                                                        1/p
+                                dp (x, y) = |y1 − x1 |p + |y2 − x2 |p          .
+
+Consequently,
+                    Sp := {x ∈ R2 : dp (0, x) = 1} = {(x1 , x2 ) : |x1 |p + |x2 |p = 1}.
+For p = ∞, d∞ (x, y) = max{|y1 − x1 |, |y2 − x2 |}, so
+
+                                S∞ = {(x1 , x2 ) : max{|x1 |, |x2 |} = 1}.
+
+For the intermediate cases, choose p = 3/2 ∈ (1, 2) and p = 4 ∈ (2, ∞).
+
+Equations and shapes
+(i) p = 1. The equation is |x1 | + |x2 | = 1. In the first quadrant this is x2 = 1 − x1 , for 0 ≤ x1 ≤ 1.
+Reflecting this line segment in the coordinate axes gives a diamond with vertices
+
+                                  (1, 0),    (0, 1),   (−1, 0),    (0, −1).
+
+(ii) p = 2. The equation is x21 + x22 = 1, which is the usual Euclidean unit circle.
+(iii) p = ∞. The equation max{|x1 |, |x2 |} = 1 means both coordinates have absolute value at most
+1, with at least one having absolute value exactly 1. Thus the sphere is the boundary of the square
+[−1, 1]2 , with vertices (±1, ±1).
+(iv) p = 3/2. The equation is
+                                            |x1 |3/2 + |x2 |3/2 = 1.
+In the first quadrant,
+                                                3/2
+                                  x2 = (1 − x1 )2/3 ,          0 ≤ x1 ≤ 1.
+Reflecting this arc gives a rounded diamond. In the first quadrant its arc lies between the p = 1
+line segment and the p = 2 circular arc.
+(v) p = 4. The equation is x41 + x42 = 1. In the first quadrant,
+
+                                   x2 = (1 − x41 )1/4 ,       0 ≤ x1 ≤ 1.
+
+Reflecting this arc gives a rounded square. Its first-quadrant arc lies outside the Euclidean circular
+arc, towards the boundary of [−1, 1]2 .
+
+All five spheres pass through (±1, 0) and (0, ±1) and are symmetric about both coordinate axes.
+The diagrams on the following page show the spheres themselves: the enclosed regions are not
+included in the spheres.
+
+
+
+
+                                                       2
+Exercise 3.9: Sketches
+
+                p=1                            p = 3/2                           p=2
+    1                                1                               1
+
+
+ x2 0                            x2 0                             x2 0
+
+
+
+    1                                1                               1
+         1       0         1              1       0         1             1        0        1
+                 x1                               x1                               x1
+
+                p=4                             p=                            Comparison
+    1                                1                               1                             p
+                                                                                                       1
+                                                                                                       3/2
+                                                                                                       2
+                                                                                                       4
+ x2 0                            x2 0                                0
+
+
+    1                                1                               1
+         1       0         1              1       0         1             1        0        1
+                 x1                               x1
+
+
+
+Checking the relative positions of the curves
+For finite p, the first-quadrant point where x1 = x2 = a satisfies 2ap = 1. Hence
+
+                                              a = 2−1/p .
+
+For the five cases, the diagonal coordinates are respectively
+
+                                  p 1    3/2     2√    4   ∞
+                                  a 1/2 2 −2/3 1/ 2 2 −1/4 1
+
+These increase as p increases, agreeing with the sketches. The equality dp (x, 0) = 1 defines each
+                                                                E
+sphere; using dp (x, 0) ≤ 1 instead would give the closed ball B1 p [0], as distinguished in the lecture
+notes.
+
+
+
+
+                                                   3
+

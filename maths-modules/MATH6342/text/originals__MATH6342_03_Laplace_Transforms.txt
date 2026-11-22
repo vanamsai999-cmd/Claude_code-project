@@ -1,0 +1,985 @@
+86 Chapter 3 Laplace transforms
+
+[See video: V11 Laplace transform introduction]
+Definition (Laplace transform)
+(i) Suppose that f : (0, ∞) → C is a continuous function such that
+
+                   (E )     |f (x)| ≤ Me βx     (x > 0)
+
+for some M > 0 and β ∈ R. Here β is called the exponential type or
+growth rate. Then we say that f is of exponential type, or satisfies (E).
+(ii) We then define the Laplace transform by
+                          ∫︂ ∞
+               L(f )(s) =      f (x)e −sx dx   (ℜs > β).
+                            0
+
+Sometimes L(f )(s) is written as fˆ(s). Here x, t are time variables;
+whereas s is the transform variable.
+87 Laplace transform table
+
+
+[See video: V13 Laplace transform of cosine] Examples. Let a be a
+non-zero real number, b > 0 and α > −1.
+
+                          f (x)      L(f )(s)
+                            1         1/s
+                                           n!
+                            xn           s n+1
+                                   1
+                           e ax   s−a      (s > a)
+                           xα           Γ(α+1)
+                                          s α+1
+                                             a
+                         sin ax          s 2 +a2
+                                             s
+                        cos ax           s 2 +a2
+                        δb (dx)          e −bs
+                                         e −bs
+                       H(x − b)            s
+88 Examples of Laplace transforms
+
+[See video: V10 MATLAB for calculus]
+                                                  2
+                  Example       L(x 2 ; s) =             (s > 0)
+                                                 s3
+To see this, consider R > 0 and integrate by parts
+   ∫︂ R                [︂ x 2 e −sx ]︂R 2 ∫︂ R
+        x 2 e −sx dx =                  +       xe −sx dx
+     0                       −s       0   s   0
+                       [︂ x 2 e −sx ]︂R [︂ 2xe −sx ]︂R      2 R −sx
+                                                             ∫︂
+                     =                  +              + 2         e dx
+                             −s 0            −s 2 0        s 0
+                       [︂ x 2 e −sx ]︂R [︂ 2xe −sx ]︂R [︂ 2e −sx ]︂R
+                     =                  +              +
+                             −s 0            −s 2 0          −s 3 0
+                           R e2  −Rs     2Re  −Rs    2e −Rs       2
+                     =−                −           −         + 3     (s > 0)
+                                s           s 2        s 3       s
+                         2
+                     → 3           as     R → ∞.
+                        s
+89 Remarks on some functions
+
+
+(i) In the above table x α satisfies (E) for α ≥ 0; for 0 > α > −1, x α
+diverges as x → 0+, but the Laplace transform integral exists as an
+improper Riemann integral.
+(ii) The Dirac delta function δb is not actually a function, instead δb is
+the
+∫︁ measure that assigns unit mass to the point b ≥ 0 on the line. So
+   f (x)δb (dx) = f (b) for all continuous real functions f .
+(iii) The Heaviside function
+
+                            H(x) = 1,    x ≥ 0;
+
+                            H(x) = 0,    x < 0;
+is a step function with a jump at x = 0, so∫︁H(x − b) is a step function
+with a jump at x = b. Hence H(x − b) = (−∞,x] δb (dt).
+90 Examples of Laplace transforms, continued
+
+
+
+
+(ii) The Heaviside function has
+                                      ∫︂ ∞
+                L(H(x − b); s) =              H(x − b)e −sx dx
+                                       0
+                                      ∫︂ ∞
+                                  =           e −sx dx
+                                       b
+                                      e −sb
+                                  =                (s > 0).
+                                        s
+91 Properties of the Laplace transform
+
+Proposition. Here (E ) refers to some M > 0 and β ∈ R.
+                                                                       M
+(i) The Laplace transform exists for all s > β, and |L(f )(s)| ≤ s−β      .
+      ax
+(ii) e f (x) also satisfies (E ) with transform L(f )(s − a).
+(iii) The Laplace transform is linear so, that if f , g satisfy (E ), then for
+all λ, µ ∈ C the function λf + µg also satisfies (E ) and
+
+                  L(λf + µg)(s) = λL(f )(s) + µL(g)(s).
+
+(iv) xf (x) also satisfies (E ) and L(f )(s) is differentiable with
+
+                                           d
+                        L(xf (x))(s) = −      L(f )(s).
+                                           ds
+(v) If f is continuously differentiable and f ′ satisfies (E ), then f also
+satisfies (E ) and L(f ′ )(s) = sL(f )(s) − f (0).
+92 Proof of properties of Laplace transform
+
+(i) Let |f (x)| ≤ Me βx . Then for 0 < W < R
+        ⃓∫︂ R            ⃓      ∫︂ R
+              e f (x) dx ⃓ ≤ M
+               −sx
+                                     e βx e −sx dx
+        ⃓                ⃓
+        ⃓
+           W                      W
+                             [︂ M              ]︂R
+                           =          e (β−s)x
+                               β−s               W
+                               M (β−s)R             M (β−s)W
+                           =        e          −       e     →0
+                             β−s                   β−s
+as W → ∞. Also, we can let R → ∞ and W → 0+ to get
+                        ⃓∫︂ ∞                ⃓     M
+                              e −sx f (x) dx ⃓ ≤      .
+                        ⃓                    ⃓
+                                                 s −β
+                        ⃓
+                           0
+
+(ii) Consider 0 e −(s−a)x f (x)dx.
+              ∫︁ ∞
+
+(iii) Suppose that |f (x)| ≤ Pe ax and |g(x)| ≤ Re bx for all x > 0. Then
+with β = max{a, b} and M = |λ|P + |µ|R, we have
+93 Integration
+
+
+                        |λf (x) + µg(x)| ≤ Me βx ,
+so we can integrate
+∫︂ ∞                           ∫︂ ∞                ∫︂ ∞
+     e (λf (x) + µg(x)) dx = λ
+      −sx
+                                    e f (x) dx + µ
+                                     −sx
+                                                        e −sx g(x) dx.
+ 0                                  0                            0
+
+(v) Suppose that |f ′ (x)| ≤ Me βx for all x > 0 and some β > 0, so f ′
+belongs to (E ); we verify that f also belongs to (E ). By fundamental
+theorem of calculus,
+                                         ∫︂ x
+                         f (x) = f (0) +      f ′ (t) dt,
+                                          0
+                                              ∫︂ x
+                   so   |f (x)| ≤ |f (0)| +           Me βt dt
+                                                  0
+                                        [︂ Me βt ]︂x
+                          = |f (0)| +
+                                              β       0
+94 Laplace transform of derivative
+
+
+                                            Me βx  M
+                             = |f (0)| +          − ,
+                                             β     β
+so f satisfies (E ). Now for s > β, we integrate by parts to get
+       ∫︂ R                             ]︂R  ∫︂ R
+              e       f (x) dx = e f (x) + s      e −sx f (x) dx
+                                [︂
+                  −sx ′            −sx
+         0                                     0         0
+                                                             ∫︂ R
+                              =e   −sR
+                                         f (R) − f (0) + s          e −sx f (x) dx
+                                                              0
+
+so we let R → ∞ to get
+            ∫︂ ∞                         ∫︂ ∞
+                 e f (x) dx = −f (0) + s
+                  −sx ′
+                                              e −sx f (x) dx.
+                  0                                  0
+
+[See video: V14 Laplace transform of derivative]
+95 Differentiating Laplace transforms
+
+[See video: V12 Laplace transforms are holomorphic] (iv) Let s > β + δ
+for some δ > 0 and consider −δ < h < δ. Note that e δx e −sx f (x) is
+integrable, and x ≤ e δx /δ, so xf (x) also satisfies (E ). Also
+
+            e −(s+h)x − e −sx         (︂ e −hx − 1 )︂
+                              = e −sx                 → −xe −sx
+                    h                        h
+as h → 0. Hence
+
+         L(f )(s + h) − L(f )(s)          e −(s+h)x − e −sx
+                                     ∫︂ ∞
+                                 =                          f (x) dx
+                    h                0            h
+                                          e      − 1 −sx
+                                   ∫︂ ∞ −xh
+                                 =                   e f (x) dx
+                                     0         h
+                                       ∫︂ ∞
+                                 →−          xe −sx f (x) dx.
+                                        0
+
+To make this precise, we consider
+96 Estimates
+
+
+                 e −xh − 1          (︂ e −xh − 1 + hx )︂
+                           +x =h
+                     h                       h2
+where by comparing the coefficients in the power series
+
+               ⃓ e −xh − 1 + hx ⃓ ⃓ x 2 hx 3 h2 x 4          ⃓
+                                ⃓=⃓ −          +       − ...⃓
+               ⃓                ⃓ ⃓                          ⃓
+                       h2           2!      3!    4!
+               ⃓
+                                   x 2 δx 3 δ 2 x 4
+                                 ≤     +       +      + ...
+                                   2!     3!     4!
+                                   e δx − 1 − δx
+                                 =               ≤ δ −2 e δx
+                                         δ2
+we have e δx e −sx f (x) is integrable,
+97 Conclusion
+
+
+and the sum
+                     e −xh − 1 −sx
+              ∫︂ ∞                                ∫︂ ∞
+                              e f (x) dx +                 xe −sx f (x) dx.
+                0        h                            0
+
+is bounded by a convergent integral
+     ⃓∫︂ ∞ e −xh − 1 + hx                ⃓       ∫︂ ∞
+                          e −sx
+                                f (x) dx   ≤ |h|      δ −2 e δx e −sx |f (x)| dx
+     ⃓                                   ⃓
+                  h
+     ⃓                                   ⃓
+        0                                          0
+                                           →0        h → 0,
+
+so
+                d
+                     ∫︂ ∞                        ∫︂ ∞
+                            e −sx f (x) dx = −            xe −sx f (x) dx.
+                ds    0                           0
+98 Holomorphic Laplace transform
+
+
+
+
+Proposition
+Suppose that f satisfies (E). Then
+(i) L(f )(s) defines a holomorphic (complex differentiable) function of s
+on the open right half plane {s ∈ C : ℜs > β};
+(ii) L(f )(s) → 0 as s → ∞ along (0, ∞).
+
+Proof. (i) Similar to Proposition 91(iv)
+(ii) This is similar to Proposition 91(i).
+99 Laplace transform of exponentials and powers
+
+
+Proposition
+Let νj > −1 and let pj ∈ C for j = 1, . . . , N. Then
+
+                                       N
+                            f (t) =         aj t νj e pj t
+                                      ∑︂
+
+                                      j=1
+
+satisfies (E ) for β > max{ℜpj } and L(f )(s) is holomorphic for ℜs > β.
+
+Proof. Let Γ(α) = 0 t α−1 e −t dt for α > 0. By direct calculation, we
+                     ∫︁ ∞
+
+have
+                                     N
+                                            Γ(νj + 1)
+                                        aj
+                                    ∑︂
+                         L(f )(s) =                       .
+                                    j=1
+                                           (s − pj )νj +1
+100 Laplace convolution
+
+[See video: V16 Laplace convolution] Definition. Suppose that f and g
+both satisfy (E ). Then their Laplace convolution is
+                                ∫︂ x
+                     f ∗ g(x) =      f (x − y)g(y) dy.
+                                   0
+
+
+
+Proposition
+The Laplace convolution is:
+(i) commutative, so f ∗ g = g ∗ f ;
+(ii) linear, so (λf + µg) ∗ h = λf ∗ h + µg ∗ h;
+(iii) multiplicative with respect to the Laplace transform, so f ∗ g satisfies
+(E) and
+                 L(f ∗ g)(s) = L(f )(s)L(g)(s)      (s > s0 );
+(iv) associative, so f ∗ (g ∗ h) = (f ∗ g) ∗ h.
+101 Bounds on convolution formula
+
+
+(i) Change variable to u = y − x.
+(ii) is easy.
+(iii) We choose M, β such that
+
+               |f (x)| ≤ Me βx ,   |g(x)| ≤ Me βx       (x > 0);
+
+then
+                 |f (x − y)g(y)| ≤ Me β(x−y) Me βy = M 2 e βx
+so                    ⃓∫︂ x
+                            f (x − y)g(y) dy ⃓ ≤ xM 2 e βx
+                                             ⃓
+                      ⃓                      ⃓
+                      ⃓
+                           0
+so f ∗ g satisfies (E ).
+102 Proof of convolution formula
+
+
+Also, when we change order of integration, then let u = x − y,
+                     ∫︂ ∞
+       L(f ∗ g)(s) =       e −sx f ∗ g(x) dx
+                     ∫︂0 ∞        ∫︂ x
+                   =       e −sx
+                                       f (x − y)g(y) dy dx
+                     ∫︂0 ∞          0
+                                       (︂∫︂ ∞
+                           e g(y)              e −s(x−y) f (x − y) dx dy
+                                                                     )︂
+                             −sy
+                   =
+                       0                   y
+                     ∫︂ ∞                   ∫︂ ∞
+                   =       e g(y) dy
+                             −sy
+                                                  e −su f (u) du
+                        0                  0
+                    = L(f )(s)L(g)(s).
+
+The Laplace transform converts convolution to multiplication.
+103 Conclusion of proof: associativity
+
+
+
+
+(iv) This can be proved in a similar way to (i). Alternatively, one use (iii)
+to compute
+
+               L((f ∗ g) ∗ h)(s) = L(f ∗ g)(s)L(h)(s)
+                                  = L(f )(s)L(g)(s)L(h)(s)
+                                  = L(f ∗ (g ∗ h))(s)
+
+and then use uniqueness, as discussed below.
+104 Lerch’s Uniqueness Theorem
+
+
+Theorem
+Suppose that f and g satisfy (E ) and that there exists s0 such that
+
+                     L(f )(s) = L(g)(s)       (s > s0 ).
+
+Then f (x) = g(x) for all x > 0.
+
+Here the Laplace transforms of f and g are equal on the line segment
+(s0 , ∞) of infinite length. The proof of this is rather difficult, hence is
+omitted. There is an inversion formula, credited to Bromwich, which
+recovers f from its Laplace transform F via a contour integral;
+unfortunately, it is rather hard to use. So if one knows that F (λ) occurs
+as L(f )(λ) for some f , then the best way to find f is by comparing F
+with known Laplace transforms in tables, then invoking the uniqueness
+theorem.
+105 Solving an integral equation
+
+Example
+To solve the integral equation
+                                           ∫︂ t
+                                  at
+                     y(t) = 2e         +          e b(t−u) y(u) du
+                                            0
+
+where a, b are constants with a ̸= b + 1, and y satisfies (E ).
+
+Solution. Note that the the integral is a convolution of y with e bt , so by
+Proposition 100(iii), we have
+                                         2   ŷ(s)
+                          ŷ(s) =          +       ;
+                                       s −a s −b
+after a little reduction we obtain
+                                        2(s − b)
+                        ŷ(s) =                       ;
+                                   (s − a)(s − b − 1)
+106 Example of integral equation, concluded
+
+
+which we write as partial fractions
+                                   A     B
+                       ŷ(s) =       +       ;
+                                 s −a s −b−1
+then
+                        2(a − b)             −2
+                    A=            ; B=              ;
+                        a−b−1             a−b−1
+by the uniqueness of Laplace transforms, we have a unique solution
+
+                              2(a − b)e at − 2e (b+1)t
+                     y(t) =                            .
+                                    a−b−1
+[See video: V17 Solving an integral equation]
+107 Laplace transform of a differential equation
+
+
+Proposition
+Suppose that y(0) = p0 , y ′ (0) = p1 , . . . , y (n−1) (0) = pn−1 and
+
+                 y (n) (t) + an−1 y (n−1) (t) + · · · + a0 y = u(t)
+
+where the coefficients are complex constants and u satisfies (E ). Then
+there exists a complex polynomial qn−1 (s) of degree ≤ n − 1, that
+depends only upon the aj and pk , such that
+
+         (s n + an−1 s n−1 + · · · + a0 )L(y)(s) + qn−1 (s) = L(u)(s)
+
+where s n + an−1 s n−1 + · · · + a0 is the characteristic polynomial.
+108 Proof
+
+By repeatedly applying Proposition 91, we have
+
+                        L(y ′ )(s) = sL(y)(s) − y(0)
+
+                       L(y ′′ )(s) = sL(y ′ )(s) − y ′ (0)
+                 L(y (n) )(s) = sL(y (n−1) )(s) − y (n−1) (0),
+so we can substitute backwards and get
+
+                  L(y ′′ )(s) = s 2 L(y)(s) − sy(0) − y ′ (0)
+
+            L(y ′′′ )(s) = s 3 L(y)(s) − s 2 y(0) − sy ′ (0) − y ′′ (0)
+and thus obtain qn−1 (s) with coefficients pj = y (j) (0) as in the initial
+conditions y(0), . . . , y (n−1) (0). The characteristic polynomial in frame
+107 is the same as we get from frame 34.
+109 Example of Laplace transform of differential equation
+
+Example
+To find the Laplace transform of
+
+                        y ′′′ + 2y ′′ − y ′ + y = u
+
+                    y ′′ (0) = 5, y ′ (0) = −1, y(0) = 7
+where u ∈ (E ).
+
+Solution. The Laplace transforms are found recursively, with
+
+                             L(y)(s) = ŷ(s)
+
+                          L(y ′ )(s) = s ŷ(s) − 7
+                      L(y ′′ )(s) = s 2 ŷ(s) − 7s + 1
+                   L(y ′′′ )(s) = s 3 ŷ(s) − 7s 2 + s − 5
+110 Example of Laplace transform of differential equation,
+concluded
+
+
+substituting this into
+
+                 L(y ′′′ ) + 2L(y ′′ ) − L(y ′ ) + L(y) = L(u)
+
+gives
+             (s 3 + 2s 2 − s + 1)ŷ(s) − 7s 2 − 13s + 4 = û(s).
+Remarks (i) Alternatively, we can represent this as an (A, B, C, D) SISO
+system.
+(ii) We often take s such that ℜs ≥ 0, so s is in the right half plane, and
+denote the points on the imaginary axis by s = iω, where ω ∈ R is the
+angular frequency.
+111 Transfer function of a Laplace transformed system
+
+
+
+Definition (Transfer function)
+Consider a linear system Y = LU where L is a linear operator, and such
+that all the entries of the (k × 1) input U and (m × 1) output Y satisfy
+(E ), and let the initial conditions be zero. Suppose that T (s) is a
+(m × k) matrix of functions such that
+
+                     Ŷ (s) = T (s)Û(s)    (s > β).
+
+Then T (s) is called the transfer function of the linear system.
+112 Solving MIMO by Laplace transforms
+
+
+Theorem
+Let A, B, C, D be constant matrices, and suppose that the input function
+satisfies (E ). Then the output Y of the linear system
+
+                             dX
+                                = AX + BU
+                             dt
+                              Y = CX + DU
+with initial condition X (0) = 0 in (E ) exists and is uniquely determined,
+and the Laplace transform satisfies
+
+                            Ŷ (s) = T (s)Û(s)
+
+where the transfer function is T (s) = D + C(sI − A)−1 B.
+113 Proof
+
+As in frame 65, the solution is determined by
+                           ∫︂ t
+                  X (t) =       exp(((t − v)A)BU(v) dv
+                             0
+
+which a convolution type integral of functions in (E ), since
+
+                ∥ exp(tA)∥ ≤ M1 e β1 t ,   ∥U(t)∥ ≤ M2 e β2 t
+
+so with M = M1 M2 ∥B∥ and β = max{β1 , β2 }, we have
+
+                    ∥ exp(((t − v)A)BU(v)∥ ≤ Me βt
+
+so
+                      ∥X (t)∥ ≤ tMe βt ≤ Me (β+1)t
+and so X satisfies (E ) and has a Laplace transform. From the differential
+equation, dX /dt also satisfies (E ) and has a Laplace transform, and
+likewise Y satisfies (E ).
+114 Laplace transform of (A,B,C,D)
+
+The Laplace transform of
+                            dX
+                               = AX + BU
+                            dt
+                             Y = CX + DU
+is
+                    s X̂ (s) − X (0) = AX̂ (s) + B Û(s)
+                        Ŷ (s) = C X̂ (s) + D Û(s).
+Hence when s is not an eigenvalue of A,
+
+              X̂ (s) = (sI − A)−1 B Û(s) + (sI − A)−1 X (0)
+
+       Ŷ (s) = C(sI − A)−1 B Û(s) + D Û(s) + C(sI − A)−1 X (0).
+When X (0) = 0 we get Ŷ (s) = T (s)Û(s).
+115 Laplace transform of block diagram
+
+
+
+
+                            A
+
+                                 X̂
+   Û   .                             .           Ŷ
+              B      +     1/s            C   +
+
+
+                           D
+116 Jordan blocks
+
+A k × k Jordan block with eigenvalue λ ∈ C is the matrix
+
+                             λ 1       0 ... 0
+                           ⎡                       ⎤
+                           ⎢0 λ        1    0 . . .⎥
+                           ⎢ ..       ..   ..
+                           ⎢                       ⎥
+                  Jk (λ) = ⎢  .  0       .     . 0
+                                                   ⎥
+                                                   ⎥
+                           ⎢ .. . .        . .
+                           ⎢                       ⎥
+                           ⎣.       . 0        . 1⎦
+                                                   ⎥
+
+                             0 0 ... 0           λ
+
+                                           λ 1
+                                          [︃   ]︃
+                   J1 (λ) = [λ], J2 (λ) =         ,
+                                           0 λ
+                                    λ 1 0
+                                   ⎡       ⎤
+
+                          J3 (λ) = ⎣ 0 λ 1 ⎦
+                                     0 0 λ
+117 Jordan canonical form (Jordan normal form)
+
+
+[See video: V18 Jordan canonical form] i) Let λ be an entry on the
+leading diagonal of a square matrix A such that all the other entries in
+the same column as λ are 0. Observe if λ is in row j, then the column
+vector with 1 in row j and 0 elsewhere is an eigenvector corresponding to
+eigenvalue λ. Hence λ is an eigenvalue of A.
+ii) In a Jordan block, all the entries down the leading diagonal are equal
+to some λ, all the entries in the diagonal above the leading diagonal are
+1, and all other entries are zero. By (i), λ is an eigenvalue of the Jordan
+block.
+iii) We put Jordan blocks of various sizes into a block matrix, so that the
+blocks on the block diagonal are Jordan blocks. Then all the entries
+below the leading diagonal are zero; all the entries in the diagonal
+directly above the leading diagonal are 0 or 1, and all the entries above
+this diagonal are all zero.
+118 Eigenvalue terminology
+
+
+(i) Each eigenvalue λj has algebraic multiplicity nj , where nj is the
+largest power of (s − λj ) that divides the characteristic polynomial
+det(sI − A) of A.
+(ii) For each eigenvalue λj , there is an eigenvector vj . Let
+E (λj ) = {v : Av = λj v} be the eigenspace. The geometric multiplicity of
+λj is the dimension of E (λj ).
+(iii) For each λj , the geometric multiplicity is the number of Jordan
+blocks that involve λj , so the geometric multiplicity is less than or equal
+to the algebraic multiplicity.
+(iv) When a Jordan block has shape k × k, where k > 1, it has both
+eigenvectors and generalised eigenvectors. A generalised eigenvector is
+v ̸= 0 such that (λj I − A)m v = 0 for some m = 2, . . . , k.
+119 Example
+
+
+Consider the matrix A that is given by
+
+                         2 1 0
+                      ⎡⎡ ∗         ⎤                  ⎤
+                      ⎢⎣ 0 2 1⎦ 03×1           03×2 ⎥
+                      ⎢ 0 0 2
+                      ⎢                               ⎥
+                 A=⎢
+                                                      ⎥
+                            01×3       [2 ] [︃ 01×2 ]︃⎥
+                                         ∗
+                                                      ⎥
+                      ⎢
+                                              3∗ 1 ⎦
+                      ⎢                               ⎥
+                            02×3       02×1
+                      ⎣
+                                               0 3
+
+where the eigenvalues are marked 2∗ and 3∗ ; these are the only entries in
+their own column; the eigenspaces are E (2) of dimension 2 since there
+are two blocks involving eigenvalue 2, and E (3) of dimension 1 since
+there is one block involving eigenvalue 3. The eigenvalues are 2, 2, 3,
+listed according to multiplicity.
+120 Jordan form of the example
+
+
+and the corresponding eigenvectors are e1 , e4 , e5 .The matrix A has
+Jordan blocks
+                         J3 (2) ⊕ J1 (2) ⊕ J2 (3)
+and A has shape 6 × 6 since 3 + 1 + 2 = 6; the characteristic polynomial
+is
+                       χA (s) = (s − 2)4 (s − 3)2
+which is given by the product of the diagonal terms of sI − A and has
+roots 2, 2, 2, 2, 3, 3; the minimal polynomial is
+
+                         m(s) = (s − 2)3 (s − 3)2
+
+since the largest block involving eigenvalue 2 is J3 (2) and the largest
+with eigenvalue 3 is J2 (3).
+121 Computing eigenvalues
+
+
+
+(i) One way to compute eigenvalues is to solve the characteristic
+equation, either algebraically or numerically. Computers can employ some
+special algorithms to find approximate values for eigenvalues.
+(ii) For complex matrices up to and including size 4 × 4, it is possible to
+compute the Jordan canonical form algebraically. However, computing
+JCF by hand is a bore.
+(iii) In any method, multiple eigenvalues are a technical challenge.
+MATLAB has a command jor dan for finding the JCF.
+(iv) However, computers find it easy to check whether matrices are
+positive definite, so researchers have found clever ways to use linear
+matrix inequalities instead of computing eigenvalues, as in frame 210.
+122 Jordan Canonical Form
+
+
+Theorem
+Let A be an (n × n) complex matrix. Then there exist S an invertible
+n × n complex matrix, a partition of n into n = k1 + k2 + · · · + kr and
+kj × kj Jordan blocks Jkj (λj ) where λj is some eigenvalue of A, such that
+A is similar to the sum of Jordan blocks
+                       Jk1 (λ1 )     0             0
+                      ⎡                                ⎤
+                                           ...
+                      ⎢ 0        Jk2 (λ2 ) 0      ... ⎥
+               A=S⎢ .                                  ⎥S .
+                                                       ⎥ −1
+                      ⎣ ..                  ..
+                      ⎢
+                                     0         .   0 ⎦
+                         0        ...     0    Jkr (λr )
+
+
+See MATH220, Chapter 6.
+123 Exponentials of complex matrices
+
+
+[See video: V19 Calculating matrix exponentials]
+Lemma
+Let A be a (n × n) complex matrix with eigenvalues λj , where
+maxj ℜλj < β for some real β.
+(i) Then the entries of exp(tA) are complex linear combinations of t k e tλj
+for integers k < n.
+(ii) There exists M such that
+
+                     ∥ exp(tA)∥ ≤ Me βt       (t > 0).
+
+
+The condition ℜλj < β means that the point λj lies strictly to the left of
+the vertical line in the complex plane through β on the real axis.
+124 Reducing to Jordan blocks
+
+From the Jordan canonical form, we have
+
+                                    0                           0
+             ⎡                                                            ⎤
+              exp(tJk1 (λ1 ))                 ...
+                                                                ..
+                    0         exp(tJk2 (λ2 )) 0                  .
+             ⎢                                                         ⎥
+ exp(tA) = S ⎢                                                         ⎥S ,
+             ⎢                                                         ⎥ −1
+                    ..                        ..
+                     .              0            .            0
+             ⎢                                                         ⎥
+             ⎣                                                         ⎦
+                    0              ...         0        exp(tJkr (λr ))
+
+so we consider a typical block Jk (λ). Now
+
+                 λ 0 0 ... 0                0      1    0             0
+                ⎡                      ⎤ ⎡                                ⎤
+                                                              ...
+                ⎢0 λ 0          0 . . .⎥ ⎢0
+                                       ⎥   ⎢       0    1      0     . . .⎥
+                ⎢ ..     . ..  . .. 0 ⎥⎥ + ⎢ ...       ..     ..
+                ⎢                                                         ⎥
+       Jk (λ) = ⎢  . 0                             0      .      .    0⎥
+                                           ⎢                              ⎥
+                ⎢ ..                   ⎥ ⎢.
+                ⎣ . 0 0 . . . 0 ⎦ ⎣ ..                        ..
+                ⎢                      ⎥ ⎢                                ⎥
+                                                   0 0           .    1⎦
+                                                                          ⎥
+
+                  0 0 ... 0          λ      0      0 ...       0      0
+
+which we write as
+125 Exponential of a Jordan block
+
+
+                             Jk (λ) = λIk + Nk
+where Nk is strictly upper triangular, and Ik and Nk commute, so
+
+                    exp(tJk (λ)) = exp(tλIk ) exp(tNk ).
+
+Now Nkk = 0, so we have a polynomial of degree k − 1 < n
+
+            exp(tNk ) = I + tNk + · · · + t k−1 Nkk−1 /(k − 1)!
+
+and | exp(tλ)| = e tℜλ , hence we obtain the bound
+
+                                                    t k−1 ∥Nk ∥k−1 )︂
+       ∥ exp(tJk (λ))∥ ≤ e tℜλ 1 + t∥Nk ∥ + · · · +
+                              (︂
+                                                                      .
+                                                       (k − 1)!
+126 Conclusion of proof of the Lemma
+
+
+                                                r
+                                               ∑︂
+             ∥ exp(tA)∥ ≤ ∥S∥∥S −1 ∥                 ∥ exp(tJkj (λj ))∥
+                                               j=1
+                                                r               kj −1 ℓ
+                                                                ∑︂ t ∥Nkℓj ∥
+                                                         tℜλj
+                                                     e
+                                               ∑︂
+                                      −1
+                            ≤ ∥S∥∥S        ∥                                   .
+                                                                       ℓ!
+                                               j=1              ℓ=0
+
+Now choose ε > 0 such that ℜλj + ε < β. Observe that t ℓ e −εt is
+bounded for all t > 0, also e tℜλj ≤ e βt e −εt , so
+                                             r k∑︂  t ∥Nkℓj ∥ )︂
+                                                j −1 ℓ
+
+                   M = sup e −εt ∥S∥∥S −1 ∥
+                           (︂               ∑︂
+                       t>0                             ℓ!
+                                                 j=1 ℓ=0
+
+is finite. Hence
+                        ∥ exp(tA)∥ ≤ Me βt                 (t > 0).
+127 Exponential and Inverses
+
+Proposition
+Let A be an (n × n) complex matrix. Then for s > ∥A∥, the matrix
+sI − A is invertible with inverse
+                                  ∫︂ ∞
+                     (sI − A) =
+                             −1
+                                       e −st exp(tA) dt.
+                                    0
+
+
+Proof. We have
+                                                 d
+               (sI − A) exp(t(A − sI)) = −          exp(t(A − sI))
+                                                 dt
+so
+      ∫︂ R                                  ∫︂ R
+                                                       d
+             (sI − A) exp(t(A − sI)) dt =          −      exp(t(A − sI)) dt
+       0                                     0         dt
+so by Fundamental Theorem of Calculus
+128 Exponential and Inverse, concluded
+
+
+
+
+           ∫︂ R
+                                                      ]︁R
+(sI − A)          exp(t(A − sI)) dt = − exp(t(A − sI)) 0 = I − exp R(A − sI);
+                                     [︁
+            0
+
+by the assumption on s, we can take the limit as R → ∞ to obtain
+                           ∫︂ ∞
+                  (sI − A)      exp(t(A − sI)) dt = I.
+                                 0
+
+Hence sI − A is invertible.
+129 Partial fractions
+
+ Proposition
+ Let f (s) be a complex rational function. Then there exists a complex
+ polynomial q(s), integers nj > 0 and poles λj ∈ C and aj ∈ C, all
+ uniquely determined, such that
+                                         N
+                                                  aj
+                       f (s) = q(s) +
+                                        ∑︂
+                                                          .
+                                              (s − λj )nj
+                                        j=1
+
+
+
+ Proof of existence. Starting with f (s) = g(s)/h(s), we use the Euclidean
+ algorithm to write
+                           g(s) = q(s)h(s) + r (s)
+ where q(s) and r (s) are polynomials, and either r (s) = 0 or the degree of
+ r (s) is strictly less than the degree of h(s); hence
+130 Partial fractions and Laplace transforms
+
+
+                                            r (s)
+                           f (s) = q(s) +
+                                            h(s)
+where r (s)/h(s) is strictly proper. Now by the fundamental theorem of
+algebra,
+                                      n
+                            h(s) = b    (s − λj )mj
+                                     ∏︂
+
+                                  j=1
+
+where the λj ∈ C are distinct. Then by the usual partial fractions
+calculation, we look for coefficients ak such that
+
+                         r (s) ∑︂ ak,nk
+                              =              ,
+                         h(s)    (s − λk )nk
+                                  k
+
+with integers 1 ≤ nk ≤ mk . The poles and coefficients are unique.
+131 Laplace transforms which are strictly proper rationals
+
+[See video: V15 Laplace transforms and partial fractions]
+Corollary
+Let y(t) be a function of the form
+                                     n
+                           y(t) =         aj,nj t nj e λj t .
+                                    ∑︂
+
+                                    j=1
+
+Then the Laplace transform Y of y is a strictly proper rational function
+with partial fraction decomposition
+                                    n
+                                           nj !aj,nj
+                         Y (s) =
+                                   ∑︂
+                                                       .
+                                    j=1
+                                        (s − λj )nj +1
+
+Conversely, all strictly proper rational functions arise thus.
+132 Laplace transform calculation
+
+Let ℜλ < β and β < s. We substitute z = (s − λ)t and find
+            ∫︂ ∞                ∫︂ ∞
+                  n λt −st
+                 t e e     dt =      t n e −(s−λ)t dt
+              0                   0
+                                     1
+                                              ∫︂ ∞
+                              =                     z n e −z dz;
+                                (s − λ)n+1 0
+this can be justified by Cauchy’s theorem from complex analysis.
+Integrating by parts, we obtain
+              1                             n
+                               ]︂∞                 ∫︂ ∞
+                         n −z
+                       −z e                               z n−1 e −z dz
+                     [︂
+      =                             +
+         (s − λ)n+1              0    (s  − λ) n+1
+                                                     0
+                   n                           n(n     1)
+                                                             ∫︂ ∞
+                              n−1 −z
+                                      ]︂∞          −
+      =0+                          e                              z n−2 e −z dz
+                         [︂
+                           −z              +
+             (s − λ)n+1                 0     (s − λ)n+1 0
+and so until
+                                                        n!
+                       ∫︂ ∞
+                              t n e λt e −st dt =              .
+                         0                          (s − λ)n+1
+133 Laplace transforms and stable rational functions
+
+Corollary
+The Laplace transform gives a bijection between
+
+                  span t n e pt : n = 0, 1, . . . ; ℜp < 0
+                      {︁                                   }︁
+
+
+and the set of strictly proper complex rational functions that have all
+their poles in the open left half plane {p : ℜp < 0}.
+
+Proof. The Laplace transform of t n e pt is n!/(s − p)n+1 , which is a
+strictly proper rational function that has a pole of order n + 1 at p in the
+open left half plane. Conversely, any strictly proper rational function has
+the form F (s) = G(s)/H(s), where G(s) and H(s) are complex
+polynomials such that deg(G) < deg(H) and the poles of F (s) are at the
+zeros of H(s). Then F (s) has a unique partial fractions decomposition as
+                                            aj
+                           F (s) =
+                                   ∑︂
+                                       (s − pj )1+nj
+134 proof of Corollary
+
+
+
+
+where aj ∈ C, nj ∈ {0, 1, 2, . . . } and the pole pj has ℜpj < 0 by the
+choice of F ; the proof of this fact involves the fundamental theorem of
+algebra and careful study of F near to each of its poles. This F (s) is the
+Laplace transform of
+                                    ∑︂ aj
+                          f (t) =               t nj e pj t ,
+                                         nj !
+                                     j
+
+by the Proposition.
+

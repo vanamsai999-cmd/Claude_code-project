@@ -1,0 +1,1500 @@
+                                        Video Clips
+                                         (1) Sets & the axiom of choice (AC)
+                                             [28 minutes, covering pp. 1–10]
+                                         (2) Functions I/II
+                                             [24 minutes, covering pp. 11–19]
+                                         (3) Functions II/II & AC again
+                                             [42 minutes, covering pp. 20–36]
+                                         (4) Direct & inverse images
+                         ·                   [24 minutes, covering pp. 38–44]
+      Metric Spaces & Topology               Schröder–Bernstein theorem
+                   (MATH6310)                [Optional material; no video clip]
+                         ·               (5) Equivalence relations and partitions
+                    Part I                   [36 minutes, covering pp. 54–66]
+                         ·               (6) Countability — definitions & examples
+             Section 1.                      [29 minutes, covering pp. 68–76]
+  Sets, functions & countability         (7) Cantor’s theoren
+        (partially revision)                 [28 minutes, covering pp. 78–82]
+                                             Partial order & Zorn’s Lemma
+            Lecture Notes & Exercises
+                                             [Optional material; no video clip]
+              Last edited: 07.ix.2026
+
+                                                                      2
+
+
+
+
+                                        Subset, set difference and power set
+                                        The empty set is denoted
+
+                                                                      ∅
+
+                                        (from the Danish alphabet); not to be confused with the greek
+                                        letter ϕ.
+                                        Let S be a set. We write
+
+                                                                   A⊂S
+
+                                        to mean A is a subset of S, i.e. x ∈ A =⇒ x ∈ S, and
+1.1    Sets and the Axiom of Choice
+                                                                   A⊊S
+
+                                        to mean A is a proper subset of S, i.e. A ⊂ S and A ̸= S.
+                                        (This is a convention.)
+                                           For A, B ⊂ S
+
+                                                         A \ B := {s ∈ A : s ∈
+                                                                             / B}
+
+                                        it is called a set difference. Thus
+
+                                                           A \ B = A ∩ (S \ B),
+
+                                        S \ B being the complement of B in the universe S.
+                                           We write P(S) for the power set of S:
+
+                                                                {A : A ⊂ S}.
+
+                        1                                             2
+Union and intersection                                              Tricky case: C = ∅.
+                                                                    Then we have an empty collection of subsets of S, so the
+Let C be a family of subsets of a set S. Their union and            following is reasonable:
+intersection are given by                                                                    [
+                [                                                                              C = ∅.
+                   C :={s ∈ S : ∃C∈C s ∈ C},
+                                                                                  T
+                                                                    What about C? Here the convention is
+                \
+                   C :={s ∈ S : ∀C∈C s ∈ C}.
+                                                                                             \
+Distributivity laws:                                                                           C = S,
+                         [         [
+                    A∩       C=          (A ∩ C),                   showing that it is vital to know what ‘universe’ we are in.
+                                   C∈C
+                         \         \
+                    A∪       C=          (A ∪ C).                   Exercise. (Simple intersection/union problem)
+                                   C∈C                              Let A and B be subsets of a set S.
+De Morgan’s laws:                                                    (a) Show that TFAE:
+                         [         \
+                    A\       C=          (A \ C),                          (i) A ⊂ B;
+                                   C∈C
+                         \         [                                      (ii) A ∩ B = A;
+                    A\       C=          (A \ C).
+                                   C∈C                                    (iii) A ∪ B = B.
+In special cases of C the notations vary/simplify, e.g. we write     (b) Show that
+                           [
+               A ∪ B for      {A, B},                                           (A ∪ B) \ (A ∩ B) = (A \ B) ∪ (B \ A).
+               \           \
+                    Aλ for    {Aλ : λ ∈ Λ}, and
+              λ∈Λ
+                                                                    This is called the symmetric difference of A and B and is
+              [∞             [                                      denoted A∆B.
+                    An for       {An : n ∈ N}.                     (c) Draw a diagram to illustrate this set.
+              n=1
+
+                                  3                                                               4
+
+
+
+
+Solution. (Simple intersection/union problem)                       Exercise. (Distributivity and de Morgan)
+                                                                    Verify
+                                                                     (a) the distributivity law
+                                                                                              [    [
+                                                                                         A∩     C=   (A ∩ C),
+                                                                                                       C∈C
+
+
+                                                                     (b) de Morgan’s law
+                                                                                              \        [
+                                                                                         A\       C=         (A \ C),
+                                                                                                       C∈C
+
+                                                                          for a subset A of a set S, and a family of subsets C of
+                                                                          S.
+
+
+
+
+                                  5                                                               6
+Solution. (Distributivity and de Morgan)                             Cartesian product
+                                                                     Let S and T be sets. The Cartesian product of (S, T ) is the
+                                                                     set of ordered pairs
+
+                                                                                 {(s, t) : s ∈ S, t ∈ T }, denoted S × T.
+
+                                                                     Remark.
+
+                                                                                   S × T = ∅ ⇐⇒ S = ∅ or T = ∅.
+
+                                                                     Let N ∈ N and let S1, . . . , SN be sets. Then
+
+                                                                     S1 × · · · × SN := {(s1, . . . , sN ) : si ∈ Si for i = 1, . . . , N }.
+
+                                                                     When S1 = · · · = SN = S, for some set S, we write S N for
+                                                                     S1 × · · · × SN .
+
+                                                                     Example.
+                                                                                       R3 = R × R × R (as a set).
+                                                                     Of course R3 has much more structure than a mere set.
+
+
+
+
+                                   7                                                                   8
+
+
+
+
+For a sequence of sets S1, S2, S3, . . .,                            Two strange cases.
+                 ∞                                                   Let (Sλ)λ∈Λ be a family of sets.
+                 Y
+                       Sn = S1 × S2 × S3 × · · ·                         If Λ = ∅ then, by convention,
+                                                                                                                 Q
+                                                                                                                     λ∈Λ Sλ contains just
+                 n=1                                                       one element, denoted (sλ)λ∈∅.
+is the collection of all sequences                                       If Sµ = ∅ for some µ ∈ Λ then (Λ ̸= ∅ and)
+                                                                                                     Y
+                       (sn) = (s1, s2, s3, . . .)                                                          Sλ = ∅,
+                                                                                                     λ∈Λ
+where si ∈ Si for each i ∈ N.
+                                                                           because there are no families (sλ)λ∈Λ for which sλ ∈ Sλ
+   More generally (covering all of the above), let (Sλ)λ∈Λ be
+                                                                           for each λ ∈ Λ; sµ has nowhere to go!
+an indexed family of sets. Then
+                                                                     Axiom of Choice.
+                           Y
+                              Sλ                                                                                   Q
+                                λ∈Λ                                  Let (Sλ)λ∈Λ be a family of nonempty sets. Then λ∈Λ Sλ is
+                                                                     nonempty.
+is the collection of indexed families (i.e. generalised sequences,
+in which N is replaced by an arbitrary set Λ)                        Remark.
+                                                                     This harmless looking statement is not deducible from the
+                               (sλ)λ∈Λ                               other axioms of set theory. On the other hand, it is needed
+                                                                     quite frequently in modern mathematics. In fact it is its
+where sλ ∈ Sλ for each λ ∈ Λ.                                        various logical equivalents that are needed, in practice.
+Equality.Q
+Let S = λ∈Λ Sλ. For a, b ∈ S,                                        Products SΛ
+
+                  a = b ⇐⇒ ∀λ∈Λ aλ = bλ.                                   Q is a single set S such that Sλ = S for each λ ∈ Λ,
+                                                                     If there
+                                                                     then λ∈Λ Sλ is denoted S Λ.
+                                                                         Thus S N abbreviates S {1,2,...,N }, and RN denotes the set
+                                                                     of all real sequences.
+                                   9                                                                   10
+   ·
+
+
+
+
+                                                                  1.2     Functions, AC again & Images
+
+
+
+
+                                11                                                               12
+
+
+
+
+What is a function?                                               Example. (Dimension function on subspaces)
+                                                                  Let V be a finite dimensional vector space over R.
+A function f has 3 ingredients:                                   Then
+    a set S, called its domain, or source,                                 {subspaces of V } → Z+, U 7→ dim U
+                                                                  defines a function.
+    a set T , called its codomain, or target,
+                                                                      Here Z+ denotes the set of nonnegative integers.
+    an unambiguous rule for assigning a unique element,
+       written f (s), from the set T , to each element s of the   Example. (Zero set function)
+       set S.                                                     Let S be a set. Then
+
+There are a number of ways of writing down a function. One          {functions from S to R} → P(S),        f 7→ {zeros of f }
+basic way is as follows:
+                                                                  where
+                    f : S → T, s 7→ f (s).                                     {zeros of f } := {s ∈ S : f (s) = 0}
+                                                                  defines a function.
+Here the rule is contained in the instruction for interpreting
+the value f (s) of the function f “at s”, for each s ∈ S.         Example. (Determinant function on matrices)
+Notation.                                                         Let n ∈ N. Then
+Given a function f , we write
+                                                                                   Mn(R) → R, A 7→ det A
+                    Domf and Codomf
+                                                                  defines a function.
+for its domain and codomain.
+
+
+
+
+                                13                                                               14
+                                                                              Q
+Examples. (Basic classes of function)                             5. Let S = j∈J Sj for an indexed family of sets (Sj )j∈J .
+                                                                     For each k ∈ J there is the canonical projection onto
+  1. Let S be a set. The function                                    Sk
+                       idS : S → S,     s 7→ s                                      S → Sk , (sj )j∈J 7→ sk
+                                                                     picking out the ‘k-th coordinate’.
+     is called the identity function on S.
+  2. Let A be a subset of S. The function                       Two strange cases.
+                      ιA→S : A → S, a 7→ a                          If S = ∅ then there is just one function f : S → T :
+
+     is called the inclusion function (for A in S).                                     Dom f = ∅
+     There is no standard notation for this kind of function.                           Codom f = T
+                                                                                        Rule f : vacuous.
+  3. Let A be a subset of S. The function
+                                  (                                  A single function with nothing to do!
+                                    1 if s ∈ A
+               1A : S → R, s 7→
+                                    0 if s ∈
+                                           /A                       If T = ∅ but S ̸= ∅ then there can be no rule for a
+                                                                     function from S to T as there is nowhere for the image
+     is called the indicator function of A (in S).                   of s ∈ S to go, so there are no functions f : S → T in
+     (Sometimes the target R is replaced by another set con-         this case.
+     taining 0 and 1, for example {0, 1} or C.)
+  4. For a set S and a set T containing an element t0, the
+     function
+                     f : S → T, s 7→ t0
+     is called the constant function (equal to) t0 (for the
+     source S and target T ).
+                              15                                                             16
+
+
+
+
+Notation. For sets S and T , we write                           Range of a function
+                           F (S; T )                            Definition. Let f ∈ F (S; T ) for sets S and T . The range of
+                                                                f (or image of S under f ) is the subset of T given by
+for the set of all function with source S and target T .
+                                                                              Ranf :={f (s) : s ∈ S}
+Remarks.                                                                            ={t ∈ T : ∃s∈S f (s) = t}
+  1. F (∅; T ) has just one element, no matter what the set
+                                                                Example. (Ranges of basic functions)
+     T is.
+                                                                  1. If S = ∅ then Ranf = ∅,
+  2. If S ̸= ∅ then F (S; ∅) has no elements:
+                                                                  2. Ran idS = S,
+                           F (S; ∅) = ∅.
+                                                                  3. Ran ιA→S = A,
+  3. If S and T are finite, with n and m elements respec-                     
+     tively, then F (S; T ) has mn elements. Since                            {1}
+                                                                                      if A = S,
+                                                                  4. Ran 1A = {0}      if A = ∅, ,
+                  m0 = 1 and 0n = 0 if n ̸= 0,                                
+                                                                                {0, 1} otherwise
+                                                                              
+
+     the conventions in 1. and 2. are consistent.                 5. f is a constant function equal to t0 if and only if
+
+                                                                                          Ran f = {t0}.
+
+
+
+
+                              17                                                             18
+Composition                                                        Restriction and extension
+For f ∈ F (S; T ) and g ∈ F (T ; U ), where S, T and U are         Let f ∈ F (S; T ) and let A ⊂ S. The function
+sets, g ◦ f ∈ F (S; U ) is defined by
+                                                                                     f |A : A → T, a 7→ f (a)
+              (g ◦ f )(s) = g(f (s)) for s ∈ S,
+                                                                   is called the restriction of f to A.
+with the illustrative diagram
+                                     T                                 In terms of the inclusion map i = ιA→S ,
+                          f                     g
+                                                                                             f |A = f ◦ i,
+                    S                                 U
+                                  g◦f                              and we have the picture
+Remarks.
+                                                                                                  f
+  1. f ◦ g only makes sense if U = S, and even then it is                                    S               T
+     usually the case that                                                                  i                    .
+                                                                                                      f |A
+                              f ◦ g ̸= g ◦ f.                                                A
+                              2                       2
+     E.g. for x ∈ R, sin(x ) ̸= (sin x) in general.                   Let g ∈ F (A; T ), where A ⊂ S. Any function f ∈
+  2. For f ∈ F (S; T ),                                            F (S; T ) satisfying f |A = g is called an extension of g.
+                                                                      We are often looking for extensions which keep some of
+                        f ◦ idS = f = idT ◦ f.                     the nice properties of g, or have even more!
+  3. If f or g is a constant function, and g ◦ f is defined,
+                                                                                             S
+     then g ◦ f is a constant function too.
+                                                                                            i                    .
+  4. If h ∈ F (U ; V ), for a fourth set V , then h ◦ (g ◦ f ) =
+                                                                                             A    g          T
+     (h ◦ g) ◦ f ; the resulting function is given by
+                    S → V,               s 7→ h(g(f (s)))
+
+                                     19                                                           20
+
+
+
+
+Co-restriction                                                     Injectivity, surjectivity & bijectivity
+Let f ∈ F (S; T ) and let B ⊂ T satisfy                            Definition.
+                                                                   Let f ∈ F (S; T ) for sets S and T . Then
+                          B ⊃ Ranf.
+Then the function                                                      f is injective if, for s1, s2 ∈ S,
+
+                 f |B : S → B, s 7→ f (s)                                             f (s1) = f (s2) =⇒ s1 = s2,
+is called the co-restriction of f to B.                                 equivalently (by the contrapositive),
+    In terms of the inclusion map i = ιB→T ,
+                                                                                      s1 ̸= s2 =⇒ f (s1) ̸= f (s2).
+                          i ◦ f |B = f,
+and we have the picture                                                f is surjective if Ran f = T , equivalently,
+
+                                     f                                                     ∀t∈T ∃s∈S f (s) = t.
+                          S                 T
+                                                i .                    f is bijective if it is both injective and surjective.
+                              f |B
+                                            B
+Axiom of Choice again
+Axiom of Choice. (An equivalent form)
+Let {Cλ : λ ∈ Λ} be an indexed family of nonempty subsets
+of a set S. Then there is a function f ∈ F (Λ; S) with the
+following property:
+                 f (λ) ∈ Cλ for all λ ∈ Λ.
+Such a map is called a choice function for {Cλ : λ ∈ Λ}.
+
+                                     21                                                           22
+Example. (Injectivity/surjectivity/bijectivity of squaring)       Exercise. (Counting injections and surjections)
+                                                                  Let S = {1, 2} and let T = {1, 2, 3}.
+    f : R+ → R, x 7→ x2 is injective but not surjective,
+                                                                   (a) How many injections are there from S to T ?
+    f : R → R+, x 7→ x2 is surjective but not injective,
+                                                                   (b) How many surjections are there from S to T ?
+    f : R+ → R+, x 7→ x2 is bijective.
+                                                                   (c) How many surjections are there from T to S?
+
+Example. (Inclusion maps are injective)
+For a subset A of a set S, the inclusion map ιA→S is injective.   Solution. (Counting injections and surjections)
+
+Example. (Canonical projections Q are surjective)
+For a Cartesian product S = j∈J Sj , each of the canonical
+projections is surjective (assuming that each Sj is nonempty).
+
+Example. (Quotient maps are surjective)
+Quotient maps (see below) are surjective.
+
+
+
+
+                               23                                                                 24
+
+
+
+
+Example. (An injective-surjective composition)                    Exercise. (Injectivity and surjectivity under composition)
+Let f, g ∈ F (N; N) be the functions given by                     Let f ∈ F (S; T ) and g ∈ F (T ; U ) for sets S, T and U .
+                                   (                              Show that
+                                     n − 1 if n ≥ 2
+      f (n) := n + 1 and g(n) :=                      .            (a)   (i) g ◦ f is injective if f and g are.
+                                     1       if n = 1
+                                                                         (ii) f is injective if g ◦ f is.
+Then
+                                                                   (b)   (i) g ◦ f is surjective if f and g are.
+    f is injective,
+                                                                         (ii) g is surjective if g ◦ f is.
+    g is surjective, and
+                                                                   (c)   (i) g ◦ f is bijective if f and g are.
+    g ◦ f is bijective, but                                             (ii) if g ◦ f is bijective then f is injective and g is
+    f ◦ g is neither injective nor surjective, because
+                                                                              surjective.
+
+                 (f ◦ g)(1) = (f ◦ g)(2) = 2, and
+                 (f ◦ g)(n) ̸= 1 for all n ∈ N.
+
+
+
+
+                               25                                                                 26
+Solution. (Injectivity and surjectivity under composition)         Proposition. (Uniqueness of inverses)
+                                                                   Let f ∈ F (S; T ) for sets S and T . Suppose that there are
+                                                                   g, h ∈ F (T ; S) such that g ◦ f = idS and f ◦ h = idT . Then
+                                                                   g = h.
+
+                                                                   Proof. This follows from the associativity of composition:
+
+                                                                        g = g ◦ idT = g ◦ (f ◦ h) = (g ◦ f ) ◦ h = idS ◦ h = h.
+
+
+
+                                                                   Proposition. (Injectivity/surjectivity & left/right invertibility)
+
+                                                                   Let f ∈ F (S; T ) for sets S and T .
+                                                                   (a)∗ f is injective if and only if there is g ∈ F (T ; S) such
+                                                                        that g ◦ f = idS . Such a function g is called a left
+                                                                        inverse for f .
+                                                                       (b) f is surjective if and only if there is h ∈ F (T ; S) such
+                                                                           that f ◦ h = idT . Such a function h is called a right
+                                                                           inverse for f .
+                                                                       (c) f is bijective if and only if there is k ∈ F (T ; S) such
+                                                                           that k ◦ f = idS and f ◦ k = idT . Such a function k is
+                                                                           called an inverse for f .
+                                                                   ∗
+                                                                       For this case, if T ̸= ∅ then S must be nonempty too.
+
+                                 27                                                                 28
+
+
+
+
+Remarks.                                                           Proof.
+                                                                   Case (i): S = T = ∅. Then each of
+  1. In general left inverses and right inverses are not unique.
+                                                                               F (S; T ), F (T ; S), F (S; S) and F (T ; T )
+  2. Sometimes the unique inverse of a bijective function
+     f : S → T is denoted f −1.                                    contains just one function, and it is trivially bijective.
+                                                                   Therefore (a)-(c) hold trivially in this case.
+  3. Since f ∈ F (S; T ), F (S; T ) ̸= ∅ so the following com-
+     bination is avoided:                                          Case (ii): S = ∅ and T ̸= ∅. In this case
+
+                        T = ∅ and S ̸= ∅.                                f is the unique function in F (S, T ),
+
+                                                                         f is injective and not surjective, and therefore not bi-
+     Thus either
+                                                                           jective.
+       (i) S = T = ∅, or
+                                                                         F (T ; S) contains no elements.
+      (ii) S = ∅ and T ̸= ∅, or
+                                                                   (b) and (c) follow, in this case, as required.
+      (iii) S ̸= ∅ and T ̸= ∅.
+                                                                   Case (iii): S ̸= ∅ and T ̸= ∅.
+  4. For part (a)∗ we must exclude (ii) since in that case         The “if” parts of (a), (b) and (c) follow nicely from Exercise
+     F (S; T ) contains just one function and that function is     (Injectivity and surjectivity under composition). It therefore
+     injective (trivially) but F (T ; S) contains no functions.    remains to prove the “only if” parts.
+  5. Note that, even for this basic result, the Axiom of
+     Choice is needed (see the proof of part (b)).
+
+
+
+
+                                 29                                                                 30
+   (a) Suppose that f is injective. Since S ̸= ∅ we may fix      Corollary. (Injections entail surjections and vice-versa)
+an element s0 ∈ S. Then                                          Let S and T be sets, where T = ∅ if S = ∅ (so we are
+                        (                                        avoiding the situation where S = ∅, but T ̸= ∅). Then the
+                          s if t = f (s)                         following are equivalent (TFAE):
+                g(t) :=
+                          s0 if t ∈/ Ranf
+                                                                   (i) there is an injection f : S → T ,
+defines a function g : T → S satisfying g(f (s)) = s for all
+s ∈ S, that is g ◦ f = idS .                                      (ii) there is a surjection g : T → S.
+    (b) Suppose that f is surjective. Then, for each t ∈ T ,
+                                                                 Proof. This follows easily from Proposition (Injectivity,
+the inverse image set f −1({t}) := {s ∈ S : f (s) = t} is
+                                                                 surjectivity and left/right invertibility).
+nonempty. Therefore, by the Axiom of Choice, there is a
+function h : T → S satisfying
+
+              h(t) ∈ f −1({t}) for each t ∈ T.                   Exercise. (Simple injectivity problem)
+                                                                 Consider the function
+Such a function h satisfies f (h(t)) = t for all t ∈ T , or                                                    2x
+f ◦ h = idT .                                                                   f : R \ {1} → R,       x 7→       .
+                                                                                                              x−1
+    (c) Suppose that f is bijective. Then by (a) and (b) there
+are g, h ∈ F (T ; S) such that g ◦ f = idS and f ◦ h = idT ,      (a) Show that f is injective.
+and by Proposition (Uniqueness of inverses), g = h, so we
+                                                                  (b) Find Ran f .
+are done.
+                                                                  (c) Find a left inverse for f , that is a function g : R →
+                                                                      R \ {1} such that
+
+                                                                                             g ◦ f = idR\{1} .
+
+
+
+                             31                                                                  32
+
+
+
+
+Solution. (Simple injectivity problem)                           Exercise. (F (S; T ) ≡ T S )
+                                                                 Let S and T be sets. Set
+                                                                                                              Y
+                                                                                 F = F (S; T ) and P =              Ts
+                                                                                                              s∈S
+
+                                                                 in which Ts = T for each s ∈ S. Show that the map ϕ : P →
+                                                                 F given by (ts)s∈S 7→ f , where
+
+                                                                                     f (s) := ts, for each s ∈ S,
+
+                                                                 is a bijection by
+                                                                  (a) carefully defining an inverse map ψ : F → P ,
+                                                                  (b) carefully showing that it is inverse to ϕ, that is:
+
+                                                                                     ψ ◦ ϕ = idP and ϕ ◦ ψ = idF .
+
+                                                                 Note that (recalling the ‘strange cases’) if S = ∅ then the
+                                                                 above prescription
+                                                                           Q         for the map ϕ takes the solitary element
+                                                                 (ts)s∈∅ of s∈∅ Ts to the solitary function in F (∅; T ). On the
+                                                                 other hand, if S ̸= ∅ but T = ∅ then
+                                                                                                     Y
+                                                                                     F (S; T ) = ∅ =     Ts,
+                                                                                                       s∈∅
+
+                                                                 and the unique map from ∅ to ∅ is trivially bijective!
+                                                                    You may therefore assume that S ̸= ∅ and T ̸= ∅.
+
+                             33                                                                  34
+Remark. The above product set P is usually written T S . The   Exercise. (P(S) ≡ F (S; {0, 1}))
+bijection above therefore identifies, in a natural way,        Let S be a set. Set
+
+                       F (S; T ) with T S ,                                  P = P(S) and F = F (S; {0, 1})
+
+that is, the set of functions from S to T with the set of      where P(S) denotes the power set of S: {A : A ⊂ S}, and
+indexed families in T with indexed set S.                      F (S; {0, 1}) denotes the set of functions from S to the set
+                                                               {0, 1}.
+Solution. (F (S; T ) ≡ T S )                                       Show that the map
+
+                                                                                         χ: P → F
+
+                                                               given by
+                                                                                          A 7→ 1A,
+                                                               where 1A denotes the indicator function of A:
+                                                                                                 (
+                                                                                                  1 if s ∈ A
+                                                                         1A : S → {0, 1}, s 7→               ,
+                                                                                                  0 if s ∈/A
+
+                                                               is a bijection by
+                                                                (a) defining the inverse map σ : F → P, and
+                                                                (b) showing that
+
+                                                                                   σ ◦ χ = idP and χ ◦ σ = idF .
+
+
+
+
+                               35                                                            36
+
+
+
+
+Solution. (P(S) ≡ F (S; {0, 1}))                               Direct images
+                                                               Let f ∈ F (S; T ) for sets S and T . For A ⊂ S, the following
+                                                               sets are equal:
+                                                                                      
+                                                                  f (s) : s ∈ A and t ∈ T : t = f (s) for some s ∈ A .
+
+                                                               The common set is called the direct image of A under f ; it
+                                                               is denoted f (A), or sometimes f [A].
+                                                               Remarks.
+                                                                  1. This is potentially confusing (as it is standing for some-
+                                                                     thing different to the value of the function f at A). So
+                                                                     you need to be on your mettle! Unfortunately the vast
+                                                                     majority of authors now use the notation f (A). Nev-
+                                                                     ertheless, you might find that using the square-bracket
+                                                                     notation f [A] helps to avoid confusion.
+                                                                  2. The direct image map is a set map:
+
+                                                                                   P(S) → P(T ),     A 7→ f (A).
+
+                                                                     Challenge. Try and think up a good notation for this
+                                                                     map.
+                                                                  3. f (S) = Ran f.
+
+
+
+                               37                                                            38
+Example. (Case of f (A ∩ B) ⊊ f (A) ∩ f (B) )                   Solution. (Images of unions and intersections)
+Let S = {0, 1} and T ̸= ∅, and let f ∈ F (S; T ) be any
+constant function.
+   Then, setting A = {0} and B = {1},
+
+                A ∩ B = ∅ so f (A ∩ B) = ∅
+
+and
+                  f (A) ∩ f (B) = Ranf ̸= ∅,
+thus
+                  f (A ∩ B) ⊊ f (A) ∩ f (B).
+
+
+Exercise. (Images of unions and intersections)
+Let f ∈ F (S; T ) for sets S and T , let A be a family of
+subsets of S, and let A and B be subsets of S. Show that
+ (a)                       [  [
+                       f     A =  f (A),
+                                    A∈A
+
+ (b)                       \   \
+                       f     A ⊂   f (A),
+                                    A∈A
+
+ (c)
+                     f (A \ B) ⊃ f (A) \ f (B).
+
+                              39                                                               40
+
+
+
+
+Inverse images                                                  Remarks.
+
+Let f ∈ F (S; T ) for sets S and T , and let C ⊂ T . Then the     1. Again this is potentially confusing, as with direct im-
+set                                                                  ages but now worse! The notation does not suggest
+               f −1(C) := {s ∈ S : f (s) ∈ C}                        that the function is invertible!! Again, using the square-
+                                                                     bracket notation f −1[C] may help to avoid confusion.
+is called the inverse image of C under f ; it is denoted
+f −1(C), or f −1[C].                                              2. The inverse image map is a set map
+Examples.                                                                              f −1 : P(T ) → P(S).
+  1. f −1(∅) = ∅,
+                                                                  3. If f ∈ F (S; T ) is invertible ≡ bijective, then its inverse,
+  2. f −1(T ) = S,                                                   say g ∈ F (T ; S), satisfies
+                                                                     f −1({t}) = {g(t)}, for all t ∈ T , and
+  3. For the function
+                                                                                  f −1(C) = {g(t) : t ∈ C}
+                        f : R → R, x 7→ x2,
+                                                                                          = g(C), for all C ⊂ T.
+       and set C = [1, 4],
+                                                                     Thus, in this case, the inverse images are also direct
+                     f −1(C) = [1, 2] ∪ [−2, −1].                    images under the inverse function.
+
+  4. If f is the constant function equal to t0 then
+                              (
+                                 S if t0 ∈ C
+                    f −1(C) =                  .
+                                 ∅ if t0 ∈/C
+
+
+
+
+                              41                                                               42
+Proposition. (Inverse images of unions and intersections)           Remark. We have implicitly been using the following fact
+Let f ∈ F (S; T ) for sets S and T , let C be a family of subsets   about subsets A and B of a set S.
+of T , and let C and D be subsets of T . Then                       The following are equivalent:
+
+  (a) f −1 ( C) = C∈C f −1(C), and
+            S       S
+                                                                      (i) A = B,
+
+  (b) f −1 ( C) = C∈C f −1(C).                                       (ii) for all s ∈ S, s ∈ A if and only if s ∈ B.
+            T       T
+
+  (c) f −1         = f −1(D)\f −1(C), In particular, f −1 T \
+                 
+          D \C −1
+       C = S \ f (C).                                               Exercise. (Unions and complements under inverse images) Let
+                                                                    f ∈ F (S; T ) for sets S and T , let C be a family of subsets of
+Proof. Let s ∈ S. Then
+                \                                                 T , and let C and D be subsets of T . Show that
+                                \
+       s ∈ f −1    C ⇐⇒ f (s) ∈   C                                                     [  [
+                                                                                   f −1     C =        f −1(C), and
+                             ⇐⇒ ∀C∈C f (s) ∈ C                                                   C∈C
+                             ⇐⇒ ∀C∈C s ∈ f −1(C)                                   f −1(D \ C) = f −1(D) \ f −1(C)
+                                    \
+                             ⇐⇒ s ∈     f −1(C),                    In particular, f −1(T \ C) = S \ f −1(C).
+                                        C∈C
+
+so (b) follows.
+A very similar argument gives (a). (c) is left as an exercise.      Solution. (Unions and complements under inverse images)
+
+
+
+
+                               43                                                                44
+
+
+
+
+Schröder–Bernstein Theorem                                            The proof turns on the following.
+
+For any function f : S → T , each subset A of S determines          Proof schema. Suppose that P is a subset of S satisfying
+a surjection fA : A → f (A), by restriction. If f is injective                                 
+                                                                                    h T \ g(P ) = S \ P,                   (†)
+then each of these functions fA is bijective; we denote its
+inverse by f A.                                                     equivalently                          
+                                                                                       P = S \ h T \ g(P ) .                 (††)
+Theorem. * [Schröder–Bernstein] Let S and T be sets. Sup-
+pose that there are is an injection g from S to T and an            Then, setting Q := T \ g(P ), the following prescription de-
+injection h from T to S. Then there is a bijection f from S         fines a bijection from S to T :
+to T .                                                                                    (
+                                                                                            gP (x) if x ∈ P
+                                                                                     x 7→                      .
+Remarks. (i) The same conclusion holds if there are surjec-                                 hQ(x) if x ∈ S \ P
+tions from S to T and from T to S or, alternatively, if there
+is both an injection from S to T and a surjection from S to         The Schröder–Bernstein theorem is therefore proved by demon-
+T.                                                                  strating the existence of a subset P of S which satisfies (†),
+    (ii) In each of the above scenarios, it cannot happen that      or (††).
+S = ∅ but T ̸= ∅, neither can it happen that S ̸= ∅ but
+T = ∅.
+                                                                    YOU MUST KNOW THIS THEOREM; THE PROOF IS
+                                                                    FOR YOUR INTEREST AND PLEASURE (IT IS NOT
+                                                                    EXAMINABLE)
+
+
+
+
+                               45                                                                46
+    There are a number of proofs of this very important the-   Corollary. Let S and T be sets, let g be a function from S
+orem. This is most elegant one that I know. It requires a      to T , and let h be a function from T to S. Set
+lemma, whose corollary solves (†) (without the assumption                                           
+of injectivity on g and h).                                              C := A ⊂ S : h T \ g(A) ⊃ S \ A .
+                                                                                                         
+Lemma. (Set monotonicity Lemma) Let S be a set and let
+                                                                                   T
+                                                               Then the set P := A∈C S \ h T \ g(A) satisfies
+ψ be a monotonic map from P(S) to itself. Set                                                          
+         \                                                                        S \ P = h T \ g(P ) .               (†)
+  P :=       ψ(A) where C := A ∈ P(S) : ψ(A) ⊂ A .
+       A∈C                                                     Proof. Define a map
+                                                                                                                 
+Then P is a fixed point of the map ψ, that is, ψ(P ) = P .            ψ : P(S) → P(S),        A 7→ S \ h T \ g(A) .
+   Monotonicity for the map ψ means the following: for
+A, B ∈ P(S), if A ⊂ B then ψ(A) ⊂ ψ(B).                        Note that ψ is monotonic since, for A, B ∈ P(S),
+
+Proof. Note that the family C is nonempty since S ∈ C.         A ⊂ B =⇒ g(A) ⊂ g(B)
+    If A ∈ C then P ⊂ ψ(A) ⊂ A so, T    by monotonicity,             =⇒ T \ g(A) ⊃ T \ g(B)
+ψ(P ) ⊂ ψ(ψ(A)) ⊂ ψ(A).    Thus ψ(P ) ⊂   A∈C ψ(A) = P .
+                                                                                              
+                        T                                            =⇒ h T \ g(A) ⊃ h T \ g(B) =⇒ ψ(A) ⊂ ψ(B).
+In particular, P ∈ C, so A∈C ψ(A) ⊂ ψ(P ) thus P ⊂ ψ(P )
+too. Therefore P = ψ(P ).                                      It follows from the lemma
+                                                                                        that ψ(P ) = P , in other words
+                                                               P = S \ h T \ g(P ) , equivalently (†) holds.
+
+                                                               Prof of the S–B theorem. Applying this corollary to the
+                                                               case where g and h are injections and appealing to the proof
+                                                               schema above, yields a proof of the Schröder–Bernstein the-
+                                                               orem.                                                     □
+
+
+
+                            47                                                                48
+
+
+
+
+                                                               Definition.
+                                                               Let S be a nonempty set. A relation ∼ on S is an equivalence
+                                                               relation if
+                                                                   ∀s ∈ S      s∼s                            (Reflexivity)
+                                                                   ∀s, t ∈ S      s ∼ t =⇒ t ∼ s              (Symmetry)
+                                                                   ∀r, s, t ∈ S     r ∼ s & s ∼ t =⇒ r ∼ t (Transitivity)
+                                                               For a ∈ S, the set
+                                                                                    [a]∼ := {s ∈ S : s ∼ a}
+1.3    Equivalence Relations & Partitions                      is called the ∼-equivalence class of a.
+                                                                   The set of ∼-equivalence classes
+                                                                                    S/∼ := {[a]∼ : a ∈ S}
+                                                               is called the quotient set of S by ∼.
+                                                                   The map
+                                                                                q : S −→ S/∼,      a 7→ [a]∼
+                                                               is called the quotient map.
+
+                                                               Remarks.
+                                                                 1. For a, b ∈ S, [a]∼ = [b]∼ if and only if a ∼ b.
+                                                                 2. Quotient maps are clearly surjective.
+
+                            49                                                                50
+Example. (Equality)                                               Solution. (Disjoint union of equivalence relations)
+On any nonempty set S, the relation of equality is an equiv-
+alence relation, with                                             Remark. The partition of A1 ∪A2 corresponding to the equiv-
+                                                                  alence relation ∼, according to Theorm (Partitions ≡ equiva-
+                    [a]= = {a} for all a ∈ S.                     lence relations) below, is precisely the union of the partitions
+                                                                  corresponding to the relations ∼i on Ai for i ∈ {1, 2}.
+Example. (Full relation)
+On any nonempty set S, there is the full relation in which
+all elements are related. This is an equivalence relation for
+which
+                   [a]F = S for all a ∈ S.
+
+Example. (Empty relation)
+On any nonempty set S, there is the empty relation in which
+no elements are related: x ̸∼ y for all x, y ∈ S. This relation
+is trivially symmetric and transitive, but not reflexive — and
+so is not an equivalence relation.
+
+Exercise. (Disjoint union of equivalence relations)
+Let A1 and A2 be disjoint nonempty sets, and suppose that
+∼1 and ∼2 are equivalence relations on A1 and A2, respec-
+tively. Show that
+                          x ∼ y if
+      (x, y ∈ A1 and x ∼1 y) or (x, y ∈ A2 and x ∼2 y)
+defines an equivalence relation on A1 ∪ A2.
+
+
+                                  51                                                            52
+
+
+
+
+Example. (Equivalence (mod p) for integers) Let p ∈ N be          Definition. Let C be a collection of subsets of a set S. Then
+a prime number. Then                                              C is a partition of S if
+                                                                        S
+       n ≡p m      if   p|(m − n) “p divides (m − n)”                1. C = S,
+
+defines an equivalence relation on the set Z.                       2. ∀C∈C C ̸= ∅,
+
+            [0]p     = {kp : k ∈ Z} = pZ                            3. ∀C,D∈C C ̸= D =⇒ C ∩ D = ∅.
+            [1]p     = {kp + 1 : k ∈ Z} = pZ + 1
+                     ..
+            [p − 1]p = pZ + (p − 1).
+Note that                 [
+                                  [k]p = Z
+                          k∈Z
+and                           
+                                  ∅, if p ̸ |(k − j)
+              [j]p ∩ [k]p =
+                                  [j]p, if p|(k − j)
+so the identity
+                                  p−1
+                                  [
+                          Z=            [k]p
+                                  k=0
+gives a partition of the set Z.
+
+
+
+
+                                  53                                                            54
+Theorem. (Partitions ≡ equivalence relations) Let S be a set.     Proof.
+
+  (i) Suppose that ∼ is an equivalence relation on S. Then          (i) Since s ∈ [s]∼ for all s ∈ S (by reflexivity),
+      the quotient set                                                              [
+                                                                                        [s]∼ = S and ∀s∈S [s]∼ ̸= ∅.
+                      S/∼ = {[a]∼ : a ∈ S}                                         s∈S
+
+     is a partition of S.                                              Let s, t ∈ S and suppose that [s]∼ ∩ [t]∼ ̸= ∅, say
+                                                                       r ∈ [s]∼ ∩ [t]∼. Then, for all u ∈ [t]∼,
+ (ii) Suppose that C is a partition of S. Then
+                                                                                         r ∼ s, r ∼ t and u ∼ t.
+                   s ∼C t   if    ∃C∈C s, t ∈ C
+                                                                       Thus, by symmetry,
+     defines an equivalence relation on S.
+                                                                                         u ∼ t, t ∼ r and r ∼ s,
+(iii) The procedures in (i) and (ii) are mutually inverse to
+      each other.                                                      and so, by transitivity, u ∼ s and thus u ∈ [s]∼. Thus
+                                                                       [t]∼ ⊂ [s]∼. By symmetry (student challenge: what
+                                                                       exactly?) the opposite inclusion holds too. Therefore
+                                                                       [t]∼ = [s]∼.
+                                                                       This proves that the quotient set S/∼ defines a parti-
+                                                                       tion of S.
+
+
+
+
+                             55                                                                 56
+
+
+
+
+                                                  S
+ (ii) For s ∈ S, s ∈ C for some C ∈ C since           C = S, so                                       ̸
+                                                                  Exercise. (Symmetry + Transitivity =⇒  Reflexivity)
+      s ∼C s. Thus ∼C is reflexive.                               Let ∼ be a relation on a nonempty set which is symmetric
+     Symmetry of the relation ∼C is obvious.                      and transitive.
+     Let r, s, t ∈ S and suppose that r ∼C s and s ∼C t.           (a) Find the logical error in the following argument, which
+     Then there are C, D ∈ C such that r, s ∈ C and s, t ∈             purports to show that ∼ is then automatically reflexive,
+     D. In particular, s ∈ C ∩ D so C ∩ D ̸= ∅. Since                  and thus an equivalence relation.
+     C is a partition of S, this implies that C = D. Thus              Let x ∈ S. Then, for all y ∈ S such that x ∼ y, y ∼ x
+     r, t ∈ C, so r ∼C t. This proves that ∼C is transitive            by symmetry, and so
+     and thus an equivalence relation.
+                                                                                            x ∼ y and y ∼ x.
+(iii) You might like to write out a proof of this — a good
+      exercise to test that you understand it completely.              Therefore, by transitivity, x ∼ x. Thus ∼ is reflexive
+                                                                       too.
+                                                                   (b) Give an example of a relation enjoying Symmerry and
+                                                                       Transitivity, but not Reflexivity.
+
+                                                                                                      ̸
+                                                                  Solution. (Symmetry + Transitivity =⇒ Reflexivity)
+
+
+
+
+                             57                                                                 58
+Theorem. (Canonical decomposition of a function)                   Remarks.
+Let f ∈ F (S; T ) for sets S and T . Then
+                                                                     1. The following commutative diagram nicely summarises
+ (a) An equivalence relation on S is given by                           the situation:
+                                                                                                  f
+                                                                                           S           T
+                 s1 ∼f s2      if   f (s1) = f (s2).
+                                                                                             q                 i
+                                                                                                      fe
+ (b) The prescription                                                                       S/∼f           I
+
+                            [s]∼f 7→ f (s)                           2. The result tells us that every function factorises into
+                                                                        the composition of a surjection followed by a bijection
+     gives a well-defined bijection
+                                                                        followed by an injection, in a canonical fashion.
+                          fe: S/∼f −→ I,
+                                                                     3. This fundamental fact is the basis for all of the “First
+     where I := Ran f .                                                 Isomorphisms Theorems” in algebra.
+
+ (c) Let q denote the quotient map
+
+                      S → S/∼f , s 7→ [s]∼f
+
+     and let i denote the inclusion map I → T . Then
+
+                           f = i ◦ fe ◦ q.
+
+
+
+
+                              59                                                                 60
+
+
+
+
+Proof. Abbreviate ∼f and [·]∼f to ∼ and [·].                         ·
+
+ (a) This is a straight-forward exercise.
+
+ (b) Well-definedness of fe. Let s1, s2 ∈ S be such that
+     [s1] = [s2]. Then s1 ∼ s2 so f (s1) = f (s2). Thus fe is
+     a well-defined function.
+
+     Injectivity of fe. Suppose that s1, s2 ∈ S satisfy f (s1) =
+     f (s2). Then s1 ∼ s2, so [s1] = [s2]. Thus fe is injective.
+
+     Surjectivity of fe. This is obvious, since
+
+                Ran fe = Ran f = I = Codom fe.
+
+ (c) This holds by the definition of the functions fe, q and i.
+
+
+
+
+                              61                                                                 62
+                                                               Let S be a set. We can all agree that the following properties
+                                                               each characterise ‘finiteness’ for S.
+
+                                                                 1. For some N ∈ N, there is an injection
+
+                                                                                      ϕ : S → {1, . . . , N }.
+
+                                                                 2. Either S = ∅ or, for some M ∈ N there is a surjection
+
+                                                                                      ψ : {1, . . . , M } → S.
+
+                                                               From these one can deduce the following (can you?):
+1.4    Countability and Cantor’s Theorem                          either S = ∅,
+                                                                  or there is a bijection χ : S → {1, . . . , K}, for some
+                                                               K ∈ N.
+                                                                  The number K (0 if S is empty) is unique; it is called the
+                                                               cardinality of S (the number of elements in S).
+                                                                  What about when S is infinite?
+
+
+
+
+                                63                                                             64
+
+
+
+
+Definition. Let S be a set. Then S is countable if there is    Solution. (Countability of Z)
+an injection f : S → N.
+Remarks.
+  1. ∅ is countable,
+  2. Suppose that S ̸= ∅. Then S is countable if and only
+     if there is a surjection g : N → S.
+  3. N is countable.
+  4. Any subset of a countable set is countable.
+  5. Suppose that T is countable. Then S is countable under
+     either of the following conditions:
+         there is an injection h : S → T , or
+         there is a surjection k : T → S.
+
+ 6∗. A set S is countable if and only if
+         either S is finite,
+         or there is a bijection ϕ : N → S.
+
+      This is proved at the end of this subsection.
+
+Exercise. (Countability of Z)
+Prove that Z is countable, by explicitly writing down a sur-
+jection f : N → Z (or, even better, a bijection).
+
+                                65                                                             66
+Example. (NN )                                                     Proposition. (Finite cartesian products of countable sets)
+For each N ∈ N, the N -fold Cartesian product                      Let N ∈ N and let S1, . . . , SN be countable sets.
+                                                                   Then the set
+                        NN = N × · · · × N                                              S := S1 × · · · × SN
+is countable.                                                      is countable too.
+                                                                   Proof.
+Proof. Let p1, . . . , pN be the first N prime numbers. The
+                                                                   If any of the sets Si is empty then S = ∅ and so is countable.
+following map is injective
+                                                                   Assume therefore that Si ̸= ∅ for each i ∈ {1, . . . , N }. Then
+                                                           k
+         NN → N,           (k1, . . . , kN ) 7→ pk11 · · · pNN .   there are surjections ϕi : N → Si for each i ∈ {1, . . . , N }.
+                                                                   Define a map
+This follows from the following elementary property of prime
+numbers: for j1, . . . , jN ∈ Z,                                      ϕ : NN → S, (n1, . . . , nN ) 7→ (ϕ1(n1), . . . , ϕN (nN )).
+                    j                                              Then ϕ is easily seen to be surjective. Since NN is countable
+        pj11 pj22 · · · pNN = 1 ⇐⇒ j1 = · · · = jN = 0.
+                                                                   this implies that S is countable too.
+(E.g. for i, j ∈ Z, 2i3j = 1 ⇐⇒ i = j = 0.)
+                                                                   Example. (Countability of the rationals)
+                                                                   Q is countable. This follows since:
+                                                                    (a) The map
+                                                                                                                    n
+                                                                                         Z × N → Q,     (n, m) 7→
+                                                                                                                    m
+                                                                         is surjective
+                                                                    (b) Z × N is countable, and
+                                                                    (c) Point 5 from the remarks therefore applies.
+
+                                 67                                                               68
+
+
+
+
+Proposition. (A countable union of countable sets is countable)    Exercise. (Countability of the set of polynomials with
+                                                                   rational coefficients)
+Let C be a countable collection of subsets of a set S, each of     Let S be the set of all polynomials whose coefficients are ra-
+which is countable itself. Then the set                            tional numbers. Show that S is countable.
+                            [
+                               C                                   [Hint: View S as ∞
+                                                                                      S
+                                                                                        n=0 Sn where Sn is the set of polynomials
+                                                                   of degree at most n, with rational coefficients. Then use
+is countable too.
+                                                                   the principles we have developed for establishing countability
+Proof. Set X := C and C ′ :=
+                    S             
+                                    C ∈SC : C ̸= ∅ . Then          (and the example of Q).]
+C′ ⊂ S
+     C so C ′ is countable, and C ′ = C = X. If C ′ = ∅
+                                S
+then C ′ = ∅ and so X is countable. Assume therefore
+that C ′ ̸= ∅. Then there is a surjection ϕ : N → C ′. Set         Solution. (Countability of the set of polynomials with
+Cn := ϕ(n) for each n ∈ N. Then                                    rational coefficients)
+                         [        [
+                    X=       C′ =    Cn .
+                                       n∈N
+
+Since each C ∈ C ′ is countable and nonempty there is, for
+each n ∈ N, a surjection ψn : N → Cn.
+Now it is easily seen that the map
+
+            χ : N × N → X, (n, m) 7→ ψn(m)
+
+is surjective. Since N × N is countable this implies that X is
+countable.
+
+
+
+                                 69                                                               70
+Exercise. (P00(N) is countable)                                 Solution. (P00(N) is countable)
+Let
+              P00(N) := {A ⊂ N : #A < ∞},
+the collection of all finite subsets of N.
+Show that P00(N) is countable.
+
+[Hint: For each N ∈ Z+, set
+
+              P (N )(N) := {A ⊂ N : #A = N },
+
+the collection of subsets of N having cardinality N .
+Then
+  (a) P00(N) = ∞          (N )
+                 S
+                   N =0 P      (N), and
+ (b) there is an easily found injection P (N )(N) → NN .]
+
+
+
+
+                               71                                                             72
+
+
+
+
+Cantor’s Theorem                                                Theorem. (There are no surjections S → F (S; {0, 1}))
+                                                                Let S be a set. There is no surjection S → F (S; {0, 1}), and
+We give an important theorem of Cantor in two guises.           thus also no injection F (S; {0, 1}) → S.
+Theorem. (There are no surjections S → P(S))
+Let S be a set. There are no surjections S → P(S), and          Proof. Let ϕ be a map from S to F (S; {0, 1}). We show
+thus also no injections P(S) → S.                               that ϕ is not surjective.
+                                                                   For each s ∈ S, write ϕs for the function ϕ(s) ∈ F (S; {0, 1}).
+Proof. Suppose for a contradiction that there is a surjection   Now define a function g ∈ F (S; {0, 1}) as follows:
+ϕ : S → P(S). Set                                                                         (
+                                                                                           1 if ϕs(s) = 0
+                                                                                  g(s) =                    .
+                   D := {s ∈ S : s ∈
+                                   / ϕ(s)}.                                                0 if ϕs(s) = 1
+Then D ∈ P(S) so D = ϕ(x) for some x ∈ S.                       The function g has the following remarkable property: g ̸=
+    If x ∈ D then x ∈
+                    / ϕ(x) = D, a contradiction.                ϕ(s) for all s ∈ S. Why? Because
+    If x ∈
+         / D then x ∈ ϕ(x) = D, a contradiction.
+Either way we get our contradiction, thus no such surjection                         ∀s∈S g(s) ̸= ϕs(s),
+exists.
+                                                                so g and ϕs disagree at the element s, at least!
+                                                                Thus g ∈/ Ran ϕ, so ϕ is not surjective.
+Remark. This proof is reminiscent of Russell’s Paradox.
+                                                                    The second part follows from the first.
+
+
+
+
+                               73                                                             74
+Remarks.                                                             The following theorem is proved in Section 2.
+  1. The above result was key to Cantor’s construction of         Theorem. (The set N is ‘well-ordered’)
+     infinite cardinals.                                          Every nonempty subset of N has a least element.
+  2. Recall (from earlier exercises) that there are bijections    Theorem. (Countably infinite sets are bijective to N)
+                           S                                      Let S be countable and infinite. Then there is a bijection
+           F (S; T ) → T       and P(S) → F (S; {0, 1}).
+                                                                  f : S → N.
+  3. Taking S = N and T = {0, 1}, we see that the bijective
+                                                                  Proof.
+     sets
+                                                                  Let g : S → N be an injection, set I = g(S), and let ge :
+               P(N) ≡ F (N; {0, 1}) ≡ {0, 1}N
+                                                                  S → I be the co-restriction of g to I. Thus ge is bijective, in
+     are uncountable.                                             particular I is infinite since S is. By the well-ordering of N
+                                                                  (applied to the set I), the recursive prescription
+  4. The uncountability of R is a guided exercise below.                                                          
+                                                                    i1 := min I, in := min I \ {i1, · · · , in−1} , for n ≥ 2
+
+                                                                  defines a sequence (in) in N satisfying
+
+                                                                             i1 < i2 < · · · and I = {ik : k ∈ N}.
+
+                                                                  Now define the map
+
+                                                                                      h : N → I,     k 7→ ik .
+
+                                                                  This is clearly bijective, and so letting k denote its inverse,
+                                                                  k ◦ ge is a bijection from S to N.
+
+
+
+                                75                                                              76
+
+
+
+
+Exercise. (Characterisation of infiniteness)
+Let S be a set. Show that S is infinite if and only if there is
+an injection from N to S.
+
+Corollary. (Schröder–Bernstein theorem for N) Let S be a set.
+Suppose that there is an injection g from S to N, and a sur-
+jection h from S to N. Then there is a bijection f from S to
+N.
+
+
+
+
+                                                                  1.5     Partial orders and Zorn’s Lemma
+                                                                                (for self-study; non-examinable)
+
+
+
+
+                                77                                                              78
+Definition.                                                       Example. (Partial ordering of power sets)
+A partial order on a set S is a relation,                         Let S = P(X) for a set X, with
+                  usually written ≤ or ≲,                                           A ≤ B meaning A ⊂ B.
+satisfying                                                        Then (S, ≤) is a partially ordered set.
+                                                                     Every subset C of S (i.e. everyScollection of subsets of X)
+    ∀s∈S s ≤ s                                  (Reflexivity),
+                                                                  has a least upper bound, namely C.
+    ∀s,t∈S s ≤ t and t ≤ s =⇒ s = t          (Antisymmetry),        There is a unique maximal element, namely X.
+    ∀r,s,t∈S r ≤ s and s ≤ t =⇒ r ≤ t          (Transitivity).   Remark.
+   Given a partially ordered set (S, ≤), elements u, x, l ∈ S     Let A ⊂ S where (S, ≤) is a partially ordered set. Then ≤
+and subsets A, C ⊂ S,                                             restricts to the partial order on A.
+                                                                      In case S = P(X) for a set X, with its standard partial
+    u is an upper bound for A if ∀a∈A a ≤ u,                     order, we say that A is partially ordered by inclusion.
+    x is a maximal element if ∀s∈S s ≥ x =⇒ s = x,
+
+    C is a chain if ∀s,t∈C s ≤ t or t ≤ s,                       Example. (Partial ordering of R-valued functions)
+                                                                  Let S = F (I; R), where I is the unit interval [0, 1], with
+    l is a least upper bound for A if it is an upper bound
+      and l ≤ u for other upper bounds u for A.                            f ≤ g meaning f (x) ≤ g(x) for all x ∈ I.
+                                                                  There are no maximal elements.
+Remarks.
+                                                                    If A ⊂ S satisfies
+  1. Thus chains are “totally ordered” subsets.
+                                                                             f (x) ≤ M for all f ∈ A and all x ∈ I,
+  2. There may be zero, one or many maximal elements.
+                                                                  for some M ∈ R, then the constant function I → R equal
+  3. By antisymmetry, A has at most one least upper bound.        to M is an upper bound for A.
+
+                             79                                                                 80
+
+
+
+
+Theorem. (Zorn’s Lemma)                                           Example. (Partial order on linearly independent subsets)
+Let (S, ≤) be a partially ordered set with the property that      Let V be a vector space (over R), and let X denote the col-
+every chain has an upper bound. Then (S, ≤) has a maximal         lection of linearly independent subsets L of V . Then X is
+element.                                                          partially ordered by inclusion.
+                                                                      A maximal element of X is precisely a basis for V !
+Remarks.                                                              For any chain C in X,
+                                                                                            [
+  1. Zorn’s Lemma is widely used in Algebra and Analysis.                                      C∈X
+  2. It is logically equivalent to the Axiom of choice.           and so C has an upper bound; moreover, it is easily seen to
+  3. Polish mathematicians know it as the Kuratowski–Zorn         be a least upper bound.
+     Lemma.
+                                                                  Theorem. (Hamel Basis Theorem)
+                                                                  Every vector space (over R) has a basis.
+
+                                                                  Proof. Apply Zorn’s Lemma to the above example.
+
+                                                                  Remark. (* Strictly for interest only *)
+                                                                  In fact Zorn’s Lemma (and therefore also the Axiom of Choice)
+                                                                  is logically equivalent to each of the following two statements:
+                                                                    (i) For all fields F, every vector space over F has a basis.
+                                                                        (Blass, 1984)
+                                                                   (ii) There is a field F such that, in all vector spaces V over
+                                                                        F, every linearly spanning subset of V contains a basis
+                                                                        for V . (Howard, 2007)
+
+                             81                                                                 82
+Example.S* (Partial order by extension)                          Strict (partial) order
+Let S = A⊂X F (A; Y ) for sets X and Y , with
+                                                                 Definition.
+    f ≤ g meaning                                                A strict (partial ) order on a set S is a relation
+    Domf ⊂ Dom g and f = g|A where A = Domf.
+                                                                                    usually written < or ≺,
+A maximal element is a function in F (X; Y ).
+                                                                 satisfying
+  Every chain in C has a least upper bound h, given by
+             [                                                       ∀s,t∈S s < t =⇒ t ̸< s ,
+   Dom h =      Domf and
+               f ∈C                                                  ∀r,s,t∈S r < s and s < t =⇒ r < t.
+       h(x) = f (x) for any f ∈ C satisfying x ∈ Domf.
+                                                                 Remarks.
+Remark.
+The common notation for this partial order is                      1. Given a partial order ≤ on S, setting
+
+                            f ⊂ g.                                                 s < t to mean s ≤ t and s ̸= t
+
+                                                                       defines a strict partial order.
+                                                                       Conversely, given a strict partial order < on S, setting
+
+                                                                                    s ≤ t to mean s < t or s = t
+
+                                                                       defines a partial order.
+                                                                   2. These two procedures are mutually inverse, and so com-
+                                                                      pletely consistent – we may move freely between the
+                                                                      two.
+
+                              83                                                                  84
+
+
+
+
+Total order                                                      Exercise. (From total order to strict total order and back)
+                                                                 Let S be a set. A relation < on S is called a strict total order
+Definition.                                                      on S if it enjoys the Trichotomy and Transitivity properties.
+A total order on S is a partial order in which all elements
+are comparable:                                                   (a) Let ≤ be a total order on S. Show that, taking s < t
+  ∀s,t∈S s ≤ t or t ≤ s.                  (Comparability)             to mean
+                                                                                        s ≤ t and s ̸= t,
+This then replaces reflexivity.                                        defines a strict total order < on S.
+Remark. The strict version, a strict total order on S, is         (b) Let < be a strict total order on S. Show that, taking
+governed by the following two rules:                                  s ≤ t to mean
+                                                                                         s < t or s = t,
+  1. For all s, t ∈ S, precisely one of the following holds:
+                                                                       defines a total order < on S.
+      s < t, or s = t, or s > t                 (Trichotomy),
+  2. ∀r,s,t∈S r < s and s < t =⇒ r < t          (Transitivity)
+
+Example. (Classic example)
+Any subset of R, with its natural (strict) orders.
+   But what exactly is R?
+
+
+
+
+                              85                                                                  86
+Solution. (From total order to strict total order and back)
+
+
+
+
+                             87                                                              88
+
+
+
+
+                                                               Exercise. 1.1 (Simple intersection/union problem)
+                                                               Let A and B be subsets of a set S.
+                                                                (a) Show that TFAE:
+                                                                      (i) A ⊂ B;
+                                                                     (ii) A ∩ B = A;
+                                                                     (iii) A ∪ B = B.
+                                                                (b) Show that
+                                                                           (A ∪ B) \ (A ∩ B) = (A \ B) ∪ (B \ A).
+
+Exercises for Section 1.                                       This is called the symmetric difference of A and B and is
+                                                               denoted A∆B.
+                                                              (c) Draw a diagram to illustrate this set.
+                                                               Exercise. 1.2 (Distributivity and de Morgan)
+                                                               Let S be a set, let A ⊂ S and let C be a family of subsets of
+                                                               S. Verify
+                                                                (a) the distributivity law
+                                                                                         [    [
+                                                                                    A∩     C=   (A ∩ C),
+                                                                                                  C∈C
+
+                                                                (b) de Morgan’s law
+                                                                                         \        [
+                                                                                    A\       C=         (A \ C).
+                                                                                                  C∈C
+                             89                                                              90
+Exercise. 1.3 (Counting injections and surjections)                 Exercise. 1.5 (Simple injectivity problem)
+Let S = {1, 2} and let T = {1, 2, 3}.                               Consider the function
+ (a) How many injections are there from S to T ?                                                                2x
+                                                                                   f : R \ {1} → R,     x 7→       .
+                                                                                                               x−1
+ (b) How many surjections are there from S to T ?
+                                                                     (a) Show that f is injective.
+ (c) How many surjections are there from T to S?
+                                                                     (b) Find Ran f .
+                                                                     (c) Find a left inverse for f , that is a function g : R →
+Exercise. 1.4 (Injectivity and surjectivity under composition)           R \ {1} such that
+
+Let f ∈ F (S; T ) and g ∈ F (T ; U ) for sets S, T and U .                                     g ◦ f = idR\{1} .
+Show that
+ (a)    (i) g ◦ f is injective if f and g are.
+       (ii) f is injective if g ◦ f is.
+ (b)    (i) g ◦ f is surjective if f and g are.
+       (ii) g is surjective if g ◦ f is.               [10 marks]
+ (c)    (i) g ◦ f is bijective if f and g are.
+       (ii) if g ◦ f is bijective then f is injective and g is
+            surjective.
+
+
+
+
+                                91                                                                 92
+
+
+
+
+Exercise. 1.6 (F (S; T ) ≡ T S )                                    Exercise. 1.7 (P(S) ≡ F (S; {0, 1}))
+Let S and T be sets. Set                                            Let S be a set. Set
+                                            Y
+                 F = F (S; T ) and P =            Ts                              P = P(S) and F = F (S; {0, 1})
+                                            s∈S
+                                                                    where P(S) denotes the power set of S: {A : A ⊂ S}, and
+in which Ts = T for each s ∈ S. Show that the map ϕ : P →           F (S; {0, 1}) denotes the set of functions from S to the set
+F given by (ts)s∈S 7→ f , where                                     {0, 1}.
+                    f (s) := ts, for each s ∈ S,                        Show that the map
+
+is a bijection by                                                                             χ: P → F
+
+ (a) carefully defining an inverse map ψ : F → P ,                  given by
+                                                                                               A 7→ 1A,
+ (b) carefully showing that it is inverse to ϕ, that is:
+                                                                    where 1A denotes the indicator function of A:
+                    ψ ◦ ϕ = idP and ϕ ◦ ψ = idF .                                                     (
+                                                                                                        1 if s ∈ A
+                                                                              1A : A → {0, 1}, s 7→                ,
+       Note that (recalling the ‘strange cases’) if S = ∅ then                                          0 if s ∈
+                                                                                                               /A
+       the above prescription
+                           Q for the map ϕ takes the solitary       is a bijection by
+       element (ts)s∈∅ of s∈∅ Ts to the solitary function in
+       F (∅; T ). On the other hand, if S ̸= ∅ but T = ∅ then        (a) defining the inverse map σ : F → P, and
+                                        Y
+                        F (S; T ) = ∅ =     Ts,                      (b) showing that
+                                           s∈∅
+                                                                                        σ ◦ χ = idP and χ ◦ σ = idF .
+       and the unique map from ∅ to ∅ is trivially bijective!
+       You may therefore assume that S ̸= ∅ and T ̸= ∅.                                                                [10 marks]
+
+                                93                                                                 94
+Exercise. 1.8 (Images of unions and intersections)                       (x, y ∈ A1 and x ∼1 y) or (x, y ∈ A2 and x ∼2 y)
+Let f ∈ F (S; T ) for sets S and T , and let A be a family of       defines an equivalence relation on A1 ∪ A2.
+subsets of S. Show that
+ (a)                       [  [                                                                            ̸
+                                                                    Exercise. 1.11 (Symmetry + Transitivity =⇒  Reflexivity)
+                       f     A =  f (A),                            Let ∼ be a relation on a nonempty set which is symmetric
+                                     A∈A
+                                                                    and transitive.
+ (b)                       \   \                                   (a) Find the logical error in the following argument, which
+                       f     A ⊂   f (A).                                purports to show that ∼ is then automatically reflexive,
+                                     A∈A
+                                                                         and thus an equivalence relation.
+Exercise. 1.9 (Unions and complements under inverse images)               Let x ∈ S. Then, for all y ∈ S such that x ∼ y, y ∼ x
+                                                                          by symmetry, and so
+Let f ∈ F (S; T ) for sets S and T , let C be a family of subsets
+of T , and let C and D be subsets of T . Show that                                           x ∼ y and y ∼ x.
+                    [  [                                                Therefore, by transitivity, x ∼ x. Thus ∼ is reflexive
+               f −1     C =       f −1(C), and
+                                                                          too.
+                               C∈C
+               f −1(D \ C) = f −1(D) \ f −1(C)                       (b) Give an example of a relation enjoying Symmerry and
+                                                                         Transitivity, but not Reflexivity.
+In particular, f −1(T \ C) = S \ f −1(C).           [10 marks]
+                                                                                                                       [10 marks]
+Exercise. 1.10 (Disjoint union of equivalence relations)
+Let A1 and A2 be disjoint nonempty sets, and suppose that
+∼1 and ∼2 are equivalence relations on A1 and A2, respec-           Exercise. 1.12 (Countability of Z)
+tively. Show that                                                   Prove that Z is countable, by explicitly writing down a sur-
+                          x ∼ y if                                  jection f : N → Z (or, even better, a bijection).
+                               95                                                                 96
+
+
+
+
+Exercise. 1.13 (Countability of the set of polynomials with         Exercise. 1.15 (From total order to strict total order and back)
+rational coefficients)
+Let S be the set of all polynomials whose coefficients are ra-      Let S be a set. A relation < on S is called a strict total order
+tional numbers. Show that S is countable.                           on S if it enjoys the Trichotomy and Transitivity properties.
+
+[Hint: View S as ∞                                                   (a) Let ≤ be a total order on S. Show that, taking s < t
+                   S
+                     n=0 Sn where Sn is the set of polynomials
+of degree at most n, with rational coefficients. Then use                to mean
+the principles we have developed for establishing countability                             s ≤ t and s ̸= t,
+(and the example of Q).]                                                  defines a strict total order < on S.         [10 marks]
+                                                                     (b) Let < be a strict total order on S. Show that, taking
+Exercise. 1.14 (P00(N) is countable)                                     s ≤ t to mean
+Let                                                                                         s < t or s = t,
+              P00(N) := {A ⊂ N : #A < ∞},                                 defines a total order < on S.                [10 marks]
+the collection of all finite subsets of N.
+Show that P00(N) is countable.
+
+[Hint: Set
+
+              P (N )(N) := {A ⊂ N : #A = N },
+
+the collection of subsets of N having cardinality N .
+Then
+  (a) P00(N) = ∞          (N )
+                 S
+                   N =0 P      (N), and
+ (b) there is an easily found injection P (N )(N) → NN .]
+
+                               97                                                                 98
+Exercise. 1.16 (Bijections on a 3-element set (new ))           Exercise. 1.18 (Uncountability of R (new ))
+Let S and T be the three-element sets {x, y, z} and {a, b, c}
+and consider the propositions:
+                                                                 (a) Show that the map
+                       A. f (x) = a.                                                                                ∞
+                                                                                                                    X an
+                       B. f (y) ̸= a.                                     ψ : {0, 1}N → R,         a = (an)n∈N 7→
+                                ̸ b.
+                       C. f (z) =                                                                                   n=1
+                                                                                                                          10n
+
+ (a) List all bijections f : S → T for which exactly two of          is injective.                                  [10 marks]
+     the propositions are true.                [10 marks]        (b) Deduce that R is uncountable.
+ (b) List all bijections f : S → T for which exactly one of          [Hint: Recall that, for any sets S and T , there are
+     the propositions is true.                                       bijections
+
+                                                                           T S → F (S; T ) and F (S; {0, 1}) → P(S),
+Exercise. 1.17 (Relations via functions & partitions (new ))         and use Cantor’s Theorem. ]                    [10 marks]
+Let f : S → T for nonempty sets S and T , and let C be a
+partition of S. Define a relation ∼ on the set T by             Exercise. 1.19 (Characterisation of infiniteness)
+                                                                Let S be a set. Show that S is infinite if and only if there is
+            t1 ∼ t2 if ∃A∈C : f −1 {t1, t2} ⊂ A.
+                                           
+                                                                an injection from N to S.
+ (a) Need ∼ be reflexive? What if f is injective?
+ (b) Need ∼ be symmetric? What if f is bijective?
+ (c) Need ∼ be transitive? What if f is surjective?
+In all cases justify your answer (as usual!), giving examples
+where appropriate.                                [20 marks]
+                             99                                                              100
+

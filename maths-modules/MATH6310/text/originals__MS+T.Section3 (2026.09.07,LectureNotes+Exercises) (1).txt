@@ -1,0 +1,788 @@
+                  ·
+Metric Spaces & Topology
+            (MATH6310)
+
+                  ·
+             Part I
+                  ·
+         Section 3.
+Metric space fundamentals
+
+     Lecture Notes & Exercises
+       Last edited: 07.ix.2026
+
+
+
+
+                                 Video Clips
+                                  (1) Norm-metrics & derived metrics
+                                      [48 minutes, covering pp. 8–17]
+                                 (2a) Metric subspaces, product spaces & isometries
+                                      [18 minutes, covering pp. 18–23]
+                                 (2b) Lipschitz maps & distance-from-subset function
+                                      [28 minutes, covering pp. 24–31]
+                                  (3) Paradigm example
+                                      [15 minutes, covering pp. 32–35]
+                                  (4) Balls & sequences
+                                      [29 minutes, covering pp. 36–43]
+                                                               Introduction
+                                                               In this section we introduce some of the basic ideas of metric
+                                                               space theory. Starting with an examination of the types of
+                                                               subinterval of R, and a reminder of the axioms for a metric
+                                                               space, we consider
+                                                                   Lipschitz maps and isometries;
+
+                                                                   the “distance from A” function, for a subset A of a
+                                                                    metric space;
+                        E = (S, d)
+                                                                   diameters and boundedness for subsets of a metric space;
+
+                                                                   open and closed balls;
+
+                                                                   sequences (bounded, Cauchy and convergent).
+
+                                                               These lead us towards the topological notions of
+                                                                   open set, closed set, and (topological) boundary;
+
+                                                                   continuity for a function from one metric space to an-
+                                                                    other.
+
+
+
+
+                                                                                              1
+
+
+
+
+Subintervals of R — again                                      Remarks.
+The subintervals J of R come in nine distinct types, depend-     1. The terminology “open” and “closed” is topological
+ing on what combination of closed/open and lower-/upper-            and we shall see much more of it below.
+bounded they are. Let a, b, c, d ∈ R be such that a ≤ b and      2. If a = b then [a, b] = {a}. Such intervals are called
+c < d.                                                              degenerate.
+   I. The closed subintervals of R.                              3. The bounded subintervals are those of the type I(ii),
+                                                                    II(ii), III(i) or III(ii). The rest are unbounded subin-
+       (i) ]−∞, b] := {x ∈ R : x ≤ b}
+                                                                    tervals.
+      (ii) [a, b] := {x ∈ R : a ≤ x ≤ b}
+                                                                 4. The closed and bounded interval [0, 1] is referred to as
+     (iiii) [a, ∞[:= {x ∈ R : a ≤ x}
+                                                                    the unit interval ; it is often denoted I.
+  II. The open subintervals of R.
+                                                                 5. Germ of an important idea for us: “closedness”.
+       (i) ]−∞, d[:= {x ∈ R : x < d}                                By Proposition (Algebra of Limits), if (xn) is a sequence
+      (ii) ]c, d[:= {x ∈ R : c < x < d}                             in a closed interval J and (xn) converges in R then
+                                                                    lim xn ∈ J too.
+     (iiii) ]c, ∞[:= {x ∈ R : c < x}
+                                                                 6. For a subinterval J of R,
+ III. The half-open subintervals of R.
+                                                                     sup J exists in cases I(i), I(ii), II(i), II(ii) and III, and
+       (i) [c, d[:= {x ∈ R : c ≤ x < d}                              sup J ∈ J in cases I(i), I(ii) and III(ii)
+      (ii) ]c, d] := {x ∈ R : c < x ≤ d}
+                                                                 7. Germ of another important idea for us: “openness”.
+ IV. The unique subinterval of R which is both open and             If p ∈ J where J is an open subinterval of R, then there
+     closed.                                                        is r > 0 such that
+       (i) ]−∞, ∞[:= R                                                                  ]p − r, p + r[ ⊂ J.
+
+                             2                                                                3
+The definition again
+Definition.
+A metric on a set S is a function
+                     d : S × S → [0, ∞[
+satisfying
+(MS1) ∀x,y∈S d(x, y) = 0 ⇔ x = y                             .
+(MS2) ∀x,y∈S d(y, x) = d(x, y)                   (Symmetry)
+(MS3) ∀x,y,z∈S d(x, z) ≤ d(x, y) + d(y, z)       (Triangle ≤)
+A metric space E is a set S together with a specified metric
+d on it; we write E = (S, d).
+Remark.
+Sometimes we break these down further, as follows:
+   A metric on a set S is a function
+                       d:S×S →R
+satisfying
+(MS0) ∀x,y∈S 0 ≤ d(x, y) < ∞         (Positivity & Finiteness)
+(MS1a) ∀x∈S d(x, x) = 0
+(MS1b) ∀x,y∈S d(x, y) = 0 =⇒ y = x              (Definiteness)
+(MS2) & (MS3)
+
+                              4                                                                5
+
+
+
+
+                                                                       d(K, J) := inf δ > 0 | K δ ⊃ J and J δ ⊃ K .
+                                                                                     
+Our initial examples
+Example. (Standard metric on R)                                  Example. (Integration distance)
+E = (R, d), where                                                                
+                                                                 E = C(I; R), d1 , where I = [0, 1] and
+                     d(x, y) := |y − x|.                                           Z 1                   Z
+                                                                       d1(f, g) :=     |g(s) − f (s)|ds = |g − f |.
+                                                                                      0
+Example. (Euclidean N -space)
+E = (RN , d), where N ∈ N and                                    Example. (Uniformdistance, or sup-metric)
+                  p                                              E = C(I; R), dsup , where
+      d(x, y) := (y1 − x1)2 + · · · + (yN − xN )2.                                        
+                                                                         dsup(f, g) := sup |g(s) − f (s)| : s ∈ I .
+
+Example. (Discrete metric on a set)                              The ℓp metrics on RN
+E = (S, d), for an arbitrary set S, where
+                             (                                   Example. (ℓ∞(N
+                                                                              ))
+                                                                       N
+                               1 if s ̸= t                       E = R , d∞ , where N ∈ N and
+                  d(s, t) :=               .
+                               0 if s = t                                            
+                                                                       d∞(x, y) = max |y1 − x1|, · · · , |yN − xN | .
+Example. (Hausdorff distance)                                    Example. (ℓp(N
+                                                                             ), 1 ≤ p < ∞)
+On the set E = K(R2), d , where K(R2) denotes the collec-        E = RN , dp , where N ∈ N and
+tion of subsets K of R2 which are                                                                                     1/p
+                                                                        dp(x, y) = |y1 − x1|p + · · · + |yN − xN |p          .
+    nonempty (K has at least one element),
+                                                                 These generalise the Euclidean metric (case p = 2).
+    bounded (K is contained in a square region of R2),             The Triangle Inequality, in case p ∈
+                                                                                                       / {1, 2, ∞}, is known
+    ‘closed’ (K includes its “boundary”), and                   as Minkowski’s inequality.
+
+                              6                                                                7
+Metric induced by a norm                                    Exercise. (Metric induced by a norm) Let ∥ · ∥ be a norm on
+                                                            a vector space over K = R or C. Show that
+Definition.
+Let V be a vector space over K where K is either R, or C.                        d(x, y) := ∥y − x∥
+A norm on V is a function
+                                                            defines a metric on V .
+                    ∥ · ∥ : V → [0, ∞[
+                                                            Remark.
+satisfying                                                  It is very common that a metric is derived from a norm. In
+(N1) ∀x∈V     ∥x∥ = 0 =⇒ x = 0                              fact, we shall later show that every metric space is isometric
+                                                            to a subset of a real normed space.
+(N2) ∀x∈V ∀λ∈K ∥λx∥ = |λ|∥x∥
+                                                               Of our ‘initial’ examples, the standard metric on R, the in-
+(N3) ∀x,y∈V    ∥x + y∥ ≤ ∥x∥ + ∥y∥.                         tegration distance on C(I; R), the uniform distance on C(I; R),
+                                                            and the ℓp-metrics on RN , are induced respectively by
+                                                                the absolute value norm on R, ∥x∥ := |x|;
+
+                                                                the L1-norm on C(I; R), ∥f ∥ :=
+                                                                                                      R
+                                                                                                          I |f |;
+
+                                                                the sup-norm on C(I; R), ∥f ∥ := sups∈I |f (s)|;
+
+                                                                the ℓp-norm on RN ,
+                                                                             ( P
+                                                                                  N        p 1/p
+                                                                                            
+                                                                                  i=1 |xi |                 if p ∈ [1, ∞[
+                                                                   ∥x∥p :=                                                .
+                                                                              max{|xi| : i = 1, · · · , N } if p = ∞
+
+
+
+                             8                                                             9
+
+
+
+
+Metric induced by an injection into a metric space          Exercise. (Metric induced by an injection)
+                                                            Prove the proposition with this name.
+Proposition. (Metric induced by an injection)
+Let A be a set. Suppose that there is
+    a metric space E, and
+
+    an injective map ϕ : A → E,
+
+Then a metric is defined on A by setting
+                                
+        d(s, t) := dE ϕ(s), ϕ(t) , for s, t ∈ A.
+
+
+
+
+                             10                                                           11
+Example. (The standard metric on C)                                    Example. (A nonstandard metric on R)
+E = (C, d) where                                                       S = R,
+                                                                                    d(x, y) := tan−1 y − tan−1 x
+                          d(u, v) := |v − u|.
+                                                                       with respect to the bijection
+This is of the above type, where E is R2 with its Euclidean
+metric, and ϕ = ψ −1, where ψ is the bijection                                     tan : ]− π/2, π/2 [→ R x 7→ tan x.
+
+                      R2 → C,     x 7→ x1 + ix2.                       Remark. For this metric,
+
+To see this, let u, v ∈ C. Setting s = ϕ(u) and t = ϕ(v),                             d(x, y) < π for all x, y ∈ R.
+
+                    u = s1 + is2 and v = t1 + it2,                     So the metric is “bounded.”
+
+so                                                                        This metric is not induced by a norm.
+                                p
+       d(ϕ(u), ϕ(v)) = d(s, t) = (t1 − s1)2 + (t2 − s2)2
+
+whereas
+                                        p
+|v − u| = (t1 − s1) + i(t2 − s2) =          (t1 − s1)2 + (t2 − s2)2,
+
+thus
+                       |v − u| = d(ϕ(u), ϕ(v)).
+
+Remark. Note that the standard metric on C is induced by
+the modulus norm on C, ∥u∥ := |u|.
+
+
+
+                                  12                                                                   13
+
+
+
+
+New metric via an increasing subadditive function                      Proof. Symmetry for d′ is immediate, and doesn’t use any
+on [0, ∞[.                                                             of the above properties.
+                                                                           Let r, s, t ∈ E. Applying the first condition on α, along
+Proposition. (New metric via an inc. subadditive function)
+                                                                       with (MS1) for d,
+Let E be a metric space, with metric d, and let α : [0, ∞[→
+[0, ∞[ be a function satisfying
+                                                                                         
+                                                                               α d(s, t) = 0 ⇐⇒ d(s, t) = 0 ⇐⇒ s = t.
+      ∀s∈[0,∞[      α(s) = 0 ⇐⇒ s = 0.                                Applying the second and then third conditions on α, along
+                                                                       with (MS3) for d,
+      ∀s,t∈[0,∞[     s ≤ t =⇒ α(s) ≤ α(t).            (Increasing)
+                                                                                                                           
+                                                                       α d(r, t) ≤ α d(r, s) + d(s, t) ≤ α d(r, s) + α d(s, t) .
+      ∀s,t∈[0,∞[     α(s + t) ≤ α(s) + α(t).      (Subadditivity)
+Then                                                                   Thus d′ is a metric on E.
+                             d′ := α ◦ d
+defines another metric on E.
+
+
+
+
+                                  14                                                                   15
+Examples.                                                                   Exercise. (Associated bounded metric)
+The simplest example is the function given by                               Prove that the function α of Example 2. renders α ◦ d a
+                                                                            metric, for every metric d.
+                                  t 7→ a t,
+for a constant a > 0. Here are some other useful ones.
+   1. α : t 7→ min{t, 1}.
+   2. α : t 7→ t/(1 + t).
+   3. α : t 7→ tan−1 t.
+      Here tan is viewed as a bijection [0, π/2[→ [0, ∞[.
+   4. α : t 7→ t1/p, where p ≥ 1.
+               (
+                 1 if t ̸= 0
+   5. α : t 7→               .
+                 0 if t = 0
+
+Remarks.
+  (i) Examples 1, 2 and 3 yield bounded metrics.
+  (ii) Verification of subadditivity in Example 4 is a special
+       case of Minkowski’s Inequality.
+ (iii) Example 5 always yields the discrete metric.
+ (iv) It is significant that, in Examples 2, 3 and 4, α is in-
+      vertible.
+
+                                      16                                                                17
+
+
+
+
+Metric subspaces                                                            Exercise. (Re-arranged Triangle ≤, 2 examples, convergence?)
+Definition.
+Let A be a subset of S, for a metric space E = (S, d). Then                  (a) Let E be a metric space. Prove the Re-arranged Tri-
+the restriction d′ := d|A×A defines a metric on A.                               angle Inequality: For all x, y, z ∈ E the following
+   The resulting metric space is referred to as a metric sub-                    holds
+space of E, and d′ is called the metric induced on A by the                                  d(x, z) − d(y, z) ≤ d(x, y).
+metric on E.
+                                                                             (b) Verify that the following are indeed metrics:
+Example.
+                                                                                  (i) The ℓ1-metric d1 on RN .
+Let A ⊂ Rn (for some n ∈ N) be of the following form
+                                                                                 (ii) The ℓ∞-metric d∞ on RN .
+      (1, 0, · · · , 0), (0, 1, 0, · · · , 0), · · · (0, 0, · · · , 0, 1)
+                                                                             (c) For a sequence (xn) and element a in a metric space E,
+and set d′ := d|A×A, where d is the Euclidean metric on Rn.                      find a sensible meaning for “xn → a”.
+Then                       √
+                      d′ = 2 ddiscr,                                        Remark. Notice that (a) gives the following Re-arranged
+where ddiscr denotes the discrete metric on A.                              Triangle Inequality for norms
+
+                                                                                              ∥x∥ − ∥y∥ ≤ ∥x − y∥.
+Remark.
+This example shows that a metric subspace can be very differ-
+ent in character from the metric space of which it is a metric
+subspace. This contrasts strongly with subspaces of a vector
+space in Linear Algebra.
+
+
+
+
+                                      18                                                                19
+Product spaces                                                            Exercise. (Metric for the product of a sequence of spaces)
+                                                                          Show that this indeed does define a metric on E.
+Finite products.
+                                                                          [Hint: Note that
+Given metric spaces E1 = (S1, d1), · · · , EN = (SN , dN ).
+There are several metrics appropriate to the Cartesian prod-                                        ∞
+                                                                                                    X
+uct S := S1 × · · · × SN . One of the following is usually used:                        d(x, y) =         (αk ◦ dEk )(xk , yk )
+let p ∈ [1, ∞], set                                                                                 k=1
+
+            (                                       1/p                  for certain functions αk : [0, ∞[→ [0, ∞[.]
+                d1(x1, y1)p + · · · + dN (xN , yN )p     if 1 ≤ p < ∞
+dp(x, y) :=                                                          ,
+              max d1(x1, y1), · · · , dN (xN , yN )      if p = ∞
+
+in other words,
+                                            N
+     d(x, y) := ∥a∥p where a = dk (xk , yk ) k=1 ∈ RN .
+
+Countable products.
+Given a sequence of metric spaces E1 = (S1, d1), E2 = (S2, d2), · · · ,
+there are several metrics appropriate to the Cartesian prod-
+uct                  ∞
+                    Y
+               S :=      Sn = S1 × S2 × · · · .
+                      n=1
+Here is a popular one:
+                            ∞
+                            X 1        dk (xk , yk )
+              d(x, y) :=                               .
+                                  2k 1 + dk (xk , yk )
+                            k=1
+
+
+
+
+                                  20                                                                       21
+
+
+
+
+Isometries                                                                Exercise. (Isometric bijections have isometric inverses)
+                                                                          Let f : E → F be an isometric map between metric spaces.
+Definition.
+Let E and F be metric spaces. A map f : E → F is an                        (a) Show that f is injective.
+isometry, or is isometric if
+                                                                          (b) Suppose that f is surjective, and thus bijective and so
+            ∀x,y∈E dF f (x), f (y) = dE (x, y).                                invertible. Show that its inverse, say g : F → E is
+                                                                               isometric too.
+If there is an isometric bijection from E to F , then we say
+that E and F are isometric.
+
+Remarks.
+   1. Isometric metric spaces are indistinguishable, as metric
+      spaces (like isomorphic vector spaces).
+   2. When A is a metric subspace of a metric space E, the
+      inclusion map ιA→E is an isometry.
+   3. Classical examples of isometries are rotations, reflec-
+      tions and translations in Euclidean spaces.
+   4. Let E = C(J; R) with the supremum metric, where
+      J = [−1, 1]. Define a map ϕ : E → E by
+
+                  ϕ(f ) = fe where fe(x) := f (−x).
+
+      Then ϕ is an isometry.
+
+
+                                  22                                                                       23
+Lipschitz maps and strict contractions                             Remarks.
+Definition.                                                          1. Subscripts have been used here to distinguish the met-
+Let E and F be metric spaces. A map f : E → F is                        rics on E and F ; normally we shall just write d for
+Lipschitz if there is a constant M ∈ R such that                        all general metrics. An exception is when we have two
+                                                                       different metrics on the same set.
+            ∀x,y∈E dF f (x), f (y) ≤ M dE (x, y).
+                                                                     2. Clearly Lipschitz constants are nonnegative. What does
+For such a map f ,                                                      it mean for f to be Lipschitz with Lipschitz constant
+                 (                                          )          zero?
+                        dF f (x), f (y)
+     Lip f := sup                         : x, y ∈ E, x ̸= y
+                           dE (x, y)                                 3. Isometries are Lipschitz, and so isometric bijections are
+                                                                        bi-Lipschitz.
+is called the Lipschitz constant for f .
+    If f is Lipschitz and Lip f < 1 then f is called a strict        4. Strict contractions play a special role in applications of
+contraction.                                                            metric space theory.
+    If f is Lipschitz and bijective, and its inverse map is Lip-
+schitz too, then f is called a bi-Lipschitz map, or “Lipeo-
+morphism”.
+
+
+
+
+                                 24                                                              25
+
+
+
+
+Example. (From differentiable to Lipschitz)                        Example. (Lipschitz bijection that is not bi-Lipschitz)
+Let f : I → R be continuously differentiable, where I is the       Consider the function
+unit interval [0, 1]. Then f ′ : I → R is a continuous function
+                                                                                       f : I → I,     x 7→ x2,
+defined on a closed and bounded interval, and so is bounded
+[by Real Analysis], by M say. Therefore, by the Fundamental        where I denotes the unit interval [0, 1]. This is Lipschitz and
+Theorem of Calculus [Real Analysis],                               bijective, but not bi-Lipschitz, for the following reasons.
+                    Z t             Z t                             (a) For x, y ∈ I with x ̸= y,
+ |f (t) − f (s)| =      f ′(x)dx ≤      |f ′(x)|dx ≤ M (t − s).                       |f (y) − f (x)|
+                    s                  s                                                              = |y + x| ≤ 2.
+                                                                                          |y − x|
+Thus f is Lipschitz, with Lip f ≤ dsup(f ′, 0).
+                                                                    (b) The following function is inverse to f :
+   We now have the following                                                                                √
+                                                                                        g : I → I, t 7→ t
+       C 1(I; R) ⊂ CLip(I; R) ⊂ C(I; R) ⊂ Fb(I; R).
+                                                                    (c) Let M > 0 and note that g is differentiable on the open
+Moreover these are inclusions of subspaces of the vector space          interval ]0, 1]. Therefore, for s, t ∈]0, 1/M [⊂ I such
+F (I; R).                                                               that s ̸= t, the Mean Value Theorem [Real Analysis]
+                                                                        implies that there is u between s and t such that
+                                                                                         g(t) − g(s)
+                                                                                                     = g ′(u).
+                                                                                            t−s
+                                                                        By the location of u, we have
+                                                                                                                    √
+                                                                                 |g(t) − g(s)|              1          M
+                                                                                               = |g ′(u)| = √ ≥          .
+                                                                                    |t − s|                2 u         2
+                                                                        Since M is arbitrary, this implies that Lip g = ∞, so g
+                                                                        is not Lipschitz.
+
+                                 26                                                              27
+Definition.                                                       Boundedness
+Let A be a nonempty subset of a metric space E. The ‘dis-
+                                                                  Definition.
+tance from A’ function is defined as follows:
+                                                                 Let A be a subset of a metric space E. The diameter of A
+     distA : E → [0, ∞[, x 7→ inf d(x, a) : a ∈ A .               is defined by
+Exercise. (‘Distance from a set’ function)                                                  
+                                                                               diam A := sup d(x, y) : x, y ∈ A ,
+Let E be a metric space. Prove the following:
+ (a) For any nonempty subset A of E, distA is Lipschitz and       if this is finite, or ∞ otherwise. We say that A is bounded if
+                                                                  diam A < ∞, and that it is unbounded otherwise.
+                         Lip(distA) ≤ 1.                              We also say that the metric is bounded, or E is a bounded
+ (b) Let x ∈ E. Then TFAE:                                        metric space, if E itself is bounded.
+
+       (i) distA(x) = 0.
+      (ii) There is a sequence (an) in A such that
+                             d(an, x) → 0.
+     [Hint: Use the Proposition (Approximation of suprema
+     by sequences) from Section 2, in its counterpart version
+     for infima.]
+ (c) TFAE:
+       (i) distA = 0 (that is, the constant function zero).
+      (ii) For all x ∈ E there is a sequence (an) in A such
+           that d(an, x) → 0.
+     [We shall later see (ii) as the property of the subset A
+     being dense in E.]
+
+                             28                                                                29
+
+
+
+
+Remarks.                                                          Exercise. (Estimates for the diameter of a union)
+                                                                  Let A, B ⊂ E for a metric space E. Show that
+  1. Discrete metric spaces are bounded.
+                                                                   (a) max{diam A, diam B} ≤ diam A ∪ B.
+  2. When A is bounded, the supremum may or may not
+     be ‘realised’, that is, there may or may not be elements      (b) diam A ∪ B ≤ dAB + diam A + diam B , where
+     a, b ∈ A such that
+                                                                                 dAB := inf{d(a, b) : a ∈ A, b ∈ B}.
+                        d(a, b) = diam A.
+                                                                  [Hint: For working with suprema and infima you usually
+  3. It follows easily from the Triangle Inequality that a sub-   need to use Approximation of suprema by sequences Propo-
+     set A of E is bounded if and only if                         sition, or its counterpart for infima.]
+                   sup{d(p, a) : a ∈ A} < ∞
+
+     for some (equivalently all ) points p ∈ A.
+  4. From the definition it is obvious that for subsets A and
+     B of E,
+
+                A ⊂ B =⇒ diam A ≤ diam B.
+
+
+
+
+                             30                                                                31
+A paradigm example: ℓ∞(S; E) ≡ Fb(S; E), dsup .                        Proposition. (The metric space ℓ∞(S; E).)
+                                             
+
+                                                                       Let S be a set and let E be a metric space.
+Let S be a set, and E a metric space. A function f : S → E
+                                                                          Then
+is bounded if its range is a bounded subset of E:
+                                                                                  dsup(f, g) := sup{dE (f (s), g(s)) : s ∈ S}
+                      diam(Ran f ) < ∞.
+                                                                       defines a metric on the set Fb(S; E).
+Thus, for example, all constant functions into a metric space
+are bounded. Set
+
+        Fb(S; E) := {f ∈ F (S; E) : f is bounded}.                     Exercise. (Finiteness of sup metric for Fb(S; E))
+                                                                       Show that, for any set S, metric space E, and functions
+Note that, for I = [0, 1],                                             f, g ∈ Fb(S; E)
+                                                                                        
+                      C(I; R) ⊂ Fb(I; R)                                           sup dE (f (s), g(s)) : s ∈ S < ∞.
+by the Uniform Continuity Theorem [Real Analysis].
+
+
+
+
+                               32                                                                       33
+
+
+
+
+Proof. Let f, g, h ∈ Fb(S; E). By the exercise, dsup is a              Remarks.
+function Fb(S; E) × Fb(S; E) : [0, ∞[.
+                                                                         1. This metric space is denoted
+(MS1) Since dE (f (s), g(s)) ≥ 0 for all s ∈ S, by (MS1) for
+                                                                                                      ℓ∞(S; E).
+    dE ,
+                                                                            Warning.
+           dsup(f, g) = 0 ⇔ ∀s∈S dE (f (s), g(s)) = 0
+                                                                            This notation is usually reserved for the case where E
+                          ⇔ ∀s∈S f (s) = g(s) ⇔ f = g.
+                                                                            is a normed linear space.
+(MS2) Since dE (g(s), f (s)) = dE (f (s), g(s)) for all s ∈ S,           2. Taking E = R with its standard metric, and S =
+      dsup(g, f ) = sup{dE (g(s), f (s)) : s ∈ S}                           {1, . . . , N }, the prescription
+                  = sup{dE (f (s), g(s)) : s ∈ S} = dsup(f, g).                      ℓ∞({1, . . . , N }; R) →ℓ∞(N ),
+                                                                                                          f 7→(f (1), . . . , f (N ))
+(MS3) Let t ∈ S. Then
+                                                                            defines a bijective isometry.
+      dE (f (t), g(t)) ≤ dsup(f, g) and dE (g(t), h(t)) ≤ dsup(g, h)
+                                                                            We are therefore massively extending the maximum
+      so, by (MS3) for dE ,                                                 metric on RN here!
+          dE (f (t), h(t)) ≤ dE (f (t), g(t)) + dE (g(t), h(t))          3. We shall see later that, for any metric space E there is
+                           ≤ dsup(f, g) + dsup(g, h).                       a set S and an isometry
+      Now the RHS is independent of t. Taking the supre-                                         ϕ : E → ℓ∞(S; R).
+      mum over t ∈ S:
+                                                                            This fact makes this special class of metric spaces very
+                dsup(f, h) ≤ dsup(f, g) + dsup(g, h).                       important in the theory.
+.     Thus dsup is a metric on the set Fb(S; E).
+
+                               34                                                                       35
+Balls                                                          Exercise. (Unit spheres in ℓp(2).)
+                                                               Draw the unit sphere in R2, for the ℓp-metrics with values
+Definition. Let E be a metric space, and let a ∈ E and
+                                                               p = 1, 2, ∞, a value strictly between 1 and 2, and a value
+r > 0. The open ball with centre a and radius r is the set
+                                                               strictly between 2 and ∞.
+             BrE (a) := x ∈ E : d(x, a) < r ;
+                       
+
+the sphere with centre a and radius r is the set
+             SrE (a) := x ∈ E : d(x, a) = r ;
+                       
+
+the closed ball with centre a and radius r is the set
+             BrE [a] := x ∈ E : d(x, a) ≤ r .
+                       
+
+Remarks.
+  1. The superscript E (like the subscript on metrics them-
+     selves) is often dropped.
+  2. For a given centre and radius, the open ball and sphere
+     make a partition of the closed ball.
+  3. For a ∈ E and R > r > 0,
+                 {a} ⊂ BrE (a) ⊂ BrE [a] ⊂ BRE (a).
+
+  4. Balls do not usually look like balls! For example, in a
+     discrete metric space E,
+                              (
+                               {a} if r ≤ 1
+                   BrE (a) :=                 .
+                               E     if r > 1
+
+                              36                                                           37
+
+
+
+
+Exercise. (Balls in an intersection of balls)                  Examples. (Diameter of balls)
+Let E be a metric space, and let
+                                                                 1. Let E be a metric space. It follows from the Triangle
+                      p ∈ Br (a) ∩ Bs(b)                            Inequality that, for R > r > 0 and a ∈ E,
+
+for some a, b ∈ E and r, s > 0. Find t > 0 such that                   diam BrE [a] ≤ diam BRE (a) ≤ diam BRE [a] ≤ 2R.
+
+                   Bt(p) ⊂ Br (a) ∩ Bs(b).                       2. When E is a discrete metric space,
+                                                                                        (
+[Hint: Use the Triangle Inequality.]                                                     0 if r ≤ 1 or E = {a}
+                                                                               E
+                                                                        diam Br (a) =                          ,
+                                                                                         1 if r > 1 and #E ≥ 2
+Remark.
+Taking b = a and s = r we see that open balls B in a metric         with corresponding cases for the closed balls.
+space have the following “openness” property:
+                                                                 3. In the case of Euclidean balls, and more generally balls
+                    ∀p∈B ∃r>0 Br (p) ⊂ B.                           associated with normed linear spaces there are no sur-
+                                                                    prises:
+We noted this earlier for open subintervals of R.
+                                                                              diam BRE (a) = diam BRE [a] = 2R.
+
+
+
+
+                              38                                                           39
+Sequences                                                         Proposition. (Convergent =⇒ Cauchy =⇒ Bounded)
+                                                                  Let E be a metric space and let (xn) be a sequence in E.
+Definition.
+Let E be a metric space, and let (xn) be a sequence in E.          (a) If (xn) is convergent then it is Cauchy.
+Then, letting X denote its set of terms: {xn : n ∈ N},
+                                                                   (b) If (xn) is Cauchy then it is bounded.
+    (xn) is bounded if the set X is bounded.
+
+    (xn) is Cauchy if
+                                                                  Proof. This is left as an exercise, which should now be
+                                                                  simple — it is a matter of translating the argument across
+                     lim sup d(xN , xN +p) = 0                    from the proofs of the corresponding statements for sequences
+                    N →∞ p∈N
+                                                                  in R.
+     or, equivalently,
+                 ∀ϵ>0∃N ∈N∀n,m≥N d(xn, xm) < ϵ.
+
+    (xn) is convergent if there is a ∈ E such that
+                          d(xn, a) → 0.
+
+Remarks.
+  1. It follows easily from the Triangle Inequality that bound-
+     edness for a sequence (xn) is equivalent to boundedness
+     of the sequence (d(a, xn))n≥1 in R, for some/all ele-
+     ments a of E, such as a term xN .
+  2. Thus the three possible properties for a sequence in E
+     correspond to the three possible properties for associ-
+     ated sequences or families in [0, ∞[⊂ R.
+
+                               40                                                                41
+
+
+
+
+Exercise. (Convergent =⇒ Cauchy =⇒ Bounded)                       Exercise. (Convergence of metric values.)
+Prove the proposition with this name.                             Let (xn) be a Cauchy sequence in a metric space E, and let
+                                                                  p ∈ E.
+                                                                                           
+                                                                    (a) Show that d(xn, p) is convergent in R.
+                                                                   (b) Suppose that (xn) is convergent to a ∈ E. Show that
+
+                                                                                         d(xn, p) → d(a, p).
+
+                                                                  [Hint: Use the Re-arranged Triangle Inequality.]
+
+
+                                                                  Exercise. (Convergence in product spaces.)
+                                                                  Let E1 = (S1, d1) and E2 = (S2, d2) be metric spaces let
+                                                                  E = (S, d) where S is the Cartesian product S1 × S2 and d
+                                                                  the sum metric on S, and let (x(n)) be a sequence in S. Show
+                                                                  that TFAE:
+                                                                    (i) (x(n)) converges in E.
+                                                                          (n)                         (n)
+                                                                   (ii) (x1 ) converges in E1 and (x2 ) converges in E2.
+
+
+
+
+                               42                                                                43
+                                                                 Exercise. 3.1 (Metric induced by a norm)
+                                                                 Let ∥ · ∥ be a norm on a vector space over K = R or C. Show
+                                                                 that
+                                                                                       d(x, y) := ∥y − x∥
+                                                                 defines a metric on V .                           [5 marks]
+
+                                                                 Exercise. 3.2 (Metric induced by an injection)
+                                                                 Prove the proposition with this name.
+
+                                                                 Exercise. 3.3 (Associated bounded metric)
+                                                                 Prove that the function α of Example 2 renders α◦d a metric,
+Exercises for Section 3                                          for every metric d.                             [ 10 marks]
+
+                                                                 Exercise. 3.4 (Re-arranged Triangle ≤, 2 examples, convergence?)
+
+                                                                 (a) Let E be a metric space. Prove the Re-arranged Triangle
+                                                                 Inequality: For all x, y, z ∈ E the following holds
+
+                                                                                  d(x, z) − d(y, z) ≤ d(x, y).
+
+                                                                    (b) Verify that the following are indeed metrics:
+                                                                   (i) The ℓ1-metric d1 on RN .
+                                                                  (ii) The ℓ∞-metric d∞ on RN .
+                                                                    (c) For a sequence (xn) and element a in a metric space
+                                                                 E, find a sensible meaning for “xn → a”.      [ 15 marks]
+                                 44                                                           45
+
+
+
+
+Exercise. 3.5 (Metric for the product of a sequence of spaces)   Exercise. 3.7 (‘Distance from a set’ function)
+Show that this indeed does define a metric on E.                 Let E be a metric space. Prove the following:
+[Hint: Note that                                                  (a) For any nonempty subset A of E, distA is Lipschitz and
+                          ∞
+                          X                                                                Lip(distA) ≤ 1.
+              d(x, y) =         (αk ◦ dEk )(xk , yk )
+                                                                  (b) Let x ∈ E. Then TFAE:
+                          k=1
+                                                                        (i) distA(x) = 0.
+for certain functions αk : [0, ∞[→ [0, ∞[.]                            (ii) There is a sequence (an) in A such that
+                                                                                               d(an, x) → 0.
+Exercise. 3.6 (Isometric bijections have isometric inverses)
+                                                                      [Hint: Use the Proposition (Approximation of suprema
+Let f : E → F be an isometric map between metric spaces.
+                                                                      by sequences) from Section 2, in its counterpart version
+ (a) Show that f is injective.                                        for infima.]
+                                                                  (c) TFAE:
+ (b) Suppose that f is surjective, and thus bijective and so            (i) distA = 0 (that is, the constant function zero).
+     invertible. Show that its inverse g : F → E is isometric
+     too.                                                              (ii) For all x ∈ E there is a sequence (an) in A such
+                                                                            that d(an, x) → 0.
+                                                                      [We shall later see this as the property of the subset A
+                                                                      being dense in E.]
+
+
+
+
+                                 46                                                           47
+Exercise. 3.8 (Estimates for the diameter of a union)             Exercise. 3.11 (Convergent =⇒ Cauchy =⇒ Bounded)
+Let A, B ⊂ E for a metric space E. Show that                      Prove the proposition with this name.
+ (a) max{diam A, diam B} ≤ diam A ∪ B.                            Exercise. 3.12 (Convergence of metric values.)
+ (b) diam A ∪ B ≤ I + diam A + diam B , where                     Let (xn) be a Cauchy sequence in a metric space E, and let
+                                                                  p ∈ E.
+                 I := inf{d(a, b) : a ∈ A, b ∈ B}.                                         
+                                                                    (a) Show that d(xn, p) is convergent in R.
+      [Hint: For working with suprema and infima you usu-
+                                                                   (b) Suppose that (xn) is convergent to a ∈ E. Show that
+      ally need to use Proposition (Approximation Lemma
+      for Suprema), or its counterpart for infima, or the se-                            d(xn, p) → d(a, p).
+      quence version.]
+                                                                  [Hint: Use the Re-arranged Triangle Inequality.]
+Exercise. 3.9 (Unit spheres in ℓp(2).)
+Draw the unit sphere in R2, for the ℓp-metrics with values        Exercise. 3.13 (Convergence in product spaces.)
+p = 1, 2, ∞, a value strictly between 1 and 2, and a value        Let E1 = (S1, d1) and E2 = (S2, d2) be metric spaces let
+strictly between 2 and ∞.                      [ 10 marks]        E = (S, d) where S is the Cartesian product S1 × S2 and d
+                                                                  the sum metric on S, and let (x(n)) be a sequence in S. Show
+Exercise. 3.10 (Balls in an intersection of balls)                that TFAE:
+Let E be a metric space, and let
+                                                                    (i) (x(n)) converges in E.
+                      p ∈ Br (a) ∩ Bs(b)
+                                                                         (n)                          (n)
+                                                                   (ii) (x1 ) converges in E1 and (x2 ) converges in E2.
+for some a, b ∈ E and r, s > 0. Find t > 0 such that
+
+                   Bt(p) ⊂ Br (a) ∩ Bs(b).
+
+[Hint : Use the Triangle Inequality.]
+
+                              48                                                                 49
+
+
+
+
+Exercise. 3.14 (Finiteness of sup metric for Fb(S; E))
+Show that, for any set S and metric space E, and functions
+f, g ∈ Fb(S; E)
+                
+             sup dE (f (s), g(s)) : s ∈ S < ∞.
+
+                                                     [ 5 marks]
+
+
+
+
+                              50
+51
+

@@ -1,0 +1,244 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=14mm,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools,multicol,booktabs,array}
+\usepackage[most]{tcolorbox}\usepackage{xcolor,hyperref,fancyhdr,titlesec,enumitem}
+\definecolor{navy}{HTML}{18365A}\definecolor{teal}{HTML}{007F88}\definecolor{violet}{HTML}{6E49A3}\definecolor{orange}{HTML}{C36D16}\definecolor{green}{HTML}{218158}\definecolor{redx}{HTML}{B63A42}
+\hypersetup{colorlinks=true,linkcolor=navy,urlcolor=teal}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\textbf{MATH6342} | Linear Systems}\fancyhead[R]{Exam Cheat Sheet}\fancyfoot[C]{\thepage}
+\titleformat{\section}{\large\bfseries\color{navy}}{\thesection}{.5em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{teal}}{\thesubsection}{.5em}{}
+\setlist[itemize]{noitemsep,topsep=2pt,leftmargin=4mm}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+\tcbset{enhanced,breakable,arc=1.5mm,boxrule=.55pt,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,before skip=4pt,after skip=5pt,fonttitle=\bfseries}
+\newtcolorbox{defbox}[1][]{colback=teal!4,colframe=teal,title={KEY IDEA / DEFINITION},#1}
+\newtcolorbox{formbox}[1][]{colback=violet!4,colframe=violet,title={FORMULA / THEOREM},#1}
+\newtcolorbox{workbox}[1][]{colback=orange!5,colframe=orange,title={WORKED EXAMPLE},#1}
+\newtcolorbox{exambox}[1][]{colback=green!5,colframe=green,title={EXAM TIPS / METHOD},#1}
+\newtcolorbox{warnbox}[1][]{colback=redx!4,colframe=redx,title={COMMON ERROR},#1}
+\newcommand{\Lap}{\mathcal{L}}\newcommand{\CC}{\mathbb{C}}\newcommand{\RR}{\mathbb{R}}
+\begin{document}
+\begin{center}{\Huge\bfseries\color{navy}MATH6342 Linear Systems}\\[3pt]{\Large Exam Cheat Sheet + Worked Examples}\\[5pt]
+\textcolor{teal}{Lancaster University | Based on Gordon Blower's October 2026 lecture deck (frames 1--227)}\end{center}
+\begin{defbox}[title={HOW TO USE THIS GUIDE}]This is a \textbf{detailed compact revision guide} organised by the five chapters of the supplied notes. In every exam calculation, explain the principle, state assumptions, perform the algebra clearly, and check your answer. The original slides contain additional proofs and diagrams; this guide does not guarantee coverage of all possible examination questions.\end{defbox}
+\tableofcontents\newpage
+\section{Chapter 1: Linear systems and their description (frames 6--30)}
+
+\begin{defbox}A system has input $u(t)$, internal state $x(t)$ and output $y(t)$. The \emph{state} contains sufficient information, together with future input, to predict future behaviour. For $n$ states, $m$ inputs and $p$ outputs,
+\[\boxed{\dot x=Ax+Bu,\qquad y=Cx+Du}\]
+with $A\in\CC^{n\times n}, B\in\CC^{n\times m}, C\in\CC^{p\times n}, D\in\CC^{p\times m}$. $A$ governs evolution, $B$ input effects, $C$ measurement, $D$ instantaneous feedthrough. SISO means one input/one output; MIMO means multiple inputs/outputs.
+\end{defbox}
+\begin{formbox}An operator $L$ is \textbf{linear} when $L(af+bg)=aLf+bLg$ for all scalars $a,b$. Examples: differentiation, integration from a fixed endpoint, multiplication by a fixed function and evaluation at a fixed time (with suitable domain/codomain). A time-varying coefficient $a(t)$ may still define a linear operator.\end{formbox}
+\begin{defbox}\textbf{Reading block diagrams:} a gain $k$ sends $u\mapsto ku$; a differentiator sends $u\mapsto u'$; an integrator sends $u\mapsto\int u$; a tap copies a signal; a summing junction adds signals with their indicated signs. An \emph{open loop} has no feedback circuit; in a \emph{closed loop} some downstream signal returns upstream. Kirchhoff's current law balances currents entering/leaving a junction, and voltage law says signed voltages around a closed circuit sum to zero.\end{defbox}
+\begin{workbox}[title={WORKED: positive vs negative feedback}]
+If $y=u+\theta y$, subtract $\theta y$: $(1-\theta)y=u$, so $\boxed{y=u/(1-\theta)}$ if $\theta\ne1$. If a forward block $G$ receives error $e=u-Hy$, then $y=Ge=Gu-GHy$, so
+\[\boxed{\frac yu=\frac{G}{1+GH}}.\]
+The denominator sign comes from the actual summing equation, \emph{not} from memorising a diagram. Feedback can change amplification, disturbance rejection and stability.
+\end{workbox}
+\begin{formbox}A constant-coefficient differential equation
+\[y^{(n)}+a_{n-1}y^{(n-1)}+\cdots+a_1 y'+a_0y=u\]
+can be reduced to first order by $x=(y,y',\ldots,y^{(n-1)})^T$. Then $\dot x=A_cx+Bu$ where
+\[A_c=\begin{bmatrix}0&1&0&\cdots&0\\0&0&1&\cdots&0\\\vdots&&&\ddots&\vdots\\-a_0&-a_1&-a_2&\cdots&-a_{n-1}\end{bmatrix},\quad B=e_n.\]
+This is the \textbf{companion matrix}. The last row contains negative coefficients in ascending order.
+\end{formbox}
+\begin{workbox}[title={WORKED: damped harmonic oscillator}]
+For $y''+3y'+2y=u(t)$, choose $x_1=y$, $x_2=y'$. Then $x_1'=x_2$, $x_2'=-2x_1-3x_2+u$, yielding
+\[A=\begin{pmatrix}0&1\\-2&-3\end{pmatrix},\ B=\binom01,\ C=\begin{pmatrix}1&0\end{pmatrix},\ D=0.\]
+Check $\det(sI-A)=s^2+3s+2=(s+1)(s+2)$; both free modes decay. Physically the $y$ term is spring restoring force and $y'$ is damping.
+\end{workbox}
+\begin{exambox}For a reduction-of-order proof: (1) define every state variable; (2) differentiate the first $n-1$ components; (3) rearrange the original ODE to obtain the final component; (4) write $A,B$ and check dimensions. For a block-diagram question, write each local signal equation before eliminating intermediate quantities.\end{exambox}
+\begin{warnbox}An indefinite integral introduces an integration constant: block-integrator diagrams need initial conditions when modelling actual trajectories. Do not claim positive feedback is always unstable or negative feedback is always stable.\end{warnbox}
+
+
+\section{Chapter 2: Matrix methods and solutions (frames 31--85)}
+
+\begin{formbox}\textbf{Matrix algebra toolkit.} $\chi_A(\lambda)=\det(\lambda I-A)$ is the characteristic polynomial (the course's convention). Roots are eigenvalues. $\chi_A(\lambda)=\lambda^n-\operatorname{tr}(A)\lambda^{n-1}+\cdots+(-1)^n\det A$. The resolvent is $(sI-A)^{-1}$ wherever $\det(sI-A)\ne0$. The adjugate identity gives $A\operatorname{adj}A=(\det A)I$, so $A^{-1}=\operatorname{adj}A/\det A$ for nonsingular $A$.\end{formbox}
+\begin{workbox}[title={WORKED: characteristic polynomial, Cayley--Hamilton}]
+Let $A=\begin{psmallmatrix}0&1\\-2&-3\end{psmallmatrix}$. Then
+\[\chi_A(\lambda)=\det\begin{pmatrix}\lambda&-1\\2&\lambda+3\end{pmatrix}=\lambda^2+3\lambda+2.\]
+Cayley--Hamilton says $\chi_A(A)=A^2+3A+2I=0$. Thus $A^2=-3A-2I$, which reduces all higher powers of $A$ to linear combinations of $I,A$.
+\end{workbox}
+\begin{defbox}\textbf{Complex inner products and norms.} $\langle v,w\rangle=w^*v$ in the convention used by the slides (check order of conjugation); $\|v\|_2=\sqrt{v^*v}$. Cauchy--Schwarz: $|w^*v|\le\|v\|_2\|w\|_2$. Triangle inequality: $\|v+w\|\le\|v\|+\|w\|$. For a subordinate matrix norm, $\|Ax\|\le\|A\|\|x\|$ and $\|AB\|\le\|A\|\|B\|$. Rank is the dimension of the column space, equal to the number of pivots. The adjoint is $A^*$ (conjugate transpose).\end{defbox}
+\begin{formbox}\textbf{Matrix exponential:} $e^{At}=\sum_{k=0}^\infty (At)^k/k!$ and $\frac d{dt}e^{At}=Ae^{At}$ for constant $A$. When $A=P\Lambda P^{-1}$,
+\[e^{At}=P\operatorname{diag}(e^{\lambda_1t},\ldots,e^{\lambda_nt})P^{-1}.\]
+If $A$ has Jordan block $J=\lambda I+N$ with nilpotent $N^r=0$, then $e^{Jt}=e^{\lambda t}\sum_{j=0}^{r-1}(Nt)^j/j!$. A repeated eigenvalue does \emph{not} necessarily imply diagonalizability.
+\end{formbox}
+\begin{formbox}[title={THE CENTRAL SOLUTION FORMULA (variation of constants)}]
+For constant $A,B$ and prescribed $x(0)=x_0$,
+\[\boxed{x(t)=e^{At}x_0+\int_0^t e^{A(t-\tau)}Bu(\tau)\,d\tau}\]
+\[y(t)=Ce^{At}x_0+D u(t)+\int_0^t Ce^{A(t-\tau)}Bu(\tau)\,d\tau.\]
+The first term is the free/zero-input response; the integral is forced/zero-state response. Differentiate and check the initial value to prove the formula.
+\end{formbox}
+\begin{workbox}[title={WORKED: complete forced solution}]
+Take $A=\operatorname{diag}(-1,-2)$, $B=(1,1)^T$, $u(t)=1$, and $x(0)=0$. The equations separate:
+\[x_1'=-x_1+1\Rightarrow x_1(t)=1-e^{-t},\quad x_2'=-2x_2+1\Rightarrow x_2(t)=\tfrac12(1-e^{-2t}).\]
+Verify $x(0)=0$ and $x'(t)=Ax(t)+B$; the steady-state is $(1,1/2)^T$.
+\end{workbox}
+\begin{formbox}\textbf{Transfer function from state space.} For zero initial state, Laplace transformation of $\dot x=Ax+Bu$, $y=Cx+Du$ gives
+\[\boxed{T(s)=C(sI-A)^{-1}B+D.}\]
+For SISO this is a scalar rational function; for MIMO, a $p\times m$ matrix of rational functions. Proper rational means numerator degree $\le$ denominator degree; strictly proper means $<$.
+\end{formbox}
+\begin{workbox}[title={WORKED: transfer function of an oscillator}]
+With $A=\begin{psmallmatrix}0&1\\-2&-3\end{psmallmatrix}$, $B=(0,1)^T$, $C=(1,0)$ and $D=0$,
+\[(sI-A)^{-1}=\frac1{s^2+3s+2}\begin{pmatrix}s+3&1\\-2&s\end{pmatrix},\quad \boxed{T(s)=\frac1{(s+1)(s+2)}}.\]
+A quick alternative: apply Laplace transforms to $y''+3y'+2y=u$ with zero initial data.
+\end{workbox}
+\begin{defbox}\textbf{Realization.} A realization of a rational transfer function $T(s)$ is matrices $(A,B,C,D)$ producing it. A scalar strictly proper rational $b(s)/a(s)$ with monic denominator can be realised using the companion matrix of $a(s)$, $B=e_n$ and a suitable output row $C$ built from numerator coefficients; a proper function may also require $D\ne0$. Equivalent transfer functions can have distinct state-space realizations.\end{defbox}
+\begin{exambox}When asked to realise a rational function: divide polynomials first to identify any $D$ term; construct $A$ from denominator; set $B=e_n$; choose $C$ to fit numerator; explicitly verify $C(sI-A)^{-1}B+D$. For eigenvalue/eigenvector questions, solve $(A-\lambda I)v=0$ rather than dividing by a singular matrix.\end{exambox}
+\begin{warnbox}Do not confuse internal eigenvalues of $A$ with poles of a nonminimal transfer function: pole--zero cancellation can hide a state mode in $T(s)$.\end{warnbox}
+
+
+\section{Chapter 3: Laplace transforms and Jordan form (frames 86--134)}
+
+\begin{defbox}For a suitable function $f(t)$ on $t\ge0$, the unilateral Laplace transform is
+\[\boxed{F(s)=\Lap\{f\}(s)=\int_0^\infty e^{-st}f(t)\,dt}\]
+where the integral converges (often in a right half-plane). It converts differentiation and convolution into algebraic operations in $s$. The slides also discuss analytic dependence on $s$, growth estimates and uniqueness (Lerch's theorem): under appropriate hypotheses a transform determines its original function.
+\end{defbox}
+\begin{formbox}[title={TRANSFORM TABLE: MEMORISE AND RE-DERIVE}]
+\begin{center}\begin{tabular}{@{}ll@{}}\toprule
+$f(t)$&$\Lap\{f\}(s)$\\\midrule
+$1$&$1/s$\\
+$t^n$ ($n=0,1,\ldots$)&$n!/s^{n+1}$\\
+$e^{at}$&$1/(s-a)$\\
+$\cos\omega t$&$s/(s^2+\omega^2)$\\
+$\sin\omega t$&$\omega/(s^2+\omega^2)$\\
+$e^{at}t^n$&$n!/(s-a)^{n+1}$\\
+$e^{at}\sin\omega t$&$\omega/((s-a)^2+\omega^2)$\\\bottomrule\end{tabular}\end{center}
+Remember the domain of convergence, e.g. $\Re(s)>\Re(a)$ for $e^{at}$.
+\end{formbox}
+\begin{formbox}[title={RULES AND INITIAL VALUES}]
+\[\Lap\{af+bg\}=aF+bG,\quad\Lap\{f'\}=sF(s)-f(0),\]
+\[\Lap\{f''\}=s^2F-sf(0)-f'(0),\quad \Lap\{f^{(n)}\}=s^nF-\sum_{j=0}^{n-1}s^{n-1-j}f^{(j)}(0),\]
+\[\Lap\{e^{at}f(t)\}(s)=F(s-a),\quad\Lap\{tf(t)\}(s)=-F'(s),\quad \Lap\{\int_0^t f(\tau)d\tau\}=F(s)/s.\]
+Convolution $ (f*g)(t)=\int_0^t f(t-\tau)g(\tau)d\tau$ satisfies $\Lap\{f*g\}=FG$ whenever hypotheses justify exchange of integrals. Convolution is associative under suitable conditions.
+\end{formbox}
+\begin{workbox}[title={WORKED: inverse transform by partial fractions}]
+Find $\Lap^{-1}\{1/[(s+1)(s+2)]\}$. Write
+\[\frac1{(s+1)(s+2)}=\frac A{s+1}+\frac B{s+2}.\]
+Setting $s=-1$ yields $A=1$; setting $s=-2$ yields $B=-1$. Therefore $\boxed{f(t)=e^{-t}-e^{-2t}}$. Check $f(0)=0$ as expected for a strictly proper second-order transfer.
+\end{workbox}
+\begin{workbox}[title={WORKED: nonzero initial conditions}]
+Solve $y'+2y=3$, $y(0)=1$. Laplace-transform both sides:
+\[sY(s)-1+2Y(s)=3/s \implies Y(s)=\frac{s+3}{s(s+2)}=\frac{3/2}{s}-\frac{1/2}{s+2}.\]
+Thus $\boxed{y(t)=\tfrac32-\tfrac12e^{-2t}}$. Check $y(0)=1$ and $y'+2y=3$.
+\end{workbox}
+\begin{workbox}[title={WORKED: convolution integral}]
+Compute $\int_0^t e^{-(t-\tau)}e^{-2\tau}\,d\tau$:
+\[e^{-t}\int_0^t e^{-\tau}d\tau=e^{-t}(1-e^{-t})=e^{-t}-e^{-2t}.\]
+This matches $\Lap^{-1}\{[(s+1)(s+2)]^{-1}\}$ because multiplication of transforms corresponds to convolution.
+\end{workbox}
+\begin{formbox}\textbf{Matrix-valued Laplace transforms:} $\Lap\{e^{At}\}(s)=(sI-A)^{-1}$ for sufficiently large $\Re s$. For $\dot x=Ax+Bu$, $X(s)=(sI-A)^{-1}x_0+(sI-A)^{-1}BU(s)$. The output adds $CX(s)+DU(s)$. The Jordan normal form $A=PJP^{-1}$ provides $e^{At}=Pe^{Jt}P^{-1}$ even when $A$ is not diagonalizable.
+\end{formbox}
+\begin{exambox}For any Laplace ODE question: (1) record initial conditions, (2) transform derivatives with initial-value terms, (3) solve algebraically for $Y(s)$, (4) decompose into familiar terms (possibly repeated or quadratic poles), (5) invert and verify. For a repeated pole $(s-a)^{-k}$, expect $t^{k-1}e^{at}/(k-1)!$.\end{exambox}
+\begin{warnbox}The formula $\Lap\{f'\}=sF$ is only valid if $f(0)=0$. Never throw away initial-condition terms unless the question specifies zero initial state.\end{warnbox}
+
+
+\section{Chapter 4: Frequency response and stability (frames 135--161)}
+
+\begin{defbox}A sinusoidal input can be represented using $e^{i\omega t}$. If a stable LTI system has transfer function $T(s)$, its steady-state sinusoidal response uses $T(i\omega)$: magnitude $|T(i\omega)|$ gives gain and argument $\arg T(i\omega)$ gives phase shift. The \textbf{Nyquist plot} traces $T(i\omega)$ in the complex plane; \textbf{Bode plots} show gain (often $20\log_{10}|T(i\omega)|$ decibels) and phase versus logarithmic frequency.
+\end{defbox}
+\begin{workbox}[title={WORKED: frequency response of a first-order filter}]
+For $T(s)=1/(s+2)$,
+\[T(i\omega)=\frac{2-i\omega}{4+\omega^2},\quad |T(i\omega)|=\frac1{\sqrt{4+\omega^2}},\quad \arg T(i\omega)=-\arctan(\omega/2).\]
+At $\omega=0$, gain $=1/2$ and phase $=0$. At high frequency, gain tends to 0 and phase tends to $-\pi/2$. On a decibel plot, DC gain $=20\log_{10}(1/2)\approx-6.02\,$dB.
+\end{workbox}
+\begin{formbox}\textbf{Three different stability notions:}
+\begin{itemize}
+\item \textbf{Asymptotic internal stability:} every unforced state tends to zero, equivalently $\Re\lambda<0$ for every eigenvalue of $A$ (continuous-time finite-dimensional LTI).
+\item \textbf{Marginally stable free dynamics:} bounded trajectories without universal decay can occur when imaginary-axis eigenvalues are semisimple and all others lie in the open left half-plane.
+\item \textbf{BIBO stability:} every bounded input produces bounded \emph{zero-state output}. For a proper rational transfer function, no uncancelled poles may lie in the closed right half-plane.
+\end{itemize}
+A nonminimal realization can be BIBO stable without being internally asymptotically stable; check the question's exact definition. The lectures present sufficient internal eigenvalue conditions and their relationship to BIBO stability.
+\end{formbox}
+\begin{workbox}[title={WORKED: damping classifications}]
+For $y''+\beta y'+\gamma y=u$, the free characteristic equation is $\lambda^2+\beta\lambda+\gamma=0$ and
+\[\lambda_{1,2}=\frac{-\beta\pm\sqrt{\beta^2-4\gamma}}2.\]
+Assuming $\gamma>0$, $\beta>0$: if $\beta^2>4\gamma$ it is overdamped (two real negative roots); $=$ critically damped (repeated negative root); $<$ underdamped (complex conjugates with negative real part). If $\beta=0$, purely imaginary roots lead to persistent undamped oscillations; forcing near the natural frequency can produce resonance.
+\end{workbox}
+\begin{formbox}\textbf{Useful bounds:} If $A$ is Hurwitz (all eigenvalues have negative real parts), there are $M,\alpha>0$ such that $\|e^{At}\|\le M e^{-\alpha t}$. For bounded input $\|u(t)\|\le U$, the forced state is bounded by $M\|x_0\|+M\|B\|U/\alpha$. The original slides discuss bounded matrix exponentials, Jordan-block conditions and proofs.\end{formbox}
+\begin{exambox}To classify stability: find eigenvalues/poles, sketch their real parts, check multiplicities/Jordan blocks on the imaginary axis, and distinguish state stability from input-output stability. For frequency plots calculate real and imaginary parts, magnitude and phase separately. Explain which frequency range a sketch refers to.\end{exambox}
+\begin{warnbox}A pole on $s=i\omega$ prevents the usual frequency-response value at that frequency. Also, $20\log_{10}$ is for amplitude gain; power ratios use $10\log_{10}$.\end{warnbox}
+
+
+\section{Chapter 5: Feedback control and algebraic stability (frames 162--218)}
+
+\begin{defbox}The control problem asks us to choose a controller so that a closed-loop interconnection is mathematically \textbf{well posed} and meets stability/performance objectives. The notes cover stable rational functions, Nyquist's argument-principle method, PID, polynomial and stable-ring Bezout identities, Youla controllers and Lyapunov equations.\end{defbox}
+\begin{formbox}[title={THE CLOSED-LOOP DENOMINATOR}]
+With negative unity feedback, plant $P(s)$ and controller $K(s)$, output $Y=P(U-KY)$, hence
+\[\boxed{\frac{Y}{U}=\frac{P}{1+PK}},\qquad S(s)=\frac1{1+PK},\qquad T(s)=\frac{PK}{1+PK}.\]
+$S$ is sensitivity and $T$ complementary sensitivity; $S+T=1$. Closed-loop characteristic factors arise from $1+PK=0$, after correctly clearing denominators and checking for cancellations. \textbf{Internal stability} requires more than stability of one observed transfer function.
+\end{formbox}
+\begin{workbox}[title={WORKED: proportional feedback stabilisation}]
+Let $P(s)=1/(s-1)$ (open-loop unstable) and use $K(s)=k$ with negative feedback. Then
+\[\frac YU=\frac1{s-1+k}.\]
+Its only closed-loop pole is $s=1-k$. Therefore the closed loop is asymptotically stable exactly when $k>1$, assuming the standard interconnection. The answer must state the gain condition, not merely $k>0$.
+\end{workbox}
+\begin{formbox}\textbf{PID controller:} $K(s)=k_P+k_I/s+k_Ds$ (an ideal PID law) yields $u_c(t)=k_Pe(t)+k_I\int_0^t e(\tau)d\tau+k_De'(t)$, with appropriate initial conditions. $P$ reacts to present error, $I$ accumulates sustained error, and $D$ responds to error slope. Practical derivatives may be filtered; an integral term adds a pole at the origin.\end{formbox}
+\begin{workbox}[title={WORKED: PI characteristic equation}]
+For $P(s)=1/(s+2)$ and $K(s)=k_P+k_I/s=(k_Ps+k_I)/s$, the loop denominator is
+\[1+PK=1+\frac{k_Ps+k_I}{s(s+2)}=\frac{s^2+(2+k_P)s+k_I}{s(s+2)}.\]
+The characteristic polynomial is $s^2+(2+k_P)s+k_I$. For a real second-order continuous-time system, its roots are in the left half-plane iff $2+k_P>0$ and $k_I>0$. State parameter assumptions and verify the sign of the feedback.
+\end{workbox}
+\begin{defbox}\textbf{Stable rational-function ring (course theme).} The slides denote by $S$ a class of rational functions stable under addition and multiplication (subject to their specified stability/properness convention). Polynomial Euclidean algorithms find greatest common divisors, and Bezout identities take the form $a(s)x(s)+b(s)y(s)=d(s)$. If $a,b$ are coprime then $d=1$. Related constructions over stable rational functions underpin controller parametrisation.\end{defbox}
+\begin{workbox}[title={WORKED: Euclidean algorithm and Bezout}]
+Let $a(s)=s^2+3s+2=(s+1)(s+2)$ and $b(s)=s+1$. Polynomial division gives
+\[a(s)=(s+2)b(s)+0.\]
+So $\gcd(a,b)=s+1$, \emph{not} 1. The identity $a-(s+2)b=0$ shows the shared factor; no polynomials $x,y$ satisfy $ax+by=1$ because both left terms are divisible by $s+1$. If $b=s+3$ instead, division gives $a=s(s+3)+2$ so $1=\frac12a-\frac s2 b$ and they are coprime.
+\end{workbox}
+\begin{formbox}\textbf{Youla idea (interpretation):} after finding a suitable stable coprime factorisation and one stabilising controller, further stabilising controllers are parametrised by a free stable rational parameter $Q$ subject to well-posedness/invertibility constraints. The exact matrix formulas depend on which factorisation and signal convention the problem gives: reproduce these from frames 194--205 rather than swapping conventions.\end{formbox}
+\begin{formbox}[title={NYQUIST PRINCIPLE: WHAT YOU MUST STATE}]
+The \emph{argument principle} relates the winding of the image of a closed contour around the origin to zeros minus poles enclosed (counting multiplicity), provided there are no zeros/poles on the contour. Nyquist applies this to $1+L(s)$, equivalently the encirclements of $-1$ by $L(s)$, to infer closed-loop right-half-plane zeros using the open-loop pole count. State your contour orientation and sign convention \emph{before} writing an encirclement count. Imaginary-axis poles require a modified/indented contour.
+\end{formbox}
+\begin{formbox}[title={LYAPUNOV AND SYLVESTER EQUATIONS}]
+For $\dot x=Ax$, choose $V(x)=x^*Px$ with $P=P^*>0$. Then
+\[\dot V=x^*(A^*P+PA)x.\]
+A standard continuous-time Lyapunov criterion: $A$ is Hurwitz iff for each $Q=Q^*>0$ there is a unique $P=P^*>0$ solving
+\[\boxed{A^*P+PA=-Q.}\]
+Indeed $\dot V=-x^*Qx<0$ for nonzero $x$. The Sylvester equation has form $AX+XB=C$; uniqueness depends on the spectra of $A$ and $-B$ being disjoint. Sylvester's positive-definiteness criterion: a Hermitian matrix is positive definite iff all leading principal minors are positive.
+\end{formbox}
+\begin{workbox}[title={WORKED: one-dimensional Lyapunov proof}]
+Take $A=[-2]$ and choose $Q=[1]$. The Lyapunov equation reads $(-2)P+P(-2)=-1$, i.e. $-4P=-1$, so $\boxed{P=1/4>0}$. Let $V=x^2/4$. Then $\dot V=(x/2)(-2x)=-x^2<0$ for $x\ne0$: the origin is asymptotically stable.
+\end{workbox}
+\begin{workbox}[title={WORKED: Sylvester equation}]
+Solve $AX+XB=C$ for scalars $A=[2],B=[3],C=[10]$. Then $2X+3X=10$ so $\boxed{X=2}$. The relevant spectra are $\{2\}$ and $\{-3\}$, disjoint, so this solution is unique.
+\end{workbox}
+\begin{exambox}For controller questions: (1) label plant/controller and feedback sign; (2) write closed-loop equations and check well-posedness; (3) derive the exact characteristic polynomial; (4) determine right-half-plane zeros/eigenvalues; (5) check internal stability and cancellations. For Lyapunov: propose Hermitian $Q>0$, solve for $P$, verify Hermitian and positive definite, then explicitly compute $\dot V$.\end{exambox}
+\begin{warnbox}Nyquist counts cannot be used without a defined contour and an accurate number of open-loop unstable poles. A stable closed-loop input-output transfer function alone need not guarantee stability of every internal signal.\end{warnbox}
+
+
+\section{MATLAB appendix, glossary, proof and question checklist (frames 219--227)}
+
+\begin{formbox}[title={MATLAB QUICK COMMANDS}]
+\texttt{A=[0 1;-2 -3];} construct matrix; \texttt{eig(A)} eigenvalues; \texttt{det(A)} determinant; \texttt{rank(A)} rank; \texttt{expm(A*t)} matrix exponential; \texttt{poly(A)} characteristic polynomial coefficients; \texttt{inv(s*eye(2)-A)} symbolic/numeric resolvent (use appropriate symbolic variable); \texttt{ss(A,B,C,D)} state space and \texttt{tf(sys)} transfer function (Control System Toolbox); \texttt{bode(sys)} Bode plot; \texttt{nyquist(sys)} Nyquist plot; \texttt{lyap(A',Q)} continuous Lyapunov equation in the real-data convention used by MATLAB. Consult the course appendix for the exact commands and syntax expected in projects.
+\end{formbox}
+\begin{defbox}[title={GLOSSARY}]
+\textbf{State}: information sufficient to continue dynamics. \textbf{Realization}: $(A,B,C,D)$ representation of a transfer function. \textbf{Resolvent}: $(sI-A)^{-1}$. \textbf{Pole}: singularity of a rational function. \textbf{Zero}: root of its numerator after appropriate simplification. \textbf{BIBO}: bounded input yields bounded output. \textbf{Hurwitz matrix}: every eigenvalue strictly in the left half-plane. \textbf{Companion matrix}: matrix of a monic polynomial. \textbf{Convolution}: $\int_0^t f(t-\tau)g(\tau)d\tau$. \textbf{Coprime}: gcd is a unit, e.g. 1 in polynomial arithmetic. \textbf{Well posed}: feedback equations determine the internal signals uniquely in the stipulated class. \textbf{Lyapunov function}: positive energy-like function decreasing along trajectories.
+\end{defbox}
+\begin{exambox}[title={HIGH-MARK PROOF STRUCTURE}]
+\begin{enumerate}[leftmargin=5mm,noitemsep]
+\item State exactly what is assumed and what must be proved.
+\item Define all matrices/functions and verify compatibility (dimensions, convergence, differentiability, invertibility).
+\item Cite or derive the required identity (e.g. Cayley--Hamilton, transform derivative rule, variation of constants).
+\item Perform each algebraic step without omitting signs or initial conditions.
+\item Explain why the final implication follows (eigenvalue location, positivity, transform uniqueness, etc.).
+\item Conclude in the language of the question; test with a limiting or initial-value check.
+\end{enumerate}
+\end{exambox}
+\begin{defbox}[title={REVISION SELF-TEST: TRY BEFORE READING THE KEY}]
+(1) Convert $y''+5y'+6y=u$ into state space and obtain its transfer function. (2) Solve $x'=-3x+6$, $x(0)=0$. (3) Find $\Lap^{-1}\{1/(s+4)^2\}$. (4) Calculate magnitude and phase of $T(i\omega)=1/(3+i\omega)$. (5) Decide whether $A=\begin{psmallmatrix}0&1\\0&0\end{psmallmatrix}$ has bounded $e^{At}$. (6) For $P=1/(s-2)$ and controller $k$, identify the stabilising negative-feedback gains. (7) Solve $A^*P+PA=-1$ with $A=-4$.
+\end{defbox}
+\begin{workbox}[title={FULLY WORKED SELF-TEST ANSWERS}]
+\textbf{1.} $x=(y,y')^T$ gives $A=\begin{psmallmatrix}0&1\\-6&-5\end{psmallmatrix}$, $B=(0,1)^T$, $C=(1,0)$, $D=0$. Hence $T(s)=1/(s^2+5s+6)=1/[(s+2)(s+3)]$.\\
+\textbf{2.} Integrating factor $e^{3t}$: $(e^{3t}x)'=6e^{3t}$. Integrate $e^{3t}x=2e^{3t}+C$. $x(0)=0\Rightarrow C=-2$, hence $x(t)=2(1-e^{-3t})$.\\
+\textbf{3.} From $\Lap\{te^{at}\}=1/(s-a)^2$, take $a=-4$: $te^{-4t}$.\\
+\textbf{4.} $|T|=1/\sqrt{9+\omega^2}$; phase $=-\arctan(\omega/3)$ for $\omega\ge0$.\\
+\textbf{5.} $A^2=0$, so $e^{At}=I+At=\begin{psmallmatrix}1&t\\0&1\end{psmallmatrix}$, unbounded as $t\to\infty$. Zero eigenvalues alone do not establish boundedness; Jordan blocks matter.\\
+\textbf{6.} Closed-loop $T=1/(s-2+k)$, pole $2-k$, so stable precisely when $k>2$.\\
+\textbf{7.} $-8P=-1$, hence $P=1/8>0$, giving $V=x^2/8$ and $\dot V=-x^2$.
+\end{workbox}
+\begin{exambox}[title={FINAL 24-HOUR REVISION CHECK}]
+I can derive $A,B,C,D$ from ODEs; compute determinants/eigenvalues and use $e^{At}$; solve forced IVPs; apply and invert Laplace transforms with nonzero initial data; calculate transfer functions and gain/phase; distinguish free-state from BIBO stability; derive negative-feedback denominators; identify a valid controller gain; explain Nyquist assumptions and use a Lyapunov equation. If any item fails, revisit its corresponding lecture frames and complete at least two unseen practice problems.
+\end{exambox}
+
+
+\end{document}

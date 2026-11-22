@@ -1,0 +1,516 @@
+135 Chapter 4: Transfer functions, realization and stability
+
+Consider a SISO linear system Y = LU where L is a linear operator, and
+such that all the input U and output Y satisfy (E ). Let Ŷ and Û be the
+Laplace transforms of Y and U. Suppose that T (s) is a function such
+that
+                      Ŷ (s) = T (s)Û(s)  (s > β).
+Then T (s) is called the transfer function of the linear system. The
+transfer function describes all the important dynamics associated with
+(A, B, C, D); see Theorem 159.
+
+Theorem (Realizing a SISO by a rational function)
+Let T be a complex rational function. Then there exists a SISO linear
+system Σ, possibly with feedback, composed of taps, amplifiers, summing
+junctions, integrators, and differentiators, such that the transfer function
+of Σ is T .
+136 Proof of realization
+
+
+Let the transfer function be T (s) = p(s)/q(s) where p(s) = nj=0 aj s j
+                                                            ∑︁
+
+and q(s) = m            k
+                k=0 bk s are polynomials with bm = 1. Consider the
+              ∑︁
+differential equation
+                                    n
+                                         dju
+                               y=     aj j
+                                   ∑︂
+                                         dt
+                                  j=0
+
+which has Laplace transform
+
+                           Y (s) = p(s)U(s).
+
+Also, we can realize the proper rational function 1/q(s) as the transfer
+function of a SISO system, as in Proposition 74. By combining these in
+series, we realize a system with transfer function T (s) = p(s)/q(s).
+137 Transfer function of a Laplace transformed MIMO
+
+Definition (Transfer function)
+Consider a MIMO linear system Y = LU where L is a linear operator,
+and such that all the entries of the (k × 1) input U and (m × 1) output
+Y satisfy (E ), and let the initial conditions be zero. Suppose that T (s)
+is a (m × k) matrix of functions such that
+
+                     Ŷ (s) = T (s)Û(s)    (s > β).
+
+Then T (s) is called the transfer function of the linear system.
+
+Corollary
+Let T be a matrix of complex rational functions. Then there exists a
+MIMO linear system Σ, possibly with feedback, composed of taps, matrix
+amplifiers, summing junctions, differentiators and integrators such that
+the transfer function of Σ is T .
+138 Frequency Response
+
+Suppose that we have a SISO with Laplace transform Ŷ (s) = T (s)Û(s).
+We change variable to s = iω so Ŷ (iω) = T (iω)Û(iω). (Consider input
+e iωt , with iω on imaginary axis in s plane. We interpret ω as an angular
+frequency, and t as time.)
+Definition
+(i) Let T (s) be a rational function. Then the frequency response
+function is T (iω) where ω ∈ (−∞, ∞).
+(ii) The Nyquist plot of T is the curve {T (iω) : −∞ ≤ ω ≤ ∞}.
+
+Nyquist introduced a plot of the frequency response function
+T (iω) = Γ(ω)e iϕ(ω) , from which one can glean a great deal of useful
+information about the linear system. In the MATH6342 Projects, it is
+helpful to produce Nyquist plots of all the frequency response functions
+in use. Given a real rational transfer function tf , MATLAB has a special
+command nyquist for the Nyquist plot.
+139 A Nyquist plot
+
+
+
+
+         Figure: Nyquist plot for the transfer function 1/(s 2 + s + 6)
+
+The arrows give direction of the Nyquist plot. We always plot T (iω) as
+ω increases from −∞ to +∞, so iω goes up the imaginary axis.
+140 Another Nyquist plot
+
+
+
+
+                 Figure: Nyquist plot looping across itself
+
+MATLAB gives a red cross at the point −1. We are interested in the net
+number of times that the contour winds round −1; that is, the number
+ of clockwise windings minus the number of anti-clockwise windings.
+141 Geometrical interpretation of phase and gain
+
+Let Γe iϕ = x + iy; then for x > 0, we have a point in the right half-plane
+with ϕ = tan−1 (y/x) so −π/2 ≤ ϕ ≤ π/2;    √︁ for y > 0, we have a point in
+the upper half-plane with ϕ = cos (x/ x 2 + y 2 ) so 0 < ϕ < π.
+                                    −1
+
+In the Nyquist plot, the gain and phase can be found from the polar form
+of points on the Nyquist contour:
+• Γ(ω) = |T (iω)| is the gain, namely the distance of T (iω) to 0;
+• ϕ(ω) = arg T (iω) is the phase, namely the angle between T (iω) and
+the positive real axis.
+Equivalently
+                        log T (iω) = log Γ(ω) + iϕ(ω).
+In complex analysis, a contour is a continuous curve γ : [a, b] → C such
+that γ(a) = γ(b), and γ is piecewise continuously differentiable. The
+image of a contour γ under a function f that is holomorphic on γ is also
+a contour. The imaginary axis is not a contour, but we can consider
+semicircular contours in the right half-plane of radius r , where r → ∞.
+Draw [−ir , ir ] on imaginary axis and join ir to −ir by a semicircle in
+142 Nyquist’s locus
+
+
+Proposition (Nyquist’s locus)
+Let R be a rational function that is proper and has all its poles in the
+open left half plane. Then R(iω) for −∞ ≤ ω ≤ ∞ gives a contour in C
+that starts and ends at some c ∈ C where R(s) → c as s → ∞.
+
+Proof. Write R(s) = c + p(s)/q(s) where degree of p(s) is strictly less
+than the degree of q(s), where R(s) → c as s → ∞. There are finitely
+many poles, at λ such that q(λ) = 0, and there exists δ > 0 such that
+ℜλ < −δ for all poles λ. Hence for −∞ < ω < ∞, the function R(iω) is
+continuously differentiable and R(iω) → c as ω → ±∞. We can write
+ω = tan t where t ∈ (−π/2, π/2), and R(i tan t) → c as t → (−π/2)+
+and → π/2−, so γ(t) = R(i tan t) is a contour in the sense of complex
+analysis. We need∫︁ to show that the length of the contour is finite, or
+equivalently that −∞ |R ′ (iω)|dω converges.
+                    ∞
+143 Nyquist’s contour
+
+
+We have
+                                       n
+                                                cj
+                       R(s) = c +
+                                      ∑︂
+                                            (s − λj )mj
+                                      j=1
+
+where mj are positive integers and ℜλj < 0, so
+                                    n
+                                          −cj mj
+                       R ′ (s) =
+                                   ∑︂
+
+                                   j=1
+                                       (s − λj )mj +1
+
+where mj + 1 ≥ 2 for all j, so there exists M such that
+|R ′ (iω)| ≤ M/(1 + ω 2 ) for all real ω , hence and the length of the
+contour is finite. The contour starts and ends at c, since p(s)/q(s) → 0
+as s = iω → ±i∞.
+144 Gain and Phase
+
+In engineering, the frequency response is relatively easy to measure. The
+polar decomposition of the frequency response function gives the gain Γ
+and phase ϕ.
+• Gain measures how much the device amplifies a signal. If Γ > 1 (so
+log Γ > 0), then the device makes the signal bigger.
+• The phase describes the relative position of peaks in the output versus
+the input.
+Definition (Gain and Phase)
+Define the frequency response to be T (iω), and make a polar
+decomposition T (iω) = Γ(ω)e iϕ(ω) . Then define the gain (or amplitude
+gain) of the system to be Γ(ω) = |T (iω)| at angular frequency ω ∈ R;
+define the phase (shift) to be ϕ(ω) = arg T (iω). The Nyquist locus is
+the curve {T (iω) : −∞ ≤ ω ≤ ∞} in the complex plane.
+145 Example of gain and phase
+
+[See video: V24 example for frequency response function]
+Example
+For a, b > 0, u0 a constant and y(0) = y ′ (0) = 0, find the gain and
+phase of
+                         ay ′′ + by ′ + y = u(t).
+
+Then the Laplace transform is
+                        (as 2 + bs + 1)Y (s) = U(s),
+so that taking s = iω in the formula
+                                           1
+                           T (s) =                 ,
+                                     as 2 + bs + 1
+                              1            1 − aω 2 − ibω
+             T (iω) =                  =                        ,
+                        1 − aω 2 + ibω   (1 − aω 2 )2 + b 2 ω 2
+146 Calculating Gain and phase
+
+so the gain is
+                                            1
+                 Γ(ω) = |T (iω)| = √︁                       ;
+                                     (1 − aω 2 )2 + b 2 ω 2
+
+while the phase ϕ(ω) satisfies
+
+                             bω                        bω
+                 tan ϕ =             ,   ϕ = tan−1
+                           ω2a − 1                   ω2a − 1
+which has sign depending on the value of ω. Note that
+
+                        ϕ(ω) = arg(1 − aω 2 − ibω)
+
+and so T (0) = 1, hence ϕ(0) = 0; while T (iω) is in the third quadrant
+as ω → ∞, whereas T (iω) is in the second quadrant as ω → −∞; at
+                                                       √
+1 − aω 2 = 0, T (iω) is on the imaginary axis so ϕ(±1/ a) = ∓π/2.
+147 Bode and phase plot
+
+
+                                           Bode Diagram
+                                      0
+                   Magnitude (dB)
+                                    -20
+
+                                    -40
+
+                                    -60
+
+                                    -80
+                                      0
+             Phase (deg)
+
+
+
+
+                                    -45
+                                    -90
+                            -135
+                            -180
+                               10 -1       10 0         10 1   10 2
+                                          Frequency (rad/s)
+
+    Figure: Bode plot and phase for the transfer function 1/(s 2 + s + 6)
+148 Scales on the Bode plot and phase plot
+
+The Bode plot is the logarithm of the gain log Γ in decibels versus ω in
+radians per second, with ω > 0 plotted on a log scale. Going from left to
+right on the Bode plot, ω increases from 0 to ∞, and iω goes up the
+imaginary axis. Recall that 360◦ is equivalent to 2π radians, and be
+careful with the scales on the plots. The phase (or phase shift) ϕ(ω) is
+the change in phase of the signal between input and output at a given
+input frequency. Phase ϕ in degrees is plotted against ω in radians per
+second, with ω > 0 on a log scale.
+i) If ϕ(ω) > 0, there is phase gain, so the output runs ahead of the input.
+ii) If ϕ(ω) < 0, there is a phase lag, so the output runs behind the input.
+iii) If ϕ = 0, then the input and output are said to be in phase.
+iv) If ϕ = π (or 180◦ ), then the input and output are in anti-phase so
+input peaks emerge as output troughs. Anti-phase signals are used in
+noise-cancelling headphones, where a sound is cancelled by a sound in
+anti-phase. Anti-phase is also used in optical lens coatings, to reduce
+reflections.
+Fourier’s integral
+
+ Suppose that we feed inputs e iωk into the system, and obtain outputs
+ T (iω)e iωk ; then             ∫︂  ∞
+                         F (k) =        T (iω)e iωk dω
+                                   −∞
+
+ is Fourier’s integral. This is natural to consider in the following examples:
+ (i) in the context of music, where e iωk represents a steady tone at a
+ single pitch;
+ (ii) for electricity, e iωt represents alternating current, which is used for
+ mains electricity;
+ (iii) in wave optics, Frieser (of Carl Zeiss) and Duffieux observed that this
+ is a useful way of assessing the response of optical instruments
+ objectively. Note that we have T (iω) for ω > 0 and ω < 0. This is
+ natural in Fourier analysis. In MATLAB, Nyquist uses ω ∈ R, whereas
+ the Bode plot only uses ω > 0.
+149 Damped harmonic oscillator
+
+Example (Damped harmonic oscillator)
+The system is
+                                 dX
+                                    = AX + BU,
+                                 dt
+where γ > 0 and β real in
+
+                         0  1                      0
+                            [︃]︃                 [︃ ]︃
+                     A=          ,            B=       .
+                        −γ −β                      1
+
+                            C= 1 0        D=0
+                              [︁   ]︁
+
+
+The characteristic equation of A is
+                       [︃        ]︃
+                          λ −1
+                   det              = λ2 + λβ + γ = 0,
+                          γ λ+β
+so eigenvalues are
+                                         √︁
+150 Matrix form of the damped harmonic oscillator
+
+with corresponding eigenvectors
+
+                              1             1
+                           [︃ ]︃          [︃     ]︃
+                                 ,
+                             λ+            λ−
+
+so when λ+ ̸= λ− , we introduce
+
+                                  1  1
+                                  [︃            ]︃
+                              S=
+                                 λ+ λ−
+
+so that S is invertible and
+                                λ+ 0
+                              [︃      ]︃
+                          A=S            S −1
+                                 0 λ−
+
+and                               [︃ tλ
+                                    e +         0
+                                                       ]︃
+                      exp(tA) = S                           S −1
+                                     0         e tλ−
+151 Cases of the damped harmonic oscillator
+
+
+                                                                  √
+Consider 1/(s 2 + βs + γ) with γ > 0; poles at λ± = (1/2)(−β ±        ∆)
+where ∆ = β 2 − 4γ. Then
+
+  solutions         ∆<0                   ∆=0            ∆>0
+   β>0       decaying oscillations  critically damped  exp decay
+   β=0             periodic              constant     hyperbolic
+   β<0      unbounded oscillations exponential growth exp growth
+
+The damped oscillator is exponentially stable if and only if β > 0 and
+γ > 0. When β = 0 and γ > 0, the oscillator is marginally stable. For
+β < 0, the oscillator is unstable.
+[See video: V20 Harmonic oscillator stability]
+152 Stability cases
+
+
+Consider dX /dt = AX with X (0) = X0 . This has solution
+X (t) = exp(tA)X0 , and we distinguish the following cases.
+(i) Exponentially stable: there exist M, δ > 0 such that
+∥X (t)∥ ≤ Me −δt for all t > 0 and all X0 . This occurs when ℜλj < 0 for
+all eigenvalues λj . This is BIBO stable.
+(ii) Marginally stable: X (t) is bounded for t > 0 for all X0 , which
+occurs when ℜλj < 0, or ℜλj = 0 and the corresponding Jordan blocks
+are all of size 1 × 1. Later we will regard this marginal case as BIBO
+unstable.
+(iii) Unstable: X (t) (t > 0) is unbounded for some X0 , which occurs
+when either ℜλj > 0 for some eigenvalue λj of A, or ℜλj = 0 for some λj
+that has a Jordan block of size ≥ 2. This is also BIBO unstable.
+153 BIBO stability
+
+
+
+Definition (BIBO)
+Let (A, B, C, D) be a linear system
+
+                            dX
+                               = AX + Bu
+                            dt
+                             Y = CX + Du
+such that for all bounded inputs u(t) for t ∈ (0, ∞), all outputs y are
+bounded for t ∈ (0, ∞). Then we say that the system is bounded-input
+bounded-output stable, or BIBO stable.
+154 Undamped harmonic oscillator
+
+Example
+The undamped harmonic oscillator
+
+                         d 2x
+                              + ν 2 x = U0 cos ωt
+                         dt 2
+with U0 real and ω, ν > 0 is marginally stable, but not BIBO stable.
+
+We introduce
+                        x            0   1            0
+                      [︃ ]︃       [︃       ]︃       [︃ ]︃
+                 X=         ,A =              , B =       ,
+                        v           −ν 2 0            1
+
+                           C = 1 0 , D=0
+                               [︁     ]︁
+
+                       d
+                          X = AX + BU0 cos ωt.
+                       dt
+Note that A has eigenvalues ±iν on the imaginary axis.
+155 Undamped harmonic oscillator: complementary
+function
+
+
+The general solution is given by the complementary function plus a
+particular integral. The complementary function arises when the input is
+zero. For U = 0 the system oscillates at its natural angular frequency ν
+                             d
+and the general solution of dt X = AX is
+                             [︃         ]︃      [︃          ]︃
+                               cos νt               sin νt
+                    X = c1                 + c2                ,
+                              −ν sin νt            ν cos νt
+
+for constants c1 , c2 . In particular, all these solutions are bounded, so we
+have marginal stability.
+We use this as the complementary function in the following two
+contrasting cases.
+156 Marginal stability
+
+
+• For U ̸= 0 and ω ̸= ν, the input has angular frequency different from
+the natural angular frequency, and the solution is the complementary
+function plus a particular integral
+
+                                                       U0
+               [︃           ]︃      [︃          ]︃         [︃         ]︃
+                   cos νt               sin νt                cos ωt
+       X = c1                  + c2                + 2                   ;
+                  −ν sin νt            ν cos νt     ν − ω 2 −ω sin ωt
+
+here the complementary function oscillates at natural angular frequency
+ν; whereas the particular integral oscillates at the input angular
+frequency ω. These solutions are all bounded. One can obtain these
+particular integrals by W3.2, or by guesswork. For aresonant system with
+resonant frequency ν > 0, Γ(ω) → ∞ as ω → ν.
+157 Resonance
+
+
+• Let U0 ̸= 0 and ν = ω, so that the input angular frequency equals the
+natural angular frequency. Then the general solution is
+
+                                                   U0       t sin νt
+              [︃          ]︃      [︃          ]︃      [︃                 ]︃
+                 cos νt               sin νt
+       X = c1                + c2                +
+                 − sin νt            ν cos νt      2ν sin νt + tν cos νt
+
+where the solution oscillates unboundedly; this effect is called resonance.
+The input is bounded whereas the output is unbounded, so the system is
+not BIBO stable. The term marginal stability is used to describe the
+situation in which the complementary function is bounded, whereas the
+particular integral is unbounded for suitably chosen bounded inputs; this
+entails that the system is not BIBO stable. [See video: V27 resonance]
+Resonance occurs where a system is driven by a bounded input at the
+natural frequency of the systems, producing an unbounded output.
+158 Bounded exponentials of matrices
+
+
+
+Lemma
+Suppose that A has (not necessarily distinct) eigenvalues such that
+ℜλj < 0 for all j = 1, . . . , n. Then there exists M, δ > 0 such that
+
+                    ∥ exp(tA)∥ ≤ Me −δt        (t ≥ 0).
+
+
+This follows from Lemma 123. The difference between ℜλ ≤ 0 in
+Proposition 57(iii) and ℜλ < 0 in the Lemma 158 is subtle, and
+historically important in the theory. Maxwell realized that the stronger
+hypothesis of the Lemma 158, requiring strict inequality, is needed to
+cover the case of multiple eigenvalues, and deal with resonance.
+159 BIBO stability in terms of eigenvalues of A
+
+
+
+Theorem
+Suppose that all eigenvalues λj of A satisfy ℜλj < 0, and that U is
+bounded on (0, ∞). Then all solutions to
+
+                            dX
+                               = AX + BU
+                            dt
+                            Y = CX + DU
+are bounded on (0, ∞). Hence (A, B, C, D) is BIBO stable.
+160 Proof of BIBO stability
+
+By the Theorem 65, the general solution to the differential equation is
+                                ∫︂ t
+           X (t) = exp(tA)X0 +       exp((t − v)A)BU(v) dv
+                                            0
+
+where by hypotheses there exists K > 0 such that
+
+                      ∥B∥∥U(v)∥ ≤ K                (v > 0)
+
+and by the Lemma 123
+
+                    ∥ exp(tA)∥ ≤ Me −tδ             (t > 0),
+
+so
+                                     ∫︂ t
+      ∥X (t)∥ ≤ Me   −tδ
+                           ∥X0 ∥ +          ∥ exp((t − v)A)∥∥B∥∥U(v)∥dv
+                                      0
+161 Conclusion of proof
+
+
+                                         ∫︂ t
+                ∥X (t)∥ ≤ M∥X0 ∥ + K M          e −δ(t−v) dv
+                                          0
+                                   K M [︂ −δ(t−v) ]︂t
+                        = M∥X0 ∥ +        −e
+                                    δ                 0
+                                   K M (︁
+                        = M∥X0 ∥ +        1−e  −δt
+                                                   )︁
+                                    δ
+                                   KM
+                        ≤ M∥X0 ∥ +           (t > 0).
+                                    δ
+Hence X (t) is bounded, so the output is also bounded, since
+
+                        Y (t) = CX (t) + Du(t)
+
+is the sum of two bounded functions.
+
