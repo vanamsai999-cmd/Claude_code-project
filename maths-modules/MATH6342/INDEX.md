@@ -13,6 +13,11 @@
   - AE2 (eigenvalues, transfer function, companion matrix, observability rank): `MATH6342LinearsystemsAssessedexercise2.pdf` (scanned; transcription in `text/`)
   - AE3 (Laplace transforms, IVP, diagonalisation/exp(tA), positive definite matrices): `MATH6342LinearsystemsAssessedexercise3.pdf` (scanned; transcription in `text/`)
 
+## Step-by-step exam revision guide (newest; built from the official notes, answers checked with sympy)
+- `revision_guide/MATH6342_Exam_Revision_Guide.pdf` (50 pages): whole module, chapters 1-5, a worked example and an exam-style question set for each chapter, proofs checklist, mock paper with full solutions, formula sheet.
+  LaTeX source: `revision_guide/MATH6342_Exam_Revision_Guide.tex` + `revision_guide/ch*.tex`.
+- Note: frames 119-120 of the official notes list the Jordan blocks as "J2(3) + J2(1) + J2(3)"; the matrix shown is J3(2) + J1(2) + J2(3) (typo in the notes).
+
 ## Sai's answers (verify before trusting)
 - AE1: `A1_1_ii_block_diagram.pdf/.tex`, `A1_2_block_diagrams.pdf/.tex`, previews `A1_*.png`
 - AE2: `MATH6342_Assessed_Exercise_2_Sai_Vanam.pdf`

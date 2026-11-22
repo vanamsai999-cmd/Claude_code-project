@@ -1,0 +1,291 @@
+\section{Chapter 5: Feedback control \texorpdfstring{\fr{162--218}}{}}
+
+\subsection*{Big picture}
+Chapter 4 told us how to \emph{recognise} stability. Chapter 5 is about \emph{creating} it by feedback, using only algebra on transfer functions:
+\begin{enumerate}
+\item test polynomials for stability without finding roots (Maxwell's problem);
+\item the ring $\mathcal S$ of stable rational functions;
+\item Nyquist's criterion (stability under feedback from a picture);
+\item the simple feedback loop $T=\frac{G}{1+GK}$, PID controllers;
+\item a guaranteed recipe to stabilise \emph{any} rational plant: coprime factorisation $\to$ Youla controller $K=X/Y$;
+\item matrix tools: positive definite matrices, Lyapunov's criterion, Sylvester's equation.
+\end{enumerate}
+
+\subsection{Stable polynomials \texorpdfstring{\fr{163--164}}{}}\label{sec:stabpoly}
+\begin{defbox}
+A polynomial $h$ is \textbf{stable} if all its zeros lie in the open left half plane LHP $=\{s:\Re s<0\}$.
+(So $h$ stable $\iff$ $1/h$ is a stable rational function.)
+\end{defbox}
+\begin{thmbox}[title={Proposition 0.43 (necessary condition)}]
+If $h$ is a \textbf{monic real} stable polynomial then \textbf{all its coefficients are positive}.
+\end{thmbox}
+\begin{proofbox}[title={Proof of Proposition 0.43}]
+Real coefficients $\Rightarrow$ $h(\lambda)=0\iff h(\bar\lambda)=0$. So the roots are real $\mu_j<0$, or conjugate pairs $\lambda_k,\bar\lambda_k$ with $\Re\lambda_k<0$, giving
+$(s-\lambda_k)(s-\bar\lambda_k)=s^2-2\Re\lambda_k\,s+|\lambda_k|^2$. Hence
+$h(s)=\prod_j(s-\mu_j)\prod_k(s^2-2\Re\lambda_k\,s+|\lambda_k|^2)$ with $-\mu_j>0$, $-2\Re\lambda_k>0$, $|\lambda_k|^2>0$.
+Multiplying out polynomials with positive coefficients gives positive coefficients.
+\end{proofbox}
+\begin{warnbox}
+The converse is \textbf{false} for degree $\ge3$: $s^3+s^2+s+1=(s+1)(s^2+1)$ has positive coefficients but roots $\pm i$. The AE2 polynomial $s^4+2s^3+s^2+4s+2$ also has positive coefficients but is unstable.
+So use positivity only to \emph{rule out} stability (a zero or negative coefficient $\Rightarrow$ not stable).
+\end{warnbox}
+\begin{thmbox}[title={Useful tests by degree (degree 3 is Routh's extension, \emph{not proved} in the notes)}]
+\begin{itemize}
+\item Degree 1: $s+a_0$ stable $\iff a_0>0$.
+\item Degree 2: $s^2+a_1s+a_0$ stable $\iff a_1>0$ and $a_0>0$. (Proof: roots $\frac{-a_1\pm\sqrt{a_1^2-4a_0}}2$; this is the damped oscillator table.)
+\item Degree 3: $s^3+a_2s^2+a_1s+a_0$ stable $\iff a_2,a_1,a_0>0$ and $\boxed{a_2a_1>a_0}$.
+\item Any degree: form the companion matrix and compute its eigenvalues numerically \fr{163}.
+\end{itemize}
+If you use the degree-3 test, say ``by the Routh--Hurwitz criterion''; when $a_2a_1=a_0$ the polynomial factorises as $(s+a_2)(s^2+a_1)$ with roots on the imaginary axis.
+\end{thmbox}
+
+\subsection{The ring \texorpdfstring{$\mathcal S$}{S} of stable rational functions \texorpdfstring{\fr{165--169}}{}}
+\begin{defbox}
+$f=g/h$ is a \textbf{stable rational function}, $f\in\mathcal S$, if (i) $f$ is \textbf{proper} ($\deg g\le\deg h$) and (ii) all poles lie in the open LHP ($h$ stable).
+\end{defbox}
+\begin{thmbox}[title={Proposition 0.44}]
+$\mathcal S$ is a commutative differential ring (closed under $+$, $\times$, scalar multiples and $d/ds$, Leibniz rule; no zero divisors on RHP). But $\mathcal S$ is \textbf{not a field}:
+$\frac1{s+1}\in\mathcal S$ but its inverse $s+1$ is not proper, so $s+1\notin\mathcal S$.
+\end{thmbox}
+\begin{proofbox}[title={Proof sketch (closure)}]
+Product: $\frac{g_1g_2}{h_1h_2}$ has $\deg(g_1g_2)\le\deg(h_1h_2)$ and the zeros of $h_1h_2$ are zeros of $h_1$ or $h_2$, so in the LHP.
+Sum: $\frac{g_1h_2+g_2h_1}{h_1h_2}$, same reasoning. Derivative: by partial fractions $f=q+\sum a_j(s-\lambda_j)^{-n_j}$ with $q$ constant and $\Re\lambda_j<0$, so
+$f'=\sum -n_ja_j(s-\lambda_j)^{-n_j-1}$ is strictly proper with the same poles.
+\end{proofbox}
+
+\subsection{Nyquist's criterion \texorpdfstring{\fr{174--177}}{}}
+\begin{thmbox}[title={Nyquist's criterion}]
+Let the plant $R$ be \textbf{stable}. If the Nyquist contour $R(i\omega)$, $-\infty\le\omega\le\infty$, does \textbf{not pass through or wind around $-1$}, then
+$T=\dfrac{R}{1+R}$ is stable, i.e.\ the feedback loop with constant feedback $-1$ is stable.\\
+\textbf{Argument principle:} $N=Z-P$ where $N$ = net number of \textbf{clockwise} windings of $R(i\omega)$ round $-1$, $Z$ = number of zeros of $1+R$ in the RHP, $P$ = number of poles of $1+R$ in the RHP.
+Here $P=0$ ($R$ stable) and $N=0$, so $Z=0$: no closed-loop poles in the RHP.
+\end{thmbox}
+\begin{proofbox}[title={Why $T$ is proper and where its poles can be \fr{175}}]
+Write $R=c+p/q$ with $\deg p<\deg q$, $c=\lim_{s\to\infty}R\neq-1$. Then $T=\dfrac{cq+p}{(1+c)q+p}$, and $\deg((1+c)q+p)=\deg q$, so $T$ is proper.
+A pole of $R$ gives a finite value of $T=R/(1+R)$, so the only possible poles of $T$ are zeros of $1+R$; the argument principle locates them.
+\end{proofbox}
+\begin{methodbox}[title={Method: use Nyquist to find a gain margin}]
+\begin{enumerate}
+\item Find where $R(i\omega)$ crosses the negative real axis: solve $\Im R(i\omega)=0$ (equivalently $\phi(\omega)=-\pi$).
+\item Compute $R(i\omega)$ there. If it lies to the right of $-1$, no winding $\Rightarrow$ stable feedback loop.
+\item With a gain $k$, the crossing point scales by $k$: stable while $k\,|R(i\omega_c)|<1$.
+\end{enumerate}
+\end{methodbox}
+\begin{workbox}[title={Worked example: $R(s)=\dfrac{k}{(s+1)^3}$, $k>0$}]
+\textbf{Nyquist.} $\phi(\omega)=-3\tan^{-1}\omega=-\pi$ at $\omega=\sqrt3$, where $|R|=\frac{k}{(1+3)^{3/2}}=\frac k8$. The plot crosses the negative real axis at $-k/8$, so it avoids winding round $-1$ iff $k<8$.\\
+\textbf{Check algebraically.} Closed-loop denominator $(s+1)^3+k=s^3+3s^2+3s+(1+k)$: Routh needs $3\cdot3>1+k$, i.e.\ $k<8$ \checkmark. At $k=8$: $(s+3)(s^2+3)$, roots $\pm i\sqrt3$ (exactly the crossing frequency).
+\end{workbox}
+
+\subsection{The simple feedback loop and PID control \texorpdfstring{\fr{179--185}}{}}\label{sec:pid}
+\begin{center}
+\begin{tikzpicture}
+\node (u) at (0,0) {$u$}; \node[sumj] (s) at (1.3,0) {$+$}; \node[blk] (g) at (3,0) {$G$}; \node[tap] (t) at (4.4,0) {}; \node (y) at (5.4,0) {$y$};
+\node[blk] (k) at (3,1.2) {$-K$};
+\draw[ar] (u)--(s); \draw[ar] (s)--(g); \draw[ar] (g)--(t); \draw[ar] (t)--(y); \draw[ar] (t)|-(k); \draw[ar] (k)-|node[left,pos=.8]{$-Ky$}(s);
+\end{tikzpicture}
+\end{center}
+\begin{thmbox}[title={Simple feedback loop (SFL)}]
+Plant $G$ ($m\times k$), controller $-K$ ($k\times m$, negative feedback). From $y=G(u-Ky)$:
+\[\boxed{T=(I+GK)^{-1}G}\qquad\text{(SISO: }T=\frac{G}{1+GK}\text{).}\]
+Poles of $G$: \textbf{open-loop poles}; poles of $T$: \textbf{closed-loop poles}. If $G=p/q$ and $K=k$ (constant), $T=\dfrac{p}{kp+q}$.
+\textbf{PID controller:} $K(s)=a+\dfrac bs+cs$ (proportional + integral + derivative). PD: abrupt correction (Whitehead's torpedoes); PI: gentle.
+\end{thmbox}
+\begin{methodbox}[title={Method: choose a controller to stabilise $G$}]
+\begin{enumerate}
+\item Write $T=\dfrac{G}{1+GK}=\dfrac{1}{1/G+K}$ and clear fractions to get $T=\dfrac{\text{num}}{\text{closed-loop polynomial}}$.
+\item Write the closed-loop polynomial with the controller parameters as unknowns.
+\item Impose the stability test (positive coefficients for degree 2; Routh for degree 3).
+\item Choose nice values (e.g.\ make the polynomial $(s+1)^2$), and check that $T$ is \textbf{proper}.
+\end{enumerate}
+\end{methodbox}
+\begin{workbox}[title={Worked example \fr{185}: stabilise $G(s)=\dfrac{s}{(s-1)(s+3)}$ by a PI controller}]
+Open-loop poles $1,-3$: unstable. Take $K(s)=-a-\frac bs$ in $T=\frac{G}{1+GK}$ (this is the notes' sign convention). Then
+\[\frac{1}{G}+K=\frac{(s-1)(s+3)}{s}-a-\frac bs=\frac{s^2+2s-3-as-b}{s},\qquad T=\frac{s}{s^2+(2-a)s-(b+3)}.\]
+Need $2-a>0$ and $-(b+3)>0$. Choose $a=0$, $b=-4$: $T=\dfrac{s}{s^2+2s+1}=\dfrac{s}{(s+1)^2}\in\mathcal S$. So $K(s)=\frac4s$ (pure integral feedback) works.
+\end{workbox}
+\begin{warnbox}
+Sign conventions differ: the diagram has the block $-K$ and the formula uses $K$. State your convention once, e.g.\ ``with $T=G/(1+GK)$'', and stick to it.
+\end{warnbox}
+\begin{workbox}[title={Worked example \fr{184}: proportional feedback can fix an improper plant}]
+$G=\frac{s^2}{bs+c}$ ($b,c>0$) is not proper. With $K=k>0$: $T=\dfrac{s^2}{ks^2+bs+c}$, proper, poles $\frac{-b\pm\sqrt{b^2-4ck}}{2k}$ in the LHP (positive coefficients, degree 2). Stable.
+\end{workbox}
+
+\subsection{Euclid, B\'ezout and matrix completion \texorpdfstring{\fr{186--193}}{}}
+\begin{methodbox}[title={Euclidean algorithm and B\'ezout for polynomials}]
+\begin{enumerate}
+\item Divide: $P_0=Q_1P_1+P_2$ with $\deg P_2<\deg P_1$; then $P_1=Q_2P_2+P_3$, and so on until a remainder is $0$. The last nonzero remainder $P_n$ is the highest common factor.
+\item \textbf{Work back}: $P_n=P_{n-2}-Q_{n-1}P_{n-1}$, substitute for $P_{n-1}$, etc., to get $P_n=MP_0+NP_1$.
+\item If $P_n$ is a nonzero constant $r$, divide by $r$ to get $MP_0/r+NP_1/r=1$.
+\end{enumerate}
+MATLAB: \texttt{[g,M,N]=gcd(P,Q)}. All in exact arithmetic, no roots needed.
+\end{methodbox}
+\begin{thmbox}[title={Lemma 0.47 and Proposition 0.48}]
+Nonzero $P,Q\in\CC[s]$ have \textbf{no common zeros} $\iff$ $\exists$ polynomials $M,N$ with $PM+QN=1$.\\
+For $f,g\in\CC[s]$ TFAE: (1) $\begin{bmatrix}f&g\\h&k\end{bmatrix}$ can be completed to a matrix with polynomial inverse; (2) $fk-gh=\Delta\in\CC\setminus\{0\}$; (3) hcf$(f,g)=1$; (4) $f,g$ have no common zeros.
+\end{thmbox}
+\begin{proofbox}[title={Proof of Lemma 0.47}]
+($\Leftarrow$) If $\lambda$ were a common zero, $1=P(\lambda)M(\lambda)+Q(\lambda)N(\lambda)=0$, contradiction.
+($\Rightarrow$) Euclid gives $PM+QN=R$ with $R$ the hcf. If $R=r$ is a nonzero constant, divide by $r$. Otherwise $\deg R\ge1$, so $R$ has a zero $\lambda$ (fundamental theorem of algebra); $R$ divides $P$ and $Q$, so $\lambda$ is a common zero, contradiction.
+\end{proofbox}
+\begin{workbox}[title={Worked examples}]
+\textbf{(a) hcf.} $P_0=s^3+2s^2+s+2$, $P_1=s^2+3s+2$: $P_0=(s-1)P_1+(2s+4)$; $P_1=(\frac s2+\frac12)(2s+4)+0$. hcf $=2s+4\sim s+2$, and $2s+4=P_0-(s-1)P_1$.\\
+\textbf{(b) B\'ezout.} $P=s+2$, $Q=s^2+1$: $Q=(s-2)P+5$, so $5=Q-(s-2)P$ and $\boxed{1=\tfrac15Q-\tfrac{s-2}5P}$. (Check: $\frac{s^2+1-(s^2-4)}5=1$ \checkmark)\\
+\textbf{(c) Completion.} With $f=s+2$, $g=s^2+1$ take $k=\frac{2-s}5$, $h=-\frac15$: $fk-gh=\frac{4-s^2+s^2+1}5=1$, so $F=\begin{bmatrix}s+2&s^2+1\\-\frac15&\frac{2-s}5\end{bmatrix}$ has inverse $\begin{bmatrix}\frac{2-s}5&-(s^2+1)\\\frac15&s+2\end{bmatrix}$.\\
+\textbf{(d) Integers} \fr{191}: $\begin{bmatrix}3&5\\c&d\end{bmatrix}$ has an integer inverse iff $3d-5c=\pm1$, e.g.\ $c=1,d=2$; possible because $\gcd(3,5)=1$.
+\end{workbox}
+
+\subsection{Coprime factorisation in \texorpdfstring{$\mathcal S$}{S} \texorpdfstring{\fr{194--200}}{}}\label{sec:coprime}
+\begin{defbox}
+$P,Q\in\mathcal S$ are \textbf{coprime} if there are $X,Y\in\mathcal S$ with $PX+QY=1$.
+\textbf{Proposition 0.49:} every rational $G$ can be written $G=P/Q$ with $P,Q$ coprime in $\mathcal S$, found in exact arithmetic.
+\end{defbox}
+\begin{methodbox}[title={The coprime factorisation algorithm (4 steps)}]
+\begin{enumerate}
+\item Write $G=M(s)/N(s)$ with polynomials $M,N$ having \textbf{no common zeros}; let $m=\max(\deg M,\deg N)$.
+\item Substitute $s=\dfrac{1-\lambda}{\lambda}$ (i.e.\ $\lambda=\dfrac1{1+s}$) and clear denominators: $\tilde M(\lambda)=\lambda^mM\big(\frac{1-\lambda}\lambda\big)$, $\tilde N(\lambda)=\lambda^mN\big(\frac{1-\lambda}\lambda\big)$.
+\item Euclid/B\'ezout in $\lambda$: find polynomials $\tilde X,\tilde Y$ with $\tilde M\tilde X+\tilde N\tilde Y=1$.
+\item Put back $\lambda=\dfrac1{1+s}$: $P=\tilde M,\ Q=\tilde N,\ X=\tilde X,\ Y=\tilde Y$ evaluated at $\frac1{1+s}$. All four are polynomials in $\frac1{1+s}$, so proper with only pole $-1$: they lie in $\mathcal S$.
+\end{enumerate}
+\end{methodbox}
+\begin{thmbox}[title={Proposition 0.50 and Theorem 0.52 (Youla)}]
+If $G=P/Q$ with $PX+QY=1$ in $\mathcal S$, then the controller $\boxed{K=X/Y}$ gives
+\[\frac{1}{1+GK}=QY,\quad\frac{G}{1+GK}=PY,\quad\frac{K}{1+GK}=XQ,\quad\frac{GK}{1+GK}=PX,\]
+all in $\mathcal S$. So $K=X/Y$ \textbf{internally stabilises} the SFL. Every rational SISO can be stabilised by a rational (possibly unstable) controller.
+\end{thmbox}
+\begin{proofbox}[title={Proof (one line each)}]
+$1+GK=1+\frac{PX}{QY}=\frac{QY+PX}{QY}=\frac1{QY}$. Hence $\frac1{1+GK}=QY$, $\frac{G}{1+GK}=\frac PQ\,QY=PY$, $\frac{K}{1+GK}=\frac XY\,QY=XQ$, $\frac{GK}{1+GK}=\frac{PX}{QY}QY=PX$.
+Products of elements of $\mathcal S$ are in $\mathcal S$.
+\end{proofbox}
+
+\begin{workbox}[title={Worked example A: $G(s)=\dfrac1{s-1}$}]
+\textbf{1.} $M=1$, $N=s-1$, $m=1$.\quad
+\textbf{2.} $\tilde M=\lambda$, $\tilde N=\lambda\big(\frac{1-\lambda}\lambda-1\big)=1-2\lambda$.\quad
+\textbf{3.} By inspection $2\tilde M+1\cdot\tilde N=1$: $\tilde X=2$, $\tilde Y=1$.\\
+\textbf{4.} $P=\frac1{1+s}$, $Q=1-\frac2{1+s}=\frac{s-1}{s+1}$, $X=2$, $Y=1$. Check $P/Q=\frac1{s-1}$ \checkmark. Controller $K=X/Y=2$:
+$\frac{G}{1+GK}=\frac1{s+1}$, $\frac1{1+GK}=\frac{s-1}{s+1}$, $\frac{K}{1+GK}=\frac{2(s-1)}{s+1}$, $\frac{GK}{1+GK}=\frac2{s+1}$, all in $\mathcal S$.
+\end{workbox}
+
+\begin{workbox}[title={Worked example B: $G(s)=\dfrac1{s^2}$ (double integrator)}]
+\textbf{1.} $M=1$, $N=s^2$, $m=2$.\quad
+\textbf{2.} $\tilde M=\lambda^2$, $\tilde N=(1-\lambda)^2=\lambda^2-2\lambda+1$.\\
+\textbf{3.} Euclid: $\tilde N=1\cdot\tilde M+(1-2\lambda)$; \ $\tilde M=\lambda^2=(1-2\lambda)\big(-\frac\lambda2-\frac14\big)+\frac14$. Work back:
+$\frac14=\tilde M+(1-2\lambda)\big(\frac\lambda2+\frac14\big)=\tilde M+(\tilde N-\tilde M)\big(\frac\lambda2+\frac14\big)=\tilde M\big(\tfrac34-\tfrac\lambda2\big)+\tilde N\big(\tfrac\lambda2+\tfrac14\big)$.
+Times 4: $\tilde M(3-2\lambda)+\tilde N(1+2\lambda)=1$.\\
+\textbf{4.} $P=\frac1{(1+s)^2}$, $Q=\frac{s^2}{(1+s)^2}$, $X=3-\frac2{1+s}=\frac{3s+1}{s+1}$, $Y=1+\frac2{1+s}=\frac{s+3}{s+1}$; controller $K=\dfrac{3s+1}{s+3}$.\\
+\textbf{Check:} $1+GK=\frac{s^2(s+3)+3s+1}{s^2(s+3)}=\frac{(s+1)^3}{s^2(s+3)}$, so $\frac{G}{1+GK}=\frac{s+3}{(s+1)^3}$, $\frac1{1+GK}=\frac{s^2(s+3)}{(s+1)^3}$, $\frac{K}{1+GK}=\frac{s^2(3s+1)}{(s+1)^3}$, $\frac{GK}{1+GK}=\frac{3s+1}{(s+1)^3}$: all proper with poles only at $-1$ \checkmark
+\end{workbox}
+
+\begin{workbox}[title={Worked example C \fr{196}: $G(s)=\dfrac{s^2+5}{s^2-s+1}$}]
+With $s=\frac{1-\lambda}{\lambda}$, $m=2$: $\tilde M=6\lambda^2-2\lambda+1$, $\tilde N=3\lambda^2-3\lambda+1$, and Euclid gives
+$\big(\tfrac{24\lambda-2}{7}\big)\tilde N-\big(\tfrac{12\lambda-9}{7}\big)\tilde M=1$. So $\tilde Y=\frac{24\lambda-2}7$, $\tilde X=-\frac{12\lambda-9}{7}$, and with $\lambda=\frac1{1+s}$:
+$Y=\frac{22-2s}{7(1+s)}$, $X=\frac{9s-3}{7(1+s)}$, giving the stabilising controller $K=\dfrac XY=\dfrac{9s-3}{22-2s}$ (itself unstable, pole at $s=11$, which is allowed).
+Indeed $\frac{G}{1+GK}=\frac{-2(s-11)(s^2+5)}{7(s+1)^3}\in\mathcal S$.
+\end{workbox}
+
+\subsection{Well-posedness and internal stability \texorpdfstring{\fr{201--206}}{}}\label{sec:internal}
+\begin{thmbox}[title={Lemma 0.51}]
+SFL with inputs $r,d,n$ and states $x=r-z$, $y=d+Kx$, $z=n+Gy$, i.e.\ $\begin{bmatrix}1&0&1\\-K&1&0\\0&-G&1\end{bmatrix}\begin{bmatrix}x\\y\\z\end{bmatrix}=\begin{bmatrix}r\\d\\n\end{bmatrix}$.
+It is \textbf{well posed} (inputs determine states uniquely) iff $1+GK\neq0$, and then
+\[\begin{bmatrix}x\\y\\z\end{bmatrix}=\frac1{1+GK}\begin{bmatrix}1&-G&-1\\K&1&-K\\GK&G&1\end{bmatrix}\begin{bmatrix}r\\d\\n\end{bmatrix}=\Phi\begin{bmatrix}r\\d\\n\end{bmatrix}.\]
+\textbf{Internally stable}: every entry of $\Phi$ is in $\mathcal S$, i.e.\ $\frac1{1+GK},\frac G{1+GK},\frac{GK}{1+GK},\frac K{1+GK}\in\mathcal S$.
+\end{thmbox}
+\begin{exambox}[title={Why we need all four (a classic exam trap)}]
+$G=\frac{s-1}{s+1}$, $K=\frac{1}{s-1}$ (the controller cancels the plant's RHP zero). Then $GK=\frac1{s+1}$ and
+$\frac1{1+GK}=\frac{s+1}{s+2}$, $\frac{G}{1+GK}=\frac{s-1}{s+2}$, $\frac{GK}{1+GK}=\frac{1}{s+2}$ are all stable, \textbf{but}
+$\frac{K}{1+GK}=\frac{s+1}{(s-1)(s+2)}$ has a pole at $1$. So the loop is \textbf{not internally stable}: an unstable pole--zero cancellation hides inside the loop, and the internal signal $y$ responds to the reference $r$ through the unstable $\frac{K}{1+GK}$, so it blows up even though the output $z$ looks fine.
+\end{exambox}
+
+\subsection{Self-adjoint and positive definite matrices \texorpdfstring{\fr{207--209}}{}}\label{sec:posdef}
+\begin{thmbox}
+\begin{itemize}
+\item \textbf{Prop 0.53:} if $A=A'$ then the eigenvalues are real and $A=U\Delta U'$ with $U$ unitary ($U'U=I$) and $\Delta$ real diagonal; eigenvectors for distinct eigenvalues are orthogonal.
+\item $K$ is \textbf{positive definite} if $K=K'$ and $\langle Kz,z\rangle>0$ for all $z\neq0$.
+\item \textbf{Lemma 0.54:} for $K=K'$, TFAE: (1) $\langle Kz,z\rangle>0\ \forall z\neq0$; (2) all eigenvalues $\kappa_j>0$; (3) all \textbf{leading principal minors} $\Delta_j>0$.
+\item The product of positive definite matrices is generally \textbf{not} positive definite.
+\end{itemize}
+\end{thmbox}
+\begin{workbox}[title={Worked example (AE3, A3.4): all five parts}]
+$K$ real symmetric positive definite.\\
+\textbf{(i)} If $Kv=\kappa v$, $v\neq0$: $0<\langle Kv,v\rangle=\langle\kappa v,v\rangle=\kappa\|v\|^2$, so $\kappa>0$ (in particular real).\\
+\textbf{(ii)} $K$ is diagonalisable (Prop 0.53), so $\det K=\prod\kappa_j>0$ and $\tr K=\sum\kappa_j>0$.\\
+\textbf{(iii)} $(S'KS)'=S'K'S''=S'KS$, so self-adjoint. For $z\neq0$, $Sz\neq0$ ($S$ invertible), so $\langle S'KSz,z\rangle=\langle KSz,Sz\rangle>0$.\\
+\textbf{(iv)} $\exp(A)'=\exp(A')$ (take adjoints term by term: $(A^k)'=(A')^k$), and $\exp(A)$ is invertible with inverse $\exp(-A)$. Apply (iii) with $S=\exp(A)$: $\exp(A')K\exp(A)$ is positive definite.\\
+\textbf{(v)} $(K+L)'=K+L$ and $\langle(K+L)z,z\rangle=\langle Kz,z\rangle+\langle Lz,z\rangle>0$ for $z\neq0$.
+\end{workbox}
+\begin{workbox}[title={Worked example: leading principal minors}]
+$K=\begin{bmatrix}2&-1&0\\-1&2&-1\\0&-1&2\end{bmatrix}$: $\Delta_1=2$, $\Delta_2=4-1=3$, $\Delta_3=2(4-1)-(-1)(-2)=4$. All $>0$, so positive definite.
+\end{workbox}
+
+\subsection{Lyapunov's criterion and Lyapunov's equation \texorpdfstring{\fr{210--218}}{}}
+\begin{thmbox}[title={Theorem 0.55 (Lyapunov's criterion)}]
+If there is a positive definite $K$ such that $Q=-(A'K+KA)$ is also positive definite, then all solutions of $\dot X=AX$ are bounded on $(0,\infty)$.
+\end{thmbox}
+\begin{proofbox}[title={Proof of Lyapunov's criterion (learn this)}]
+Let $V(t)=\langle KX(t),X(t)\rangle\ge0$. Using $\dot X=AX$:
+\begin{align*}\frac{dV}{dt}&=\langle K\dot X,X\rangle+\langle KX,\dot X\rangle=\langle KAX,X\rangle+\langle KX,AX\rangle\\&=\langle KAX,X\rangle+\langle A'KX,X\rangle=-\langle QX,X\rangle\le0.\end{align*}
+So $V$ is decreasing. If $\kappa_n>0$ is the smallest eigenvalue of $K$, then
+$\kappa_n\|X(t)\|^2\le\langle KX(t),X(t)\rangle\le\langle KX_0,X_0\rangle$, so $\|X(t)\|\le\big(\langle KX_0,X_0\rangle/\kappa_n\big)^{1/2}$ for all $t\ge0$.
+\end{proofbox}
+\begin{workbox}[title={Worked example: try $K=I$}]
+$A=\begin{bmatrix}-1&2\\0&-3\end{bmatrix}$, $K=I$: $Q=-(A^\top+A)=-\begin{bmatrix}-2&2\\2&-6\end{bmatrix}=\begin{bmatrix}2&-2\\-2&6\end{bmatrix}$; minors $2>0$, $12-4=8>0$. So $Q$ is positive definite and all solutions are bounded.
+(If $K=I$ fails, try another $K$, or choose $Q$ and solve for $K$.)
+\end{workbox}
+\begin{thmbox}[title={Corollary 0.59 (Lyapunov's equation)}]
+If all eigenvalues of $A$ are in the open LHP, then for every positive definite $P$,
+$L=\displaystyle\int_0^\infty\exp(tA)P\exp(tA')\,dt$ is positive definite and solves $\boxed{AL+LA'=-P}$. (MATLAB: \texttt{L=lyap(A,P)}.)
+\end{thmbox}
+\begin{workbox}[title={Worked example: solve $AL+LA^\top=-I$ for $A=\begin{bmatrix}0&1\\-2&-3\end{bmatrix}$}]
+Let $L=\begin{bmatrix}l_1&l_2\\l_2&l_3\end{bmatrix}$. $AL=\begin{bmatrix}l_2&l_3\\-2l_1-3l_2&-2l_2-3l_3\end{bmatrix}$ and $LA^\top=(AL)^\top$. Entries of $AL+(AL)^\top=-I$:
+$(1,1)$: $2l_2=-1\Rightarrow l_2=-\frac12$; \ $(2,2)$: $-4l_2-6l_3=-1\Rightarrow l_3=\frac12$; \ $(1,2)$: $l_3-2l_1-3l_2=0\Rightarrow l_1=1$.
+$L=\begin{bmatrix}1&-\frac12\\-\frac12&\frac12\end{bmatrix}$, minors $1$ and $\frac14$: positive definite, as the Corollary predicts (eigenvalues $-1,-2$).
+\end{workbox}
+
+\subsection{Sylvester's equation \texorpdfstring{\fr{212--216}}{}}\label{sec:sylv}
+\begin{thmbox}
+$AY+YB=-C$ is a linear system of $n^2$ equations in $n^2$ unknowns. Either a unique solution for all $C$, or infinitely many for some $C$, or none for some $C$ (Prop 0.56).
+\textbf{Prop 0.57:} unique solution for every $C$ $\iff$ $A$ and $-B$ have \textbf{no common eigenvalue}.
+\textbf{Prop 0.58:} if all eigenvalues of $A$ and $B$ are in the open LHP, $Y=\int_0^\infty\exp(tA)C\exp(tB)\,dt$ is the unique solution (MATLAB \texttt{lyap(A,B,C)}).
+\end{thmbox}
+\begin{proofbox}[title={Proof of Prop 0.58}]
+$\|\exp(tA)\|\le M_1e^{-\delta_1t}$, $\|\exp(tB)\|\le M_2e^{-\delta_2t}$ so the integral converges. Then
+$AY+YB=\int_0^\infty\frac{d}{dt}\big(\exp(tA)C\exp(tB)\big)dt=\big[\exp(tA)C\exp(tB)\big]_0^\infty=0-C=-C$.
+So $Y\mapsto AY+YB$ is surjective on the $n^2$-dimensional space $M_{n\times n}(\CC)$, hence injective: the solution is unique.
+\end{proofbox}
+\begin{workbox}[title={Worked example}]
+$1\times1$ intuition: $ay+yb=-c$ has a unique solution iff $a+b\neq0$, i.e.\ $a\neq-b$.\\
+$A=\mathrm{diag}(1,2)$, $B=\mathrm{diag}(-1,3)$: eigenvalues of $-B$ are $1,-3$; $1$ is shared with $A$. Indeed $Y=\begin{bmatrix}1&0\\0&0\end{bmatrix}$ gives $AY+YB=Y-Y=0$, so solutions are not unique.
+\end{workbox}
+
+\subsection{Exam-style questions for Chapter 5}
+\begin{qbox}[title={Q5.1 (stable polynomials)}]
+(a) Is $s^3+2s^2+3s+5$ stable? (b) For which real $k$ is $s^3+2s^2+3s+k$ stable? (c) Show $s^4+s^3-2s^2+s+1$ is not stable.
+\end{qbox}
+\begin{solbox}
+(a) Coefficients positive and $2\cdot3=6>5$, so stable (Routh--Hurwitz). (b) Need $k>0$ and $6>k$: $0<k<6$. At $k=6$: $(s+2)(s^2+3)$, roots $\pm i\sqrt3$.
+(c) The coefficient $-2$ is negative, so by Prop 0.43 it is not stable.
+\end{solbox}
+
+\begin{qbox}[title={Q5.2 (proportional feedback)}]
+$G(s)=\dfrac{1}{s(s+1)(s+2)}$, $K=k>0$. Find the closed-loop transfer function and the values of $k$ giving a stable closed loop.
+\end{qbox}
+\begin{solbox}
+$T=\frac{p}{kp+q}=\frac{1}{s^3+3s^2+2s+k}$. Routh: $3\cdot2>k$, so stable iff $0<k<6$. At $k=6$, $(s+3)(s^2+2)$: poles $\pm i\sqrt2$ (marginal).
+\end{solbox}
+
+\begin{qbox}[title={Q5.3 (coprime factorisation and Youla)}]
+Let $G(s)=\dfrac{1}{s-2}$. Find $P,Q,X,Y\in\mathcal S$ with $G=P/Q$, $PX+QY=1$, and a controller that internally stabilises the SFL.
+\end{qbox}
+\begin{solbox}
+$m=1$: $\tilde M=\lambda$, $\tilde N=\lambda(\frac{1-\lambda}\lambda-2)=1-3\lambda$, and $3\tilde M+\tilde N=1$.
+$P=\frac1{1+s}$, $Q=1-\frac3{1+s}=\frac{s-2}{s+1}$, $X=3$, $Y=1$; $K=3$.
+Check: $\frac1{1+GK}=\frac{s-2}{s+1}$, $\frac{G}{1+GK}=\frac1{s+1}$, $\frac{K}{1+GK}=\frac{3(s-2)}{s+1}$, $\frac{GK}{1+GK}=\frac{3}{s+1}$: all in $\mathcal S$.
+\end{solbox}
+
+\begin{qbox}[title={Q5.4 (Lyapunov)}]
+Show using $K=I$ that every solution of $\dot X=AX$, $A=\begin{bmatrix}-2&1\\-1&-1\end{bmatrix}$, is bounded.
+\end{qbox}
+\begin{solbox}
+$A^\top+A=\begin{bmatrix}-4&0\\0&-2\end{bmatrix}$, so $Q=-(A^\top+A)=\mathrm{diag}(4,2)$, positive definite. By Theorem 0.55 solutions are bounded.
+(Indeed $\chi_A=s^2+3s+3$, eigenvalues $\frac{-3\pm i\sqrt3}{2}$, in the LHP.)
+\end{solbox}
+\newpage

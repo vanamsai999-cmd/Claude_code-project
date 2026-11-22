@@ -1,0 +1,244 @@
+\tikzset{blk/.style={draw,minimum height=7mm,minimum width=9mm,fill=white,font=\small},
+ sumj/.style={draw,circle,inner sep=1.2pt,font=\scriptsize},
+ tap/.style={circle,fill,inner sep=1.3pt},
+ ar/.style={-Stealth}}
+
+\section{Chapter 1: Linear systems and their description \texorpdfstring{\fr{6--30}}{}}
+
+\subsection*{Big picture}
+A \textbf{linear system} is a machine with input $u(t)$, output $y(t)$ and internal \textbf{state} $x(t)$.
+The state is ``everything you need to know now, so that together with future inputs you can predict the future''.
+In this chapter we learn to \emph{draw} systems (block diagrams) and to \emph{rewrite} any constant-coefficient ODE as a first order
+matrix system $\dot X=AX+Bu$. Nothing is solved yet; that is Chapter 2.
+
+\subsection{Linear operators and the five building blocks \texorpdfstring{\fr{7--9}}{}}
+\begin{defbox}
+$L:V\to W$ is \textbf{linear} if $L(\lambda f+\mu g)=\lambda Lf+\mu Lg$ for all $f,g$ and all $\lambda,\mu\in\CC$.
+The basic linear operators (on continuously differentiable $f:[0,\infty)\to\CC$) are
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{differentiator} $f\mapsto df/dt$, drawn $[d/dt]$;
+\item \textbf{integrator} $f\mapsto\int_0^x f(t)\,dt$, drawn $[\int]$ (always integrate from $0$);
+\item \textbf{amplifier} $f\mapsto af$ for a constant $a\in\CC$, drawn $[a]$ (called an amplifier even if $|a|<1$);
+\item \textbf{multiplication} by a fixed function $h$: $f\mapsto hf$, drawn $[h]$;
+\item \textbf{evaluation} $f\mapsto f(t_0)$, drawn $[\delta_{t_0}]$.
+\end{enumerate}
+Two connectors: a \textbf{summing junction} $\oplus$ adds the incoming signals (with the signs written on the arrows);
+a \textbf{tap} $\bullet$ copies a signal onto several wires \emph{without} dividing it (like a point in an electrical circuit,
+all wires at a tap carry the same voltage).
+\end{defbox}
+
+\begin{warnbox}
+A tap does \textbf{not} split the signal into halves. If $u$ goes into a tap with three wires out, each wire carries $u$.
+\end{warnbox}
+
+\begin{exambox}
+``Show that $L$ is linear'' questions: write out $L(\lambda f+\mu g)$ and use linearity of differentiation/integration.
+E.g.\ $Lf=t\,f''+3\int_0^t f$ is linear since $L(\lambda f+\mu g)=t(\lambda f''+\mu g'')+3\int_0^t(\lambda f+\mu g)=\lambda Lf+\mu Lg$.
+A map like $f\mapsto f^2$ or $f\mapsto f+1$ is \textbf{not} linear (check $L(2f)\neq 2Lf$, or $L(0)\neq0$).
+\end{exambox}
+
+\subsection{Block diagrams: rules, open loop and feedback \texorpdfstring{\fr{11--17}}{}}
+\begin{defbox}
+A block diagram is a directed graph from input $u$ to output $y$ built from $u,y,\delta_0,\oplus,\bullet,d/dt,\int,a,h$.
+\begin{itemize}
+\item $u$ and $y$ have degree one; every other vertex has degree two or three.
+\item No loops at a vertex and no multiple edges; every vertex lies on a directed path from $u$ to $y$.
+\item If the diagram contains a \textbf{circuit} there is \textbf{feedback} (closed loop); otherwise it is \textbf{open loop} (straight through).
+\end{itemize}
+\end{defbox}
+
+\begin{workbox}[title={Worked example: Black's amplifier \fr{15} (positive feedback)}]
+\begin{center}
+\begin{tikzpicture}
+\node (u) at (0,0) {$u$};
+\node[sumj] (s) at (1.6,0) {$+$};
+\node[tap] (t) at (4,0) {};
+\node (y) at (5.3,0) {$y$};
+\node[blk] (th) at (2.8,1.1) {$\theta$};
+\draw[ar] (u)--(s); \draw[ar] (s)--node[above]{$u+\theta y$}(t); \draw[ar] (t)--(y);
+\draw[ar] (t)|-(th); \draw[ar] (th)-|node[left,pos=.8]{$\theta y$}(s);
+\end{tikzpicture}
+\end{center}
+\textbf{Step 1.} Write the equation at the summing junction: the signal leaving it is $u+\theta y$, and that is $y$.\\
+\textbf{Step 2.} So $y=u+\theta y$, hence $(1-\theta)y=u$ and $\boxed{y=\dfrac{u}{1-\theta}}$ ($0<\theta<1$).\\
+Since $1/(1-\theta)>1$ the input is amplified; but so is any noise, so it is not practical on its own.
+Note: summing junction next to the input, tap next to the output.
+\end{workbox}
+
+\begin{workbox}[title={Worked example: negative feedback from air resistance \fr{16--17}}]
+Cyclist: $m\,\dfrac{dv}{dt}=-kv+u$. Integrate from $0$ (with $v(0)=0$) and divide by $m$:
+\[ v=-\frac km\int v+\frac1m\int u. \]
+The \textbf{minus} sign of $-k/m$ on the fed-back signal is what ``negative feedback'' means: going faster produces a force that slows you down.
+Positive feedback example: bird population $\dot x=kx+u$ with $k>0$ (more birds $\Rightarrow$ more births); turbocharger.
+\end{workbox}
+
+\subsection{How to turn an equation into a block diagram}\label{sec:bd}
+\begin{methodbox}
+\begin{enumerate}
+\item If differentiators \emph{are allowed}: tap $u$ into one branch per term, put the right operator ($d/dt$, $\int$, amplifier) on each branch, and add the branches at a summing junction. This is open loop if $y$ does not appear on the right.
+\item If \textbf{no differentiators} are allowed: \textbf{integrate both sides} enough times that no derivative is left
+(as many times as the highest derivative of $y$ or $u$), assuming zero initial values.
+\item Solve for $y$ (divide by the coefficient of $y$). You now have $y=(\text{multiple integrals of }y)+(\text{multiple integrals of }u)$.
+\item Draw: terms involving $y$ are a \textbf{feedback} loop from a tap at the output back to a summing junction; terms involving $u$ feed forward.
+\item Check: read the diagram backwards and recover the equation.
+\end{enumerate}
+\end{methodbox}
+
+\begin{workbox}[title={Worked example (AE1, A1.1(i)): $y=4\dfrac{d^2u}{dt^2}+3\displaystyle\int u+6u$}]
+Differentiators allowed and $y$ does not appear on the right, so this is \textbf{open loop}: tap $u$ three ways.
+\begin{center}
+\begin{tikzpicture}
+\node (u) at (0,0) {$u$}; \node[tap] (t) at (1,0) {};
+\node[blk] (d1) at (2.4,1.2) {$d/dt$}; \node[blk] (d2) at (3.8,1.2) {$d/dt$}; \node[blk] (a4) at (5.2,1.2) {$4$};
+\node[blk] (i) at (2.4,0) {$\int$}; \node[blk] (a3) at (5.2,0) {$3$};
+\node[blk] (a6) at (5.2,-1.2) {$6$};
+\node[sumj] (s) at (7,0) {$+$}; \node (y) at (8.3,0) {$y$};
+\draw[ar] (u)--(t); \draw[ar] (t)|-(d1); \draw[ar] (d1)--(d2); \draw[ar] (d2)--(a4);
+\draw[ar] (t)--(i); \draw[ar] (i)--(a3); \draw[ar] (t)|-(a6);
+\draw[ar] (a4)-|node[above,pos=.3]{$4u''$}(s); \draw[ar] (a3)--node[above]{$3\!\int\! u$}(s); \draw[ar] (a6)-|node[below,pos=.3]{$6u$}(s); \draw[ar] (s)--(y);
+\end{tikzpicture}
+\end{center}
+\end{workbox}
+
+\begin{workbox}[title={Worked example (AE1, A1.1(ii)): $y+4\dfrac{d^2y}{dt^2}=2\dfrac{du}{dt}+7\displaystyle\int u$, no differentiators}]
+\textbf{Step 1: integrate twice} (highest derivative is $y''$), zero initial conditions, writing $\int^{(2)}$ for a double integral:
+\[ \textstyle\int^{(2)}y+4y=2\int u+7\int^{(3)}u. \]
+\textbf{Step 2: solve for $y$:}
+\[ \boxed{\,y=-\tfrac14\textstyle\int^{(2)}y+\tfrac12\int u+\tfrac74\int^{(3)}u\,} \]
+\textbf{Step 3: nest the integrals} (a neat way to use only three integrators):
+\[ y=\int\Big(\tfrac12u+\int\big(-\tfrac14 y+\int\tfrac74u\big)\Big). \]
+(Check by expanding: $\int\frac12 u-\frac14\int^{(2)}y+\frac74\int^{(3)}u$. \checkmark)
+\begin{center}
+\begin{tikzpicture}
+\node (u) at (-0.6,0) {$u$}; \node[tap] (t) at (0.3,0) {};
+\node[blk] (a) at (1.3,0) {$7/4$}; \node[blk] (i1) at (2.7,0) {$\int$};
+\node[sumj] (s1) at (3.9,0) {$+$}; \node[blk] (i2) at (5.0,0) {$\int$};
+\node[sumj] (s2) at (6.2,0) {$+$}; \node[blk] (i3) at (7.3,0) {$\int$};
+\node[tap] (ty) at (8.5,0) {}; \node (y) at (9.4,0) {$y$};
+\node[blk] (h) at (6.2,1.3) {$1/2$};
+\node[blk] (f) at (6.2,-1.3) {$-1/4$};
+\draw[ar] (u)--(t); \draw[ar] (t)--(a); \draw[ar] (a)--(i1); \draw[ar] (i1)--(s1); \draw[ar] (s1)--(i2); \draw[ar] (i2)--(s2);
+\draw[ar] (s2)--(i3); \draw[ar] (i3)--(ty); \draw[ar] (ty)--(y);
+\draw[ar] (t)|-(h); \draw[ar] (h)--(s2);
+\draw[ar] (ty)|-(f); \draw[ar] (f)-|(s1);
+\end{tikzpicture}
+\end{center}
+The loop $y\to[-1/4]\to\oplus\to\int\to\oplus\to\int\to y$ is the feedback; there are no differentiators.
+\end{workbox}
+
+\begin{workbox}[title={Worked example (AE1, A1.2): coupled equations $\dot x=ax+bu,\ \dot y=cx+du$}]
+\textbf{Step 1.} Integrate each (zero initial values): $x=a\int x+b\int u$ and $y=\int(cx+du)$.\\
+\textbf{Step 2.} Draw $x$ as a feedback loop around an integrator, then feed $x$ and $u$ forward.
+\begin{center}
+\begin{tikzpicture}
+\node (u) at (-0.5,0) {$u$}; \node[tap] (t) at (0.4,0) {};
+\node[blk] (b) at (1.4,0) {$b$}; \node[sumj] (s1) at (2.6,0) {$+$}; \node[blk] (i1) at (3.7,0) {$\int$};
+\node[tap] (tx) at (4.8,0) {}; \node[blk] (a) at (3.7,1.2) {$a$};
+\node[blk] (c) at (5.8,0) {$c$}; \node[sumj] (s2) at (7,0) {$+$}; \node[blk] (i2) at (8.1,0) {$\int$}; \node (y) at (9.2,0) {$y$};
+\node[blk] (d) at (5.8,-1.2) {$d$};
+\draw[ar] (u)--(t); \draw[ar] (t)--(b); \draw[ar] (b)--(s1); \draw[ar] (s1)--(i1); \draw[ar] (i1)--node[above]{$x$}(tx);
+\draw[ar] (tx)|-(a); \draw[ar] (a)-|(s1); \draw[ar] (tx)--(c); \draw[ar] (c)--(s2); \draw[ar] (s2)--(i2); \draw[ar] (i2)--(y);
+\draw[ar] (t)|-(d); \draw[ar] (d)-|(s2);
+\end{tikzpicture}
+\end{center}
+\textbf{(ii) Two inputs.} With $\dot x=ax+b_1u_1+b_2u_2$, $\dot y=cx+d_1u_1+d_2u_2$: the same diagram, but the first summing junction
+receives $b_1u_1$ and $b_2u_2$ (two amplifiers) and the second receives $cx$, $d_1u_1$, $d_2u_2$. Equivalently use the vector input $U=[u_1;u_2]$
+and matrix amplifiers $[b_1\ b_2]$ and $[d_1\ d_2]$ \fr{18}.
+\end{workbox}
+
+\begin{thmbox}[title={Proposition 0.1 \fr{20}: ODEs are feedback systems}]
+$a_ny^{(n)}+\dots+a_0y=b_mu^{(m)}+\dots+b_0u$ (constant coefficients, $a_n\neq0$) can be realised with taps, amplifiers, summing junctions,
+integrators and differentiators. \textbf{Idea of proof:} integrate $n$ times and divide by $a_n$:
+\[ y=-\frac{a_{n-1}}{a_n}\int y-\dots-\frac{a_0}{a_n}\int^{(n)}y+\frac{b_m}{a_n}\int^{(n)}u^{(m)}+\dots+\frac{b_0}{a_n}\int^{(n)}u ,\]
+build $x=\frac{b_m}{a_n}u^{(m)}+\dots+\frac{b_0}{a_n}u$ with differentiators (input operator, \fr{21}), and feed $y$ back through integrators (\fr{22}).
+\end{thmbox}
+
+\subsection{Reduction of order and the matrix form \texorpdfstring{\fr{23--29}}{}}\label{sec:reduction}
+\begin{thmbox}[title={Lemma 0.2 (reduction of order) \fr{26--27}}]
+$y^{(n)}+a_{n-1}(t)y^{(n-1)}+\dots+a_0(t)y=u(t)$ is equivalent to $\dfrac{dX}{dt}=AX+Bu$ with
+\[
+X=\begin{bmatrix}y\\y'\\\vdots\\y^{(n-1)}\end{bmatrix},\quad
+A=\begin{bmatrix}0&1&0&\cdots&0\\0&0&1&\cdots&0\\\vdots&&&\ddots&\vdots\\0&0&\cdots&0&1\\-a_0&-a_1&\cdots&\cdots&-a_{n-1}\end{bmatrix},\quad
+B=\begin{bmatrix}0\\0\\\vdots\\0\\1\end{bmatrix}.
+\]
+\textbf{Why:} the first $n-1$ rows just say ``the derivative of $y^{(j)}$ is $y^{(j+1)}$''; the last row is the ODE solved for $y^{(n)}$.
+\end{thmbox}
+
+\begin{methodbox}[title={Method: write an ODE as $(A,B,C,D)$}]
+\begin{enumerate}
+\item Make the ODE \textbf{monic}: divide by the leading coefficient.
+\item Choose states $x_1=y,\ x_2=y',\dots,x_n=y^{(n-1)}$.
+\item Write $\dot x_1=x_2,\ \dots,\ \dot x_{n-1}=x_n,\ \dot x_n=(\text{ODE solved for }y^{(n)})$.
+\item Read off $A$ and $B$. The output is $y=x_1$, so $C=[1\ 0\ \cdots\ 0]$, $D=0$.
+\end{enumerate}
+\end{methodbox}
+
+\begin{workbox}[title={Worked example (AE1, A1.3): simple harmonic oscillator $m\ddot x+kx=u$}]
+\textbf{Step 1.} Monic: $\ddot x=-\frac km x+\frac1m u$.\quad
+\textbf{Step 2.} States $x$ and $v=\dot x$.\quad
+\textbf{Step 3.} $\dot x=v$, $\dot v=-\frac km x+\frac1m u$.\\
+\textbf{Step 4.}
+\[
+\frac{d}{dt}\begin{bmatrix}x\\v\end{bmatrix}=\underbrace{\begin{bmatrix}0&1\\-k/m&0\end{bmatrix}}_{A}\begin{bmatrix}x\\v\end{bmatrix}+\underbrace{\begin{bmatrix}0\\1/m\end{bmatrix}}_{B}u,\qquad
+x=\underbrace{\begin{bmatrix}1&0\end{bmatrix}}_{C}\begin{bmatrix}x\\v\end{bmatrix}+\underbrace{0}_{D}\,u.
+\]
+\end{workbox}
+
+\begin{workbox}[title={Worked example: damped harmonic oscillator \fr{23--25}}]
+$y''+\beta y'+\gamma y=u$ (car suspension: spring $-\gamma y$, shock absorber $-\beta y'$). With $v=y'$:
+$A=\begin{bmatrix}0&1\\-\gamma&-\beta\end{bmatrix}$, $B=\begin{bmatrix}0\\1\end{bmatrix}$, $C=[1\ 0]$, $D=0$.
+As a feedback system: $y=-\beta\int y-\gamma\int^{(2)}y+\int^{(2)}u$. This example comes back in Chapters 2, 4 and 5.
+\end{workbox}
+
+\subsection{The companion matrix \texorpdfstring{\fr{30}, \fr{34--35}}{}}\label{sec:companion}
+\begin{thmbox}[title={Proposition 0.5: every monic polynomial is a characteristic polynomial}]
+The companion matrix $A_c$ (last row $-a_0,-a_1,\dots,-a_{n-1}$, ones on the superdiagonal) has
+\[ \det(\lambda I-A_c)=\lambda^n+a_{n-1}\lambda^{n-1}+\dots+a_1\lambda+a_0. \]
+\end{thmbox}
+\begin{warnbox}
+Note the \textbf{order} and \textbf{signs}: the last row is $[-a_0\ \ -a_1\ \cdots\ -a_{n-1}]$, i.e.\ the coefficients from the
+\emph{constant term upwards}, all with a \emph{minus} sign.
+\end{warnbox}
+\begin{proofbox}[title={Proof of Proposition 0.5 (induction on $n$; expand along the first column)}]
+$P_1$ is trivial. Assume true for size $n-1$. Expanding $\det(\lambda I-A_c)$ along the first column, which has $\lambda$ in place $(1,1)$ and $a_0$ in place $(n,1)$:
+\[ \det(\lambda I-A_c)=\lambda\det\begin{bmatrix}\lambda&-1&&\\&\ddots&\ddots&\\&&\lambda&-1\\a_1&\cdots&a_{n-2}&\lambda+a_{n-1}\end{bmatrix}+(-1)^{n+1}a_0\det\begin{bmatrix}-1&&&\\\lambda&-1&&\\&\ddots&\ddots&\\&&\lambda&-1\end{bmatrix}. \]
+The first determinant is $\lambda^{n-1}+a_{n-1}\lambda^{n-2}+\dots+a_1$ by the induction hypothesis (it is the companion form for $a_1,\dots,a_{n-1}$).
+The second matrix is lower triangular with $n-1$ diagonal entries $-1$, so its determinant is $(-1)^{n-1}$, and $(-1)^{n+1}(-1)^{n-1}=1$. Hence
+$\det(\lambda I-A_c)=\lambda(\lambda^{n-1}+\dots+a_1)+a_0=\lambda^n+a_{n-1}\lambda^{n-1}+\dots+a_0$.
+\end{proofbox}
+
+\begin{workbox}[title={Worked example (AE2, A2.2): matrix with $\chi_A(s)=s^4+2s^3+s^2+4s+2$}]
+Here $a_3=2,\ a_2=1,\ a_1=4,\ a_0=2$, so
+\[ A=\begin{bmatrix}0&1&0&0\\0&0&1&0\\0&0&0&1\\-2&-4&-1&-2\end{bmatrix}. \]
+Numerically (MATLAB \texttt{eig(A)} or \texttt{roots([1 2 1 4 2])}): $-2.1877,\ -0.5156,\ 0.3516\pm1.2843i$.\\
+\textit{Bonus:} two eigenvalues have positive real part, so $\dot X=AX$ is \textbf{unstable}. (Coefficients all positive does \emph{not} imply stable, see \S\ref{sec:stabpoly}.)
+\end{workbox}
+
+\subsection{Exam-style questions for Chapter 1}
+\begin{qbox}[title={Q1.1 (easy)}]
+Express $\dfrac{d^2y}{dt^2}+3\dfrac{dy}{dt}+2y=5u$ (a) as a block diagram without differentiators and (b) as an $(A,B,C,D)$ system.
+\end{qbox}
+\begin{solbox}
+(a) Integrate twice: $y+3\int y+2\int^{(2)}y=5\int^{(2)}u$, so $y=-3\int y-2\int^{(2)}y+5\int^{(2)}u$.
+Nested: $y=\int\big(-3y+\int(5u-2y)\big)$. Diagram: $u\to[5]\to\oplus\to\int\to\oplus\to\int\to\bullet\to y$, with $y$ fed back through $[-2]$ into the first $\oplus$ and through $[-3]$ into the second.\\
+(b) $X=[y;\,y']$, $A=\begin{bmatrix}0&1\\-2&-3\end{bmatrix}$, $B=\begin{bmatrix}0\\5\end{bmatrix}$, $C=[1\ 0]$, $D=0$.
+(Equally valid: $B=[0;1]$, $C=[5\ 0]$. Realisations are not unique.)
+\end{solbox}
+
+\begin{qbox}[title={Q1.2 (medium)}]
+Write $y'''-2y''+y'+7y=u$ in the form $\dot X=AX+Bu$, $y=CX$, and state $\det(sI-A)$ without computing a determinant.
+\end{qbox}
+\begin{solbox}
+$X=[y;y';y'']$, $A=\begin{bmatrix}0&1&0\\0&0&1\\-7&-1&2\end{bmatrix}$, $B=[0;0;1]$, $C=[1\ 0\ 0]$.
+$A$ is a companion matrix with $a_0=7,a_1=1,a_2=-2$, so by Proposition 0.5, $\det(sI-A)=s^3-2s^2+s+7$.
+\end{solbox}
+
+\begin{qbox}[title={Q1.3 (harder: reading a diagram)}]
+In a diagram, $u$ enters a summing junction; the junction output goes through an integrator to a tap; the tap gives $y$, and also feeds $y$ back through
+an amplifier $[-3]$ into the summing junction and forward through $[2]$ to a second junction that also receives $u$. The output of the second junction is $z$. Find the ODE for $y$ and express $z$ in terms of $u$ and $y$.
+\end{qbox}
+\begin{solbox}
+The first junction outputs $u-3y$, and integrating gives $y$: $y=\int(u-3y)$, so $\dot y=-3y+u$. The second junction: $z=2y+u$.
+This is the SISO system $A=[-3]$, $B=[1]$, $C=[2]$, $D=[1]$.
+\end{solbox}
+\newpage

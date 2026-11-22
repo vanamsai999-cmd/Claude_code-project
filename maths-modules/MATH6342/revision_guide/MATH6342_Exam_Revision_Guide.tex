@@ -1,0 +1,70 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=20mm,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage[most]{tcolorbox}\usepackage{xcolor,fancyhdr,titlesec,enumitem}
+\usepackage{tikz}\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{hyperref}
+\definecolor{navy}{HTML}{18365A}\definecolor{teal}{HTML}{007F88}\definecolor{violet}{HTML}{6E49A3}
+\definecolor{orange}{HTML}{C36D16}\definecolor{green}{HTML}{218158}\definecolor{redx}{HTML}{B63A42}
+\definecolor{grey}{HTML}{555555}
+\hypersetup{colorlinks=true,linkcolor=navy,urlcolor=teal}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\textbf{MATH6342} Linear Systems}\fancyhead[R]{Step-by-step exam revision guide}
+\fancyfoot[C]{\thepage}
+\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection}{.6em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{teal}}{\thesubsection}{.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{violet}}{\thesubsubsection}{.5em}{}
+\setlist{topsep=3pt,itemsep=2pt}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\tcbset{enhanced,breakable,arc=1.5mm,boxrule=.6pt,left=2.5mm,right=2.5mm,top=1.5mm,bottom=1.5mm,
+  before skip=6pt,after skip=7pt,fonttitle=\bfseries}
+\newtcolorbox{defbox}[1][]{colback=teal!4,colframe=teal,title={Definition / key idea},#1}
+\newtcolorbox{thmbox}[1][]{colback=violet!4,colframe=violet,title={Result to know},#1}
+\newtcolorbox{methodbox}[1][]{colback=navy!4,colframe=navy,title={Method (step by step)},#1}
+\newtcolorbox{workbox}[1][]{colback=orange!5,colframe=orange,title={Worked example},#1}
+\newtcolorbox{exambox}[1][]{colback=green!5,colframe=green,title={Exam tip},#1}
+\newtcolorbox{warnbox}[1][]{colback=redx!4,colframe=redx,title={Common mistake},#1}
+\newtcolorbox{proofbox}[1][]{colback=grey!4,colframe=grey,title={Proof you should be able to write},#1}
+\newtcolorbox{qbox}[1][]{colback=white,colframe=navy,title={Exam-style question},#1}
+\newtcolorbox{solbox}[1][]{colback=green!3,colframe=green!60!black,title={Full solution},#1}
+\newcommand{\Lap}{\mathcal{L}}\newcommand{\CC}{\mathbb{C}}\newcommand{\RR}{\mathbb{R}}
+\newcommand{\adj}{\operatorname{adj}}\newcommand{\tr}{\operatorname{trace}}
+\newcommand{\rank}{\operatorname{rank}}
+\renewcommand{\Re}{\operatorname{Re}}\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\fr}[1]{{\small[frame #1]}}
+\begin{document}
+
+\begin{center}
+{\Huge\bfseries\color{navy}MATH6342 Linear Systems}\\[6pt]
+{\Large Complete step-by-step exam revision guide}\\[6pt]
+{\color{teal}Lancaster University 2026/27 \textbullet{} built on Gordon Blower's lecture notes and beamer (frames 1--227)\\
+and Assessed Exercises 1--3}
+\end{center}
+
+\begin{defbox}[title={How this guide is built, and how to use it}]
+\begin{itemize}
+\item \textbf{Source of truth.} Every definition, theorem and notation follows the official lecture notes.
+Frame numbers are given like this \fr{65} so you can look things up in the beamer.
+\item \textbf{Past papers.} No past exam papers were in your uploaded files. The exam-style questions here are
+modelled on the lecture examples and on the three Assessed Exercises (AE1--AE3), which show the lecturer's style.
+When you get past papers, use Section~\ref{sec:map} to match each question to a method in this guide.
+\item \textbf{Every answer checked.} All the worked numbers were checked independently with a computer algebra system.
+\item \textbf{How to revise.} For each chapter: (1) read the \emph{Big picture}; (2) learn the boxed results;
+(3) cover the solution and do each worked example yourself; (4) do the exam-style questions at the end of the chapter;
+(5) finish with the mock paper in Section~\ref{sec:mock}.
+\end{itemize}
+\end{defbox}
+
+\tableofcontents
+\newpage
+
+\input{ch0_overview}
+\input{ch1_description}
+\input{ch2_matrix}
+\input{ch3_laplace}
+\input{ch4_transfer}
+\input{ch5_feedback}
+\input{ch6_mock}
+
+\end{document}

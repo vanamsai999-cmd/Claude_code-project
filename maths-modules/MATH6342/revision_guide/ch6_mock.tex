@@ -1,0 +1,141 @@
+\section{Proofs you should be able to reproduce}\label{sec:proofs}
+Bookwork questions usually ask for a short proof from the notes. These are the ones in this guide (grey boxes), in order of how likely they are to appear:
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{7.5cm}p{3cm}p{4.5cm}@{}}
+\toprule
+\textbf{Result} & \textbf{Frames} & \textbf{Key idea}\\\midrule
+Solution formula for $\dot X=AX+BU$ (Thm 0.17) & 65--67 & integrating factor $\exp(-tA)$\\
+$T(s)$ is proper rational, poles are eigenvalues (Prop 0.20) & 72 & cofactors have degree $\le n-1$\\
+BIBO stability if all $\Re\lambda<0$ (Thm 0.42) & 159--161 & $\|\exp(tA)\|\le Me^{-\delta t}$, integrate\\
+Derivative rule $\Lap(f')=s\hat f-f(0)$ & 91--93 & integration by parts\\
+Convolution theorem & 100--102 & swap order, substitute $u=x-y$\\
+Stable real monic $\Rightarrow$ positive coefficients (Prop 0.43) & 164 & real and quadratic factors\\
+Lyapunov's criterion (Thm 0.55) & 210--211 & $V=\langle KX,X\rangle$ is decreasing\\
+Youla: $K=X/Y$ stabilises (Prop 0.50, Thm 0.52) & 200, 205--206 & $1+GK=1/(QY)$\\
+$P,Q$ no common zeros $\iff PM+QN=1$ (Lemma 0.47) & 188--189 & Euclid + FTA\\
+Companion matrix char.\ poly (Prop 0.5) & 34--35 & induction, expand column 1\\
+Companion realisation (Prop 0.22) and determinant formula & 74--78, 82 & last-row cofactors; block row reduction\\
+Exponential properties (Prop 0.14) & 52--55 & power series\\
+Cauchy--Schwarz, norm properties & 37--43 & discriminant $\le0$\\
+$\mathcal S$ is a ring, not a field (Prop 0.44) & 166--168 & $1/(s+1)$ vs $s+1$\\
+Positive definite facts (AE3, A3.4) & 208 & $\langle KSz,Sz\rangle$\\
+Sylvester integral solution (Prop 0.58) & 215--216 & FTC, surjective $\Rightarrow$ injective\\
+Stable $T\iff$ BIBO realisation (Thm 0.45) & 170--172 & bounded input $1$, then $\cos\nu t$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Mock examination paper (with full solutions)}\label{sec:mock}
+\textit{Try this under timed conditions (about 2 hours) before reading the solutions. The style follows the assessed exercises; no past papers were available to copy the exact format.}
+
+\subsection{Questions}
+\begin{qbox}[title={M1 (Chapters 1--2) [20 marks]}]
+(a) Express $\dfrac{d^2y}{dt^2}+2\dfrac{dy}{dt}-3y=\dfrac{du}{dt}+4u$ as a block diagram with no differentiators. [5]\\
+(b) Find a SISO $(A,B,C,D)$ whose transfer function is $T(s)=\dfrac{s+4}{s^2+2s-3}$, and verify your answer by computing $C(sI-A)^{-1}B$. [7]\\
+(c) Is $\dot X=AX$ stable? Is $T$ a stable rational function? Justify. [4]\\
+(d) State and prove the formula for $\det(\lambda I-A_c)$ for an $n\times n$ companion matrix $A_c$. [4]
+\end{qbox}
+\begin{qbox}[title={M2 (Chapter 2) [20 marks]}]
+Let $A=\begin{bmatrix}-4&2\\-3&1\end{bmatrix}$, $B=\begin{bmatrix}1\\0\end{bmatrix}$, $C=[1\ 0]$, $D=0$.\\
+(a) Find the eigenvalues and eigenvectors of $A$ and hence $\exp(tA)$. [8]\\
+(b) Compute the transfer function $T(s)$. [4]\\
+(c) Find the output $y(t)$ for the unit step input $u=1$ with $X(0)=0$. [4]\\
+(d) Solve $\dot X=AX$ with $X(0)=[1;1]$, explaining why the answer is so simple. [4]
+\end{qbox}
+\begin{qbox}[title={M3 (Chapter 3) [20 marks]}]
+(a) Using properties of the Laplace transform, find $\Lap(t\cos2t)$. [3]\\
+(b) Solve $y''+2y'+5y=0$, $y(0)=1$, $y'(0)=1$. [6]\\
+(c) Solve the integral equation $y(t)=1-\displaystyle\int_0^t(t-u)\,y(u)\,du$. [5]\\
+(d) State and prove the Laplace convolution theorem. [6]
+\end{qbox}
+\begin{qbox}[title={M4 (Chapter 4 and Nyquist) [20 marks]}]
+Let $R(s)=\dfrac{k}{(s+1)(s+2)(s+3)}$ with $k>0$.\\
+(a) Find the gain $\Gamma(\omega)$ and show that the phase is $\phi(\omega)=-\big(\tan^{-1}\omega+\tan^{-1}\frac\omega2+\tan^{-1}\frac\omega3\big)$. [5]\\
+(b) Find where the Nyquist plot of $R$ crosses the negative real axis. [5]\\
+(c) Using Nyquist's criterion, find the values of $k$ for which $R/(1+R)$ is stable, and confirm algebraically. [6]\\
+(d) Define BIBO stability, and explain why $\ddot y+4y=u$ is marginally stable but not BIBO stable. [4]
+\end{qbox}
+\begin{qbox}[title={M5 (Chapter 5) [20 marks]}]
+(a) The plant $G(s)=\dfrac{1}{s^2-4}$ is controlled by the PD controller $K(s)=a+cs$ in the loop $T=G/(1+GK)$. Find conditions on $a,c$ for stability and choose values that make $T=\frac{1}{(s+1)^2}$. [5]\\
+(b) Let $G(s)=\dfrac{s-1}{s-2}$. Find a coprime factorisation $G=P/Q$ in $\mathcal S$ with $PX+QY=1$, and a controller $K$ that internally stabilises the simple feedback loop. Verify that all four closed-loop functions are stable. [9]\\
+(c) Let $K$ be positive definite and suppose $Q=-(A'K+KA)$ is positive definite. Show that every eigenvalue $\lambda$ of $A$ has $\Re\lambda<0$. [6]
+\end{qbox}
+
+\subsection{Solutions}
+\begin{solbox}[title={M1 solutions}]
+(a) Integrate twice (zero initial data): $y+2\int y-3\int^{(2)}y=\int u+4\int^{(2)}u$, so
+$y=-2\int y+3\int^{(2)}y+\int u+4\int^{(2)}u=\int\Big(u-2y+\int(4u+3y)\Big)$.
+Diagram: $u$ is tapped; one branch $\to[4]\to\oplus_1$, the other straight to $\oplus_2$. $\oplus_1\to\int\to\oplus_2\to\int\to\bullet\to y$. From the output tap, $y$ is fed back through $[3]$ into $\oplus_1$ and through $[-2]$ into $\oplus_2$.\\[1mm]
+(b) Denominator monic: $\alpha_0=-3$, $\alpha_1=2$; numerator $\gamma_0=4$, $\gamma_1=1$.
+$A=\begin{bmatrix}0&1\\3&-2\end{bmatrix}$, $B=\begin{bmatrix}0\\1\end{bmatrix}$, $C=[4\ 1]$, $D=0$.
+Check: $sI-A=\begin{bmatrix}s&-1\\-3&s+2\end{bmatrix}$, $\det=s^2+2s-3$, $\adj(sI-A)B=\begin{bmatrix}1\\s\end{bmatrix}$, $C\adj(sI-A)B=4+s$ \checkmark\\[1mm]
+(c) $\chi_A=s^2+2s-3=(s+3)(s-1)$: eigenvalue $1>0$, so \textbf{unstable}. $T=\frac{s+4}{(s-1)(s+3)}$: the numerator does not vanish at $1$, so $1$ is a pole in the RHP and $T\notin\mathcal S$.\\[1mm]
+(d) Proposition 0.5; proof as in \S\ref{sec:companion}.
+\end{solbox}
+\begin{solbox}[title={M2 solutions}]
+(a) $\chi_A=s^2-\tr(A)s+\det A=s^2+3s+2=(s+1)(s+2)$.
+$\lambda=-1$: $(A+I)v=\begin{bmatrix}-3&2\\-3&2\end{bmatrix}v=0\Rightarrow v=\begin{bmatrix}2\\3\end{bmatrix}$; \ $\lambda=-2$: $\begin{bmatrix}-2&2\\-3&3\end{bmatrix}v=0\Rightarrow v=\begin{bmatrix}1\\1\end{bmatrix}$.
+$S=\begin{bmatrix}2&1\\3&1\end{bmatrix}$, $\det S=-1$, $S^{-1}=\begin{bmatrix}-1&1\\3&-2\end{bmatrix}$.
+\[\exp(tA)=S\begin{bmatrix}e^{-t}&0\\0&e^{-2t}\end{bmatrix}S^{-1}=\begin{bmatrix}-2e^{-t}+3e^{-2t}&2e^{-t}-2e^{-2t}\\-3e^{-t}+3e^{-2t}&3e^{-t}-2e^{-2t}\end{bmatrix}.\]
+Check $t=0$: $I$ \checkmark\\[1mm]
+(b) $sI-A=\begin{bmatrix}s+4&-2\\3&s-1\end{bmatrix}$, $\adj=\begin{bmatrix}s-1&2\\-3&s+4\end{bmatrix}$, $\adj\cdot B=\begin{bmatrix}s-1\\-3\end{bmatrix}$, so $T(s)=\dfrac{s-1}{(s+1)(s+2)}$.\\[1mm]
+(c) $\hat y=\frac{s-1}{s(s+1)(s+2)}$; cover-up: $s=0$: $-\frac12$; $s=-1$: $\frac{-2}{(-1)(1)}=2$; $s=-2$: $\frac{-3}{(-2)(-1)}=-\frac32$.
+$y(t)=-\frac12+2e^{-t}-\frac32e^{-2t}$. Check $y(0)=0$ \checkmark, $y(\infty)=T(0)=-\frac12$ \checkmark\\[1mm]
+(d) $X(0)=[1;1]$ is an eigenvector for $\lambda=-2$, so $X(t)=\exp(tA)X_0=e^{-2t}[1;1]$ (Prop 0.14(4)). (Check with the matrix: row 1 gives $-2e^{-t}+3e^{-2t}+2e^{-t}-2e^{-2t}=e^{-2t}$ \checkmark)
+\end{solbox}
+\begin{solbox}[title={M3 solutions}]
+(a) $\Lap(\cos2t)=\frac{s}{s^2+4}$; $\Lap(t\cos2t)=-\frac{d}{ds}\frac{s}{s^2+4}=-\frac{(s^2+4)-2s^2}{(s^2+4)^2}=\dfrac{s^2-4}{(s^2+4)^2}$.\\[1mm]
+(b) $(s^2\hat y-s-1)+2(s\hat y-1)+5\hat y=0\Rightarrow\hat y=\dfrac{s+3}{s^2+2s+5}=\dfrac{(s+1)+2}{(s+1)^2+4}$, so $y=e^{-t}(\cos2t+\sin2t)$.
+Check: $y(0)=1$; $y'=e^{-t}(-\cos2t-\sin2t-2\sin2t+2\cos2t)$, $y'(0)=1$ \checkmark\\[1mm]
+(c) The integral is $t*y$, so $\hat y=\frac1s-\frac1{s^2}\hat y\Rightarrow\hat y\,\frac{s^2+1}{s^2}=\frac1s\Rightarrow\hat y=\frac{s}{s^2+1}$, so $y=\cos t$ (Lerch).
+Check: $1-\int_0^t(t-u)\cos u\,du=1-(1-\cos t)=\cos t$ \checkmark\\[1mm]
+(d) Proposition 0.28(3); proof in \S\ref{sec:conv} (include the exponential-type bound for $f*g$).
+\end{solbox}
+\begin{solbox}[title={M4 solutions}]
+(a) $\Gamma(\omega)=\dfrac{k}{\sqrt{(1+\omega^2)(4+\omega^2)(9+\omega^2)}}$. Phase: $\arg k=0$ and $\arg(j+i\omega)=\tan^{-1}(\omega/j)$ for $j>0$ (right half plane), and arguments of a product add, so $\phi=-\sum_j\tan^{-1}(\omega/j)$.\\[1mm]
+(b) $(1+i\omega)(2+i\omega)(3+i\omega)=(6-6\omega^2)+i(11\omega-\omega^3)$. Real axis crossing: $11\omega-\omega^3=0$, $\omega=\pm\sqrt{11}$ ($\omega=0$ gives $R=k/6>0$). There the denominator is $6-66=-60$, so $R=-\dfrac{k}{60}$.\\[1mm]
+(c) $R$ is stable (poles $-1,-2,-3$) and its Nyquist plot meets the negative real axis only at $-k/60$. It does not pass through or wind round $-1$ iff $k/60<1$, i.e.\ $\boxed{0<k<60}$. Then $R/(1+R)$ is stable.
+Algebraic check: $1+R=0\iff s^3+6s^2+11s+6+k=0$; Routh: $6\cdot11>6+k\iff k<60$ \checkmark\\[1mm]
+(d) BIBO: every bounded input gives a bounded output. $A=\begin{bmatrix}0&1\\-4&0\end{bmatrix}$ has simple eigenvalues $\pm2i$, so free solutions are bounded (marginal). But $u=\cos2t$ (resonance) gives $\hat y=\frac{s}{(s^2+4)^2}$, $y=\frac{t\sin2t}{4}$, unbounded.
+\end{solbox}
+\begin{solbox}[title={M5 solutions}]
+(a) $\frac1G+K=s^2-4+a+cs$, so $T=\dfrac{1}{s^2+cs+(a-4)}$: stable iff $c>0$ and $a>4$ (degree 2: positive coefficients). For $(s+1)^2=s^2+2s+1$: $c=2$, $a=5$.\\[1mm]
+(b) $M=s-1$, $N=s-2$, $m=1$. With $s=\frac{1-\lambda}\lambda$: $\tilde M=1-2\lambda$, $\tilde N=1-3\lambda$. Then $3\tilde M-2\tilde N=3-6\lambda-2+6\lambda=1$, so $\tilde X=3$, $\tilde Y=-2$.
+$P=1-\frac{2}{1+s}=\frac{s-1}{s+1}$, $Q=1-\frac3{1+s}=\frac{s-2}{s+1}$, $X=3$, $Y=-2$, $K=X/Y=-\frac32$.
+Check $PX+QY=\frac{3(s-1)-2(s-2)}{s+1}=1$ \checkmark. Closed loop: $1+GK=\frac{-(s+1)}{2(s-2)}$, so
+$\frac1{1+GK}=\frac{-2(s-2)}{s+1}$, $\frac{G}{1+GK}=\frac{-2(s-1)}{s+1}$, $\frac{K}{1+GK}=\frac{3(s-2)}{s+1}$, $\frac{GK}{1+GK}=\frac{3(s-1)}{s+1}$: all proper with the single pole $-1$, so in $\mathcal S$: internally stable.\\[1mm]
+(c) Let $Av=\lambda v$, $v\neq0$. Then
+$\langle(A'K+KA)v,v\rangle=\langle Kv,Av\rangle+\langle KAv,v\rangle=\bar\lambda\langle Kv,v\rangle+\lambda\langle Kv,v\rangle=2\Re\lambda\,\langle Kv,v\rangle$.
+The left side equals $-\langle Qv,v\rangle<0$ and $\langle Kv,v\rangle>0$, so $\Re\lambda<0$. (This strengthens Lyapunov's criterion: solutions in fact decay exponentially.)
+\end{solbox}
+
+\section{One-page formula sheet}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\small
+\begin{tabular}{@{}p{4.3cm}p{11cm}@{}}
+\toprule
+System & $\dot X=AX+BU$, $Y=CX+DU$; $A$ $n\times n$, $B$ $n\times k$, $C$ $m\times n$, $D$ $m\times k$\\
+Char.\ polynomial & $\chi_A(s)=\det(sI-A)=s^n-\tr(A)s^{n-1}+\dots+(-1)^n\det A$; $2\times2$: $s^2-\tr A\,s+\det A$\\
+Companion & last row $[-a_0\ \cdots\ -a_{n-1}]$ $\Rightarrow$ $\chi=s^n+a_{n-1}s^{n-1}+\dots+a_0$\\
+Resolvent & $(sI-A)^{-1}=\adj(sI-A)/\det(sI-A)$ \ (adj = \emph{transpose} of cofactors); $=\Lap(\exp(tA))$\\
+Exponential & $\exp(tA)=S\,\mathrm{diag}(e^{\lambda_jt})S^{-1}$; double eigenvalue ($2\times2$): $e^{\lambda t}(I+t(A-\lambda I))$\\
+Solution & $X(t)=\exp(tA)X_0+\int_0^t\exp((t-s)A)BU(s)\,ds$\\
+Transfer function & $T(s)=D+C(sI-A)^{-1}B=\det\begin{bmatrix}A-sI&B\\C&D\end{bmatrix}\big/\det(A-sI)$; $\hat Y=T\hat U$ ($X_0=0$)\\
+Realisation & $T=D+\frac{\gamma_0+\dots+\gamma_{n-1}s^{n-1}}{s^n+\dots+\alpha_0}$: companion $A$, $B=e_n$, $C=[\gamma_0\cdots\gamma_{n-1}]$\\
+Laplace rules & $\Lap f'=s\hat f-f(0)$; $\Lap f''=s^2\hat f-sf(0)-f'(0)$; $\Lap(e^{at}f)=\hat f(s-a)$; $\Lap(tf)=-\hat f'$; $\Lap(f*g)=\hat f\hat g$\\
+Laplace table & $1\to\frac1s$; $t^n\to\frac{n!}{s^{n+1}}$; $e^{at}\to\frac1{s-a}$; $\sin at\to\frac a{s^2+a^2}$; $\cos at\to\frac s{s^2+a^2}$; $H(t-b)\to\frac{e^{-bs}}s$; $\delta_b\to e^{-bs}$\\
+Frequency & $T(i\omega)=\Gamma e^{i\phi}$, gain $\Gamma=|T(i\omega)|$, phase $\phi=\arg T(i\omega)$, dB $=20\log_{10}\Gamma$\\
+Stability of $\dot X=AX$ & all $\Re\lambda<0$: exponential (BIBO); $\Re\lambda\le0$ with $1\times1$ blocks on the axis: marginal; else unstable\\
+$T$ stable & proper and all poles in open LHP $\iff$ BIBO-stable realisation exists\\
+Stable polynomial tests & monic real stable $\Rightarrow$ all coefficients $>0$; deg 2: iff; deg 3: also $a_2a_1>a_0$\\
+Nyquist & $N=Z-P$ (clockwise windings round $-1$); $R$ stable \& no winding $\Rightarrow R/(1+R)$ stable\\
+Feedback & $T=G/(1+GK)$; constant $k$: $T=p/(kp+q)$; PID $K=a+b/s+cs$\\
+Coprime / Youla & $s=\frac{1-\lambda}\lambda$, $\lambda=\frac1{1+s}$; $PX+QY=1$; $K=X/Y$; $\frac1{1+GK}=QY$, $\frac{G}{1+GK}=PY$, $\frac{K}{1+GK}=XQ$, $\frac{GK}{1+GK}=PX$\\
+Positive definite & $K=K'$ and: $\langle Kz,z\rangle>0$ $\iff$ eigenvalues $>0$ $\iff$ leading minors $>0$\\
+Lyapunov & $K,\,-(A'K+KA)$ positive definite $\Rightarrow$ bounded; $AL+LA'=-P$, $L=\int_0^\infty e^{tA}Pe^{tA'}dt$\\
+Sylvester & $AY+YB=-C$ uniquely solvable $\forall C\iff$ $A$, $-B$ share no eigenvalue\\
+\bottomrule
+\end{tabular}
+\end{center}

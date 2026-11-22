@@ -1,0 +1,363 @@
+\section{Chapter 2: Solving linear systems by matrix theory \texorpdfstring{\fr{31--85}}{}}
+
+\subsection*{Big picture}
+To solve $\dot X=AX+BU$ we need the matrix $\exp(tA)$; to describe input $\to$ output we need the
+\textbf{transfer function} $T(s)=D+C(sI-A)^{-1}B$. Both are controlled by the \textbf{eigenvalues} of $A$.
+So this chapter is: determinants $\to$ characteristic polynomial $\to$ eigenvalues $\to$ diagonalise $\to$ $\exp(tA)$ $\to$ solution formula $\to$ transfer function $\to$ realisation.
+
+\subsection{Determinants, cofactors and the characteristic polynomial \texorpdfstring{\fr{31--35}}{}}
+\begin{defbox}
+\begin{itemize}
+\item \textbf{Cofactor} $A_{jk}=(-1)^{j+k}\times$(determinant of $A$ with row $j$ and column $k$ deleted). Expansion along column $k$: $\det A=\sum_j a_{jk}A_{jk}$. Sign pattern $\begin{bmatrix}+&-&+\\-&+&-\\+&-&+\end{bmatrix}$.
+\item \textbf{Adjugate} $\adj(A)$ = \emph{transpose} of the matrix of cofactors. Then $A\,\adj(A)=\adj(A)\,A=(\det A)I$.
+\item Triangular matrix: $\det$ = product of the diagonal entries.
+\item \textbf{Characteristic polynomial} (control-theory convention): $\chi_A(\lambda)=\det(\lambda I-A)=\lambda^n-\tr(A)\lambda^{n-1}+\dots+(-1)^n\det A$. It is monic of degree $n$.
+\item \textbf{Resolvent}: $(sI-A)^{-1}=\dfrac{\adj(sI-A)}{\det(sI-A)}$ (Lemma 0.4), defined except at the $n$ eigenvalues.
+\end{itemize}
+\end{defbox}
+\begin{warnbox}
+MATH220 used $\det(A-\lambda I)$, which differs by $(-1)^n$. In this module always use $\det(\lambda I-A)$ (monic).
+Also: the adjugate is the \textbf{transpose} of the cofactor matrix. Forgetting the transpose is the most common error in $(sI-A)^{-1}$.
+\end{warnbox}
+
+\subsection{Computing the resolvent \texorpdfstring{$(sI-A)^{-1}$}{(sI-A)\^{}-1}}\label{sec:resolvent}
+\begin{methodbox}
+\begin{enumerate}
+\item Write down $sI-A$ (change the sign of every entry of $A$, then add $s$ on the diagonal).
+\item Compute $\det(sI-A)$ and factorise it if you can.
+\item Compute all $n^2$ cofactors of $sI-A$, then \textbf{transpose} to get $\adj(sI-A)$.
+\item Divide by $\det(sI-A)$, cancel common factors in each entry.
+\item \textbf{Check:} $(sI-A)\times$(your answer) $=I$ for one column at least; as $s\to\infty$, $(sI-A)^{-1}\approx I/s$.
+\end{enumerate}
+Shortcut: if $A$ is \textbf{upper triangular}, $sI-A$ is upper triangular, so $(sI-A)^{-1}$ is upper triangular with diagonal entries $1/(s-a_{jj})$.
+\end{methodbox}
+
+\begin{workbox}[title={Worked example (AE1, A1.4)}]
+$A=\begin{bmatrix}1&4&10\\0&2&0\\0&0&3\end{bmatrix}$, so $sI-A=\begin{bmatrix}s-1&-4&-10\\0&s-2&0\\0&0&s-3\end{bmatrix}$, \ $\det(sI-A)=(s-1)(s-2)(s-3)$.
+
+\textbf{Cofactors} $C_{jk}$ of $sI-A$ (row $j$, column $k$ deleted, times $(-1)^{j+k}$):
+\begin{align*}
+C_{11}&=(s-2)(s-3), & C_{12}&=0, & C_{13}&=0,\\
+C_{21}&=-\det\begin{bmatrix}-4&-10\\0&s-3\end{bmatrix}=4(s-3), & C_{22}&=(s-1)(s-3), & C_{23}&=0,\\
+C_{31}&=\det\begin{bmatrix}-4&-10\\s-2&0\end{bmatrix}=10(s-2), & C_{32}&=-\det\begin{bmatrix}s-1&-10\\0&0\end{bmatrix}=0, & C_{33}&=(s-1)(s-2).
+\end{align*}
+\textbf{Transpose and divide:}
+\[
+(sI-A)^{-1}=\frac{1}{(s-1)(s-2)(s-3)}\begin{bmatrix}(s-2)(s-3)&4(s-3)&10(s-2)\\0&(s-1)(s-3)&0\\0&0&(s-1)(s-2)\end{bmatrix}
+\]
+\[
+\phantom{(sI-A)^{-1}}=\begin{bmatrix}\dfrac{1}{s-1}&\dfrac{4}{(s-1)(s-2)}&\dfrac{10}{(s-1)(s-3)}\\[2mm]0&\dfrac1{s-2}&0\\[1mm]0&0&\dfrac1{s-3}\end{bmatrix}.
+\]
+\textbf{Check} (row 1 of $sI-A$ times column 2 of the answer): $(s-1)\frac{4}{(s-1)(s-2)}-4\cdot\frac1{s-2}=0$ \checkmark
+\end{workbox}
+
+\subsection{Norms and the Cauchy--Schwarz inequality \texorpdfstring{\fr{36--43}}{}}
+\begin{defbox}
+On $\CC^{n\times1}$: $\langle z,w\rangle=\sum_j z_j\bar w_j=\bar w^\top z$, \ $\|z\|=\langle z,z\rangle^{1/2}$.
+The \textbf{adjoint} $A'=[\bar a_{kj}]$ is the conjugate transpose and $\langle Ax,y\rangle=\langle x,A'y\rangle$.
+The \textbf{matrix norm} is $\|A\|=\sup\{\|Av\|:\|v\|\le1\}$.
+\end{defbox}
+\begin{thmbox}
+\begin{itemize}
+\item Cauchy--Schwarz: $|\langle z,w\rangle|\le\|z\|\|w\|$, and triangle inequality $\|z+w\|\le\|z\|+\|w\|$ (Prop 0.6).
+\item $\|\Delta\|=\max_j|\lambda_j|$ for diagonal $\Delta$; $\|A\|\le(\sum_j\|A_j\|^2)^{1/2}$ where $A_j$ are the columns (Prop 0.7).
+\item $\|A+B\|\le\|A\|+\|B\|$, $\|\lambda A\|=|\lambda|\|A\|$, $\|AB\|\le\|A\|\|B\|$ (Lemma 0.8). In particular $\|A^m\|\le\|A\|^m$.
+\end{itemize}
+\end{thmbox}
+\begin{proofbox}[title={Proof of Cauchy--Schwarz \fr{38}}]
+If $\langle z,w\rangle=0$ there is nothing to prove. Otherwise choose $u\in\CC$ with $|u|=1$ and $u\langle z,w\rangle=|\langle z,w\rangle|$. For real $t$,
+\[0\le\|tw+uz\|^2=t^2\|w\|^2+2t|\langle z,w\rangle|+\|z\|^2.\]
+A real quadratic that is never negative has discriminant $\le0$: $4|\langle z,w\rangle|^2-4\|z\|^2\|w\|^2\le0$. \\
+\textbf{Triangle inequality:} $\|z+w\|^2=\|z\|^2+2\Re\langle z,w\rangle+\|w\|^2\le\|z\|^2+2\|z\|\|w\|+\|w\|^2=(\|z\|+\|w\|)^2$.
+\end{proofbox}
+\begin{proofbox}[title={Proof that $\|\Delta\|=\max|\lambda_j|$ and $\|AB\|\le\|A\|\|B\|$}]
+For $v=\sum v_je_j$: $\|\Delta v\|^2=\sum|\lambda_jv_j|^2\le\max_k|\lambda_k|^2\sum|v_j|^2$, so $\|\Delta\|\le\max|\lambda_k|$; equality by taking $v=e_k$ for the largest $|\lambda_k|$.\\
+For $\|v\|\le1$: $\|ABv\|\le\|A\|\,\|Bv\|\le\|A\|\,\|B\|\,\|v\|\le\|A\|\|B\|$; take the sup over $v$.
+\end{proofbox}
+
+\subsection{Rank \texorpdfstring{\fr{44}}{} and the matrices \texorpdfstring{$Q$}{Q} and \texorpdfstring{$R$}{R} (AE2)}\label{sec:rank}
+\begin{defbox}
+Rank = dimension of the column span = number of independent columns = number of independent rows = number of nonzero rows in an echelon form (Lemma 0.9).
+In particular $\rank(M)=\rank(M^\top)$.
+\end{defbox}
+\begin{workbox}[title={Worked example (AE2, A2.3)}]
+$Q=\begin{bmatrix}C\\CA\\\vdots\\CA^{n-1}\end{bmatrix}$, \quad $R=\begin{bmatrix}C^\top&A^\top C^\top&\cdots&(A^\top)^{n-1}C^\top\end{bmatrix}$.\\
+\textbf{(i)} $(CA^k)^\top=(A^k)^\top C^\top=(A^\top)^kC^\top$, so transposing row $k$ of $Q$ gives column $k$ of $R$: $Q^\top=R$, and $\rank Q=\rank Q^\top=\rank R$.\\
+\textbf{(ii)} If $A^\top C^\top=\lambda C^\top$ then by induction $(A^\top)^kC^\top=\lambda^kC^\top$, so
+$R=C^\top\begin{bmatrix}1&\lambda&\cdots&\lambda^{n-1}\end{bmatrix}$. Every column is a multiple of $C^\top\neq0$ (an eigenvector is nonzero), so $\rank R=1$.\\
+\textbf{(iii)} For the given $4\times4$ $A$ and $C=[1\ \ {-5}\ \ {-\tfrac12}\ \ 3]$ one computes
+$CA=[\tfrac{13}2,\tfrac72,-39,-\tfrac52]$, $CA^2=[-\tfrac{75}2,-21,-\tfrac{189}2,274]$, $CA^3=[416,320,-\tfrac{961}2,\tfrac{5455}2]$; row reduction gives $\rank Q=4$ (full rank).
+\end{workbox}
+\begin{exambox}[title={Why the rank matters (insight)}]
+Take $A=\begin{bmatrix}0&1\\-2&-3\end{bmatrix}$, $B=\begin{bmatrix}0\\1\end{bmatrix}$. With $C=[1\ 0]$: $Q=\begin{bmatrix}1&0\\0&1\end{bmatrix}$, rank 2, and $T(s)=\frac1{(s+1)(s+2)}$.
+With $C=[1\ 1]$: $CA=[-2\ -2]$, $Q=\begin{bmatrix}1&1\\-2&-2\end{bmatrix}$, rank 1 (indeed $C^\top$ is an eigenvector of $A^\top$, as in (ii)), and
+$T(s)=\frac{s+1}{(s+1)(s+2)}=\frac1{s+2}$: \textbf{a pole has cancelled}. A rank drop in $Q$ means some eigenvalue of $A$ cannot be seen in the output.
+(In the wider literature, $Q$ is the \emph{observability matrix}.)
+\end{exambox}
+
+\subsection{Eigenvalues, diagonalisation and functions of a matrix \texorpdfstring{\fr{45--51}}{}}
+\begin{thmbox}
+\begin{itemize}
+\item Eigenvalues are the roots of $\chi_A(\lambda)=0$ (Lemma 0.10): $\chi_A(\lambda)=0\iff\lambda I-A$ not invertible $\iff\exists v\ne0$ with $Av=\lambda v$.
+\item $A$ is \textbf{diagonalisable} ($S^{-1}AS=\Delta$) $\iff$ $A$ has $n$ linearly independent eigenvectors $\iff$ there is a basis of eigenvectors (Lemma 0.11). This holds if the $n$ eigenvalues are distinct.
+\item If $A=S\Delta S^{-1}$ then $g(A)=S\,g(\Delta)\,S^{-1}=S\,\mathrm{diag}(g(\lambda_1),\dots,g(\lambda_n))\,S^{-1}$ for every polynomial $g$ (Prop 0.12); the columns of $S$ are the eigenvectors, in the same order as the $\lambda_j$ in $\Delta$.
+\item \textbf{Cayley--Hamilton} (Theorem 0.13): $\chi_A(A)=0$.
+\end{itemize}
+\end{thmbox}
+\begin{proofbox}[title={Proof that $AS=S\Delta$ \fr{49}}]
+With $S=[X_1\ \cdots\ X_n]$, $AS=[AX_1\ \cdots\ AX_n]=[\lambda_1X_1\ \cdots\ \lambda_nX_n]=[X_1\ \cdots\ X_n]\Delta=S\Delta$. Independent columns give $\rank S=n$, so $S$ is invertible and $A=S\Delta S^{-1}$.
+Then $A^2=S\Delta S^{-1}S\Delta S^{-1}=S\Delta^2S^{-1}$, and in general $g(A)=Sg(\Delta)S^{-1}$.
+\end{proofbox}
+\begin{workbox}[title={Worked example: using Cayley--Hamilton}]
+$A=\begin{bmatrix}2&1\\1&2\end{bmatrix}$: $\chi_A(s)=s^2-4s+3$. So $A^2-4A+3I=0$.\\
+\textbf{Inverse:} $A(4I-A)=3I\Rightarrow A^{-1}=\frac13(4I-A)=\frac13\begin{bmatrix}2&-1\\-1&2\end{bmatrix}$.\\
+\textbf{Powers:} $A^3=A\cdot A^2=A(4A-3I)=4A^2-3A=4(4A-3I)-3A=13A-12I$.
+\end{workbox}
+
+\subsection{The matrix exponential \texorpdfstring{\fr{51--59}, \fr{123--126}}{}}\label{sec:exp}
+\begin{defbox}
+$\exp(A)=I+A+\dfrac{A^2}{2!}+\dfrac{A^3}{3!}+\cdots$ (MATLAB \texttt{expm(A)}; \textbf{not} \texttt{exp(A)}, which exponentiates each entry).
+\end{defbox}
+\begin{thmbox}[title={Proposition 0.14 (Wedderburn)}]
+\begin{enumerate}
+\item The series converges and $\|\exp(A)\|\le e^{\|A\|}$.
+\item $\exp(zA)\exp(wA)=\exp((z+w)A)$.
+\item $\exp(zA)$ is invertible with inverse $\exp(-zA)$.
+\item If $Av=\lambda v$ then $\exp(zA)v=e^{z\lambda}v$, so $e^{z\lambda}$ is an eigenvalue of $\exp(zA)$.
+\item $\dfrac{d}{dz}\exp(zA)=A\exp(zA)=\exp(zA)A$.
+\end{enumerate}
+\end{thmbox}
+\begin{warnbox}
+$\exp(A+B)=\exp(A)\exp(B)$ is only guaranteed when $AB=BA$. (Property 2 works because $zA$ and $wA$ commute.) This is why the Jordan proof uses $\lambda I$ and $N$, which commute.
+\end{warnbox}
+\begin{proofbox}[title={Proofs of (3), (4), (5)}]
+(3) By (2), $\exp(zA)\exp(-zA)=\exp(0)=I$.\\
+(4) $\exp(zA)v=\sum_j\frac{z^jA^jv}{j!}=\sum_j\frac{z^j\lambda^jv}{j!}=e^{z\lambda}v$, since $A^jv=\lambda^jv$.\\
+(5) $\dfrac{\exp((z+h)A)-\exp(zA)}{h}=\exp(zA)\dfrac{\exp(hA)-I}{h}=\exp(zA)\Big(A+\dfrac{hA^2}{2!}+\dfrac{h^2A^3}{3!}+\cdots\Big)\to\exp(zA)A$ as $h\to0$.
+\end{proofbox}
+
+\begin{methodbox}[title={Method: computing $\exp(tA)$ (three ways)}]
+\textbf{Way 1 (distinct eigenvalues / diagonalisable).}
+(1) Find eigenvalues $\lambda_j$ and eigenvectors $X_j$. (2) $S=[X_1\cdots X_n]$, find $S^{-1}$.
+(3) $\exp(tA)=S\,\mathrm{diag}(e^{\lambda_1t},\dots,e^{\lambda_nt})\,S^{-1}$ (Lemma 0.15).
+For real symmetric $A$ take \emph{orthonormal} eigenvectors, then $S^{-1}=S^\top$.\\[1mm]
+\textbf{Way 2 (Jordan block / repeated eigenvalue).} If $A=\lambda I+N$ with $N^k=0$, then
+$\exp(tA)=e^{\lambda t}\big(I+tN+\dots+\frac{t^{k-1}}{(k-1)!}N^{k-1}\big)$. For a $2\times2$ matrix with a double eigenvalue $\lambda$, $N=A-\lambda I$ satisfies $N^2=0$ (Cayley--Hamilton), so $\boxed{\exp(tA)=e^{\lambda t}(I+t(A-\lambda I))}$.\\[1mm]
+\textbf{Way 3 (Laplace).} $\exp(tA)=\Lap^{-1}\big[(sI-A)^{-1}\big]$ entry by entry (Prop 0.34 and \S\ref{sec:lapabcd}). Works for everything, including complex eigenvalues.\\[1mm]
+\textbf{Always check:} at $t=0$ you get $I$; $\frac{d}{dt}\exp(tA)$ at $t=0$ is $A$.
+\end{methodbox}
+
+\begin{workbox}[title={Worked example: $A=\begin{bmatrix}0&1\\-2&-3\end{bmatrix}$ (distinct eigenvalues)}]
+\textbf{Step 1.} $\chi_A(\lambda)=\lambda^2+3\lambda+2=(\lambda+1)(\lambda+2)$, eigenvalues $-1,-2$.\\
+\textbf{Step 2.} $\lambda=-1$: $(A+I)v=0$, $\begin{bmatrix}1&1\\-2&-2\end{bmatrix}v=0\Rightarrow v=\begin{bmatrix}1\\-1\end{bmatrix}$.
+$\lambda=-2$: $\begin{bmatrix}2&1\\-2&-1\end{bmatrix}v=0\Rightarrow v=\begin{bmatrix}1\\-2\end{bmatrix}$.\\
+\textbf{Step 3.} $S=\begin{bmatrix}1&1\\-1&-2\end{bmatrix}$, $\det S=-1$, $S^{-1}=\begin{bmatrix}2&1\\-1&-1\end{bmatrix}$.\\
+\textbf{Step 4.}
+\[\exp(tA)=\begin{bmatrix}1&1\\-1&-2\end{bmatrix}\begin{bmatrix}e^{-t}&0\\0&e^{-2t}\end{bmatrix}\begin{bmatrix}2&1\\-1&-1\end{bmatrix}
+=\begin{bmatrix}2e^{-t}-e^{-2t}&e^{-t}-e^{-2t}\\-2e^{-t}+2e^{-2t}&-e^{-t}+2e^{-2t}\end{bmatrix}.\]
+\textbf{Check} $t=0$: $\begin{bmatrix}1&0\\0&1\end{bmatrix}$ \checkmark. Derivative at $0$: $\begin{bmatrix}-2+2&-1+2\\2-4&1-4\end{bmatrix}=A$ \checkmark
+\end{workbox}
+
+\begin{workbox}[title={Worked example: $A=\begin{bmatrix}1&1\\-1&3\end{bmatrix}$ (repeated eigenvalue, not diagonalisable)}]
+$\chi_A(\lambda)=(\lambda-1)(\lambda-3)+1=(\lambda-2)^2$. $N=A-2I=\begin{bmatrix}-1&1\\-1&1\end{bmatrix}$, and $N^2=0$. Since $2I$ and $N$ commute,
+\[\exp(tA)=e^{2t}\exp(tN)=e^{2t}(I+tN)=e^{2t}\begin{bmatrix}1-t&t\\-t&1+t\end{bmatrix}.\]
+Only one independent eigenvector ($[1;1]$), so geometric multiplicity 1 $<$ algebraic multiplicity 2: a single Jordan block $J_2(2)$. Note the factor $t$: this is what causes trouble on the imaginary axis (Chapter 4).
+\end{workbox}
+
+\begin{workbox}[title={Worked example: $A=\begin{bmatrix}0&1\\-1&0\end{bmatrix}$ (eigenvalues $\pm i$)}]
+$A^2=-I$, so split the series into even and odd terms:
+$\exp(tA)=I\big(1-\frac{t^2}{2!}+\cdots\big)+A\big(t-\frac{t^3}{3!}+\cdots\big)=\begin{bmatrix}\cos t&\sin t\\-\sin t&\cos t\end{bmatrix}$. Bounded but not decaying (marginal stability).
+\end{workbox}
+
+\begin{workbox}[title={Worked example (AE3, A3.3): real symmetric $A=\begin{bmatrix}2&1&0\\1&2&1\\0&1&2\end{bmatrix}$}]
+\textbf{(i)} Put $\mu=\lambda-2$ (a neat trick when the diagonal is constant) and expand along row 1:
+$\det\begin{bmatrix}\mu&-1&0\\-1&\mu&-1\\0&-1&\mu\end{bmatrix}=\mu(\mu^2-1)-\mu=\mu(\mu^2-2)$.
+So $\mu=0,\pm\sqrt2$, i.e.\ $\lambda=2,\ 2-\sqrt2,\ 2+\sqrt2$, with eigenvectors
+\[\lambda=2:\ \begin{bmatrix}-1\\0\\1\end{bmatrix},\qquad \lambda=2-\sqrt2:\ \begin{bmatrix}1\\-\sqrt2\\1\end{bmatrix},\qquad \lambda=2+\sqrt2:\ \begin{bmatrix}1\\\sqrt2\\1\end{bmatrix}.\]
+(Check the last: $A[1;\sqrt2;1]=[2+\sqrt2;\ 2+2\sqrt2;\ 2+\sqrt2]=(2+\sqrt2)[1;\sqrt2;1]$ \checkmark)\\
+\textbf{(ii)} Distinct eigenvalues of a symmetric matrix have orthogonal eigenvectors; normalise (lengths $\sqrt2,2,2$):
+\[U=\begin{bmatrix}-\frac1{\sqrt2}&\frac12&\frac12\\0&-\frac{1}{\sqrt2}&\frac1{\sqrt2}\\\frac1{\sqrt2}&\frac12&\frac12\end{bmatrix},\qquad U^\top U=I,\qquad U^\top AU=\Delta=\mathrm{diag}(2,\,2-\sqrt2,\,2+\sqrt2).\]
+\textbf{(iii)} $A=U\Delta U^\top$, so $\exp(tA)=U\exp(t\Delta)U^\top$ with $\exp(t\Delta)=\mathrm{diag}(e^{2t},e^{(2-\sqrt2)t},e^{(2+\sqrt2)t})$.
+\end{workbox}
+
+\begin{thmbox}[title={Growth bounds (Prop 0.16, Lemma 0.33, Lemma 0.41)}]
+\begin{itemize}
+\item Entries of $\exp(tA)$ are linear combinations of $t^ke^{\lambda_jt}$ with $k<n$ (powers of $t$ only from Jordan blocks).
+\item If $\Re\lambda_j<\beta$ for all $j$, there is $M$ with $\|\exp(tA)\|\le Me^{\beta t}$ $(t>0)$.
+\item If $\Re\lambda_j<0$ for all $j$, then $\|\exp(tA)\|\le Me^{-\delta t}$ for some $M,\delta>0$.
+\item If $A$ has distinct eigenvalues with $\Re\lambda_j\le\kappa$, then $\|\exp(tA)\|\le\|S\|\|S^{-1}\|e^{\kappa t}$, and the general solution of $\dot X=AX$ is $X=\sum a_je^{\lambda_jt}X_j$.
+\end{itemize}
+\end{thmbox}
+
+\subsection{Solving \texorpdfstring{$\dot X=AX+BU$}{dX/dt = AX+BU}: the variation of constants formula \texorpdfstring{\fr{65--69}}{}}\label{sec:solution}
+\begin{thmbox}[title={Theorem 0.17 and Corollary 0.18}]
+The unique solution of $\dfrac{dX}{dt}=AX+BU$, $X(0)=X_0$ is
+\[\boxed{X(t)=\exp(tA)X_0+\int_0^t\exp((t-s)A)BU(s)\,ds}\]
+and the output is $Y(t)=C\exp(tA)X_0+\displaystyle\int_0^tC\exp((t-v)A)BU(v)\,dv+DU(t)$.\\
+$\exp(tA)X_0$ = \textbf{complementary function} (solves $\dot X=AX$); the integral = \textbf{particular integral}; general solution = CF + PI.
+\end{thmbox}
+\begin{proofbox}[title={Proof of Theorem 0.17 (integrating factor)}]
+\textbf{Existence/uniqueness.} Rewrite as $\dot X-AX=BU$ and multiply by the integrating factor $\exp(-tA)$:
+\[\exp(-tA)\dot X-\exp(-tA)AX=\frac{d}{dt}\big(\exp(-tA)X\big)=\exp(-tA)BU,\]
+using $\frac{d}{dt}\exp(-tA)=-A\exp(-tA)=-\exp(-tA)A$. Integrate from $0$ to $t$:
+$\exp(-tA)X(t)-X_0=\int_0^t\exp(-wA)BU(w)\,dw$. Multiply by $\exp(tA)$ (the inverse of $\exp(-tA)$) and use $\exp(tA)\exp(-wA)=\exp((t-w)A)$.
+Since every step is reversible, any solution must equal this one (uniqueness).\\
+\textbf{Check.} $t=0$ gives $X(0)=X_0$. Writing the integral as $\exp(tA)\int_0^t\exp(-wA)BU(w)dw$ and differentiating with the product rule and FTC:
+$\dot X=A\exp(tA)X_0+A\exp(tA)\int_0^t\cdots+\exp(tA)\exp(-tA)BU(t)=AX+BU$.
+\end{proofbox}
+
+\begin{workbox}[title={Worked example: step response of $A=\begin{bmatrix}0&1\\-2&-3\end{bmatrix}$, $B=\begin{bmatrix}0\\1\end{bmatrix}$, $C=[1\ 0]$, $u=1$, $X_0=0$}]
+\textbf{Step 1.} From the example above, $\exp(\tau A)B$ = second column $=\begin{bmatrix}e^{-\tau}-e^{-2\tau}\\-e^{-\tau}+2e^{-2\tau}\end{bmatrix}$.\\
+\textbf{Step 2.} $X(t)=\int_0^t\exp((t-v)A)B\cdot1\,dv=\int_0^t\exp(\tau A)B\,d\tau$ (substitute $\tau=t-v$).\\
+\textbf{Step 3.} $y(t)=CX(t)=\int_0^t(e^{-\tau}-e^{-2\tau})d\tau=(1-e^{-t})-\tfrac12(1-e^{-2t})=\boxed{\tfrac12-e^{-t}+\tfrac12e^{-2t}}$.\\
+\textbf{Check:} $y(0)=0$ \checkmark, $y\to\frac12$ as $t\to\infty$, which is $T(0)=\frac1{0+0+2}$ \checkmark (the steady-state value of a stable system under a unit step is $T(0)$).
+\end{workbox}
+
+\subsection{\texorpdfstring{$(A,B,C,D)$}{(A,B,C,D)} systems: SISO and MIMO \texorpdfstring{\fr{60--64}}{}}
+\begin{defbox}
+$A$ ($n\times n$) = state matrix, $B$ ($n\times k$) = input matrix, $C$ ($m\times n$) = output matrix, $D$ ($m\times k$) = straight-through matrix.
+$k$ inputs, $n$ states, $m$ outputs. SISO: $k=m=1$. Written as the block array $\begin{bmatrix}A&B\\C&D\end{bmatrix}$ of size $(n+m)\times(n+k)$.
+The transposed system $(A^\top,C^\top,B^\top,D^\top)$ is also a linear system (with $m$ inputs and $k$ outputs), and $\det(sI-A^\top)=\det(sI-A)$.\\
+Examples: fan, wind turbine (SISO); washing machine, central heating, massive MIMO 5G (MIMO).
+\end{defbox}
+
+\subsection{Rational functions and the transfer function \texorpdfstring{\fr{70--73}}{}}\label{sec:tf}
+\begin{defbox}
+$f(s)=g(s)/h(s)$ with $g,h$ polynomials (no common factors).
+\textbf{Proper}: $\deg g\le\deg h$ (so $f(s)\to$ a finite constant as $s\to\infty$). \textbf{Strictly proper}: $\deg g<\deg h$ ($f(s)\to0$).
+Zeros of $g$ are the \textbf{zeros} of $f$; zeros of $h$ are the \textbf{poles} of $f$.\\
+\textbf{Transfer function} of $(A,B,C,D)$: $\boxed{T(s)=D+C(sI-A)^{-1}B}$ ($m\times k$ matrix).
+\end{defbox}
+\begin{thmbox}[title={Proposition 0.20 / Corollary 0.21}]
+$T(s)$ is a (matrix of) \textbf{proper} rational function(s), and every pole of $T$ is an eigenvalue of $A$. ($D=0\Rightarrow$ strictly proper.)
+\end{thmbox}
+\begin{proofbox}[title={Proof of Proposition 0.20}]
+$\det(sI-A)$ is monic of degree $n$. Each cofactor of $sI-A$ is the determinant of an $(n-1)\times(n-1)$ submatrix, so a polynomial of degree $\le n-1$.
+Hence each entry of $(sI-A)^{-1}=\adj(sI-A)/\det(sI-A)$ is strictly proper, with possible poles only at zeros of $\det(sI-A)$, i.e.\ at eigenvalues of $A$.
+Multiplying by constant matrices $C,B$ and adding the constant $D$ introduces no new poles and keeps the function proper.
+\end{proofbox}
+\begin{warnbox}
+``Every pole is an eigenvalue'' is \textbf{not} reversible: an eigenvalue can cancel (see the rank insight in \S\ref{sec:rank}). So stability of $T$ does not by itself prove stability of $A$.
+\end{warnbox}
+
+\begin{methodbox}[title={Method: compute $T(s)$ for a SISO}]
+\begin{enumerate}
+\item Compute $q(s)=\det(sI-A)$ and factorise.
+\item You only need the vector $\adj(sI-A)B$, i.e.\ $\adj(sI-A)$ times $B$ (sometimes faster: solve $(sI-A)Z=B$ for $Z$ by elimination, Lemma 0.19).
+\item $T(s)=D+\dfrac{C\,\adj(sI-A)B}{q(s)}$. Simplify and check for cancellations.
+\item Check: degree of numerator $<\deg q$ when $D=0$; at $s=0$, $T(0)=D-CA^{-1}B$ if $A$ is invertible.
+\end{enumerate}
+\end{methodbox}
+
+\begin{workbox}[title={Worked example (AE2, A2.1)}]
+$A=\begin{bmatrix}4&-3&3\\8&-8&-1\\-4&4&1\end{bmatrix}$, $B=\begin{bmatrix}1\\-1\\2\end{bmatrix}$, $C=[1\ 3\ 1]$, $D=0$.\\
+\textbf{(i) Eigenvalues.} Expanding $\det\begin{bmatrix}s-4&3&-3\\-8&s+8&1\\4&-4&s-1\end{bmatrix}$ along row 1:
+\begin{align*}&(s-4)\big[(s+8)(s-1)+4\big]-3\big[-8(s-1)-4\big]-3\big[32-4(s+8)\big]\\
+&\quad=(s-4)(s^2+7s-4)+24s-12+12s=s^3+3s^2+4s+4.\end{align*}
+Try $s=-2$: $-8+12-8+4=0$, so $\chi_A(s)=(s+2)(s^2+s+2)$ and the eigenvalues are $-2,\ \dfrac{-1\pm i\sqrt7}{2}$.\\
+\textbf{(ii) Transfer function.} The adjugate is
+\[\adj(sI-A)=\begin{bmatrix}s^2+7s-4&15-3s&3s+27\\8s-4&s^2-5s+16&28-s\\-4s&4s-4&s^2+4s-8\end{bmatrix},\quad
+\adj(sI-A)B=\begin{bmatrix}s^2+16s+35\\-s^2+11s+36\\2s^2-12\end{bmatrix}.\]
+$C\,\adj(sI-A)B=(s^2+16s+35)+3(-s^2+11s+36)+(2s^2-12)=49s+131$. Hence
+\[\boxed{T(s)=\frac{49s+131}{(s+2)(s^2+s+2)}}.\]
+Strictly proper (as $D=0$); no cancellation (since $49(-2)+131\neq0$ and $49s+131$ has a real root), so the poles are exactly the three eigenvalues, all in the LHP.
+\end{workbox}
+
+\begin{workbox}[title={Worked example: the damped oscillator}]
+$A=\begin{bmatrix}0&1\\-\gamma&-\beta\end{bmatrix}$, $B=\begin{bmatrix}0\\1\end{bmatrix}$, $C=[1\ 0]$, $D=0$.
+$sI-A=\begin{bmatrix}s&-1\\\gamma&s+\beta\end{bmatrix}$, $\det=s^2+\beta s+\gamma$, $\adj(sI-A)=\begin{bmatrix}s+\beta&1\\-\gamma&s\end{bmatrix}$, $\adj(sI-A)B=\begin{bmatrix}1\\s\end{bmatrix}$.
+So $T(s)=\dfrac{1}{s^2+\beta s+\gamma}$, which is what you get from Laplace transforming $y''+\beta y'+\gamma y=u$ with zero initial data.
+\end{workbox}
+
+\subsection{Realisation: from \texorpdfstring{$T(s)$}{T(s)} back to \texorpdfstring{$(A,B,C,D)$}{(A,B,C,D)} \texorpdfstring{\fr{74--84}}{}}\label{sec:realise}
+\begin{thmbox}[title={Proposition 0.22 (companion realisation) and Theorem 0.23}]
+The strictly proper $T(s)=\dfrac{\gamma_0+\gamma_1s+\dots+\gamma_{n-1}s^{n-1}}{s^n+\alpha_{n-1}s^{n-1}+\dots+\alpha_0}$ is the transfer function of
+\[A=\begin{bmatrix}0&1&&\\&\ddots&\ddots&\\&&0&1\\-\alpha_0&-\alpha_1&\cdots&-\alpha_{n-1}\end{bmatrix},\quad B=\begin{bmatrix}0\\\vdots\\0\\1\end{bmatrix},\quad C=[\gamma_0\ \gamma_1\ \cdots\ \gamma_{n-1}],\quad D=0.\]
+Every \textbf{proper} rational $T$ is realised by first writing $T(s)=D+(\text{strictly proper})$, $D=\lim_{s\to\infty}T(s)$. Moreover
+\[T(s)=\frac{\det\begin{bmatrix}A-sI&B\\C&D\end{bmatrix}}{\det(A-sI)}\qquad(\text{beware the minus signs}).\]
+\end{thmbox}
+\begin{proofbox}[title={Proof of Proposition 0.22 (sketch you can write)}]
+$T=C\,\adj(sI-A)B/\det(sI-A)$. Since $B=e_n$, $\adj(sI-A)B$ is the last column of $\adj(sI-A)$, i.e.\ (transposing) the cofactors of the \emph{last row} of $sI-A$.
+Deleting row $n$ and column $k$ leaves a block-triangular matrix, and its cofactor is $s^{k-1}$ (e.g.\ for $k=1$ the minor is lower triangular with $-1$'s, giving $(-1)^{n+1}(-1)^{n-1}=1$;
+for $k=n$ it is upper triangular with $s$'s, giving $s^{n-1}$). The $\alpha_j$ do not appear. So $\adj(sI-A)B=[1;s;\dots;s^{n-1}]$ and
+$C\adj(sI-A)B=\gamma_0+\gamma_1s+\dots+\gamma_{n-1}s^{n-1}$; and $\det(sI-A)=s^n+\alpha_{n-1}s^{n-1}+\dots+\alpha_0$ by Proposition 0.5.
+\end{proofbox}
+\begin{proofbox}[title={Proof of the determinant formula (via Lemma 0.19)}]
+Row reduce: subtract $C(A-sI)^{-1}\times$(top block row) from the bottom block row:
+$\begin{bmatrix}A-sI&B\\C&D\end{bmatrix}\sim\begin{bmatrix}A-sI&B\\0&D-C(A-sI)^{-1}B\end{bmatrix}$. This row operation does not change the determinant, so
+$\det\begin{bmatrix}A-sI&B\\C&D\end{bmatrix}=\det(A-sI)\,\big(D+C(sI-A)^{-1}B\big)=\det(A-sI)\,T(s)$.
+\end{proofbox}
+
+\begin{methodbox}[title={Method: realise a given $T(s)$}]
+\begin{enumerate}
+\item Make the denominator \textbf{monic} (divide top and bottom by its leading coefficient).
+\item If $\deg(\text{num})=\deg(\text{den})$, do polynomial long division: $T=D+\frac{r(s)}{q(s)}$ with $\deg r<\deg q$.
+\item Read $\alpha_0,\dots,\alpha_{n-1}$ from $q(s)$ (constant term first) and $\gamma_0,\dots,\gamma_{n-1}$ from $r(s)$ (constant term first). Include zero coefficients!
+\item Write $A$ (last row $-\alpha$'s), $B=e_n$, $C=[\gamma_0\cdots\gamma_{n-1}]$, $D$.
+\end{enumerate}
+\end{methodbox}
+
+\begin{workbox}[title={Worked example \fr{79--81}}]
+$T(s)=\dfrac{2s^2+3s+1}{s^3+6s^2+8s-2}$: $\alpha_0=-2,\alpha_1=8,\alpha_2=6$; $\gamma_0=1,\gamma_1=3,\gamma_2=2$.
+\[A=\begin{bmatrix}0&1&0\\0&0&1\\2&-8&-6\end{bmatrix},\quad B=\begin{bmatrix}0\\0\\1\end{bmatrix},\quad C=[1\ 3\ 2],\quad D=0.\]
+(Last row is $-\alpha_0=2$, $-\alpha_1=-8$, $-\alpha_2=-6$.)
+\end{workbox}
+
+\begin{workbox}[title={Worked example: a proper (not strictly proper) $T$}]
+$T(s)=\dfrac{2s^2+5s+1}{s^2+3s+2}$. \textbf{Divide:} $2s^2+5s+1=2(s^2+3s+2)+(-s-3)$, so $T=2+\dfrac{-3-s}{s^2+3s+2}$.
+\[A=\begin{bmatrix}0&1\\-2&-3\end{bmatrix},\quad B=\begin{bmatrix}0\\1\end{bmatrix},\quad C=[-3\ \ {-1}],\quad D=2.\]
+\textbf{Check by the determinant formula:} $\det\begin{bmatrix}-s&1&0\\-2&-3-s&1\\-3&-1&2\end{bmatrix}=2s^2+5s+1$ and $\det(A-sI)=s^2+3s+2$ \checkmark
+\end{workbox}
+
+\begin{thmbox}[title={Proposition 0.24: MIMO without differentiators \fr{83--85}}]
+$(A,B,C,D)$ is realised by: $U\to[B]\to\oplus\to[\int]\to X$, with $X$ fed back through $[A]$ into $\oplus$; then $Y=[C]X+[D]U$ at a second junction.
+Replacing $\int$ by multiplication by $1/s$ gives $\hat X=\frac1sA\hat X+\frac1sB\hat U$, so $\hat Y=(D+C(sI-A)^{-1}B)\hat U$: the Laplace transform justifies this (Chapter 3).
+\begin{center}
+\begin{tikzpicture}
+\node (u) at (-0.4,0) {$U$}; \node[tap] (t) at (0.5,0) {}; \node[blk] (b) at (1.5,0) {$B$}; \node[sumj] (s1) at (2.7,0) {$+$};
+\node[blk] (i) at (3.9,0) {$\int$}; \node[tap] (tx) at (5.1,0) {}; \node[blk] (a) at (3.9,1.2) {$A$};
+\node[blk] (c) at (6.2,0) {$C$}; \node[sumj] (s2) at (7.4,0) {$+$}; \node (y) at (8.4,0) {$Y$}; \node[blk] (d) at (4.5,-1.3) {$D$};
+\draw[ar] (u)--(t); \draw[ar] (t)--(b); \draw[ar] (b)--(s1); \draw[ar] (s1)--(i); \draw[ar] (i)--node[above]{$X$}(tx);
+\draw[ar] (tx)|-(a); \draw[ar] (a)-|(s1); \draw[ar] (tx)--(c); \draw[ar] (c)--(s2); \draw[ar] (s2)--(y); \draw[ar] (t)|-(d); \draw[ar] (d)-|(s2);
+\end{tikzpicture}
+\end{center}
+\end{thmbox}
+
+\subsection{Exam-style questions for Chapter 2}
+\begin{qbox}[title={Q2.1 (standard)}]
+Let $A=\begin{bmatrix}-1&2\\0&-3\end{bmatrix}$, $B=\begin{bmatrix}1\\1\end{bmatrix}$, $C=[1\ 0]$, $D=0$.
+(a) Find $\exp(tA)$. (b) Find $T(s)$. (c) Find $y(t)$ when $u=0$ and $X(0)=[1;0]$.
+\end{qbox}
+\begin{solbox}
+(a) Upper triangular: eigenvalues $-1,-3$. Eigenvectors: $\lambda=-1$: $[1;0]$; $\lambda=-3$: $(A+3I)v=\begin{bmatrix}2&2\\0&0\end{bmatrix}v=0\Rightarrow v=[1;-1]$.
+$S=\begin{bmatrix}1&1\\0&-1\end{bmatrix}=S^{-1}$. So
+$\exp(tA)=S\,\mathrm{diag}(e^{-t},e^{-3t})S^{-1}=\begin{bmatrix}e^{-t}&e^{-t}-e^{-3t}\\0&e^{-3t}\end{bmatrix}$. Check $t=0$: $I$ \checkmark; derivative at 0: $\begin{bmatrix}-1&-1+3\\0&-3\end{bmatrix}=A$ \checkmark\\
+(b) $(sI-A)^{-1}=\begin{bmatrix}\frac1{s+1}&\frac{2}{(s+1)(s+3)}\\0&\frac1{s+3}\end{bmatrix}$, $(sI-A)^{-1}B=\begin{bmatrix}\frac{s+5}{(s+1)(s+3)}\\\frac1{s+3}\end{bmatrix}$, so $T(s)=\dfrac{s+5}{(s+1)(s+3)}$.\\
+(c) $y=C\exp(tA)X_0=e^{-t}$.
+\end{solbox}
+
+\begin{qbox}[title={Q2.2 (realisation)}]
+Find a SISO $(A,B,C,D)$ with $T(s)=\dfrac{3s^3+s+4}{s^3+2s^2-5}$, and state the characteristic polynomial of your $A$.
+\end{qbox}
+\begin{solbox}
+Divide: $3s^3+s+4=3(s^3+2s^2-5)+(-6s^2+s+19)$, so $D=3$ and $\frac{r}{q}=\frac{19+s-6s^2}{s^3+2s^2+0s-5}$.
+$\alpha_0=-5,\alpha_1=0,\alpha_2=2$; $\gamma=(19,1,-6)$:
+$A=\begin{bmatrix}0&1&0\\0&0&1\\5&0&-2\end{bmatrix}$, $B=[0;0;1]$, $C=[19\ 1\ {-6}]$, $D=3$; $\chi_A(s)=s^3+2s^2-5$.
+\end{solbox}
+
+\begin{qbox}[title={Q2.3 (proof)}]
+Prove that if $Av=\lambda v$, $v\neq0$, then $\exp(tA)v=e^{\lambda t}v$, and deduce $\det\exp(tA)=e^{t\,\tr A}$ when $A$ is diagonalisable.
+\end{qbox}
+\begin{solbox}
+First part: Prop 0.14(4) proof above. For diagonalisable $A=S\Delta S^{-1}$: $\det\exp(tA)=\det S\det\exp(t\Delta)\det S^{-1}=\prod_je^{t\lambda_j}=e^{t\sum\lambda_j}=e^{t\,\tr A}$, as the trace is the sum of the eigenvalues.
+\end{solbox}
+
+\begin{qbox}[title={Q2.4 (harder)}]
+Let $A$ be $n\times n$ with $\|A\|<s$. Show $(sI-A)$ is invertible with $(sI-A)^{-1}=\int_0^\infty e^{-st}\exp(tA)\,dt$ (Prop 0.34).
+\end{qbox}
+\begin{solbox}
+$\frac{d}{dt}\exp(t(A-sI))=(A-sI)\exp(t(A-sI))$, so $(sI-A)\int_0^R\exp(t(A-sI))dt=-\big[\exp(t(A-sI))\big]_0^R=I-e^{-sR}\exp(RA)$.
+Since $\|e^{-sR}\exp(RA)\|\le e^{-sR}e^{R\|A\|}\to0$ as $R\to\infty$ (because $\|A\|<s$), we get $(sI-A)\int_0^\infty e^{-st}\exp(tA)dt=I$. As $\exp(t(A-sI))=e^{-st}\exp(tA)$ (since $sI$ commutes with $A$), done.
+In words: \textbf{the Laplace transform of $\exp(tA)$ is $(sI-A)^{-1}$.}
+\end{solbox}
+\newpage

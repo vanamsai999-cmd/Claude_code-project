@@ -1,0 +1,187 @@
+\section{Chapter 4: Transfer functions, realisation and stability \texorpdfstring{\fr{135--161}}{}}
+
+\subsection*{Big picture}
+The transfer function $T(s)$ carries all the important dynamics. Two questions:
+(1) \textbf{How does the system respond to a pure tone $e^{i\omega t}$?} Answer: it multiplies it by $T(i\omega)=\Gamma(\omega)e^{i\phi(\omega)}$ (gain and phase; Nyquist and Bode plots).
+(2) \textbf{Does the output stay bounded?} Answer: look at where the eigenvalues of $A$ / poles of $T$ are. Strictly left of the imaginary axis is good; on it is borderline (resonance); right of it is bad.
+
+\subsection{Transfer functions and realisation \texorpdfstring{\fr{135--137}}{}}
+\begin{thmbox}
+\begin{itemize}
+\item $T(s)$ is the transfer function if $\hat Y(s)=T(s)\hat U(s)$ (zero initial conditions).
+\item \textbf{Theorem 0.38:} any complex rational $T=p/q$ (even improper) is the transfer function of a SISO built from taps, amplifiers, summing junctions, integrators \emph{and differentiators}:
+realise $1/q(s)$ as a SISO (Prop 0.22), then apply $y=\sum a_j\frac{d^ju}{dt^j}$ (transform $p(s)$) in series.
+\item \textbf{Corollary 0.39:} the same for matrices of rational functions (MIMO).
+\item \textbf{Theorem 0.46:} every monic polynomial is a characteristic polynomial; every proper rational function is $T$ of some SISO $(A,B,C,D)$; every \emph{stable} rational function is $T$ of some \emph{BIBO stable} $(A,B,C,D)$.
+\end{itemize}
+\end{thmbox}
+
+\subsection{Frequency response, gain and phase \texorpdfstring{\fr{138--148}}{}}\label{sec:freq}
+\begin{defbox}
+\begin{itemize}
+\item \textbf{Frequency response function:} $T(i\omega)$, $\omega\in(-\infty,\infty)$ (angular frequency, rad/s). Input $e^{i\omega t}$ gives (in steady state) output $T(i\omega)e^{i\omega t}$.
+\item Polar form $T(i\omega)=\Gamma(\omega)e^{i\phi(\omega)}$. \textbf{Gain} $\Gamma(\omega)=|T(i\omega)|$ (distance from $0$); \textbf{phase} $\phi(\omega)=\arg T(i\omega)$ (angle from the positive real axis). Equivalently $\log T(i\omega)=\log\Gamma(\omega)+i\phi(\omega)$.
+\item \textbf{Nyquist plot / locus:} the curve $\{T(i\omega):-\infty\le\omega\le\infty\}$ in $\CC$, traversed as $\omega$ increases (so $i\omega$ goes \emph{up} the imaginary axis).
+\item \textbf{Bode plot:} $\log\Gamma$ in decibels ($20\log_{10}\Gamma$) against $\omega>0$ on a log scale; plus the \textbf{phase plot} $\phi$ in degrees against $\omega>0$ on a log scale.
+\item $\phi>0$: \textbf{phase gain} (output runs ahead); $\phi<0$: \textbf{phase lag} (output behind); $\phi=0$: in phase; $\phi=\pi$: \textbf{anti-phase} (peaks become troughs; noise-cancelling headphones).
+\end{itemize}
+\end{defbox}
+\begin{methodbox}[title={Method: gain and phase}]
+\begin{enumerate}
+\item Put $s=i\omega$. Use $i^2=-1$ to write the denominator as $X(\omega)+iY(\omega)$.
+\item \textbf{Gain:} $\Gamma=|\text{numerator}|/|\text{denominator}|$, e.g.\ $\Gamma=\dfrac{1}{\sqrt{X^2+Y^2}}$ for $T=1/(\cdots)$.
+\item \textbf{Phase:} $\phi=\arg(\text{num})-\arg(\text{den})$. Multiply top and bottom by the conjugate to get real and imaginary parts if you need the quadrant.
+\item Find special values: $\omega=0$, $\omega\to\pm\infty$, and where the real or imaginary part is zero (where the Nyquist plot crosses the axes).
+\end{enumerate}
+\end{methodbox}
+\begin{warnbox}
+$\tan^{-1}$ only gives angles in $(-\pi/2,\pi/2)$. Always decide the \textbf{quadrant} from the signs of the real and imaginary parts.
+\end{warnbox}
+
+\begin{workbox}[title={Worked example: first-order lag $T(s)=\dfrac1{s+1}$, with its Nyquist plot}]
+$T(i\omega)=\dfrac1{1+i\omega}=\dfrac{1-i\omega}{1+\omega^2}$. Gain $\Gamma=\dfrac1{\sqrt{1+\omega^2}}$, phase $\phi=-\tan^{-1}\omega\in(-\frac\pi2,\frac\pi2)$ (real part $>0$).
+Write $x=\frac1{1+\omega^2}$, $y=\frac{-\omega}{1+\omega^2}$: then $x^2+y^2=\frac1{1+\omega^2}=x$, i.e.\ $(x-\frac12)^2+y^2=\frac14$.
+The Nyquist plot is the circle centre $\frac12$, radius $\frac12$, starting and ending at $0$ ($=\lim_{s\to\infty}T$), passing $T(0)=1$, traversed \textbf{clockwise}.
+\begin{center}
+\begin{tikzpicture}[scale=2]
+\draw[->] (-1.2,0)--(1.4,0) node[right]{$\Re$}; \draw[->] (0,-0.7)--(0,0.7) node[above]{$\Im$};
+\draw[thick,teal] (0.5,0) circle (0.5);
+\draw[-Stealth,thick,teal] (0.5,0.5) arc (90:60:0.5); \draw[-Stealth,thick,teal] (0.5,-0.5) arc (-90:-120:0.5);
+\fill (1,0) circle (0.6pt) node[below right]{\small$T(0)=1$}; \fill (0,0) circle(0.6pt) node[below left]{\small$\omega=\pm\infty$};
+\node[redx] at (-1,0) {$\times$}; \node[redx,below] at (-1,0) {\small$-1$};
+\node[teal] at (0.95,0.45) {\small$\omega<0$}; \node[teal] at (0.95,-0.45) {\small$\omega>0$};
+\end{tikzpicture}
+\end{center}
+It never winds round $-1$, so by Nyquist's criterion (Chapter 5) negative unit feedback keeps it stable; indeed $\frac{R}{1+R}=\frac{1}{s+2}$.
+\end{workbox}
+
+\begin{workbox}[title={Worked example \fr{145--146}: $ay''+by'+y=u$, $a,b>0$}]
+$T(s)=\dfrac1{as^2+bs+1}$, so $T(i\omega)=\dfrac{1}{1-a\omega^2+ib\omega}=\dfrac{1-a\omega^2-ib\omega}{(1-a\omega^2)^2+b^2\omega^2}$.
+\[\Gamma(\omega)=\frac1{\sqrt{(1-a\omega^2)^2+b^2\omega^2}},\qquad \tan\phi=\frac{b\omega}{a\omega^2-1},\quad\phi=\arg(1-a\omega^2-ib\omega).\]
+$T(0)=1$ so $\phi(0)=0$; at $\omega=\pm1/\sqrt a$ the real part vanishes, $T(i\omega)$ is on the imaginary axis and $\phi=\mp\pi/2$;
+as $\omega\to+\infty$, $T(i\omega)$ is in the third quadrant ($\phi\to-\pi$); as $\omega\to-\infty$, in the second quadrant.
+\textbf{Special case} $T=\frac1{s^2+s+6}$ (the notes' Bode plot): $\Gamma=\frac1{\sqrt{(6-\omega^2)^2+\omega^2}}$, $\Gamma(0)=\frac16\approx-15.6$\,dB, phase passes $-90^\circ$ at $\omega=\sqrt6$ and tends to $-180^\circ$.
+\end{workbox}
+
+\begin{thmbox}[title={Proposition 0.40 (Nyquist's locus)}]
+If $R$ is proper rational with all poles in the open LHP, then $\omega\mapsto R(i\omega)$ $(-\infty\le\omega\le\infty)$ is a closed contour of finite length starting and ending at $c=\lim_{s\to\infty}R(s)$.
+\emph{Idea:} $R=c+\sum_jc_j(s-\lambda_j)^{-m_j}$, $\Re\lambda_j<-\delta$, so $|R'(i\omega)|\le M/(1+\omega^2)$, which is integrable.
+\end{thmbox}
+
+\subsection{Stability: the three cases for \texorpdfstring{$\dot X=AX$}{dX/dt=AX} \texorpdfstring{\fr{152}}{}}\label{sec:stab}
+\begin{thmbox}[title={Stability of $\dot X=AX$, $X(t)=\exp(tA)X_0$}]
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{3.1cm}p{5.4cm}p{6.3cm}@{}}
+\toprule
+\textbf{Name} & \textbf{Definition} & \textbf{Eigenvalue test}\\\midrule
+Exponentially stable & $\|X(t)\|\le Me^{-\delta t}$ for all $X_0$ & all $\Re\lambda_j<0$ $\quad(\Rightarrow$ BIBO stable$)$\\
+Marginally stable & $X(t)$ bounded for all $X_0$ & all $\Re\lambda_j\le0$, and every $\lambda$ with $\Re\lambda=0$ has only $1\times1$ Jordan blocks (regarded as BIBO \emph{unstable})\\
+Unstable & $X(t)$ unbounded for some $X_0$ & some $\Re\lambda_j>0$, or some $\Re\lambda=0$ with a Jordan block of size $\ge2$\\
+\bottomrule
+\end{tabular}
+\end{thmbox}
+\begin{methodbox}[title={Method: classify the stability of $\dot X=AX$}]
+\begin{enumerate}
+\item Find the eigenvalues (or just the signs of their real parts; see \S\ref{sec:stabpoly} for polynomial tests).
+\item All $\Re\lambda<0$ $\Rightarrow$ exponentially stable. Any $\Re\lambda>0$ $\Rightarrow$ unstable. Stop.
+\item If some $\Re\lambda=0$ (and none $>0$): check the Jordan blocks of those eigenvalues: geometric multiplicity $=$ algebraic $\Rightarrow$ marginal; otherwise unstable (a factor $t$ appears in $\exp(tA)$).
+\end{enumerate}
+\end{methodbox}
+\begin{workbox}[title={Worked examples}]
+\begin{itemize}
+\item $A=\begin{bmatrix}-1&5\\0&-2\end{bmatrix}$: eigenvalues $-1,-2$ $\Rightarrow$ exponentially stable.
+\item $A=\begin{bmatrix}0&1\\-1&0\end{bmatrix}$: $\pm i$, simple $\Rightarrow$ marginally stable ($\exp(tA)$ is a rotation, bounded).
+\item $A=\begin{bmatrix}0&0\\0&0\end{bmatrix}$: $0$ twice, two $1\times1$ blocks $\Rightarrow$ marginally stable ($X(t)=X_0$).
+\item $A=\begin{bmatrix}0&1\\0&0\end{bmatrix}=J_2(0)$: $\exp(tA)=\begin{bmatrix}1&t\\0&1\end{bmatrix}$ $\Rightarrow$ unstable ($X_0=[0;1]$ gives $X(t)=[t;1]$).
+\item AE2's companion matrix for $s^4+2s^3+s^2+4s+2$: eigenvalues $0.35\pm1.28i$ $\Rightarrow$ unstable.
+\end{itemize}
+\end{workbox}
+
+\begin{defbox}[title={BIBO stability \fr{153}}]
+$(A,B,C,D)$ is \textbf{bounded-input bounded-output stable} if every bounded input $u$ on $(0,\infty)$ produces a bounded output $y$ on $(0,\infty)$.
+\end{defbox}
+
+\subsection{The damped harmonic oscillator \texorpdfstring{\fr{149--151}, \fr{169}}{}}
+$y''+\beta y'+\gamma y=u$, $A=\begin{bmatrix}0&1\\-\gamma&-\beta\end{bmatrix}$, eigenvalues $\lambda_\pm=\frac12(-\beta\pm\sqrt\Delta)$ with $\Delta=\beta^2-4\gamma$, eigenvectors $[1;\lambda_\pm]$.
+For $\lambda_+\neq\lambda_-$, $S=\begin{bmatrix}1&1\\\lambda_+&\lambda_-\end{bmatrix}$ and $\exp(tA)=S\,\mathrm{diag}(e^{t\lambda_+},e^{t\lambda_-})S^{-1}$.
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+($\gamma>0$) & $\Delta<0$ & $\Delta=0$ & $\Delta>0$\\\midrule
+$\beta>0$ (stable) & decaying oscillations & critically damped & exponential decay\\
+$\beta=0$ (marginal) & periodic & --- & ---\\
+$\beta<0$ (unstable) & unbounded oscillations & exponential growth & exponential growth\\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{The damped oscillator is exponentially stable iff $\beta>0$ and $\gamma>0$} (both coefficients of $s^2+\beta s+\gamma$ positive). $\beta=0,\gamma>0$: marginal.
+
+\subsection{Resonance: marginal is not BIBO \texorpdfstring{\fr{154--157}}{}}
+\begin{workbox}[title={Undamped oscillator $\ddot x+\nu^2x=U_0\cos\omega t$}]
+$A=\begin{bmatrix}0&1\\-\nu^2&0\end{bmatrix}$, eigenvalues $\pm i\nu$ (simple) $\Rightarrow$ marginally stable.
+Complementary function $c_1\begin{bmatrix}\cos\nu t\\-\nu\sin\nu t\end{bmatrix}+c_2\begin{bmatrix}\sin\nu t\\\nu\cos\nu t\end{bmatrix}$ (bounded).
+\begin{itemize}
+\item $\omega\neq\nu$: particular integral $\dfrac{U_0}{\nu^2-\omega^2}\begin{bmatrix}\cos\omega t\\-\omega\sin\omega t\end{bmatrix}$, bounded.
+\item $\omega=\nu$ (\textbf{resonance}): particular integral $\dfrac{U_0}{2\nu}\begin{bmatrix}t\sin\nu t\\\sin\nu t+\nu t\cos\nu t\end{bmatrix}$, \textbf{unbounded}.
+\end{itemize}
+Bounded input, unbounded output $\Rightarrow$ \textbf{not BIBO stable}. Laplace view: $T(s)=\frac1{s^2+\nu^2}$ and $\hat u=\frac{U_0s}{s^2+\nu^2}$, so $\hat x$ has a \emph{double} pole at $\pm i\nu$, giving $t\sin\nu t$.
+\end{workbox}
+
+\subsection{BIBO stability theorems \texorpdfstring{\fr{158--161}, \fr{170--172}}{}}
+\begin{thmbox}[title={Theorem 0.42 (frame 159)}]
+If every eigenvalue of $A$ has $\Re\lambda_j<0$ and $U$ is bounded on $(0,\infty)$, then all solutions of $(A,B,C,D)$ are bounded; so $(A,B,C,D)$ is BIBO stable.
+\end{thmbox}
+\begin{proofbox}[title={Proof of Theorem 0.42 (learn this one)}]
+By Lemma 0.41 there are $M,\delta>0$ with $\|\exp(tA)\|\le Me^{-\delta t}$, and by hypothesis $\|B\|\|U(v)\|\le K$. From Theorem 0.17,
+\begin{align*}
+\|X(t)\|&\le\|\exp(tA)\|\|X_0\|+\int_0^t\|\exp((t-v)A)\|\,\|B\|\,\|U(v)\|\,dv
+\le M\|X_0\|+KM\int_0^te^{-\delta(t-v)}dv\\
+&=M\|X_0\|+\frac{KM}{\delta}\big(1-e^{-\delta t}\big)\le M\|X_0\|+\frac{KM}{\delta}.
+\end{align*}
+So $X$ is bounded, and $Y=CX+DU$ is a sum of bounded functions, hence bounded.
+\end{proofbox}
+
+\begin{thmbox}[title={Theorem 0.45 (frame 170): stable $T$ $\iff$ BIBO stable realisation}]
+A complex rational $T$ is \textbf{stable} (proper, all poles in the open LHP) iff $T$ is the transfer function of some BIBO stable $(A,B,C,D)$.
+\end{thmbox}
+\begin{proofbox}[title={Proof outline of Theorem 0.45}]
+($\Rightarrow$ BIBO gives stable $T$.) Take the bounded input $u=1$, $\hat u=\frac1s$. If $|y|\le M$ then $|\hat Y(s)|\le\int_0^\infty e^{-t\Re s}M\,dt=\frac{M}{\Re s}$, so $\hat Y$ is holomorphic on $\Re s>0$ and $\to0$ as $s\to\infty$ along $(0,\infty)$; hence $T=s\hat Y$ is proper.
+A pole $\lambda$ with $\Re\lambda>0$ would also be a pole of $\hat Y=T/s$, impossible since $\hat Y$ is holomorphic there.
+A pole $\lambda=i\nu$ on the axis: use the bounded input $\cos\nu t$, $\hat u=\frac{s}{s^2+\nu^2}$, which has a pole at $i\nu$, so $T\hat u$ blows up like $(s-i\nu)^{-2}$ or worse; but $|\hat Y(s)|\le M/\Re s$ only allows $(s-i\nu)^{-1}$ type growth. Contradiction (resonance). So all poles are in the LHP.\\
+($\Leftarrow$) If $T$ is stable, the companion realisation (Prop 0.22) has eigenvalues of $A$ = poles of $T$, all with $\Re<0$, so it is BIBO stable by Theorem 0.42.
+\end{proofbox}
+\begin{exambox}
+\begin{itemize}
+\item ``Is the system BIBO stable?'': compute the eigenvalues of $A$; if all $\Re<0$, cite Theorem 0.42.
+\item ``Is $T$ stable?'': check it is \textbf{proper} and all poles have $\Re<0$. Forgetting properness loses marks: $T=s^2/(s+1)$ has its pole in the LHP but is \emph{not} stable.
+\item $T=\frac1s$ (an integrator) is not BIBO stable: the bounded input $u=1$ gives $y=t$.
+\end{itemize}
+\end{exambox}
+
+\subsection{Exam-style questions for Chapter 4}
+\begin{qbox}[title={Q4.1 (classification)}]
+For each $A$, decide whether $\dot X=AX$ is exponentially stable, marginally stable or unstable:
+(a) $\begin{bmatrix}-2&1\\-1&-2\end{bmatrix}$, (b) $\begin{bmatrix}0&2\\-2&0\end{bmatrix}$, (c) $\begin{bmatrix}1&0\\0&-3\end{bmatrix}$, (d) $\begin{bmatrix}0&1&0\\0&0&0\\0&0&-1\end{bmatrix}$.
+\end{qbox}
+\begin{solbox}
+(a) $\chi=(s+2)^2+1$, $\lambda=-2\pm i$: exponentially stable. (b) $\chi=s^2+4$, $\lambda=\pm2i$ simple: marginal. (c) $\lambda=1>0$: unstable.
+(d) $\lambda=0$ (algebraic multiplicity 2) and $\lambda=-1$. $A-0I=A$ has rank 2 (rows $(0,1,0)$ and $(0,0,-1)$), so $\dim E(0)=3-2=1<2$: there is a $J_2(0)$ block, so \textbf{unstable} ($X_0=e_2$ gives $X(t)=[t;1;0]$).
+\end{solbox}
+
+\begin{qbox}[title={Q4.2 (gain and phase)}]
+$T(s)=\dfrac{2}{s+2}$. Find $\Gamma(\omega)$ and $\phi(\omega)$, the gain in dB at $\omega=2$, and the steady-state output for input $\cos2t$.
+\end{qbox}
+\begin{solbox}
+$T(i\omega)=\frac{2}{2+i\omega}$: $\Gamma=\frac{2}{\sqrt{4+\omega^2}}$, $\phi=-\tan^{-1}(\omega/2)$ (real part $>0$). At $\omega=2$: $\Gamma=\frac1{\sqrt2}$, $20\log_{10}\frac1{\sqrt2}\approx-3.01$ dB, $\phi=-\frac\pi4$ (phase lag).
+Steady state: $\cos2t=\Re e^{2it}\mapsto\Re\big(T(2i)e^{2it}\big)=\frac1{\sqrt2}\cos(2t-\frac\pi4)$.
+\end{solbox}
+
+\begin{qbox}[title={Q4.3 (BIBO and resonance)}]
+Is the system $\ddot y+9y=u$ BIBO stable? Justify by choosing an input.
+\end{qbox}
+\begin{solbox}
+$T(s)=\frac1{s^2+9}$, poles $\pm3i$ on the imaginary axis, so $T\notin\mathcal S$, not BIBO stable (Theorem 0.45). Explicitly, $u=\cos3t$ (bounded) gives
+$\hat y=\frac{s}{(s^2+9)^2}=-\frac12\frac{d}{ds}\frac{1}{s^2+9}$, so $y=\frac{t}{2}\cdot\frac{\sin3t}{3}=\frac{t\sin3t}{6}$, unbounded. (Zero initial data.)
+\end{solbox}
+\newpage
