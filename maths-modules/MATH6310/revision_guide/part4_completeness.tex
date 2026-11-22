@@ -1,0 +1,293 @@
+\section{Complete metric spaces and the Contraction Mapping Theorem (Section 5)}
+
+\begin{plain}
+A space is \emph{complete} if it has no ``holes'': every sequence whose terms get closer and
+closer together (Cauchy) actually converges to a point \emph{of the space}. $\R$ is complete;
+$\Q$ is not (rational approximations to $\sqrt2$ have nowhere to converge). Completeness is the
+hypothesis that makes the big existence theorems work: Banach's fixed point theorem, Cantor's
+intersection theorem and Baire's theorem.
+\end{plain}
+
+\topic{Two basic facts about sequences}
+\begin{thm}{uniqueness of limits; subsequences}
+A sequence has at most one limit. Every subsequence of a convergent sequence converges to the
+same limit.
+\end{thm}
+\begin{thm}{Cauchy with a convergent subsequence $\Rightarrow$ convergent}
+If $(x_n)$ is Cauchy and $x_{n_k}\to a$, then $x_n\to a$.
+\end{thm}
+\begin{answer}
+Let $\varepsilon>0$. Choose $N$ with $d(x_n,x_m)<\varepsilon$ for $n,m\ge N$, and $K$ with
+$d(x_{n_K},a)<\varepsilon$ and $n_K\ge N$. Then for $n\ge N$:
+$d(x_n,a)\le d(x_n,x_{n_K})+d(x_{n_K},a)<2\varepsilon$.
+\end{answer}
+
+\topic{Completeness: definition and examples}
+\begin{defn}{complete}
+$E$ is \textbf{complete} if every Cauchy sequence in $E$ converges (to a point of $E$).
+\end{defn}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}ll@{}}\toprule
+Complete & Not complete\\\midrule
+$\R$, $\R^N$ with any $d_p$, $\C$ & $\Q$ \ (e.g.\ decimal truncations of $\sqrt2$)\\
+closed subsets of complete spaces, e.g.\ $[0,1]$, $\Z$ & $\ro01$ \ ($x_n=1/n$)\\
+discrete spaces & $(\R,d_{NS})$ \ ($x_n=n$)\\
+$\ell^\infty(S;E)$ for complete $E$ & $(C([0,1];\R),d_1)$ (see below)\\
+$C_b(E;E')$, $C(I;\R)$ with $\dsup$ & $\oi{-\pi/2}{\pi/2}$, although homeomorphic to $\R$\\
+sequentially compact spaces & polynomials on $[0,1]$ with $\dsup$\\\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{steps}{showing a space is NOT complete}
+Find a Cauchy sequence with no limit \emph{in the space}. Usually there is an ``obvious limit''
+outside the space: show the sequence is Cauchy, then show that any limit in the space would
+contradict uniqueness of limits in a bigger space.
+\end{steps}
+
+\begin{example}{$(C([0,1];\R),d_1)$ is not complete}
+Let $f_n$ be $0$ on $[0,\frac12]$, $1$ on $[\frac12+\frac1n,1]$, and linear in between.
+For $m\ge n$, $f_n$ and $f_m$ differ only on $[\frac12,\frac12+\frac1n]$, where both lie in
+$[0,1]$, so $d_1(f_n,f_m)\le\frac1n$: the sequence is Cauchy. If $d_1(f_n,f)\to0$ with $f$
+continuous, then on $[0,\frac12]$, $\int_0^{1/2}|f|\le d_1(f_n,f)\to0$, so $f=0$ there (by
+Exercise 2.10). On $[\frac12+\delta,1]$ we have $f_n=1$ for $n>1/\delta$, so $f=1$ there for
+every $\delta>0$. Then $f$ jumps at $\frac12$, which contradicts continuity.
+\end{example}
+
+\topic{Completeness and maps}
+\begin{thm}{Lipschitz maps preserve Cauchy sequences (Exercise 5.1)}
+If $\phi$ is Lipschitz, $d(\phi(x_n),\phi(x_m))\le L\,d(x_n,x_m)$, so $(\phi(x_n))$ is Cauchy when
+$(x_n)$ is. Hence if $\phi:E\to E'$ is bi-Lipschitz, $E$ is complete $\iff E'$ is complete; and
+Lipschitz equivalent metrics have the same complete spaces. The same proof works for
+\emph{uniformly continuous} maps.
+\end{thm}
+\begin{answer}
+\textbf{Bi-Lipschitz part.} Suppose $E'$ complete and $(x_n)$ Cauchy in $E$. Then $(\phi(x_n))$
+is Cauchy in $E'$, so $\phi(x_n)\to y$. Then $x_n=\phi^{-1}(\phi(x_n))\to\phi^{-1}(y)$, since
+$\phi^{-1}$ is Lipschitz and hence continuous. So $E$ is complete. The other direction is
+symmetric.
+\end{answer}
+
+\begin{exam}{2022 Q3(b) style}
+Let $f:E\to E'$ be a homeomorphism that is uniformly continuous, and let $E'$ be complete. Prove
+that $E$ is complete. Why is ``homeomorphism'' alone not enough?
+\end{exam}
+\begin{answer}
+Let $(x_n)$ be Cauchy in $E$ and $\varepsilon>0$. By uniform continuity there is $\delta>0$ with
+$d(x,y)<\delta\Rightarrow d'(f(x),f(y))<\varepsilon$; choose $N$ with $d(x_n,x_m)<\delta$ for
+$n,m\ge N$. Then $d'(f(x_n),f(x_m))<\varepsilon$, so $(f(x_n))$ is Cauchy in $E'$ and converges
+to some $y$. As $f^{-1}$ is continuous, $x_n=f^{-1}(f(x_n))\to f^{-1}(y)\in E$. Hence $E$ is
+complete.\\
+\textbf{Not enough}: $\tan:\oi{-\pi/2}{\pi/2}\to\R$ is a homeomorphism onto the complete space
+$\R$, but $\oi{-\pi/2}{\pi/2}$ is not complete. ($\tan$ is not uniformly continuous.)
+\end{answer}
+
+\topic{Complete $\iff$ closed (inside a complete space)}
+\begin{thm}{closed subsets of complete spaces (2025 Q4(a))}
+Let $A\subset E$ with the subspace metric. (i) If $A$ is complete then $A$ is closed in $E$.
+(ii) If $E$ is complete and $A$ is closed in $E$, then $A$ is complete.
+\end{thm}
+\begin{answer}
+(i) Let $a_n\in A$, $a_n\to p$ in $E$. Then $(a_n)$ is Cauchy (convergent sequences are
+Cauchy), and the distances are the same in $A$, so $(a_n)$ is Cauchy in $A$. Since $A$ is
+complete, $a_n\to a\in A$. By uniqueness of limits in $E$, $p=a\in A$. So $A$ is closed.\\
+(ii) Let $(a_n)$ be Cauchy in $A$. It is Cauchy in $E$, which is complete, so $a_n\to p\in E$.
+Since $A$ is closed, $p\in A$. Hence $(a_n)$ converges in $A$, and $A$ is complete.
+\end{answer}
+\textbf{Products}: a finite or countable product (with the metrics of Part 2) is complete iff
+every factor is complete. Hence $\ell^p(N)$ is complete.
+
+\topic{The paradigm theorem: $\ell^\infty(S;E)$ is complete}
+\begin{thm}{completeness of $\ell^\infty(S;E)$}
+If $E$ is complete then $(F_b(S;E),\dsup)$ is complete.
+\end{thm}
+\begin{answer}
+\textbf{Model proof (2023 Q3(b), 2024 Q3(d); learn this one).}
+\begin{enumerate}
+\item \textbf{Pointwise Cauchy.} Let $(f_n)$ be $\dsup$-Cauchy. For each $s\in S$,
+  $d(f_n(s),f_m(s))\le\dsup(f_n,f_m)$, so $(f_n(s))$ is Cauchy in $E$. As $E$ is complete,
+  define $f(s):=\lim_n f_n(s)$.
+\item \textbf{Uniform estimate (the crafty move).} Let $\varepsilon>0$ and choose $N$ with
+  $\dsup(f_n,f_m)<\varepsilon$ for $n,m\ge N$. Then for every $s$ and $n,m\ge N$:
+  $d(f_n(s),f_m(s))<\varepsilon$. Let $m\to\infty$ (the metric is continuous):
+  \[d(f_n(s),f(s))\le\varepsilon\qquad\text{for all }s\in S,\ n\ge N.\tag{$*$}\]
+\item \textbf{$f$ is bounded.} For $s,t\in S$:
+  $d(f(s),f(t))\le d(f(s),f_N(s))+d(f_N(s),f_N(t))+d(f_N(t),f(t))\le2\varepsilon+\diam f_N(S)<\infty$.
+  So $f\in F_b(S;E)$.
+\item \textbf{Convergence.} By $(*)$, $\dsup(f_n,f)\le\varepsilon$ for $n\ge N$. So $f_n\to f$ in
+  $\dsup$.
+\end{enumerate}
+\end{answer}
+
+\begin{exam}{2024 Q3(d) style}
+Show that $\ell^\infty(S;[0,1])$ is complete.
+\end{exam}
+\begin{answer}
+$[0,1]$ is a closed subset of the complete space $\R$, hence complete. Apply the theorem.
+(Every function into $[0,1]$ is automatically bounded.)
+\end{answer}
+
+\begin{thm}{$C_b(E;E')$ is complete (2025 Q4(b))}
+If $E'$ is complete, the bounded continuous functions $C_b(E;E')$ with $\dsup$ form a complete
+space. In particular $(C([0,1];\R),\dsup)$ is complete.
+\end{thm}
+\begin{answer}
+By the closed-subset theorem it suffices to show $C_b(E;E')$ is \emph{closed} in the complete
+space $\ell^\infty(E;E')$. Let $f_n\in C_b$, $\dsup(f_n,f)\to0$. Fix $x\in E$, $\varepsilon>0$.
+Choose $N$ with $\dsup(f_N,f)<\varepsilon$, then $\delta>0$ with
+$d(f_N(x),f_N(y))<\varepsilon$ whenever $d(x,y)<\delta$ (continuity of $f_N$). Then for such $y$:
+\[d(f(x),f(y))\le d(f(x),f_N(x))+d(f_N(x),f_N(y))+d(f_N(y),f(y))<3\varepsilon.\]
+So $f$ is continuous at $x$, and $f\in C_b$. (This is the ``$\varepsilon/3$ argument'': a uniform
+limit of continuous functions is continuous.) For $C(I;\R)$: continuous functions on $[0,1]$ are
+bounded, so $C(I;\R)=C_b(I;\R)$.
+\end{answer}
+
+\topic{Embedding, extension and completion (statements)}
+\begin{thm}{embedding (proof not required from memory)}
+Every metric space $E$ embeds isometrically into the complete normed space $\ell^\infty(E;\R)$.
+If $E$ is bounded, use $x\mapsto d_x:=d(x,\cdot)$. In general, fix $\omega$ and use
+$x\mapsto d_x-d_\omega$. Key inequality: $|d_x(p)-d_y(p)|\le d(x,y)$, with equality at $p=y$.
+\end{thm}
+\begin{thm}{unique Lipschitz extension}
+If $E_0$ is dense in $E$, $E'$ is complete, and $f_0:E_0\to E'$ is Lipschitz, then $f_0$ has a
+unique continuous extension $f:E\to E'$, given by $f(x)=\lim f_0(a_n)$ for any $a_n\to x$ with
+$a_n\in E_0$. Moreover $\Lip f=\Lip f_0$, and $f$ is an isometry if $f_0$ is. (Same with
+``uniformly continuous'', Exercise 5.9.)
+\end{thm}
+\textbf{Idea of proof}: $(a_n)$ is Cauchy $\Rightarrow$ $(f_0(a_n))$ is Cauchy $\Rightarrow$ it
+converges (completeness). Two sequences tending to $x$ give the same limit, so $f$ is
+well defined. Lipschitz bounds pass to the limit. Uniqueness comes from the identity theorem.
+
+\begin{defn}{completion}
+A completion of $E$ is a complete space $\tilde E$ with an isometry $\iota:E\to\tilde E$ whose
+range is dense. Completions exist and are unique up to a unique isometry (proof
+\textbf{non-examinable}). Example: the completion of $\Q$ is $\R$; of $(C(I;\R),d_1)$ it is
+$L^1(I)$ (optional).
+\end{defn}
+
+\topic{Banach's Contraction Mapping Theorem}
+\begin{thm}{Banach's CMT}
+Let $E$ be a \textbf{nonempty complete} metric space and $\phi:E\to E$ a \textbf{strict
+contraction} ($d(\phi(x),\phi(y))\le L\,d(x,y)$ with $L<1$). Then $\phi$ has a \textbf{unique}
+fixed point $a$, and for every $x\in E$, $\phi^{\circ n}(x)\to a$.
+\end{thm}
+\begin{answer}
+\textbf{Proof (learn it; it is examinable and often asked).}
+\begin{enumerate}
+\item \textbf{Uniqueness.} If $\phi(a)=a$, $\phi(b)=b$, $a\ne b$, then
+  $d(a,b)=d(\phi(a),\phi(b))\le L\,d(a,b)<d(a,b)$, a contradiction.
+\item \textbf{The iterates are Cauchy.} Let $x_0=x$, $x_k=\phi(x_{k-1})$. By induction
+  $d(x_k,x_{k+1})\le L^k d(x_0,x_1)$. For $n,p\ge1$, by the triangle inequality,
+  \[d(x_n,x_{n+p})\le\sum_{k=n}^{n+p-1}L^kd(x_0,x_1)\le\frac{L^n}{1-L}\,d(x_0,x_1)\to0.\]
+\item \textbf{Limit.} $E$ is complete, so $x_n\to a$. $\phi$ is Lipschitz, hence continuous, so
+  $\phi(a)=\lim\phi(x_n)=\lim x_{n+1}=a$.
+\end{enumerate}
+\textbf{Error estimate} (useful in numerical questions): letting $p\to\infty$,
+$d(x_n,a)\le\frac{L^n}{1-L}d(x_0,x_1)$.
+\end{answer}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}lll@{}}\toprule
+Hypothesis dropped & Counterexample & Why it fails\\\midrule
+completeness & $\phi(x)=x/2$ on $\ro01$ & fixed point $0$ is missing\\
+$L<1$ (only $L=1$) & $\phi(x)=x+1$ on $\R$ & no fixed point\\
+$L<1$ (only $d(\phi x,\phi y)<d(x,y)$) & $\phi(x)=x+\frac1x$ on $\lo1\infty$ & $x=x+\frac1x$ impossible\\
+$\phi(E)\subset E$ & $\phi(x)=\frac x2+1$ on $[0,1]$ & $\phi(1)=\frac32\notin[0,1]$\\\bottomrule
+\end{tabular}
+\end{center}
+\emph{Check of the third row}: for $x\ne y\ge1$,
+$|\phi(x)-\phi(y)|=|x-y|\,\big|1-\frac1{xy}\big|<|x-y|$, and $[1,\infty[$ is closed in $\R$, hence
+complete.
+
+\begin{exam}{solving $\cos x=x$}
+Show that $\cos x=x$ has exactly one solution in $[0,1]$, and that the iteration
+$x_{n+1}=\cos x_n$ converges to it from any $x_0\in[0,1]$.
+\end{exam}
+\begin{answer}
+$E=[0,1]$ is closed in $\R$, so complete. $\phi=\cos$ maps $[0,1]$ into $[\cos1,1]\subset[0,1]$.
+By the mean value theorem, $|\cos x-\cos y|=|\sin\xi||x-y|\le\sin(1)|x-y|$ for some $\xi$ between
+$x,y$, and $L=\sin1\approx0.84<1$. By Banach's CMT there is a unique fixed point in $[0,1]$, and
+the iterates converge to it. (Any solution of $\cos x=x$ in $\R$ lies in $[-1,1]$, and on
+$[-1,0[$ we have $\cos x>0>x$; so it is in fact the unique real solution.)
+\end{answer}
+
+\begin{exam}{an integral equation}
+Show there is a unique $y\in C([0,1];\R)$ with $y(t)=1+\frac12\int_0^t y(s)\,ds$ for all $t$.
+Identify $y$.
+\end{exam}
+\begin{answer}
+Let $E=(C([0,1];\R),\dsup)$, which is complete. Define $\phi(f)(t)=1+\frac12\int_0^tf$. The map
+$t\mapsto\int_0^tf$ is continuous (it is Lipschitz with constant $\norm f_{\sup}$), so
+$\phi(f)\in E$. For $f,g\in E$ and $t\in[0,1]$:
+\[|\phi(f)(t)-\phi(g)(t)|\le\tfrac12\int_0^t|f-g|\le\tfrac12\,t\,\dsup(f,g)\le\tfrac12\dsup(f,g).\]
+So $\dsup(\phi f,\phi g)\le\frac12\dsup(f,g)$, a strict contraction. By Banach there is a unique
+fixed point $y$. Since $y'=\frac12y$, $y(0)=1$ (FTC), we get $y(t)=e^{t/2}$; check:
+$1+\frac12\int_0^te^{s/2}ds=1+(e^{t/2}-1)=e^{t/2}$.\\
+\textbf{General version in the notes}: for $y(t)=\alpha(t)+\int_a^t\beta(y(s),s)ds$ with $\beta$
+Lipschitz in its first variable (constant $M$), one gets
+$\dsup(\phi^{\circ n}f,\phi^{\circ n}g)\le\frac{(M(b-a))^n}{n!}\dsup(f,g)$, and the extended CMT
+(Exercise 5.4: $\sum\alpha_n<\infty$) applies on any interval, however long.
+\end{answer}
+
+\begin{exam}{a power of $T$ is a contraction (2022 Q3(c)(ii))}
+Let $E$ be nonempty and complete, $T:E\to E$, and suppose $S=T^{\circ K}$ is a strict contraction.
+Show $T$ has a unique fixed point $p$ and $T^{\circ n}x\to p$ for all $x$.
+\end{exam}
+\begin{answer}
+By Banach, $S$ has a unique fixed point $p$. Since $S\circ T=T\circ S$:
+$S(Tp)=T(Sp)=Tp$, so $Tp$ is a fixed point of $S$, and by uniqueness $Tp=p$. Any fixed point of
+$T$ is a fixed point of $S$, hence equals $p$. For $r\in\{0,\dots,K-1\}$,
+$T^{\circ(mK+r)}x=S^{\circ m}(T^{\circ r}x)\to p$ as $m\to\infty$. Finitely many subsequences
+covering all $n$ tend to $p$, so $T^{\circ n}x\to p$.
+\end{answer}
+
+\topic{Cantor's Intersection Theorem}
+\begin{thm}{Cantor's Intersection Theorem}
+Let $E$ be complete and $F_1\supset F_2\supset\cdots$ \textbf{nonempty, closed} sets with
+$\diam F_n\to0$. Then $\bigcap_nF_n$ is a single point.
+\end{thm}
+\begin{answer}
+At most one point: $\diam\bigcap F_n\le\diam F_n\to0$. At least one: choose $x_n\in F_n$. For
+$p\ge0$, $x_{n+p}\in F_n$, so $d(x_n,x_{n+p})\le\diam F_n\to0$: Cauchy. By completeness
+$x_n\to a$. For fixed $n$, $(x_{n+p})_p$ lies in the closed set $F_n$, so $a\in F_n$. Hence
+$a\in\bigcap F_n$.
+\end{answer}
+\textbf{Every hypothesis is needed (Exercise 5.6)}: drop closed: $F_n=\oi0{1/n}$ in $\R$ (empty
+intersection). Drop $\diam\to0$: $F_n=\lo n\infty$ (closed, nested, empty intersection). Drop
+completeness: $F_n=\Q\cap[\sqrt2-\frac1n,\sqrt2+\frac1n]$ in $\Q$.
+
+\topic{Baire Category Theorem (proof non-examinable)}
+\begin{thm}{Baire}
+In a complete metric space, a countable intersection of open dense sets is dense. Equivalently,
+a countable union of closed nowhere dense sets ($\inte\cl A=\emptyset$) has dense complement; in
+particular a complete space is not such a union.
+\end{thm}
+Consequences: $\R$ is uncountable (it is not a countable union of points); $\R^2$ is not a
+countable union of lines; ``most'' continuous functions are nowhere differentiable.
+
+\begin{exam}{Exercise 5.7: what ``not Cauchy'' means}
+Show $(x_n)$ is not Cauchy iff it has a subsequence with $\inf_kd(x_{n_k},x_{n_{k+1}})>0$.
+\end{exam}
+\begin{answer}
+First, Cauchy $\iff\forall\varepsilon\ \exists N\ \forall n\ge N$, $d(x_N,x_n)<\varepsilon$
+(use $\varepsilon/2$ and the triangle inequality for ``$\Leftarrow$''). So not Cauchy means:
+$\exists\varepsilon_0>0\ \forall N\ \exists n\ge N$ with $d(x_N,x_n)\ge\varepsilon_0$. Set $n_1=1$
+and choose $n_{k+1}$ with $d(x_{n_k},x_{n_{k+1}})\ge\varepsilon_0$, which forces
+$n_{k+1}>n_k$. The infimum is $\ge\varepsilon_0$. Conversely, if the infimum is $\eta>0$ and
+the sequence were Cauchy, choose $N$ for $\eta/2$ and $k$ with $n_k\ge N$: then
+$\eta\le d(x_{n_k},x_{n_{k+1}})<\eta/2$, a contradiction.
+\end{answer}
+
+\begin{tip}
+\begin{itemize}
+\item In completeness proofs, the candidate limit comes from completeness of the
+  \emph{target} space, applied pointwise. Then you must prove (a) it is in the space and (b)
+  convergence happens in \emph{the given metric}, not just pointwise.
+\item ``Let $m\to\infty$ in $d(f_n(s),f_m(s))<\varepsilon$'' gives $\le\varepsilon$, not $<$.
+\item Banach: check all four conditions: nonempty, complete, maps \emph{into itself},
+  constant $L<1$. A Lipschitz constant of exactly $1$ is not enough.
+\item Completeness is a \emph{metric} property, not topological: $\R$ and
+  $\oi{-\pi/2}{\pi/2}$ are homeomorphic, but only one is complete.
+\end{itemize}
+\end{tip}

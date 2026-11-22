@@ -1,0 +1,155 @@
+\section{Mock examination paper with full solutions}
+
+\begin{note}{Instructions (practice conditions)}
+Four questions, 25 marks each. Allow about 2 hours. Attempt everything before looking at the
+solutions. Mark yourself with the mark allocations shown: a definition must be exact, and a
+proof scores only if every step has a reason.
+\end{note}
+
+\topic{The paper}
+\textbf{Question 1 (metrics; 25 marks).} Define $d:\R\times\R\to[0,\infty[$ by
+$d(x,y)=|x-y|+|x^3-y^3|$.
+\begin{enumerate}[label=(\alph*)]
+\item Define what is meant by a metric on a set $S$. \hfill[3]
+\item Prove that $d$ is a metric on $\R$. \hfill[6]
+\item Prove that $d$ is topologically equivalent to the standard metric on $\R$. \hfill[5]
+\item Prove that $d$ is not Lipschitz equivalent to the standard metric. \hfill[4]
+\item Prove that $(\R,d)$ is complete. \hfill[7]
+\end{enumerate}
+
+\textbf{Question 2 (topology; 25 marks).} Let $E$ be a metric space.
+\begin{enumerate}[label=(\alph*)]
+\item Define: open subset of $E$; the closure $\cl A$ of $A\subset E$. \hfill[4]
+\item Prove that the intersection of two open sets is open. Give an example showing that a
+  countable intersection of open sets need not be open. \hfill[5]
+\item In $(\R^2,d_2)$ let $A=\{(x,y):x^2+y^2<1\}\cup\{(2,0)\}$. Find $\inte A$, $\cl A$ and
+  $\partial A$, justifying your answers. \hfill[6]
+\item Let $f:E\to E'$ be continuous. Prove that $f^{-1}(V)$ is open in $E$ for every open
+  $V\subset E'$. Give an example of a continuous $f:\R\to\R$ and an open set $U$ such that $f(U)$
+  is not open. \hfill[10]
+\end{enumerate}
+
+\textbf{Question 3 (completeness; 25 marks).}
+\begin{enumerate}[label=(\alph*)]
+\item Define a Cauchy sequence and a complete metric space. \hfill[3]
+\item Let $E$ be complete and $A\subset E$ closed. Prove that $A$, with the restricted metric,
+  is complete. \hfill[5]
+\item Show that $\ro01$ with the standard metric is not complete. \hfill[3]
+\item State Banach's Contraction Mapping Theorem. \hfill[3]
+\item Let $E=(C([0,1];\R),\dsup)$, which you may assume is complete, and define
+  \[\phi(f)(t)=t+\tfrac12\int_0^1 t\,s\,f(s)\,ds\qquad(t\in[0,1]).\]
+  Show that $\phi$ maps $E$ into $E$ and is a strict contraction. Deduce that the equation
+  $y(t)=t+\frac12\int_0^1ts\,y(s)\,ds$ has a unique continuous solution, and find it. \hfill[11]
+\end{enumerate}
+
+\textbf{Question 4 (compactness; 25 marks).}
+\begin{enumerate}[label=(\alph*)]
+\item Define what it means for $K\subset E$ to be sequentially compact. \hfill[2]
+\item Prove that a sequentially compact subset of a metric space is closed and bounded. \hfill[6]
+\item Prove that the continuous image of a sequentially compact set is sequentially compact. \hfill[5]
+\item Show that the closed unit ball of $(C([0,1];\R),\dsup)$ is closed and bounded but not
+  sequentially compact. \hfill[6]
+\item Let $K$ be a nonempty sequentially compact metric space and $f:K\to K$ satisfy
+  $d(f(x),f(y))<d(x,y)$ whenever $x\ne y$. Prove that $f$ has exactly one fixed point. \hfill[6]
+\end{enumerate}
+
+\clearpage
+\topic{Solutions}
+
+\textbf{Q1(a)} [3] A function $d:S\times S\to[0,\infty[$ such that for all $x,y,z\in S$:
+$d(x,y)=0\iff x=y$; $d(x,y)=d(y,x)$; $d(x,z)\le d(x,y)+d(y,z)$.
+
+\textbf{Q1(b)} [6] Values are finite and $\ge0$. If $d(x,y)=0$ then $|x-y|=0$, so $x=y$;
+and $d(x,x)=0$. Symmetry is clear since $|a|=|-a|$. Triangle inequality: by the triangle
+inequality in $\R$,
+$|x-z|\le|x-y|+|y-z|$ and $|x^3-z^3|\le|x^3-y^3|+|y^3-z^3|$; add these.
+
+\textbf{Q1(c)} [5] We show both metrics have the same convergent sequences. Since
+$|x_n-x|\le d(x_n,x)$, $d$-convergence implies standard convergence. Conversely if $x_n\to x$ in
+the standard metric then $x_n^3\to x^3$ (algebra of limits), so
+$d(x_n,x)=|x_n-x|+|x_n^3-x^3|\to0$. By the convergence criterion the metrics are topologically
+equivalent.
+
+\textbf{Q1(d)} [4] If $d(x,y)\le M|x-y|$ for all $x,y$, take $x=n$, $y=n+1$:
+$d(n,n+1)=1+(3n^2+3n+1)\le M$ for all $n$, which is impossible. So the identity from
+$(\R,|\cdot|)$ to $(\R,d)$ is not Lipschitz.
+
+\textbf{Q1(e)} [7] Let $(x_n)$ be $d$-Cauchy. As $|x_n-x_m|\le d(x_n,x_m)$, $(x_n)$ is Cauchy
+in $\R$, so it converges to some $x\in\R$ (completeness of $\R$). By (c), $d(x_n,x)\to0$. So
+every $d$-Cauchy sequence converges: $(\R,d)$ is complete. \emph{(Note that topological
+equivalence alone would not be enough; we used $d\ge|\cdot|$ to transfer Cauchyness.)}
+
+\textbf{Q2(a)} [4] $U$ is open if $\forall p\in U\ \exists r>0$ with $B_r(p)\subset U$.
+$\cl A=\{p\in E:\forall r>0,\ B_r(p)\cap A\ne\emptyset\}$ (equivalently, limits of sequences in
+$A$).
+
+\textbf{Q2(b)} [5] Let $U,V$ be open, $p\in U\cap V$. Choose $r,s>0$ with $B_r(p)\subset U$,
+$B_s(p)\subset V$, and let $t=\min\{r,s\}>0$. Then $B_t(p)\subset B_r(p)\cap B_s(p)\subset U\cap V$.
+Example: $\bigcap_{n\ge1}\oi{-\frac1n}{\frac1n}=\{0\}$, not open in $\R$ (every ball about $0$
+contains other points).
+
+\textbf{Q2(c)} [6] Let $D$ be the open unit disc and $q=(2,0)$.\\
+$\inte A=D$: $D$ is an open ball, so $D\subset\inte A$. And $q$ is not interior: every
+$B_r(q)$ contains $(2+\frac r2,0)\notin A$.\\
+$\cl A=\cl D\cup\{q\}$ where $\cl D$ is the closed unit disc: this set is closed (a closed ball
+union a point) and contains $A$, so $\cl A\subset\cl D\cup\{q\}$. Conversely each $p$ with
+$\norm p\le1$ is the limit of $(1-\frac1n)p\in D$, and $q\in A$.\\
+$\partial A=\cl A\setminus\inte A=\{(x,y):x^2+y^2=1\}\cup\{q\}$.
+
+\textbf{Q2(d)} [10] Let $V\subset E'$ be open and $p\in f^{-1}(V)$. Then $f(p)\in V$, so
+choose $\varepsilon>0$ with $B_\varepsilon(f(p))\subset V$. By continuity at $p$ there is
+$\delta>0$ with $f(B_\delta(p))\subset B_\varepsilon(f(p))$. Hence for $x\in B_\delta(p)$,
+$f(x)\in V$, i.e.\ $B_\delta(p)\subset f^{-1}(V)$. So $f^{-1}(V)$ is open. [7]\\
+Example: $f\equiv0$ is continuous (constant), $U=\oi{-1}1$ is open, $f(U)=\{0\}$ is not open. [3]
+
+\textbf{Q3(a)} [3] $(x_n)$ is Cauchy if $\forall\varepsilon>0\ \exists N\ \forall n,m\ge N$,
+$d(x_n,x_m)<\varepsilon$. $E$ is complete if every Cauchy sequence in $E$ converges to a point of
+$E$.
+
+\textbf{Q3(b)} [5] Let $(a_n)$ be Cauchy in $A$. Distances in $A$ equal those in $E$, so
+$(a_n)$ is Cauchy in $E$ and converges to some $p\in E$. As $A$ is closed and $a_n\in A$,
+$p\in A$. Hence $a_n\to p$ in $A$.
+
+\textbf{Q3(c)} [3] $x_n=\frac1n$ is Cauchy (it converges in $\R$). If $x_n\to a\in\ro01$ then also
+$x_n\to a$ in $\R$; but $x_n\to0$ in $\R$, so $a=0\notin\ro01$ by uniqueness of limits. Hence it
+has no limit in $\ro01$.
+
+\textbf{Q3(d)} [3] If $E$ is a nonempty complete metric space and $\phi:E\to E$ satisfies
+$d(\phi x,\phi y)\le L\,d(x,y)$ for some $L<1$, then $\phi$ has a unique fixed point $a$, and
+$\phi^{\circ n}(x)\to a$ for every $x\in E$.
+
+\textbf{Q3(e)} [11] \emph{Into $E$.} $\phi(f)(t)=t\big(1+\frac12c_f\big)$ with
+$c_f=\int_0^1sf(s)\,ds\in\R$ (the integrand is continuous), so $\phi(f)$ is linear in $t$ and
+continuous. [2]\\
+\emph{Contraction.} For $t\in[0,1]$:
+\[|\phi(f)(t)-\phi(g)(t)|=\tfrac t2\Big|\int_0^1s(f-g)(s)\,ds\Big|\le\tfrac12\int_0^1s\,|f(s)-g(s)|\,ds
+\le\tfrac12\cdot\tfrac12\,\dsup(f,g).\]
+So $\dsup(\phi f,\phi g)\le\frac14\dsup(f,g)$, with $L=\frac14<1$. [4]\\
+\emph{Conclusion.} By Banach there is a unique $y\in E$ with $\phi(y)=y$, i.e.\ a unique
+continuous solution. [1]\\
+\emph{Finding it.} Any solution has the form $y(t)=kt$ with $k=1+\frac c2$ and
+$c=\int_0^1s\cdot ks\,ds=\frac k3$. So $k=1+\frac k6$, giving $k=\frac65$: $y(t)=\frac65t$.
+Check: $t+\frac t2\int_0^1\frac65s^2ds=t+\frac t2\cdot\frac25=\frac65t$. [4]
+
+\textbf{Q4(a)} [2] Every sequence in $K$ has a subsequence converging to a point of $K$.
+
+\textbf{Q4(b)} [6] See Part 5 (closed: subsequence limit equals the limit; bounded: otherwise
+build $x_n$ with $d(x_n,x_m)\ge1$ for all $n\ne m$, which has no Cauchy subsequence).
+
+\textbf{Q4(c)} [5] See Part 5 (lift to $x_n\in K$, extract $x_{n_k}\to a\in K$, apply
+sequential continuity).
+
+\textbf{Q4(d)} [6] $B=\{f:\dsup(f,0)\le1\}$ is a closed ball, hence closed, and
+$\diam B\le2$, so it is bounded. [2] Let $f_n(x)=x^n\in B$. Suppose $f_{n_k}\to g$ in $\dsup$.
+Uniform convergence implies pointwise convergence, so $g(x)=\lim x^{n_k}=0$ for $0\le x<1$ and
+$g(1)=1$. Then $g$ is not continuous at $1$, but $g\in B\subset C([0,1];\R)$ must be continuous
+(the limit is in the space). Contradiction, so no subsequence converges. [4]
+
+\textbf{Q4(e)} [6] \emph{Uniqueness}: if $a\ne b$ were both fixed,
+$d(a,b)=d(f(a),f(b))<d(a,b)$, a contradiction. [1]\\
+\emph{Existence}: $f$ is $1$-Lipschitz, hence continuous, so $g(x)=d(x,f(x))$ is continuous
+(composition of continuous maps with the continuous metric). $K$ is sequentially compact and
+nonempty, so $g$ attains its minimum at some $a\in K$. [3] If $f(a)\ne a$, then
+$g(f(a))=d(f(a),f(f(a)))<d(a,f(a))=g(a)$, contradicting minimality. So $f(a)=a$. [2]\\
+\emph{Remark}: compactness is essential: $x\mapsto x+\frac1x$ on $\lo1\infty$ (complete, not
+compact) has the same strict inequality and no fixed point.

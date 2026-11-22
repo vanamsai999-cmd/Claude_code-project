@@ -1,0 +1,189 @@
+\setcounter{section}{-1}
+\section{How to answer exam questions in this module}
+
+\topic{The big picture: what the module is about}
+The whole module is built from one idea: a \emph{distance function} $d$ on a set $S$ obeying
+three rules (the metric axioms). From those three rules alone we rebuild everything you know
+from real analysis:
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Real analysis idea & Metric space version & Where \\ \midrule
+$|x-y|$ & $d(x,y)$ & Section 0, 3 \\
+$\oi{a-r}{a+r}$ & open ball $B_r(a)=\{x: d(x,a)<r\}$ & Section 3 \\
+$x_n\to a$ & $d(x_n,a)\to 0$ & Section 3 \\
+open interval, closed interval & open set, closed set & Section 4 \\
+$\varepsilon$--$\delta$ continuity & continuity, preimages of open sets are open & Section 4 \\
+Cauchy sequences converge in $\R$ & complete metric space & Section 5 \\
+Bolzano--Weierstrass & sequentially compact set & Section 6 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Sections 1 and 2 are the toolkit (sets, functions, countability, sup/inf, sequences, norms).
+They are partly revision, but they supply the tools for the main proofs.
+
+\begin{plain}
+Almost every exam question is one of three kinds:
+\begin{enumerate}
+\item \textbf{Define / state}: write down a definition or theorem exactly.
+\item \textbf{Prove}: show that something has a property (is a metric, is open, is complete,
+  is compact, is continuous, \dots). There is a template for each one, given below.
+\item \textbf{Disprove / give an example}: show that something can fail. You need a
+  counterexample, and you must \emph{check} that it works. Part 8 has a counterexample bank.
+\end{enumerate}
+\end{plain}
+
+\topic{What the past papers looked like}
+The 2022--2025 papers (code MATH316) had four or five long questions, each split into parts
+worth a few marks to about ten marks. The recurring topics were:
+\begin{itemize}
+\item metric axioms, triangle-inequality estimates, discrete metric, isometries into $\R^2$;
+\item open/closed sets, interior, closure, metric subspaces (relatively open sets);
+\item continuity via preimages; density; separability;
+\item equivalent metrics ($\min\{d,1\}$, $d/(1+d)$, $\arctan$); product metrics;
+\item completeness: closed subsets of complete spaces, $\ell^\infty(S;E)$, $C_b(E;E')$;
+\item Banach's Contraction Mapping Theorem;
+\item sequential compactness: continuous images, closed subsets, products, Heine--Borel,
+  and counterexamples.
+\end{itemize}
+The parts usually go in the order \emph{define} $\to$ \emph{easy proof} $\to$
+\emph{example/counterexample} $\to$ \emph{harder proof}. Marks for definitions are the easiest
+marks on the paper, so learn them word for word (Part 8.1).
+
+\topic{How to write a proof that earns full marks}
+\begin{steps}{writing any proof}
+\begin{enumerate}
+\item \textbf{Write down what you are given} in symbols. (``Let $(x_n)$ be a Cauchy sequence
+  in $E$.'')
+\item \textbf{Write down what you must show}, using the definition. (``We must find $a\in E$
+  with $d(x_n,a)\to 0$.'') This one line often earns a mark by itself and tells you what to
+  do next.
+\item \textbf{Choose the template} (below) that matches the goal.
+\item \textbf{Work through it}, quoting a reason for every inequality: ``by the triangle
+  inequality (MS3)'', ``since $U$ is open'', ``by completeness of $E$''.
+\item \textbf{When you use a theorem, check its hypotheses aloud}: ``$E$ is complete and
+  $\phi$ is a strict contraction, so by Banach's CMT\dots''.
+\item \textbf{Finish with a conclusion sentence} that repeats the claim.
+\end{enumerate}
+\end{steps}
+
+\begin{tip}
+\begin{itemize}
+\item Fix the order of quantifiers: ``$\forall \varepsilon>0\ \exists N$'' means $N$ may depend
+  on $\varepsilon$; ``$\exists \delta\ \forall x$'' (uniform) means one $\delta$ works for all
+  $x$.
+\item Strict inequalities can become non-strict in a limit: if $d(x_n,a)<r$ for all $n$ and
+  $x_n\to p$, you only get $d(p,a)\le r$.
+\item ``Not open'' does \emph{not} mean ``closed''. Most sets are neither.
+\item An example never proves a ``for all'' statement, but one counterexample disproves it.
+\item When giving a counterexample, verify \emph{both} that the hypotheses hold \emph{and}
+  that the conclusion fails.
+\end{itemize}
+\end{tip}
+
+\topic{The ten proof templates}
+Learn these. Each later Part refers back to them.
+
+\begin{steps}{T1. Show that $d$ is a metric on $S$}
+\begin{enumerate}
+\item (MS0) $d(x,y)\in[0,\infty[$ for all $x,y$: finite and non-negative.
+\item (MS1) $d(x,y)=0\iff x=y$. Do both directions: $d(x,x)=0$, and $d(x,y)=0\Rightarrow x=y$.
+\item (MS2) Symmetry $d(x,y)=d(y,x)$.
+\item (MS3) Triangle inequality $d(x,z)\le d(x,y)+d(y,z)$. This is usually the only hard
+  step. Typical tools: the triangle inequality for $|\cdot|$ or a norm; splitting into cases
+  (e.g.\ $x=z$ or not); ``pointwise then take sup''; subadditivity of $\alpha$.
+\end{enumerate}
+To show something is \emph{not} a metric, find one specific triple or pair breaking one axiom.
+\end{steps}
+
+\begin{steps}{T2. Show that a set $U$ is open}
+\begin{enumerate}
+\item Let $p\in U$ be arbitrary.
+\item Find a radius $r>0$ (it may depend on $p$). Draw a picture: how far is $p$ from the
+  ``edge'' of $U$? Typical choices: $r=R-d(p,a)$ for a ball $B_R(a)$; $r=\min\{r_1,r_2\}$;
+  $r=\min_i d(p,a_i)$.
+\item Take $x\in B_r(p)$ and use the triangle inequality to show $x\in U$.
+\item Conclude $B_r(p)\subset U$, so $U$ is open.
+\end{enumerate}
+Other routes: $U=f^{-1}(V)$ with $f$ continuous and $V$ open; $U$ is a union of open sets or a
+finite intersection of open sets; $U\cpl$ is closed.
+\end{steps}
+
+\begin{steps}{T3. Show that a set $F$ is closed}
+\textbf{Sequence method:} let $(x_n)$ be a sequence in $F$ with $x_n\to p$ in $E$; show $p\in F$.
+\textbf{Complement method:} show $E\setminus F$ is open (template T2).
+\textbf{Preimage method:} $F=f^{-1}(C)$ with $f$ continuous and $C$ closed, e.g.\
+$\{x: f(x)=g(x)\}$, $\{x: f(x)\le c\}$.
+\textbf{Algebra:} arbitrary intersections and finite unions of closed sets are closed.
+\end{steps}
+
+\begin{steps}{T4. Show that $f:E\to E'$ is continuous}
+Pick whichever is easiest:
+\begin{enumerate}
+\item \textbf{Lipschitz}: find $M$ with $d'(f(x),f(y))\le M\,d(x,y)$. Then $f$ is continuous
+  (take $\delta=\varepsilon/M$).
+\item \textbf{Sequences}: $x_n\to p\Rightarrow f(x_n)\to f(p)$.
+\item \textbf{$\varepsilon$--$\delta$}: given $\varepsilon$, find $\delta$ with
+  $f(B_\delta(p))\subset B_\varepsilon(f(p))$.
+\item \textbf{Preimages}: $f^{-1}(V)$ is open for every open $V$.
+\item \textbf{Building blocks}: compositions, sums and products of continuous functions.
+\end{enumerate}
+To show $f$ is \emph{not} continuous at $p$: find a sequence $x_n\to p$ with
+$f(x_n)\not\to f(p)$.
+\end{steps}
+
+\begin{steps}{T5. Show that a sequence is Cauchy, or convergent}
+Convergent: name the limit $a$, then show $d(x_n,a)\to 0$ (bound it by something that tends to
+$0$). Cauchy: show that for each $\varepsilon>0$ there is $N$ with $d(x_n,x_m)<\varepsilon$ for
+$n,m\ge N$. Geometric trick: if $d(x_k,x_{k+1})\le CL^k$ with $L<1$ then
+$d(x_n,x_{n+p})\le CL^n/(1-L)$.
+\end{steps}
+
+\begin{steps}{T6. Show that a metric space $E$ is complete (the 3-step method)}
+\begin{enumerate}
+\item \textbf{Take} a Cauchy sequence $(x_n)$ in $E$.
+\item \textbf{Build a candidate limit}: usually by applying completeness of something you
+  already know (e.g.\ $\R$, or $E'$ pointwise): $x(s):=\lim_n x_n(s)$.
+\item \textbf{Check} (a) the candidate lies in $E$ (bounded? continuous?) and (b) $x_n\to x$
+  \emph{in the metric of $E$}. The key move is: write the Cauchy inequality, then let
+  $m\to\infty$.
+\end{enumerate}
+\textbf{Shortcut}: if $E$ is a \emph{closed subset} of a complete space, $E$ is complete.
+\end{steps}
+
+\begin{steps}{T7. Show that $K$ is sequentially compact}
+\begin{enumerate}
+\item Take an arbitrary sequence $(x_n)$ in $K$.
+\item Extract a convergent subsequence (Bolzano--Weierstrass in each coordinate, or use the
+  compactness of a bigger set).
+\item Show the limit lies in $K$ (usually because $K$ is closed).
+\end{enumerate}
+\textbf{Shortcuts}: Heine--Borel in $\R^N$ (closed and bounded); closed subset of a compact
+set; continuous image of a compact set; finite or countable product of compact spaces.
+\end{steps}
+
+\begin{steps}{T8. Show that $K$ is \emph{not} sequentially compact}
+Either show $K$ is not closed or not bounded, or find a sequence in $K$ with no convergent
+subsequence: typically a sequence with $d(x_n,x_m)\ge c>0$ for all $n\ne m$.
+\end{steps}
+
+\begin{steps}{T9. Show two metrics $d_1,d_2$ on $S$ are equivalent}
+\textbf{Lipschitz equivalent}: find $m,M>0$ with $m\,d_1\le d_2\le M\,d_1$.
+\textbf{Topologically equivalent}: show $d_1$-convergence $\iff$ $d_2$-convergence for every
+sequence, or that both identity maps are continuous.
+\textbf{Not equivalent}: find a sequence converging in one but not the other.
+\end{steps}
+
+\begin{steps}{T10. Use Banach's Contraction Mapping Theorem}
+\begin{enumerate}
+\item Name the complete metric space $E$ (often a closed subset of $\R$ or $C([a,b];\R)$
+  with $\dsup$).
+\item Check $\phi$ maps $E$ \emph{into} $E$.
+\item Find $L<1$ with $d(\phi(x),\phi(y))\le L\,d(x,y)$ (mean value theorem, or an integral
+  estimate).
+\item Conclude: there is a unique fixed point $a$, and $\phi^{\circ n}(x)\to a$ for every
+  starting point $x$.
+\end{enumerate}
+\end{steps}

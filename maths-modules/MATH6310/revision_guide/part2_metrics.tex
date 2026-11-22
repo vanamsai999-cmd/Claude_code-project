@@ -1,0 +1,342 @@
+\section{Metric spaces: definitions, examples and basic tools (Sections 0 and 3)}
+
+\topic{The definition}
+\begin{defn}{metric, metric space}
+A \textbf{metric} on a set $S$ is a function $d:S\times S\to[0,\infty[$ such that for all
+$x,y,z\in S$:
+\begin{itemize}
+\item[(MS1)] $d(x,y)=0\iff x=y$;
+\item[(MS2)] $d(y,x)=d(x,y)$ \hfill (symmetry)
+\item[(MS3)] $d(x,z)\le d(x,y)+d(y,z)$ \hfill (triangle inequality)
+\end{itemize}
+A \textbf{metric space} is a pair $E=(S,d)$. Broken down further: (MS0) $0\le d<\infty$;
+(MS1a) $d(x,x)=0$; (MS1b) $d(x,y)=0\Rightarrow x=y$ (definiteness).
+\end{defn}
+
+\begin{plain}
+A metric is any sensible notion of ``how far apart'' two things are: never negative, zero only
+for the same point, the same in both directions, and going via a third point is never shorter.
+The ``points'' can be numbers, vectors, functions, sets, strings, and so on. The same set can
+carry many different metrics, and these give different metric spaces.
+\end{plain}
+
+\topic{The examples you must know}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{3.6cm}p{6.6cm}p{5.4cm}@{}}
+\toprule
+Name & Formula & Key fact\\\midrule
+Standard on $\R$ & $|y-x|$ & complete; induced by a norm\\
+$\ell^p(N)$ on $\R^N$ & $\big(\sum|y_i-x_i|^p\big)^{1/p}$, $1\le p<\infty$ & $p=2$ Euclidean; Minkowski\\
+$\ell^\infty(N)$ & $\max_i|y_i-x_i|$ & all $d_p$ Lipschitz equivalent\\
+Discrete & $1$ if $s\ne t$, $0$ if $s=t$ & every set open and closed\\
+Counting on $\mathcal P(S)$ & $\#(A\Delta B)$ ($S$ finite) & $A\Delta C\subset(A\Delta B)\cup(B\Delta C)$\\
+Integration $d_1$ on $C(I;\R)$ & $\int_0^1|g-f|$ & (MS1b) needs continuity; not complete\\
+Uniform / sup $\dsup$ & $\sup_{s\in I}|g(s)-f(s)|$ & complete; convergence = uniform\\
+Hausdorff on $\mathcal K(\R^2)$ & $\inf\{\delta: K^\delta\supset J,\ J^\delta\supset K\}$ & sets as points\\
+$d_{TGV}$ on $\R^2$ & $\norm u_2+\norm v_2$ if $u\ne v$, else $0$ & ``all routes go via $0$''\\
+$d_{NS}$ on $\R$ & $|\tan^{-1}y-\tan^{-1}x|$ & bounded; not complete\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{example}{Exercise 0.1: the discrete metric is a metric}
+(MS0) values are $0$ or $1$. (MS1) $d(s,t)=0\iff s=t$ by definition. (MS2) ``$s\ne t$'' is
+symmetric. (MS3) Let $x,y,z\in S$. If $x=z$, LHS $=0\le$ RHS. If $x\ne z$ then $y\ne x$ or
+$y\ne z$ (else $x=y=z$), so RHS $\ge1=$ LHS.
+\end{example}
+
+\begin{example}{Exercise 0.4: triangle inequality for the counting metric}
+\textbf{Claim}: $A\Delta C\subset(A\Delta B)\cup(B\Delta C)$. Let $x\in A\setminus C$. If
+$x\in B$ then $x\in B\setminus C\subset B\Delta C$; if $x\notin B$ then $x\in A\setminus B\subset
+A\Delta B$. The case $x\in C\setminus A$ is symmetric. Hence
+$\#(A\Delta C)\le\#\big((A\Delta B)\cup(B\Delta C)\big)\le\#(A\Delta B)+\#(B\Delta C)$.
+\end{example}
+
+\begin{example}{Exercise 0.2: (MS1b) for $d_1$}
+We show the contrapositive: $h\in C(I;\R)$, $h\ne0\Rightarrow\int|h|>0$. Pick $p$ with
+$h(p)\ne0$ and set $c=|h(p)|/2$. By continuity there is $\delta>0$ with $|h(x)|>c$ whenever
+$x\in I$, $|x-p|<\delta$. That set contains an interval of length $\ell>0$ inside $I$, so
+$\int_0^1|h|\ge c\ell>0$.
+\end{example}
+
+\begin{example}{Exercise 0.3: $\dsup$ satisfies (MS3) and (MS1b)}
+(MS3) For each $s\in I$: $|h(s)-f(s)|\le|h(s)-g(s)|+|g(s)-f(s)|\le\dsup(g,h)+\dsup(f,g)$.
+The right-hand side does not depend on $s$, so taking the sup over $s$ gives
+$\dsup(f,h)\le\dsup(f,g)+\dsup(g,h)$. \textbf{(``Pointwise, then take sup.'' Remember this
+move.)}\\
+(MS1b) If $\dsup(f,g)=0$ then $0\le|g(s)-f(s)|\le0$ for every $s$, so $f=g$.
+\end{example}
+
+\begin{example}{Exercise 0.5: $d_{TGV}$ and $d'_{TGV}$}
+Write $\norm\cdot=\norm\cdot_2$.\\
+\textbf{$d_{TGV}$.} If $u=w$, LHS $=0$. If $u\ne w$, LHS $=\norm u+\norm w$. If $v=u$ then RHS
+$=0+\norm u+\norm w$ (as $v=u\ne w$), which is equal. The case $v=w$ is the same. If $v\ne u,w$,
+RHS $=\norm u+2\norm v+\norm w\ge$ LHS.\\
+\textbf{$d'_{TGV}$} ($=\norm u+\norm v$ if $u,v$ linearly independent, else $\norm{v-u}$).
+Note that always $\norm{v-u}\le d'(u,v)\le\norm u+\norm v$.
+\emph{Case $u,w$ dependent}: $d'(u,w)=\norm{w-u}\le\norm{v-u}+\norm{w-v}\le d'(u,v)+d'(v,w)$.
+\emph{Case $u,w$ independent}: we need $\norm u+\norm w\le d'(u,v)+d'(v,w)$.
+If $u,v$ are independent, RHS $=\norm u+\norm v+d'(v,w)\ge\norm u+\norm v+(\norm w-\norm v)$.
+The case $v,w$ independent is symmetric. If $u,v$ and $v,w$ are both dependent then $v=0$
+(otherwise $u,w\in\operatorname{span}\{v\}$, which would make them dependent), and
+RHS $=\norm u+\norm w$.
+\end{example}
+
+\begin{example}{Exercise 0.6: the Hausdorff metric satisfies (MS3)}
+(a)(i) If $x\in A^\delta$ there is $a\in A\subset B$ with $d(x,a)\le\delta$, so $x\in B^\delta$.
+(ii) If $x\in(A^\gamma)^\delta$, pick $y\in A^\gamma$ with $d(x,y)\le\delta$ and $a\in A$ with
+$d(y,a)\le\gamma$; then $d(x,a)\le\gamma+\delta$.\\
+(b) Let $K,J,L\in\mathcal K$ and $\varepsilon>0$. Call $\delta$ \emph{admissible} for $(K,J)$
+if $K^\delta\supset J$ and $J^\delta\supset K$. Choose $\gamma$ admissible for $(K,J)$ with
+$\gamma<d(K,J)+\varepsilon$, and $\delta$ admissible for $(J,L)$ with $\delta<d(J,L)+\varepsilon$.
+Then by (i) and (ii):
+$K^{\gamma+\delta}\supset(K^\gamma)^\delta\supset J^\delta\supset L$ and
+$L^{\gamma+\delta}\supset(L^\delta)^\gamma\supset J^\gamma\supset K$.
+So $\gamma+\delta$ is admissible for $(K,L)$, and
+$d(K,L)\le\gamma+\delta<d(K,J)+d(J,L)+2\varepsilon$. Let $\varepsilon\to0$.
+\end{example}
+
+\topic{Ways to build new metrics}
+\begin{thm}{four constructions}
+\begin{enumerate}
+\item \textbf{From a norm}: $d(x,y)=\norm{y-x}$ is a metric (Exercise 3.1).
+\item \textbf{From an injection} $\phi:A\to E$: $d(s,t)=d_E(\phi(s),\phi(t))$ (Exercise 3.2).
+  Injectivity is exactly what gives (MS1b). Examples: $|v-u|$ on $\C$; $d_{NS}$ on $\R$.
+\item \textbf{By restriction}: $d|_{A\times A}$ is a metric on $A\subset S$ (metric subspace).
+\item \textbf{Via $\alpha$}: if $\alpha:[0,\infty[\to[0,\infty[$ is \emph{definite}
+  ($\alpha(s)=0\iff s=0$), \emph{increasing} and \emph{subadditive}
+  ($\alpha(s+t)\le\alpha(s)+\alpha(t)$), then $\alpha\circ d$ is a metric.
+  Examples: $ct$, $\min\{t,1\}$, $t/(1+t)$, $\tan^{-1}t$, $t^{1/p}$ ($p\ge1$).
+\end{enumerate}
+\end{thm}
+
+\begin{answer}
+\textbf{Proof of 1 (Exercise 3.1).} (MS0) clear. (MS1) $\norm{y-x}=0\iff y-x=0$ by (N1) and
+$\norm0=0$. (MS2) $\norm{x-y}=\norm{(-1)(y-x)}=|-1|\norm{y-x}$ by (N2).
+(MS3) $\norm{z-x}=\norm{(z-y)+(y-x)}\le\norm{z-y}+\norm{y-x}$ by (N3).\\[2pt]
+\textbf{Proof of 4.} Symmetry is inherited. $\alpha(d(s,t))=0\iff d(s,t)=0\iff s=t$. For (MS3):
+$\alpha(d(r,t))\le\alpha(d(r,s)+d(s,t))\le\alpha(d(r,s))+\alpha(d(s,t))$, using
+increasing (with (MS3) for $d$) and then subadditivity.
+\end{answer}
+
+\begin{exam}{Exercise 3.3 (associated bounded metric)}
+Show that $d'=\dfrac{d}{1+d}$ is a metric for every metric $d$, and that it is bounded.
+\end{exam}
+\begin{answer}
+Let $\alpha(t)=t/(1+t)$ on $[0,\infty[$.
+\textbf{Definite}: $1+t>0$, so $\alpha(t)=0\iff t=0$.
+\textbf{Increasing}: for $0\le s\le t$, $\alpha(t)-\alpha(s)=\dfrac{t-s}{(1+s)(1+t)}\ge0$.
+\textbf{Subadditive}: $\alpha(s+t)=\dfrac{s}{1+s+t}+\dfrac{t}{1+s+t}\le\dfrac{s}{1+s}+\dfrac{t}{1+t}$.
+By the $\alpha$-construction, $d'=\alpha\circ d$ is a metric. Since $\alpha(t)<1$, every
+distance is $<1$, so $d'$ is bounded.
+\end{answer}
+
+\begin{example}{subadditivity of $\min\{t,1\}$}
+If $s\ge1$ or $t\ge1$, RHS $\ge1\ge\min\{s+t,1\}$. Otherwise RHS $=s+t\ge\min\{s+t,1\}$.
+\end{example}
+
+\topic{Triangle inequality tricks}
+\begin{thm}{rearranged (reverse) triangle inequality}
+$|d(x,z)-d(y,z)|\le d(x,y)$ for all $x,y,z$. For norms: $\big|\norm x-\norm y\big|\le\norm{x-y}$.
+\end{thm}
+\begin{answer}
+$d(x,z)\le d(x,y)+d(y,z)$ gives $d(x,z)-d(y,z)\le d(x,y)$. Swapping $x,y$ gives
+$d(y,z)-d(x,z)\le d(y,x)=d(x,y)$. Together these give the absolute value.
+\end{answer}
+
+\begin{exam}{four-point estimate (2025 Q1 style)}
+Prove that $|d(a_1,b_1)-d(a_2,b_2)|\le d(a_1,a_2)+d(b_1,b_2)$.
+\end{exam}
+\begin{answer}
+By (MS3) twice, $d(a_1,b_1)\le d(a_1,a_2)+d(a_2,b_2)+d(b_2,b_1)$, so
+$d(a_1,b_1)-d(a_2,b_2)\le d(a_1,a_2)+d(b_1,b_2)$. Exchanging the roles of the indices $1$ and $2$
+(and using symmetry) gives $d(a_2,b_2)-d(a_1,b_1)\le d(a_1,a_2)+d(b_1,b_2)$. Combine.\\
+\textbf{Use}: this shows that $d:E\times E\to\R$ is continuous (Exercise 4.9), and that
+$d(x_n,y_n)\to d(x,y)$ when $x_n\to x$, $y_n\to y$.
+\end{answer}
+
+\topic{Products of metric spaces}
+\textbf{Finite products}: on $S_1\times\dots\times S_N$ use
+$d_p(x,y)=\norm{(d_1(x_1,y_1),\dots,d_N(x_N,y_N))}_p$. The most common is the sum metric
+$\sum_i d_i(x_i,y_i)$. All $d_p$ are Lipschitz equivalent:
+$d_k(x_k,y_k)\le d_\infty\le d_p\le N^{1/p}d_\infty\le N^{1/p}\sum_i d_i$.\\
+\textbf{Countable products}: $d(x,y)=\sum_{k\ge1}2^{-k}\dfrac{d_k(x_k,y_k)}{1+d_k(x_k,y_k)}$.
+
+\begin{exam}{Exercise 3.5: the countable product metric}
+Show that $d$ above is a metric on $S=\prod_k S_k$.
+\end{exam}
+\begin{answer}
+Each term is $\alpha_k(d_k(x_k,y_k))$ with $\alpha_k(t)=2^{-k}t/(1+t)$, which lies in
+$[0,2^{-k}[$. So the series converges and $0\le d<\sum 2^{-k}=1$ (MS0).
+(MS1) $d(x,y)=0\iff$ every term is $0\iff d_k(x_k,y_k)=0\ \forall k\iff x=y$.
+(MS2) termwise. (MS3) Each $\alpha_k\circ d_k$ is a metric on $S_k$ (Exercise 3.3, scaled), so
+termwise $\alpha_k(d_k(x_k,z_k))\le\alpha_k(d_k(x_k,y_k))+\alpha_k(d_k(y_k,z_k))$; sum over $k$.
+\end{answer}
+
+\textbf{Convergence in products} (Exercise 3.13, and Section 4): a sequence converges in a
+finite or countable product (with these metrics) \emph{iff it converges in every coordinate}.
+For the sum metric: $d_k(x^{(n)}_k,a_k)\le d(x^{(n)},a)$ gives ``$\Rightarrow$''; and
+$d(x^{(n)},a)=\sum_{k=1}^N d_k(x^{(n)}_k,a_k)$ is a finite sum of terms tending to $0$, which gives
+``$\Leftarrow$''.
+
+\topic{Isometries}
+\begin{defn}{isometry}
+$f:E\to F$ is an \textbf{isometry} if $d_F(f(x),f(y))=d_E(x,y)$ for all $x,y$. $E$ and $F$
+are \textbf{isometric} if there is an isometric bijection.
+\end{defn}
+\textbf{Exercise 3.6.} An isometry is injective: $f(x)=f(y)\Rightarrow d(x,y)=d(f(x),f(y))=0$.
+If it is bijective with inverse $g$, then $d(g(u),g(v))=d(f(g(u)),f(g(v)))=d(u,v)$, so $g$ is an
+isometry.
+
+\begin{exam}{equilateral embeddings (2022 Q1 / 2023 Q1 style)}
+(a) Show that a three-point set with the discrete metric is isometric to a subset of
+$(\R^2,d_2)$. (b) Show that a four-point discrete space is not.
+\end{exam}
+\begin{answer}
+(a) Send the points to $(0,0)$, $(1,0)$, $(\frac12,\frac{\sqrt3}2)$. Each pair of distinct
+images is at Euclidean distance $1$, which is the discrete distance; equal points go to equal
+images.\\
+(b) Suppose $f$ is an isometry from $\{p_1,\dots,p_4\}$ (discrete) into $\R^2$. Translating and
+rotating (isometries of $\R^2$) we may assume $f(p_1)=(0,0)$, $f(p_2)=(1,0)$. Any other image
+$(u,v)$ has distance $1$ from both: $u^2+v^2=1$ and $(u-1)^2+v^2=1$. Subtracting gives $u=\frac12$,
+so $v=\pm\frac{\sqrt3}2$. Since $f$ is injective, $f(p_3)$ and $f(p_4)$ are these two points.
+But their distance is $\sqrt3\ne1$. Contradiction.
+\end{answer}
+
+\topic{Lipschitz maps and the distance-from-a-set function}
+\begin{defn}{Lipschitz, strict contraction, bi-Lipschitz}
+$f:E\to F$ is \textbf{Lipschitz} if $\exists M$ with $d(f(x),f(y))\le M\,d(x,y)$ for all $x,y$.
+$\Lip f=\sup_{x\ne y}\frac{d(f(x),f(y))}{d(x,y)}$. A \textbf{strict contraction} has
+$\Lip f<1$. \textbf{Bi-Lipschitz}: bijective, and both $f$ and $f^{-1}$ Lipschitz.
+\end{defn}
+\textbf{Facts.} Isometries have $\Lip=1$ (if $E$ has two points). $C^1$ functions on $[0,1]$ are
+Lipschitz with $\Lip f\le\sup|f'|$ (by the FTC or the MVT). $f(x)=x^2$ on $[0,1]$ is a
+Lipschitz bijection ($|x^2-y^2|=|x+y||x-y|\le2|x-y|$), but its inverse $\sqrt t$ is not
+Lipschitz: $\frac{\sqrt t-0}{t-0}=\frac1{\sqrt t}\to\infty$ as $t\to 0^+$.
+
+\begin{exam}{Exercise 3.7 / 5.8 style}
+(a) For nonempty $A\subset E$ let $\dist_A(x)=\inf_{a\in A}d(x,a)$. Show $\Lip(\dist_A)\le1$.
+(b) Show that $R:(C(I;\R),\dsup)\to\R$, $R(f)=\int_0^1 f$, is Lipschitz and find $\Lip R$.
+\end{exam}
+\begin{answer}
+(a) For any $a\in A$: $\dist_A(x)\le d(x,a)\le d(x,y)+d(y,a)$. Take the inf over $a$:
+$\dist_A(x)\le d(x,y)+\dist_A(y)$, i.e.\ $\dist_A(x)-\dist_A(y)\le d(x,y)$. Swap $x,y$:
+$|\dist_A(x)-\dist_A(y)|\le d(x,y)$.\\
+Also: $\dist_A(x)=0\iff$ there is a sequence $(a_n)$ in $A$ with $a_n\to x$ (choose
+$a_n$ with $d(x,a_n)<\dist_A(x)+\frac1n$).\\
+(b) $|R(g)-R(f)|=\big|\int(g-f)\big|\le\int|g-f|\le1\cdot\dsup(f,g)$, so $\Lip R\le1$. For the
+constant functions $f=0$, $g=1$: $|R(g)-R(f)|=1=\dsup(f,g)$. Hence $\Lip R=1$.
+\end{answer}
+
+\topic{Diameter and boundedness}
+\begin{defn}{diameter, bounded}
+$\diam A=\sup\{d(x,y):x,y\in A\}$ (or $\infty$). $A$ is \textbf{bounded} if $\diam A<\infty$,
+equivalently $\sup_{a\in A}d(p,a)<\infty$ for some (every) point $p$.
+\end{defn}
+Discrete spaces are bounded ($\diam\le1$). $A\subset B\Rightarrow\diam A\le\diam B$.
+
+\begin{exam}{Exercise 3.8: diameter of a union}
+For nonempty $A,B$ show $\max\{\diam A,\diam B\}\le\diam(A\cup B)\le I+\diam A+\diam B$, where
+$I=\inf\{d(a,b):a\in A,b\in B\}$.
+\end{exam}
+\begin{answer}
+The first inequality is monotonicity. For the second, let $x,y\in A\cup B$. If both lie in $A$,
+$d(x,y)\le\diam A$; similarly for $B$. If $x\in A$, $y\in B$, then for any $a\in A$, $b\in B$:
+$d(x,y)\le d(x,a)+d(a,b)+d(b,y)\le\diam A+d(a,b)+\diam B$. Taking the inf over $a,b$ gives
+$d(x,y)\le\diam A+I+\diam B$. In all cases $d(x,y)\le I+\diam A+\diam B$; take the sup.
+\end{answer}
+
+\topic{The paradigm example $\ell^\infty(S;E)$}
+$F_b(S;E)$ is the set of bounded functions $S\to E$ (bounded range), with
+$\dsup(f,g)=\sup_{s\in S}d_E(f(s),g(s))$. This is finite (Exercise 3.14): fix $s_0$; then
+$d(f(s),g(s))\le d(f(s),f(s_0))+d(f(s_0),g(s_0))+d(g(s_0),g(s))\le\diam f(S)+d(f(s_0),g(s_0))+
+\diam g(S)$. The metric axioms are proved exactly as in Exercise 0.3. Convergence in $\dsup$
+is \textbf{uniform convergence}. This space is complete when $E$ is (Part 4), and every metric
+space embeds in $\ell^\infty(E;\R)$.
+
+\topic{Balls and spheres}
+\begin{defn}{balls}
+$B_r(a)=\{x:d(x,a)<r\}$ (open ball), $B_r[a]=\{x:d(x,a)\le r\}$ (closed ball),
+$S_r(a)=\{x:d(x,a)=r\}$ (sphere).
+\end{defn}
+\begin{plain}
+Balls need not look round. In a discrete space, $B_r(a)=\{a\}$ if $r\le1$ and $=E$ if $r>1$.
+In $\R^2$ the unit sphere is a diamond for $d_1$, a circle for $d_2$, a square for $d_\infty$.
+For $1<p<2$ it lies between the diamond and the circle; for $2<p<\infty$ it lies between the
+circle and the square.
+\end{plain}
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+\draw[->,gray] (-1.3,0)--(1.4,0) node[below]{$x_1$};
+\draw[->,gray] (0,-1.3)--(0,1.4) node[above]{$x_2$};
+\draw[thick,teal] (1,0)--(0,1)--(-1,0)--(0,-1)--cycle;
+\draw[thick,navy] (0,0) circle (1);
+\draw[thick,amber] (-1,-1) rectangle (1,1);
+\draw[thick,plum,dashed,domain=0:90,samples=60,smooth] plot ({cos(\x)^(4/3)},{sin(\x)^(4/3)});
+\draw[thick,plum,dashed,domain=90:180,samples=60,smooth] plot ({-(-cos(\x))^(4/3)},{sin(\x)^(4/3)});
+\draw[thick,plum,dashed,domain=180:270,samples=60,smooth] plot ({-(-cos(\x))^(4/3)},{-(-sin(\x))^(4/3)});
+\draw[thick,plum,dashed,domain=270:360,samples=60,smooth] plot ({cos(\x)^(4/3)},{-(-sin(\x))^(4/3)});
+\node[teal,anchor=west] at (1.6,1.0) {\small $p=1$};
+\node[plum,anchor=west] at (1.6,0.7) {\small $p=\tfrac32$ (dashed)};
+\node[navy,anchor=west] at (1.6,0.4) {\small $p=2$};
+\node[amber,anchor=west] at (1.6,0.1) {\small $p=\infty$};
+\end{tikzpicture}
+\end{center}
+
+\begin{exam}{Exercise 3.10 and 2025 Q3(c)}
+(a) If $p\in B_r(a)\cap B_s(b)$, find $t>0$ with $B_t(p)\subset B_r(a)\cap B_s(b)$.
+(b) If $x\ne y$ and $0<R\le d(x,y)/2$, show $B_R(x)\cap B_R(y)=\emptyset$.
+\end{exam}
+\begin{answer}
+(a) Let $t=\min\{r-d(p,a),\,s-d(p,b)\}>0$. If $d(z,p)<t$ then
+$d(z,a)\le d(z,p)+d(p,a)<r-d(p,a)+d(p,a)=r$, and similarly $d(z,b)<s$.\\
+(b) If $z$ were in both, $d(x,y)\le d(x,z)+d(z,y)<2R\le d(x,y)$, a contradiction.
+\end{answer}
+
+\topic{Sequences in a metric space}
+\begin{defn}{convergent, Cauchy, bounded}
+$x_n\to a$ if $d(x_n,a)\to0$, i.e.\ $\forall\varepsilon>0\ \exists N\ \forall n\ge N$,
+$d(x_n,a)<\varepsilon$. \textbf{Cauchy}: $\forall\varepsilon>0\ \exists N\ \forall n,m\ge N$,
+$d(x_n,x_m)<\varepsilon$. \textbf{Bounded}: the set of terms is bounded.
+\end{defn}
+\begin{thm}{convergent $\Rightarrow$ Cauchy $\Rightarrow$ bounded (Exercise 3.11)}
+In any metric space, every convergent sequence is Cauchy, and every Cauchy sequence is bounded.
+\end{thm}
+\begin{answer}
+If $x_n\to a$, choose $N$ with $d(x_n,a)<\varepsilon/2$ for $n\ge N$; then
+$d(x_n,x_m)\le d(x_n,a)+d(a,x_m)<\varepsilon$. If Cauchy, choose $N$ with $d(x_n,x_m)<1$ for
+$n,m\ge N$. Then $d(x_n,x_N)\le M:=\max\{d(x_1,x_N),\dots,d(x_{N-1},x_N),1\}$ for all $n$, so
+the terms lie in $B_{M}[x_N]$ and the sequence is bounded.
+\end{answer}
+Neither arrow reverses: $(1/n)$ in $\ro01$ is Cauchy but not convergent there; $(-1)^n$ is
+bounded but not Cauchy.
+
+\begin{exam}{convergence in a discrete space (2024 Q1 style)}
+Show that in a discrete metric space a sequence converges iff it is eventually constant, and
+that every Cauchy sequence converges.
+\end{exam}
+\begin{answer}
+If $x_n\to p$, take $\varepsilon=\frac12$: there is $N$ with $d(x_n,p)<\frac12$ for $n\ge N$, and
+the only distance below $\frac12$ is $0$, so $x_n=p$ for $n\ge N$. Conversely, if $x_n=p$ for
+$n\ge N$ then $d(x_n,p)=0<\varepsilon$ for all $n\ge N$. The same $\varepsilon=\frac12$ argument
+shows that a Cauchy sequence satisfies $x_n=x_N$ for all $n\ge N$, so it converges to $x_N$.
+Hence discrete spaces are complete.
+\end{answer}
+
+\begin{example}{Exercise 3.12: convergence of metric values}
+If $(x_n)$ is Cauchy, $|d(x_n,p)-d(x_m,p)|\le d(x_n,x_m)$ (reverse triangle inequality), so
+$(d(x_n,p))$ is Cauchy in $\R$, hence convergent. If $x_n\to a$ then
+$|d(x_n,p)-d(a,p)|\le d(x_n,a)\to0$.
+\end{example}
+
+\begin{tip}
+\begin{itemize}
+\item In (MS1) do \emph{both} directions; (MS1b) is where continuity or injectivity is used.
+\item To disprove (MS3), give three explicit points. Example: $d(x,y)=(x-y)^2$ on $\R$ fails
+  with $x=0,y=1,z=2$: $4>1+1$.
+\item A metric subspace can look very different from the big space: the standard basis
+  vectors in $\R^n$ form, with $d_2$, a copy of $\sqrt2\times$ the discrete metric.
+\item $B_r(a)$ uses $<$; $B_r[a]$ uses $\le$. Don't mix them up.
+\end{itemize}
+\end{tip}

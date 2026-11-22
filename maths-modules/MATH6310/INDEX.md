@@ -18,6 +18,9 @@ Use the un-numbered copy; `(1)`, `(2)` … are duplicate downloads with the same
 - Coursework 4 (Q4.2 …): `MATH6310_Coursework_4.pdf`
 - `main.tex`, `main(1).tex`: coursework LaTeX sources
 
+## Step-by-step exam revision guide (start here for revision)
+- `revision_guide/MATH6310_Step_by_Step_Exam_Revision_Guide.pdf` (49 pp., Nov 2026): whole module, Sections 0-6, built from the official notes. Proof templates, plain-words explanations, worked exercises, exam-style questions (topics of the 2022-2025 MATH316 papers) easy to hard with model answers, a mock paper with solutions, and quick-reference sheets. LaTeX source: `revision_guide/main.tex` + `part*.tex` (compile `main.tex` with pdflatex, twice).
+
 ## Revision guides (AI/Sai-made, verify before trusting)
 - `MATH6310_Exam_Cheat_Sheet.pdf`: short exam cheat sheet
 - `MATH6310_Combined_Guide.pdf/.tex`: cheat sheet + fully worked exercise solutions

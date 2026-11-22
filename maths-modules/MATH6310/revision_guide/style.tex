@@ -1,0 +1,46 @@
+\usepackage[a4paper,margin=19mm,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,mathtools,array,longtable,booktabs,enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr,hyperref,bookmark,needspace,titlesec}
+\usepackage{tikz}
+\definecolor{navy}{HTML}{183650}
+\definecolor{teal}{HTML}{007D83}
+\definecolor{amber}{HTML}{A65F08}
+\definecolor{plum}{HTML}{6B3A7A}
+\definecolor{crimson}{HTML}{A3243A}
+\hypersetup{colorlinks=true,linkcolor=teal,urlcolor=teal}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small MATH6310 | Metric Spaces \& Topology: step-by-step exam revision}
+\fancyhead[R]{\small Sai Vanam}\fancyfoot[C]{\thepage}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\setlist{nosep,leftmargin=*}
+\linespread{1.1}
+\tcbset{enhanced,breakable,colback=blue!2!white,colframe=navy,boxrule=.6pt,arc=1.5mm,
+  left=3mm,right=3mm,top=2mm,bottom=2mm,before skip=8pt,after skip=8pt,fonttitle=\bfseries}
+\newtcolorbox{defn}[1]{title={Definition: #1}}
+\newtcolorbox{thm}[1]{title={Theorem: #1},colframe=plum,colback=plum!3!white}
+\newtcolorbox{plain}{title={In plain words},colframe=black!45,colback=black!2!white}
+\newtcolorbox{steps}[1]{title={Step by step: #1},colframe=teal,colback=teal!3!white}
+\newtcolorbox{example}[1]{title={Worked example: #1},colframe=navy!70,colback=white}
+\newtcolorbox{exam}[1]{title={Exam-style question: #1},colframe=amber,colback=yellow!5!white}
+\newtcolorbox{answer}{title={Model answer},colframe=teal,colback=green!2!white}
+\newtcolorbox{tip}{title={Exam tips and common mistakes},colframe=crimson,colback=red!2!white}
+\newtcolorbox{note}[1]{title={#1}}
+\newcommand{\R}{\mathbb R}\newcommand{\Q}{\mathbb Q}\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}\newcommand{\C}{\mathbb C}
+\newcommand{\cl}[1]{\overline{#1}}
+\newcommand{\inte}{\operatorname{Int}}\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\dist}{\operatorname{dist}}\newcommand{\Lip}{\operatorname{Lip}}
+\newcommand{\Ran}{\operatorname{Ran}}\newcommand{\id}{\operatorname{id}}
+\newcommand{\dsup}{d_{\sup}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\oi}[2]{\mathopen{]}#1,#2\mathclose{[}}   % open interval ]a,b[
+\newcommand{\lo}[2]{\mathopen{[}#1,#2\mathclose{[}}   % [a,b[
+\newcommand{\ro}[2]{\mathopen{]}#1,#2\mathclose{]}}   % ]a,b]
+\newcommand{\cpl}{^{\complement}}
+\renewcommand{\thesection}{\arabic{section}}
+\titleformat{\section}{\Large\bfseries\color{navy}}{Part \thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{navy}}{\thesubsection}{0.8em}{}
+\newcommand{\topic}[1]{\par\Needspace{40mm}\subsection{#1}}
+\setcounter{tocdepth}{2}

@@ -1,0 +1,263 @@
+\section{Exam question bank: easy to hard, with model answers}
+
+\begin{plain}
+These questions are in the style of the 2022--2025 papers. They are graded
+\textbf{Easy} (definitions and one-step checks), \textbf{Medium} (standard proofs using one
+template) and \textbf{Hard} (several ideas combined, or unfamiliar settings). Cover the answer,
+write your own, then compare. Questions already worked earlier in the guide are not repeated,
+but are listed at the end of this Part.
+\end{plain}
+
+\topic{Easy}
+
+\begin{exam}{E1: which formulas are metrics on $\R$?}
+(a) $|x^2-y^2|$ \quad (b) $(x-y)^2$ \quad (c) $\sqrt{|x-y|}$ \quad (d) $|x-2y|$ \quad
+(e) $\min\{|x-y|,1\}$ \quad (f) $|x^3-y^3|$
+\end{exam}
+\begin{answer}
+(a) \textbf{No}: (MS1b) fails, $d(1,-1)=0$ but $1\ne-1$.
+(b) \textbf{No}: (MS3) fails with $0,1,2$: $d(0,2)=4>1+1$.
+(c) \textbf{Yes}: $\alpha(t)=\sqrt t$ is definite, increasing and subadditive
+($(\sqrt s+\sqrt t)^2=s+t+2\sqrt{st}\ge s+t$), so $\alpha\circ|\cdot|$ is a metric.
+(d) \textbf{No}: $d(0,0)=0$, but $d(1,0)=1\ne2=d(0,1)$, so symmetry fails.
+(e) \textbf{Yes}: $\alpha(t)=\min\{t,1\}$ (see Part 2).
+(f) \textbf{Yes}: induced by the injection $x\mapsto x^3$ into $(\R,|\cdot|)$.
+\end{answer}
+
+\begin{exam}{E2: interior, closure, boundary}
+In $\R$, find $\inte A$, $\cl A$, $\partial A$ for $A=\Q\cap\lo01$. Is $A$ open? closed?
+\end{exam}
+\begin{answer}
+$\inte A=\emptyset$: any ball $\oi{x-r}{x+r}$ contains irrationals, so it is not inside $A$.
+$\cl A=[0,1]$: every $x\in[0,1]$ is a limit of rationals in $\lo01$ (density of $\Q$; for
+$x=1$ use $1-\frac1n$), and $[0,1]$ is closed and contains $A$. So $\partial A=[0,1]$. Neither
+open ($A\ne\inte A$) nor closed ($A\ne\cl A$).
+\end{answer}
+
+\begin{exam}{E3: balls in unusual metrics}
+Describe (a) $B_1(0)$ in $(\R^2,d_\infty)$; (b) $B_{1/2}(a)$, $B_1(a)$, $B_1[a]$ in a discrete
+space; (c) $B_r(a)$ in $(\R^2,d_{TGV})$ for $a\ne0$.
+\end{exam}
+\begin{answer}
+(a) The open square $\oi{-1}1\times\oi{-1}1$.
+(b) $B_{1/2}(a)=B_1(a)=\{a\}$, $B_1[a]=E$.
+(c) $d_{TGV}(x,a)=\norm x+\norm a$ for $x\ne a$. If $r\le\norm a$: $B_r(a)=\{a\}$. If $r>\norm a$:
+$B_r(a)=\{a\}\cup\{x:\norm x<r-\norm a\}$, the point $a$ together with a Euclidean disc about
+$0$.
+\end{answer}
+
+\begin{exam}{E4: three kinds of continuity}
+Show $f(x)=x^2$ on $\R$ is continuous but neither uniformly continuous nor Lipschitz, while on
+$[0,1]$ it is Lipschitz.
+\end{exam}
+\begin{answer}
+Continuous: a product of continuous functions. Not uniformly continuous: with $x_n=n$,
+$y_n=n+\frac1n$, $|x_n-y_n|\to0$ but $|f(y_n)-f(x_n)|=2+\frac1{n^2}\ge2$. (Hence not Lipschitz.)
+On $[0,1]$: $|x^2-y^2|=|x+y||x-y|\le2|x-y|$.
+\end{answer}
+
+\begin{exam}{E5: finite sets are closed}
+Prove that every finite subset of a metric space is closed.
+\end{exam}
+\begin{answer}
+Singletons: if $y\ne a$ then $B_{d(y,a)}(y)$ misses $a$, so $E\setminus\{a\}$ is open, so $\{a\}$
+is closed. A finite union of closed sets is closed.
+\end{answer}
+
+\begin{exam}{E6: open and closed sets from continuous functions}
+Let $f:E\to\R$ be continuous. Show $\{x:f(x)>0\}$ is open and $\{x:f(x)\ge0\}$ is closed.
+\end{exam}
+\begin{answer}
+They are $f^{-1}(\oi0\infty)$ and $f^{-1}(\lo0\infty)$. The first set is open in $\R$ and the
+second closed, and preimages under continuous maps preserve both properties.
+\end{answer}
+
+\topic{Medium}
+
+\begin{exam}{M1: two metrics on $C([0,1];\R)$}
+(a) Show $d_1(f,g)\le\dsup(f,g)$. (b) Deduce that $\dsup$-convergence implies $d_1$-convergence.
+(c) Show $g_n(x)=x^n$ converges to $0$ in $d_1$ but not in $\dsup$. (d) Are $d_1$ and $\dsup$
+topologically equivalent?
+\end{exam}
+\begin{answer}
+(a) $|g-f|\le\dsup(f,g)$ pointwise; integrate over $[0,1]$ (length $1$).
+(b) $0\le d_1(f_n,f)\le\dsup(f_n,f)\to0$.
+(c) $d_1(g_n,0)=\int_0^1x^n\,dx=\frac1{n+1}\to0$, but $\dsup(g_n,0)=1$ for all $n$. If $g_n\to h$
+in $\dsup$ then also in $d_1$, so $h=0$ by uniqueness of limits (in $d_1$), contradicting
+$\dsup(g_n,0)=1$.
+(d) No: they have different convergent sequences. (The identity $(C,\dsup)\to(C,d_1)$ is
+$1$-Lipschitz, but its inverse is not continuous at $0$.)
+\end{answer}
+
+\begin{exam}{M2: a weighted sup product metric (2023 Q4(b) style)}
+Let $E_i=(S_i,d_i)$ with $\diam E_i\le1$, and on $S=\prod S_i$ let
+$D(x,y)=\sup_{i\ge1}\frac{d_i(x_i,y_i)}{i}$. Show $D$ is a metric, and $x^{(n)}\to a$ in $D$ iff
+$x^{(n)}_i\to a_i$ for every $i$.
+\end{exam}
+\begin{answer}
+\textbf{Metric.} Each ratio is in $[0,1]$, so $0\le D\le1$. $D(x,y)=0\iff d_i(x_i,y_i)=0\ \forall
+i\iff x=y$. Symmetry is termwise. For each $i$,
+$\frac{d_i(x_i,z_i)}i\le\frac{d_i(x_i,y_i)}i+\frac{d_i(y_i,z_i)}i\le D(x,y)+D(y,z)$; take the sup
+over $i$.\\
+\textbf{($\Rightarrow$)} $d_i(x^{(n)}_i,a_i)\le i\,D(x^{(n)},a)\to0$.\\
+\textbf{($\Leftarrow$)} Let $\varepsilon>0$ and choose $K$ with $\frac1K<\varepsilon$. For
+$i\ge K$, $\frac{d_i}{i}\le\frac1i\le\frac1K<\varepsilon$ (as $\diam E_i\le1$). For the finitely
+many $i<K$ choose $N$ with $d_i(x^{(n)}_i,a_i)<\varepsilon$ for $n\ge N$. Then
+$D(x^{(n)},a)\le\varepsilon$ for $n\ge N$.
+\end{answer}
+
+\begin{exam}{M3: unions of balls (2022 Q2(b))}
+Show every open set is a union of open balls, and also a union of closed balls. Is every union of
+closed balls closed?
+\end{exam}
+\begin{answer}
+For $x\in U$ choose $r_x>0$ with $B_{r_x}(x)\subset U$. Then
+$U=\bigcup_xB_{r_x}(x)$, and since $x\in B_{r_x/2}[x]\subset B_{r_x}(x)$,
+$U=\bigcup_xB_{r_x/2}[x]$. No: $\bigcup_n B_{1/2-1/(n+2)}[0]$ in $\R$ (the $n$-th set is
+$[-r_n,r_n]$ with $r_n=\frac12-\frac1{n+2}$) is $\oi{-\frac12}{\frac12}$, which is not closed.
+\end{answer}
+
+\begin{exam}{M4: empty boundary}
+Show $\partial A=\emptyset$ iff $A$ is both open and closed. Deduce $\partial A=\emptyset$ for
+every subset of a discrete space.
+\end{exam}
+\begin{answer}
+$\inte A\subset A\subset\cl A$ always. If $\partial A=\cl A\setminus\inte A=\emptyset$ then
+$\cl A\subset\inte A$, so all three sets are equal: $A=\inte A$ (open) and $A=\cl A$ (closed).
+Conversely, if $A$ is open and closed then $\cl A=A=\inte A$, so $\partial A=\emptyset$. In a
+discrete space every set is open and closed.
+\end{answer}
+
+\begin{exam}{M5: a nonempty proper open set (2025 Q3(d))}
+Show that a metric space with at least two points has an open set that is neither $\emptyset$
+nor $E$.
+\end{exam}
+\begin{answer}
+Pick $x\ne y$ and $R=d(x,y)/2>0$. $B_R(x)$ is open, contains $x$, and does not contain $y$ since
+$d(x,y)=2R\not<R$.
+\end{answer}
+
+\begin{exam}{M6: Banach with a numerical answer}
+Let $g(x)=\frac12\big(x+\frac2x\big)$ on $E=[1,2]$. Show $g$ has a unique fixed point, identify
+it, and bound $|x_n-x^*|$ for $x_0=1$, $x_{n+1}=g(x_n)$.
+\end{exam}
+\begin{answer}
+$E$ is closed in $\R$, so complete. $g'(x)=\frac12-\frac1{x^2}\in[-\frac12,\frac14]$ on $[1,2]$, so
+by the MVT $|g(x)-g(y)|\le\frac12|x-y|$: $L=\frac12$. $g$ decreases on $[1,\sqrt2]$ and increases
+on $[\sqrt2,2]$, with $g(1)=g(2)=\frac32$ and $g(\sqrt2)=\sqrt2$, so $g(E)=[\sqrt2,\frac32]\subset
+E$. By Banach there is a unique fixed point: $x=\frac12(x+\frac2x)\iff x^2=2$, so $x^*=\sqrt2$.
+With $x_1=\frac32$: $|x_n-\sqrt2|\le\frac{L^n}{1-L}|x_1-x_0|=\frac{(1/2)^n}{1/2}\cdot\frac12=2^{-n}$.
+\end{answer}
+
+\begin{exam}{M7: complete but not obviously so}
+Let $d(x,y)=|x-y|+|x^3-y^3|$ on $\R$. Show $(\R,d)$ is complete.
+\end{exam}
+\begin{answer}
+It is a metric (the sum of a metric and the metric induced by the injection $x\mapsto x^3$). Let
+$(x_n)$ be $d$-Cauchy. Since $|x_n-x_m|\le d(x_n,x_m)$, $(x_n)$ is Cauchy in $\R$, so $x_n\to x$
+in $\R$. By continuity of cubing, $x_n^3\to x^3$, so $d(x_n,x)=|x_n-x|+|x_n^3-x^3|\to0$.
+\end{answer}
+
+\topic{Hard}
+
+\begin{exam}{H1: convergent sequences form a complete space}
+Let $c$ be the set of convergent real sequences, viewed inside $\ell^\infty(\N;\R)$ with
+$\dsup$. Show $c$ is complete.
+\end{exam}
+\begin{answer}
+Convergent sequences are bounded, so $c\subset\ell^\infty(\N;\R)$, which is complete. It
+suffices to show $c$ is closed. Let $x^{(k)}\in c$ with $\dsup(x^{(k)},x)\to0$. We show $x$ is
+Cauchy in $\R$ (hence convergent). Let $\varepsilon>0$; fix $k$ with $\dsup(x^{(k)},x)<
+\varepsilon/3$, then $N$ with $|x^{(k)}_n-x^{(k)}_m|<\varepsilon/3$ for $n,m\ge N$ ($x^{(k)}$
+converges, so it is Cauchy). Then for $n,m\ge N$:
+$|x_n-x_m|\le|x_n-x^{(k)}_n|+|x^{(k)}_n-x^{(k)}_m|+|x^{(k)}_m-x_m|<\varepsilon$.
+So $x\in c$; $c$ is closed, hence complete.
+\end{answer}
+
+\begin{exam}{H2: complete + totally bounded $\Rightarrow$ sequentially compact (2025 Q5)}
+$A$ is \emph{totally bounded} if for every $r>0$ it is covered by finitely many balls of
+radius $r$. (a) Show totally bounded $\Rightarrow$ bounded. (b) Show every sequence in a totally
+bounded $A$ has, for each $r>0$, a subsequence lying in one ball of radius $r$. (c) Show a
+complete, totally bounded space is sequentially compact.
+\end{exam}
+\begin{answer}
+(a) Cover $A$ by $B_1(c_1),\dots,B_1(c_k)$. For $x\in B_1(c_i)$, $y\in B_1(c_j)$:
+$d(x,y)<2+\max_{i,j}d(c_i,c_j)$, a finite bound.\\
+(b) Finitely many balls cover $A$, and infinitely many indices $n$ must go into them, so some
+ball contains $x_n$ for infinitely many $n$. Those terms form a subsequence.\\
+(c) Let $(x_n)$ be a sequence. By (b) take a subsequence $S_1$ in a ball of radius $1$; from
+$S_1$ a subsequence $S_2$ in a ball of radius $\frac12$; and so on: $S_j$ lies in a ball of
+radius $\frac1j$. Let $z_j$ be the $j$-th term of $S_j$ (diagonal; the indices still strictly
+increase). For $j,k\ge J$, $z_j,z_k$ both lie in $S_J$'s ball, so $d(z_j,z_k)<\frac2J$: $(z_j)$
+is Cauchy, and converges by completeness. So $A$ is sequentially compact.
+\end{answer}
+
+\begin{exam}{H3: compact spaces are separable}
+Prove every sequentially compact metric space $E$ is separable.
+\end{exam}
+\begin{answer}
+Fix $n$. Pick $x_1$; while possible, pick $x_{k+1}$ with $d(x_{k+1},x_i)\ge\frac1n$ for all
+$i\le k$. This must stop after finitely many steps, since otherwise we get a sequence with all
+mutual distances $\ge\frac1n$ and no convergent subsequence. So there is a finite $F_n$ with
+every point of $E$ within $\frac1n$ of $F_n$. $D=\bigcup_nF_n$ is countable, and every ball
+$B_R(p)$ contains a point of $F_n$ once $\frac1n<R$. So $D$ is dense.
+\end{answer}
+
+\begin{exam}{H4: continuous on compact $\Rightarrow$ uniformly continuous}
+Let $K$ be sequentially compact and $f:K\to E'$ continuous. Prove $f$ is uniformly continuous.
+\end{exam}
+\begin{answer}
+If not, there are $\varepsilon>0$ and $x_n,y_n\in K$ with $d(x_n,y_n)<\frac1n$ but
+$d(f(x_n),f(y_n))\ge\varepsilon$. A subsequence $x_{n_k}\to p\in K$, and then
+$d(y_{n_k},p)\le\frac1{n_k}+d(x_{n_k},p)\to0$. By continuity both $f(x_{n_k})$ and $f(y_{n_k})$
+tend to $f(p)$, so $d(f(x_{n_k}),f(y_{n_k}))\to0$. This contradicts $\ge\varepsilon$.
+\end{answer}
+
+\begin{exam}{H5: distance between a compact set and a closed set}
+Let $K$ be sequentially compact, $F$ closed, both nonempty and $K\cap F=\emptyset$. Show
+$\inf\{d(k,x):k\in K,x\in F\}>0$. Show this fails for two disjoint closed sets.
+\end{exam}
+\begin{answer}
+The infimum equals $\inf_{k\in K}\dist_F(k)$. $\dist_F$ is continuous, so it attains its minimum
+on $K$ at some $k_0$. Since $F$ is closed and $k_0\notin F$, $\dist_F(k_0)>0$ (otherwise $k_0$
+would be a point of closure of $F$).\\
+Failure: in $\R^2$, $F_1=\{(x,0)\}$ and $F_2=\{(x,1/x):x>0\}$ are closed and disjoint, but
+$d\big((n,0),(n,\frac1n)\big)=\frac1n\to0$.
+\end{answer}
+
+\begin{exam}{H6: compact subsets of a discrete space}
+Show that in a discrete space every subset is closed, every sequence that is Cauchy converges,
+and the sequentially compact subsets are exactly the finite ones.
+\end{exam}
+\begin{answer}
+Every subset is open, so every complement is open, so every subset is closed. Cauchy sequences
+are eventually constant (Part 2), so they converge. Finite sets are compact. If $K$ is infinite,
+choose distinct $x_1,x_2,\dots\in K$. Then $d(x_n,x_m)=1$ for $n\ne m$, so no subsequence is
+Cauchy and $K$ is not compact. (So ``closed and bounded'' does not imply compact here.)
+\end{answer}
+
+\topic{Where to find the other past-paper-style questions in this guide}
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}ll@{}}\toprule
+Question type & Location\\\midrule
+Diagonal/countability (2025 Q2) & Part 1, Cantor's theorem\\
+Norm on matrices (2023 Q2(a)) & Part 1, norms\\
+Four-point estimate (2025 Q1) & Part 2, triangle tricks\\
+Equilateral embeddings (2022 Q1, 2023 Q1) & Part 2, isometries\\
+Discrete convergence (2024 Q1) & Part 2, sequences\\
+Balls open; disjoint balls (2025 Q3) & Parts 2--3\\
+Closed $\iff$ complement open (2025 Q3(e), 2024 Q2(b)) & Part 3\\
+Closure of union / intersection (2023 Q2(b)) & Part 3\\
+Open-preimage theorem (2023 Q2(c), 2025 Q3(f)) & Part 3\\
+Relative open sets; clopen example (2022 Q2(d), 2024 Q2(c)) & Part 3, subspaces\\
+Dense $\cap$ open dense; dyadic dense set (2023 Q3(a), 2024 Q2(d)) & Part 3, density\\
+Truncated and arctan metrics (2024 Q3(b)(c)) & Part 3, equivalent metrics\\
+Closed iff complete (2025 Q4(a)) & Part 4\\
+$\ell^\infty$ and $C_b$ complete (2023 Q3(b), 2024 Q3(d), 2025 Q4(b)) & Part 4\\
+Uniform continuity and completeness (2022 Q3(b)) & Part 4\\
+Banach; powers of $T$ (2022 Q3(c)) & Part 4\\
+Compact subsets, continuous images (2022 Q4, 2023 Q4(a)) & Part 5\\
+Compact unit ball (2024 Q4(b)); compact self-isometry (2022 Q4(c)) & Part 5\\\bottomrule
+\end{tabular}
+\end{center}

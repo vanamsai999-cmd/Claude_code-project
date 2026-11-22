@@ -1,0 +1,368 @@
+\section{Metric space topology: open, closed, continuity, density, equivalence (Section 4)}
+
+\begin{plain}
+``Topology'' is everything that can be described using \emph{open sets} alone: closed sets,
+interior, closure, boundary, density, continuity, convergence. Two metrics that have the same
+open sets (equivalent metrics) have the same topology, even if their distances are very different.
+This is the most heavily examined Section. Every past paper had a full question on it.
+\end{plain}
+
+\topic{Open sets}
+\begin{defn}{open set}
+$U\subset E$ is \textbf{open} if $\forall p\in U\ \exists r>0$ with $B_r(p)\subset U$.
+\emph{``Wherever you stand in $U$, there is a ball around you that stays inside $U$.''}
+\end{defn}
+
+\begin{exam}{open balls are open (2025 Q3(b) style)}
+Prove that $B_R(a)$ is an open set.
+\end{exam}
+\begin{answer}
+Let $p\in B_R(a)$ and set $r=R-d(p,a)>0$ (this is the ``spare radius''). If $x\in B_r(p)$, then
+by (MS3) $d(x,a)\le d(x,p)+d(p,a)<r+d(p,a)=R$, so $x\in B_R(a)$. Hence $B_r(p)\subset B_R(a)$,
+and $B_R(a)$ is open.
+\end{answer}
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+\draw[thick,navy] (0,0) circle (2); \fill (0,0) circle (1.2pt) node[below left]{$a$};
+\fill (1.1,0.5) circle (1.2pt) node[below]{$p$};
+\draw[thick,teal,dashed] (1.1,0.5) circle ({2-sqrt(1.1^2+0.5^2)});
+\draw[->] (0,0)--(-1.41,1.41) node[midway,left]{$R$};
+\draw[->,teal] (1.1,0.5)--++(0,{2-sqrt(1.1^2+0.5^2)}) node[right,pos=.7]{\small $r=R-d(p,a)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{thm}{the family of open sets $\mathcal O(E)$}
+(a) $\emptyset$ and $E$ are open. (b) Any union of open sets is open.
+(c) A \emph{finite} intersection of open sets is open (take $t=\min\{r_1,\dots,r_n\}$).
+Every open set is a union of open balls: $U=\bigcup_{x\in U}B_{r(x)}(x)$.
+\end{thm}
+\textbf{Infinite intersections can fail}: $\bigcap_{n}\oi{-\frac1n}{\frac1n}=\{0\}$ is not open
+in $\R$.
+
+\begin{exam}{Exercises 4.1 and 4.2}
+(a) What are the open sets in a discrete metric space? (b) If $V$ is open and $F$ finite, show
+that $V\setminus F$ is open.
+\end{exam}
+\begin{answer}
+(a) \emph{Every} subset $U$ is open: for $p\in U$, $B_1(p)=\{p\}\subset U$.\\
+(b) Let $p\in V\setminus F$. Choose $r>0$ with $B_r(p)\subset V$. If $F=\emptyset$ we are done.
+Otherwise $F=\{a_1,\dots,a_m\}$, and $\delta=\min_i d(p,a_i)>0$ because $p\notin F$ and the
+minimum is over finitely many positive numbers. Let $t=\min\{r,\delta\}$. If $x\in B_t(p)$ then
+$x\in V$, and $x\ne a_i$ because $d(x,p)<\delta\le d(a_i,p)$. So $B_t(p)\subset V\setminus F$.
+(``Finite'' matters: $\R\setminus\{1/n:n\in\N\}$ is not open, since $0$ has no such ball.)
+\end{answer}
+
+\topic{Interior}
+\begin{defn}{interior}
+$p$ is an \textbf{interior point} of $A$ if $\exists r>0$ with $B_r(p)\subset A$.
+$\inte A$ is the set of interior points. $\inte A=\bigcup\{U\subset A: U\text{ open}\}$, the
+\emph{largest open subset} of $A$. So $\inte A$ is open, and $A$ is open $\iff A=\inte A$.
+\end{defn}
+Example: $\inte\Q=\emptyset$ in $\R$, since every interval $\oi{x-r}{x+r}$ contains an
+irrational number.
+
+\topic{Continuity}
+\begin{defn}{continuity in metric spaces}
+$f:E\to E'$ is \textbf{continuous at $p$} if $\forall\varepsilon>0\ \exists\delta>0$ with
+$f(B_\delta(p))\subset B_\varepsilon(f(p))$. It is \textbf{sequentially continuous at $p$} if
+$x_n\to p\Rightarrow f(x_n)\to f(p)$. These are equivalent. $f$ is continuous if it is continuous
+at every point.
+\end{defn}
+
+\begin{thm}{global continuity via open sets (very frequently examined)}
+$f:E\to E'$ is continuous $\iff$ $f^{-1}(V)$ is open in $E$ for every open $V\subset E'$
+$\iff$ $f^{-1}(C)$ is closed in $E$ for every closed $C\subset E'$.
+\end{thm}
+\begin{answer}
+\textbf{($\Rightarrow$)} Let $V\subset E'$ be open and $p\in f^{-1}(V)$. Then $f(p)\in V$, so
+there is $\varepsilon>0$ with $B_\varepsilon(f(p))\subset V$. By continuity there is $\delta>0$
+with $f(B_\delta(p))\subset B_\varepsilon(f(p))\subset V$. Hence $B_\delta(p)\subset f^{-1}(V)$,
+so $f^{-1}(V)$ is open.\\
+\textbf{($\Leftarrow$)} Let $p\in E$, $\varepsilon>0$. The ball $V=B_\varepsilon(f(p))$ is open,
+so $f^{-1}(V)$ is open and contains $p$. Choose $\delta>0$ with $B_\delta(p)\subset f^{-1}(V)$.
+Then $f(B_\delta(p))\subset V$, which is continuity at $p$.\\
+\textbf{Closed version (Exercise 4.5).} $f^{-1}(E'\setminus C)=E\setminus f^{-1}(C)$, and a set
+is closed iff its complement is open.
+\end{answer}
+
+\begin{tip}
+Continuity is about \emph{preimages}. The \emph{image} of an open set under a continuous map
+need not be open: the constant map $f\equiv0$ on $\R$ sends $\oi{-1}1$ to $\{0\}$, which is not
+open. Likewise the image of a closed set need not be closed ($t\mapsto\frac1{1+t}$ sends
+$\lo0\infty$ to $\ro01$).
+\end{tip}
+
+\textbf{Lipschitz $\Rightarrow$ continuous}: $f(B_r(p))\subset B_{Lr}(f(p))$ with $L=\Lip f$;
+take $\delta=\varepsilon/L$. Compositions of continuous maps are continuous (Exercise 6.6:
+$(g\circ f)^{-1}(W)=f^{-1}(g^{-1}(W))$).
+
+\topic{Closed sets, closure}
+\begin{thm}{point of closure: three equivalent conditions}
+For $A\subset E$, $p\in E$, the following are equivalent:
+(i) $\forall r>0$, $B_r(p)\cap A\ne\emptyset$; (ii) there is a sequence $(a_n)$ in $A$ with
+$a_n\to p$; (iii) $\dist_A(p)=0$. Such a $p$ is a \textbf{point of closure} of $A$, and $\cl A$
+is the set of all of them.
+\end{thm}
+\begin{defn}{closed set}
+$A$ is \textbf{closed} if $\cl A=A$, i.e.\ \emph{whenever a sequence in $A$ converges in $E$,
+its limit lies in $A$.}
+\end{defn}
+
+\begin{thm}{closed $\iff$ complement open}
+$A$ is closed $\iff$ $E\setminus A$ is open.
+\end{thm}
+\begin{answer}
+\textbf{Model proof (sequence version, 2025 Q3(e) style).}
+($\Leftarrow$) Suppose $E\setminus A$ is open. Let $a_n\in A$ with $a_n\to p$. If $p\notin A$,
+there is $r>0$ with $B_r(p)\subset E\setminus A$. Since $a_n\to p$, eventually $a_n\in B_r(p)$,
+so $a_n\notin A$, a contradiction. So $p\in A$ and $A$ is closed.\\
+($\Rightarrow$) Suppose $A$ is closed and $E\setminus A$ is not open. Then some
+$p\in E\setminus A$ has $B_{1/n}(p)\cap A\ne\emptyset$ for every $n$. Pick $a_n$ in this
+intersection. Then $a_n\to p$, $a_n\in A$, so $p\in A$ by closedness, a contradiction.
+\end{answer}
+
+\begin{thm}{the family of closed sets}
+$\emptyset$, $E$ are closed; arbitrary \emph{intersections} and \emph{finite} unions of closed
+sets are closed. $\cl A$ is closed and $\cl A=\bigcap\{F\supset A: F\text{ closed}\}$, the
+\emph{smallest closed superset} of $A$. Also $\cl{\cl A}=\cl A$.
+\end{thm}
+\textbf{Infinite unions can fail}: $\bigcup_n[\frac1n,1]=\ro01$ is not closed.
+
+\textbf{Complement identities}: $(\cl A)\cpl=\inte(A\cpl)$ and $(\inte A)\cpl=\cl{A\cpl}$.
+
+\begin{thm}{closures of balls}
+$\cl{B_r(a)}\subset B_r[a]$. Equality holds in normed spaces but can fail in general: in a
+discrete space with $\ge2$ points, $\cl{B_1(a)}=\{a\}$ but $B_1[a]=E$.
+\end{thm}
+\begin{answer}
+If $p\in\cl{B_r(a)}$, pick $x_n\in B_r(a)$ with $x_n\to p$. Then $d(x_n,a)\to d(p,a)$, and since
+$d(x_n,a)<r$ for all $n$, order preservation gives $d(p,a)\le r$. \emph{(Only $\le$: strict
+inequality is lost in the limit.)} Closed balls are closed by the same argument, and spheres are
+closed too.
+\end{answer}
+
+\begin{exam}{closure of unions and intersections (2023 Q2(b) style)}
+Prove $\cl{A\cup B}=\cl A\cup\cl B$. Give an example with $\cl{A\cap B}\subsetneq\cl A\cap\cl B$.
+\end{exam}
+\begin{answer}
+$A\subset A\cup B$ gives $\cl A\subset\cl{A\cup B}$; similarly for $B$; so
+$\cl A\cup\cl B\subset\cl{A\cup B}$. Conversely $\cl A\cup\cl B$ is closed (a finite union of
+closed sets) and contains $A\cup B$, so it contains the smallest closed superset
+$\cl{A\cup B}$. For the example, take $A=\oi01$, $B=\oi12$ in $\R$: $\cl{A\cap B}=\cl\emptyset
+=\emptyset$, but $\cl A\cap\cl B=[0,1]\cap[1,2]=\{1\}$.
+\end{answer}
+
+\topic{Boundary}
+\begin{defn}{boundary}
+$\partial A=\cl A\setminus\inte A=\cl A\cap\cl{A\cpl}$. It is closed, and
+$E=\inte A\ \sqcup\ \partial A\ \sqcup\ \inte(A\cpl)$ (disjoint union).
+\end{defn}
+
+\begin{steps}{finding interior, closure and boundary}
+\begin{enumerate}
+\item Draw the set. \textbf{Interior}: points with a whole ball inside $A$.
+\item \textbf{Closure}: add all limits of sequences in $A$.
+\item \textbf{Boundary}: closure minus interior. Check each claim with a ball or a sequence.
+\end{enumerate}
+\end{steps}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}lllll@{}}\toprule
+Set $A$ (in $\R$ unless stated) & $\inte A$ & $\cl A$ & $\partial A$ & open/closed?\\\midrule
+$\lo01$ & $\oi01$ & $[0,1]$ & $\{0,1\}$ & neither\\
+$\lo01\cup\{2\}$ & $\oi01$ & $[0,1]\cup\{2\}$ & $\{0,1,2\}$ & neither\\
+$\Q$ & $\emptyset$ & $\R$ & $\R$ & neither\\
+$\{1/n:n\in\N\}$ & $\emptyset$ & $A\cup\{0\}$ & $A\cup\{0\}$ & neither\\
+$\Z$ & $\emptyset$ & $\Z$ & $\Z$ & closed\\
+$\R$, $\emptyset$ & itself & itself & $\emptyset$ & both\\
+any $A$ in a discrete space & $A$ & $A$ & $\emptyset$ & both\\
+$\{(x,y):x^2+y^2<1\}\subset\R^2$ & itself & closed disc & unit circle & open\\
+\bottomrule\end{tabular}
+\end{center}
+
+\topic{Density and separability}
+\begin{defn}{dense, separable}
+$D$ is \textbf{dense} in $E$ if $\cl D=E$, i.e.\ every ball $B_R(p)$ meets $D$, i.e.\ every
+$p\in E$ is a limit of a sequence in $D$. $E$ is \textbf{separable} if it has a
+\emph{countable} dense subset.
+\end{defn}
+Examples: $\Q$ and $\R\setminus\Q$ are both dense in $\R$ (and disjoint). $\Q^N$ is dense in
+$\ell^p(N)$, so $\R^N$ is separable. $C(I;\R)$ with $\dsup$ is separable (polynomials with
+rational coefficients; or Exercise 4.11).
+
+\begin{exam}{dense intersect open dense (2023 Q3(a) / 2024 Q2(d))}
+Let $U$ be open and dense and $A$ dense in $E$. Prove that $U\cap A$ is dense. Show this can fail
+if $U$ is not open.
+\end{exam}
+\begin{answer}
+Let $p\in E$, $R>0$. We must show $B_R(p)\cap U\cap A\ne\emptyset$.
+\begin{enumerate}
+\item $U$ is dense, so there is $u\in B_R(p)\cap U$.
+\item $B_R(p)\cap U$ is open (a finite intersection of open sets), so there is $r>0$ with
+  $B_r(u)\subset B_R(p)\cap U$.
+\item $A$ is dense, so there is $a\in B_r(u)\cap A$.
+\item Then $a\in B_R(p)\cap U\cap A$.
+\end{enumerate}
+\textbf{Failure without openness}: $U=\Q$, $A=\R\setminus\Q$ are both dense in $\R$, but
+$U\cap A=\emptyset$.
+\end{answer}
+
+\begin{exam}{a non-separable space}
+Show that an uncountable set $S$ with the discrete metric is not separable.
+\end{exam}
+\begin{answer}
+Let $D$ be dense. For each $s\in S$, the ball $B_1(s)=\{s\}$ must meet $D$, so $s\in D$. Thus
+$D=S$, which is uncountable. So no countable dense subset exists.
+\emph{(The same idea shows that $\ell^\infty(\N;\R)$, the bounded sequences with $\dsup$, is not
+separable: the uncountably many $0$--$1$ sequences are pairwise at distance $1$, and the balls
+$B_{1/2}$ around them are disjoint, so each must contain a different point of $D$.)}
+\end{answer}
+
+\begin{exam}{Exercise 4.11: a countable dense set in $C(I;\R)$ (2024 Q2(d)(v))}
+Let $A_n$ be the continuous $g$ that are linear on each $[k/2^n,(k+1)/2^n]$ with
+$g(j/2^n)\in\Q$, and $A=\bigcup_n A_n$. Show $A$ is countable and dense in $(C(I;\R),\dsup)$.
+\end{exam}
+\begin{answer}
+\textbf{Countable.} $g\in A_n$ is determined by its values at the $2^n+1$ nodes, so
+$g\mapsto(g(0),g(2^{-n}),\dots,g(1))$ is injective into $\Q^{2^n+1}$, which is countable. A
+countable union of countable sets is countable.\\
+\textbf{Dense.} Let $f\in C(I;\R)$, $\varepsilon>0$. By the Uniform Continuity Theorem choose
+$n$ with $|f(s)-f(t)|<\varepsilon/3$ when $|s-t|\le2^{-n}$. Choose rationals $q_j$ with
+$|q_j-f(j/2^n)|<\varepsilon/3$, and let $g\in A_n$ take these node values. For $t$ in a mesh
+interval with nodes $s_0,s_1$, $g(t)$ is a convex combination of $q_0,q_1$, each within
+$\varepsilon/3+\varepsilon/3$ of $f(t)$ (since $|q_i-f(t)|\le|q_i-f(s_i)|+|f(s_i)-f(t)|$).
+So $|g(t)-f(t)|<2\varepsilon/3$ for all $t$, and $\dsup(f,g)\le2\varepsilon/3<\varepsilon$.
+\end{answer}
+
+\begin{thm}{open subsets of $\R$}
+Every open $U\subset\R$ is a countable union of open intervals (those with rational endpoints
+contained in $U$).
+\end{thm}
+
+\topic{Homeomorphisms}
+\begin{defn}{homeomorphism}
+$f:E\to E'$ is a \textbf{homeomorphism} if it is continuous, bijective, and $f^{-1}$ is
+continuous. Equivalently: a continuous bijection that maps open sets to open sets.
+\end{defn}
+\textbf{Examples}: $\tan:\oi{-\pi/2}{\pi/2}\to\R$ (a bounded space homeomorphic to an unbounded
+one). Bi-Lipschitz maps.\\
+\textbf{Non-example}: $\id:(\R,d_{disc})\to(\R,|\cdot|)$ is a continuous bijection (every map
+\emph{from} a discrete space is continuous, since every preimage is open), but its inverse is not
+continuous: $\{0\}$ is open in the discrete space but not in $\R$.
+
+\topic{Equivalent metrics}
+\begin{defn}{topological and Lipschitz equivalence}
+Metrics $d_1,d_2$ on $S$ are \textbf{topologically equivalent} if
+$\id:(S,d_1)\to(S,d_2)$ is a homeomorphism; \textbf{Lipschitz equivalent} if it is
+bi-Lipschitz, i.e.\ $\exists m,M>0$ with $m\,d_1\le d_2\le M\,d_1$.
+Lipschitz equivalent $\Rightarrow$ topologically equivalent.
+\end{defn}
+\begin{thm}{tests for topological equivalence}
+The following are equivalent: (i) $d_1,d_2$ topologically equivalent; (ii) they have the same
+convergent sequences (with the same limits); (iii) they have the same closed sets; (iv) they have
+the same open sets; (v) every $d_1$-ball about $p$ contains a $d_2$-ball about $p$, and vice versa.
+\end{thm}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}lcc@{}}\toprule
+Property & top.\ equiv.\ preserves? & Lipschitz equiv.\ preserves?\\\midrule
+open and closed sets, convergence, density & yes & yes\\
+sequential compactness & yes & yes\\
+boundedness & \textbf{no} & yes\\
+Cauchy sequences, completeness & \textbf{no} & yes\\\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{thm}{$\alpha\circ d$ is topologically equivalent to $d$}
+If $\alpha$ is definite, increasing, subadditive and \emph{continuous at $0$}, then $\alpha\circ
+d$ is a topologically equivalent metric. If moreover $\alpha$ is strictly increasing near $0$,
+then $d$ and $\alpha\circ d$ have the same Cauchy sequences. Examples: $cs$, $\min\{s,1\}$,
+$s/(1+s)$, $\tan^{-1}s$, $s^{1/p}$. \textbf{Corollary}: every metric is topologically equivalent
+to a bounded metric with the same Cauchy sequences.
+\end{thm}
+
+\begin{exam}{truncated and arctangent metrics (2024 Q3(b)(c) style)}
+(a) Show that $d'=\min\{d,1\}$ has the same convergent and the same Cauchy sequences as $d$.
+(b) Show $d'$ and $d$ need not be Lipschitz equivalent.
+(c) Show $d_{NS}(x,y)=|\tan^{-1}x-\tan^{-1}y|$ is topologically, but not Lipschitz, equivalent
+to the usual metric on $\R$, and that $(\R,d_{NS})$ is not complete.
+\end{exam}
+\begin{answer}
+(a) $d'\le d$, so $d$-convergent/Cauchy $\Rightarrow$ $d'$-convergent/Cauchy. Conversely, given
+$0<\varepsilon<1$: once $d'(x_n,x_m)<\varepsilon<1$, the minimum must equal $d(x_n,x_m)$, so
+$d(x_n,x_m)<\varepsilon$. The same holds for $d(x_n,a)$.\\
+(b) On $\R$ with $d=|\cdot|$: if $d\le M\,d'$, then taking $x=0$, $y=n$ gives $n\le M$ for all
+$n$, which is impossible. (In general: Lipschitz equivalence preserves boundedness, $d'$ is
+bounded, and $d$ is not.)\\
+(c) $\tan^{-1}:\R\to\oi{-\pi/2}{\pi/2}$ is a homeomorphism, so $x_n\to x$ in $|\cdot|$ $\iff$
+$\tan^{-1}x_n\to\tan^{-1}x$ $\iff$ $x_n\to x$ in $d_{NS}$. Not Lipschitz equivalent: $d_{NS}<\pi$
+is bounded, the usual metric is not. Not complete: $x_n=n$ is $d_{NS}$-Cauchy because
+$\tan^{-1}n\to\pi/2$, so $d_{NS}(n,m)\le|\tan^{-1}n-\frac\pi2|+|\frac\pi2-\tan^{-1}m|\to0$. If
+$n\to a$ in $d_{NS}$ then $\tan^{-1}n\to\tan^{-1}a$, so $\tan^{-1}a=\pi/2$, which is impossible.
+\textbf{Moral: completeness is not a topological property.}
+\end{answer}
+
+\begin{exam}{Exercise 4.8: $d_{TGV}$ on $\R$}
+$d_{TGV}(x,y)=|x|+|y|$ for $x\ne y$. Let $f=\id:(\R,|\cdot|)\to(\R,d_{TGV})$ and $g=f^{-1}$.
+Show (a) $g$ is Lipschitz; (b) $f$ is continuous at $0$; (c) $f$ is not continuous at $a\ne0$.
+\end{exam}
+\begin{answer}
+(a) $|x-y|\le|x|+|y|=d_{TGV}(x,y)$ for $x\ne y$, so $\Lip g\le1$.\\
+(b) $d_{TGV}(x,0)=|x|$, so $|x-0|<\varepsilon\Rightarrow d_{TGV}(x,0)<\varepsilon$ ($\delta=\varepsilon$).\\
+(c) Take $x_n=a+\frac1n\to a$ in $|\cdot|$. Then $d_{TGV}(x_n,a)=|x_n|+|a|\to2|a|\ne0$, so
+$f(x_n)\not\to f(a)$. Hence $d_{TGV}$ is not topologically equivalent to the usual metric.
+(Indeed $\{a\}=B^{TGV}_{|a|}(a)$ is $d_{TGV}$-open.)
+\end{answer}
+
+\textbf{All $\ell^p$ metrics on $\R^N$ are Lipschitz equivalent}, since
+$\norm x_\infty\le\norm x_p\le N^{1/p}\norm x_\infty$. So in $\R^N$, open, closed, bounded,
+convergent, Cauchy and compact do not depend on $p$, and convergence is coordinatewise.
+
+\topic{Metric subspaces: ``open in $A$'' versus ``open in $E$''}
+For $A\subset E$ with the restricted metric: $B^A_r(a)=A\cap B_r(a)$.
+\begin{thm}{relatively open and closed sets}
+For $X\subset A$: $X$ is open in $A$ $\iff$ $X=A\cap U$ for some $U$ open in $E$;
+$X$ is closed in $A$ $\iff$ $X=A\cap F$ for some $F$ closed in $E$.
+\end{thm}
+\begin{answer}
+\textbf{Proof of the open version (Exercise 4.10; 2022 Q2(d)).}
+($\Leftarrow$) Let $v\in X=A\cap U$. Choose $r$ with $B_r(v)\subset U$. Then
+$B^A_r(v)=A\cap B_r(v)\subset A\cap U=X$.\\
+($\Rightarrow$) For each $v\in X$ choose $r_v>0$ with $B^A_{r_v}(v)\subset X$. Let
+$U=\bigcup_{v\in X}B_{r_v}(v)$, which is open in $E$ as a union of balls. Each $v\in X$ is in
+$A\cap U$. If $x\in A\cap U$ then $x\in A\cap B_{r_v}(v)=B^A_{r_v}(v)\subset X$ for some $v$.
+So $X=A\cap U$.
+\end{answer}
+
+\begin{exam}{clopen in the subspace, neither in $E$ (2024 Q2(c)(ii))}
+Give $A\subset E$ and $R\subset A$ such that $R$ is open and closed in $A$, but neither open nor
+closed in $E$.
+\end{exam}
+\begin{answer}
+$E=\R$, $A=R=\lo01$. The whole space is always open and closed in itself. In $\R$: not open,
+since every ball about $0$ contains negative numbers; not closed, since $1-\frac1n\in R$
+converges to $1\notin R$.
+Another: in $A=\Z\subset\R$, $B^{\Z}_1(k)=\{k\}$, so every subset of $\Z$ is open and closed in
+$\Z$.
+\end{answer}
+
+\begin{exam}{identity theorem (Exercise 6.7)}
+Let $f,g:E\to E'$ be continuous. Show $H=\{x: f(x)=g(x)\}$ is closed, and that if $f=g$ on a
+dense set then $f=g$.
+\end{exam}
+\begin{answer}
+If $x_n\in H$, $x_n\to x$, then $f(x)=\lim f(x_n)=\lim g(x_n)=g(x)$ by sequential continuity and
+uniqueness of limits, so $x\in H$. If $D\subset H$ is dense then $E=\cl D\subset\cl H=H$.
+\end{answer}
+
+\begin{tip}
+\begin{itemize}
+\item Always say \emph{where} a set is open or closed: ``open in $A$'' or ``open in $E$''.
+\item To prove ``closed'' you may use sequences \emph{or} the complement. Pick the shorter route.
+\item Many proofs need a radius $r$. Draw the picture and use the spare radius
+  $R-d(p,a)$.
+\item ``Dense'' means meets every ball. Prove it by fixing an arbitrary ball.
+\item Completeness and boundedness are \emph{not} preserved by mere topological equivalence.
+\end{itemize}
+\end{tip}

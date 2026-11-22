@@ -1,0 +1,259 @@
+\section{Sequential compactness, Heine--Borel and the Cantor set (Section 6)}
+
+\begin{plain}
+A set is \emph{sequentially compact} if no sequence in it can ``escape'': every sequence has a
+subsequence that settles down to a point \emph{of the set}. Closed bounded intervals are the
+model (Bolzano--Weierstrass). Compactness is what makes continuous functions attain their max and
+min, and makes continuous bijections into homeomorphisms. In $\R^N$ it is the same as ``closed
+and bounded'' (Heine--Borel), but in general spaces it is strictly stronger.
+\end{plain}
+
+\topic{Definition and first properties}
+\begin{defn}{sequentially compact}
+$K\subset E$ is \textbf{sequentially compact} if every sequence in $K$ has a subsequence that
+converges to a limit \emph{in $K$}.
+\end{defn}
+
+\begin{thm}{sequentially compact $\Rightarrow$ closed and bounded}
+If $K\subset E$ is sequentially compact, then $K$ is closed in $E$ and bounded.
+\end{thm}
+\begin{answer}
+\textbf{Closed.} Let $x_n\in K$, $x_n\to a$ in $E$. A subsequence converges to some $b\in K$;
+but every subsequence also converges to $a$, so $a=b\in K$.\\
+\textbf{Bounded.} If not, build $x_1\in K$ and then $x_{k+1}\in K$ with $d(x_{k+1},x_i)\ge1$ for
+all $i\le k$. (Possible: if every point of $K$ were within $1$ of $\{x_1,\dots,x_k\}$, $K$ would
+be bounded.) Then $d(x_n,x_m)\ge1$ for $n\ne m$, so no subsequence is Cauchy, and none converges.
+\end{answer}
+
+\begin{thm}{more basic facts}
+\begin{enumerate}
+\item \textbf{Intrinsic}: $K$ is sequentially compact in $E$ iff it is sequentially compact as a
+  space in its own right. (Unlike ``open'' or ``closed''.)
+\item \textbf{Compact $\Rightarrow$ complete}: a Cauchy sequence with a convergent subsequence
+  converges.
+\item \textbf{Closed subsets}: if $E$ is sequentially compact, $F\subset E$ is sequentially
+  compact $\iff$ $F$ is closed.
+\item Finite sets, finite unions and arbitrary intersections of sequentially compact sets
+  are sequentially compact (Exercise 6.1).
+\end{enumerate}
+\end{thm}
+
+\begin{exam}{2022 Q4(a): closed subsets of compact spaces}
+Let $K$ be sequentially compact and $A\subset K$. Prove $A$ is sequentially compact iff $A$ is
+closed in $K$.
+\end{exam}
+\begin{answer}
+($\Rightarrow$) As above: compact sets are closed.\\
+($\Leftarrow$) Let $(a_n)$ be a sequence in $A$. It lies in $K$, so a subsequence
+$a_{n_j}\to x\in K$. The subsequence lies in $A$ and $A$ is closed, so $x\in A$. Hence $A$ is
+sequentially compact.
+\end{answer}
+
+\begin{exam}{Exercise 6.1}
+Show (a) $A\cup B$, (b) $A\cap B$ are sequentially compact if $A,B$ are, and (c) finite sets are
+sequentially compact.
+\end{exam}
+\begin{answer}
+(a) A sequence in $A\cup B$ has infinitely many terms in $A$ or in $B$, say $A$. Those terms form
+a subsequence in $A$, which has a further subsequence converging in $A\subset A\cup B$.\\
+(b) $A\cap B$ is closed (as $B$ is closed) and is a subset of the compact set $A$; it is also
+closed in $A$. Apply 2022 Q4(a).\\
+(c) A sequence in a finite set takes some value infinitely often; that constant subsequence
+converges.
+\end{answer}
+
+\topic{Continuous images: the most useful theorem}
+\begin{thm}{continuous image of compact is compact}
+If $f:E\to E'$ is continuous and $K\subset E$ is sequentially compact, then $f(K)$ is
+sequentially compact (hence closed and bounded).
+\end{thm}
+\begin{answer}
+Let $(y_n)$ be in $f(K)$; write $y_n=f(x_n)$ with $x_n\in K$. Then $x_{n_k}\to a\in K$, so by
+sequential continuity $y_{n_k}=f(x_{n_k})\to f(a)\in f(K)$.
+\end{answer}
+
+\begin{thm}{consequences}
+\begin{enumerate}
+\item \textbf{Extreme value theorem} (Exercise 6.3): a continuous $f:K\to\R$ on a nonempty
+  sequentially compact $K$ attains its max and min.
+\item \textbf{Realisation} (6.2): there are $a,b\in K$ with $d(a,b)=\diam K$; for $p\in E$
+  there is $c\in K$ with $d(c,p)=\dist_K(p)$.
+\item \textbf{Continuous bijection from a compact space is a homeomorphism.}
+\item \textbf{Compactness is topological}: topologically equivalent metrics have the same
+  sequentially compact sets.
+\end{enumerate}
+\end{thm}
+\begin{answer}
+\textbf{1.} $f(K)\subset\R$ is compact, so closed and bounded. Let $u=\sup f(K)$. There is a
+sequence in $f(K)$ tending to $u$ (approximation of suprema), and $f(K)$ is closed, so
+$u\in f(K)$, i.e.\ $u=f(q)$. Similarly for the inf.\\
+\textbf{2.} $\dist_K$ is continuous ($1$-Lipschitz), so it attains its min on $K$ by 1. For the
+diameter, pick $(a_n,b_n)$ with $d(a_n,b_n)\to\diam K$; $K\times K$ is compact (product theorem),
+so a subsequence converges to $(a,b)$, and by continuity of $d$, $d(a,b)=\diam K$.\\
+\textbf{3.} Let $g=f^{-1}$. For $F\subset E$ closed: $F$ is compact (closed in compact), so
+$g^{-1}(F)=f(F)$ is compact, hence closed. So $g$ is continuous (preimages of closed sets are
+closed).
+\end{answer}
+
+\begin{exam}{what continuous maps preserve (2023 Q4(a) style)}
+Give examples showing that a continuous image of a bounded set need not be bounded, and of a
+closed set need not be closed. Then show that if $A\subset\R^2$ is closed and bounded and
+$f:A\to E$ is continuous, $f(A)$ is closed and bounded.
+\end{exam}
+\begin{answer}
+\textbf{Bounded $\not\to$ bounded}: $f(t)=1/t$ on the bounded set $\ro01$ has image
+$\lo1\infty$; or $\tan$ on $\oi{-\pi/2}{\pi/2}$ has image $\R$.
+\textbf{Closed $\not\to$ closed}: $f(t)=\frac1{1+t}$ on the closed set $\lo0\infty$ has image
+$\ro01$, which is not closed.\\
+\textbf{Closed and bounded}: by Heine--Borel $A$ is sequentially compact; so $f(A)$ is
+sequentially compact; so $f(A)$ is closed and bounded.
+\end{answer}
+
+\begin{example}{optimisation using compactness}
+$K=\{(x,y):x^2+y^2\le4,\ y\ge0\}$ is closed (an intersection of preimages of closed sets under
+continuous maps) and bounded, so it is compact by Heine--Borel. Then $f(x,y)=x+y$ attains a max
+and a min on $K$. On the arc $(2\cos\theta,2\sin\theta)$, $0\le\theta\le\pi$:
+$f=2\sqrt2\sin(\theta+\frac\pi4)$, max $2\sqrt2$ at $(\sqrt2,\sqrt2)$. On the segment $y=0$:
+$f=x\ge-2$. Since $f$ is linear, its extremes over $K$ occur on the boundary. So $\max=2\sqrt2$,
+$\min=-2$ at $(-2,0)$.
+\end{example}
+
+\topic{Products and Heine--Borel}
+\begin{thm}{Tychonoff (countable, metric version)}
+A countable product of sequentially compact spaces, with the metric
+$\sum_k d'_k(x_k,y_k)$ ($d'_k$ equivalent to $d_k$, $\sum\diam_{d'_k}<\infty$), is sequentially
+compact. ``Baby Tychonoff'': the same for finite products with the sum metric.
+\end{thm}
+\textbf{Proof idea (diagonal argument).} Take a subsequence converging in coordinate $1$; from it
+a further subsequence converging in coordinate $2$; and so on. The diagonal sequence (the $k$-th
+term of the $k$-th subsequence) is eventually a subsequence of each of these, so it converges in
+every coordinate. Convergence in every coordinate means convergence in the product.
+
+\begin{thm}{Heine--Borel}
+For $A\subset\R^N$ (with any $\ell^p$ metric): $A$ is sequentially compact $\iff$ $A$ is closed
+and bounded.
+\end{thm}
+\begin{answer}
+($\Rightarrow$) always true. ($\Leftarrow$) $A$ bounded $\Rightarrow$ $A\subset[-L,L]^N$ for some
+$L$ (Exercise 6.4: if $\diam_\infty A=D$, fix $a\in A$; then $|x_i|\le\norm a_\infty+D$). By
+Bolzano--Weierstrass $[-L,L]$ is sequentially compact, so $[-L,L]^N$ is too (Baby Tychonoff). $A$
+is a closed subset of this compact set, so it is sequentially compact. All $\ell^p$ metrics are
+Lipschitz equivalent, so nothing depends on $p$.
+\end{answer}
+
+\begin{tip}
+\textbf{Heine--Borel is false in general metric spaces.} Closed and bounded does not imply
+compact:
+\begin{itemize}
+\item $\N$ with the discrete metric: closed, bounded ($\diam=1$), but $(n)$ has no convergent
+  subsequence (convergent sequences are eventually constant).
+\item The closed unit ball of $(C([0,1];\R),\dsup)$: $f_n(x)=x^n$ has $\dsup(f_n,0)=1$. If
+  $f_{n_k}\to g$ uniformly, then $g$ is continuous and equals the pointwise limit, which is
+  $0$ on $\lo01$ and $1$ at $1$. That limit is not continuous, so no subsequence converges.
+\item The unit ball of $\ell^\infty(\N;\R)$: $e_n$ (1 in place $n$, else 0) has
+  $\dsup(e_n,e_m)=1$ for $n\ne m$.
+\end{itemize}
+\end{tip}
+
+\begin{exam}{compact unit ball (2024 Q4(b) style)}
+Let $X$ be a normed space whose closed unit ball $B_1[0]$ is sequentially compact. Prove that
+every closed bounded subset of $X$ is sequentially compact.
+\end{exam}
+\begin{answer}
+Let $A$ be closed and bounded, so $A\subset B_R[0]$ for some $R>0$. The map $h(x)=Rx$ is
+continuous ($\norm{h(x)-h(y)}=R\norm{x-y}$) and maps $B_1[0]$ onto $B_R[0]$ (for $\norm y\le R$,
+$y=h(y/R)$). So $B_R[0]$ is sequentially compact as a continuous image. $A$ is closed in $X$,
+hence closed in $B_R[0]$, so $A$ is sequentially compact.
+\end{answer}
+
+\begin{exam}{isometries of a compact space (2022 Q4(c) style)}
+Let $E$ be sequentially compact and $f:E\to E$ an isometry. Prove $f$ is surjective, hence a
+homeomorphism.
+\end{exam}
+\begin{answer}
+Let $p\in E$. The sequence $(f^{\circ n}(p))_{n\ge1}$ has a convergent subsequence
+$(f^{\circ n_j}(p))$, which is Cauchy, so $d(f^{\circ n_{j+1}}(p),f^{\circ n_j}(p))\to0$. As
+$f^{\circ n_j}$ is an isometry, this distance equals $d(f^{\circ m_j}(p),p)$ with
+$m_j=n_{j+1}-n_j\ge1$. Hence $f^{\circ m_j}(p)\to p$. Each $f^{\circ m_j}(p)$ lies in $f(E)$,
+which is compact (a continuous image), hence closed. So $p\in f(E)$. Thus $f$ is surjective; it
+is injective (isometry), and $f^{-1}$ is an isometry, so continuous. So $f$ is a homeomorphism.
+\end{answer}
+
+\begin{exam}{Exercise 6.5}
+If $x_n\to a$, show $C=\{a\}\cup\{x_n:n\in\N\}$ is closed. (In fact it is compact.)
+\end{exam}
+\begin{answer}
+We show $E\setminus C$ is open. Let $y\notin C$; then $r:=d(y,a)/2>0$. Choose $N$ with
+$d(x_n,a)<r$ for $n\ge N$; then $d(x_n,y)\ge d(y,a)-d(x_n,a)>r$ for $n\ge N$. Let
+$t=\min\{r,d(y,x_1),\dots,d(y,x_{N-1})\}>0$ (each is positive since $y\notin C$). Then $B_t(y)$
+misses $a$ (as $t<2r$) and every $x_n$, so $B_t(y)\subset E\setminus C$.
+\end{answer}
+
+\topic{The Cantor middle-thirds set $Z$}
+Start with $Z_0=[0,1]$ and remove open middle thirds:
+$Z_n=\alpha(Z_{n-1})\cup\beta(Z_{n-1})$ with $\alpha(x)=x/3$, $\beta(x)=x/3+2/3$.
+$Z_n$ is $2^n$ disjoint closed intervals of length $3^{-n}$. Set $Z=\bigcap_nZ_n$.
+
+\begin{center}
+\begin{tikzpicture}[xscale=10,yscale=0.4]
+\foreach \lev in {0,1,2,3}{
+  \pgfmathsetmacro{\y}{-\lev}
+  \node[left] at (0,\y) {\small $Z_{\lev}$};
+}
+\draw[line width=3pt,navy] (0,0)--(1,0);
+\draw[line width=3pt,navy] (0,-1)--(1/3,-1) (2/3,-1)--(1,-1);
+\draw[line width=3pt,navy] (0,-2)--(1/9,-2) (2/9,-2)--(1/3,-2) (2/3,-2)--(7/9,-2) (8/9,-2)--(1,-2);
+\foreach \a in {0,2/9,2/3,8/9}{
+  \draw[line width=3pt,navy] (\a,-3)--(\a+1/27,-3) (\a+2/27,-3)--(\a+1/9,-3);
+}
+\end{tikzpicture}
+\end{center}
+
+\begin{thm}{properties of $Z$}
+\begin{enumerate}
+\item $Z=\{2\sum_{n\ge1}c_n3^{-n}:c_n\in\{0,1\}\}$: the numbers in $[0,1]$ with a ternary
+  expansion using only digits $0$ and $2$.
+\item $Z$ is closed (an intersection of finite unions of closed intervals) and bounded, so
+  sequentially compact.
+\item $Z$ is homeomorphic to the Cantor space $\mathcal C=\{0,1\}^\N$ with
+  $d(x,y)=\sum2^{-n}|y_n-x_n|$, via $\phi(x)=2\sum x_n3^{-n}$.
+\item $Z$ is uncountable (it is in bijection with $\{0,1\}^\N$).
+\item $Z$ is nowhere dense ($\inte Z=\emptyset$, as $Z$ contains no interval of length
+  $>3^{-n}$ for any $n$).
+\item $Z$ has length $0$: $Z\subset Z_n$, which has total length $(2/3)^n\to0$.
+\end{enumerate}
+So $Z$ is large as a set (uncountable) but small topologically and in length.
+\end{thm}
+\begin{answer}
+\textbf{Why $\phi$ is a homeomorphism.} \emph{Lipschitz}: $|\phi(y)-\phi(x)|\le2\sum
+\frac{|y_n-x_n|}{3^n}\le2\sum\frac{|y_n-x_n|}{2^n}=2d(x,y)$. \emph{Surjective}: by property 1.
+\emph{Injective}: if $N$ is the first index with $x_N=0$, $y_N=1$, then the tail of $\phi(x)$
+after place $N-1$ is at most $2\sum_{n>N}3^{-n}=3^{-N}<2\cdot3^{-N}\le$ the tail of $\phi(y)$,
+so $\phi(x)<\phi(y)$. $\mathcal C$ is sequentially compact (a countable product of the finite
+spaces $\{0,1\}$), so the continuous bijection $\phi$ is a homeomorphism.
+\end{answer}
+
+\begin{example}{Exercise 6.8: Cauchy via tails}
+Let $X_n=\{x_k:k\ge n\}$. Then $(x_n)$ is Cauchy $\iff\diam X_n\to0$: ``$d(x_k,x_m)<\varepsilon$
+for $k,m\ge N$'' says exactly ``$\diam X_N\le\varepsilon$'', and $\diam X_n$ decreases in $n$.
+\end{example}
+
+\begin{example}{Exercise 6.9: pseudo-metric to metric}
+If $\rho$ satisfies all metric axioms except definiteness, $x\sim y\iff\rho(x,y)=0$ is an
+equivalence relation (transitivity: $\rho(x,z)\le\rho(x,y)+\rho(y,z)=0$), and
+$d([x],[y])=\rho(x,y)$ is well defined: if $x\sim x'$, $y\sim y'$ then
+$|\rho(x,y)-\rho(x',y')|\le\rho(x,x')+\rho(y,y')=0$ by the four-point estimate. It is then a
+metric. For $\rho(f,g)=\int_a^b|g-f|$ on Riemann integrable functions, $f=\mathbf 1_{\{a\}}$
+and $g=0$ have $\rho=0$ but $f\ne g$.
+\end{example}
+
+\begin{tip}
+\begin{itemize}
+\item The limit of the subsequence must be \emph{in $K$}. ``Every sequence has a convergent
+  subsequence'' with the limit outside $K$ is not enough: $\ro01$ fails this.
+\item Use Heine--Borel only in $\R^N$. In other spaces, prove compactness directly, or via
+  continuous images, closed subsets and products.
+\item A continuous bijection is a homeomorphism automatically \emph{only} when the domain is
+  compact.
+\end{itemize}
+\end{tip}

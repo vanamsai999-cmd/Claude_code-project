@@ -1,0 +1,145 @@
+\section{Quick reference: learn these by heart}
+
+\topic{Definitions checklist (write each one from memory)}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}p{3.4cm}p{12.6cm}@{}}\toprule
+Term & Definition\\\midrule
+Metric & $d:S\times S\to[0,\infty[$; $d(x,y)=0\iff x=y$; symmetric; $d(x,z)\le d(x,y)+d(y,z)$.\\
+Norm & $\norm v=0\Rightarrow v=0$; $\norm{\lambda v}=|\lambda|\norm v$; $\norm{u+v}\le\norm u+\norm v$.\\
+Open / closed ball & $B_r(a)=\{x:d(x,a)<r\}$, \ $B_r[a]=\{x:d(x,a)\le r\}$.\\
+Diameter, bounded & $\diam A=\sup_{x,y\in A}d(x,y)$; bounded if $<\infty$.\\
+Lipschitz & $\exists M\ \forall x,y$: $d(f(x),f(y))\le M\,d(x,y)$; strict contraction if $\Lip f<1$.\\
+Isometry & $d(f(x),f(y))=d(x,y)$ for all $x,y$.\\
+$\dist_A(x)$ & $\inf_{a\in A}d(x,a)$.\\
+Convergent & $\exists a\ \forall\varepsilon>0\ \exists N\ \forall n\ge N$: $d(x_n,a)<\varepsilon$.\\
+Cauchy & $\forall\varepsilon>0\ \exists N\ \forall n,m\ge N$: $d(x_n,x_m)<\varepsilon$.\\
+Open set & $\forall p\in U\ \exists r>0$: $B_r(p)\subset U$.\\
+Interior & $\inte A=\{p:\exists r>0,\ B_r(p)\subset A\}$, the largest open subset of $A$.\\
+Closure & $\cl A=\{p:\forall r>0,\ B_r(p)\cap A\ne\emptyset\}$ = limits of sequences in $A$, the smallest closed superset.\\
+Closed set & $A=\cl A$; equivalently limits of convergent sequences in $A$ lie in $A$; equivalently $A\cpl$ open.\\
+Boundary & $\partial A=\cl A\setminus\inte A$.\\
+Dense & $\cl D=E$: every ball meets $D$.\\
+Separable & has a countable dense subset.\\
+Nowhere dense & $\inte\cl A=\emptyset$ (Baire section, non-examinable proof).\\
+Continuous at $p$ & $\forall\varepsilon\ \exists\delta$: $f(B_\delta(p))\subset B_\varepsilon(f(p))$; $\iff$ sequentially continuous.\\
+Uniformly continuous & $\forall\varepsilon\ \exists\delta\ \forall x,y$: $d(x,y)<\delta\Rightarrow d(f(x),f(y))<\varepsilon$.\\
+Homeomorphism & continuous bijection with continuous inverse.\\
+Top.\ equivalent metrics & $\id:(S,d_1)\to(S,d_2)$ is a homeomorphism (same open sets / convergent sequences).\\
+Lipschitz equivalent & $m\,d_1\le d_2\le M\,d_1$ for some $m,M>0$.\\
+Metric subspace & $(A,d|_{A\times A})$; $B^A_r(a)=A\cap B_r(a)$.\\
+Complete & every Cauchy sequence converges (in the space).\\
+Completion & complete $\tilde E$ + isometry $\iota:E\to\tilde E$ with dense range.\\
+Fixed point & $\phi(a)=a$.\\
+Seq.\ compact & every sequence has a subsequence converging to a point of $K$.\\
+Countable & injection into $\N$ (equivalently, surjection from $\N$ if nonempty).\\
+$\ell^\infty(S;E)$ & bounded $f:S\to E$ with $\dsup(f,g)=\sup_sd(f(s),g(s))$.\\\bottomrule
+\end{longtable}
+\end{center}
+
+\topic{Theorems and their hypotheses}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}p{4.3cm}p{6.2cm}p{5.5cm}@{}}\toprule
+Theorem & Hypotheses & Conclusion\\\midrule
+$\alpha\circ d$ metric & $\alpha$ definite, increasing, subadditive & $\alpha\circ d$ is a metric (+ top.\ equiv.\ if $\alpha$ cts at $0$)\\
+Open sets family & -- & arbitrary unions, finite intersections open\\
+Closed sets family & -- & arbitrary intersections, finite unions closed\\
+Closed $\iff$ complement open & -- & --\\
+Global continuity & $f:E\to E'$ & cts $\iff f^{-1}$(open) open $\iff f^{-1}$(closed) closed\\
+Lipschitz $\Rightarrow$ continuous & $f$ Lipschitz & $f$ (uniformly) continuous\\
+Dense $\cap$ open dense & $U$ open \& dense, $A$ dense & $U\cap A$ dense\\
+Relative open/closed & $X\subset A\subset E$ & $X$ open in $A\iff X=A\cap U$, $U$ open in $E$\\
+Closed in complete & $E$ complete, $A$ closed & $A$ complete; and complete $\Rightarrow$ closed\\
+$\ell^\infty(S;E)$ complete & $E$ complete & $(F_b(S;E),\dsup)$ complete\\
+$C_b(E;E')$ complete & $E'$ complete & $(C_b,\dsup)$ complete; $C(I;\R)$ complete\\
+Unique Lipschitz extension & $E_0$ dense, $E'$ complete, $f_0$ Lipschitz & unique cts extension, same $\Lip$\\
+Banach CMT & $E\ne\emptyset$ complete, $\phi:E\to E$, $L<1$ & unique fixed pt; iterates converge\\
+Cantor intersection & $E$ complete; $F_n$ nonempty, closed, nested, $\diam\to0$ & $\bigcap F_n$ is one point\\
+Baire (proof non-exam.) & $E$ complete, $V_n$ open dense & $\bigcap V_n$ dense\\
+Compact $\Rightarrow$ & $K$ seq.\ compact & closed, bounded, complete\\
+Closed in compact & $E$ seq.\ compact, $F$ closed & $F$ seq.\ compact\\
+Continuous image & $f$ continuous, $K$ seq.\ compact & $f(K)$ seq.\ compact\\
+Extreme values & $f:K\to\R$ cts, $K\ne\emptyset$ seq.\ compact & max and min attained\\
+Cts bijection & $f$ cts bijection, domain seq.\ compact & $f$ homeomorphism\\
+Tychonoff (countable) & each factor seq.\ compact & product seq.\ compact\\
+Heine--Borel & $A\subset\R^N$, any $\ell^p$ & seq.\ compact $\iff$ closed and bounded\\
+Bolzano--Weierstrass & $(x_n)$ in closed bounded interval & convergent subsequence, limit in it\\
+Cantor (sets) & any set $S$ & no surjection $S\to\mathcal P(S)$\\\bottomrule
+\end{longtable}
+\end{center}
+
+\topic{Counterexample bank}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}p{6.8cm}p{9.2cm}@{}}\toprule
+False claim & Counterexample\\\midrule
+Infinite intersection of open sets is open & $\bigcap\oi{-\frac1n}{\frac1n}=\{0\}$\\
+Infinite union of closed sets is closed & $\bigcup[\frac1n,1]=\ro01$\\
+Not open $\Rightarrow$ closed & $\lo01$ is neither\\
+$\cl{B_r(a)}=B_r[a]$ & discrete, $\ge2$ points: $\cl{B_1(a)}=\{a\}$, $B_1[a]=E$\\
+$\cl{A\cap B}=\cl A\cap\cl B$ & $A=\oi01$, $B=\oi12$\\
+Continuous image of open is open & constant map\\
+Continuous image of closed is closed & $\frac1{1+t}$ on $\lo0\infty$, image $\ro01$\\
+Continuous image of bounded is bounded & $\tan$ on $\oi{-\frac\pi2}{\frac\pi2}$; $\frac1t$ on $\ro01$\\
+Continuous bijection is a homeomorphism & $\id:(\R,d_{disc})\to(\R,|\cdot|)$\\
+Intersection of dense sets is dense & $\Q$ and $\R\setminus\Q$\\
+Open in subspace $\Rightarrow$ open in $E$ & $\lo01$ in $A=\lo01\subset\R$\\
+Continuous $\Rightarrow$ uniformly continuous & $\frac1x$ on $\ro01$; $x^2$ on $\R$\\
+Uniformly continuous $\Rightarrow$ Lipschitz & $\sqrt x$ on $[0,1]$\\
+Lipschitz bijection $\Rightarrow$ bi-Lipschitz & $x^2$ on $[0,1]$\\
+Cauchy $\Rightarrow$ convergent & $\frac1n$ in $\ro01$; truncations of $\sqrt2$ in $\Q$\\
+Homeomorphic spaces both complete & $\R$ and $\oi{-\frac\pi2}{\frac\pi2}$\\
+Top.\ equivalent $\Rightarrow$ same Cauchy sequences & $d_{NS}$ vs standard: $(n)$\\
+Top.\ equivalent $\Rightarrow$ Lipschitz equivalent & $\min\{d,1\}$ vs $d$ on $\R$; $d_{NS}$\\
+$d_1$, $\dsup$ equivalent on $C(I)$ & $x^n\to0$ in $d_1$, not in $\dsup$\\
+$(C(I),d_1)$ complete & piecewise linear approximations of a step\\
+Banach without completeness & $\frac x2$ on $\ro01$\\
+Banach with $d(\phi x,\phi y)<d(x,y)$ only & $x+\frac1x$ on $\lo1\infty$\\
+Cantor intersection without closedness & $\oi0{\frac1n}$\\
+Cantor intersection without $\diam\to0$ & $\lo n\infty$\\
+Closed + bounded $\Rightarrow$ compact & infinite discrete space; unit ball of $C(I)$ ($x^n$); $e_n$ in $\ell^\infty$\\
+Disjoint closed sets have positive distance & $x$-axis and $y=1/x$\\
+Symmetric + transitive $\Rightarrow$ reflexive & empty relation\\
+$f(A\cap B)=f(A)\cap f(B)$ & constant map, disjoint $A,B$\\\bottomrule
+\end{longtable}
+\end{center}
+
+\topic{Which tool do I use?}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}p{5.6cm}p{10.4cm}@{}}\toprule
+If the question asks you to show\dots & reach for\dots\\\midrule
+$d$ is a metric & T1; norm/injection/$\alpha$ constructions; ``pointwise then sup''\\
+a set is open & spare radius; preimage of open under continuous map; union of balls\\
+a set is closed & sequences; complement open; preimage of closed; intersections\\
+$f$ is continuous & Lipschitz estimate; sequences; preimages; compositions\\
+$f$ is not continuous & a sequence $x_n\to p$ with $f(x_n)\not\to f(p)$\\
+metrics equivalent / not & two-sided inequality; same convergent sequences; a bad sequence\\
+a space is complete & closed subset of complete; T6 (pointwise limit + let $m\to\infty$)\\
+a space is not complete & Cauchy sequence whose ``limit'' is outside\\
+an equation has a unique solution & Banach CMT on $[a,b]$ or $C([a,b];\R)$\\
+a set is compact & Heine--Borel ($\R^N$); closed in compact; continuous image; products\\
+a set is not compact & not closed / not bounded / sequence with $d(x_n,x_m)\ge c$\\
+a max/min exists & continuous function on a compact set\\
+a bijection is a homeomorphism & continuous + domain compact\\
+a set is countable / uncountable & injection or surjection; Cantor's diagonal argument\\
+a set is dense & every ball meets it; or every point is a limit from it\\\bottomrule
+\end{longtable}
+\end{center}
+
+\topic{Final-week checklist}
+\begin{itemize}
+\item[$\square$] I can write every definition in 8.1 exactly, with quantifiers in the right order.
+\item[$\square$] I can prove from memory: open balls are open; closed $\iff$ complement open;
+  global continuity theorem; dense $\cap$ open dense; relative open sets; closed in complete
+  $\iff$ complete; $\ell^\infty(S;E)$ complete; $C_b$ closed in $\ell^\infty$ ($\varepsilon/3$);
+  Banach CMT; Cantor intersection; compact $\Rightarrow$ closed and bounded; continuous image of
+  compact; continuous bijection from compact; Heine--Borel; Cantor's theorem (sets).
+\item[$\square$] I can verify the metric axioms for: discrete, counting, $d_1$, $\dsup$,
+  $d_{TGV}$, $\alpha\circ d$, product metrics.
+\item[$\square$] I know at least one counterexample for every line of 8.3.
+\item[$\square$] I have done the mock paper (Part 7) under timed conditions.
+\item[$\square$] Non-examinable: proofs of Schr\"oder--Bernstein, Zorn/Hamel, embedding
+  (statement needed only), completion existence/uniqueness, Baire; Appendices I--II.
+\end{itemize}
