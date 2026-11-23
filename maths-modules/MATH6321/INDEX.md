@@ -9,6 +9,11 @@
   Useful Information sheet provided (e.g. ElGamal); "Attacking Enigma" non-examinable; some unseen parts.
 - Coursework sheets: `MATH6321 Coursework 1.pdf` (5%, due 21 Oct), `MATH6321 Coursework 2.pdf` (5%, due 4 Nov), `MATH6321 Coursework 3 (1).pdf` (5%, due 18 Nov)
 
+## Exam revision guide (Claude, Nov 2026; every number re-verified)
+- `MATH6321_Exam_Revision_Guide.html` (also published as a private artifact) and `MATH6321_Exam_Revision_Guide.pdf` (answers expanded):
+  whole module step by step, worked examples, graded practice with model answers, 2025 paper answers, full mock exam,
+  14:30–15:30 one-hour study plan and skills checklist. Corrects two slips in the notes (Example 3.17(3) periods; Gauss angle range).
+
 ## Sai's coursework answers (verify before trusting)
 - CW1: `MATH6321_Coursework_1_Detailed_Solutions.pdf`
 - CW2: `MATH6321_Coursework_2_Worked_Solutions.pdf`
