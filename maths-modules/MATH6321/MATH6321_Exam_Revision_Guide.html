@@ -126,7 +126,8 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:28px 0}
 <li class="sub"><a href="#ch7-q">Ch 7 practice</a></li>
 <li><a href="#past">2025 paper, worked</a></li>
 <li><a href="#mock">Full mock exam</a></li>
-<li><a href="#final">14:30 plan and checklist</a></li>
+<li><a href="#final">Last-day checklist</a></li>
+<li><a href="#plan">14:30–17:30 study plan</a></li>
 </ol>
 </nav>
 
@@ -1500,9 +1501,46 @@ Shortest vector ±(9, 4) = (S, T).  Check: 4·44 = 176 ≡ 9 ✓  (Alice's own k
 <div class="q"><div class="qh">5(d) <span class="marks">[2]</span></div><p>Why are cryptographers interested in lattice-based schemes, even though these two are insecure?</p>
 <details><summary>Show model answer</summary><div class="ans"><p>Shor's algorithm would let a large quantum computer factor and solve discrete logs in polynomial time, breaking RSA, Diffie–Hellman and El-Gamal. The Shortest (and Closest) Vector Problems in high-dimensional lattices have no known efficient quantum algorithm. These toy schemes fail only because their lattices have small rank (2 here), where Gauss reduction (or lattice reduction for the Knapsack) succeeds; schemes like NTRU use high-dimensional lattices.</p></div></details></div>
 
-<h2 id="final"><span class="chapno">Final</span>Last-day checklist and your 14:30–15:30 session</h2>
+<h2 id="final"><span class="chapno">Final</span>Last-day checklist</h2>
 
-<h3>Your 14:30–17:30 content session (Chapter 1 onwards)</h3>
+<h3>Skills checklist</h3>
+<p class="small">Tick each skill once you can do it without notes. Ticks are saved in this browser only.</p>
+<ul class="check" id="checklist">
+<li><input type="checkbox" id="c1"><label for="c1">Caesar, substitution (cycle notation), Vigenère and OTP: encrypt and decrypt</label></li>
+<li><input type="checkbox" id="c2"><label for="c2">Compare the classical ciphers (key space, strengths, weaknesses)</label></li>
+<li><input type="checkbox" id="c3"><label for="c3">Compute IoC and MutIoC; know 0.0656 vs 0.0385</label></li>
+<li><input type="checkbox" id="c4"><label for="c4">Keyword from a MutIoC table: β ≡ k<sub>i</sub> − k<sub>j</sub>, solve, check, choose λ</label></li>
+<li><input type="checkbox" id="c5"><label for="c5">Describe the Enigma components; count settings (plugboard formula, rotor order, positions)</label></li>
+<li><input type="checkbox" id="c6"><label for="c6">Generate an LFSR stream; encrypt bits and pictures</label></li>
+<li><input type="checkbox" id="c7"><label for="c7">Characteristic polynomial, irreducibility test, Main Theorem period</label></li>
+<li><input type="checkbox" id="c8"><label for="c8">Extended Euclid inverses and repeated squaring, quickly and accurately</label></li>
+<li><input type="checkbox" id="c9"><label for="c9">Diffie–Hellman numerical example; primitive root test</label></li>
+<li><input type="checkbox" id="c10"><label for="c10">RSA key generation, encryption, decryption; RSA signatures</label></li>
+<li><input type="checkbox" id="c11"><label for="c11">El-Gamal encryption/decryption and signatures (mod p vs mod p − 1)</label></li>
+<li><input type="checkbox" id="c12"><label for="c12">Explain DLP, DHP, Semiprime Factorisation; list 5 bad key choices with attacks</label></li>
+<li><input type="checkbox" id="c13"><label for="c13">Fermat's method and Pollard rho factoring</label></li>
+<li><input type="checkbox" id="c14"><label for="c14">Dixon's method (mod 2 matrix, square root, gcd)</label></li>
+<li><input type="checkbox" id="c15"><label for="c15">BSGS; Pollard rho for logs (including several candidates); index calculus</label></li>
+<li><input type="checkbox" id="c16"><label for="c16">Superincreasing test, greedy algorithm, Knapsack scheme; knapsack as a short vector</label></li>
+<li><input type="checkbox" id="c17"><label for="c17">Simple Noisy Scheme: bounds, encrypt, decrypt</label></li>
+<li><input type="checkbox" id="c18"><label for="c18">Gauss reduction and the lattice attack on the noisy scheme</label></li>
+</ul>
+
+<h3>The ten mistakes that cost the most marks</h3>
+<ol>
+<li>Reducing exponents mod p instead of mod p − 1 (or mod N instead of ϕ(N)).</li>
+<li>Verifying a signature with the receiver's key instead of the signer's.</li>
+<li>Reading a MutIoC β as a key letter rather than a difference k<sub>i</sub> − k<sub>j</sub>.</li>
+<li>Forgetting the LFSR output starts with the initial fill, or restarting the stream at each picture row.</li>
+<li>Claiming irreducibility of a quartic or quintic from "no roots" alone.</li>
+<li>Forgetting rotor order or starting positions in Enigma counts.</li>
+<li>Using m = ⌊√q⌋ in BSGS, or √p instead of √(p − 1).</li>
+<li>Dividing by a non-unit in a congruence mod p − 1 instead of handling the gcd.</li>
+<li>Rounding −7.6 to −7 in Gauss reduction.</li>
+<li>Not checking the final answer: one substitution back into the original equation catches most errors.</li>
+</ol>
+<h2 id="plan"><span class="chapno">Study plan</span>Your 14:30–17:30 study plan</h2>
+<h3>The session at a glance</h3>
 <p>This three-hour session works through the <b>content only</b>, in order, starting at Chapter 1. It skips the practice questions, past paper and mock exam. The pace is set so you can understand every section, not just read it. Realistically it covers <b>Chapters 1–4</b>, which is three of the five exam questions. Chapters 5–7 make a second session of about the same length.</p>
 <p><b>How to read each section.</b> (1) Read the explanation once. (2) Copy the worked example by hand, line by line, checking each number yourself. (3) Close the page and explain the idea out loud in two sentences, using the "understood when" test. If you can't, reread that section before moving on.</p>
 <div class="tw"><table class="t">
@@ -1544,42 +1582,6 @@ Shortest vector ±(9, 4) = (S, T).  Check: 4·44 = 176 ≡ 9 ✓  (Alice's own k
 </table></div>
 <p class="small">If a block runs over, drop its practice question rather than rushing the reading. Understanding the worked example matters more. For the next session: Diffie–Hellman, El-Gamal and signatures, the weaknesses list, Enigma counting, generating LFSR streams and pictures, Caesar/Vigenère/IoC calculations, Fermat and Pollard rho factoring, then the sheet methods (Dixon, Pollard rho for logs, index calculus, Knapsack), then the full mock exam.</p>
 
-<h3>Skills checklist</h3>
-<p class="small">Tick each skill once you can do it without notes. Ticks are saved in this browser only.</p>
-<ul class="check" id="checklist">
-<li><input type="checkbox" id="c1"><label for="c1">Caesar, substitution (cycle notation), Vigenère and OTP: encrypt and decrypt</label></li>
-<li><input type="checkbox" id="c2"><label for="c2">Compare the classical ciphers (key space, strengths, weaknesses)</label></li>
-<li><input type="checkbox" id="c3"><label for="c3">Compute IoC and MutIoC; know 0.0656 vs 0.0385</label></li>
-<li><input type="checkbox" id="c4"><label for="c4">Keyword from a MutIoC table: β ≡ k<sub>i</sub> − k<sub>j</sub>, solve, check, choose λ</label></li>
-<li><input type="checkbox" id="c5"><label for="c5">Describe the Enigma components; count settings (plugboard formula, rotor order, positions)</label></li>
-<li><input type="checkbox" id="c6"><label for="c6">Generate an LFSR stream; encrypt bits and pictures</label></li>
-<li><input type="checkbox" id="c7"><label for="c7">Characteristic polynomial, irreducibility test, Main Theorem period</label></li>
-<li><input type="checkbox" id="c8"><label for="c8">Extended Euclid inverses and repeated squaring, quickly and accurately</label></li>
-<li><input type="checkbox" id="c9"><label for="c9">Diffie–Hellman numerical example; primitive root test</label></li>
-<li><input type="checkbox" id="c10"><label for="c10">RSA key generation, encryption, decryption; RSA signatures</label></li>
-<li><input type="checkbox" id="c11"><label for="c11">El-Gamal encryption/decryption and signatures (mod p vs mod p − 1)</label></li>
-<li><input type="checkbox" id="c12"><label for="c12">Explain DLP, DHP, Semiprime Factorisation; list 5 bad key choices with attacks</label></li>
-<li><input type="checkbox" id="c13"><label for="c13">Fermat's method and Pollard rho factoring</label></li>
-<li><input type="checkbox" id="c14"><label for="c14">Dixon's method (mod 2 matrix, square root, gcd)</label></li>
-<li><input type="checkbox" id="c15"><label for="c15">BSGS; Pollard rho for logs (including several candidates); index calculus</label></li>
-<li><input type="checkbox" id="c16"><label for="c16">Superincreasing test, greedy algorithm, Knapsack scheme; knapsack as a short vector</label></li>
-<li><input type="checkbox" id="c17"><label for="c17">Simple Noisy Scheme: bounds, encrypt, decrypt</label></li>
-<li><input type="checkbox" id="c18"><label for="c18">Gauss reduction and the lattice attack on the noisy scheme</label></li>
-</ul>
-
-<h3>The ten mistakes that cost the most marks</h3>
-<ol>
-<li>Reducing exponents mod p instead of mod p − 1 (or mod N instead of ϕ(N)).</li>
-<li>Verifying a signature with the receiver's key instead of the signer's.</li>
-<li>Reading a MutIoC β as a key letter rather than a difference k<sub>i</sub> − k<sub>j</sub>.</li>
-<li>Forgetting the LFSR output starts with the initial fill, or restarting the stream at each picture row.</li>
-<li>Claiming irreducibility of a quartic or quintic from "no roots" alone.</li>
-<li>Forgetting rotor order or starting positions in Enigma counts.</li>
-<li>Using m = ⌊√q⌋ in BSGS, or √p instead of √(p − 1).</li>
-<li>Dividing by a non-unit in a congruence mod p − 1 instead of handling the gcd.</li>
-<li>Rounding −7.6 to −7 in Gauss reduction.</li>
-<li>Not checking the final answer: one substitution back into the original equation catches most errors.</li>
-</ol>
 </main>
 </div>
 
