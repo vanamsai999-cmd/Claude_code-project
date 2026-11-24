@@ -7,6 +7,11 @@ So ODEs and integral equations become algebra: transform, solve for $\hat y(s)$,
 (justified by Lerch's uniqueness theorem). For $(A,B,C,D)$ it gives $\hat Y=T(s)\hat U$.
 
 \subsection{Definition and the table \texorpdfstring{\fr{86--90}}{}}\label{ss:3-1}
+\begin{plainbox}
+The Laplace transform is a \textbf{translator}: it turns a function of time $f(t)$ into a function of $s$, $\hat f(s)$.
+The point is that hard calculus in $t$ becomes easy algebra in $s$. You will mostly use the \textbf{table}, not the integral.
+\par\smallskip\textbf{In the exam this looks like:} ``Using the table, write down $\Lap(\dots)$'' or ``invert $F(s)$''.
+\end{plainbox}
 \begin{defbox}
 $f:(0,\infty)\to\CC$ continuous is of \textbf{exponential type} (satisfies (E)) if $|f(x)|\le Me^{\beta x}$ for some $M>0$, $\beta\in\RR$.
 Then
@@ -29,6 +34,11 @@ $\delta_b$ & $e^{-bs}$ & $\exp(tA)$ & $(sI-A)^{-1}$\\
 (The last three of the right-hand column follow from the shift rule and Prop 0.34.)
 
 \subsection{Properties \texorpdfstring{\fr{91--98}}{}}\label{ss:3-2}
+\begin{plainbox}
+The properties are the ``grammar'' of the translator. The most important: \textbf{differentiating in $t$ becomes multiplying by $s$}
+(minus the starting value). So an ODE becomes an equation you can solve by dividing.
+\par\smallskip\textbf{In the exam this looks like:} ``State and prove $\Lap(f')=s\Lap f-f(0)$'' or using the shift and $t f(t)$ rules to find a transform.
+\end{plainbox}
 \begin{thmbox}[title={Proposition 0.25 and 0.26}]
 If $f$ satisfies (E) with constants $M,\beta$:
 \begin{enumerate}
@@ -53,6 +63,11 @@ Since $|f(R)|\le M'e^{\beta R}$ (f satisfies (E) because $f(x)=f(0)+\int_0^xf'$)
 \end{proofbox}
 
 \subsection{Laplace transforms from the definition}\label{sec:lapdef}\label{ss:3-3}
+\begin{plainbox}
+``From the definition'' means you must actually do the integral $\int_0^\infty f(t)e^{-st}dt$, not quote the table.
+Two tricks cover almost everything: \textbf{integration by parts} (for powers of $t$) and \textbf{writing $\cos,\sin$ using $e^{\pm i a t}$}.
+\par\smallskip\textbf{In the exam this looks like:} ``Calculate $\Lap(\cos2\omega t)$ from the definition, deduce $\Lap(\sin^2\omega t)$'' (AE3, A3.1).
+\end{plainbox}
 \begin{methodbox}
 \begin{enumerate}
 \item Write $\int_0^R f(x)e^{-sx}dx$ (finite $R$ first, as in the notes).
@@ -82,6 +97,11 @@ $\Lap(t\sin at)=-\frac{d}{ds}\frac{a}{s^2+a^2}=\frac{2as}{(s^2+a^2)^2}$. \quad $
 \end{workbox}
 
 \subsection{Partial fractions and inverting \texorpdfstring{\fr{129--134}}{}}\label{ss:3-4}
+\begin{plainbox}
+To go back from $s$ to $t$, break the fraction into \textbf{simple pieces} (partial fractions), because each simple piece is in the table.
+Lerch's theorem guarantees the answer is unique, so ``looking it up'' is a valid method.
+\par\smallskip\textbf{In the exam this looks like:} the last step of every Laplace question: ``use partial fractions at the final step''.
+\end{plainbox}
 \begin{thmbox}[title={Prop 0.35, Cor 0.36, Cor 0.37}]
 Every rational $f(s)=q(s)+\sum_j\frac{a_j}{(s-\lambda_j)^{n_j}}$ uniquely (Euclidean algorithm then partial fractions).
 $\Lap\big(t^ne^{\lambda t}\big)=\dfrac{n!}{(s-\lambda)^{n+1}}$, so \textbf{strictly proper rational functions are exactly the Laplace transforms of sums of $t^ne^{\lambda t}$}.
@@ -108,6 +128,11 @@ So $f(t)=-e^{-t}+2te^{-t}+e^{-2t}$.
 \end{workbox}
 
 \subsection{Solving initial value problems \texorpdfstring{\fr{107--110}}{}}\label{sec:ivp}\label{ss:3-5}
+\begin{plainbox}
+Recipe: translate the whole ODE (initial values appear automatically), solve for $\hat y$ by simple algebra,
+split into partial fractions, translate back. No guessing of particular integrals needed.
+\par\smallskip\textbf{In the exam this looks like:} ``Solve the IVP by taking Laplace transforms'' (AE3, A3.2). Very likely in the exam.
+\end{plainbox}
 \begin{thmbox}[title={Proposition 0.30}]
 For $y^{(n)}+a_{n-1}y^{(n-1)}+\dots+a_0y=u$ with initial values $y^{(j)}(0)=p_j$:
 $(s^n+a_{n-1}s^{n-1}+\dots+a_0)\hat y(s)+q_{n-1}(s)=\hat u(s)$, with $q_{n-1}$ a polynomial of degree $\le n-1$ built from the $a_j$ and $p_k$.
@@ -147,6 +172,11 @@ $(s^3+2s^2-s+1)\hat y-7s^2-13s+4=\hat u(s)$.
 \end{workbox}
 
 \subsection{Convolution and integral equations \texorpdfstring{\fr{100--106}}{}}\label{sec:conv}\label{ss:3-6}
+\begin{plainbox}
+A \textbf{convolution} $\int_0^tf(t-u)g(u)\,du$ is a ``weighted memory'' of $g$. Its transform is simply the \textbf{product} $\hat f\,\hat g$.
+So an integral equation with $\int_0^tk(t-u)y(u)\,du$ becomes an algebraic equation for $\hat y$.
+\par\smallskip\textbf{In the exam this looks like:} ``Solve the integral equation'' or ``prove the convolution theorem''.
+\end{plainbox}
 \begin{thmbox}[title={Proposition 0.28 (Laplace convolution)}]
 $(f*g)(x)=\displaystyle\int_0^xf(x-y)g(y)\,dy$ is commutative, linear, associative and
 \[\boxed{\Lap(f*g)=\Lap(f)\,\Lap(g).}\]
@@ -169,6 +199,11 @@ $\hat y=\frac1{s^2}+\frac{1}{s^2+1}\hat y\Rightarrow\hat y\cdot\frac{s^2}{s^2+1}
 \end{workbox}
 
 \subsection{Laplace transform of \texorpdfstring{$(A,B,C,D)$}{(A,B,C,D)} \texorpdfstring{\fr{111--115}}{}}\label{sec:lapabcd}\label{ss:3-7}
+\begin{plainbox}
+Applying the translator to the whole system: integrating becomes dividing by $s$, so the matrix ODE becomes
+$\hat X=(sI-A)^{-1}B\hat U$, and output $=T(s)\times$ input. This is \emph{why} $T(s)=D+C(sI-A)^{-1}B$.
+\par\smallskip\textbf{In the exam this looks like:} ``Show that $\hat Y=T(s)\hat U$ when $X(0)=0$'' or ``find $\exp(tA)$ by inverting $(sI-A)^{-1}$''.
+\end{plainbox}
 \begin{thmbox}[title={Theorem 0.31}]
 Transforming $\dot X=AX+BU$, $Y=CX+DU$ gives $s\hat X-X(0)=A\hat X+B\hat U$, $\hat Y=C\hat X+D\hat U$, so (for $s$ not an eigenvalue)
 \[\hat X=(sI-A)^{-1}B\hat U+(sI-A)^{-1}X(0),\qquad \hat Y=\underbrace{\big(D+C(sI-A)^{-1}B\big)}_{T(s)}\hat U+C(sI-A)^{-1}X(0).\]
@@ -185,6 +220,11 @@ $A=\begin{bmatrix}0&1\\-5&-2\end{bmatrix}$: $(sI-A)^{-1}=\dfrac{1}{s^2+2s+5}\beg
 \end{workbox}
 
 \subsection{Jordan canonical form \texorpdfstring{\fr{116--126}}{}}\label{sec:jordan}\label{ss:3-8}
+\begin{plainbox}
+Not every matrix can be diagonalised. The \textbf{Jordan form} is the ``next best'': diagonal blocks with 1's just above the diagonal.
+Each block with eigenvalue $\lambda$ gives terms $e^{\lambda t}, te^{\lambda t}, \dots$ in $\exp(tA)$. Count blocks = count eigenvectors.
+\par\smallskip\textbf{In the exam this looks like:} ``Find the algebraic/geometric multiplicities and the minimal polynomial'' or ``write down $\exp(tA)$ for a Jordan block''.
+\end{plainbox}
 \begin{defbox}
 Jordan block $J_k(\lambda)$: $\lambda$ on the diagonal, $1$ on the superdiagonal, zeros elsewhere.
 \textbf{JCF (Theorem 0.32):} every $A$ is similar to a block-diagonal matrix of Jordan blocks: $A=S\,\mathrm{diag}(J_{k_1}(\lambda_1),\dots,J_{k_r}(\lambda_r))\,S^{-1}$.
@@ -211,6 +251,11 @@ minimal polynomial $m(s)=(s-2)^3(s-3)^2$.\\
 \end{methodbox}
 
 \subsection{Exam-style questions for Chapter 3}\label{ss:3-9}
+\begin{answerbox}
+\textbf{IVP:} (1) ``Taking Laplace transforms, using $\Lap(y')=s\hat y-y(0)$\dots''; (2) solve for $\hat y$; (3) partial fractions with constants found; (4) ``by the table and Lerch's uniqueness theorem, $y(t)=\dots$''; (5) check $y(0)$.\\
+\textbf{From the definition:} write the integral to $R$, evaluate, let $R\to\infty$, state the condition on $s$.\\
+\textbf{Integral equation:} name the convolution, transform, solve, invert, check by substitution.
+\end{answerbox}
 \begin{qbox}[title={Q3.1 (from the definition)}]
 Show from the definition that $\Lap(e^{at})=\frac1{s-a}$ for $s>a$, and deduce $\Lap(\cosh at)$ and $\Lap(te^{at})$.
 \end{qbox}

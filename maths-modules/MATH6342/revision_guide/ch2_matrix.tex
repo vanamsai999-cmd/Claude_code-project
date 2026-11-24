@@ -7,6 +7,12 @@ To solve $\dot X=AX+BU$ we need the matrix $\exp(tA)$; to describe input $\to$ o
 So this chapter is: determinants $\to$ characteristic polynomial $\to$ eigenvalues $\to$ diagonalise $\to$ $\exp(tA)$ $\to$ solution formula $\to$ transfer function $\to$ realisation.
 
 \subsection{Determinants, cofactors and the characteristic polynomial \texorpdfstring{\fr{31--35}}{}}\label{ss:2-1}
+\begin{plainbox}
+The \textbf{characteristic polynomial} $\det(sI-A)$ is the polynomial whose roots are the eigenvalues of $A$.
+The eigenvalues control \emph{everything} later: how solutions grow or decay, the poles of $T(s)$, stability.
+The \textbf{adjugate} is the ``almost-inverse'': $A^{-1}=\adj(A)/\det A$.
+\par\smallskip\textbf{In the exam this looks like:} a first step in almost every Chapter 2 question: ``find the eigenvalues of $A$''.
+\end{plainbox}
 \begin{defbox}
 \begin{itemize}
 \item \textbf{Cofactor} $A_{jk}=(-1)^{j+k}\times$(determinant of $A$ with row $j$ and column $k$ deleted). Expansion along column $k$: $\det A=\sum_j a_{jk}A_{jk}$. Sign pattern $\begin{bmatrix}+&-&+\\-&+&-\\+&-&+\end{bmatrix}$.
@@ -22,6 +28,12 @@ Also: the adjugate is the \textbf{transpose} of the cofactor matrix. Forgetting 
 \end{warnbox}
 
 \subsection{Computing the resolvent \texorpdfstring{$(sI-A)^{-1}$}{(sI-A)\^{}-1}}\label{sec:resolvent}\label{ss:2-2}
+\begin{plainbox}
+$(sI-A)^{-1}$ is just the inverse of a matrix whose entries contain the letter $s$.
+Use the same recipe as for any inverse (cofactors, transpose, divide by the determinant); the entries come out as fractions in $s$.
+You need it because $T(s)=D+C(sI-A)^{-1}B$, and because it is the Laplace transform of $\exp(tA)$.
+\par\smallskip\textbf{In the exam this looks like:} ``Find $(sI-A)^{-1}$'' (AE1, A1.4), usually for a triangular or $2\times2$ matrix.
+\end{plainbox}
 \begin{methodbox}
 \begin{enumerate}
 \item Write down $sI-A$ (change the sign of every entry of $A$, then add $s$ on the diagonal).
@@ -53,6 +65,12 @@ C_{31}&=\det\begin{bmatrix}-4&-10\\s-2&0\end{bmatrix}=10(s-2), & C_{32}&=-\det\b
 \end{workbox}
 
 \subsection{Norms and the Cauchy--Schwarz inequality \texorpdfstring{\fr{36--43}}{}}\label{ss:2-3}
+\begin{plainbox}
+A \textbf{norm} measures size: $\|z\|$ is the length of a vector; $\|A\|$ is the most $A$ can stretch a vector of length 1.
+Cauchy--Schwarz says a dot product can never be bigger than the product of the lengths. These are the tools that let us say
+``$\exp(tA)$ stays bounded'' later.
+\par\smallskip\textbf{In the exam this looks like:} short bookwork: ``prove Cauchy--Schwarz'' or ``show $\|AB\|\le\|A\|\|B\|$''.
+\end{plainbox}
 \begin{defbox}
 On $\CC^{n\times1}$: $\langle z,w\rangle=\sum_j z_j\bar w_j=\bar w^\top z$, \ $\|z\|=\langle z,z\rangle^{1/2}$.
 The \textbf{adjoint} $A'=[\bar a_{kj}]$ is the conjugate transpose and $\langle Ax,y\rangle=\langle x,A'y\rangle$.
@@ -77,6 +95,12 @@ For $\|v\|\le1$: $\|ABv\|\le\|A\|\,\|Bv\|\le\|A\|\,\|B\|\,\|v\|\le\|A\|\|B\|$; t
 \end{proofbox}
 
 \subsection{Rank \texorpdfstring{\fr{44}}{} and the matrices \texorpdfstring{$Q$}{Q} and \texorpdfstring{$R$}{R} (AE2)}\label{sec:rank}\label{ss:2-4}
+\begin{plainbox}
+\textbf{Rank} = how many genuinely different directions the rows (or columns) give. Stacking $C, CA, CA^2,\dots$ tests whether the
+output $y=CX$ can ``see'' every part of the state. Rank less than $n$ means some part of the system is invisible from the output
+(and a pole will cancel in $T(s)$).
+\par\smallskip\textbf{In the exam this looks like:} ``Show $Q^\top=R$, find $R$ when $C^\top$ is an eigenvector, find $\rank Q$'' (AE2, A2.3).
+\end{plainbox}
 \begin{defbox}
 Rank = dimension of the column span = number of independent columns = number of independent rows = number of nonzero rows in an echelon form (Lemma 0.9).
 In particular $\rank(M)=\rank(M^\top)$.
@@ -97,6 +121,12 @@ $T(s)=\frac{s+1}{(s+1)(s+2)}=\frac1{s+2}$: \textbf{a pole has cancelled}. A rank
 \end{exambox}
 
 \subsection{Eigenvalues, diagonalisation and functions of a matrix \texorpdfstring{\fr{45--51}}{}}\label{ss:2-5}
+\begin{plainbox}
+If you change coordinates to the eigenvectors, $A$ becomes a \textbf{diagonal} matrix $\Delta$, and diagonal matrices are easy:
+powers, polynomials and exponentials just act on each diagonal entry. Then change back: $g(A)=S\,g(\Delta)\,S^{-1}$.
+Cayley--Hamilton: every matrix satisfies its own characteristic equation, so high powers of $A$ reduce to low ones.
+\par\smallskip\textbf{In the exam this looks like:} ``Diagonalise $A$'', ``use Cayley--Hamilton to find $A^{-1}$ or $A^3$''.
+\end{plainbox}
 \begin{thmbox}
 \begin{itemize}
 \item Eigenvalues are the roots of $\chi_A(\lambda)=0$ (Lemma 0.10): $\chi_A(\lambda)=0\iff\lambda I-A$ not invertible $\iff\exists v\ne0$ with $Av=\lambda v$.
@@ -116,6 +146,12 @@ $A=\begin{bmatrix}2&1\\1&2\end{bmatrix}$: $\chi_A(s)=s^2-4s+3$. So $A^2-4A+3I=0$
 \end{workbox}
 
 \subsection{The matrix exponential \texorpdfstring{\fr{51--59}, \fr{123--126}}{}}\label{sec:exp}\label{ss:2-6}
+\begin{plainbox}
+For a number $a$, the solution of $x'=ax$ is $x=e^{at}x_0$. For a matrix it is the same with $\exp(tA)$ in place of $e^{at}$.
+To compute it: \textbf{diagonalise} (then it is just $e^{\lambda t}$ on the diagonal), or for a repeated eigenvalue use
+$e^{\lambda t}(I+tN)$. Each eigenvalue $\lambda$ contributes a term $e^{\lambda t}$: negative real part $\Rightarrow$ it dies away.
+\par\smallskip\textbf{In the exam this looks like:} ``Find $\exp(tA)$'' (AE3, A3.3) --- one of the most common computations in the module.
+\end{plainbox}
 \begin{defbox}
 $\exp(A)=I+A+\dfrac{A^2}{2!}+\dfrac{A^3}{3!}+\cdots$ (MATLAB \texttt{expm(A)}; \textbf{not} \texttt{exp(A)}, which exponentiates each entry).
 \end{defbox}
@@ -191,6 +227,12 @@ So $\mu=0,\pm\sqrt2$, i.e.\ $\lambda=2,\ 2-\sqrt2,\ 2+\sqrt2$, with eigenvectors
 \end{thmbox}
 
 \subsection{Solving \texorpdfstring{$\dot X=AX+BU$}{dX/dt = AX+BU}: the variation of constants formula \texorpdfstring{\fr{65--69}}{}}\label{sec:solution}\label{ss:2-7}
+\begin{plainbox}
+The answer has two parts: \textbf{what the system does on its own} from its starting state ($\exp(tA)X_0$), plus
+\textbf{the accumulated effect of all the inputs so far} (the integral: each past input $U(s)$ is pushed forward by $\exp((t-s)A)$ and added up).
+Same idea as the integrating factor for $y'-ay=f$ in first year.
+\par\smallskip\textbf{In the exam this looks like:} ``Prove the solution formula'' (bookwork) or ``find $y(t)$ for this input and initial state''.
+\end{plainbox}
 \begin{thmbox}[title={Theorem 0.17 and Corollary 0.18}]
 The unique solution of $\dfrac{dX}{dt}=AX+BU$, $X(0)=X_0$ is
 \[\boxed{X(t)=\exp(tA)X_0+\int_0^t\exp((t-s)A)BU(s)\,ds}\]
@@ -215,6 +257,11 @@ $\dot X=A\exp(tA)X_0+A\exp(tA)\int_0^t\cdots+\exp(tA)\exp(-tA)BU(t)=AX+BU$.
 \end{workbox}
 
 \subsection{\texorpdfstring{$(A,B,C,D)$}{(A,B,C,D)} systems: SISO and MIMO \texorpdfstring{\fr{60--64}}{}}\label{ss:2-8}
+\begin{plainbox}
+$A$ = how the state evolves, $B$ = how inputs push the state, $C$ = what we measure, $D$ = input that goes straight to the output.
+SISO = one input, one output (like a fan); MIMO = many (like a washing machine). Check shapes: they must multiply.
+\par\smallskip\textbf{In the exam this looks like:} ``State the sizes of $A,B,C,D$'' or ``give an example of a MIMO system''.
+\end{plainbox}
 \begin{defbox}
 $A$ ($n\times n$) = state matrix, $B$ ($n\times k$) = input matrix, $C$ ($m\times n$) = output matrix, $D$ ($m\times k$) = straight-through matrix.
 $k$ inputs, $n$ states, $m$ outputs. SISO: $k=m=1$. Written as the block array $\begin{bmatrix}A&B\\C&D\end{bmatrix}$ of size $(n+m)\times(n+k)$.
@@ -223,6 +270,11 @@ Examples: fan, wind turbine (SISO); washing machine, central heating, massive MI
 \end{defbox}
 
 \subsection{Rational functions and the transfer function \texorpdfstring{\fr{70--73}}{}}\label{sec:tf}\label{ss:2-9}
+\begin{plainbox}
+The \textbf{transfer function} $T(s)$ is the system's ``multiplier'': in the Laplace world, output $=T(s)\times$ input.
+It is a fraction of polynomials in $s$. Its \textbf{poles} (where the denominator is zero) are eigenvalues of $A$, and they decide stability.
+\par\smallskip\textbf{In the exam this looks like:} ``Compute the transfer function $T(s)=D+C(sI-A)^{-1}B$'' (AE2, A2.1). Usually 4--8 marks.
+\end{plainbox}
 \begin{defbox}
 $f(s)=g(s)/h(s)$ with $g,h$ polynomials (no common factors).
 \textbf{Proper}: $\deg g\le\deg h$ (so $f(s)\to$ a finite constant as $s\to\infty$). \textbf{Strictly proper}: $\deg g<\deg h$ ($f(s)\to0$).
@@ -271,6 +323,12 @@ So $T(s)=\dfrac{1}{s^2+\beta s+\gamma}$, which is what you get from Laplace tran
 \end{workbox}
 
 \subsection{Realisation: from \texorpdfstring{$T(s)$}{T(s)} back to \texorpdfstring{$(A,B,C,D)$}{(A,B,C,D)} \texorpdfstring{\fr{74--84}}{}}\label{sec:realise}\label{ss:2-10}
+\begin{plainbox}
+Realisation is the \textbf{reverse} of the last subchapter: you are given $T(s)$ and must build a machine $(A,B,C,D)$ with that $T$.
+Recipe: denominator coefficients go in the bottom row of a companion matrix, numerator coefficients go in $C$, and $D$ is the
+constant left over after division.
+\par\smallskip\textbf{In the exam this looks like:} ``Find a SISO $(A,B,C,D)$ with transfer function $T(s)$'', often followed by ``verify''.
+\end{plainbox}
 \begin{thmbox}[title={Proposition 0.22 (companion realisation) and Theorem 0.23}]
 The strictly proper $T(s)=\dfrac{\gamma_0+\gamma_1s+\dots+\gamma_{n-1}s^{n-1}}{s^n+\alpha_{n-1}s^{n-1}+\dots+\alpha_0}$ is the transfer function of
 \[A=\begin{bmatrix}0&1&&\\&\ddots&\ddots&\\&&0&1\\-\alpha_0&-\alpha_1&\cdots&-\alpha_{n-1}\end{bmatrix},\quad B=\begin{bmatrix}0\\\vdots\\0\\1\end{bmatrix},\quad C=[\gamma_0\ \gamma_1\ \cdots\ \gamma_{n-1}],\quad D=0.\]
@@ -325,6 +383,12 @@ Replacing $\int$ by multiplication by $1/s$ gives $\hat X=\frac1sA\hat X+\frac1s
 \end{thmbox}
 
 \subsection{Exam-style questions for Chapter 2}\label{ss:2-11}
+\begin{answerbox}
+\textbf{Eigenvalues:} write $\det(sI-A)$, expand (say which row/column), factorise, list roots.\\
+\textbf{$\exp(tA)$:} eigenvalues $\to$ eigenvectors $\to$ $S$, $S^{-1}$ $\to$ $S\exp(t\Delta)S^{-1}$ $\to$ ``check: $t=0$ gives $I$''.\\
+\textbf{Transfer function:} state $T(s)=D+C(sI-A)^{-1}B$, compute $\adj(sI-A)B$, multiply by $C$, simplify, comment on poles.\\
+\textbf{Realisation:} divide if needed, quote Prop 0.22, write $A,B,C,D$, verify with $\det(sI-A)$ and $C\adj(sI-A)B$.
+\end{answerbox}
 \begin{qbox}[title={Q2.1 (standard)}]
 Let $A=\begin{bmatrix}-1&2\\0&-3\end{bmatrix}$, $B=\begin{bmatrix}1\\1\end{bmatrix}$, $C=[1\ 0]$, $D=0$.
 (a) Find $\exp(tA)$. (b) Find $T(s)$. (c) Find $y(t)$ when $u=0$ and $X(0)=[1;0]$.

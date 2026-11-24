@@ -1,0 +1,80 @@
+\section{Symbol and word decoder}\label{sec:decoder}
+Most confusion in this module comes from notation, not ideas. Keep this page open while you revise.
+
+\subsection*{Letters and symbols}
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\small
+\begin{tabular}{@{}p{3.2cm}p{12cm}@{}}
+\toprule
+\textbf{Symbol} & \textbf{What it means, in words}\\\midrule
+$t$ & time ($t>0$)\\
+$u(t)$, $U(t)$ & the \textbf{input}: what we feed in (a force, a voltage, \dots); capital $U$ when it is a vector\\
+$y(t)$, $Y(t)$ & the \textbf{output}: what we measure\\
+$x(t)$, $X(t)$ & the \textbf{state}: the internal variables (e.g.\ position and velocity)\\
+$\dot X$, $X'$, $\frac{dX}{dt}$ & all mean the derivative with respect to time\\
+$\int^{(n)}$ & integrate $n$ times, each time from $0$\\
+$A,B,C,D$ & state, input, output and straight-through matrices of the system $\dot X=AX+BU$, $Y=CX+DU$\\
+$n,k,m$ & number of states, inputs, outputs\\
+$I$ & identity matrix\\
+$A^\top$ & transpose (swap rows and columns)\\
+$A'$ & \textbf{adjoint}: transpose \emph{and} complex conjugate (equals $A^\top$ for real $A$). \emph{Not} a derivative!\\
+$\adj(A)$ & adjugate: transpose of the matrix of cofactors; $A^{-1}=\adj(A)/\det A$\\
+$\chi_A(s)$ & characteristic polynomial $\det(sI-A)$; its roots are the eigenvalues\\
+$\lambda$ & usually an eigenvalue (in \S\ref{sec:coprime} also the new variable $\frac1{1+s}$)\\
+$\exp(tA)$ & the matrix exponential $I+tA+\frac{t^2A^2}{2!}+\cdots$ (MATLAB \texttt{expm})\\
+$(sI-A)^{-1}$ & the resolvent; the Laplace transform of $\exp(tA)$\\
+$s$ & the Laplace variable (a complex number); think ``$s$ replaces $d/dt$''\\
+$\hat f(s)$, $\Lap(f)(s)$ & the Laplace transform of $f$\\
+$f*g$ & Laplace convolution $\int_0^tf(t-u)g(u)\,du$\\
+$H(t-b)$, $\delta_b$ & step that switches on at $t=b$; unit impulse at $t=b$\\
+$T(s)$ & transfer function: output $=T(s)\times$input in the $s$-world\\
+$\omega$ & angular frequency (rad/s); we put $s=i\omega$ to study pure tones\\
+$\Gamma(\omega)$, $\phi(\omega)$ & gain $|T(i\omega)|$ and phase $\arg T(i\omega)$\\
+$\Re\lambda$ & real part of $\lambda$; its sign decides growth or decay of $e^{\lambda t}$\\
+LHP, RHP & open left half plane $\{\Re s<0\}$ (``safe''), open right half plane $\{\Re s>0\}$\\
+$\mathcal S$ & stable rational functions: proper, and all poles in the LHP\\
+$G$, $K$ & plant (the machine being controlled) and controller\\
+$J_k(\lambda)$ & $k\times k$ Jordan block\\
+$\langle z,w\rangle$, $\|z\|$ & inner product $\sum z_j\bar w_j$ and length\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Words}
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\small
+\begin{tabular}{@{}p{3.6cm}p{11.6cm}@{}}
+\toprule
+\textbf{Word} & \textbf{Plain meaning}\\\midrule
+SISO / MIMO & one input and one output / several inputs and outputs\\
+open loop / feedback & no signal comes back / output is fed back into the input\\
+proper / strictly proper & $\deg(\text{top})\le\deg(\text{bottom})$ / $<$; i.e.\ $T(s)$ tends to a constant / to $0$ as $s\to\infty$\\
+pole / zero & where the denominator / numerator of $T(s)$ is zero\\
+realisation & building $(A,B,C,D)$ that has a given $T(s)$\\
+companion matrix & the standard matrix with a given characteristic polynomial (ones above the diagonal, coefficients in the last row)\\
+complementary function / particular integral & solution with no input / extra part caused by the input\\
+exponentially stable & every solution decays to 0 like $e^{-\delta t}$ (all $\Re\lambda<0$)\\
+marginally stable & every solution stays bounded but need not decay (eigenvalues on the axis, $1\times1$ blocks)\\
+BIBO stable & every bounded input gives a bounded output\\
+resonance & bounded input at the natural frequency gives an unbounded output\\
+Nyquist plot & the curve traced by $T(i\omega)$ in the complex plane\\
+Bode plot & gain (in dB) and phase against $\omega$ on a log scale\\
+coprime & $P,Q$ have no common factor: $PX+QY=1$ for some $X,Y$\\
+internally stable & every signal inside the feedback loop stays bounded\\
+positive definite & matrix version of ``positive'': $\langle Kz,z\rangle>0$ for $z\neq0$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Six facts that unlock the whole module}
+\begin{enumerate}
+\item The \textbf{eigenvalues of $A$} decide everything: each gives a term $e^{\lambda t}$ in the solution.
+\item $\Re\lambda<0$ means decay (good), $\Re\lambda>0$ means growth (bad), $\Re\lambda=0$ is the borderline.
+\item The \textbf{poles of $T(s)$} are eigenvalues of $A$, so you can read stability from $T(s)$.
+\item \textbf{Laplace} turns $\frac{d}{dt}$ into ``$\times s$'' and $\int_0^t$ into ``$\div s$''.
+\item \textbf{Feedback} changes the denominator: $T=\frac{G}{1+GK}$, so choosing $K$ moves the poles.
+\item A polynomial is stable iff its roots are in the LHP; quick necessary test: all coefficients positive.
+\end{enumerate}
+\newpage

@@ -13,6 +13,12 @@ Chapter 4 told us how to \emph{recognise} stability. Chapter 5 is about \emph{cr
 \end{enumerate}
 
 \subsection{Stable polynomials \texorpdfstring{\fr{163--164}}{}}\label{sec:stabpoly}\label{ss:5-1}
+\begin{plainbox}
+A polynomial is \textbf{stable} if all its roots are in the left half plane (so the matching terms $e^{\lambda t}$ decay).
+Quick test without finding roots: a stable polynomial must have \textbf{all coefficients positive}. That is enough for degree 2,
+but not for degree 3 or more (use $a_2a_1>a_0$ for degree 3).
+\par\smallskip\textbf{In the exam this looks like:} ``Is this polynomial stable?'', ``for which $k$ is it stable?'', ``prove all coefficients are positive''.
+\end{plainbox}
 \begin{defbox}
 A polynomial $h$ is \textbf{stable} if all its zeros lie in the open left half plane LHP $=\{s:\Re s<0\}$.
 (So $h$ stable $\iff$ $1/h$ is a stable rational function.)
@@ -41,6 +47,11 @@ If you use the degree-3 test, say ``by the Routh--Hurwitz criterion''; when $a_2
 \end{thmbox}
 
 \subsection{The ring \texorpdfstring{$\mathcal S$}{S} of stable rational functions \texorpdfstring{\fr{165--169}}{}}\label{ss:5-2}
+\begin{plainbox}
+$\mathcal S$ is the set of ``safe'' transfer functions: \textbf{proper} (does not blow up at high frequency) and all poles on the
+left (does not blow up in time). Adding or multiplying safe functions gives safe functions.
+\par\smallskip\textbf{In the exam this looks like:} ``Is $f\in\mathcal S$?'' or ``show $\mathcal S$ is not a field''.
+\end{plainbox}
 \begin{defbox}
 $f=g/h$ is a \textbf{stable rational function}, $f\in\mathcal S$, if (i) $f$ is \textbf{proper} ($\deg g\le\deg h$) and (ii) all poles lie in the open LHP ($h$ stable).
 \end{defbox}
@@ -55,6 +66,12 @@ $f'=\sum -n_ja_j(s-\lambda_j)^{-n_j-1}$ is strictly proper with the same poles.
 \end{proofbox}
 
 \subsection{Nyquist's criterion \texorpdfstring{\fr{174--177}}{}}\label{ss:5-3}
+\begin{plainbox}
+Look at the picture of $R(i\omega)$. If it never loops around the point $-1$, then closing the loop (feeding the output back
+negatively) keeps the system stable. Where the curve crosses the negative real axis tells you how much extra gain you can add
+before it becomes unstable.
+\par\smallskip\textbf{In the exam this looks like:} ``Use Nyquist's criterion to find the values of $k$ for which the closed loop is stable''.
+\end{plainbox}
 \begin{thmbox}[title={Nyquist's criterion}]
 Let the plant $R$ be \textbf{stable}. If the Nyquist contour $R(i\omega)$, $-\infty\le\omega\le\infty$, does \textbf{not pass through or wind around $-1$}, then
 $T=\dfrac{R}{1+R}$ is stable, i.e.\ the feedback loop with constant feedback $-1$ is stable.\\
@@ -78,6 +95,11 @@ A pole of $R$ gives a finite value of $T=R/(1+R)$, so the only possible poles of
 \end{workbox}
 
 \subsection{The simple feedback loop and PID control \texorpdfstring{\fr{179--185}}{}}\label{sec:pid}\label{ss:5-4}
+\begin{plainbox}
+A \textbf{controller} watches the output and corrects the input, like cruise control. With negative feedback through $K$, the new
+transfer function is $T=G/(1+GK)$. We choose $K$ (often $a+b/s+cs$, a PID) so that the new denominator is a stable polynomial.
+\par\smallskip\textbf{In the exam this looks like:} ``Find a controller of the form $-a-b/s$ that stabilises $G$'' --- set up the denominator and choose $a,b$.
+\end{plainbox}
 \begin{center}
 \begin{tikzpicture}
 \node (u) at (0,0) {$u$}; \node[sumj] (s) at (1.3,0) {$+$}; \node[blk] (g) at (3,0) {$G$}; \node[tap] (t) at (4.4,0) {}; \node (y) at (5.4,0) {$y$};
@@ -112,6 +134,11 @@ $G=\frac{s^2}{bs+c}$ ($b,c>0$) is not proper. With $K=k>0$: $T=\dfrac{s^2}{ks^2+
 \end{workbox}
 
 \subsection{Euclid, B\'ezout and matrix completion \texorpdfstring{\fr{186--193}}{}}\label{ss:5-5}
+\begin{plainbox}
+The Euclidean algorithm finds the \textbf{highest common factor} of two polynomials by repeated long division, exactly like for
+whole numbers. Working backwards writes $1=PM+QN$ whenever $P,Q$ have no common root. This identity is the engine of the next subchapter.
+\par\smallskip\textbf{In the exam this looks like:} ``Find polynomials $M,N$ with $PM+QN=1$'' or ``complete this matrix to an invertible one''.
+\end{plainbox}
 \begin{methodbox}[title={Euclidean algorithm and B\'ezout for polynomials}]
 \begin{enumerate}
 \item Divide: $P_0=Q_1P_1+P_2$ with $\deg P_2<\deg P_1$; then $P_1=Q_2P_2+P_3$, and so on until a remainder is $0$. The last nonzero remainder $P_n$ is the highest common factor.
@@ -136,6 +163,11 @@ For $f,g\in\CC[s]$ TFAE: (1) $\begin{bmatrix}f&g\\h&k\end{bmatrix}$ can be compl
 \end{workbox}
 
 \subsection{Coprime factorisation in \texorpdfstring{$\mathcal S$}{S} \texorpdfstring{\fr{194--200}}{}}\label{sec:coprime}\label{ss:5-6}
+\begin{plainbox}
+Goal: a \textbf{recipe that stabilises any plant}. Write $G=P/Q$ using only ``safe'' functions (the substitution $\lambda=1/(1+s)$ does this),
+find $X,Y$ with $PX+QY=1$ (Euclid), and take the controller $K=X/Y$. Then all closed-loop functions are products of safe functions, so safe.
+\par\smallskip\textbf{In the exam this looks like:} ``Find a coprime factorisation and a stabilising controller, and verify''. A long question, but purely mechanical.
+\end{plainbox}
 \begin{defbox}
 $P,Q\in\mathcal S$ are \textbf{coprime} if there are $X,Y\in\mathcal S$ with $PX+QY=1$.
 \textbf{Proposition 0.49:} every rational $G$ can be written $G=P/Q$ with $P,Q$ coprime in $\mathcal S$, found in exact arithmetic.
@@ -184,6 +216,11 @@ Indeed $\frac{G}{1+GK}=\frac{-2(s-11)(s^2+5)}{7(s+1)^3}\in\mathcal S$.
 \end{workbox}
 
 \subsection{Well-posedness and internal stability \texorpdfstring{\fr{201--206}}{}}\label{sec:internal}\label{ss:5-7}
+\begin{plainbox}
+It is not enough for the output to behave: \textbf{every signal inside the loop} must stay bounded too. If the controller cancels an
+unstable part of the plant, the problem is hidden, not removed. So we check all four functions, not just $G/(1+GK)$.
+\par\smallskip\textbf{In the exam this looks like:} ``Is the loop internally stable?'', ``when is the SFL well posed?''.
+\end{plainbox}
 \begin{thmbox}[title={Lemma 0.51}]
 SFL with inputs $r,d,n$ and states $x=r-z$, $y=d+Kx$, $z=n+Gy$, i.e.\ $\begin{bmatrix}1&0&1\\-K&1&0\\0&-G&1\end{bmatrix}\begin{bmatrix}x\\y\\z\end{bmatrix}=\begin{bmatrix}r\\d\\n\end{bmatrix}$.
 It is \textbf{well posed} (inputs determine states uniquely) iff $1+GK\neq0$, and then
@@ -197,6 +234,11 @@ $\frac{K}{1+GK}=\frac{s+1}{(s-1)(s+2)}$ has a pole at $1$. So the loop is \textb
 \end{exambox}
 
 \subsection{Self-adjoint and positive definite matrices \texorpdfstring{\fr{207--209}}{}}\label{sec:posdef}\label{ss:5-8}
+\begin{plainbox}
+A \textbf{positive definite} matrix is the matrix version of a positive number: $\langle Kz,z\rangle>0$ for every nonzero $z$.
+Three equivalent tests: the definition, all eigenvalues positive, or all top-left determinants positive (easiest by hand).
+\par\smallskip\textbf{In the exam this looks like:} ``Show that $S'KS$ / $\exp(A')K\exp(A)$ / $K+L$ is positive definite'' (AE3, A3.4).
+\end{plainbox}
 \begin{thmbox}
 \begin{itemize}
 \item \textbf{Prop 0.53:} if $A=A'$ then the eigenvalues are real and $A=U\Delta U'$ with $U$ unitary ($U'U=I$) and $\Delta$ real diagonal; eigenvectors for distinct eigenvalues are orthogonal.
@@ -218,6 +260,11 @@ $K=\begin{bmatrix}2&-1&0\\-1&2&-1\\0&-1&2\end{bmatrix}$: $\Delta_1=2$, $\Delta_2
 \end{workbox}
 
 \subsection{Lyapunov's criterion and Lyapunov's equation \texorpdfstring{\fr{210--218}}{}}\label{ss:5-9}
+\begin{plainbox}
+Lyapunov's idea is an ``energy'' $V=\langle KX,X\rangle$. If you can show the energy never increases, the state can never run away.
+This checks stability \emph{without} finding eigenvalues.
+\par\smallskip\textbf{In the exam this looks like:} ``Use $K=I$ to show solutions are bounded'' or ``prove Lyapunov's criterion''.
+\end{plainbox}
 \begin{thmbox}[title={Theorem 0.55 (Lyapunov's criterion)}]
 If there is a positive definite $K$ such that $Q=-(A'K+KA)$ is also positive definite, then all solutions of $\dot X=AX$ are bounded on $(0,\infty)$.
 \end{thmbox}
@@ -242,6 +289,11 @@ $L=\begin{bmatrix}1&-\frac12\\-\frac12&\frac12\end{bmatrix}$, minors $1$ and $\f
 \end{workbox}
 
 \subsection{Sylvester's equation \texorpdfstring{\fr{212--216}}{}}\label{sec:sylv}\label{ss:5-10}
+\begin{plainbox}
+$AY+YB=-C$ is just a (big) system of linear equations for the entries of $Y$. It has exactly one solution for every $C$ unless
+$A$ and $-B$ share an eigenvalue (like $ay+yb=-c$ fails when $a=-b$).
+\par\smallskip\textbf{In the exam this looks like:} ``When does Sylvester's equation have a unique solution?''.
+\end{plainbox}
 \begin{thmbox}
 $AY+YB=-C$ is a linear system of $n^2$ equations in $n^2$ unknowns. Either a unique solution for all $C$, or infinitely many for some $C$, or none for some $C$ (Prop 0.56).
 \textbf{Prop 0.57:} unique solution for every $C$ $\iff$ $A$ and $-B$ have \textbf{no common eigenvalue}.
@@ -258,6 +310,11 @@ $A=\mathrm{diag}(1,2)$, $B=\mathrm{diag}(-1,3)$: eigenvalues of $-B$ are $1,-3$;
 \end{workbox}
 
 \subsection{Exam-style questions for Chapter 5}\label{ss:5-11}
+\begin{answerbox}
+\textbf{Polynomial stability:} quote the test you use (positive coefficients / Routh--Hurwitz) and check each condition.\\
+\textbf{Controller design:} state $T=G/(1+GK)$, find the closed-loop denominator, state conditions, choose values, give the final $T$ and say why it is in $\mathcal S$.\\
+\textbf{Coprime/Youla:} follow the 4 steps with headings, show $PX+QY=1$ explicitly, give $K=X/Y$, list the four closed-loop functions.
+\end{answerbox}
 \begin{qbox}[title={Q5.1 (stable polynomials)}]
 (a) Is $s^3+2s^2+3s+5$ stable? (b) For which real $k$ is $s^3+2s^2+3s+k$ stable? (c) Show $s^4+s^3-2s^2+s+1$ is not stable.
 \end{qbox}

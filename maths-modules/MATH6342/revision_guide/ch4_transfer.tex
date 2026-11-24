@@ -7,6 +7,11 @@ The transfer function $T(s)$ carries all the important dynamics. Two questions:
 (2) \textbf{Does the output stay bounded?} Answer: look at where the eigenvalues of $A$ / poles of $T$ are. Strictly left of the imaginary axis is good; on it is borderline (resonance); right of it is bad.
 
 \subsection{Transfer functions and realisation \texorpdfstring{\fr{135--137}}{}}\label{ss:4-1}
+\begin{plainbox}
+Two promises: \textbf{any} sensible $T(s)$ can be built as a real system, and a \textbf{stable} $T(s)$ can be built as a stable system.
+So we can design with $T(s)$ alone.
+\par\smallskip\textbf{In the exam this looks like:} a statement question: ``state the realisation theorem''.
+\end{plainbox}
 \begin{thmbox}
 \begin{itemize}
 \item $T(s)$ is the transfer function if $\hat Y(s)=T(s)\hat U(s)$ (zero initial conditions).
@@ -18,6 +23,12 @@ realise $1/q(s)$ as a SISO (Prop 0.22), then apply $y=\sum a_j\frac{d^ju}{dt^j}$
 \end{thmbox}
 
 \subsection{Frequency response, gain and phase \texorpdfstring{\fr{138--148}}{}}\label{sec:freq}\label{ss:4-2}
+\begin{plainbox}
+Feed in a pure tone $e^{i\omega t}$. A linear system sends out \textbf{the same tone}, only louder or quieter (\textbf{gain} $\Gamma$)
+and shifted in time (\textbf{phase} $\phi$). Both come from the single complex number $T(i\omega)$: its size and its angle.
+The \textbf{Nyquist plot} draws $T(i\omega)$ for all $\omega$; the \textbf{Bode plot} draws gain and phase against $\omega$.
+\par\smallskip\textbf{In the exam this looks like:} ``Find the gain and phase'', ``sketch the Nyquist plot'', ``what is the steady-state output for input $\cos\omega t$?''.
+\end{plainbox}
 \begin{defbox}
 \begin{itemize}
 \item \textbf{Frequency response function:} $T(i\omega)$, $\omega\in(-\infty,\infty)$ (angular frequency, rad/s). Input $e^{i\omega t}$ gives (in steady state) output $T(i\omega)e^{i\omega t}$.
@@ -70,6 +81,12 @@ If $R$ is proper rational with all poles in the open LHP, then $\omega\mapsto R(
 \end{thmbox}
 
 \subsection{Stability: the three cases for \texorpdfstring{$\dot X=AX$}{dX/dt=AX} \texorpdfstring{\fr{152}}{}}\label{sec:stab}\label{ss:4-3}
+\begin{plainbox}
+Each eigenvalue $\lambda$ gives a term like $e^{\lambda t}$. If its real part is \textbf{negative} the term shrinks to 0;
+\textbf{zero} real part, it neither grows nor shrinks (unless a Jordan block adds a factor $t$, which makes it grow);
+\textbf{positive}, it blows up. Stability is just ``where are the eigenvalues?''.
+\par\smallskip\textbf{In the exam this looks like:} ``Classify the stability of $\dot X=AX$ for these matrices''.
+\end{plainbox}
 \begin{thmbox}[title={Stability of $\dot X=AX$, $X(t)=\exp(tA)X_0$}]
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{@{}p{3.1cm}p{5.4cm}p{6.3cm}@{}}
@@ -103,6 +120,11 @@ $(A,B,C,D)$ is \textbf{bounded-input bounded-output stable} if every bounded inp
 \end{defbox}
 
 \subsection{The damped harmonic oscillator \texorpdfstring{\fr{149--151}, \fr{169}}{}}\label{ss:4-4}
+\begin{plainbox}
+A car's suspension: $\beta$ is the shock absorber, $\gamma$ is the spring. With both positive, bumps die away (stable).
+No damping ($\beta=0$): it bounces forever (marginal). Negative damping: the bouncing grows (unstable).
+\par\smallskip\textbf{In the exam this looks like:} ``For which $\beta,\gamma$ is the oscillator stable?''.
+\end{plainbox}
 $y''+\beta y'+\gamma y=u$, $A=\begin{bmatrix}0&1\\-\gamma&-\beta\end{bmatrix}$, eigenvalues $\lambda_\pm=\frac12(-\beta\pm\sqrt\Delta)$ with $\Delta=\beta^2-4\gamma$, eigenvectors $[1;\lambda_\pm]$.
 For $\lambda_+\neq\lambda_-$, $S=\begin{bmatrix}1&1\\\lambda_+&\lambda_-\end{bmatrix}$ and $\exp(tA)=S\,\mathrm{diag}(e^{t\lambda_+},e^{t\lambda_-})S^{-1}$.
 \begin{center}
@@ -119,6 +141,12 @@ $\beta<0$ (unstable) & unbounded oscillations & exponential growth & exponential
 \textbf{The damped oscillator is exponentially stable iff $\beta>0$ and $\gamma>0$} (both coefficients of $s^2+\beta s+\gamma$ positive). $\beta=0,\gamma>0$: marginal.
 
 \subsection{Resonance: marginal is not BIBO \texorpdfstring{\fr{154--157}}{}}\label{ss:4-5}
+\begin{plainbox}
+Pushing a swing at exactly its natural rhythm makes it go higher and higher. That is \textbf{resonance}: a \emph{bounded} push gives an
+\emph{unbounded} response. So a system with eigenvalues on the imaginary axis is not safe (not BIBO stable) even though it
+does not blow up on its own.
+\par\smallskip\textbf{In the exam this looks like:} ``Show the system is not BIBO stable by choosing a bounded input'' (use $\cos\nu t$ at the natural frequency).
+\end{plainbox}
 \begin{workbox}[title={Undamped oscillator $\ddot x+\nu^2x=U_0\cos\omega t$}]
 $A=\begin{bmatrix}0&1\\-\nu^2&0\end{bmatrix}$, eigenvalues $\pm i\nu$ (simple) $\Rightarrow$ marginally stable.
 Complementary function $c_1\begin{bmatrix}\cos\nu t\\-\nu\sin\nu t\end{bmatrix}+c_2\begin{bmatrix}\sin\nu t\\\nu\cos\nu t\end{bmatrix}$ (bounded).
@@ -130,6 +158,12 @@ Bounded input, unbounded output $\Rightarrow$ \textbf{not BIBO stable}. Laplace 
 \end{workbox}
 
 \subsection{BIBO stability theorems \texorpdfstring{\fr{158--161}, \fr{170--172}}{}}\label{ss:4-6}
+\begin{plainbox}
+\textbf{BIBO} = ``bounded input $\Rightarrow$ bounded output''. The main theorem: if every eigenvalue has negative real part,
+$\exp(tA)$ decays exponentially, so the accumulated effect of a bounded input stays bounded. And a transfer function is stable
+exactly when some BIBO-stable machine has it.
+\par\smallskip\textbf{In the exam this looks like:} ``Prove that if all $\Re\lambda_j<0$ then $(A,B,C,D)$ is BIBO stable'' (bookwork).
+\end{plainbox}
 \begin{thmbox}[title={Theorem 0.42 (frame 159)}]
 If every eigenvalue of $A$ has $\Re\lambda_j<0$ and $U$ is bounded on $(0,\infty)$, then all solutions of $(A,B,C,D)$ are bounded; so $(A,B,C,D)$ is BIBO stable.
 \end{thmbox}
@@ -161,6 +195,11 @@ A pole $\lambda=i\nu$ on the axis: use the bounded input $\cos\nu t$, $\hat u=\f
 \end{exambox}
 
 \subsection{Exam-style questions for Chapter 4}\label{ss:4-7}
+\begin{answerbox}
+\textbf{Stability:} list the eigenvalues with real parts, name the case (exponential / marginal / unstable), justify with the theorem; for $\Re\lambda=0$ discuss the Jordan blocks.\\
+\textbf{Gain/phase:} put $s=i\omega$, write $T(i\omega)=\frac{\cdots}{X+iY}$, give $\Gamma$ and $\phi$, and state the quadrant.\\
+\textbf{Not BIBO:} name a bounded input (e.g.\ $\cos\nu t$), compute the output, show it is unbounded.
+\end{answerbox}
 \begin{qbox}[title={Q4.1 (classification)}]
 For each $A$, decide whether $\dot X=AX$ is exponentially stable, marginally stable or unstable:
 (a) $\begin{bmatrix}-2&1\\-1&-2\end{bmatrix}$, (b) $\begin{bmatrix}0&2\\-2&0\end{bmatrix}$, (c) $\begin{bmatrix}1&0\\0&-3\end{bmatrix}$, (d) $\begin{bmatrix}0&1&0\\0&0&0\\0&0&-1\end{bmatrix}$.

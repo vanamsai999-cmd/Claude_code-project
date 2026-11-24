@@ -13,6 +13,13 @@ In this chapter we learn to \emph{draw} systems (block diagrams) and to \emph{re
 matrix system $\dot X=AX+Bu$. Nothing is solved yet; that is Chapter 2.
 
 \subsection{Linear operators and the five building blocks \texorpdfstring{\fr{7--9}}{}}\label{ss:1-1}
+\begin{plainbox}
+A linear system is a \textbf{machine}: a signal $u(t)$ goes in, a signal $y(t)$ comes out. Inside, the signal passes through
+simple ``boxes''. Each box does one job: \emph{scale it} (amplifier), \emph{add up the history} (integrator), \emph{measure how fast it changes}
+(differentiator), \emph{combine signals} (summing junction) or \emph{copy it} (tap).
+\textbf{Linear} means ``double the input, double the output; add two inputs, add the outputs''.
+\par\smallskip\textbf{In the exam this looks like:} ``Show that $L$ is linear'' or ``which of these maps are linear?''.
+\end{plainbox}
 \begin{defbox}
 $L:V\to W$ is \textbf{linear} if $L(\lambda f+\mu g)=\lambda Lf+\mu Lg$ for all $f,g$ and all $\lambda,\mu\in\CC$.
 The basic linear operators (on continuously differentiable $f:[0,\infty)\to\CC$) are
@@ -39,6 +46,12 @@ A map like $f\mapsto f^2$ or $f\mapsto f+1$ is \textbf{not} linear (check $L(2f)
 \end{exambox}
 
 \subsection{Block diagrams: rules, open loop and feedback \texorpdfstring{\fr{11--17}}{}}\label{ss:1-2}
+\begin{plainbox}
+\textbf{Feedback} means part of the output is sent back to the input. Think of a thermostat: the room temperature (output)
+is measured and used to switch the heater (input). \textbf{Negative} feedback calms the system down (going faster creates drag);
+\textbf{positive} feedback pushes it further the same way (more birds $\Rightarrow$ more births). Open loop = no signal ever comes back.
+\par\smallskip\textbf{In the exam this looks like:} ``Find the output of this feedback diagram'' (write the equation at the summing junction and solve for $y$).
+\end{plainbox}
 \begin{defbox}
 A block diagram is a directed graph from input $u$ to output $y$ built from $u,y,\delta_0,\oplus,\bullet,d/dt,\int,a,h$.
 \begin{itemize}
@@ -74,6 +87,12 @@ Positive feedback example: bird population $\dot x=kx+u$ with $k>0$ (more birds 
 \end{workbox}
 
 \subsection{How to turn an equation into a block diagram}\label{sec:bd}\label{ss:1-3}
+\begin{plainbox}
+Differentiators amplify noise, so we want diagrams built from \textbf{integrators} only.
+The trick: \textbf{integrate the whole equation} until no derivatives are left. Then every term is ``an integral of $y$'' or
+``an integral of $u$''. Terms with $y$ become a loop back from the output; terms with $u$ go forward from the input.
+\par\smallskip\textbf{In the exam this looks like:} ``Express this ODE / integral equation as a block diagram with no differentiators'' (AE1, A1.1--A1.2). Usually 5 marks.
+\end{plainbox}
 \begin{methodbox}
 \begin{enumerate}
 \item If differentiators \emph{are allowed}: tap $u$ into one branch per term, put the right operator ($d/dt$, $\int$, amplifier) on each branch, and add the branches at a summing junction. This is open loop if $y$ does not appear on the right.
@@ -155,6 +174,12 @@ build $x=\frac{b_m}{a_n}u^{(m)}+\dots+\frac{b_0}{a_n}u$ with differentiators (in
 \end{thmbox}
 
 \subsection{Reduction of order and the matrix form \texorpdfstring{\fr{23--29}}{}}\label{sec:reduction}\label{ss:1-4}
+\begin{plainbox}
+A big $n$-th order ODE is hard; $n$ small first-order ODEs are easy, and they fit into \textbf{one matrix equation}.
+So we keep track of the list $y, y', \dots, y^{(n-1)}$ as one vector $X$ (the \emph{state}).
+Each entry's derivative is simply the next entry, except the last, which the ODE tells us.
+\par\smallskip\textbf{In the exam this looks like:} ``Introduce $v=dx/dt$ and write the system as $(A,B,C,D)$'' (AE1, A1.3).
+\end{plainbox}
 \begin{thmbox}[title={Lemma 0.2 (reduction of order) \fr{26--27}}]
 $y^{(n)}+a_{n-1}(t)y^{(n-1)}+\dots+a_0(t)y=u(t)$ is equivalent to $\dfrac{dX}{dt}=AX+Bu$ with
 \[
@@ -192,6 +217,12 @@ As a feedback system: $y=-\beta\int y-\gamma\int^{(2)}y+\int^{(2)}u$. This examp
 \end{workbox}
 
 \subsection{The companion matrix \texorpdfstring{\fr{30}, \fr{34--35}}{}}\label{sec:companion}\label{ss:1-5}
+\begin{plainbox}
+The companion matrix is a \textbf{ready-made matrix for any polynomial}: put ones just above the diagonal and the
+polynomial's coefficients (with minus signs, constant term first) along the bottom row. Its characteristic polynomial is exactly
+the polynomial you started with.
+\par\smallskip\textbf{In the exam this looks like:} ``Find a matrix whose characteristic polynomial is $p(s)$'' (AE2, A2.2), or the induction proof.
+\end{plainbox}
 \begin{thmbox}[title={Proposition 0.5: every monic polynomial is a characteristic polynomial}]
 The companion matrix $A_c$ (last row $-a_0,-a_1,\dots,-a_{n-1}$, ones on the superdiagonal) has
 \[ \det(\lambda I-A_c)=\lambda^n+a_{n-1}\lambda^{n-1}+\dots+a_1\lambda+a_0. \]
@@ -216,6 +247,10 @@ Numerically (MATLAB \texttt{eig(A)} or \texttt{roots([1 2 1 4 2])}): $-2.1877,\ 
 \end{workbox}
 
 \subsection{Exam-style questions for Chapter 1}\label{ss:1-6}
+\begin{answerbox}
+\textbf{Block diagram:} (1) integrate $k$ times, saying ``with zero initial conditions''; (2) solve for $y$; (3) draw, labelling every wire; (4) one line checking the diagram gives back the equation.\\
+\textbf{Matrix form:} (1) make monic; (2) define the state vector in words (``let $x_1=y$, $x_2=y'$''); (3) write the first-order equations; (4) state $A,B,C,D$ clearly with their sizes.
+\end{answerbox}
 \begin{qbox}[title={Q1.1 (easy)}]
 Express $\dfrac{d^2y}{dt^2}+3\dfrac{dy}{dt}+2y=5u$ (a) as a block diagram without differentiators and (b) as an $(A,B,C,D)$ system.
 \end{qbox}
