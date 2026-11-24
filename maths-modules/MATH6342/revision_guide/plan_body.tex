@@ -1,0 +1,198 @@
+% Study plan 14:30-19:00. Used inside the guide and in the standalone plan.
+\providecommand{\G}[1]{\S\ref{#1} (p.\,\pageref{#1})}
+\newcommand{\core}{\textcolor{redx}{\textbf{$\bigstar$}}}
+\newcommand{\extra}{\textcolor{grey}{$\circ$}}
+\newcommand{\tick}{$\square$}
+\newtcolorbox{sessionbox}[2][]{colback=white,colframe=navy,title={#2},#1}
+\newtcolorbox{breakbox}[1][]{colback=green!6,colframe=green!60!black,title={Break},#1}
+
+\section{Your study plan: 14:30 to 19:00 (4\texorpdfstring{$\frac12$}{1/2} hours)}\label{sec:plan}
+
+\subsection*{The idea of the plan}
+The aim is to cover \textbf{the whole module} in one afternoon \textbf{without} skimming. So every block follows the same
+\textbf{understand $\to$ do $\to$ check} loop, and the time goes where the marks are: Chapters 2, 3 and 5 get the most.
+\begin{itemize}
+\item \core\ = core: do it even if you are behind. \quad \extra\ = only if you are on time.
+\item Every block starts with a \textbf{2-minute recall} of the previous block (closed book). Recalling is what makes it stick.
+\item Every block ends with a ``\textbf{you understand it when\dots}'' checklist. Tick a box only if you can do it \emph{without looking}.
+\end{itemize}
+
+\begin{methodbox}[title={How to ``fully understand'' a worked example (use this every time)}]
+\begin{enumerate}
+\item \textbf{Read} the method box once, slowly. For each step ask ``\emph{why} is this step allowed?''
+\item \textbf{Cover} the worked solution with a sheet of paper. Write the question at the top of your own page.
+\item \textbf{Do it yourself}, uncovering one line only when you are stuck. Mark the line where you got stuck with a star.
+\item \textbf{Explain it aloud in one sentence} (``we integrate twice because the highest derivative is $y''$\dots''). If you cannot, reread that step.
+\item \textbf{Check} your answer with the cheap checks ($t=0$, $s\to\infty$, trace/determinant).
+\end{enumerate}
+Have ready: this guide, plain paper, pen, a calculator, and your phone in another room.
+\end{methodbox}
+
+\subsection*{Timetable at a glance}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{@{}p{2.1cm}p{0.9cm}p{4.6cm}p{3.4cm}p{3.6cm}@{}}
+\toprule
+\textbf{Time} & \textbf{Min} & \textbf{Block} & \textbf{Guide} & \textbf{You finish with}\\\midrule
+14:30--14:40 & 10 & 0. Set up and the big picture & \G{sec:map} & the chain ODE $\to$ $(A,B,C,D)$ $\to$ $T(s)$ $\to$ stability \\
+14:40--15:20 & 40 & 1. Describing systems & \G{ch1} & block diagrams, matrix form\\
+15:20--15:25 & 5 & Break & & \\
+15:25--16:25 & 60 & 2. Matrix theory & \G{ch2} & $(sI-A)^{-1}$, $\exp(tA)$, $T(s)$, realisation\\
+16:25--16:35 & 10 & Break (longer: eat something) & & \\
+16:35--17:20 & 45 & 3. Laplace transforms & \G{ch3} & IVPs, convolution, Jordan\\
+17:20--17:25 & 5 & Break & & \\
+17:25--17:55 & 30 & 4. Frequency response \& stability & \G{ch4} & gain/phase, BIBO\\
+17:55--18:00 & 5 & Break & & \\
+18:00--18:40 & 40 & 5. Feedback control & \G{ch5} & Nyquist, PID, Youla, Lyapunov\\
+18:40--19:00 & 20 & 6. Mixed test and review & \G{sec:mock} & your list of weak spots\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{The blocks in detail}
+
+\begin{sessionbox}{Block 0 \quad 14:30--14:40 (10 min) \quad Set up and the big picture}
+\textbf{Goal.} Know what the whole module is about before you go into detail.
+\begin{itemize}
+\item[\core] Read \G{sec:map}: the table of five chapters and the ``chain'' diagram.
+\item[\core] Closed book: copy the chain from memory: ODE $\to$ block diagram $\to$ $(A,B,C,D)$ $\to$ $T(s)=D+C(sI-A)^{-1}B$ $\to$ poles/eigenvalues $\to$ stability $\to$ feedback.
+\item[\core] Write the two system equations $\dot X=AX+BU$, $Y=CX+DU$ and the shapes of $A,B,C,D$.
+\end{itemize}
+\textbf{You understand it when you can:} \tick\ say in one sentence what each chapter is for \quad \tick\ write $T(s)$ from memory.
+\end{sessionbox}
+
+\begin{sessionbox}{Block 1 \quad 14:40--15:20 (40 min) \quad Chapter 1: describing systems}
+\textbf{Recall (2 min, closed book):} the chain from Block 0.\\
+\textbf{Learn and do:}
+\begin{itemize}
+\item[\core] \textbf{14:42--14:52} Building blocks and feedback (\G{ch1}, first two subsections). Do Black's amplifier ($y=u/(1-\theta)$) yourself.
+\item[\core] \textbf{14:52--15:07} Equation $\to$ block diagram: \G{sec:bd}. Cover and redo A1.1(ii) (integrate twice, nest the integrals) and A1.2. \emph{This is a guaranteed exam skill.}
+\item[\core] \textbf{15:07--15:14} Reduction of order and companion matrix: \G{sec:reduction}, \G{sec:companion}. Redo A1.3 and A2.2.
+\item[\core] \textbf{15:14--15:20} Test: Q1.1 and Q1.2 (end of Chapter 1), closed book, then mark.
+\item[\extra] Read the companion-matrix proof by induction (you will meet it again in the proofs list).
+\end{itemize}
+\textbf{You understand it when you can:}
+\tick\ turn any constant-coefficient ODE into a diagram with no differentiators \quad
+\tick\ write $A,B,C,D$ for $y''+\beta y'+\gamma y=u$ \quad
+\tick\ write a matrix whose characteristic polynomial is a given monic polynomial (signs!).
+\end{sessionbox}
+
+\begin{breakbox}15:20--15:25. Stand up, get water. Do not look at your phone; let the last block settle.\end{breakbox}
+
+\begin{sessionbox}{Block 2 \quad 15:25--16:25 (60 min) \quad Chapter 2: matrix theory (the biggest block)}
+\textbf{Recall (2 min):} write $A$, $B$, $C$, $D$ for $m\ddot x+kx=u$; write the companion matrix of $s^3+2s+5$.\\
+\textbf{Learn and do:}
+\begin{itemize}
+\item[\core] \textbf{15:27--15:40} Characteristic polynomial and resolvent: \G{sec:resolvent}. Redo A1.4 (remember the \emph{transpose} in the adjugate).
+\item[\core] \textbf{15:40--15:58} $\exp(tA)$: \G{sec:exp}. Redo the three worked examples: distinct eigenvalues, repeated eigenvalue ($e^{\lambda t}(I+t(A-\lambda I))$), and $\pm i$ (rotation). Check $t=0$ each time.
+\item[\core] \textbf{15:58--16:06} Solution formula: \G{sec:solution}. Say the integrating-factor proof aloud; redo the step-response example.
+\item[\core] \textbf{16:06--16:14} Transfer function: \G{sec:tf}. Redo the damped oscillator $T(s)=1/(s^2+\beta s+\gamma)$. Read through A2.1 (do not redo the $3\times3$ adjugate now).
+\item[\core] \textbf{16:14--16:22} Realisation: \G{sec:realise}. Redo the proper (not strictly proper) example with long division.
+\item[\core] \textbf{16:22--16:25} Test: Q2.1(a)(b).
+\item[\extra] Norms and Cauchy--Schwarz proof, the rank question A2.3, A3.3 (symmetric $3\times3$), Q2.2--Q2.4.
+\end{itemize}
+\textbf{You understand it when you can:}
+\tick\ compute $(sI-A)^{-1}$ for a $2\times2$ in under 3 minutes \quad
+\tick\ compute $\exp(tA)$ by diagonalising, and for a double eigenvalue \quad
+\tick\ write the solution formula and explain each term (complementary function, particular integral) \quad
+\tick\ go from $T(s)$ to $(A,B,C,D)$ and back.
+\end{sessionbox}
+
+\begin{breakbox}16:25--16:35. Longer break: eat something and walk around. You are halfway through.\end{breakbox}
+
+\begin{sessionbox}{Block 3 \quad 16:35--17:20 (45 min) \quad Chapter 3: Laplace transforms}
+\textbf{Recall (2 min):} the solution formula for $\dot X=AX+BU$; the formula for $T(s)$; $\exp(tA)$ for a double eigenvalue.\\
+\textbf{Learn and do:}
+\begin{itemize}
+\item[\core] \textbf{16:37--16:45} Definition, table and properties (Chapter 3, first two subsections). Close the guide and write the table from memory; check it.
+\item[\core] \textbf{16:45--16:52} From the definition: \G{sec:lapdef}. Redo A3.1 ($\cos2\omega t$, then $\sin^2\omega t$).
+\item[\core] \textbf{16:52--17:05} IVPs: \G{sec:ivp}. Redo A3.2 (partial fractions with a quadratic) and the second-order step example. Use the 5-step method box.
+\item[\core] \textbf{17:05--17:11} Convolution and integral equations: \G{sec:conv}. Redo $y=t+\int_0^t\sin(t-u)y(u)\,du$.
+\item[\core] \textbf{17:11--17:17} Laplace of $(A,B,C,D)$: \G{sec:lapabcd}. Understand why $\hat Y=T\hat U$; read the complex-eigenvalue $\exp(tA)$ example.
+\item[\core] \textbf{17:17--17:20} Jordan form: \G{sec:jordan}. Learn ``number of blocks = geometric multiplicity'' and do Q3.4.
+\item[\extra] Proofs of the derivative rule and the convolution theorem; Q3.1--Q3.3.
+\end{itemize}
+\textbf{You understand it when you can:}
+\tick\ solve a second-order IVP by Laplace from start to finish \quad
+\tick\ spot a convolution in an integral equation \quad
+\tick\ find algebraic/geometric multiplicity and the minimal polynomial from a Jordan form.
+\end{sessionbox}
+
+\begin{breakbox}17:20--17:25. Short break.\end{breakbox}
+
+\begin{sessionbox}{Block 4 \quad 17:25--17:55 (30 min) \quad Chapter 4: frequency response and stability}
+\textbf{Recall (2 min):} $\Lap(f')$, $\Lap(f'')$, $\Lap(\sin at)$, $\Lap(e^{at})$, and $\Lap(f*g)$.\\
+\textbf{Learn and do:}
+\begin{itemize}
+\item[\core] \textbf{17:27--17:37} Gain and phase: \G{sec:freq}. Redo the $\frac1{s+1}$ example including the Nyquist circle; then do Q4.2.
+\item[\core] \textbf{17:37--17:47} Stability: \G{sec:stab}. Learn the three-row table (exponential / marginal / unstable), then do Q4.1 closed book.
+\item[\core] \textbf{17:47--17:55} BIBO and resonance: read Theorem 0.42 and say its proof aloud; do Q4.3 (why $\cos3t$ breaks $\ddot y+9y=u$).
+\item[\extra] Proof outline of Theorem 0.45; the damped-oscillator table.
+\end{itemize}
+\textbf{You understand it when you can:}
+\tick\ find $\Gamma(\omega)$ and $\phi(\omega)$ and pick the right quadrant \quad
+\tick\ classify $\dot X=AX$ from the eigenvalues, including the Jordan-block case on the axis \quad
+\tick\ explain why marginally stable is \emph{not} BIBO stable.
+\end{sessionbox}
+
+\begin{breakbox}17:55--18:00. Short break. Last push.\end{breakbox}
+
+\begin{sessionbox}{Block 5 \quad 18:00--18:40 (40 min) \quad Chapter 5: feedback control}
+\textbf{Recall (2 min):} the definition of a stable rational function (two conditions!); the stability table.\\
+\textbf{Learn and do:}
+\begin{itemize}
+\item[\core] \textbf{18:02--18:10} Stable polynomials: \G{sec:stabpoly}. Learn the positive-coefficient test and its counterexample $(s+1)(s^2+1)$; do Q5.1.
+\item[\core] \textbf{18:10--18:18} Feedback loop and PID: \G{sec:pid}. Derive $T=G/(1+GK)$ yourself, redo the PI example, then do Q5.2.
+\item[\core] \textbf{18:18--18:30} Coprime factorisation and Youla: \G{sec:coprime}. Redo worked example A ($G=\frac1{s-1}$), learn the 4 formulas ($QY, PY, XQ, PX$), then do Q5.3.
+\item[\core] \textbf{18:30--18:36} Internal stability: \G{sec:internal}. Understand the trap example (why all four functions are needed).
+\item[\core] \textbf{18:36--18:40} Positive definite and Lyapunov: \G{sec:posdef}. Learn the three equivalent conditions and do Q5.4.
+\item[\extra] Nyquist criterion example $\frac{k}{(s+1)^3}$; Euclid/B\'ezout; A3.4; Sylvester's equation; worked example B ($1/s^2$).
+\end{itemize}
+\textbf{You understand it when you can:}
+\tick\ decide if a polynomial of degree $\le3$ is stable \quad
+\tick\ find a PI/PD controller that stabilises a simple plant \quad
+\tick\ do the 4-step coprime factorisation for $G=\frac1{s-a}$ \quad
+\tick\ test a $2\times2$ matrix for positive definiteness.
+\end{sessionbox}
+
+\begin{sessionbox}{Block 6 \quad 18:40--19:00 (20 min) \quad Mixed test and review}
+\begin{itemize}
+\item[\core] \textbf{18:40--18:52} Timed, closed book: mock question \textbf{M2} (\G{sec:mock}). It uses Chapters 2 and 3 together. Then mark it.
+\item[\core] \textbf{18:52--18:57} Cover the formula sheet (last page) and write down as many lines as you can. Mark what you missed.
+\item[\core] \textbf{18:57--19:00} Fill in the tracker below. Write your 3 weakest topics: these are where the next session starts.
+\end{itemize}
+\end{sessionbox}
+
+\subsection*{End-of-session tracker}
+Rate each topic: 1 = lost, 3 = can do it with the guide open, 5 = can do it closed book and explain why.
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\small
+\begin{tabular}{@{}p{7.6cm}p{1.4cm}p{2.6cm}p{3.2cm}@{}}
+\toprule
+\textbf{Topic} & \textbf{Done?} & \textbf{Rating 1--5} & \textbf{Note}\\\midrule
+Block diagrams (no differentiators) & \tick & & \\
+ODE $\to$ $(A,B,C,D)$, companion matrix & \tick & & \\
+$(sI-A)^{-1}$ and $\det(sI-A)$ & \tick & & \\
+$\exp(tA)$ (distinct / repeated / complex eigenvalues) & \tick & & \\
+Solution formula and its proof & \tick & & \\
+Transfer function and realisation & \tick & & \\
+Laplace table, properties, from the definition & \tick & & \\
+IVPs and integral equations by Laplace & \tick & & \\
+Jordan form, multiplicities & \tick & & \\
+Gain, phase, Nyquist plot & \tick & & \\
+Stability classification, BIBO, resonance & \tick & & \\
+Stable polynomials and PID feedback & \tick & & \\
+Coprime factorisation, Youla, internal stability & \tick & & \\
+Positive definite, Lyapunov, Sylvester & \tick & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{exambox}[title={If you fall behind}]
+Do not rush the core items to ``catch up''. Instead drop the \extra\ items, then shorten the end-of-block tests to one question.
+If a block overruns by more than 10 minutes, take the time from Block 6's formula-sheet recall, not from the breaks.
+\textbf{Next session:} start with 10 minutes writing the formula sheet from memory, then your 3 weakest topics, then the proofs list (\G{sec:proofs}) and the rest of the mock paper.
+\end{exambox}
+\newpage

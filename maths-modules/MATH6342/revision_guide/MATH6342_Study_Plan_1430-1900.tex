@@ -1,0 +1,17 @@
+\documentclass[11pt,a4paper]{article}
+\input{preamble}
+% Page numbers and section numbers point into the revision guide.
+% Build MATH6342_Exam_Revision_Guide.tex first so its .aux file exists.
+\usepackage{xr}
+\externaldocument[G-]{MATH6342_Exam_Revision_Guide}
+\newcommand{\G}[1]{Guide \S\ref{G-#1} (p.\,\pageref{G-#1})}
+\fancyhead[R]{Study plan 14:30--19:00}
+\setcounter{secnumdepth}{0}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{navy}MATH6342 Linear Systems}\\[4pt]
+{\Large Study plan: 14:30 to 19:00}\\[4pt]
+{\color{teal}Use alongside \texttt{MATH6342\_Exam\_Revision\_Guide.pdf}. Section and page numbers below refer to the guide.}
+\end{center}
+\input{plan_body}
+\end{document}
