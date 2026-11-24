@@ -6,7 +6,7 @@ The transfer function $T(s)$ carries all the important dynamics. Two questions:
 (1) \textbf{How does the system respond to a pure tone $e^{i\omega t}$?} Answer: it multiplies it by $T(i\omega)=\Gamma(\omega)e^{i\phi(\omega)}$ (gain and phase; Nyquist and Bode plots).
 (2) \textbf{Does the output stay bounded?} Answer: look at where the eigenvalues of $A$ / poles of $T$ are. Strictly left of the imaginary axis is good; on it is borderline (resonance); right of it is bad.
 
-\subsection{Transfer functions and realisation \texorpdfstring{\fr{135--137}}{}}
+\subsection{Transfer functions and realisation \texorpdfstring{\fr{135--137}}{}}\label{ss:4-1}
 \begin{thmbox}
 \begin{itemize}
 \item $T(s)$ is the transfer function if $\hat Y(s)=T(s)\hat U(s)$ (zero initial conditions).
@@ -17,7 +17,7 @@ realise $1/q(s)$ as a SISO (Prop 0.22), then apply $y=\sum a_j\frac{d^ju}{dt^j}$
 \end{itemize}
 \end{thmbox}
 
-\subsection{Frequency response, gain and phase \texorpdfstring{\fr{138--148}}{}}\label{sec:freq}
+\subsection{Frequency response, gain and phase \texorpdfstring{\fr{138--148}}{}}\label{sec:freq}\label{ss:4-2}
 \begin{defbox}
 \begin{itemize}
 \item \textbf{Frequency response function:} $T(i\omega)$, $\omega\in(-\infty,\infty)$ (angular frequency, rad/s). Input $e^{i\omega t}$ gives (in steady state) output $T(i\omega)e^{i\omega t}$.
@@ -69,7 +69,7 @@ If $R$ is proper rational with all poles in the open LHP, then $\omega\mapsto R(
 \emph{Idea:} $R=c+\sum_jc_j(s-\lambda_j)^{-m_j}$, $\Re\lambda_j<-\delta$, so $|R'(i\omega)|\le M/(1+\omega^2)$, which is integrable.
 \end{thmbox}
 
-\subsection{Stability: the three cases for \texorpdfstring{$\dot X=AX$}{dX/dt=AX} \texorpdfstring{\fr{152}}{}}\label{sec:stab}
+\subsection{Stability: the three cases for \texorpdfstring{$\dot X=AX$}{dX/dt=AX} \texorpdfstring{\fr{152}}{}}\label{sec:stab}\label{ss:4-3}
 \begin{thmbox}[title={Stability of $\dot X=AX$, $X(t)=\exp(tA)X_0$}]
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{@{}p{3.1cm}p{5.4cm}p{6.3cm}@{}}
@@ -102,7 +102,7 @@ Unstable & $X(t)$ unbounded for some $X_0$ & some $\Re\lambda_j>0$, or some $\Re
 $(A,B,C,D)$ is \textbf{bounded-input bounded-output stable} if every bounded input $u$ on $(0,\infty)$ produces a bounded output $y$ on $(0,\infty)$.
 \end{defbox}
 
-\subsection{The damped harmonic oscillator \texorpdfstring{\fr{149--151}, \fr{169}}{}}
+\subsection{The damped harmonic oscillator \texorpdfstring{\fr{149--151}, \fr{169}}{}}\label{ss:4-4}
 $y''+\beta y'+\gamma y=u$, $A=\begin{bmatrix}0&1\\-\gamma&-\beta\end{bmatrix}$, eigenvalues $\lambda_\pm=\frac12(-\beta\pm\sqrt\Delta)$ with $\Delta=\beta^2-4\gamma$, eigenvectors $[1;\lambda_\pm]$.
 For $\lambda_+\neq\lambda_-$, $S=\begin{bmatrix}1&1\\\lambda_+&\lambda_-\end{bmatrix}$ and $\exp(tA)=S\,\mathrm{diag}(e^{t\lambda_+},e^{t\lambda_-})S^{-1}$.
 \begin{center}
@@ -118,7 +118,7 @@ $\beta<0$ (unstable) & unbounded oscillations & exponential growth & exponential
 \end{center}
 \textbf{The damped oscillator is exponentially stable iff $\beta>0$ and $\gamma>0$} (both coefficients of $s^2+\beta s+\gamma$ positive). $\beta=0,\gamma>0$: marginal.
 
-\subsection{Resonance: marginal is not BIBO \texorpdfstring{\fr{154--157}}{}}
+\subsection{Resonance: marginal is not BIBO \texorpdfstring{\fr{154--157}}{}}\label{ss:4-5}
 \begin{workbox}[title={Undamped oscillator $\ddot x+\nu^2x=U_0\cos\omega t$}]
 $A=\begin{bmatrix}0&1\\-\nu^2&0\end{bmatrix}$, eigenvalues $\pm i\nu$ (simple) $\Rightarrow$ marginally stable.
 Complementary function $c_1\begin{bmatrix}\cos\nu t\\-\nu\sin\nu t\end{bmatrix}+c_2\begin{bmatrix}\sin\nu t\\\nu\cos\nu t\end{bmatrix}$ (bounded).
@@ -129,7 +129,7 @@ Complementary function $c_1\begin{bmatrix}\cos\nu t\\-\nu\sin\nu t\end{bmatrix}+
 Bounded input, unbounded output $\Rightarrow$ \textbf{not BIBO stable}. Laplace view: $T(s)=\frac1{s^2+\nu^2}$ and $\hat u=\frac{U_0s}{s^2+\nu^2}$, so $\hat x$ has a \emph{double} pole at $\pm i\nu$, giving $t\sin\nu t$.
 \end{workbox}
 
-\subsection{BIBO stability theorems \texorpdfstring{\fr{158--161}, \fr{170--172}}{}}
+\subsection{BIBO stability theorems \texorpdfstring{\fr{158--161}, \fr{170--172}}{}}\label{ss:4-6}
 \begin{thmbox}[title={Theorem 0.42 (frame 159)}]
 If every eigenvalue of $A$ has $\Re\lambda_j<0$ and $U$ is bounded on $(0,\infty)$, then all solutions of $(A,B,C,D)$ are bounded; so $(A,B,C,D)$ is BIBO stable.
 \end{thmbox}
@@ -160,7 +160,7 @@ A pole $\lambda=i\nu$ on the axis: use the bounded input $\cos\nu t$, $\hat u=\f
 \end{itemize}
 \end{exambox}
 
-\subsection{Exam-style questions for Chapter 4}
+\subsection{Exam-style questions for Chapter 4}\label{ss:4-7}
 \begin{qbox}[title={Q4.1 (classification)}]
 For each $A$, decide whether $\dot X=AX$ is exponentially stable, marginally stable or unstable:
 (a) $\begin{bmatrix}-2&1\\-1&-2\end{bmatrix}$, (b) $\begin{bmatrix}0&2\\-2&0\end{bmatrix}$, (c) $\begin{bmatrix}1&0\\0&-3\end{bmatrix}$, (d) $\begin{bmatrix}0&1&0\\0&0&0\\0&0&-1\end{bmatrix}$.

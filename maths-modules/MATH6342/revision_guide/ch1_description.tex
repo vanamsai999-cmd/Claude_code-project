@@ -12,7 +12,7 @@ The state is ``everything you need to know now, so that together with future inp
 In this chapter we learn to \emph{draw} systems (block diagrams) and to \emph{rewrite} any constant-coefficient ODE as a first order
 matrix system $\dot X=AX+Bu$. Nothing is solved yet; that is Chapter 2.
 
-\subsection{Linear operators and the five building blocks \texorpdfstring{\fr{7--9}}{}}
+\subsection{Linear operators and the five building blocks \texorpdfstring{\fr{7--9}}{}}\label{ss:1-1}
 \begin{defbox}
 $L:V\to W$ is \textbf{linear} if $L(\lambda f+\mu g)=\lambda Lf+\mu Lg$ for all $f,g$ and all $\lambda,\mu\in\CC$.
 The basic linear operators (on continuously differentiable $f:[0,\infty)\to\CC$) are
@@ -38,7 +38,7 @@ E.g.\ $Lf=t\,f''+3\int_0^t f$ is linear since $L(\lambda f+\mu g)=t(\lambda f''+
 A map like $f\mapsto f^2$ or $f\mapsto f+1$ is \textbf{not} linear (check $L(2f)\neq 2Lf$, or $L(0)\neq0$).
 \end{exambox}
 
-\subsection{Block diagrams: rules, open loop and feedback \texorpdfstring{\fr{11--17}}{}}
+\subsection{Block diagrams: rules, open loop and feedback \texorpdfstring{\fr{11--17}}{}}\label{ss:1-2}
 \begin{defbox}
 A block diagram is a directed graph from input $u$ to output $y$ built from $u,y,\delta_0,\oplus,\bullet,d/dt,\int,a,h$.
 \begin{itemize}
@@ -73,7 +73,7 @@ The \textbf{minus} sign of $-k/m$ on the fed-back signal is what ``negative feed
 Positive feedback example: bird population $\dot x=kx+u$ with $k>0$ (more birds $\Rightarrow$ more births); turbocharger.
 \end{workbox}
 
-\subsection{How to turn an equation into a block diagram}\label{sec:bd}
+\subsection{How to turn an equation into a block diagram}\label{sec:bd}\label{ss:1-3}
 \begin{methodbox}
 \begin{enumerate}
 \item If differentiators \emph{are allowed}: tap $u$ into one branch per term, put the right operator ($d/dt$, $\int$, amplifier) on each branch, and add the branches at a summing junction. This is open loop if $y$ does not appear on the right.
@@ -154,7 +154,7 @@ integrators and differentiators. \textbf{Idea of proof:} integrate $n$ times and
 build $x=\frac{b_m}{a_n}u^{(m)}+\dots+\frac{b_0}{a_n}u$ with differentiators (input operator, \fr{21}), and feed $y$ back through integrators (\fr{22}).
 \end{thmbox}
 
-\subsection{Reduction of order and the matrix form \texorpdfstring{\fr{23--29}}{}}\label{sec:reduction}
+\subsection{Reduction of order and the matrix form \texorpdfstring{\fr{23--29}}{}}\label{sec:reduction}\label{ss:1-4}
 \begin{thmbox}[title={Lemma 0.2 (reduction of order) \fr{26--27}}]
 $y^{(n)}+a_{n-1}(t)y^{(n-1)}+\dots+a_0(t)y=u(t)$ is equivalent to $\dfrac{dX}{dt}=AX+Bu$ with
 \[
@@ -191,7 +191,7 @@ $A=\begin{bmatrix}0&1\\-\gamma&-\beta\end{bmatrix}$, $B=\begin{bmatrix}0\\1\end{
 As a feedback system: $y=-\beta\int y-\gamma\int^{(2)}y+\int^{(2)}u$. This example comes back in Chapters 2, 4 and 5.
 \end{workbox}
 
-\subsection{The companion matrix \texorpdfstring{\fr{30}, \fr{34--35}}{}}\label{sec:companion}
+\subsection{The companion matrix \texorpdfstring{\fr{30}, \fr{34--35}}{}}\label{sec:companion}\label{ss:1-5}
 \begin{thmbox}[title={Proposition 0.5: every monic polynomial is a characteristic polynomial}]
 The companion matrix $A_c$ (last row $-a_0,-a_1,\dots,-a_{n-1}$, ones on the superdiagonal) has
 \[ \det(\lambda I-A_c)=\lambda^n+a_{n-1}\lambda^{n-1}+\dots+a_1\lambda+a_0. \]
@@ -215,7 +215,7 @@ Numerically (MATLAB \texttt{eig(A)} or \texttt{roots([1 2 1 4 2])}): $-2.1877,\ 
 \textit{Bonus:} two eigenvalues have positive real part, so $\dot X=AX$ is \textbf{unstable}. (Coefficients all positive does \emph{not} imply stable, see \S\ref{sec:stabpoly}.)
 \end{workbox}
 
-\subsection{Exam-style questions for Chapter 1}
+\subsection{Exam-style questions for Chapter 1}\label{ss:1-6}
 \begin{qbox}[title={Q1.1 (easy)}]
 Express $\dfrac{d^2y}{dt^2}+3\dfrac{dy}{dt}+2y=5u$ (a) as a block diagram without differentiators and (b) as an $(A,B,C,D)$ system.
 \end{qbox}

@@ -12,7 +12,7 @@ Chapter 4 told us how to \emph{recognise} stability. Chapter 5 is about \emph{cr
 \item matrix tools: positive definite matrices, Lyapunov's criterion, Sylvester's equation.
 \end{enumerate}
 
-\subsection{Stable polynomials \texorpdfstring{\fr{163--164}}{}}\label{sec:stabpoly}
+\subsection{Stable polynomials \texorpdfstring{\fr{163--164}}{}}\label{sec:stabpoly}\label{ss:5-1}
 \begin{defbox}
 A polynomial $h$ is \textbf{stable} if all its zeros lie in the open left half plane LHP $=\{s:\Re s<0\}$.
 (So $h$ stable $\iff$ $1/h$ is a stable rational function.)
@@ -40,7 +40,7 @@ So use positivity only to \emph{rule out} stability (a zero or negative coeffici
 If you use the degree-3 test, say ``by the Routh--Hurwitz criterion''; when $a_2a_1=a_0$ the polynomial factorises as $(s+a_2)(s^2+a_1)$ with roots on the imaginary axis.
 \end{thmbox}
 
-\subsection{The ring \texorpdfstring{$\mathcal S$}{S} of stable rational functions \texorpdfstring{\fr{165--169}}{}}
+\subsection{The ring \texorpdfstring{$\mathcal S$}{S} of stable rational functions \texorpdfstring{\fr{165--169}}{}}\label{ss:5-2}
 \begin{defbox}
 $f=g/h$ is a \textbf{stable rational function}, $f\in\mathcal S$, if (i) $f$ is \textbf{proper} ($\deg g\le\deg h$) and (ii) all poles lie in the open LHP ($h$ stable).
 \end{defbox}
@@ -54,7 +54,7 @@ Sum: $\frac{g_1h_2+g_2h_1}{h_1h_2}$, same reasoning. Derivative: by partial frac
 $f'=\sum -n_ja_j(s-\lambda_j)^{-n_j-1}$ is strictly proper with the same poles.
 \end{proofbox}
 
-\subsection{Nyquist's criterion \texorpdfstring{\fr{174--177}}{}}
+\subsection{Nyquist's criterion \texorpdfstring{\fr{174--177}}{}}\label{ss:5-3}
 \begin{thmbox}[title={Nyquist's criterion}]
 Let the plant $R$ be \textbf{stable}. If the Nyquist contour $R(i\omega)$, $-\infty\le\omega\le\infty$, does \textbf{not pass through or wind around $-1$}, then
 $T=\dfrac{R}{1+R}$ is stable, i.e.\ the feedback loop with constant feedback $-1$ is stable.\\
@@ -77,7 +77,7 @@ A pole of $R$ gives a finite value of $T=R/(1+R)$, so the only possible poles of
 \textbf{Check algebraically.} Closed-loop denominator $(s+1)^3+k=s^3+3s^2+3s+(1+k)$: Routh needs $3\cdot3>1+k$, i.e.\ $k<8$ \checkmark. At $k=8$: $(s+3)(s^2+3)$, roots $\pm i\sqrt3$ (exactly the crossing frequency).
 \end{workbox}
 
-\subsection{The simple feedback loop and PID control \texorpdfstring{\fr{179--185}}{}}\label{sec:pid}
+\subsection{The simple feedback loop and PID control \texorpdfstring{\fr{179--185}}{}}\label{sec:pid}\label{ss:5-4}
 \begin{center}
 \begin{tikzpicture}
 \node (u) at (0,0) {$u$}; \node[sumj] (s) at (1.3,0) {$+$}; \node[blk] (g) at (3,0) {$G$}; \node[tap] (t) at (4.4,0) {}; \node (y) at (5.4,0) {$y$};
@@ -111,7 +111,7 @@ Sign conventions differ: the diagram has the block $-K$ and the formula uses $K$
 $G=\frac{s^2}{bs+c}$ ($b,c>0$) is not proper. With $K=k>0$: $T=\dfrac{s^2}{ks^2+bs+c}$, proper, poles $\frac{-b\pm\sqrt{b^2-4ck}}{2k}$ in the LHP (positive coefficients, degree 2). Stable.
 \end{workbox}
 
-\subsection{Euclid, B\'ezout and matrix completion \texorpdfstring{\fr{186--193}}{}}
+\subsection{Euclid, B\'ezout and matrix completion \texorpdfstring{\fr{186--193}}{}}\label{ss:5-5}
 \begin{methodbox}[title={Euclidean algorithm and B\'ezout for polynomials}]
 \begin{enumerate}
 \item Divide: $P_0=Q_1P_1+P_2$ with $\deg P_2<\deg P_1$; then $P_1=Q_2P_2+P_3$, and so on until a remainder is $0$. The last nonzero remainder $P_n$ is the highest common factor.
@@ -135,7 +135,7 @@ For $f,g\in\CC[s]$ TFAE: (1) $\begin{bmatrix}f&g\\h&k\end{bmatrix}$ can be compl
 \textbf{(d) Integers} \fr{191}: $\begin{bmatrix}3&5\\c&d\end{bmatrix}$ has an integer inverse iff $3d-5c=\pm1$, e.g.\ $c=1,d=2$; possible because $\gcd(3,5)=1$.
 \end{workbox}
 
-\subsection{Coprime factorisation in \texorpdfstring{$\mathcal S$}{S} \texorpdfstring{\fr{194--200}}{}}\label{sec:coprime}
+\subsection{Coprime factorisation in \texorpdfstring{$\mathcal S$}{S} \texorpdfstring{\fr{194--200}}{}}\label{sec:coprime}\label{ss:5-6}
 \begin{defbox}
 $P,Q\in\mathcal S$ are \textbf{coprime} if there are $X,Y\in\mathcal S$ with $PX+QY=1$.
 \textbf{Proposition 0.49:} every rational $G$ can be written $G=P/Q$ with $P,Q$ coprime in $\mathcal S$, found in exact arithmetic.
@@ -183,7 +183,7 @@ $Y=\frac{22-2s}{7(1+s)}$, $X=\frac{9s-3}{7(1+s)}$, giving the stabilising contro
 Indeed $\frac{G}{1+GK}=\frac{-2(s-11)(s^2+5)}{7(s+1)^3}\in\mathcal S$.
 \end{workbox}
 
-\subsection{Well-posedness and internal stability \texorpdfstring{\fr{201--206}}{}}\label{sec:internal}
+\subsection{Well-posedness and internal stability \texorpdfstring{\fr{201--206}}{}}\label{sec:internal}\label{ss:5-7}
 \begin{thmbox}[title={Lemma 0.51}]
 SFL with inputs $r,d,n$ and states $x=r-z$, $y=d+Kx$, $z=n+Gy$, i.e.\ $\begin{bmatrix}1&0&1\\-K&1&0\\0&-G&1\end{bmatrix}\begin{bmatrix}x\\y\\z\end{bmatrix}=\begin{bmatrix}r\\d\\n\end{bmatrix}$.
 It is \textbf{well posed} (inputs determine states uniquely) iff $1+GK\neq0$, and then
@@ -196,7 +196,7 @@ $\frac1{1+GK}=\frac{s+1}{s+2}$, $\frac{G}{1+GK}=\frac{s-1}{s+2}$, $\frac{GK}{1+G
 $\frac{K}{1+GK}=\frac{s+1}{(s-1)(s+2)}$ has a pole at $1$. So the loop is \textbf{not internally stable}: an unstable pole--zero cancellation hides inside the loop, and the internal signal $y$ responds to the reference $r$ through the unstable $\frac{K}{1+GK}$, so it blows up even though the output $z$ looks fine.
 \end{exambox}
 
-\subsection{Self-adjoint and positive definite matrices \texorpdfstring{\fr{207--209}}{}}\label{sec:posdef}
+\subsection{Self-adjoint and positive definite matrices \texorpdfstring{\fr{207--209}}{}}\label{sec:posdef}\label{ss:5-8}
 \begin{thmbox}
 \begin{itemize}
 \item \textbf{Prop 0.53:} if $A=A'$ then the eigenvalues are real and $A=U\Delta U'$ with $U$ unitary ($U'U=I$) and $\Delta$ real diagonal; eigenvectors for distinct eigenvalues are orthogonal.
@@ -217,7 +217,7 @@ $K$ real symmetric positive definite.\\
 $K=\begin{bmatrix}2&-1&0\\-1&2&-1\\0&-1&2\end{bmatrix}$: $\Delta_1=2$, $\Delta_2=4-1=3$, $\Delta_3=2(4-1)-(-1)(-2)=4$. All $>0$, so positive definite.
 \end{workbox}
 
-\subsection{Lyapunov's criterion and Lyapunov's equation \texorpdfstring{\fr{210--218}}{}}
+\subsection{Lyapunov's criterion and Lyapunov's equation \texorpdfstring{\fr{210--218}}{}}\label{ss:5-9}
 \begin{thmbox}[title={Theorem 0.55 (Lyapunov's criterion)}]
 If there is a positive definite $K$ such that $Q=-(A'K+KA)$ is also positive definite, then all solutions of $\dot X=AX$ are bounded on $(0,\infty)$.
 \end{thmbox}
@@ -241,7 +241,7 @@ $(1,1)$: $2l_2=-1\Rightarrow l_2=-\frac12$; \ $(2,2)$: $-4l_2-6l_3=-1\Rightarrow
 $L=\begin{bmatrix}1&-\frac12\\-\frac12&\frac12\end{bmatrix}$, minors $1$ and $\frac14$: positive definite, as the Corollary predicts (eigenvalues $-1,-2$).
 \end{workbox}
 
-\subsection{Sylvester's equation \texorpdfstring{\fr{212--216}}{}}\label{sec:sylv}
+\subsection{Sylvester's equation \texorpdfstring{\fr{212--216}}{}}\label{sec:sylv}\label{ss:5-10}
 \begin{thmbox}
 $AY+YB=-C$ is a linear system of $n^2$ equations in $n^2$ unknowns. Either a unique solution for all $C$, or infinitely many for some $C$, or none for some $C$ (Prop 0.56).
 \textbf{Prop 0.57:} unique solution for every $C$ $\iff$ $A$ and $-B$ have \textbf{no common eigenvalue}.
@@ -257,7 +257,7 @@ $1\times1$ intuition: $ay+yb=-c$ has a unique solution iff $a+b\neq0$, i.e.\ $a\
 $A=\mathrm{diag}(1,2)$, $B=\mathrm{diag}(-1,3)$: eigenvalues of $-B$ are $1,-3$; $1$ is shared with $A$. Indeed $Y=\begin{bmatrix}1&0\\0&0\end{bmatrix}$ gives $AY+YB=Y-Y=0$, so solutions are not unique.
 \end{workbox}
 
-\subsection{Exam-style questions for Chapter 5}
+\subsection{Exam-style questions for Chapter 5}\label{ss:5-11}
 \begin{qbox}[title={Q5.1 (stable polynomials)}]
 (a) Is $s^3+2s^2+3s+5$ stable? (b) For which real $k$ is $s^3+2s^2+3s+k$ stable? (c) Show $s^4+s^3-2s^2+s+1$ is not stable.
 \end{qbox}

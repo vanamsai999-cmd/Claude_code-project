@@ -6,7 +6,7 @@ The Laplace transform turns \textbf{differentiation into multiplication by $s$} 
 So ODEs and integral equations become algebra: transform, solve for $\hat y(s)$, use partial fractions, read the answer from the table
 (justified by Lerch's uniqueness theorem). For $(A,B,C,D)$ it gives $\hat Y=T(s)\hat U$.
 
-\subsection{Definition and the table \texorpdfstring{\fr{86--90}}{}}
+\subsection{Definition and the table \texorpdfstring{\fr{86--90}}{}}\label{ss:3-1}
 \begin{defbox}
 $f:(0,\infty)\to\CC$ continuous is of \textbf{exponential type} (satisfies (E)) if $|f(x)|\le Me^{\beta x}$ for some $M>0$, $\beta\in\RR$.
 Then
@@ -28,7 +28,7 @@ $\delta_b$ & $e^{-bs}$ & $\exp(tA)$ & $(sI-A)^{-1}$\\
 \end{center}
 (The last three of the right-hand column follow from the shift rule and Prop 0.34.)
 
-\subsection{Properties \texorpdfstring{\fr{91--98}}{}}
+\subsection{Properties \texorpdfstring{\fr{91--98}}{}}\label{ss:3-2}
 \begin{thmbox}[title={Proposition 0.25 and 0.26}]
 If $f$ satisfies (E) with constants $M,\beta$:
 \begin{enumerate}
@@ -52,7 +52,7 @@ Since $|f(R)|\le M'e^{\beta R}$ (f satisfies (E) because $f(x)=f(0)+\int_0^xf'$)
 (2) $\Lap(e^{ax}f)(s)=\int_0^\infty e^{-sx}e^{ax}f(x)dx=\int_0^\infty e^{-(s-a)x}f(x)dx=\Lap f(s-a)$.
 \end{proofbox}
 
-\subsection{Laplace transforms from the definition}\label{sec:lapdef}
+\subsection{Laplace transforms from the definition}\label{sec:lapdef}\label{ss:3-3}
 \begin{methodbox}
 \begin{enumerate}
 \item Write $\int_0^R f(x)e^{-sx}dx$ (finite $R$ first, as in the notes).
@@ -81,7 +81,7 @@ $\Lap(H(x-b))=\int_b^\infty e^{-sx}dx=\frac{e^{-sb}}{s}$ $(s>0)$.\\
 $\Lap(t\sin at)=-\frac{d}{ds}\frac{a}{s^2+a^2}=\frac{2as}{(s^2+a^2)^2}$. \quad $\Lap(t^2e^{-3t})=\frac{2}{(s+3)^3}$ (shift rule applied to $2/s^3$).
 \end{workbox}
 
-\subsection{Partial fractions and inverting \texorpdfstring{\fr{129--134}}{}}
+\subsection{Partial fractions and inverting \texorpdfstring{\fr{129--134}}{}}\label{ss:3-4}
 \begin{thmbox}[title={Prop 0.35, Cor 0.36, Cor 0.37}]
 Every rational $f(s)=q(s)+\sum_j\frac{a_j}{(s-\lambda_j)^{n_j}}$ uniquely (Euclidean algorithm then partial fractions).
 $\Lap\big(t^ne^{\lambda t}\big)=\dfrac{n!}{(s-\lambda)^{n+1}}$, so \textbf{strictly proper rational functions are exactly the Laplace transforms of sums of $t^ne^{\lambda t}$}.
@@ -107,7 +107,7 @@ Cover-up at $s=-2$: $C=\frac{1}{1}=1$. Cover-up for $B$ (multiply by $(s+1)^2$, 
 So $f(t)=-e^{-t}+2te^{-t}+e^{-2t}$.
 \end{workbox}
 
-\subsection{Solving initial value problems \texorpdfstring{\fr{107--110}}{}}\label{sec:ivp}
+\subsection{Solving initial value problems \texorpdfstring{\fr{107--110}}{}}\label{sec:ivp}\label{ss:3-5}
 \begin{thmbox}[title={Proposition 0.30}]
 For $y^{(n)}+a_{n-1}y^{(n-1)}+\dots+a_0y=u$ with initial values $y^{(j)}(0)=p_j$:
 $(s^n+a_{n-1}s^{n-1}+\dots+a_0)\hat y(s)+q_{n-1}(s)=\hat u(s)$, with $q_{n-1}$ a polynomial of degree $\le n-1$ built from the $a_j$ and $p_k$.
@@ -146,7 +146,7 @@ $\Lap y'=s\hat y-7$, $\Lap y''=s^2\hat y-7s+1$, $\Lap y'''=s^3\hat y-7s^2+s-5$. 
 $(s^3+2s^2-s+1)\hat y-7s^2-13s+4=\hat u(s)$.
 \end{workbox}
 
-\subsection{Convolution and integral equations \texorpdfstring{\fr{100--106}}{}}\label{sec:conv}
+\subsection{Convolution and integral equations \texorpdfstring{\fr{100--106}}{}}\label{sec:conv}\label{ss:3-6}
 \begin{thmbox}[title={Proposition 0.28 (Laplace convolution)}]
 $(f*g)(x)=\displaystyle\int_0^xf(x-y)g(y)\,dy$ is commutative, linear, associative and
 \[\boxed{\Lap(f*g)=\Lap(f)\,\Lap(g).}\]
@@ -168,7 +168,7 @@ $A=\frac{2(a-b)}{a-b-1}$, $B=\frac{-2}{a-b-1}$ (cover-up). Hence $y(t)=\dfrac{2(
 $\hat y=\frac1{s^2}+\frac{1}{s^2+1}\hat y\Rightarrow\hat y\cdot\frac{s^2}{s^2+1}=\frac1{s^2}\Rightarrow\hat y=\frac{s^2+1}{s^4}=\frac1{s^2}+\frac1{s^4}$, so $y(t)=t+\dfrac{t^3}{6}$.
 \end{workbox}
 
-\subsection{Laplace transform of \texorpdfstring{$(A,B,C,D)$}{(A,B,C,D)} \texorpdfstring{\fr{111--115}}{}}\label{sec:lapabcd}
+\subsection{Laplace transform of \texorpdfstring{$(A,B,C,D)$}{(A,B,C,D)} \texorpdfstring{\fr{111--115}}{}}\label{sec:lapabcd}\label{ss:3-7}
 \begin{thmbox}[title={Theorem 0.31}]
 Transforming $\dot X=AX+BU$, $Y=CX+DU$ gives $s\hat X-X(0)=A\hat X+B\hat U$, $\hat Y=C\hat X+D\hat U$, so (for $s$ not an eigenvalue)
 \[\hat X=(sI-A)^{-1}B\hat U+(sI-A)^{-1}X(0),\qquad \hat Y=\underbrace{\big(D+C(sI-A)^{-1}B\big)}_{T(s)}\hat U+C(sI-A)^{-1}X(0).\]
@@ -184,7 +184,7 @@ $A=\begin{bmatrix}0&1\\-5&-2\end{bmatrix}$: $(sI-A)^{-1}=\dfrac{1}{s^2+2s+5}\beg
 \[\exp(tA)=e^{-t}\begin{bmatrix}\cos2t+\frac12\sin2t&\frac12\sin2t\\-\frac52\sin2t&\cos2t-\frac12\sin2t\end{bmatrix}.\quad\text{Check }t=0:\ I\ \checkmark\]
 \end{workbox}
 
-\subsection{Jordan canonical form \texorpdfstring{\fr{116--126}}{}}\label{sec:jordan}
+\subsection{Jordan canonical form \texorpdfstring{\fr{116--126}}{}}\label{sec:jordan}\label{ss:3-8}
 \begin{defbox}
 Jordan block $J_k(\lambda)$: $\lambda$ on the diagonal, $1$ on the superdiagonal, zeros elsewhere.
 \textbf{JCF (Theorem 0.32):} every $A$ is similar to a block-diagonal matrix of Jordan blocks: $A=S\,\mathrm{diag}(J_{k_1}(\lambda_1),\dots,J_{k_r}(\lambda_r))\,S^{-1}$.
@@ -210,7 +210,7 @@ minimal polynomial $m(s)=(s-2)^3(s-3)^2$.\\
 \end{enumerate}
 \end{methodbox}
 
-\subsection{Exam-style questions for Chapter 3}
+\subsection{Exam-style questions for Chapter 3}\label{ss:3-9}
 \begin{qbox}[title={Q3.1 (from the definition)}]
 Show from the definition that $\Lap(e^{at})=\frac1{s-a}$ for $s>a$, and deduce $\Lap(\cosh at)$ and $\Lap(te^{at})$.
 \end{qbox}
